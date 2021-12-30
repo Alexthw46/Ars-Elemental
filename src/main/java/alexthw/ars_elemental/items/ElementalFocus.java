@@ -31,7 +31,9 @@ public class ElementalFocus extends Item implements ISpellModifierItem {
 
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         if (element.isPartOfSchool(spellPart)) {
-            builder.addDamageModifier(2.0D);
+            builder.addAmplification(2.0D);
+        }else{
+            builder.addAmplification(-1.0D);
         }
         return builder;
     }
