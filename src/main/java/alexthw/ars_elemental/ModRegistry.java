@@ -1,9 +1,13 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.items.ElementalFocus;
+import alexthw.ars_elemental.items.NecroticFocus;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import entities.MermaidEntity;
-import entities.familiars.MermaidFamiliar;
+import entity.AllyVhexEntity;
+import entity.MermaidEntity;
+import entity.SummonDirewolf;
+import entity.SummonSkeleHorse;
+import entity.familiars.MermaidFamiliar;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -29,15 +33,20 @@ public class ModRegistry {
         ENTITIES.register(bus);
     }
 
-    public static RegistryObject<EntityType<MermaidEntity>> SIREN_ENTITY;
-    public static RegistryObject<EntityType<MermaidFamiliar>> SIREN_FAMILIAR;
+    public static final RegistryObject<EntityType<MermaidEntity>> SIREN_ENTITY;
+    public static final RegistryObject<EntityType<MermaidFamiliar>> SIREN_FAMILIAR;
+
+    public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
+    public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
+    public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
 
     public static RegistryObject<Item> SIREN_CHARM;
 
-    public static RegistryObject<Item> FIRE_FOCUS;
-    public static RegistryObject<Item> AIR_FOCUS;
-    public static RegistryObject<Item> WATER_FOCUS;
-
+    public static final RegistryObject<Item> FIRE_FOCUS;
+    public static final RegistryObject<Item> AIR_FOCUS;
+    public static final RegistryObject<Item> WATER_FOCUS;
+    public static final RegistryObject<Item> EARTH_FOCUS;
+    public static final RegistryObject<Item> NECRO_FOCUS;
 
     static {
 
@@ -46,9 +55,17 @@ public class ModRegistry {
         SIREN_ENTITY = addEntity("siren_entity", 500, 800,0.4F,0.8F, false, MermaidEntity::new, MobCategory.WATER_CREATURE );
         SIREN_FAMILIAR = registerEntity("siren_familiar", 500, 800, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
 
+        SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
+
+        DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, MobCategory.CREATURE);
+        VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
+
+
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(addTabProp(), SpellSchools.ELEMENTAL_FIRE));
         WATER_FOCUS = ITEMS.register("water_focus", ()-> new ElementalFocus(addTabProp(), SpellSchools.ELEMENTAL_WATER));
         AIR_FOCUS = ITEMS.register("air_focus", ()-> new ElementalFocus(addTabProp(), SpellSchools.ELEMENTAL_AIR));
+        EARTH_FOCUS = ITEMS.register("earth_focus", ()-> new ElementalFocus(addTabProp(), SpellSchools.ELEMENTAL_EARTH));
+        NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(addTabProp()));
 
 
     }

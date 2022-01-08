@@ -7,8 +7,11 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,7 +29,7 @@ public class ArsElemental
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return new ItemStack(Items.AMETHYST_BLOCK);
+            return ModRegistry.FIRE_FOCUS.get().getDefaultInstance();
         }
     };
 
@@ -35,14 +38,16 @@ public class ArsElemental
     public ArsElemental() {
 
         GeckoLib.initialize();
+        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
 
-        ModRegistry.registerRegistries(FMLJavaModLoadingContext.get().getModEventBus());
+
+        ModRegistry.registerRegistries(modbus);
         //ArsNouveauRegistry.registerGlyphs();
         //ExampleConfig.registerGlyphConfigs();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        modbus.addListener(this::setup);
+        modbus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.register(this);
-
 
     }
 

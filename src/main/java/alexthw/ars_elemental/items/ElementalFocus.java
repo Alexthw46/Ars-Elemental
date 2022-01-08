@@ -1,10 +1,10 @@
 package alexthw.ars_elemental.items;
 
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -12,12 +12,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
+
+import static alexthw.ars_elemental.ConfigHandler.COMMON;
 
 @Mod.EventBusSubscriber(modid = ArsNouveau.MODID)
 public class ElementalFocus extends Item implements ISpellModifierItem {
@@ -30,38 +32,65 @@ public class ElementalFocus extends Item implements ISpellModifierItem {
     }
 
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
-        if (element.isPartOfSchool(spellPart)) {
-            builder.addAmplification(2.0D);
-        }else{
-            builder.addAmplification(-1.0D);
+        if (SpellSchools.ELEMENTAL.isPartOfSchool(spellPart)) {
+            if (element.isPartOfSchool(spellPart)) {
+                builder.addAmplification(getBoostMultiplier());
+            } else {
+                builder.addAmplification(getMalusMultiplier());
+            }
         }
         return builder;
     }
 
-    public SpellStats.Builder getSimpleStats(SpellStats.Builder builder) {
-        builder.addDamageModifier(1.0D);
-        return builder;
+    @SubscribeEvent
+    public static void onCast(SpellCastEvent event) {
+        if (!event.getWorld().isClientSide) {
+            ElementalFocus focus = hasFocus(event.getWorld(), event.getEntityLiving());
+            if (focus != null) {
+                if (event.spell.recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
+                    event.spell.setCost((int) (event.spell.getCastingCost() * (1 - COMMON.FocusDiscount.get())));
+            }
+        }
     }
 
-
-    public static boolean containsThis(Level world, Entity entity) {
+    public static ElementalFocus hasFocus(Level world, Entity entity) {
         if (!world.isClientSide && entity instanceof Player) {
-            IItemHandlerModifiable items = CuriosUtil.getAllWornItems((LivingEntity) entity).orElse(null);
-            if (items != null) {
-                for (int i = 0; i < items.getSlots(); ++i) {
+            Optional<IItemHandlerModifiable> curios = CuriosUtil.getAllWornItems((LivingEntity)entity).resolve();
+            if (curios.isPresent()) {
+                IItemHandlerModifiable items = curios.get();
+                for(int i = 0; i < items.getSlots(); ++i) {
                     Item item = items.getStackInSlot(i).getItem();
-                    if (item instanceof ElementalFocus) {
-                        return true;
+                    if (item instanceof ElementalFocus focus) {
+                        return focus;
                     }
                 }
             }
         }
-        return false;
+        return null;
     }
 
-    public static List<AbstractCastMethod> sympatheticMethods = new ArrayList<>();
-
-    static {
-        sympatheticMethods.add(MethodProjectile.INSTANCE);
+    public SpellSchool getSchool() {
+        return element;
     }
+
+    double getBoostMultiplier(){
+        return switch (element.getId()) {
+            case "fire" -> COMMON.FireMasteryBuff.get();
+            case "water" -> COMMON.WaterMasteryBuff.get();
+            case "air" -> COMMON.AirMasteryBuff.get();
+            case "earth" -> COMMON.EarthMasteryBuff.get();
+            default -> 0;
+        };
+    }
+
+    double getMalusMultiplier(){
+        return switch (element.getId()) {
+            case "fire" -> COMMON.FireMasteryDebuff.get();
+            case "water" -> COMMON.WaterMasteryDebuff.get();
+            case "air" -> COMMON.AirMasteryDebuff.get();
+            case "earth" -> COMMON.EarthMasteryDebuff.get();
+            default -> 0;
+        };
+    }
+
 }

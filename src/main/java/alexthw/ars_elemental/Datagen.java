@@ -24,7 +24,7 @@ import static alexthw.ars_elemental.ModRegistry.ITEMS;
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Datagen {
 
-    static ResourceLocation prefix(String path){
+    public static ResourceLocation prefix(String path){
         return new ResourceLocation(ArsElemental.MODID,path);
     }
         @SubscribeEvent

@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.client.mermaid;
 
 import alexthw.ars_elemental.ArsElemental;
-import entities.MermaidEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
