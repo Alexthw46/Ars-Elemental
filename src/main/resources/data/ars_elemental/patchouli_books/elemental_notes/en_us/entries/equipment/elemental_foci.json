@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "By infusing the focus of summoning with elemental energy, you can change its powers to boost the spell glyphs of that elemental school with reduced mana cost. But be wary, while using these kind of foci will greatly amplify that school spell, the other elements ones will be dampened."
+      "text": "If you imbue a crystal with elemental energy and the magical power of the chimera, you can attune it to one of the Elemental Schools. The resulting spell focus will amplify the glyphs of that school and reduce the cost of spells that contains them. As a drawback of focusing on one element, glyphs of the other three will be dampened."
     },
 {
       "type": "ars_nouveau:imbuement_recipe",

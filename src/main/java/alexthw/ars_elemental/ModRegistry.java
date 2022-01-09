@@ -50,7 +50,7 @@ public class ModRegistry {
 
     static {
 
-        SIREN_CHARM = ITEMS.register("siren_charm", () -> new Item(addTabProp()));
+        //SIREN_CHARM = ITEMS.register("siren_charm", () -> new Item(addTabProp()));
 
         SIREN_ENTITY = addEntity("siren_entity", 500, 800,0.4F,0.8F, false, MermaidEntity::new, MobCategory.WATER_CREATURE );
         SIREN_FAMILIAR = registerEntity("siren_familiar", 500, 800, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
@@ -91,7 +91,7 @@ public class ModRegistry {
                     .sized(width, height)
                     .build(ArsElemental.MODID + ":" + name);
         }
-        ITEMS.register("spawn_" + name, () -> new ForgeSpawnEggItem(() -> type, color1, color2, addTabProp()));
+        //ITEMS.register("spawn_" + name, () -> new ForgeSpawnEggItem(() -> type, color1, color2, addTabProp()));
         return ENTITIES.register(name, () -> type);
     }
 
