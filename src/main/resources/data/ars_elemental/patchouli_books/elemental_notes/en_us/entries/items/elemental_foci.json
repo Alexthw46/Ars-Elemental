@@ -1,0 +1,28 @@
+{
+  "name": "Elemental Foci",
+  "icon": "ars_elemental:fire_focus",
+  "category": "equipment",
+  "pages": [
+    {
+      "type": "text",
+      "text": "By infusing the focus of summoning with elemental energy, you can change its powers to boost the spell glyphs of that elemental school with reduced mana cost. But be wary, while using these kind of foci will greatly amplify that school spell, the other elements ones will be dampened."
+    },
+{
+      "type": "apparatus_recipe",
+      "recipe": "ars_elemental:fire_focus"
+    },
+{
+      "type": "apparatus_recipe",
+      "recipe": "ars_elemental:water_focus"
+    },
+{
+      "type": "apparatus_recipe",
+      "recipe": "ars_elemental:air_focus"
+    },
+{
+      "type": "apparatus_recipe",
+      "recipe": "ars_elemental:earth_focus"
+}
+
+  ]
+}

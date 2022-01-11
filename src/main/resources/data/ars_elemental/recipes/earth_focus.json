@@ -1,36 +1,51 @@
 {
-  "type": "ars_nouveau:imbuement",
-  "input": {
-      "item": "minecraft:amethyst_shard"
-  },
-  "output": "ars_elemental:earth_focus",
-  "count": 1,
-  "source": 2000,
-  "pedestalItems": [
+  "type": "ars_nouveau:enchanting_apparatus",
+  "item_1": [
     {
-      "item": {
-        "item": "ars_nouveau:wilden_tribute"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
+      "item": "ars_nouveau:green_archwood_sapling"
     }
-  ]
+  ],
+  "item_2": [
+  {
+    "item": "ars_nouveau:sylph_shards"
+  }
+  ],
+  "item_3": [
+    {
+      "item": "ars_nouveau:green_archwood_sapling"
+    }
+  ],
+  "item_4": [
+  {
+    "item": "minecraft:obsidian"
+  }
+  ],
+  "item_5": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "item_6": [
+    {
+      "tag": "minecraft:logs"
+    }
+  ],
+  "item_7": [
+  {
+    "tag": "minecraft:logs"
+  }
+  ],
+  "item_8": [
+    {
+      "tag": "minecraft:logs"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_nouveau:summon_focus"
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:earth_focus"
+  }
 }

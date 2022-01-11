@@ -1,31 +1,26 @@
 {
-  "type": "ars_nouveau:imbuement",
-  "input": {
-    "item": "ars_nouveau:summon_focus"
-  },
-  "output": "ars_elemental:necrotic_focus",
-  "count": 1,
-  "source": 2000,
-  "pedestalItems": [
+  "type": "ars_nouveau:enchanting_apparatus",
+  "item_1": [
     {
-      "item": {
-        "item": "minecraft:wither_rose"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:wither_skeleton_skull"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:wither_rose"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:conjuration_essence"
-      }
+      "item": "minecraft:wither_rose"
     }
-  ]
+  ],
+  "item_2": [
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    }
+  ],
+  "item_3": [
+    {
+      "item": "minecraft:wither_rose"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_nouveau:summon_focus"
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:necrotic_focus"
+  }
 }

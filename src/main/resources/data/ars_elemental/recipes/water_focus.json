@@ -1,36 +1,47 @@
 {
-  "type": "ars_nouveau:imbuement",
-  "input": {
-      "item": "minecraft:amethyst_shard"
-  },
-  "output": "ars_elemental:water_focus",
-  "count": 1,
-  "source": 2000,
-  "pedestalItems": [
+  "type": "ars_nouveau:enchanting_apparatus",
+  "item_1": [
     {
-      "item": {
-        "item": "ars_nouveau:wilden_tribute"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:water_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:water_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:water_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:water_essence"
-      }
+      "item": "minecraft:prismarine_shard"
     }
-  ]
+  ],
+  "item_2": [
+    {
+      "item": "minecraft:prismarine_crystals"
+    }
+  ],
+  "item_3": [
+    {
+      "item": "minecraft:prismarine_shard"
+    }
+  ],
+  "item_4": [
+    {
+      "item": "minecraft:prismarine_crystals"
+    }
+  ],"item_5": [
+  {
+    "item": "minecraft:prismarine_crystals"
+  }
+  ],"item_6": [
+  {
+    "item": "minecraft:prismarine_shard"
+  }
+  ],"item_7": [
+  {
+    "item": "minecraft:prismarine_crystals"
+  }
+  ],"item_8": [
+  {
+    "item": "minecraft:prismarine_shard"
+  }
+  ],
+  "reagent": [
+    {
+      "item": "ars_nouveau:summon_focus"
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:water_focus"
+  }
 }

@@ -1,36 +1,46 @@
-package entity;
+package alexthw.ars_elemental.entity;
 
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.animal.horse.Horse;
-import net.minecraft.world.level.Level;
-
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 
 public class SummonSkeleHorse extends SummonHorse {
-    public SummonSkeleHorse(EntityType<? extends Horse> type, Level worldIn) {
+    public SummonSkeleHorse(EntityType<? extends HorseEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
+    @Override
+    public boolean canBeRiddenInWater(Entity rider) {
+        return true;
+    }
+
+
+    @Override
     protected SoundEvent getAmbientSound() {
         super.getAmbientSound();
         return this.isEyeInFluid(FluidTags.WATER) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         super.getDeathSound();
         return SoundEvents.SKELETON_HORSE_DEATH;
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_30916_) {
-        super.getHurtSound(p_30916_);
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        super.getHurtSound(pDamageSource);
         return SoundEvents.SKELETON_HORSE_HURT;
     }
 
+    @Override
     protected SoundEvent getSwimSound() {
         if (this.onGround) {
             if (!this.isVehicle()) {
@@ -50,15 +60,17 @@ public class SummonSkeleHorse extends SummonHorse {
         return SoundEvents.SKELETON_HORSE_SWIM;
     }
 
-    protected void playSwimSound(float p_30911_) {
+    @Override
+    protected void playSwimSound(float pVolume) {
         if (this.onGround) {
             super.playSwimSound(0.3F);
         } else {
-            super.playSwimSound(Math.min(0.1F, p_30911_ * 25.0F));
+            super.playSwimSound(Math.min(0.1F, pVolume * 25.0F));
         }
 
     }
 
+    @Override
     protected void playJumpSound() {
         if (this.isInWater()) {
             this.playSound(SoundEvents.SKELETON_HORSE_JUMP_WATER, 0.4F, 1.0F);
@@ -68,20 +80,9 @@ public class SummonSkeleHorse extends SummonHorse {
 
     }
 
-    public MobType getMobType() {
-        return MobType.UNDEAD;
-    }
-
-    public double getPassengersRidingOffset() {
-        return super.getPassengersRidingOffset() - 0.1875D;
-    }
-
-    public boolean rideableUnderWater() {
-        return true;
-    }
-
-    protected float getWaterSlowDown() {
-        return 0.96F;
+    @Override
+    public CreatureAttribute getMobType() {
+        return CreatureAttribute.UNDEAD;
     }
 
 }

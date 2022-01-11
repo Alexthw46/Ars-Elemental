@@ -1,0 +1,19 @@
+{
+  "name": "Corrupted Summoning",
+  "icon": "ars_elemental:necrotic_focus",
+  "category": "equipment",
+  "pages": [
+    {
+      "type": "text",
+      "text": "By infusing the focus of summoning with evil energy, you can corrupt its powers and summons. Touch and projectile, instead of self and orbit, spells casted with this focus will be copied by the summons at the cost of halving their remaining time. This effect doesn't apply to decoys. "
+    },
+    {
+      "type": "apparatus_recipe",
+      "recipe": "ars_elemental:necrotic_focus"
+    },
+    {
+      "type": "text",
+      "text": "After some study from various necromancers, summoned steeds become skeletal and able to walk underwater. Wolves and Vexes becomes stronger, more aggressive, with darker colors. When a summon dies it will wither who killed it."
+    }
+  ]
+}

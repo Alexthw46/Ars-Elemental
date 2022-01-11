@@ -1,36 +1,51 @@
 {
-  "type": "ars_nouveau:imbuement",
-  "input": {
-      "item": "minecraft:amethyst_shard"
-  },
-  "output": "ars_elemental:fire_focus",
-  "count": 1,
-  "source": 2000,
-  "pedestalItems": [
+  "type": "ars_nouveau:enchanting_apparatus",
+  "item_1": [
     {
-      "item": {
-        "item": "ars_nouveau:wilden_tribute"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "minecraft:blaze_powder"
     }
-  ]
+  ],
+  "item_2": [
+    {
+      "item": "minecraft:fire_charge"
+    }
+  ],
+  "item_3": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "item_4": [
+    {
+      "item": "minecraft:fire_charge"
+    }
+  ],
+  "item_5": [
+    {
+      "item": "minecraft:fire_charge"
+    }
+  ],
+  "item_6": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "item_7": [
+  {
+    "item": "minecraft:fire_charge"
+  }
+  ],
+  "item_8": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_nouveau:summon_focus"
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:fire_focus"
+  }
 }

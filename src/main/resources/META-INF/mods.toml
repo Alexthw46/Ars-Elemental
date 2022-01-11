@@ -1,6 +1,8 @@
+# Find more information on toml format here:  https://github.com/toml-lang/toml
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[38,)" #mandatory (28 is current forge version)
+loaderVersion="[28,)" #mandatory (28 is current forge version)
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="http://my.issue.tracker/" #optional
 
@@ -20,7 +22,7 @@ displayName="Ars Elemental - Elemental Spell Foci" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="ars_elemental_logo.png" #optional
 # A text field displayed in the mod UI
-credits="Bailey for making Ars Nouveau and its api" #optional
+credits="Bailey for Ars Nouveau and its api" #optional
 # A text field displayed in the mod UI
 authors="Alexthw" #optional
 # The description text for the mod (multi line!) (#mandatory)
@@ -33,7 +35,7 @@ This mod adds four more spell focus, each power up one of the elemental schools,
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[38.0.0,)" #mandatory
+    versionRange="[36,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -42,12 +44,12 @@ This mod adds four more spell focus, each power up one of the elemental schools,
 [[dependencies.ars_elemental]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.1,)"
+    versionRange="[1.16.4,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.ars_elemental]]
     modId="ars_nouveau"
     mandatory=true
-    versionRange="[2.0,)"
+    versionRange="[1.24.12,)"
     ordering="AFTER"
     side="BOTH"

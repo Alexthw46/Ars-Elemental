@@ -1,36 +1,51 @@
 {
-  "type": "ars_nouveau:imbuement",
-  "input": {
-      "item": "minecraft:amethyst_shard"
-  },
-  "output": "ars_elemental:air_focus",
-  "count": 1,
-  "source": 2000,
-  "pedestalItems": [
+  "type": "ars_nouveau:enchanting_apparatus",
+  "item_1": [
     {
-      "item": {
-        "item": "ars_nouveau:wilden_tribute"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "minecraft:chorus_fruit"
     }
-  ]
+  ],
+  "item_2": [
+    {
+      "item": "minecraft:feather"
+    }
+  ],
+  "item_3": [
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "item_4": [
+    {
+      "item": "minecraft:feather"
+    }
+  ],
+  "item_5": [
+    {
+      "item": "minecraft:feather"
+    }
+  ],
+  "item_6": [
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "item_7": [
+  {
+    "item": "minecraft:feather"
+  }
+  ],
+  "item_8": [
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_nouveau:summon_focus"
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:air_focus"
+  }
 }

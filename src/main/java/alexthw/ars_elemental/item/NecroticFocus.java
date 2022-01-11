@@ -1,7 +1,10 @@
-package alexthw.ars_elemental.items;
+package alexthw.ars_elemental.item;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.entity.AllyVhexEntity;
+import alexthw.ars_elemental.entity.SummonDirewolf;
+import alexthw.ars_elemental.entity.SummonSkeleHorse;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
@@ -16,26 +19,24 @@ import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
-import entity.AllyVhexEntity;
-import entity.SummonDirewolf;
-import entity.SummonSkeleHorse;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -43,38 +44,40 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
 public class NecroticFocus extends Item implements ISpellModifierItem {
-    public NecroticFocus(Item.Properties properties) {
+    public NecroticFocus(Properties properties) {
         super(properties);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void summonedEvent(SummonEvent event) {
-        if (!event.world.isClientSide && hasFocus(event.world, event.summon.getOwner((ServerLevel) event.world))) {
-            if (event.summon instanceof SummonHorse oldHorse) {
+        if (!event.world.isClientSide && containsThis(event.world, event.summon.getOwner((ServerWorld) event.world))) {
+            if (event.summon instanceof SummonHorse) {
+                SummonHorse oldHorse = (SummonHorse) event.summon;
                 SummonSkeleHorse newHorse = replaceHorse(event.world, oldHorse);
                 if (newHorse != null) {
-                    oldHorse.remove(Entity.RemovalReason.DISCARDED);
+                    oldHorse.getEntity().remove();
                     event.summon = newHorse;
                     event.world.addFreshEntity(newHorse);
                 }
-            } else if (event.summon instanceof SummonWolf oldWolf) {
+            } else if (event.summon instanceof SummonWolf) {
+                SummonWolf oldWolf = (SummonWolf) event.summon;
                 SummonDirewolf newWolf = replaceWolf(event.world, oldWolf);
 
                 if (newWolf != null) {
-                    oldWolf.remove(Entity.RemovalReason.DISCARDED);
+                    oldWolf.getEntity().remove();
                     event.summon = newWolf;
                     event.world.addFreshEntity(newWolf);
                 }
-            } else if (event.summon instanceof EntityAllyVex oldVex) {
+            } else if (event.summon instanceof EntityAllyVex) {
+                EntityAllyVex oldVex = (EntityAllyVex) event.summon;
                 AllyVhexEntity newVex = replaceVex(event.world, oldVex);
 
                 if (newVex != null) {
-                    oldVex.getSelfEntity().remove(Entity.RemovalReason.DISCARDED);
+                    oldVex.getEntity().remove();
                     event.summon = newVex;
                     event.world.addFreshEntity(newVex);
                 }
@@ -82,12 +85,12 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
         }
     }
 
-    private static AllyVhexEntity replaceVex(Level level, EntityAllyVex oldVex) {
-        Player owner = (Player) oldVex.getOwner((ServerLevel) level);
+    private static AllyVhexEntity replaceVex(World world, EntityAllyVex oldVex) {
+        PlayerEntity owner = (PlayerEntity) oldVex.getOwner((ServerWorld) world);
         if (owner == null) return null;
-        AllyVhexEntity vexEntity = new AllyVhexEntity(level, owner);
+        AllyVhexEntity vexEntity = new AllyVhexEntity(world, owner);
         vexEntity.moveTo(oldVex.blockPosition(), 0.0F, 0.0F);
-        vexEntity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(oldVex.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+        vexEntity.finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(oldVex.blockPosition()), SpawnReason.MOB_SUMMONED, null, null);
         vexEntity.setOwner(owner);
         vexEntity.setOwnerID(owner.getUUID());
         vexEntity.setBoundOrigin(oldVex.getBoundOrigin());
@@ -95,13 +98,13 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
         return vexEntity;
     }
 
-    private static SummonDirewolf replaceWolf(Level level, SummonWolf oldWolf) {
-        SummonDirewolf direwolf = new SummonDirewolf(level);
+    private static SummonDirewolf replaceWolf(World world, SummonWolf oldWolf) {
+        SummonDirewolf direwolf = new SummonDirewolf(world);
         direwolf.setTicksLeft(oldWolf.getTicksLeft());
-        Vec3 hit = oldWolf.position();
+        Vector3d hit = oldWolf.position();
         direwolf.setPos(hit.x(), hit.y(), hit.z());
         if (oldWolf.getOwnerID() == null) return null;
-        Player shooter = level.getPlayerByUUID(oldWolf.getOwnerID());
+        PlayerEntity shooter = world.getPlayerByUUID(oldWolf.getOwnerID());
         if (shooter == null) return null;
         direwolf.setTarget(shooter.getLastHurtMob());
         direwolf.setAggressive(true);
@@ -111,10 +114,10 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
         return direwolf;
     }
 
-    public static SummonSkeleHorse replaceHorse(Level level, SummonHorse oldHorse) {
-        SummonSkeleHorse newHorse = new SummonSkeleHorse(ModRegistry.SKELEHORSE_SUMMON.get(), level);
+    public static SummonSkeleHorse replaceHorse(World world, SummonHorse oldHorse) {
+        SummonSkeleHorse newHorse = new SummonSkeleHorse(ModRegistry.SKELEHORSE_SUMMON.get(), world);
         if (oldHorse.getOwnerID() == null) return null;
-        Player player = level.getPlayerByUUID(oldHorse.getOwnerID());
+        PlayerEntity player = world.getPlayerByUUID(oldHorse.getOwnerID());
         if (player == null) return null;
         BlockPos position = oldHorse.blockPosition();
         newHorse.setPos(position.getX(), position.getY(), position.getZ());
@@ -122,7 +125,7 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
         newHorse.tameWithName(player);
         newHorse.getHorseInventory().setItem(0, new ItemStack(Items.SADDLE));
         newHorse.setOwnerID(player.getUUID());
-        newHorse.setDropChance(EquipmentSlot.CHEST, 0.0F);
+        newHorse.setDropChance(EquipmentSlotType.CHEST, 0.0F);
 
         return newHorse;
     }
@@ -131,22 +134,23 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void summonDeathEvent(SummonEvent.Death event) {
         if (!event.world.isClientSide) {
-            if (event.summon.getOwner((ServerLevel) event.world) instanceof Player player) {
-                if (hasFocus(event.world, player)) {
+            if (event.summon.getOwner((ServerWorld) event.world) instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) event.summon.getOwner((ServerWorld) event.world);
+                if (player != null && containsThis(event.world, player)) {
                     DamageSource source = event.source;
-                    if (source != null && source.getEntity() != null && source.getEntity() instanceof LivingEntity killer) {
-                        killer.addEffect(new MobEffectInstance(MobEffects.WITHER, 100));
+                    if (source != null && source.getEntity() != null && source.getEntity() instanceof LivingEntity) {
+                        LivingEntity killer = (LivingEntity) source.getEntity();
+                        killer.addEffect(new EffectInstance(Effects.WITHER, 100));
                     }
                 }
             }
         }
     }
 
-    public static boolean hasFocus(Level level, Entity entity) {
-        if (!level.isClientSide && entity instanceof Player) {
-            Optional<IItemHandlerModifiable> curios = CuriosUtil.getAllWornItems((LivingEntity)entity).resolve();
-            if (curios.isPresent()) {
-                IItemHandlerModifiable items = curios.get();
+    public static boolean containsThis(World world, Entity entity) {
+        if (!world.isClientSide && entity instanceof PlayerEntity) {
+            IItemHandlerModifiable items = CuriosUtil.getAllWornItems((LivingEntity) entity).orElse(null);
+            if (items != null) {
                 for (int i = 0; i < items.getSlots(); ++i) {
                     Item item = items.getStackInSlot(i).getItem();
                     if (item instanceof NecroticFocus) {
@@ -160,11 +164,12 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
 
     @SubscribeEvent
     public static void castSpell(SpellCastEvent event) {
-        if (!event.getWorld().isClientSide && event.getEntity() instanceof Player player && hasFocus(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() != null && sympatheticMethods.contains(event.spell.getCastMethod())) {
+        if (!event.getWorld().isClientSide && event.getEntity() instanceof PlayerEntity && containsThis(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() != null && sympatheticMethods.contains(event.spell.getCastMethod())) {
 
-            for (LivingEntity i : event.getWorld().getEntitiesOfClass(LivingEntity.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof ISummon && !(l instanceof EntityDummy))) {
+            PlayerEntity player = (PlayerEntity) event.getEntity();
+            for (LivingEntity i : event.getWorld().getLoadedEntitiesOfClass(LivingEntity.class, (new AxisAlignedBB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof ISummon && !(l instanceof EntityDummy))) {
                 ISummon summon = (ISummon) i;
-                Entity owner = summon.getOwner((ServerLevel) event.getWorld());
+                Entity owner = summon.getOwner((ServerWorld) event.getWorld());
                 if (player.equals(owner)) {
                     EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
                     spellResolver.onCast(ItemStack.EMPTY, i, i.level);
