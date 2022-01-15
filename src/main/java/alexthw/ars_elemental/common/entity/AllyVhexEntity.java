@@ -1,4 +1,4 @@
-package entity;
+package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;

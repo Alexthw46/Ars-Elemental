@@ -6,10 +6,13 @@
 	"item.ars_elemental.earth_focus": "Focus of Earth",
 	"item.ars_elemental.necrotic_focus": "Corrupted Focus of Summoning",
 	"item.ars_elemental.siren_charm": "Siren Charm",
+	"item.ars_elemental.curio_bag": "Trinkets Pouch",
 
 	"entity.ars_elemental.summon_skelehorse": "Summoned Skeletal Steed",
 	"entity.ars_elemental.summon_direwolf": "Summoned Direwolf",
 	"entity.ars_elemental.summon_vhex": "Summoned Vhex",
 	"entity.ars_elemental.siren_entity": "Siren",
-	"entity.ars_elemental.siren_familiar": "Siren Familiar"
+	"entity.ars_elemental.siren_familiar": "Siren Familiar",
+
+	"curios.modifiers.an_focus": "While in spell focus slot:"
 }

@@ -1,4 +1,4 @@
-package entity;
+package alexthw.ars_elemental.common.entity;
 
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import net.minecraft.sounds.SoundEvent;

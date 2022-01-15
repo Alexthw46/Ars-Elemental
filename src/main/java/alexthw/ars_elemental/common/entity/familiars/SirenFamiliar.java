@@ -1,9 +1,9 @@
-package entity.familiars;
+package alexthw.ars_elemental.common.entity.familiars;
 
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.MermaidEntity;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.familiar.IFamiliar;
-import entity.MermaidEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 

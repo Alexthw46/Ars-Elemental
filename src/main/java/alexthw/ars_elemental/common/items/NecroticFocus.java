@@ -1,7 +1,8 @@
-package alexthw.ars_elemental.items;
+package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.AllyVhexEntity;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
@@ -16,9 +17,8 @@ import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
-import entity.AllyVhexEntity;
-import entity.SummonDirewolf;
-import entity.SummonSkeleHorse;
+import alexthw.ars_elemental.common.entity.SummonDirewolf;
+import alexthw.ars_elemental.common.entity.SummonSkeleHorse;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;

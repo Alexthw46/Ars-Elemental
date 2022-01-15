@@ -1,4 +1,4 @@
-package entity;
+package alexthw.ars_elemental.common.entity;
 
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import net.minecraft.core.BlockPos;

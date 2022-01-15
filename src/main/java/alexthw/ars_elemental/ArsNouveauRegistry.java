@@ -2,7 +2,7 @@ package alexthw.ars_elemental;
 
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import entity.familiars.SirenFamiliar;
+import alexthw.ars_elemental.common.entity.familiars.SirenFamiliar;
 
 import java.util.ArrayList;
 import java.util.List;

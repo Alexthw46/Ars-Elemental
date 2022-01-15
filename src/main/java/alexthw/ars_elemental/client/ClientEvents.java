@@ -3,6 +3,7 @@ package alexthw.ars_elemental.client;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.VexRenderer;
@@ -15,6 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import static alexthw.ars_elemental.Datagen.prefix;
 
@@ -52,4 +54,8 @@ public class ClientEvents {
         });
     }
 
+    @SubscribeEvent
+    public static void bindContainerRenderers(FMLClientSetupEvent event) {
+        MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
+    }
 }

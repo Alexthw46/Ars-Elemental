@@ -1,4 +1,4 @@
-package entity.familiars;
+package alexthw.ars_elemental.common.entity.familiars;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
