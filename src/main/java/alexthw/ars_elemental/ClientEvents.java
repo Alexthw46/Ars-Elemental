@@ -1,5 +1,8 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.bag.CurioHolderScreen;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.IngameMenuScreen;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.VexRenderer;
 import net.minecraft.client.renderer.entity.WolfRenderer;
@@ -43,5 +46,10 @@ public class ClientEvents {
                 return VhexTexture;
             }
         });
+    }
+
+    @SubscribeEvent
+    public static void bindContainerRenderers(FMLClientSetupEvent event) {
+        ScreenManager.register(ModRegistry.CURIO_POUCH.get(), CurioHolderScreen::new);
     }
 }

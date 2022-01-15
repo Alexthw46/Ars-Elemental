@@ -131,9 +131,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.22'
 
-    // Ars Nouveau 1.24.12
-    implementation fg.deobf("curse.maven:ars-401955:3586196")
-    //implementation fg.deobf("com.hollingsworth:ars_nouveau:1.16.5-1.24.14")
+    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-1.16.5:1.24.14.5")
 
 
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.16.4-50")
