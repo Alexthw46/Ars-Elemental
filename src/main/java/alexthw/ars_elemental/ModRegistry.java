@@ -1,6 +1,7 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
+import alexthw.ars_elemental.common.HellFireEffect;
 import alexthw.ars_elemental.common.entity.AllyVhexEntity;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.common.items.ElementalFocus;
@@ -10,14 +11,22 @@ import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.SummonSkeleHorse;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
+import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -29,17 +38,21 @@ import static alexthw.ars_elemental.ArsElemental.MODID;
 public class ModRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
+    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
 
     static Item.Properties addTabProp() {
         return new Item.Properties().tab(ArsElemental.TAB);
     }
 
     public static void registerRegistries(IEventBus bus ){
+        BLOCKS.register(bus);
         ITEMS.register(bus);
         ENTITIES.register(bus);
         CONTAINERS.register(bus);
+        EFFECTS.register(bus);
     }
 
     public static final RegistryObject<EntityType<MermaidEntity>> SIREN_ENTITY;
@@ -48,6 +61,8 @@ public class ModRegistry {
     public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
     public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
+
+    public static final RegistryObject<MobEffect> HELLFIRE;
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
 
@@ -61,6 +76,8 @@ public class ModRegistry {
     public static final RegistryObject<Item> NECRO_FOCUS;
 
     static {
+
+        HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
 
         //SIREN_CHARM = ITEMS.register("siren_charm", () -> new Item(addTabProp()));
 
@@ -80,7 +97,6 @@ public class ModRegistry {
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(addTabProp().stacksTo(1)));
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
-
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
@@ -108,6 +124,19 @@ public class ModRegistry {
         return ENTITIES.register(name, () -> type);
     }
 
+    static RegistryObject<Block> addBlock(String name, Block block) {
+        ITEMS.register(name, () -> new BlockItem(block, addTabProp()));
+        return BLOCKS.register(name, () -> block);
+    }
 
+    static RegistryObject<Block> addSlab(String name, SlabBlock slab){
+        return addBlock(name + "_slab", slab);
+    }
 
+    static RegistryObject<Block> addStair(String name, StairBlock stair){
+        return addBlock(name + "_stairs", stair);
+    }
+    static net.minecraft.world.level.block.state.BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {
+        return net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(mat, color);
+    }
 }

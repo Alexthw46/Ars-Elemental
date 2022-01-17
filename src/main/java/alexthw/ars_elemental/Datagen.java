@@ -1,5 +1,6 @@
 package alexthw.ars_elemental;
 
+import com.hollingsworth.arsnouveau.ArsNouveau;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -7,7 +8,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -32,9 +37,30 @@ public class Datagen {
             DataGenerator gen = event.getGenerator();
             ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
+            gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
             gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
 
         }
+
+    public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> pred) {
+        List<T> ret = new ArrayList<>();
+
+        Iterator<T> iter = src.iterator();
+        while (iter.hasNext())
+        {
+            T item = iter.next();
+            if (pred.test(item))
+            {
+                iter.remove();
+                ret.add(item);
+            }
+        }
+
+        if (ret.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return ret;
+    }
 
 
     public static class ModItemModelProvider extends ItemModelProvider {
@@ -89,25 +115,36 @@ public class Datagen {
                 fenceInventory(name, prefix("block/" + baseName));
             }
 
-        public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> pred) {
-            List<T> ret = new ArrayList<>();
-
-            Iterator<T> iter = src.iterator();
-            while (iter.hasNext())
-            {
-                T item = iter.next();
-                if (pred.test(item))
-                {
-                    iter.remove();
-                    ret.add(item);
-                }
-            }
-
-            if (ret.isEmpty()) {
-                return Collections.emptyList();
-            }
-            return ret;
-        }
     }
 
+    public static class ModBlockStateProvider extends BlockStateProvider{
+
+        public ModBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
+            super(gen, ArsElemental.MODID, exFileHelper);
+        }
+
+        @Override
+        protected void registerStatesAndModels() {
+            Set<RegistryObject<Block>> blocks = new HashSet<>(ModRegistry.BLOCKS.getEntries());
+            takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
+            takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
+            blocks.forEach(this::basicBlock);
+        }
+
+        public void slabBlock(RegistryObject<Block> blockRegistryObject) {
+            String name = Registry.BLOCK.getKey(blockRegistryObject.get()).getPath();
+            String baseName = name.substring(0, name.length() - 5);
+            slabBlock((SlabBlock) blockRegistryObject.get(), prefix(baseName), prefix("block/" + baseName));
+        }
+
+        public void stairsBlock(RegistryObject<Block> blockRegistryObject) {
+            String name = Registry.BLOCK.getKey(blockRegistryObject.get()).getPath();
+            String baseName = name.substring(0, name.length() - 7);
+            stairsBlock((StairBlock) blockRegistryObject.get(), prefix("block/" + baseName));
+        }
+
+        private void basicBlock(RegistryObject<Block> blockRegistryObject) {
+            simpleBlock(blockRegistryObject.get());
+        }
+    }
 }

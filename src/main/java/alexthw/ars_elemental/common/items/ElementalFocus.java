@@ -128,7 +128,7 @@ public class ElementalFocus extends Item implements ISpellModifierItem,ICurioIte
 
             }
             case "air" ->{
-                if (player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
+                if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
                     player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
             }
         }
