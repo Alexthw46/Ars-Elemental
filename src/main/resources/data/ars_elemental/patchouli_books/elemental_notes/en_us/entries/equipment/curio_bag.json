@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around rings, amulets, foci, mirrors...and the dominion wand!"
+      "text": "ars_elemental.curio_bag.description"
     },
     {
       "type": "patchouli:crafting",

@@ -19,6 +19,10 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Double> AirMasteryDebuff;
         public final ForgeConfigSpec.ConfigValue<Double> EarthMasteryDebuff;
 
+        public final ForgeConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
+        public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
+
+
         public Common(ForgeConfigSpec.Builder builder) {
 
             FocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the focus")
@@ -40,6 +44,13 @@ public class ConfigHandler {
             WaterMasteryDebuff = builder.define("Water Focus debuff", -1.0D);
             AirMasteryDebuff = builder.define("Air Focus debuff", -1.0D);
             EarthMasteryDebuff = builder.define("Earth Focus debuff", -1.0D);
+
+            builder.pop();
+
+            builder.comment("Enable or disable the passive bonus of the foci").push("Elemental Spell Foci - Abilities");
+
+            EnableGlyphEmpowering = builder.define("Enable glyph empowering (ignite & freeze)",true);
+            EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
 
             builder.pop();
         }

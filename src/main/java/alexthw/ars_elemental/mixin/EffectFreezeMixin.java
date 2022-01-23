@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.mixin;
 
+import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.items.ElementalFocus;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
@@ -18,6 +19,7 @@ public class EffectFreezeMixin {
 
     @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false)
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
+        if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
         if (rayTraceResult.getEntity() instanceof LivingEntity living && ElementalFocus.hasFocus(world, shooter) == ModRegistry.WATER_FOCUS.get()){
             living.setIsInPowderSnow(true);
             living.setTicksFrozen((int) (living.getTicksFrozen() + 60 * spellStats.getAmpMultiplier()));

@@ -5,27 +5,27 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "If you imbue a crystal with elemental energy and the magical power of the chimera, you can attune it to one of the Elemental Schools. The resulting spell focus will amplify the glyphs of that school and reduce the cost of spells that contains them. As a drawback of focusing on one element, glyphs of the other three will be dampened."
+      "text": "ars_elemental.elemental_foci"
     },
     {
       "type" : "patchouli:spotlight",
       "item" : "ars_elemental:fire_focus",
-      "text" : "The focus of fire grant mana regen bonus when the wearer is on fire or in lava and power-up the Ignite glyph, inflicting Hellfire burn to target.$(br)This debuff will reduce healing and allows flare to inflict damage and spread."
+      "text" : "ars_elemental.fire_focus.description"
     },
     {
       "type": "patchouli:spotlight",
       "item" : "ars_elemental:water_focus",
-      "text" : "The focus of water grant mana regen bonus when the wearer is in water or rain and boost swimming speed.$(br)It also enhances the Freeze glyph to cause Freezing, dealing damage to fire mobs. (It might require amplify or dual cast)"
+      "text" : "ars_elemental.water_focus.description"
     },
     {
       "type": "patchouli:spotlight",
       "item" : "ars_elemental:air_focus",
-      "text" : "The focus of air grant mana regen bonus while the wearer is falling from high places or standing over Y 200."
+      "text" : "ars_elemental.air_focus.description"
     },
     {
       "type": "patchouli:spotlight",
       "item" : "ars_elemental:earth_focus",
-      "text" : "The focus of earth grant the wearer high knockback resistance and improved healing abilities."
+      "text" : "ars_elemental.earth_focus.description"
     },
     {
       "type": "ars_nouveau:imbuement_recipe",

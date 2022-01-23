@@ -3,11 +3,14 @@ package alexthw.ars_elemental;
 import alexthw.ars_elemental.common.items.ElementalFocus;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static alexthw.ars_elemental.ConfigHandler.COMMON;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 
@@ -22,7 +25,13 @@ public class Events {
                     case "fire" -> {
                         if (event.getSource().isFire() && living.fireImmune()) {
                             event.setCanceled(true);
-                            living.hurt(DamageSource.playerAttack(player), event.getAmount());
+                            living.hurt(DamageSource.playerAttack(player).setMagic(), event.getAmount());
+                        }
+                    }
+                    case "water" -> {
+                        if (event.getSource().getMsgId().equals("drown") && living.getMobType() == MobType.WATER) {
+                            event.setCanceled(true);
+                            living.hurt(DamageSource.playerAttack(player).setMagic(), event.getAmount());
                         }
                     }
                     case "air" -> {
@@ -37,7 +46,7 @@ public class Events {
 
     @SubscribeEvent
     public static void boostHealing(LivingHealEvent event){
-        if (event.getEntity() instanceof Player player && ElementalFocus.hasFocus(player.getLevel(), player) == ModRegistry.EARTH_FOCUS.get()) {
+        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ElementalFocus.hasFocus(player.getLevel(), player) == ModRegistry.EARTH_FOCUS.get()) {
             event.setAmount(event.getAmount() * 1.5F);
         }
     }

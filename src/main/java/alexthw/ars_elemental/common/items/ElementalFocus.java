@@ -114,7 +114,7 @@ public class ElementalFocus extends Item implements ISpellModifierItem,ICurioIte
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        if (slotContext.entity().getLevel().isClientSide() || !(slotContext.entity() instanceof Player player)) return;
+        if (slotContext.entity().getLevel().isClientSide() || !(slotContext.entity() instanceof Player player) || !COMMON.EnableRegenBonus.get()) return;
 
         if (player.tickCount % 20 == 0)
         switch (getSchool().getId()){
@@ -129,6 +129,10 @@ public class ElementalFocus extends Item implements ISpellModifierItem,ICurioIte
             }
             case "air" ->{
                 if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
+                    player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
+            }
+            case "earth" ->{
+                if (player.getY() < 1)
                     player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
             }
         }

@@ -14,5 +14,15 @@
 	"entity.ars_elemental.siren_entity": "Siren",
 	"entity.ars_elemental.siren_familiar": "Siren Familiar",
 
-	"curios.modifiers.an_focus": "While in spell focus slot:"
+	"curios.modifiers.an_focus": "While in spell focus slot:",
+
+
+	"ars_elemental.elemental_foci" : "If you imbue a crystal with elemental energy and the magical power of the chimera, you can attune it to one of the Elemental Schools. The resulting spell focus will amplify the glyphs of that school and reduce the cost of spells that contains them. As a drawback of focusing on one element, glyphs of the other three will be dampened.",
+	"ars_elemental.fire_focus.description" : "The focus of fire grant mana regen bonus when the wearer is on fire or in lava and power-up the Ignite glyph, inflicting Hellfire burn to target.$(br)This debuff will reduce healing and allows flare to inflict damage and spread.",
+	"ars_elemental.water_focus.description" : "The focus of water grant mana regen bonus when the wearer is in water or rain and boost swimming speed.$(br)It also enhances the Freeze glyph to cause Freezing, dealing damage to fire mobs. (It might require amplify or dual cast)",
+	"ars_elemental.air_focus.description" : "The focus of air grant mana regen bonus while the wearer is falling from high places or standing over Y 200.",
+	"ars_elemental.earth_focus.description" : "The focus of earth grant the wearer mana regen bonus while under Y 0, high knockback resistance and improved healing abilities.",
+	"ars_elemental.necrotic_focus.description" :"By imbuing the focus of summoning with evil energy, you can corrupt its powers and summons. Touch and projectile, instead of self and orbit, spells casted with this focus will be copied by the summons at the cost of halving their remaining time. This effect doesn't apply to decoys.",
+	"ars_elemental.necrotic_focus.summons": "After some study from various necromancers, summoned steeds become skeletal and able to walk underwater. Wolves and Vexes becomes stronger, more aggressive, with darker colors. When a summon dies, it will wither who killed it.",
+	"ars_elemental.curio_bag.description":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around rings, amulets, foci, mirrors...and the dominion wand!"
 }
