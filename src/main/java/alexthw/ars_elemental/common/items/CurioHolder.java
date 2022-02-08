@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
-import alexthw.ars_elemental.common.ItemInventory;
+import alexthw.ars_elemental.util.ItemInventory;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;

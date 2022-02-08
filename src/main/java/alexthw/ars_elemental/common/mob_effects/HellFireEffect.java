@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -13,12 +14,20 @@ import static alexthw.ars_elemental.Datagen.prefix;
 
 public class HellFireEffect extends MobEffect implements IForgeMobEffect {
 
-    protected static final ResourceLocation EFFECT_TEXTURE = prefix("textures/mob_effect/hellfire.png");
-
     public HellFireEffect() {
         super(MobEffectCategory.HARMFUL, 14981690);
         MinecraftForge.EVENT_BUS.addListener(this::burn);
+    }
 
+    @Override
+    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+        return true;
+    }
+
+    @Override
+    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+        if (pLivingEntity.isInWaterOrRain()) pLivingEntity.removeEffect(this);
+        super.applyEffectTick(pLivingEntity, pAmplifier);
     }
 
     public void burn(LivingHealEvent event){

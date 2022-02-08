@@ -23,6 +23,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -47,6 +48,9 @@ public class ModRegistry {
 
     static Item.Properties addTabProp() {
         return new Item.Properties().tab(ArsElemental.TAB);
+    }
+    static Item.Properties FocusProp() {
+        return addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE);
     }
 
     public static void registerRegistries(IEventBus bus ){
@@ -93,11 +97,11 @@ public class ModRegistry {
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
 
         CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().stacksTo(1)));
-        FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
-        WATER_FOCUS = ITEMS.register("water_focus", ()-> new ElementalFocus(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_WATER));
-        AIR_FOCUS = ITEMS.register("air_focus", ()-> new ElementalFocus(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_AIR));
-        EARTH_FOCUS = ITEMS.register("earth_focus", ()-> new ElementalFocus(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_EARTH));
-        NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(addTabProp().stacksTo(1)));
+        FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
+        WATER_FOCUS = ITEMS.register("water_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
+        AIR_FOCUS = ITEMS.register("air_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
+        EARTH_FOCUS = ITEMS.register("earth_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
+        NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
     }

@@ -6,6 +6,8 @@
   "mixins": [
     "EffectFreezeMixin",
     "EffectIgniteMixin",
+    "EffectLaunchMixin",
+    "EffectWaterMixin",
     "FlareMixin",
     "LightningMixin"
   ],

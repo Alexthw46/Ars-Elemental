@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common;
+package alexthw.ars_elemental.util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.SimpleContainer;

@@ -39,6 +39,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -47,9 +49,14 @@ import java.util.Optional;
 
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
-public class NecroticFocus extends Item implements ISpellModifierItem {
+public class NecroticFocus extends Item implements ISpellModifierItem, ICurioItem {
     public NecroticFocus(Item.Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+        return true;
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
