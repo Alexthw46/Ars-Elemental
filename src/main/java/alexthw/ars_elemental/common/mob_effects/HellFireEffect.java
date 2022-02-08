@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common;
+package alexthw.ars_elemental.common.mob_effects;
 
 import alexthw.ars_elemental.ModRegistry;
 import net.minecraft.resources.ResourceLocation;

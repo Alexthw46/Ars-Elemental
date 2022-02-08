@@ -7,9 +7,7 @@ import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
-import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
-import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import com.hollingsworth.arsnouveau.common.entity.EntityDummy;
@@ -35,12 +33,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -173,6 +173,12 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
             }
         }
 
+    }
+
+    @Override
+    public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
+        builder.addDamageModifier(1.0f);
+        return builder;
     }
 
     public static List<AbstractCastMethod> sympatheticMethods = new ArrayList<>();

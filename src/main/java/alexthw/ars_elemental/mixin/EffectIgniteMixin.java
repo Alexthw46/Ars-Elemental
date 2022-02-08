@@ -22,7 +22,7 @@ public class EffectIgniteMixin {
     @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false)
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        if (rayTraceResult.getEntity() instanceof LivingEntity living && ElementalFocus.hasFocus(world, shooter) == ModRegistry.FIRE_FOCUS.get() && shooter!=living){
+        if (rayTraceResult.getEntity() instanceof LivingEntity living && ElementalFocus.hasFocus(world, shooter) == ModRegistry.FIRE_FOCUS.get()){
             living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) spellStats.getAmpMultiplier()/2));
             living.invulnerableTime = 0;
         }

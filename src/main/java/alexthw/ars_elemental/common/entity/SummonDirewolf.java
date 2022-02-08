@@ -19,6 +19,6 @@ public class SummonDirewolf extends SummonWolf {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.4F).add(Attributes.MAX_HEALTH, 16.0D).add(Attributes.ATTACK_DAMAGE, 4.0D);
+        return Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.7F).add(Attributes.MAX_HEALTH, 16.0D).add(Attributes.ATTACK_DAMAGE, 6.0D);
     }
 }

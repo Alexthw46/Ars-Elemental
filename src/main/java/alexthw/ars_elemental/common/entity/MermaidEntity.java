@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.entity;
 
+import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -40,6 +41,10 @@ public class MermaidEntity extends WaterAnimal implements IAnimatable, IDispella
         super(p_21683_, p_21684_);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
+    }
+
+    public MermaidEntity(Level level){
+        this(ModRegistry.SIREN_ENTITY.get(),level);
     }
 
     @Override

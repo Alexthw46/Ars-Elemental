@@ -26,4 +26,9 @@ public class SirenFamiliar extends AbstractFamiliarHolder {
     public String getBookDescription() {
         return "A Siren";
     }
+
+    @Override
+    public String getEntityKey() {
+        return "siren";
+    }
 }

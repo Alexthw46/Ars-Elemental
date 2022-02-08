@@ -6,7 +6,8 @@
   "mixins": [
     "EffectFreezeMixin",
     "EffectIgniteMixin",
-    "FlareMixin"
+    "FlareMixin",
+    "LightningMixin"
   ],
   "minVersion": "0.8"
 }

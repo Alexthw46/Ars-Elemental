@@ -1,17 +1,18 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
-import alexthw.ars_elemental.common.HellFireEffect;
+import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
+import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
 import alexthw.ars_elemental.common.entity.AllyVhexEntity;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.common.items.ElementalFocus;
 import alexthw.ars_elemental.common.items.NecroticFocus;
+import alexthw.ars_elemental.common.items.SirenCharm;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.SummonSkeleHorse;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -63,10 +65,11 @@ public class ModRegistry {
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
 
     public static final RegistryObject<MobEffect> HELLFIRE;
+    public static final RegistryObject<MobEffect> WATER_GRAVE;
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
 
-    public static RegistryObject<Item> SIREN_CHARM;
+    public static final RegistryObject<Item> SIREN_CHARM;
 
     public static final RegistryObject<Item> CURIO_BAG;
     public static final RegistryObject<Item> FIRE_FOCUS;
@@ -78,14 +81,14 @@ public class ModRegistry {
     static {
 
         HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
+        WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
 
-        //SIREN_CHARM = ITEMS.register("siren_charm", () -> new Item(addTabProp()));
+        SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
 
         SIREN_ENTITY = addEntity("siren_entity", 500, 800,0.4F,0.8F, false, MermaidEntity::new, MobCategory.WATER_CREATURE );
         SIREN_FAMILIAR = registerEntity("siren_familiar", 500, 800, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
 
         SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
-
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, MobCategory.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
 
@@ -120,7 +123,7 @@ public class ModRegistry {
                     .sized(width, height)
                     .build(MODID + ":" + name);
         }
-        //ITEMS.register("spawn_" + name, () -> new ForgeSpawnEggItem(() -> type, color1, color2, addTabProp()));
+        ITEMS.register("spawn_" + name, () -> new ForgeSpawnEggItem(() -> type, color1, color2, addTabProp()));
         return ENTITIES.register(name, () -> type);
     }
 

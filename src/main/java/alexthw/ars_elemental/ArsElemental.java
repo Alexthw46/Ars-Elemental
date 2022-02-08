@@ -43,8 +43,9 @@ public class ArsElemental
 
 
         ModRegistry.registerRegistries(modbus);
-        //ArsNouveauRegistry.registerGlyphs();
-        //ExampleConfig.registerGlyphConfigs();
+        ArsNouveauRegistry.registerGlyphs();
+        ArsNouveauRegistry.registerFamiliars();
+        GlyphConfigs.registerGlyphConfigs();
         modbus.addListener(this::setup);
         modbus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.register(this);

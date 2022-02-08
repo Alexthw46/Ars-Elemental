@@ -13,8 +13,8 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class MermaidFamiliar extends FamiliarEntity implements ISpellCastListener {
-    public MermaidFamiliar(EntityType<? extends PathfinderMob> p_i48575_1_, Level p_i48575_2_) {
-        super(p_i48575_1_, p_i48575_2_);
+    public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
+        super(entityType, level);
     }
 
     public void onModifier(SpellModifierEvent event) {
