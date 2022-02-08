@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.mixin;
 
+import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.items.ElementalFocus;
-import com.google.common.base.MoreObjects;
 import com.hollingsworth.arsnouveau.api.spell.AbstractAugment;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
@@ -29,6 +29,7 @@ public class EffectLaunchMixin {
 
     @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false)
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
+        if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
 
         if (rayTraceResult.getEntity() instanceof LivingEntity living && (ElementalFocus.hasFocus(world, shooter) == ModRegistry.AIR_FOCUS.get()) && (spellStats.hasBuff(AugmentExtendTime.INSTANCE) || spellStats.hasBuff(AugmentDurationDown.INSTANCE))){
             living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, (int) (50 * (1 + spellStats.getDurationMultiplier())), (int) spellStats.getAmpMultiplier()/2) );
