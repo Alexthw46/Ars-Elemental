@@ -1,6 +1,7 @@
-package alexthw.ars_elemental;
+package alexthw.ars_elemental.datagen;
 
-import com.hollingsworth.arsnouveau.ArsNouveau;
+import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.ModRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -40,6 +41,11 @@ public class Datagen {
             gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
             gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
 
+            gen.addProvider(new ANProviders.ImbuementProvider(gen));
+            gen.addProvider(new ANProviders.GlyphProvider(gen));
+            gen.addProvider(new ANProviders.EnchantingAppProvider(gen));
+
+            gen.addProvider(new ANProviders.PatchouliProvider(gen));
         }
 
     public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> pred) {
@@ -147,4 +153,6 @@ public class Datagen {
             simpleBlock(blockRegistryObject.get());
         }
     }
+
+
 }

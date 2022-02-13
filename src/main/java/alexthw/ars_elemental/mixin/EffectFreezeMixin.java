@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFreeze;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.fml.common.Mod;
@@ -23,6 +24,9 @@ public class EffectFreezeMixin {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
             if (ElementalFocus.hasFocus(world, shooter) == ModRegistry.WATER_FOCUS.get()) {
+                if (living instanceof Skeleton skel){
+                    skel.setFreezeConverting(true);
+                }
                 living.setIsInPowderSnow(true);
                 living.setTicksFrozen((int) (living.getTicksFrozen() + 60 * spellStats.getAmpMultiplier()));
                 living.invulnerableTime = 0;

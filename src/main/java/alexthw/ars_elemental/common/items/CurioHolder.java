@@ -67,4 +67,10 @@ public class CurioHolder extends Item {
     public static ItemInventory getInventory(ItemStack stack) {
         return new ItemInventory(stack, 27);
     }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return oldStack.getItem() != newStack.getItem();
+    }
+
 }

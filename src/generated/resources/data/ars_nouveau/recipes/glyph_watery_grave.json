@@ -4,17 +4,17 @@
   "inputItems": [
     {
       "item": {
-        "item": "ars_nouveau:water_essence"
-      }
-    },
-    {
-      "item": {
         "item": "minecraft:kelp"
       }
     },
     {
       "item": {
-        "item": "minecraft:prismarine"
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
       }
     }
   ],

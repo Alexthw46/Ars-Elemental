@@ -26,9 +26,9 @@
 	"ars_elemental.water_focus.description" : "The focus of water grant mana regen bonus when the wearer is in water or rain and boost swimming speed.$(br)It also enhances the Freeze glyph to cause Freezing, dealing damage to fire mobs. (It might require amplify or dual cast)",
 	"ars_elemental.air_focus.description" : "The focus of air grant mana regen bonus while the wearer is falling from high places or standing over Y 200.",
 	"ars_elemental.earth_focus.description" : "The focus of earth grant the wearer mana regen bonus while under Y 0, high knockback resistance and improved healing abilities.",
-	"ars_elemental.necrotic_focus.description" :"By imbuing the focus of summoning with evil energy, you can corrupt its powers and summons. Touch and projectile, instead of self and orbit, spells casted with this focus will be copied by the summons at the cost of halving their remaining time. This effect doesn't apply to decoys.",
-	"ars_elemental.necrotic_focus.summons": "After some study from various necromancers, summoned steeds become skeletal and able to walk underwater. Wolves and Vexes becomes stronger, more aggressive, with darker colors. When a summon dies, it will wither who killed it.",
-	"ars_elemental.curio_bag.description":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around rings, amulets, foci, mirrors...and the dominion wand!",
+	"ars_nouveau.page1.necrotic_focus" :"By imbuing the focus of summoning with evil energy, you can corrupt its powers and summons. Touch and projectile, instead of self and orbit, spells casted with this focus will be copied by the summons at the cost of halving their remaining time. This effect doesn't apply to decoys.",
+	"ars_nouveau.page2.necrotic_focus": "After some study from various necromancers, summoned steeds become skeletal and able to walk underwater. Wolves and Vexes becomes stronger, more aggressive, with darker colors. When a summon dies, it will wither who killed it.",
+	"ars_elemental.page.curio_bag":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around belts, rings, amulets, foci, potion flasks, mirrors...and the dominion wand!",
 
 	"item.ars_nouveau.familiar_siren" : "Bound Script: Siren - WIP",
 	"item.ars_nouveau.glyph_watery_grave" : "Glyph of Watery Grave",
@@ -36,6 +36,6 @@
 	"ars_nouveau.glyph_desc.watery_grave" : "This spell dooms a creature to drown. Reduces the target air supply and causes drowning damage when depleted. Similar to gravity the target will sunken down if in water, can be augmented with ExtendTime.",
 	"item.ars_nouveau.glyph_conjure_dirt" : "Glyph of Conjure Terrain",
 	"ars_nouveau.glyph_name.conjure_dirt" : "Conjure Terrain",
-	"ars_nouveau.glyph_desc.conjure_dirt" : "Places Dirt, if augmented with Amplify it will place Cobblestone. Can be augmented with AoE and Pierce."
+	"ars_nouveau.glyph_desc.conjure_dirt" : "Places Dirt, if augmented with Amplify it will place Cobblestone, if followed by Crush it will place to Sand or Sandstone. Can be augmented with AoE and Pierce."
 
 }

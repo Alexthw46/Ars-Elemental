@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.mixin.ZombieMixin;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
@@ -10,6 +11,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -40,6 +43,10 @@ public class EffectWaterGrave extends AbstractEffect {
                 double dy = Math.min(-1.0D, delta.y - 0.05D);
                 living.setDeltaMovement(delta.x, dy, delta.z);
             }
+            if (living instanceof Zombie zombie && ! (living instanceof Drowned)){
+                ((ZombieMixin)zombie).callStartUnderWaterConversion(10);
+                return;
+            }
             int airSupply = living.getAirSupply();
             if (airSupply <= 0 || living.getMobType() == MobType.WATER) {
                 double damage = DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier();
@@ -55,11 +62,6 @@ public class EffectWaterGrave extends AbstractEffect {
     @Override
     public int getDefaultManaCost() {
         return 25;
-    }
-
-    @Override
-    public Item getCraftingReagent() {
-        return Items.PRISMARINE_CRYSTALS;
     }
 
     @Override

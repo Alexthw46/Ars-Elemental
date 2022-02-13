@@ -1,0 +1,34 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "reagent": [
+    {
+      "item": "ars_nouveau:summon_focus"
+    }
+  ],
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "minecraft:wither_rose"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:wither_rose"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:wither_skeleton_skull"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:conjuration_essence"
+      }
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:necrotic_focus"
+  },
+  "sourceCost": 0
+}

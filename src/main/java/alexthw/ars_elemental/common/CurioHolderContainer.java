@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.items.CurioHolder;
 import com.hollingsworth.arsnouveau.api.item.ArsNouveauCurio;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.common.items.DominionWand;
+import com.hollingsworth.arsnouveau.common.items.PotionFlask;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosCapability;
 
@@ -35,7 +37,8 @@ public class CurioHolderContainer extends AbstractContainerMenu {
                 addSlot(new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
                     @Override
                     public boolean mayPlace(ItemStack stack) {
-                        return stack.getItem() instanceof ISpellModifierItem || stack.getItem() instanceof DominionWand || stack.getItem() instanceof ArsNouveauCurio || stack.getCapability(CuriosCapability.ITEM).isPresent();
+                        Item item = stack.getItem();
+                        return item instanceof ISpellModifierItem || item instanceof DominionWand || item instanceof ArsNouveauCurio || item instanceof PotionFlask || stack.getCapability(CuriosCapability.ITEM).isPresent();
                     }
 
                 });
@@ -94,4 +97,5 @@ public class CurioHolderContainer extends AbstractContainerMenu {
 
         return copy;
     }
+
 }

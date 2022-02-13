@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.common.mob_effects;
 
 import alexthw.ars_elemental.ModRegistry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -9,8 +8,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
-
-import static alexthw.ars_elemental.Datagen.prefix;
 
 public class HellFireEffect extends MobEffect implements IForgeMobEffect {
 

@@ -9,7 +9,8 @@
     "EffectLaunchMixin",
     "EffectWaterMixin",
     "FlareMixin",
-    "LightningMixin"
+    "LightningMixin",
+    "ZombieMixin"
   ],
   "minVersion": "0.8"
 }

@@ -5,6 +5,7 @@ import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -27,7 +28,20 @@ public class EffectConjureDirt extends AbstractEffect {
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
-        BlockState toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.COBBLESTONE.defaultBlockState() : Blocks.DIRT.defaultBlockState();
+        BlockState toPlace = Blocks.DIRT.defaultBlockState();
+
+        if (spellStats.hasBuff(AugmentAmplify.INSTANCE)) toPlace = Blocks.COBBLESTONE.defaultBlockState();
+        if (spellContext.hasNextPart()) {
+            while (spellContext.hasNextPart()){
+                AbstractSpellPart next = spellContext.nextPart();
+                if (next instanceof AbstractAugment) continue;
+                if (next instanceof AbstractEffect && next == EffectCrush.INSTANCE){
+                    toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
+                    spellContext.setCanceled(true);
+                }
+                break;
+            }
+        }
         GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, toPlace);
     }
 
@@ -45,11 +59,6 @@ public class EffectConjureDirt extends AbstractEffect {
     @Override
     public String getBookDescription() {
         return "Places dirt at a location. Can place more blocks if augmented with AoE or Pierce";
-    }
-
-    @Override
-    public Item getCraftingReagent() {
-        return Items.DIRT;
     }
 
     @Override

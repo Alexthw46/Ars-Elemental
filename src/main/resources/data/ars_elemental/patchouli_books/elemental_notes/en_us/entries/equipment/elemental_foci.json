@@ -29,15 +29,15 @@
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
-      "recipe": "ars_elemental:fire_focus"
+      "recipe": "ars_elemental:imbuement_fire_focus"
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
-      "recipe": "ars_elemental:water_focus"
+      "recipe": "ars_elemental:imbuement_water_focus"
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
-      "recipe": "ars_elemental:air_focus"
+      "recipe": "ars_elemental:imbuement_air_focus"
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
