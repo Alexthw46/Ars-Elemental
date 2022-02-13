@@ -8,13 +8,12 @@
 	"item.ars_elemental.siren_charm": "Siren Charm - WIP",
 	"item.ars_elemental.curio_bag": "Trinkets Pouch",
 
-	"item.ars_elemental.spawn_siren_entity": "Siren Spawn Egg",
-
 	"entity.ars_elemental.summon_skelehorse": "Summoned Skeletal Steed",
 	"entity.ars_elemental.summon_direwolf": "Summoned Direwolf",
 	"entity.ars_elemental.summon_vhex": "Summoned Vhex",
 	"entity.ars_elemental.siren_entity": "Siren",
 	"entity.ars_elemental.siren_familiar": "Siren Familiar",
+
 
 	"curios.modifiers.an_focus": "While in spell focus slot:",
 
@@ -31,6 +30,8 @@
 	"ars_elemental.page.curio_bag":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around belts, rings, amulets, foci, potion flasks, mirrors...and the dominion wand!",
 
 	"item.ars_nouveau.familiar_siren" : "Bound Script: Siren - WIP",
+	"ars_nouveau.familiar_name.siren": "Siren - WIP do not summon",
+	"ars_nouveau.familiar_desc.siren": "Siren Familiar - WIP",
 	"item.ars_nouveau.glyph_watery_grave" : "Glyph of Watery Grave",
 	"ars_nouveau.glyph_name.watery_grave" : "Watery Grave",
 	"ars_nouveau.glyph_desc.watery_grave" : "This spell dooms a creature to drown. Reduces the target air supply and causes drowning damage when depleted. Similar to gravity the target will sunken down if in water, can be augmented with ExtendTime.",

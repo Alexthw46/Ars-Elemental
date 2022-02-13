@@ -8,11 +8,10 @@ import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
-import com.hollingsworth.arsnouveau.api.util.ManaUtil;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -25,7 +24,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
@@ -119,20 +120,24 @@ public class ElementalFocus extends Item implements ISpellModifierItem,ICurioIte
         if (player.tickCount % 20 == 0)
         switch (getSchool().getId()){
             case "fire" -> {
-                if (player.isOnFire() || player.isInLava()) player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,1));
+                if (player.isOnFire() || player.isInLava()) player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,200 ,1));
             }
             case "water" -> {
-                if (player.isInWaterRainOrBubble())
-                    player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,1));
-                if (player.isSwimming()) player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE,200 ,1));
-
+                if (player.isInWaterRainOrBubble()) {
+                    if (player.isSwimming()) {
+                        player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE,200 ,1));
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,1));
+                    }else{
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
+                    }
+                }
             }
             case "air" ->{
                 if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
                     player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
             }
             case "earth" ->{
-                if (player.getY() < 1)
+                if (player.getY() < 0)
                     player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
             }
         }
@@ -143,13 +148,32 @@ public class ElementalFocus extends Item implements ISpellModifierItem,ICurioIte
 
 
     @Override
+    public void onEquipFromUse(SlotContext slotContext, ItemStack stack) {
+        LivingEntity livingEntity = slotContext.entity();
+        ICurio.SoundInfo soundInfo = getEquipSound(new SlotContext("", livingEntity, 0, false, true),stack);
+        livingEntity.level.playSound(null, livingEntity.blockPosition(), soundInfo.getSoundEvent(),
+                livingEntity.getSoundSource(), soundInfo.getVolume(), soundInfo.getPitch());
+    }
+
+    @NotNull
+    @Override
+    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+        return switch (element.getId()){
+            case "fire" -> new ICurio.SoundInfo(SoundEvents.FIRE_AMBIENT,1,1);
+            case "water" -> new ICurio.SoundInfo(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT,1,1);
+            case "earth" -> new ICurio.SoundInfo(SoundEvents.ROOTED_DIRT_BREAK,1,1);
+            case "air" -> new ICurio.SoundInfo(SoundEvents.LIGHTNING_BOLT_THUNDER,1,1);
+            default ->  ICurioItem.super.getEquipSound(slotContext, stack);
+        };
+    }
+
+    @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         if (element.equals(SpellSchools.ELEMENTAL_EARTH)){
                 Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
                 map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(ATTR_ID, ArsElemental.MODID + ":earth_focus", 0.3f, AttributeModifier.Operation.ADDITION));
                 return map;
         }
-
         return ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
     }
 }

@@ -167,7 +167,7 @@ public class ANProviders {
 
         }
 
-        private Path getRecipePath(Path pathIn, String str){
+        protected Path getRecipePath(Path pathIn, String str){
             return pathIn.resolve("data/ars_elemental/recipes/" + str + ".json");
         }
 

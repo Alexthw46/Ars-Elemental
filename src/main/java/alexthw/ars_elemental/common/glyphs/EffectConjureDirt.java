@@ -6,9 +6,8 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectSmelt;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,9 +34,16 @@ public class EffectConjureDirt extends AbstractEffect {
             while (spellContext.hasNextPart()){
                 AbstractSpellPart next = spellContext.nextPart();
                 if (next instanceof AbstractAugment) continue;
-                if (next instanceof AbstractEffect && next == EffectCrush.INSTANCE){
-                    toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
-                    spellContext.setCanceled(true);
+                if (next instanceof AbstractEffect) {
+                    if (next == EffectCrush.INSTANCE) {
+                        toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
+                        spellContext.setCanceled(true);
+                    } else if (next == EffectSmelt.INSTANCE && spellStats.hasBuff(AugmentAmplify.INSTANCE)) {
+                        toPlace = Blocks.STONE.defaultBlockState();
+                        Spell spell = spellContext.getSpell();
+                        spell.setCost((int) (spell.getCastingCost() * 1.5F));
+                        spellContext.setCanceled(true);
+                    }
                 }
                 break;
             }

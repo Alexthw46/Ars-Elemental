@@ -11,6 +11,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 public class MermaidFamiliar extends FamiliarEntity implements ISpellCastListener {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
@@ -33,8 +36,18 @@ public class MermaidFamiliar extends FamiliarEntity implements ISpellCastListene
         }
     }
 
+    @Override
+    public PlayState walkPredicate(AnimationEvent event) {
+        if (event.isMoving()) {
+           //event.getController().setAnimation(new AnimationBuilder().addAnimation("run"));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.STOP;
+    }
+
+
     public @NotNull EntityType<?> getType() {
-        return ModRegistry.SIREN_FAMILIAR.get();
+        return ModRegistry.SIREN_ENTITY.get();
     }
 
 }
