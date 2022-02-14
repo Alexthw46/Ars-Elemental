@@ -64,7 +64,7 @@ public class EffectConjureDirt extends AbstractEffect {
 
     @Override
     public String getBookDescription() {
-        return "Places dirt at a location. Can place more blocks if augmented with AoE or Pierce";
+        return "Places terrain block at a location. Can place more blocks if augmented with AoE or Pierce";
     }
 
     @Override
@@ -72,9 +72,4 @@ public class EffectConjureDirt extends AbstractEffect {
         return SpellTier.ONE;
     }
 
-    @Nonnull
-    @Override
-    public Set<SpellSchool> getSchools() {
-        return setOf(SpellSchools.CONJURATION,SpellSchools.ELEMENTAL_EARTH);
-    }
 }

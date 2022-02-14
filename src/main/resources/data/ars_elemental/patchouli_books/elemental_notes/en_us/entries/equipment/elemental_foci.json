@@ -41,7 +41,7 @@
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
-      "recipe": "ars_elemental:earth_focus"
+      "recipe": "ars_elemental:imbuement_earth_focus"
     }
   ]
 }

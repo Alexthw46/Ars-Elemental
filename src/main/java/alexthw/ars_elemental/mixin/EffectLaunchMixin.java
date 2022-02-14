@@ -40,12 +40,4 @@ public class EffectLaunchMixin {
 
     }
 
-    @Inject(method = "getCompatibleAugments", at = {@At("RETURN")}, remap = false, cancellable = true)
-    public void getCompatibleAugments(CallbackInfoReturnable<Set<AbstractAugment>> cir) {
-        Set<AbstractAugment> augments = new HashSet<>(cir.getReturnValue());
-        augments.add(AugmentExtendTime.INSTANCE);
-        augments.add(AugmentDurationDown.INSTANCE);
-        cir.setReturnValue(Collections.unmodifiableSet(augments));
-    }
-
 }

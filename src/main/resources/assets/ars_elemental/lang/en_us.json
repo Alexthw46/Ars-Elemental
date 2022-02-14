@@ -4,7 +4,7 @@
 	"item.ars_elemental.water_focus": "Focus of Water",
 	"item.ars_elemental.air_focus": "Focus of Air",
 	"item.ars_elemental.earth_focus": "Focus of Earth",
-	"item.ars_elemental.necrotic_focus": "Corrupted Focus of Summoning",
+	"item.ars_elemental.necrotic_focus": "Focus of Corruption",
 	"item.ars_elemental.siren_charm": "Siren Charm - WIP",
 	"item.ars_elemental.curio_bag": "Trinkets Pouch",
 
@@ -14,20 +14,25 @@
 	"entity.ars_elemental.siren_entity": "Siren",
 	"entity.ars_elemental.siren_familiar": "Siren Familiar",
 
-
+	"key.ars_elemental.open_pouch" : "[Elemental] Open trinkets pouch",
 	"curios.modifiers.an_focus": "While in spell focus slot:",
+	"curios.identifier.bundle": "Bundle",
 
 	"effect.ars_elemental.watery_grave": "Watery Grave",
 	"effect.ars_elemental.hellfire": "Hellfire Burn",
 
 	"ars_elemental.elemental_foci" : "If you imbue a crystal with elemental energy and the magical power of the chimera, you can attune it to one of the Elemental Schools. The resulting spell focus will amplify the glyphs of that school and reduce the cost of spells that contains them. As a drawback of focusing on one element, glyphs of the other three will be dampened.",
-	"ars_elemental.fire_focus.description" : "The focus of fire grant mana regen bonus when the wearer is on fire or in lava and power-up the Ignite glyph, inflicting Hellfire burn to target.$(br)This debuff will reduce healing and allows flare to inflict damage and spread.",
-	"ars_elemental.water_focus.description" : "The focus of water grant mana regen bonus when the wearer is in water or rain and boost swimming speed.$(br)It also enhances the Freeze glyph to cause Freezing, dealing damage to fire mobs. (It might require amplify or dual cast)",
-	"ars_elemental.air_focus.description" : "The focus of air grant mana regen bonus while the wearer is falling from high places or standing over Y 200.",
-	"ars_elemental.earth_focus.description" : "The focus of earth grant the wearer mana regen bonus while under Y 0, high knockback resistance and improved healing abilities.",
-	"ars_nouveau.page1.necrotic_focus" :"By imbuing the focus of summoning with evil energy, you can corrupt its powers and summons. Touch and projectile, instead of self and orbit, spells casted with this focus will be copied by the summons at the cost of halving their remaining time. This effect doesn't apply to decoys.",
-	"ars_nouveau.page2.necrotic_focus": "After some study from various necromancers, summoned steeds become skeletal and able to walk underwater. Wolves and Vexes becomes stronger, more aggressive, with darker colors. When a summon dies, it will wither who killed it.",
-	"ars_elemental.page.curio_bag":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around belts, rings, amulets, foci, potion flasks, mirrors...and the dominion wand!",
+	"ars_elemental.page1.fire_focus" : "The focus of fire amplify and discount fire school spells but dampen the other three. It also grant Mana Regen II when the wearer is on fire or in lava.",
+	"ars_elemental.page2.fire_focus" :"This focus empower Ignite, allowing to inflict Hellfire Burn, reducing healing and allows flare to inflict damage and spread even on fire resistant mobs. Ignite + Evaporate combo will sublimate Ice.",
+	"ars_elemental.page1.water_focus" : "The focus of water amplify and discount water school spells but dampen the other three. It also grant Mana Regen I when the wearer is in water or rain and Mana Regen II and Dolphin Grace while swimming.",
+	"ars_elemental.page2.water_focus" :"This focus empower Freeze, adding Freezing seconds to the target (it might take an additional amplify to start damage) or combo with Conjure Water to create Ice.",
+	"ars_elemental.page1.air_focus" : "The focus of air amplify and discount air school spells but dampen the other three. It also grant Mana Regen I while the wearer stand over Y 200 or is falling for long time.",
+	"ars_elemental.page2.air_focus" : "This focus empower Lauch, changing it to apply Levitate when augmented with ExtendTime.",
+	"ars_elemental.page1.earth_focus" : "The focus of earth amplify and discount earth school spells but dampen the other three. It also grant the wearer Mana Regen I while under Y 0, knockback resistance and boost by 50% natural and instantaneous healing.",
+	"ars_elemental.page2.earth_focus" : "Currently, it does not allow special glyph combo or empowering",
+	"ars_elemental.page1.necrotic_focus" :"By imbuing the focus of summoning with evil energy, you can corrupt its powers and summons. Touch and projectile, instead of self and orbit, spells casted with this focus will be copied by the summons at the cost of halving their remaining time. This effect doesn't apply to decoys.",
+	"ars_elemental.page2.necrotic_focus": "After some study from various necromancers, summoned steeds become skeletal and able to walk underwater. Wolves and Vexes becomes stronger, more aggressive, with darker colors. When a summon dies, it will wither who killed it.",
+	"ars_elemental.page.curio_bag":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around belts, rings, amulets, foci, potion flasks, mirrors and the dominion wand! You can also open it with J (default key) while in the hotbar or in a curio slot.",
 
 	"item.ars_nouveau.familiar_siren" : "Bound Script: Siren - WIP",
 	"ars_nouveau.familiar_name.siren": "Siren - WIP do not summon",
@@ -37,6 +42,6 @@
 	"ars_nouveau.glyph_desc.watery_grave" : "This spell dooms a creature to drown. Reduces the target air supply and causes drowning damage when depleted. Similar to gravity the target will sunken down if in water, can be augmented with ExtendTime.",
 	"item.ars_nouveau.glyph_conjure_dirt" : "Glyph of Conjure Terrain",
 	"ars_nouveau.glyph_name.conjure_dirt" : "Conjure Terrain",
-	"ars_nouveau.glyph_desc.conjure_dirt" : "Places Dirt, if augmented with Amplify it will place Cobblestone, if followed by Crush it will place to Sand or Sandstone. Can be augmented with AoE and Pierce."
+	"ars_nouveau.glyph_desc.conjure_dirt" : "Places Dirt or other terrain blocks. Can be augmented with AoE and Pierce to place more blocks, Amplify to place cobblestone or one of the following combinations (Note: if one of these triggers, the spell will end after the conjure terrain effect). If augmented with Amplify and followed by Smelt, it will place Stone. If followed by Crush it will place Sand or, if amplified, Sandstone."
 
 }

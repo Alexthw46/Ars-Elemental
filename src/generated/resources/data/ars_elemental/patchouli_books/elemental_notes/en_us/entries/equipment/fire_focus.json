@@ -1,0 +1,19 @@
+{
+  "name": "item.ars_elemental.fire_focus",
+  "icon": "ars_elemental:fire_focus",
+  "category": "ars_nouveau:equipment",
+  "pages": [
+    {
+      "text": "ars_elemental.page1.fire_focus",
+      "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_elemental:imbuement_fire_focus",
+      "type": "ars_nouveau:imbuement_recipe"
+    },
+    {
+      "text": "ars_elemental.page2.fire_focus",
+      "type": "patchouli:text"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "item.ars_elemental.earth_focus",
+  "icon": "ars_elemental:earth_focus",
+  "category": "ars_nouveau:equipment",
+  "pages": [
+    {
+      "text": "ars_elemental.page1.earth_focus",
+      "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_elemental:imbuement_earth_focus",
+      "type": "ars_nouveau:imbuement_recipe"
+    },
+    {
+      "text": "ars_elemental.page2.earth_focus",
+      "type": "patchouli:text"
+    }
+  ]
+}

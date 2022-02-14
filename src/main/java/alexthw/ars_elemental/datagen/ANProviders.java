@@ -16,6 +16,7 @@ import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
+import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.Recipes;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;
@@ -41,13 +42,8 @@ public class ANProviders {
 
     public static class GlyphProvider extends GlyphRecipeProvider {
 
-        private final DataGenerator generator;
-        private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
-        List<GlyphRecipe> recipes = new ArrayList<>();
-
         public GlyphProvider(DataGenerator generatorIn) {
             super(generatorIn);
-            this.generator = generatorIn;
         }
 
         @Override
@@ -65,10 +61,6 @@ public class ANProviders {
 
         }
 
-        public static Path getScribeGlyphPath(Path pathIn, Item glyph) {
-            return pathIn.resolve("data/ars_nouveau/recipes/" + glyph.getRegistryName().getPath() + ".json");
-        }
-
         @Override
         public String getName() {
             return "Ars Elemental Glyph Recipes";
@@ -77,15 +69,12 @@ public class ANProviders {
 
     public static class EnchantingAppProvider extends ApparatusRecipeProvider{
 
-        private final DataGenerator generator;
-        private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
+        List<EnchantingApparatusRecipe> recipes = new ArrayList<>();
 
         public EnchantingAppProvider(DataGenerator generatorIn) {
             super(generatorIn);
-            this.generator = generatorIn;
         }
 
-        List<EnchantingApparatusRecipe> recipes = new ArrayList<>();
         @Override
         public void run(HashCache cache) throws IOException {
 
@@ -108,23 +97,20 @@ public class ANProviders {
 
         }
 
-        private static Path getRecipePath(Path pathIn, String str){
+        protected static Path getRecipePath(Path pathIn, String str){
             return pathIn.resolve("data/ars_elemental/recipes/" + str + ".json");
         }
+
         @Override
         public String getName() {
             return "Ars Elemental Apparatus";
         }
     }
 
-    public static class ImbuementProvider implements DataProvider{
-
-        private final DataGenerator generator;
-        List<ImbuementRecipe> recipes = new ArrayList<>();
-        private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
+    public static class ImbuementProvider extends ImbuementRecipeProvider{
 
         public ImbuementProvider(DataGenerator generatorIn){
-            this.generator = generatorIn;
+            super(generatorIn);
         }
 
         @Override
@@ -159,7 +145,7 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
             );
 
-            Path output = this.generator.getOutputFolder();
+            Path output = generator.getOutputFolder();
             for(ImbuementRecipe g : recipes){
                 Path path = getRecipePath(output, g.getId().getPath());
                 DataProvider.save(GSON, cache,  g.asRecipe(), path);
@@ -179,20 +165,10 @@ public class ANProviders {
     }
 
     public static class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider {
-        private final DataGenerator generator;
 
         public PatchouliProvider(DataGenerator generatorIn) {
             super(generatorIn);
-            this.generator = generatorIn;
         }
-
-        private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
-        public record PatchouliPage(PatchouliBuilder builder, Path path) {
-            public JsonObject build(){
-                return builder.build();
-            }
-        }
-        public List<PatchouliPage> pages = new ArrayList<>();
 
         @Override
         public void run(HashCache cache) throws IOException {
@@ -202,28 +178,46 @@ public class ANProviders {
 
             addBasicItem(ModRegistry.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModRegistry.CURIO_BAG.get()));
             addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.NECRO_FOCUS.get())
-                            .withLocalizedText()
+                            .withIcon(ModRegistry.NECRO_FOCUS.get())
+                            .withTextPage("ars_elemental.page1.necrotic_focus")
                             .withPage(new ApparatusPage(ModRegistry.NECRO_FOCUS.get()))
+                            .withTextPage("ars_elemental.page2.necrotic_focus")
                     ,getPath(EQUIPMENT,"necrotic_focus")
             );
 
-            /* too painful
-            addPage(new PatchouliBuilder(EQUIPMENT, "elemental_foci")
+            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.FIRE_FOCUS.get())
                             .withIcon(ModRegistry.FIRE_FOCUS.get())
-                            .withLocalizedText()
-                            .withPage(new ImbuementPage(ModRegistry.FIRE_FOCUS.get()))
-                    ,getPath(EQUIPMENT,"elemental_foci")
+                            .withTextPage("ars_elemental.page1.fire_focus")
+                            .withPage(ImbuementPage(ModRegistry.FIRE_FOCUS.get()))
+                            .withTextPage("ars_elemental.page2.fire_focus")
+                    ,getPath(EQUIPMENT,"fire_focus")
             );
-            */
+            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.WATER_FOCUS.get())
+                            .withIcon(ModRegistry.WATER_FOCUS.get())
+                            .withTextPage("ars_elemental.page1.water_focus")
+                            .withPage(ImbuementPage(ModRegistry.WATER_FOCUS.get()))
+                            .withTextPage("ars_elemental.page2.water_focus")
+                    ,getPath(EQUIPMENT,"water_focus")
+            );
+            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.AIR_FOCUS.get())
+                            .withIcon(ModRegistry.AIR_FOCUS.get())
+                            .withTextPage("ars_elemental.page1.air_focus")
+                            .withPage(ImbuementPage(ModRegistry.AIR_FOCUS.get()))
+                            .withTextPage("ars_elemental.page2.air_focus")
+                    ,getPath(EQUIPMENT,"air_focus")
+            );
+            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.EARTH_FOCUS.get())
+                            .withIcon(ModRegistry.EARTH_FOCUS.get())
+                            .withTextPage("ars_elemental.page1.earth_focus")
+                            .withPage(ImbuementPage(ModRegistry.EARTH_FOCUS.get()))
+                            .withTextPage("ars_elemental.page2.earth_focus")
+                    ,getPath(EQUIPMENT,"earth_focus")
+            );
 
             for(PatchouliPage patchouliPage : pages){
-                DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path);
+                DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
             }
-        }
 
-        @Override
-        public void addPage(PatchouliBuilder builder, Path path){
-            this.pages.add(new PatchouliPage(builder, path));
         }
 
         @Override
@@ -235,21 +229,6 @@ public class ANProviders {
             this.pages.add(new PatchouliPage(builder, getPath(category, item.asItem().getRegistryName().getPath())));
         }
 
-        @Override
-        public void addGlyphPage(AbstractSpellPart spellPart){
-            ResourceLocation category = switch (spellPart.getTier().value) {
-                case 1 -> GLYPHS_1;
-                case 2 -> GLYPHS_2;
-                default -> GLYPHS_3;
-            };
-            PatchouliBuilder builder = new PatchouliBuilder(category, spellPart.getName())
-                    .withName("ars_nouveau.glyph_name." + spellPart.getId())
-                    .withIcon(ArsNouveau.MODID + ":" + spellPart.getItemID())
-                    .withSortNum(spellPart instanceof AbstractCastMethod ? 1 : spellPart instanceof AbstractEffect ? 2 : 3)
-                    .withPage(new TextPage("ars_nouveau.glyph_desc." + spellPart.getId()))
-                    .withPage(new GlyphPressPage(spellPart));
-            this.pages.add(new PatchouliPage(builder, getPath(category, "glyph_" + spellPart.getId())));
-        }
         /**
          * Gets a name for this provider, to use in logging.
          */
@@ -258,8 +237,14 @@ public class ANProviders {
             return "ArsElemental Patchouli Datagen";
         }
 
+        @Override
         public Path getPath(ResourceLocation category, String fileName){
             return this.generator.getOutputFolder().resolve("data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/" + category.getPath() +"/" + fileName + ".json");
         }
+
+        ImbuementPage ImbuementPage(ItemLike item){
+            return new ImbuementPage("ars_elemental:imbuement_" + item.asItem().getRegistryName().getPath());
+        }
+
     }
 }

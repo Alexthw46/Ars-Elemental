@@ -35,7 +35,7 @@ public class Events {
                         }
                     }
                     case "air" -> {
-                        if (living.invulnerableTime > 0 && event.getSource().isMagic()) {
+                        if (living.invulnerableTime > 0 && (event.getSource().isMagic() || event.getSource().isFall())) {
                             living.invulnerableTime = 0;
                         }
                     }

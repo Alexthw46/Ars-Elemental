@@ -37,8 +37,7 @@ public class CurioHolderContainer extends AbstractContainerMenu {
                 addSlot(new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
                     @Override
                     public boolean mayPlace(ItemStack stack) {
-                        Item item = stack.getItem();
-                        return item instanceof ISpellModifierItem || item instanceof DominionWand || item instanceof ArsNouveauCurio || item instanceof PotionFlask || stack.getCapability(CuriosCapability.ITEM).isPresent();
+                        return CurioHolder.canStore(stack);
                     }
 
                 });

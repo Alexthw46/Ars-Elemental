@@ -30,10 +30,7 @@ import static alexthw.ars_elemental.ModRegistry.ITEMS;
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Datagen {
 
-    public static ResourceLocation prefix(String path){
-        return new ResourceLocation(ArsElemental.MODID,path);
-    }
-        @SubscribeEvent
+    @SubscribeEvent
         public static void gatherData(GatherDataEvent event) {
             DataGenerator gen = event.getGenerator();
             ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
@@ -97,28 +94,28 @@ public class Datagen {
 
             private void handheldItem(RegistryObject<Item> i) {
                 String name = Registry.ITEM.getKey(i.get()).getPath();
-                withExistingParent(name, HANDHELD).texture("layer0", prefix("item/" + name));
+                withExistingParent(name, HANDHELD).texture("layer0", ArsElemental.prefix("item/" + name));
             }
 
             private void generatedItem(RegistryObject<Item> i) {
                 String name = Registry.ITEM.getKey(i.get()).getPath();
-                withExistingParent(name, GENERATED).texture("layer0", prefix("item/" + name));
+                withExistingParent(name, GENERATED).texture("layer0", ArsElemental.prefix("item/" + name));
             }
 
             private void blockGeneratedItem(RegistryObject<Item> i) {
                 String name = Registry.ITEM.getKey(i.get()).getPath();
-                withExistingParent(name, GENERATED).texture("layer0", prefix("block/" + name));
+                withExistingParent(name, GENERATED).texture("layer0", ArsElemental.prefix("block/" + name));
             }
 
             private void blockItem(RegistryObject<Item> i) {
                 String name = Registry.ITEM.getKey(i.get()).getPath();
-                getBuilder(name).parent(new ModelFile.UncheckedModelFile(prefix("block/" + name)));
+                getBuilder(name).parent(new ModelFile.UncheckedModelFile(ArsElemental.prefix("block/" + name)));
             }
 
             private void fenceBlockItem(RegistryObject<Item> i) {
                 String name = Registry.ITEM.getKey(i.get()).getPath();
                 String baseName = name.substring(0, name.length() - 6);
-                fenceInventory(name, prefix("block/" + baseName));
+                fenceInventory(name, ArsElemental.prefix("block/" + baseName));
             }
 
     }
@@ -140,13 +137,13 @@ public class Datagen {
         public void slabBlock(RegistryObject<Block> blockRegistryObject) {
             String name = Registry.BLOCK.getKey(blockRegistryObject.get()).getPath();
             String baseName = name.substring(0, name.length() - 5);
-            slabBlock((SlabBlock) blockRegistryObject.get(), prefix(baseName), prefix("block/" + baseName));
+            slabBlock((SlabBlock) blockRegistryObject.get(), ArsElemental.prefix(baseName), ArsElemental.prefix("block/" + baseName));
         }
 
         public void stairsBlock(RegistryObject<Block> blockRegistryObject) {
             String name = Registry.BLOCK.getKey(blockRegistryObject.get()).getPath();
             String baseName = name.substring(0, name.length() - 7);
-            stairsBlock((StairBlock) blockRegistryObject.get(), prefix("block/" + baseName));
+            stairsBlock((StairBlock) blockRegistryObject.get(), ArsElemental.prefix("block/" + baseName));
         }
 
         private void basicBlock(RegistryObject<Block> blockRegistryObject) {

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "minecraft:bundle",
     "ars_elemental:curio_bag"
   ]
 }

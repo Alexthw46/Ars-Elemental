@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 import javax.annotation.Nonnull;
 
-import static alexthw.ars_elemental.datagen.Datagen.prefix;
+import static alexthw.ars_elemental.ArsElemental.prefix;
 
 
 public class CurioHolderScreen extends AbstractContainerScreen<CurioHolderContainer> {

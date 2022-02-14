@@ -84,20 +84,12 @@ public class EffectWaterGrave extends AbstractEffect {
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(
-                AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE,
-                AugmentExtendTime.INSTANCE,
-                AugmentDurationDown.INSTANCE
-        );
+        return getPotionAugments();
     }
 
     @Override
     public String getBookDescription() {
         return "Causes entities to drown. When augmented with Extend Time, they will be dragged down and unable to swim up.";
     }
-    @Nonnull
-    @Override
-    public Set<SpellSchool> getSchools() {
-        return setOf(SpellSchools.ELEMENTAL_WATER);
-    }
+
 }
