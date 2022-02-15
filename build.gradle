@@ -49,6 +49,8 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
+            arg "-mixin.config=ars_elemental.mixins.json"
+
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
@@ -70,6 +72,8 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.console.level', 'debug'
+
+            arg "-mixin.config=ars_elemental.mixins.json"
 
             mods {
                 ars_elemental {
@@ -142,6 +146,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
     runtimeOnly fg.deobf("curse.maven:exp-407174:3188120")  // Shutup experimental settings
 
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -154,7 +159,8 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": project.version,
             "Implementation-Vendor" :"alexthw",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "ars_elemental.mixins.json"
         ])
     }
 }
@@ -176,4 +182,10 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, "ars_elemental.refmap.json"
 }

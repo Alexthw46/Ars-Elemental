@@ -36,8 +36,7 @@ public class ArsElemental
         ModRegistry.registerRegistries(modbus);
         ArsNouveauRegistry.registerGlyphs();
         //ExampleConfig.registerGlyphConfigs();
-        modbus.addListener(this::setup);
-        MinecraftForge.EVENT_BUS.register(this);
+        modbus.addListener(Events::registerEntities);
     }
 
     private void setup(final FMLCommonSetupEvent event)

@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "alexthw.ars_elemental.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "ars_elemental.refmap.json",
+  "mixins": [
+    "EffectIgniteMixin",
+    "FlareMixin"
+  ],
+  "minVersion": "0.8"
+}

@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 
 import static alexthw.ars_elemental.datagen.Datagen.prefix;
 
-
 public class CurioHolderScreen extends ContainerScreen<CurioHolderContainer> {
 
     public static final ResourceLocation BACKGROUND = prefix("textures/gui/curio_bag.png");

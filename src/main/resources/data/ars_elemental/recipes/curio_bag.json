@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ars_elemental",
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "M" : {
+      "item" : "ars_nouveau:mana_fiber"
+    },
+    "C" : {
+      "item" : "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "ars_elemental:curio_bag"
+  }
+}

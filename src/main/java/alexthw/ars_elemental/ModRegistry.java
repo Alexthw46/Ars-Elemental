@@ -15,6 +15,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -28,11 +30,13 @@ public class ModRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
+    public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, MODID);
 
     public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
     public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
 
+    public static final RegistryObject<Effect> HELLFIRE;
     public static final RegistryObject<Item> CURIO_BAG;
 
     public static final RegistryObject<Item> FIRE_FOCUS;
@@ -48,6 +52,8 @@ public class ModRegistry {
     }
 
     static {
+        HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
+
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(addTabProps(), SpellSchools.ELEMENTAL_FIRE));
         WATER_FOCUS = ITEMS.register("water_focus", ()-> new ElementalFocus(addTabProps(), SpellSchools.ELEMENTAL_WATER));
         AIR_FOCUS = ITEMS.register("air_focus", ()-> new ElementalFocus(addTabProps(), SpellSchools.ELEMENTAL_AIR));
@@ -71,6 +77,7 @@ public class ModRegistry {
         ITEMS.register(bus);
         ENTITIES.register(bus);
         CONTAINERS.register(bus);
+        EFFECTS.register(bus);
     }
 
 }
