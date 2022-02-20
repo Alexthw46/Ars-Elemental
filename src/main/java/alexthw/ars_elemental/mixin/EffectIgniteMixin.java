@@ -39,7 +39,6 @@ public class EffectIgniteMixin {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
         if (rayTraceResult.getEntity() instanceof LivingEntity living && ElementalFocus.hasFocus(world, shooter) == ModRegistry.FIRE_FOCUS.get() && shooter!=living){
             living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) spellStats.getAmpMultiplier()/2));
-            living.invulnerableTime = 0;
         }
     }
 

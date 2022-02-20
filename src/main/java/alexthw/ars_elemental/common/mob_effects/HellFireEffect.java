@@ -32,6 +32,7 @@ public class HellFireEffect extends MobEffect implements IForgeMobEffect {
             MobEffectInstance inst = event.getEntityLiving().getEffect(ModRegistry.HELLFIRE.get());
             if (inst == null) return;
             event.setAmount(event.getAmount()/inst.getAmplifier());
+            event.getEntityLiving().invulnerableTime = 0;
         }
     }
 }

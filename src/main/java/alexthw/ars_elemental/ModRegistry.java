@@ -90,7 +90,7 @@ public class ModRegistry {
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
 
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F,0.8F, MermaidEntity::new, MobCategory.WATER_CREATURE );
-        SIREN_FAMILIAR = registerEntity("siren_familiar", 500, 800, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
+        SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F,0.8F, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
 
         SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, MobCategory.CREATURE);

@@ -4,7 +4,7 @@ import alexthw.ars_elemental.common.glyphs.EffectConjureDirt;
 import alexthw.ars_elemental.common.glyphs.EffectWaterGrave;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import alexthw.ars_elemental.common.entity.familiars.SirenFamiliar;
+import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
@@ -36,7 +36,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void registerFamiliars(){
-        ArsNouveauAPI.getInstance().registerFamiliar(new SirenFamiliar());
+        ArsNouveauAPI.getInstance().registerFamiliar(new MermaidHolder());
     }
 
 }

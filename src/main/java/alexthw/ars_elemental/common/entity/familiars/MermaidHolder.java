@@ -7,8 +7,8 @@ import com.hollingsworth.arsnouveau.api.familiar.IFamiliar;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
-public class SirenFamiliar extends AbstractFamiliarHolder {
-    public SirenFamiliar() {
+public class MermaidHolder extends AbstractFamiliarHolder {
+    public MermaidHolder() {
         super("siren", (e) -> e instanceof MermaidEntity);
     }
 

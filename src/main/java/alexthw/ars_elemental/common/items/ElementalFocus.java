@@ -146,15 +146,6 @@ public class ElementalFocus extends Item implements ISpellModifierItem,ICurioIte
 
     private final UUID ATTR_ID = new UUID(370177938288222399L, 503574982077300549L);
 
-
-    @Override
-    public void onEquipFromUse(SlotContext slotContext, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
-        ICurio.SoundInfo soundInfo = getEquipSound(new SlotContext("", livingEntity, 0, false, true),stack);
-        livingEntity.level.playSound(null, livingEntity.blockPosition(), soundInfo.getSoundEvent(),
-                livingEntity.getSoundSource(), soundInfo.getVolume(), soundInfo.getPitch());
-    }
-
     @NotNull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {

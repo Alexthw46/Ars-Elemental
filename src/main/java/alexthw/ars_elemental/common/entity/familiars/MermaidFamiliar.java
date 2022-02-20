@@ -4,6 +4,7 @@ import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
+import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,7 +16,7 @@ import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
-public class MermaidFamiliar extends FamiliarEntity implements ISpellCastListener {
+public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
@@ -47,7 +48,7 @@ public class MermaidFamiliar extends FamiliarEntity implements ISpellCastListene
 
 
     public @NotNull EntityType<?> getType() {
-        return ModRegistry.SIREN_ENTITY.get();
+        return ModRegistry.SIREN_FAMILIAR.get();
     }
 
 }
