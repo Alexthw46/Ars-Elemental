@@ -1,19 +1,41 @@
 package alexthw.ars_elemental.common.entity;
 
+import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 
-public class SummonSkeleHorse extends SummonHorse {
+public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
     public SummonSkeleHorse(EntityType<? extends Horse> type, Level worldIn) {
         super(type, worldIn);
+    }
+
+    public SummonSkeleHorse(Level level) {
+        this(ModRegistry.SKELEHORSE_SUMMON.get(),level);
+    }
+
+    public SummonSkeleHorse(SummonHorse oldHorse, Player summoner){
+        this(summoner.level);
+        BlockPos position = oldHorse.blockPosition();
+        setPos(position.getX(), position.getY(), position.getZ());
+        ticksLeft = oldHorse.getTicksLeft();
+        tameWithName(summoner);
+        getHorseInventory().setItem(0, new ItemStack(Items.SADDLE));
+        setOwnerID(summoner.getUUID());
+        setDropChance(EquipmentSlot.CHEST, 0.0F);
     }
 
     protected SoundEvent getAmbientSound() {

@@ -1,0 +1,16 @@
+{
+  "name": "ars_nouveau.glyph_name.enthrall",
+  "category": "ars_nouveau:glyphs_2",
+  "icon": "ars_nouveau:glyph_enthrall",
+  "sortnum": 2,
+  "pages": [
+    {
+      "text": "ars_nouveau.glyph_desc.enthrall",
+      "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_nouveau:glyph_enthrall",
+      "type": "ars_nouveau:glyph_recipe"
+    }
+  ]
+}

@@ -2,20 +2,35 @@ package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
-public class SummonDirewolf extends SummonWolf {
+public class SummonDirewolf extends SummonWolf implements IUndeadSummon {
     public SummonDirewolf(EntityType<? extends Wolf> type, Level levelIn) {
         super(type, levelIn);
     }
 
     public SummonDirewolf(Level level){
         super(ModRegistry.DIREWOLF_SUMMON.get(), level);
+    }
+
+    public SummonDirewolf(Level world, Player player,SummonWolf oldWolf) {
+        this(world);
+        Vec3 hit = oldWolf.position();
+        setPos(hit.x(), hit.y(), hit.z());
+        setTarget(player.getLastHurtMob());
+        setAggressive(true);
+        setTame(true);
+        tame(player);
+        setOwnerID(player.getUUID());
+        oldWolf.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

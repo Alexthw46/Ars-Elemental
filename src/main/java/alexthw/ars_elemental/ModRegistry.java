@@ -1,17 +1,16 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
+import alexthw.ars_elemental.common.entity.*;
+import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
+import alexthw.ars_elemental.common.mob_effects.LifeLinkEffect;
 import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
-import alexthw.ars_elemental.common.entity.AllyVhexEntity;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.common.items.ElementalFocus;
 import alexthw.ars_elemental.common.items.NecroticFocus;
 import alexthw.ars_elemental.common.items.SirenCharm;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import alexthw.ars_elemental.common.entity.MermaidEntity;
-import alexthw.ars_elemental.common.entity.SummonDirewolf;
-import alexthw.ars_elemental.common.entity.SummonSkeleHorse;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.effect.MobEffect;
@@ -27,9 +26,9 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -67,9 +66,12 @@ public class ModRegistry {
     public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
     public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
+    public static final RegistryObject<EntityType<EntityHomingProjectile>> HOMING_PROJECTILE;
 
     public static final RegistryObject<MobEffect> HELLFIRE;
     public static final RegistryObject<MobEffect> WATER_GRAVE;
+    public static final RegistryObject<MobEffect> ENTHRALLED;
+    public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
 
@@ -86,6 +88,8 @@ public class ModRegistry {
 
         HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
         WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
+        ENTHRALLED = EFFECTS.register("enthralled", EnthrallEffect::new);
+        LIFE_LINK = EFFECTS.register("life_link", LifeLinkEffect::new);
 
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
 
@@ -95,6 +99,7 @@ public class ModRegistry {
         SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, MobCategory.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
+        HOMING_PROJECTILE = registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, MobCategory.MISC);
 
         CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
@@ -107,27 +112,24 @@ public class ModRegistry {
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
-        EntityType<T> type = EntityType.Builder.of(factory, kind).setTrackingRange(64).setUpdateInterval(1).sized(width, height).build("hexblades:" + name);
+        EntityType<T> type = EntityType.Builder.of(factory, kind).setTrackingRange(64).setUpdateInterval(1).sized(width, height).build(MODID + ":" + name);
         return ENTITIES.register(name, () -> type);
     }
 
-    static <T extends Mob> RegistryObject<EntityType<T>> addEntity(String name, int color1, int color2, float width, float height, boolean fire, EntityType.EntityFactory<T> factory, MobCategory kind) {
-        EntityType<T> type;
-        if (fire) {
-            type = EntityType.Builder.of(factory, kind)
-                    .setTrackingRange(64)
-                    .setUpdateInterval(1)
-                    .sized(width, height)
-                    .fireImmune()
-                    .build(MODID + ":" + name);
-        } else {
-            type = EntityType.Builder.of(factory, kind)
-                    .setTrackingRange(64)
-                    .setUpdateInterval(1)
-                    .sized(width, height)
-                    .build(MODID + ":" + name);
+    static <T extends Mob> RegistryObject<EntityType<T>> addEntity(String name, float width, float height, boolean fire, boolean noSave, EntityType.EntityFactory<T> factory, MobCategory kind, int color1, int color2) {
+        EntityType.Builder<T> builder = EntityType.Builder.of(factory, kind)
+                .setTrackingRange(64)
+                .setUpdateInterval(1)
+                .sized(width, height);
+        if (noSave){
+            builder.noSave();
         }
-        ITEMS.register("spawn_" + name, () -> new ForgeSpawnEggItem(() -> type, color1, color2, addTabProp()));
+        if (fire) {
+            builder.fireImmune();
+        }
+        EntityType<T> type = builder.build(MODID + ":" + name);
+
+        //ITEMS.register("spawn_" + name, () -> new ForgeSpawnEggItem(() -> type, color1, color2, addTabProp()));
         return ENTITIES.register(name, () -> type);
     }
 
@@ -143,7 +145,7 @@ public class ModRegistry {
     static RegistryObject<Block> addStair(String name, StairBlock stair){
         return addBlock(name + "_stairs", stair);
     }
-    static net.minecraft.world.level.block.state.BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {
-        return net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(mat, color);
+    static Properties blockProps(Material mat, MaterialColor color) {
+        return Properties.of(mat, color);
     }
 }

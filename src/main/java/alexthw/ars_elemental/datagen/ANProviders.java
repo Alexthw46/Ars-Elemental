@@ -38,6 +38,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
+
 public class ANProviders {
 
     public static class GlyphProvider extends GlyphRecipeProvider {
@@ -173,8 +175,9 @@ public class ANProviders {
         @Override
         public void run(HashCache cache) throws IOException {
 
-            addGlyphPage(EffectConjureDirt.INSTANCE);
-            addGlyphPage(EffectWaterGrave.INSTANCE);
+            for (AbstractSpellPart spell : registeredSpells){
+                addGlyphPage(spell);
+            }
 
             addBasicItem(ModRegistry.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModRegistry.CURIO_BAG.get()));
             addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.NECRO_FOCUS.get())

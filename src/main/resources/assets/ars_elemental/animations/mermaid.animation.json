@@ -89,6 +89,26 @@
 					}
 				}
 			}
+		},
+		"swim": {
+			"animation_length": 25.68,
+			"bones": {
+				"master": {
+					"rotation": {
+						"vector": [45, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [-8.86959, -4.39499, -1.13357]
+					}
+				},
+				"tail": {
+					"rotation": {
+						"vector": [8.72226, -1.76046, -1.91498]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

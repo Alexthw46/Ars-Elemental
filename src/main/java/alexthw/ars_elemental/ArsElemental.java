@@ -49,6 +49,7 @@ public class ArsElemental
         ModRegistry.registerRegistries(modbus);
         ArsNouveauRegistry.registerGlyphs();
         ArsNouveauRegistry.registerFamiliars();
+        ArsNouveauRegistry.addCustomThings();
         GlyphConfigs.registerGlyphConfigs();
         modbus.addListener(this::setup);
         modbus.addListener(this::doClientStuff);

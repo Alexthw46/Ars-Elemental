@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.items.PotionFlask;
+import com.hollingsworth.arsnouveau.common.items.RunicChalk;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,9 +64,10 @@ public class CurioHolder extends Item {
         return ItemStack.EMPTY;
     }
 
+    //TODO make tag
     public static boolean canStore(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof ISpellModifierItem || item instanceof DominionWand || item instanceof ArsNouveauCurio || item instanceof PotionFlask || stack.getCapability(CuriosCapability.ITEM).isPresent();
+        return item instanceof ISpellModifierItem || item instanceof DominionWand || item instanceof ArsNouveauCurio || item instanceof PotionFlask || item instanceof RunicChalk ||stack.getCapability(CuriosCapability.ITEM).isPresent();
     }
 
     @Nullable
