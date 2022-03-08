@@ -6,6 +6,7 @@ import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -36,9 +37,8 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
 
-    static ResourceLocation SkeleHorseTexture = new ResourceLocation("textures/entity/horse/horse_skeleton.png");
-    static ResourceLocation DireWolfTexture = prefix("textures/entity/direwolf.png");
-    static ResourceLocation VhexTexture = prefix("textures/entity/vhex.png");
+    static final ResourceLocation SkeleHorseTexture = new ResourceLocation("textures/entity/horse/horse_skeleton.png");
+    static final ResourceLocation VhexTexture = prefix("textures/entity/vhex.png");
 
     public static final KeyMapping CURIO_BAG_KEYBINDING = new KeyMapping("key.ars_elemental.open_pouch", GLFW.GLFW_KEY_J, "key.category.ars_nouveau.general");
 
@@ -54,12 +54,7 @@ public class ClientEvents {
                 return SkeleHorseTexture;
             }
         });
-        event.registerEntityRenderer(ModRegistry.DIREWOLF_SUMMON.get(), manager -> new WolfRenderer(manager){
-            @Override
-            public ResourceLocation getTextureLocation(Wolf entity) {
-                return DireWolfTexture;
-            }
-        });
+        event.registerEntityRenderer(ModRegistry.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
         event.registerEntityRenderer(ModRegistry.VHEX_SUMMON.get(), manager -> new VexRenderer(manager)
         {
             @Override

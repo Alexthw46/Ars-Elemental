@@ -5,9 +5,7 @@ import alexthw.ars_elemental.util.ItemInventory;
 import com.hollingsworth.arsnouveau.api.item.ArsNouveauCurio;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
-import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.items.PotionFlask;
-import com.hollingsworth.arsnouveau.common.items.RunicChalk;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,6 +33,8 @@ import top.theillusivec4.curios.api.CuriosCapability;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
+
+import static alexthw.ars_elemental.ModRegistry.CURIO_BAGGABLE;
 
 public class CurioHolder extends Item {
     public CurioHolder(Properties pProperties) {
@@ -64,10 +64,10 @@ public class CurioHolder extends Item {
         return ItemStack.EMPTY;
     }
 
-    //TODO make tag
     public static boolean canStore(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof ISpellModifierItem || item instanceof DominionWand || item instanceof ArsNouveauCurio || item instanceof PotionFlask || item instanceof RunicChalk ||stack.getCapability(CuriosCapability.ITEM).isPresent();
+        if (item instanceof CurioHolder) return false;
+        return item instanceof ISpellModifierItem || stack.is(CURIO_BAGGABLE) || item instanceof ArsNouveauCurio || item instanceof PotionFlask || stack.getCapability(CuriosCapability.ITEM).isPresent();
     }
 
     @Nullable

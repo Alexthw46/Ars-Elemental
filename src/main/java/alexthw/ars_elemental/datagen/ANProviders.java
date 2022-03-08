@@ -1,42 +1,31 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.glyphs.EffectCharm;
 import alexthw.ars_elemental.common.glyphs.EffectConjureDirt;
+import alexthw.ars_elemental.common.glyphs.EffectLifeLink;
 import alexthw.ars_elemental.common.glyphs.EffectWaterGrave;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
-import com.hollingsworth.arsnouveau.api.enchanting_apparatus.IEnchantingRecipe;
-import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
-import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
-import com.hollingsworth.arsnouveau.common.datagen.Recipes;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
-import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.level.block.Blocks;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
 
@@ -56,6 +45,9 @@ public class ANProviders {
             recipes.add(get(EffectConjureDirt.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.DIRT));
             recipes.add(get(EffectWaterGrave.INSTANCE).withItem(Items.KELP).withItem(Items.PRISMARINE_SHARD).withItem(ItemsRegistry.WATER_ESSENCE));
 
+            recipes.add(get(EffectCharm.INSTANCE).withItem(Items.GOLDEN_APPLE).withItem(Items.GOLDEN_CARROT).withItem(ItemsRegistry.SOURCE_BERRY_PIE).withItem(Blocks.CAKE));
+            recipes.add(get(EffectLifeLink.INSTANCE).withItem(Items.LEAD).withItem(ItemsRegistry.ABJURATION_ESSENCE).withItem(Items.GLISTERING_MELON_SLICE).withItem(Items.IRON_SWORD).withItem(Items.FERMENTED_SPIDER_EYE));
+
             for(GlyphRecipe recipe : recipes){
                 Path path = getScribeGlyphPath(output,  recipe.output.getItem());
                 DataProvider.save(GSON, cache, recipe.asRecipe(), path);
@@ -70,8 +62,6 @@ public class ANProviders {
     }
 
     public static class EnchantingAppProvider extends ApparatusRecipeProvider{
-
-        List<EnchantingApparatusRecipe> recipes = new ArrayList<>();
 
         public EnchantingAppProvider(DataGenerator generatorIn) {
             super(generatorIn);

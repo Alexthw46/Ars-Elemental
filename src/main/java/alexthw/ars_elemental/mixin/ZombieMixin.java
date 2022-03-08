@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Zombie.class)
 public interface ZombieMixin {
 
-
     @Invoker
     void callStartUnderWaterConversion(int time);
 

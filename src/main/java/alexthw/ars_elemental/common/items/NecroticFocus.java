@@ -16,6 +16,9 @@ import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -69,7 +72,7 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void summonDeathEvent(SummonEvent.Death event) {
+    public static void reraiseSummon(SummonEvent.Death event) {
         if (!event.world.isClientSide) {
             ServerLevel world = (ServerLevel) event.world;
             if (event.summon.getOwner(world) instanceof Player player && !(event.summon instanceof IUndeadSummon)) {
@@ -81,13 +84,21 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
                         toRaise = new AllyVhexEntity(world, vex, player);
                     }
                     if (toRaise instanceof IUndeadSummon undead){
-                        if (!event.wasExpiration) event.summon.setTicksLeft(0);
-                        undead.setOwnerID(event.summon.getOwnerID());
-                        undead.setTicksLeft(400);
+                        undead.inherit(event.summon);
                         event.world.addFreshEntity(toRaise);
+                        spawnDeathPoof(world, toRaise.blockPosition());
                     }
                 }
             }
+        }
+    }
+
+    public static void spawnDeathPoof(ServerLevel world, BlockPos pos){
+        for(int i =0; i < 10; i++){
+            double d0 = pos.getX() + 0.5;
+            double d1 = pos.getY() + 1.2;
+            double d2 = pos.getZ() + 0.5 ;
+            world.sendParticles(ParticleTypes.ANGRY_VILLAGER, d0, d1, d2, 2,(world.random.nextFloat() - 0.5)/3, (world.random.nextFloat() - 0.5)/3, (world.random.nextFloat() - 0.5)/3, 0.1f);
         }
     }
 
@@ -105,7 +116,7 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
     @Override
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         builder.addDamageModifier(1.0f);
-        if (NECROMANCY.isPartOfSchool(spellPart)) builder.addAmplification(2.0f);
+        if (NECROMANCY.isPartOfSchool(spellPart)) builder.addDurationModifier(2.0f);
         return builder;
     }
 
@@ -119,15 +130,15 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
         }
     }
 
-    //TODO change this
+    //TODO remember this exists
     @SubscribeEvent
     public static void castSpell(SpellCastEvent event) {
-        if (!event.getWorld().isClientSide && event.getEntity() instanceof Player player && hasFocus(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() != null && sympatheticMethods.contains(event.spell.getCastMethod())) {
+        if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() != null && sympatheticMethods.contains(event.spell.getCastMethod())) {
 
-            for (LivingEntity i : event.getWorld().getEntitiesOfClass(LivingEntity.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon)) {
-                ISummon summon = (ISummon) i;
-                Entity owner = summon.getOwner((ServerLevel) event.getWorld());
+            for (LivingEntity i : world.getEntitiesOfClass(LivingEntity.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon)) {
+                Entity owner = ((ISummon)i).getOwner(world);
                 if (player.equals(owner)) {
+                    i.lookAt(EntityAnchorArgument.Anchor.EYES, player.getLookAngle());
                     EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
                     spellResolver.onCast(ItemStack.EMPTY, i, i.level);
                 }
@@ -135,7 +146,7 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
         }
     }
 
-    public static List<AbstractCastMethod> sympatheticMethods = new ArrayList<>();
+    public static final List<AbstractCastMethod> sympatheticMethods = new ArrayList<>();
 
     static {
         sympatheticMethods.add(MethodTouch.INSTANCE);

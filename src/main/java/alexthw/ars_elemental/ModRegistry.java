@@ -1,18 +1,25 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
+import alexthw.ars_elemental.common.blocks.UpstreamTile;
+import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.*;
-import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
-import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
-import alexthw.ars_elemental.common.mob_effects.LifeLinkEffect;
-import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
+import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.common.items.ElementalFocus;
 import alexthw.ars_elemental.common.items.NecroticFocus;
 import alexthw.ars_elemental.common.items.SirenCharm;
+import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
+import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
+import alexthw.ars_elemental.common.mob_effects.LifeLinkEffect;
+import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
+import com.hollingsworth.arsnouveau.common.block.ModBlock;
+import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,27 +30,42 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
+import static alexthw.ars_elemental.ArsElemental.prefix;
 
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
+
+    public static final Tag.Named<Item> CURIO_BAGGABLE = ItemTags.bind(prefix("curio_bag_item").toString());
 
     static Item.Properties addTabProp() {
         return new Item.Properties().tab(ArsElemental.TAB);
@@ -52,10 +74,11 @@ public class ModRegistry {
         return addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE);
     }
 
-    public static void registerRegistries(IEventBus bus ){
+    public static void registerRegistries(IEventBus bus){
         BLOCKS.register(bus);
         ITEMS.register(bus);
         ENTITIES.register(bus);
+        TILES.register(bus);
         CONTAINERS.register(bus);
         EFFECTS.register(bus);
     }
@@ -84,6 +107,12 @@ public class ModRegistry {
     public static final RegistryObject<Item> EARTH_FOCUS;
     public static final RegistryObject<Item> NECRO_FOCUS;
 
+    public static final RegistryObject<Block> MERMAID_ROCK;
+    public static final RegistryObject<Block> UPSTREAM_BLOCK;
+
+    public static BlockEntityType<MermaidTile> MERMAID_TILE;
+    public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
+
     static {
 
         HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
@@ -97,9 +126,9 @@ public class ModRegistry {
         SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F,0.8F, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
 
         SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
-        DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, MobCategory.CREATURE);
+        DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 0.95F, SummonDirewolf::new, MobCategory.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
-        HOMING_PROJECTILE = registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, MobCategory.MISC);
+        HOMING_PROJECTILE = null;//registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, MobCategory.MISC);
 
         CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
@@ -109,6 +138,19 @@ public class ModRegistry {
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
+
+        MERMAID_ROCK = addBlock("mermaid_rock", new Block(ModBlock.defaultProperties()));//TODO migrate to actual class
+        UPSTREAM_BLOCK = addBlock("water_upstream", new TickableModBlock(ModBlock.defaultProperties()) {
+            public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+                return new UpstreamTile(pPos,pState);
+            }
+
+            @Nullable
+            @Override
+            public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+                return super.getTicker(level, state, type);
+            }
+        });
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
@@ -147,5 +189,18 @@ public class ModRegistry {
     }
     static Properties blockProps(Material mat, MaterialColor color) {
         return Properties.of(mat, color);
+    }
+
+    @SubscribeEvent
+    static void registerTiles(RegistryEvent.Register<BlockEntityType<?>> evt){
+        MERMAID_TILE = addTileEntity(evt.getRegistry(), "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
+        UPSTREAM_TILE = addTileEntity(evt.getRegistry(), "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
+    }
+
+    static <T extends BlockEntity> BlockEntityType<T> addTileEntity(IForgeRegistry<BlockEntityType<?>> registry, String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
+        BlockEntityType<T> type = BlockEntityType.Builder.of(factory, blocks).build(null);
+        type.setRegistryName(ArsElemental.MODID, name);
+        registry.register(type);
+        return type;
     }
 }

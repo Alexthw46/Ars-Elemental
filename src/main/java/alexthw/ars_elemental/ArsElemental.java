@@ -45,7 +45,6 @@ public class ArsElemental
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
 
-
         ModRegistry.registerRegistries(modbus);
         ArsNouveauRegistry.registerGlyphs();
         ArsNouveauRegistry.registerFamiliars();

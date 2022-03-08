@@ -154,16 +154,17 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     }
 
     private <T extends IAnimatable> PlayState idle(AnimationEvent<T> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));
         return PlayState.CONTINUE;
     }
 
     private <T extends IAnimatable> PlayState actions(AnimationEvent<T> event){
-        if (this.isInWater()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("act",true));
-            return PlayState.CONTINUE;
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim"));
+        }else{
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
         }
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
 
     public static AttributeSupplier createAttributes(){

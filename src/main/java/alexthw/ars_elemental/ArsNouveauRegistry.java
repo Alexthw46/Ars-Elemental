@@ -9,6 +9,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 
 import java.util.ArrayList;
@@ -16,17 +17,18 @@ import java.util.List;
 import java.util.Set;
 
 public class ArsNouveauRegistry {
-    public static List<AbstractSpellPart> registeredSpells = new ArrayList<>();
+    public static final List<AbstractSpellPart> registeredSpells = new ArrayList<>();
 
-    public static SpellSchool NECROMANCY = new SpellSchool("necromancy");
+    public static final SpellSchool NECROMANCY = new SpellSchool("necromancy");
 
     public static void registerGlyphs(){
+        //effects
         register(EffectWaterGrave.INSTANCE);
         register(EffectConjureDirt.INSTANCE);
-        register(EffectEnthrall.INSTANCE);
+        register(EffectCharm.INSTANCE);
         register(EffectLifeLink.INSTANCE);
-
-//        register(MethodHomingProjectile.INSTANCE);
+        //methods
+        register(MethodHomingProjectile.INSTANCE);
 
     }
 
@@ -39,11 +41,12 @@ public class ArsNouveauRegistry {
         EffectWither.INSTANCE.spellSchools.add(NECROMANCY);
         EffectHex.INSTANCE.spellSchools.add(NECROMANCY);
         EffectLifeLink.INSTANCE.spellSchools.add(NECROMANCY);
-        EffectEnthrall.INSTANCE.spellSchools.add(NECROMANCY);
+        EffectCharm.INSTANCE.spellSchools.add(NECROMANCY);
 
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
+        EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
     }
 
     public static void register(AbstractSpellPart spellPart){

@@ -1,0 +1,33 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:lead"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:abjuration_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:glistering_melon_slice"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:iron_sword"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:fermented_spider_eye"
+      }
+    }
+  ],
+  "exp": 160,
+  "output": "ars_nouveau:glyph_life_link"
+}

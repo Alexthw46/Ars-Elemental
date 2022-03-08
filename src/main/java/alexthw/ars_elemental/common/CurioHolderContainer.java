@@ -2,10 +2,6 @@ package alexthw.ars_elemental.common;
 
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.items.CurioHolder;
-import com.hollingsworth.arsnouveau.api.item.ArsNouveauCurio;
-import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
-import com.hollingsworth.arsnouveau.common.items.DominionWand;
-import com.hollingsworth.arsnouveau.common.items.PotionFlask;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -14,9 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.CuriosCapability;
 
 import javax.annotation.Nonnull;
 

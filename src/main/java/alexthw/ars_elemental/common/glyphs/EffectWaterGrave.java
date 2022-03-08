@@ -3,9 +3,6 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.mixin.ZombieMixin;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -13,8 +10,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -22,7 +17,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class EffectWaterGrave extends AbstractEffect {
@@ -44,7 +38,7 @@ public class EffectWaterGrave extends AbstractEffect {
                 living.setDeltaMovement(delta.x, dy, delta.z);
             }
             if (living instanceof Zombie zombie && ! (living instanceof Drowned)){
-                ((ZombieMixin)zombie).callStartUnderWaterConversion(10);
+                ((ZombieMixin)zombie).callStartUnderWaterConversion(20);
                 return;
             }
             int airSupply = living.getAirSupply();

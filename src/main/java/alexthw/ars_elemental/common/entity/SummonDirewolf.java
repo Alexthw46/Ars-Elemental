@@ -2,7 +2,7 @@ package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -21,19 +21,18 @@ public class SummonDirewolf extends SummonWolf implements IUndeadSummon {
         super(ModRegistry.DIREWOLF_SUMMON.get(), level);
     }
 
-    public SummonDirewolf(Level world, Player player,SummonWolf oldWolf) {
+    public SummonDirewolf(Level world, Player player, SummonWolf oldWolf) {
         this(world);
         Vec3 hit = oldWolf.position();
         setPos(hit.x(), hit.y(), hit.z());
         setTarget(player.getLastHurtMob());
         setAggressive(true);
-        setTame(true);
         tame(player);
-        setOwnerID(player.getUUID());
         oldWolf.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.7F).add(Attributes.MAX_HEALTH, 16.0D).add(Attributes.ATTACK_DAMAGE, 6.0D);
+        return Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.5F).add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.ATTACK_DAMAGE, 6.0D);
     }
+
 }

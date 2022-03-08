@@ -33,7 +33,7 @@
 	"ars_elemental.page2.earth_focus" : "Currently, it does not allow special glyph combo or empowering, but offer knockback resistance and boost natural and instant healing by 1.5.",
 	"ars_elemental.page1.necrotic_focus" :"By imbuing the focus of summoning with evil energy, you can corrupt its powers and summons to practice Necromancy. Glyphs of the Necromantic school will get two free Amplify. Summon Steed will change in Summon Skeletal Steed, which is able to walk and breath underwater.",
 	"ars_elemental.page2.necrotic_focus": "Summoned Wolves and Vexes seems unchanged at first, but while the summoner wear this focus they will rise from death once, filled with blood lust. These undead summons will cast Touch and Projectile spells when you do and heal you every time they kill an enemy.",
-	"ars_elemental.page.curio_bag":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around curios, potion flasks, mirrors, runic chalk and the dominion wand! You can also open it with $(k:ars_elemental.open_pouch) while in the hotbar or in a curio slot.",
+	"ars_elemental.page.curio_bag":"All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around curios, potion flasks, mirrors, charms and other small items. You can also open it with $(k:ars_elemental.open_pouch) while in the hotbar or in a curio slot.",
 
 	"item.ars_nouveau.familiar_siren" : "Bound Script: Siren - WIP",
 	"ars_nouveau.familiar_name.siren": "Siren - WIP do not summon",
@@ -50,8 +50,8 @@
 	"item.ars_nouveau.glyph_life_link" : "Glyph of Life Link",
 	"ars_nouveau.glyph_name.life_link" : "Life Link",
 	"ars_nouveau.glyph_desc.life_link" : "You create a link between your life force and the target's. Any damage dealt to you will be shared with the target and any healing of the target will be shared with you.",
-	"item.ars_nouveau.glyph_enthrall" : "Glyph of Enthrall",
-	"ars_nouveau.glyph_name.enthrall" : "Enthrall",
-	"ars_nouveau.glyph_desc.enthrall" : "Try to dominate the mind of enemy, making them fight for you as a temporary ally. Each Amplify and damage dealt raises the chance of successfully enthralling the target, as stronger mobs will have higher resistance to your control."
+	"item.ars_nouveau.glyph_charm" : "Glyph of Charm",
+	"ars_nouveau.glyph_name.charm" : "Charm",
+	"ars_nouveau.glyph_desc.charm" : "Try to dominate the mind of enemy, making them fight for you as a temporary ally, a tamable mob, to tame it, or a wild animal, to fall in love. Each Amplify and damage dealt raises the chance of successfully enthralling the target, as stronger mobs will have higher resistance to your control."
 
 }

@@ -2,7 +2,6 @@ package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -29,7 +28,6 @@ public class AllyVhexEntity extends EntityAllyVex implements IUndeadSummon {
         moveTo(oldVex.blockPosition(), 0.0F, 0.0F);
         finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(oldVex.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
         setOwner(player);
-        setOwnerID(player.getUUID());
         setBoundOrigin(oldVex.getBoundOrigin());
         setLimitedLife(50+oldVex.serializeNBT().getInt("LifeTicks"));
 

@@ -12,7 +12,7 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class NetworkManager {
     public static final String PROTOCOL_VERSION = "1";
-    public static SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(prefix("main"), () -> NetworkManager.PROTOCOL_VERSION, NetworkManager.PROTOCOL_VERSION::equals, NetworkManager.PROTOCOL_VERSION::equals);
+    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(prefix("main"), () -> NetworkManager.PROTOCOL_VERSION, NetworkManager.PROTOCOL_VERSION::equals, NetworkManager.PROTOCOL_VERSION::equals);
 
     @SubscribeEvent
     public static void registerNetworkStuff(FMLCommonSetupEvent event)
