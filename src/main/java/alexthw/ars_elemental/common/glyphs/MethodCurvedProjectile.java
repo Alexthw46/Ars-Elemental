@@ -1,7 +1,8 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
+import alexthw.ars_elemental.common.entity.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -22,39 +23,39 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class MethodHomingProjectile extends AbstractCastMethod {
+public class MethodCurvedProjectile extends AbstractCastMethod {
 
-    public static MethodHomingProjectile INSTANCE = new MethodHomingProjectile();
+    public static MethodCurvedProjectile INSTANCE = new MethodCurvedProjectile();
 
-    public MethodHomingProjectile() {
-        super("homing_projectile", "Homing Projectile");
+    public MethodCurvedProjectile() {
+        super("curved_projectile", "Parable Projectile");
     }
 
-    public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver){
-
-        ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(world, shooter, resolver);
+    public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
+        ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
+        EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
         projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
         for(int i =1; i < numSplits + 1; i++){
             Direction offset =shooter.getDirection().getClockWise();
             if(i%2==0) offset = offset.getOpposite();
-            BlockPos projPos = shooter.blockPosition().relative(offset, i/2);
+            // Alternate sides
+            BlockPos projPos = shooter.blockPosition().relative(offset, i);
             projPos = projPos.offset(0, 1.5, 0);
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver);
+            EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
 
-        float velocity = 0.1f + stats.getBuffCount(AugmentAccelerate.INSTANCE);
+        float velocity = 0.3f + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 2.0f;
 
-        for(EntityHomingProjectile proj : projectiles) {
-            proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
+        for(EntityProjectileSpell proj : projectiles) {
+            proj.setPos(proj.position().add(0,0.25,0));
+            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
             world.addFreshEntity(proj);
         }
     }
-
 
     @Override
     public void onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
@@ -107,7 +108,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
 
     @Override
     public int getDefaultManaCost() {
-        return 40;
+        return 10;
     }
 
     @Nonnull

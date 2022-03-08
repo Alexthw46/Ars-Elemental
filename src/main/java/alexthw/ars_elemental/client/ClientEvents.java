@@ -6,6 +6,9 @@ import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
+import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.client.renderer.entity.RenderBlank;
+import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -62,6 +65,10 @@ public class ClientEvents {
                 return VhexTexture;
             }
         });
+
+        event.registerEntityRenderer(ModRegistry.HOMING_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+        event.registerEntityRenderer(ModRegistry.CURVED_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+
     }
 
 

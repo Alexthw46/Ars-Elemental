@@ -29,6 +29,7 @@ public class ArsNouveauRegistry {
         register(EffectLifeLink.INSTANCE);
         //methods
         register(MethodHomingProjectile.INSTANCE);
+        register(MethodCurvedProjectile.INSTANCE);
 
     }
 

@@ -8,6 +8,10 @@
 	"item.ars_elemental.siren_charm": "Siren Charm - WIP",
 	"item.ars_elemental.curio_bag": "Trinkets Pouch",
 
+	"block.ars_elemental.water_upstream": "Upstream flow generator",
+	"block.ars_elemental.mermaid_rock": "Mermaid Rock",
+
+
 	"entity.ars_elemental.summon_skelehorse": "Summoned Skeletal Steed",
 	"entity.ars_elemental.summon_direwolf": "Summoned Direwolf",
 	"entity.ars_elemental.summon_vhex": "Summoned Vhex",
@@ -46,12 +50,21 @@
 	"ars_nouveau.glyph_name.conjure_dirt" : "Conjure Terrain",
 	"ars_nouveau.glyph_desc.conjure_dirt" : "Places Dirt or other terrain blocks. Can be augmented with AoE and Pierce to place more blocks, Amplify to place cobblestone or one of the following combinations (Note: if one of these triggers, the spell will end after the conjure terrain effect). If augmented with Amplify and followed by Smelt, it will place Stone. If followed by Crush it will place Sand or, if amplified, Sandstone.",
 
+	"item.ars_nouveau.glyph_homing_projectile": "Glyph of Homing Projectile",
+	"ars_nouveau.glyph_name.homing_projectile" : "Homing Projectile",
+	"ars_nouveau.glyph_desc.homing_projectile" : "This projectile home to the nearest target.",
+	"item.ars_nouveau.glyph_curved_projectile" : "Glyph of Arc Projectile",
+	"ars_nouveau.glyph_name.curved_projectile" : "Arc Projectile",
+	"ars_nouveau.glyph_desc.curved_projectile" : "This projectile is affected by gravity.",
+
+
+
 	"ars_nouveau.school.necromancy" : "Necromancy",
 	"item.ars_nouveau.glyph_life_link" : "Glyph of Life Link",
 	"ars_nouveau.glyph_name.life_link" : "Life Link",
 	"ars_nouveau.glyph_desc.life_link" : "You create a link between your life force and the target's. Any damage dealt to you will be shared with the target and any healing of the target will be shared with you.",
 	"item.ars_nouveau.glyph_charm" : "Glyph of Charm",
 	"ars_nouveau.glyph_name.charm" : "Charm",
-	"ars_nouveau.glyph_desc.charm" : "Try to dominate the mind of enemy, making them fight for you as a temporary ally, a tamable mob, to tame it, or a wild animal, to fall in love. Each Amplify and damage dealt raises the chance of successfully enthralling the target, as stronger mobs will have higher resistance to your control."
+	"ars_nouveau.glyph_desc.charm" : "Try to dominate the mind of enemy, making them fight for you as a temporary ally, a tamable mob, to tame it, or a wild animal, to make it fall in love. Each Amplify and damage dealt raises the chance of successfully charming the target, as stronger mobs will have higher resistance to your control."
 
 }

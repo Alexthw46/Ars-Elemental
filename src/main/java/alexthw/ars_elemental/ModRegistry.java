@@ -55,6 +55,7 @@ import org.jetbrains.annotations.Nullable;
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
+@SuppressWarnings("ConstantConditions")
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegistry {
 
@@ -90,6 +91,7 @@ public class ModRegistry {
     public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
     public static final RegistryObject<EntityType<EntityHomingProjectile>> HOMING_PROJECTILE;
+    public static final RegistryObject<EntityType<EntityCurvedProjectile>> CURVED_PROJECTILE;
 
     public static final RegistryObject<MobEffect> HELLFIRE;
     public static final RegistryObject<MobEffect> WATER_GRAVE;
@@ -128,7 +130,8 @@ public class ModRegistry {
         SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 0.95F, SummonDirewolf::new, MobCategory.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
-        HOMING_PROJECTILE = null;//registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, MobCategory.MISC);
+        HOMING_PROJECTILE = registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, MobCategory.MISC);
+        CURVED_PROJECTILE = registerEntity("curved_projectile", 0.5F, 0.5F, EntityCurvedProjectile::new, MobCategory.MISC);
 
         CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
