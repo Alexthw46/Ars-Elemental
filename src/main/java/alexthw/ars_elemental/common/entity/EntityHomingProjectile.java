@@ -5,9 +5,11 @@ import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
@@ -16,11 +18,18 @@ import java.util.List;
 public class EntityHomingProjectile extends EntityProjectileSpell {
 
     LivingEntity owner;
+    Entity ignore;
     LivingEntity target;
 
-    public EntityHomingProjectile(Level worldIn, LivingEntity shooter) {
+    @Override
+    public int getExpirationTime() {
+        return 20 * 30;
+    }
+
+    public EntityHomingProjectile(Level worldIn, LivingEntity shooter, LivingEntity ignore, SpellResolver resolver) {
         super(ModRegistry.HOMING_PROJECTILE.get(), worldIn, shooter);
         this.owner = shooter;
+        this.ignore = ignore;
     }
 
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
@@ -43,10 +52,8 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
             if ((target != null) && (!target.isAlive() || (target.distanceToSqr(this) > 50))) target = null;
 
             if (target == null && tickCount % 5 == 0) {
-
                 List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,
-                        this.getBoundingBox().inflate(4),
-                        (e) -> e != owner && e.isAlive());
+                        this.getBoundingBox().inflate(4), this::shouldTarget);
 
                 //update target or keep going
                 if (entities.isEmpty() && target == null) {
@@ -61,6 +68,29 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
             }else{
                 super.tickNextPosition();
             }
+
+        }
+    }
+
+    private boolean shouldTarget(LivingEntity e) {
+        if (e instanceof FirenandoEntity) return false;
+        return e != owner && e != ignore && e.isAlive();
+    }
+
+    @Override
+    protected void attemptRemoval() {
+        this.pierceLeft--;
+        if(this.pierceLeft < 0){
+            this.level.broadcastEntityEvent(this, (byte)3);
+            this.remove(RemovalReason.DISCARDED);
+        }else if (getHitResult().getType() == HitResult.Type.ENTITY){
+            Vec3 vel = getDeltaMovement();
+            /*
+            if (Math.abs(vel.x()) > Math.abs(vel.z())){
+                setDeltaMovement(-vel.x(), -vel.y(), vel.z());
+            }
+            */
+            setDeltaMovement(-vel.x(), -vel.y(), -vel.z());
 
         }
     }
@@ -107,6 +137,9 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     @Override
     public boolean save(CompoundTag pCompound) {
         pCompound.putUUID("owner", owner.getUUID());
+        if (ignore != null) {
+            pCompound.putInt("ignore", ignore.getId());
+        }
         return super.save(pCompound);
     }
 
@@ -114,5 +147,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.owner = getCommandSenderWorld().getPlayerByUUID(tag.getUUID("owner"));
+        this.ignore = getCommandSenderWorld().getEntity(tag.getInt("ignore"));
     }
+
 }

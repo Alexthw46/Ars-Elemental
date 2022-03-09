@@ -2,23 +2,20 @@ package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.client.renderer.entity.RenderBlank;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.VexRenderer;
-import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +48,9 @@ public class ClientEvents {
         event.registerEntityRenderer(ModRegistry.SIREN_ENTITY.get(), MermaidRenderer::new);
         event.registerEntityRenderer(ModRegistry.SIREN_FAMILIAR.get(), MermaidRenderer::new);
 
+        event.registerEntityRenderer(ModRegistry.FIRENANDO_ENTITY.get(), FirenandoRenderer::new);
+        event.registerEntityRenderer(ModRegistry.FIRENANDO_FAMILIAR.get(), FirenandoRenderer::new);
+
         event.registerEntityRenderer(ModRegistry.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
             @Override
             public ResourceLocation getTextureLocation(AbstractHorse pEntity) {
@@ -71,7 +71,6 @@ public class ClientEvents {
 
     }
 
-
     //keybinding
     @SubscribeEvent
     public static void registerKeybinding(FMLClientSetupEvent event) {
@@ -83,7 +82,6 @@ public class ClientEvents {
     public static void bindContainerRenderers(FMLClientSetupEvent event) {
         MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
     }
-
 
     @SubscribeEvent
     public void openBackpackGui(TickEvent.ClientTickEvent event)
@@ -112,4 +110,5 @@ public class ClientEvents {
     {
         event.addSprite(ArsElemental.FOCUS_SLOT);
     }
+
 }

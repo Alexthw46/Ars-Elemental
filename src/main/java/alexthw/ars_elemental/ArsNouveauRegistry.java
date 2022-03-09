@@ -1,5 +1,6 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.glyphs.*;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
@@ -57,6 +58,7 @@ public class ArsNouveauRegistry {
 
     public static void registerFamiliars(){
         ArsNouveauAPI.getInstance().registerFamiliar(new MermaidHolder());
+        ArsNouveauAPI.getInstance().registerFamiliar(new FirenandoHolder());
     }
 
 }

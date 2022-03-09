@@ -10,16 +10,18 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 import javax.annotation.Nullable;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
 public class MermaidModel extends AnimatedGeoModel<IAnimatable> {
 
     @Override
     public ResourceLocation getModelLocation(IAnimatable object) {
-        return new ResourceLocation(ArsElemental.MODID,"geo/mermaid.geo.json");
+        return prefix("geo/mermaid.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(IAnimatable object) {
-        return new ResourceLocation(ArsElemental.MODID,"textures/entity/mermaid.png");
+        return prefix("textures/entity/mermaid.png");
     }
 
     /**
@@ -31,7 +33,7 @@ public class MermaidModel extends AnimatedGeoModel<IAnimatable> {
      */
     @Override
     public ResourceLocation getAnimationFileLocation(IAnimatable animatable) {
-        return new ResourceLocation(ArsElemental.MODID,"animations/mermaid.animation.json");
+        return prefix("animations/mermaid.animation.json");
     }
 
     @Override

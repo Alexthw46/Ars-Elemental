@@ -10,6 +10,7 @@
     "EffectLaunchMixin",
     "EffectWaterMixin",
     "FlareMixin",
+    "FoxMixin",
     "LightningMixin",
     "ZombieMixin"
   ],

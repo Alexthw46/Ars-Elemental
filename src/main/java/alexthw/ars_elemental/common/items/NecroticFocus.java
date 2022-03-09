@@ -14,6 +14,7 @@ import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -72,7 +73,7 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void reraiseSummon(SummonEvent.Death event) {
+    public static void reRaiseSummon(SummonEvent.Death event) {
         if (!event.world.isClientSide) {
             ServerLevel world = (ServerLevel) event.world;
             if (event.summon.getOwner(world) instanceof Player player && !(event.summon instanceof IUndeadSummon)) {
@@ -116,7 +117,12 @@ public class NecroticFocus extends Item implements ISpellModifierItem, ICurioIte
     @Override
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         builder.addDamageModifier(1.0f);
-        if (NECROMANCY.isPartOfSchool(spellPart)) builder.addDurationModifier(2.0f);
+        if (NECROMANCY.isPartOfSchool(spellPart)) {
+            builder.addDurationModifier(2.0f);
+            if (spellPart == EffectHeal.INSTANCE){
+                builder.addAmplification(2.0f);
+            }
+        }
         return builder;
     }
 

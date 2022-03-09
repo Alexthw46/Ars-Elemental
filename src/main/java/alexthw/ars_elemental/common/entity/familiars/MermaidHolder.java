@@ -14,7 +14,7 @@ public class MermaidHolder extends AbstractFamiliarHolder {
 
     @Override
     public IFamiliar getSummonEntity(Level level, CompoundTag compoundTag) {
-        MermaidFamiliar mermaid =  new MermaidFamiliar(ModRegistry.SIREN_FAMILIAR.get(), level);
+        MermaidFamiliar mermaid =  new MermaidFamiliar(level);
         mermaid.setTagData(compoundTag);
         return mermaid;
     }
@@ -23,12 +23,4 @@ public class MermaidHolder extends AbstractFamiliarHolder {
         return "Siren";
     }
 
-    public String getBookDescription() {
-        return "A Siren";
-    }
-
-    @Override
-    public String getEntityKey() {
-        return "siren";
-    }
 }

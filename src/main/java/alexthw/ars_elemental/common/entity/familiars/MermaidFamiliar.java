@@ -24,6 +24,10 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         super(entityType, level);
     }
 
+    public MermaidFamiliar(Level level) {
+        super(ModRegistry.SIREN_FAMILIAR.get(), level);
+    }
+
     public void onModifier(SpellModifierEvent event) {
         if (this.isAlive() && this.getOwner() != null && this.getOwner().equals(event.caster) && SpellSchools.ELEMENTAL_WATER.isPartOfSchool(event.spellPart)) {
             event.builder.addDamageModifier(2.0D);

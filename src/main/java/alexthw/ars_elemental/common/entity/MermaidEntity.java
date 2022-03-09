@@ -217,7 +217,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     }
 
     public void tryResetGoals(){
-        this.goalSelector.availableGoals = new LinkedHashSet<>();
+        this.goalSelector.removeAllGoals();
         this.addGoalsAfterConstructor();
     }
 

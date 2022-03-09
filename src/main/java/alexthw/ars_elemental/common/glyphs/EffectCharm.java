@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.items.NecroticFocus;
+import alexthw.ars_elemental.mixin.FoxMixin;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.core.particles.ParticleTypes;
@@ -69,9 +70,9 @@ public class EffectCharm extends AbstractEffect {
                 }else if (animal instanceof AbstractHorse horse && !horse.isTamed()){
                     if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))
                         horse.setTamed(true);
-                }else if (animal instanceof Fox fox && !fox.trusts(player.getUUID())){
+                }else if (animal instanceof Fox fox && !((FoxMixin)fox).callTrusts(player.getUUID())){
                     if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))
-                        fox.addTrustedUUID(player.getUUID());
+                        ((FoxMixin)fox).callAddTrustedUUID(player.getUUID());
                 }
                 else if (animal.canFallInLove()) {
                     if (rollToSeduce(75, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))

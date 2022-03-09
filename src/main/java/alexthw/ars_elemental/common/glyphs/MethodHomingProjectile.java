@@ -47,14 +47,13 @@ public class MethodHomingProjectile extends AbstractCastMethod {
             projectiles.add(spell);
         }
 
-        float velocity = 0.1f + stats.getBuffCount(AugmentAccelerate.INSTANCE);
+        float velocity = 0.05f + stats.getBuffCount(AugmentAccelerate.INSTANCE);
 
         for(EntityHomingProjectile proj : projectiles) {
             proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
             world.addFreshEntity(proj);
         }
     }
-
 
     @Override
     public void onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {

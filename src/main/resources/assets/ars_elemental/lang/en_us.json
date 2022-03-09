@@ -6,6 +6,7 @@
 	"item.ars_elemental.earth_focus": "Focus of Earth",
 	"item.ars_elemental.necrotic_focus": "Focus of Necromancy",
 	"item.ars_elemental.siren_charm": "Siren Charm - WIP",
+	"item.ars_elemental.firenando_charm" : "Fire Golem Charm - WIP",
 	"item.ars_elemental.curio_bag": "Trinkets Pouch",
 
 	"block.ars_elemental.water_upstream": "Upstream flow generator",
@@ -17,6 +18,8 @@
 	"entity.ars_elemental.summon_vhex": "Summoned Vhex",
 	"entity.ars_elemental.siren_entity": "Siren",
 	"entity.ars_elemental.siren_familiar": "Siren Familiar",
+	"entity.ars_elemental.firenando_entity": "Fire Golem",
+	"entity.ars_elemental.firenando_familiar": "Fire Golem Familiar",
 
 	"key.ars_elemental.open_pouch" : "[Elemental] Open trinkets pouch",
 	"curios.modifiers.an_focus": "While in spell focus slot:",
@@ -42,6 +45,9 @@
 	"item.ars_nouveau.familiar_siren" : "Bound Script: Siren - WIP",
 	"ars_nouveau.familiar_name.siren": "Siren - WIP do not summon",
 	"ars_nouveau.familiar_desc.siren": "Siren Familiar - WIP",
+	"item.ars_nouveau.familiar_firenando": "Bound Script: Fire Golem - NYI",
+	"ars_nouveau.familiar_name.firenando": "Fire Golem",
+	"ars_nouveau.familiar_desc.firenando": "Fire Golem Familiar - NYI",
 
 	"item.ars_nouveau.glyph_watery_grave" : "Glyph of Watery Grave",
 	"ars_nouveau.glyph_name.watery_grave" : "Watery Grave",
@@ -56,7 +62,6 @@
 	"item.ars_nouveau.glyph_curved_projectile" : "Glyph of Arc Projectile",
 	"ars_nouveau.glyph_name.curved_projectile" : "Arc Projectile",
 	"ars_nouveau.glyph_desc.curved_projectile" : "This projectile is affected by gravity.",
-
 
 
 	"ars_nouveau.school.necromancy" : "Necromancy",
