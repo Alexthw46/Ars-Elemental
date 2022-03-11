@@ -57,7 +57,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     private <T extends IAnimatable>  PlayState actionPredicate(AnimationEvent<T> event) {
-        if (event.isMoving()) {
+        if (getDeltaMovement().length() > 0 || isInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim"));
         }else{
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));

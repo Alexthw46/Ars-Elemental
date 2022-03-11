@@ -1,0 +1,28 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:arrow"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:snowball"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:slime_ball"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:ender_pearl"
+      }
+    }
+  ],
+  "exp": 55,
+  "output": "ars_nouveau:glyph_curved_projectile"
+}

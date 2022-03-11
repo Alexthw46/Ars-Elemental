@@ -37,7 +37,7 @@ import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static com.hollingsworth.arsnouveau.common.potions.ModPotions.MANA_REGEN_EFFECT;
 
 @Mod.EventBusSubscriber(modid = ArsNouveau.MODID)
-public class ElementalFocus extends Item implements ISpellModifierItem,ICurioItem {
+public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
 
     public final SpellSchool element;
 

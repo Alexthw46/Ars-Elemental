@@ -1,0 +1,15 @@
+{
+  "name": "item.ars_elemental.siren_charm",
+  "icon": "ars_elemental:siren_charm",
+  "category": "ars_nouveau:automation",
+  "pages": [
+    {
+      "text": "ars_elemental.page1.mermaid",
+      "type": "patchouli:text"
+    },
+    {
+      "entity": "ars_elemental:siren_entity",
+      "type": "patchouli:entity"
+    }
+  ]
+}

@@ -4,7 +4,8 @@ import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
-import com.hollingsworth.arsnouveau.common.entity.goal.whirlisprig.FollowMobGoalBackoff;
+import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
+import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.entity.goal.whirlisprig.FollowPlayerGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,16 +18,14 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -39,7 +38,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispellable {
@@ -47,8 +45,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     private final AnimationFactory factory = new AnimationFactory(this);
 
     public static final EntityDataAccessor<Boolean> TAMED = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
-    //private final TargetingConditions playerTargeting = TargetingConditions.forNonCombat().range(8.0D);
-    private BlockPos homePos;
+    public BlockPos homePos;
     private boolean setBehaviors;
 
 
@@ -83,19 +80,22 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     public List<WrappedGoal> getTamedGoals(){
         List<WrappedGoal> list = new ArrayList<>();
         list.add(new WrappedGoal(3, new RandomLookAroundGoal(this)));
-        list.add(new WrappedGoal(0, new RandomSwimmingGoal(this,1,40)));
         list.add(new WrappedGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F)));
+        list.add(new WrappedGoal(2, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null)));
 
         return list;
     }
 
+    public BlockPos getHome() {
+        return this.homePos;
+    }
+
     public List<WrappedGoal> getWildGoals() {
         List<WrappedGoal> list = new ArrayList<>();
-        list.add(new WrappedGoal(3, new FollowMobGoalBackoff(this, 1.0D, 3.0F, 7.0F, 0.5f)));
-        list.add(new WrappedGoal(5, new FollowPlayerGoal(this, 1.0D, 3.0F, 7.0F)));
-        list.add(new WrappedGoal(0, new RandomSwimmingGoal(this,1,40)));
+        list.add(new WrappedGoal(6, new FollowPlayerGoal(this, 1.0D, 5.0F, 5.0F)));
+        list.add(new WrappedGoal(0, new RandomSwimmingGoal(this,1.2f,30)));
         list.add(new WrappedGoal(2, new RandomLookAroundGoal(this)));
-        list.add(new WrappedGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F)));
+        list.add(new WrappedGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F)));
         return list;
     }
 
@@ -116,6 +116,11 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     }
 
     public boolean removeWhenFarAway(double dist) {
+        return false;
+    }
+
+    @Override
+    public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
         return false;
     }
 
@@ -150,7 +155,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "idle", 0, this::idle));
-        data.addAnimationController(new AnimationController<>(this,"actions",10,this::actions));
+        data.addAnimationController(new AnimationController<>(this,"actions",20,this::actions));
     }
 
     private <T extends IAnimatable> PlayState idle(AnimationEvent<T> event) {
@@ -159,13 +164,20 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     }
 
     private <T extends IAnimatable> PlayState actions(AnimationEvent<T> event){
-        if (event.isMoving()) {
+        if (getDeltaMovement().length() > 0 || isInWater() || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim"));
         }else{
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
         }
         return PlayState.CONTINUE;
     }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
+    //end gecko stuff
 
     public static AttributeSupplier createAttributes(){
         return LivingEntity.createLivingAttributes()
@@ -176,12 +188,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
                 .build();
     }
 
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
-    }
-
-    //end gecko stuff
 
     @Override
     protected void defineSynchedData() {
@@ -227,38 +233,32 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     protected PathNavigation createNavigation(Level world) {
         FlyingPathNavigation flyingpathnavigator = new FlyingPathNavigation(this, world);
         flyingpathnavigator.setCanOpenDoors(false);
-        flyingpathnavigator.setCanFloat(true);
+        flyingpathnavigator.setCanFloat(false);
         flyingpathnavigator.setCanPassDoors(true);
         return flyingpathnavigator;
     }
 
+
     public void travel(Vec3 pTravelVector) {
-        if (this.isInWater()) {
-            this.moveRelative(0.02F, pTravelVector);
-            this.move(MoverType.SELF, this.getDeltaMovement());
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.8F));
-        } else if (this.isInLava()) {
+        if (this.isInLava()) {
             this.moveRelative(0.02F, pTravelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
         } else {
-            BlockPos ground = new BlockPos(this.getX(), this.getY() - 1.0D, this.getZ());
+            BlockPos ground = new BlockPos(this.getX(), this.getY(), this.getZ());
             float f = 0.91F;
+
             if (this.onGround) {
                 f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
             }
 
             float f1 = 0.16277137F / (f * f * f);
-            f = 0.91F;
-            if (this.onGround) {
-                f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
-            }
-
-            this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, pTravelVector);
+            this.moveRelative(0.1F * f1, pTravelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(f));
         }
 
         this.calculateEntityAnimation(this, false);
     }
+
 }

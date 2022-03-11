@@ -1,0 +1,45 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "reagent": [
+    {
+      "item": "minecraft:soul_sand"
+    }
+  ],
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:air_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:water_upstream"
+  },
+  "sourceCost": 0,
+  "keepNbtOfReagent": false
+}

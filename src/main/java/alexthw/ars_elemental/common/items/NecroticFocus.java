@@ -47,10 +47,15 @@ import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
 
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
-public class NecroticFocus extends Item implements ISpellModifierItem, ICurioItem {
+public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
 
     public NecroticFocus(Item.Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public SpellSchool getSchool() {
+        return NECROMANCY;
     }
 
     @Override

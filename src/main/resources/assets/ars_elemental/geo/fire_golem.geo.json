@@ -35,7 +35,12 @@
 				{
 					"name": "r_arm",
 					"parent": "master",
-					"pivot": [-7.5, 24, 0],
+					"pivot": [-7.5, 24, 0]
+				},
+				{
+					"name": "arm_r",
+					"parent": "r_arm",
+					"pivot": [-12.5, 19, 0],
 					"cubes": [
 						{"origin": [-15.5, 12, -3], "size": [6, 14, 6], "uv": [40, 43]}
 					]
@@ -43,7 +48,12 @@
 				{
 					"name": "l_arm",
 					"parent": "master",
-					"pivot": [7.5, 24, 0],
+					"pivot": [7.5, 24, 0]
+				},
+				{
+					"name": "arm_l",
+					"parent": "l_arm",
+					"pivot": [12.5, 19, 0],
 					"cubes": [
 						{"origin": [9.5, 12, -3], "size": [6, 14, 6], "uv": [40, 43], "mirror": true}
 					]

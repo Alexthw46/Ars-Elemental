@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.blocks.mermaid_block;
 
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.MermaidEntity;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
@@ -42,10 +43,10 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             if (tickCounter >= 120) {
                 converted = true;
                 level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(SummoningTile.CONVERTED, true));
-                EntityDrygmy entityDrygmy = new EntityDrygmy(level, true);
-                entityDrygmy.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 1.0, worldPosition.getZ() + 0.5);
-                entityDrygmy.homePos = new BlockPos(getBlockPos());
-                level.addFreshEntity(entityDrygmy);
+                MermaidEntity mermaid = new MermaidEntity(level, true);
+                mermaid.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 1.0, worldPosition.getZ() + 0.5);
+                mermaid.homePos = new BlockPos(getBlockPos());
+                level.addFreshEntity(mermaid);
                 ParticleUtil.spawnPoof(world, worldPosition.above());
                 tickCounter = 0;
                 return;
@@ -100,7 +101,6 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             }
 
         }else {
-
 
             if (level.getGameTime() % 100 == 0) {
                 refreshEntitiesAndBonus();

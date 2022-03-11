@@ -2,6 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
+import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -11,10 +12,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -30,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static alexthw.ars_elemental.ModRegistry.BLOCKS;
 import static alexthw.ars_elemental.ModRegistry.ITEMS;
 
 @SuppressWarnings("ConstantConditions")
@@ -142,8 +141,10 @@ public class Datagen {
         @Override
         protected void registerStatesAndModels() {
             Set<RegistryObject<Block>> blocks = new HashSet<>(ModRegistry.BLOCKS.getEntries());
+            takeAll(blocks, b-> b.get() instanceof RotatedPillarBlock).forEach(this::topSideBlock);
             takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
             takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
+            takeAll(blocks, b -> b.get() instanceof SummonBlock);
             blocks.forEach(this::basicBlock);
         }
 
@@ -159,8 +160,12 @@ public class Datagen {
             stairsBlock((StairBlock) blockRegistryObject.get(), ArsElemental.prefix("block/" + baseName));
         }
 
-        private void basicBlock(RegistryObject<Block> blockRegistryObject) {
+        public void basicBlock(RegistryObject<Block> blockRegistryObject) {
             simpleBlock(blockRegistryObject.get());
+        }
+
+        public void topSideBlock(RegistryObject<Block> blockRegistryObject){
+            logBlock((RotatedPillarBlock) blockRegistryObject.get());
         }
 
         @NotNull
@@ -168,6 +173,7 @@ public class Datagen {
         public String getName() {
             return "Ars Elemental BlockStates";
         }
+
     }
 
     public static class ModItemTagsProvider extends ItemTagsProvider{

@@ -109,6 +109,11 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         return 40;
     }
 
+    @Override
+    public SpellTier getTier() {
+        return SpellTier.THREE;
+    }
+
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {

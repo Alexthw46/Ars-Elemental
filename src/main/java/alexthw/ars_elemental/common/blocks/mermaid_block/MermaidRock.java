@@ -14,7 +14,7 @@ public class MermaidRock extends SummonBlock {
     public static VoxelShape shape;
 
     public MermaidRock(Properties properties) {
-        super(properties, "mermaid_rock");
+        super(properties);
         registerDefaultState(defaultBlockState().setValue(CONVERTED, false));
     }
 

@@ -3,7 +3,7 @@
 	"animations": {
 		"floating": {
 			"loop": true,
-			"animation_length": 4,
+			"animation_length": 2.4,
 			"bones": {
 				"master": {
 					"position": {
@@ -33,43 +33,22 @@
 			}
 		},
 		"idle": {
-			"loop": "hold_on_last_frame",
-			"animation_length": 1.04,
+			"loop": true,
 			"bones": {
 				"arm_right": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.04": {
-							"vector": [0, 40, 20]
-						}
+						"vector": [0, 40, 20]
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.04": {
-							"vector": [0, 0.25, -1.5]
-						}
+						"vector": [0, 0.25, -1.5]
 					}
 				},
 				"arm_left": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.04": {
-							"vector": [0, -40, -20]
-						}
+						"vector": [0, -40, -20]
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.04": {
-							"vector": [0, 0.25, -1.5]
-						}
+						"vector": [0, 0.25, -1.5]
 					}
 				},
 				"hairpin": {

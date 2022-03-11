@@ -84,13 +84,10 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
             this.level.broadcastEntityEvent(this, (byte)3);
             this.remove(RemovalReason.DISCARDED);
         }else if (getHitResult().getType() == HitResult.Type.ENTITY){
+
             Vec3 vel = getDeltaMovement();
-            /*
-            if (Math.abs(vel.x()) > Math.abs(vel.z())){
-                setDeltaMovement(-vel.x(), -vel.y(), vel.z());
-            }
-            */
-            setDeltaMovement(-vel.x(), -vel.y(), -vel.z());
+            setDeltaMovement(vel.reverse().scale(1.2d));
+            target = null;
 
         }
     }

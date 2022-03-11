@@ -1,7 +1,9 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
+import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
+import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.*;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
@@ -38,6 +40,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -100,6 +103,7 @@ public class ModRegistry {
     public static final RegistryObject<Item> FIRENANDO_CHARM;
 
     public static final RegistryObject<Item> CURIO_BAG;
+    public static final RegistryObject<Item> DEBUG_ICON;
     public static final RegistryObject<Item> FIRE_FOCUS;
     public static final RegistryObject<Item> AIR_FOCUS;
     public static final RegistryObject<Item> WATER_FOCUS;
@@ -122,17 +126,19 @@ public class ModRegistry {
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", ()-> new FirenandoCharm(addTabProp()));
 
-        SIREN_ENTITY = registerEntity("siren_entity", 0.4F,0.8F, MermaidEntity::new, MobCategory.WATER_CREATURE );
-        SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F,0.8F, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
+        SIREN_ENTITY = registerEntity("siren_entity", 0.4F,1.4F, MermaidEntity::new, MobCategory.WATER_CREATURE );
+        SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F,1.4F, MermaidFamiliar::new, MobCategory.WATER_CREATURE );
 
-        FIRENANDO_ENTITY = addEntity("fire_golem_entity", 1.0F, 1.8F, true, false, FirenandoEntity::new, MobCategory.CREATURE);
-        FIRENANDO_FAMILIAR = addEntity("fire_golem_familiar", 1.0F, 1.8F, true, false, FirenandoFamiliar::new, MobCategory.CREATURE);
+        FIRENANDO_ENTITY = addEntity("firenando_entity", 1.0F, 2.2F, true, false, FirenandoEntity::new, MobCategory.CREATURE);
+        FIRENANDO_FAMILIAR = addEntity("firenando_familiar", 1.0F, 2.2F, true, false, FirenandoFamiliar::new, MobCategory.CREATURE);
 
         SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 0.95F, SummonDirewolf::new, MobCategory.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         HOMING_PROJECTILE = addEntity("homing_projectile", 0.5F, 0.5F,true,true, EntityHomingProjectile::new, MobCategory.MISC);
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);
+
+        DEBUG_ICON = ITEMS.register("debug",() -> new Item(new Item.Properties()));
 
         CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
@@ -143,13 +149,8 @@ public class ModRegistry {
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
 
-        MERMAID_ROCK = addBlock("mermaid_rock", new Block(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));//TODO migrate to actual class
-        UPSTREAM_BLOCK = addBlock("water_upstream", new TickableModBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
-            @Override
-            public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-                return new UpstreamTile(pPos,pState);
-            }
-        });
+        MERMAID_ROCK = addBlock("mermaid_rock", new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
+        UPSTREAM_BLOCK = addBlock("water_upstream", new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
@@ -190,9 +191,14 @@ public class ModRegistry {
     }
 
     @SubscribeEvent
-    static void registerTiles(RegistryEvent.Register<BlockEntityType<?>> evt){
+    public static void registerTiles(RegistryEvent.Register<BlockEntityType<?>> evt){
         MERMAID_TILE = addTileEntity(evt.getRegistry(), "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
         UPSTREAM_TILE = addTileEntity(evt.getRegistry(), "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
+        ArsNouveauRegistry.addLights();
     }
 
     static <T extends BlockEntity> BlockEntityType<T> addTileEntity(IForgeRegistry<BlockEntityType<?>> registry, String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {

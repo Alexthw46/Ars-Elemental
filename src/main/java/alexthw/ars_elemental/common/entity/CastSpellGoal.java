@@ -1,6 +1,9 @@
 package alexthw.ars_elemental.common.entity;
 
 import com.hollingsworth.arsnouveau.common.entity.goal.wealdwalker.CastGoal;
+import com.hollingsworth.arsnouveau.common.network.Networking;
+import com.hollingsworth.arsnouveau.common.network.PacketAnimEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.function.Supplier;
 

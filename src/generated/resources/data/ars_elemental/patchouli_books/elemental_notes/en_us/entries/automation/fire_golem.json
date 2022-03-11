@@ -1,0 +1,15 @@
+{
+  "name": "item.ars_elemental.firenando_charm",
+  "icon": "ars_elemental:firenando_charm",
+  "category": "ars_nouveau:automation",
+  "pages": [
+    {
+      "text": "ars_elemental.page1.fire_golem",
+      "type": "patchouli:text"
+    },
+    {
+      "entity": "ars_elemental:firenando_entity",
+      "type": "patchouli:entity"
+    }
+  ]
+}

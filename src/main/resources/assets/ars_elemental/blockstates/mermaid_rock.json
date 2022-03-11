@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "converted=false": {
+      "model": "minecraft:block/prismarine"
+    },
+    "converted=true": {
+      "model": "ars_elemental:block/mermaid_rock"
+    }
+  }
+}

@@ -1,11 +1,11 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.glyphs.EffectCharm;
-import alexthw.ars_elemental.common.glyphs.EffectConjureDirt;
-import alexthw.ars_elemental.common.glyphs.EffectLifeLink;
-import alexthw.ars_elemental.common.glyphs.EffectWaterGrave;
+import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
+import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
+import alexthw.ars_elemental.common.glyphs.*;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
+import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.Blocks;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
 
 public class ANProviders {
@@ -47,6 +48,9 @@ public class ANProviders {
 
             recipes.add(get(EffectCharm.INSTANCE).withItem(Items.GOLDEN_APPLE).withItem(Items.GOLDEN_CARROT).withItem(ItemsRegistry.SOURCE_BERRY_PIE).withItem(Blocks.CAKE));
             recipes.add(get(EffectLifeLink.INSTANCE).withItem(Items.LEAD).withItem(ItemsRegistry.ABJURATION_ESSENCE).withItem(Items.GLISTERING_MELON_SLICE).withItem(Items.IRON_SWORD).withItem(Items.FERMENTED_SPIDER_EYE));
+
+            recipes.add(get(MethodCurvedProjectile.INSTANCE).withItem(Items.ARROW).withItem(Items.SNOWBALL).withItem(Items.SLIME_BALL).withItem(Items.ENDER_PEARL));
+            recipes.add(get(MethodHomingProjectile.INSTANCE).withItem(Items.NETHER_STAR).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ItemsRegistry.DOWSING_ROD).withItem(Items.ENDER_EYE));
 
             for(GlyphRecipe recipe : recipes){
                 Path path = getScribeGlyphPath(output,  recipe.output.getItem());
@@ -76,6 +80,15 @@ public class ANProviders {
                     .withPedestalItem(2, Items.WITHER_ROSE)
                     .withPedestalItem(1, Items.WITHER_SKELETON_SKULL)
                     .withPedestalItem(1, ItemsRegistry.CONJURATION_ESSENCE)
+                    .build()
+            );
+
+            recipes.add(builder()
+                            .withResult(ModRegistry.UPSTREAM_BLOCK.get())
+                            .withReagent(Items.SOUL_SAND)
+                            .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                            .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                            .withPedestalItem(4, Items.PRISMARINE_SHARD)
                     .build()
             );
 
@@ -169,7 +182,9 @@ public class ANProviders {
                 addGlyphPage(spell);
             }
 
+            addBasicItem(ModRegistry.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModRegistry.UPSTREAM_BLOCK.get()));
             addBasicItem(ModRegistry.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModRegistry.CURIO_BAG.get()));
+
             addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.NECRO_FOCUS.get())
                             .withIcon(ModRegistry.NECRO_FOCUS.get())
                             .withTextPage("ars_elemental.page1.necrotic_focus")
@@ -207,6 +222,21 @@ public class ANProviders {
                     ,getPath(EQUIPMENT,"earth_focus")
             );
 
+            addPage(new PatchouliBuilder(AUTOMATION, ModRegistry.SIREN_CHARM.get())
+                            .withIcon(ModRegistry.SIREN_CHARM.get())
+                            .withTextPage("ars_elemental.page1.mermaid")
+                            .withPage(new EntityPage(prefix("siren_entity").toString()))
+                    ,getPath(AUTOMATION, "mermaid"));
+
+            addPage(new PatchouliBuilder(AUTOMATION, ModRegistry.FIRENANDO_CHARM.get())
+                            .withIcon(ModRegistry.FIRENANDO_CHARM.get())
+                            .withTextPage("ars_elemental.page1.fire_golem")
+                            .withPage(new EntityPage(prefix("firenando_entity").toString()))
+                    ,getPath(AUTOMATION, "fire_golem"));
+
+            addFamiliarPage(new MermaidHolder());
+            addFamiliarPage(new FirenandoHolder());
+
             for(PatchouliPage patchouliPage : pages){
                 DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
             }
@@ -220,6 +250,14 @@ public class ANProviders {
                     .withPage(new TextPage("ars_elemental.page." + item.asItem().getRegistryName().getPath()))
                     .withPage(recipePage);
             this.pages.add(new PatchouliPage(builder, getPath(category, item.asItem().getRegistryName().getPath())));
+        }
+
+        public void addFamiliarPage(AbstractFamiliarHolder familiarHolder){
+            PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getId() + "_entity")
+                    .withIcon("ars_nouveau:familiar_" + familiarHolder.getId())
+                    .withTextPage("ars_nouveau.familiar_desc." + familiarHolder.getId())
+                    .withPage(new EntityPage(prefix(familiarHolder.getEntityKey() + "_entity").toString()));
+            this.pages.add(new PatchouliPage(builder, getPath(FAMILIARS, familiarHolder.getId())));
         }
 
         /**

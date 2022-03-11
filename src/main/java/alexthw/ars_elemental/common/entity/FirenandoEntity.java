@@ -2,14 +2,14 @@ package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.ISpellCaster;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
-import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -22,6 +22,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,12 +35,15 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -48,7 +52,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, IWandable {
+public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, IWandable, IDispellable {
     public FirenandoEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
@@ -70,6 +74,25 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         if(!level.isClientSide() && level.getGameTime() % 20 == 0 && !this.isDeadOrDying()){
             this.heal(1.0f);
         }
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        if(!level.isClientSide){
+            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModRegistry.FIRENANDO_CHARM.get())));
+        }
+        super.die(source);
+    }
+
+    @Override
+    public boolean onDispel(@Nullable LivingEntity caster) {
+        if (this.isRemoved() || level.isClientSide) return false;
+
+        level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModRegistry.FIRENANDO_CHARM.get())));
+        ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
+        this.remove(RemovalReason.DISCARDED);
+
+        return true;
     }
 
     @Override
@@ -162,14 +185,21 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     //TODO GeckoStuff
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this,"run_controller", 1.0f, this::walkPredicate));
-        data.addAnimationController(new AnimationController(this,"attack_controller", 5f, this::attackPredicate));
+        data.addAnimationController(new AnimationController<>(this,"idle_controller", 0, this::idlePredicate));
+        data.addAnimationController(new AnimationController<>(this,"attack_controller", 5f, this::attackPredicate));
     }
 
-    PlayState attackPredicate(AnimationEvent event){
+    <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event){
+        if (entityData.get(SHOOTING)){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("shoot",true));
+        }else{
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
+        }
         return PlayState.CONTINUE;
     }
-    PlayState walkPredicate(AnimationEvent event){
+
+    <T extends IAnimatable> PlayState idlePredicate(AnimationEvent<T> event){
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle.body"));
         return PlayState.CONTINUE;
     }
 

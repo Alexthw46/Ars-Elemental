@@ -1,0 +1,15 @@
+{
+  "name": "entity.ars_elemental.firenando_entity",
+  "category": "ars_nouveau:familiars",
+  "icon": "ars_nouveau:familiar_firenando",
+  "pages": [
+    {
+      "text": "ars_nouveau.familiar_desc.firenando",
+      "type": "patchouli:text"
+    },
+    {
+      "entity": "ars_elemental:firenando_entity",
+      "type": "patchouli:entity"
+    }
+  ]
+}

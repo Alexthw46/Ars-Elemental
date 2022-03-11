@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.client.mermaid;
 
-import alexthw.ars_elemental.ArsElemental;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -42,8 +41,8 @@ public class MermaidModel extends AnimatedGeoModel<IAnimatable> {
         if (customPredicate == null) return;
         IBone head = this.getAnimationProcessor().getBone("head");
         EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-        //head.setRotationX(extraData.headPitch * ((float) Math.PI / 330F));
-        head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 330F));
+        head.setRotationX(extraData.headPitch * 0.002f);
+        head.setRotationY(extraData.netHeadYaw * 0.005f);
     }
 
 }

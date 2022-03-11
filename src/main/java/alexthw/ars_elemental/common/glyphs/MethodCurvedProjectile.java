@@ -111,6 +111,11 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
         return 10;
     }
 
+    @Override
+    public SpellTier getTier() {
+        return SpellTier.TWO;
+    }
+
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
