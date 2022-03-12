@@ -7,8 +7,6 @@ import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
-import javax.annotation.Nullable;
-
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
 public class FirenandoModel extends AnimatedGeoModel<IAnimatable> {

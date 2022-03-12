@@ -3,7 +3,6 @@ package alexthw.ars_elemental;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
-import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.*;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
@@ -14,8 +13,6 @@ import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
 import alexthw.ars_elemental.common.mob_effects.LifeLinkEffect;
 import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
@@ -35,7 +32,6 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -140,7 +136,7 @@ public class ModRegistry {
 
         DEBUG_ICON = ITEMS.register("debug",() -> new Item(new Item.Properties()));
 
-        CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().stacksTo(1)));
+        CURIO_BAG = ITEMS.register("curio_bag", ()-> new CurioHolder(addTabProp().fireResistant().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
         WATER_FOCUS = ITEMS.register("water_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
         AIR_FOCUS = ITEMS.register("air_focus", ()-> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
@@ -149,7 +145,8 @@ public class ModRegistry {
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
 
-        MERMAID_ROCK = addBlock("mermaid_rock", new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
+        MERMAID_ROCK = addBlock("mermaid_rock", new Block(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
+        //addBlock("mermaid_rock", new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
         UPSTREAM_BLOCK = addBlock("water_upstream", new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
     }
 

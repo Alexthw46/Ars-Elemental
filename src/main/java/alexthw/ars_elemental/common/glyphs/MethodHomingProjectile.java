@@ -30,7 +30,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         super("homing_projectile", "Homing Projectile");
     }
 
-    public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver){
+    public void summonProjectiles(Level world, Player shooter, SpellStats stats, SpellResolver resolver){
 
         ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
         EntityHomingProjectile projectileSpell = new EntityHomingProjectile(world, shooter, resolver);
@@ -57,8 +57,10 @@ public class MethodHomingProjectile extends AbstractCastMethod {
 
     @Override
     public void onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
-        summonProjectiles(world, shooter, spellStats, resolver);
-        resolver.expendMana(shooter);
+        if (shooter instanceof Player) {
+            summonProjectiles(world, (Player) shooter, spellStats, resolver);
+            resolver.expendMana(shooter);
+        }
     }
 
     /**

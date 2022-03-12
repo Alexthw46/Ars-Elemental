@@ -13,10 +13,15 @@ public class MermaidRock extends SummonBlock {
 
     public static VoxelShape shape;
 
+    public MermaidRock(String string) {
+        super(string);
+    }
+
+    /*
     public MermaidRock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(CONVERTED, false));
-    }
+    }*/
 
     @Nullable
     @Override

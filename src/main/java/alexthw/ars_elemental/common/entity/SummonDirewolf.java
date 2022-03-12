@@ -2,7 +2,6 @@ package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;

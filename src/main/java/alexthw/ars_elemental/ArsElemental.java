@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -50,13 +51,13 @@ public class ArsElemental
         ModRegistry.registerRegistries(modbus);
         ArsNouveauRegistry.init();
         modbus.addListener(this::setup);
-        modbus.addListener(this::doClientStuff);
         modbus.addListener(this::sendImc);
 
         MinecraftForge.EVENT_BUS.register(this);
 
         DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
+            modbus.addListener(this::doClientStuff);
             return new Object();
         });
 
@@ -70,8 +71,8 @@ public class ArsElemental
 
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
-
         CuriosRendererRegistry.register(ModRegistry.FIRE_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModRegistry.WATER_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModRegistry.AIR_FOCUS.get(), SpellFocusRenderer::new);

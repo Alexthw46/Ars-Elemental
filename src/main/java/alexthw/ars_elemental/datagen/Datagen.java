@@ -2,12 +2,14 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
@@ -28,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static alexthw.ars_elemental.ModRegistry.BLOCKS;
 import static alexthw.ars_elemental.ModRegistry.ITEMS;
 
 @SuppressWarnings("ConstantConditions")
@@ -43,6 +44,7 @@ public class Datagen {
             gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
             gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
             BlockTagsProvider BTP = new ModBlockTagsProvider(gen, existingFileHelper);
+            gen.addProvider(BTP);
             gen.addProvider(new ModItemTagsProvider(gen, BTP, existingFileHelper));
 
             gen.addProvider(new ANProviders.ImbuementProvider(gen));
@@ -141,10 +143,9 @@ public class Datagen {
         @Override
         protected void registerStatesAndModels() {
             Set<RegistryObject<Block>> blocks = new HashSet<>(ModRegistry.BLOCKS.getEntries());
-            takeAll(blocks, b-> b.get() instanceof RotatedPillarBlock).forEach(this::topSideBlock);
+            takeAll(blocks, b -> b.get() instanceof UpstreamBlock || b.get() instanceof SummonBlock);
             takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
             takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
-            takeAll(blocks, b -> b.get() instanceof SummonBlock);
             blocks.forEach(this::basicBlock);
         }
 
@@ -164,9 +165,6 @@ public class Datagen {
             simpleBlock(blockRegistryObject.get());
         }
 
-        public void topSideBlock(RegistryObject<Block> blockRegistryObject){
-            logBlock((RotatedPillarBlock) blockRegistryObject.get());
-        }
 
         @NotNull
         @Override
@@ -185,7 +183,9 @@ public class Datagen {
         @Override
         protected void addTags() {
             tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.AMETHYST_GOLEM_CHARM,ItemsRegistry.BOOKWYRM_CHARM, ItemsRegistry.DRYGMY_CHARM, ItemsRegistry.WIXIE_CHARM, ItemsRegistry.STARBUNCLE_CHARM, ItemsRegistry.WHIRLISPRIG_CHARM,
-                    ModRegistry.SIREN_CHARM.get(), ItemsRegistry.DOMINION_ROD, ItemsRegistry.JAR_OF_LIGHT, ItemsRegistry.VOID_JAR, ItemsRegistry.RUNIC_CHALK, ItemsRegistry.WARP_SCROLL, ItemsRegistry.SPELL_PARCHMENT);
+                    ModRegistry.SIREN_CHARM.get(), ModRegistry.FIRENANDO_CHARM.get(), ItemsRegistry.DOMINION_ROD, ItemsRegistry.JAR_OF_LIGHT, ItemsRegistry.VOID_JAR, ItemsRegistry.RUNIC_CHALK, ItemsRegistry.WARP_SCROLL, ItemsRegistry.SPELL_PARCHMENT);
+
+
         }
 
         @Override
@@ -202,6 +202,18 @@ public class Datagen {
 
         @Override
         protected void addTags() {
+            addPickMineable(1, ModRegistry.UPSTREAM_BLOCK.get());
+        }
+
+        void addPickMineable(int level,Block...blocks){
+            for (Block block : blocks){
+                tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+                switch (level) {
+                    case (1) -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
+                    case (2) -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
+                    case (3) -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
+                }
+            }
 
         }
 

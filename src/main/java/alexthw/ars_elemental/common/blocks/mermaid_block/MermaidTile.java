@@ -9,7 +9,6 @@ import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.SummoningTile;
-import com.hollingsworth.arsnouveau.common.entity.EntityDrygmy;
 import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import com.hollingsworth.arsnouveau.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -119,8 +118,6 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
     /**
      * A list of tool tips to render on the screen when looking at this target.
-     *
-     * @param tooltip
      */
     @Override
     public void getTooltip(List<Component> tooltip) {

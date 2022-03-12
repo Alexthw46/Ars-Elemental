@@ -3,11 +3,8 @@ package alexthw.ars_elemental.common.entity;
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class EntityCurvedProjectile extends EntityProjectileSpell {
@@ -44,7 +41,7 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
             this.remove(RemovalReason.DISCARDED);
         }else{
             Vec3 vel = getDeltaMovement();
-            setDeltaMovement(vel.x(), -vel.y(), vel.z());
+            setDeltaMovement(vel.x(), -0.9 * vel.y(), vel.z());
        }
     }
 

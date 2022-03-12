@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class EntityHomingProjectile extends EntityProjectileSpell {
 
-    LivingEntity owner;
+    Player owner;
     Entity ignore;
     LivingEntity target;
 
@@ -26,9 +27,9 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         return 20 * 30;
     }
 
-    public EntityHomingProjectile(Level worldIn, LivingEntity shooter, LivingEntity ignore, SpellResolver resolver) {
-        super(ModRegistry.HOMING_PROJECTILE.get(), worldIn, shooter);
-        this.owner = shooter;
+    public EntityHomingProjectile(Level worldIn, Player owner, LivingEntity ignore, SpellResolver resolver) {
+        super(ModRegistry.HOMING_PROJECTILE.get(), worldIn, resolver);
+        this.owner = owner;
         this.ignore = ignore;
     }
 
@@ -36,7 +37,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         super(ModRegistry.HOMING_PROJECTILE.get(), world, resolver);
     }
 
-    public EntityHomingProjectile(Level world, LivingEntity shooter, SpellResolver resolver) {
+    public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver) {
         this(world,resolver);
         this.owner = shooter;
     }

@@ -2,7 +2,6 @@ package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;

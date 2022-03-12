@@ -19,13 +19,14 @@ public class FirenandoCharm extends Item {
      */
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
-        if (world.isClientSide)
+        if (world.isClientSide || context.getPlayer() == null)
             return InteractionResult.SUCCESS;
         BlockPos pos = context.getClickedPos();
         FirenandoEntity firenando = new FirenandoEntity(world);
         Vec3 vec = context.getClickLocation();
         firenando.setPos(vec.x, vec.y, vec.z);
         firenando.setHome(pos);
+        firenando.setOwner(context.getPlayer());
         world.addFreshEntity(firenando);
         context.getItemInHand().shrink(1);
 

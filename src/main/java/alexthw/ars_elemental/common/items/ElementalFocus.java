@@ -1,11 +1,12 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
-import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import net.minecraft.sounds.SoundEvents;
@@ -81,6 +82,7 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
                 }
             }
         }
+        if (entity instanceof FirenandoEntity) return (ElementalFocus) ModRegistry.FIRE_FOCUS.get();
         return null;
     }
 
