@@ -2,6 +2,7 @@ package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.client.ClientEvents;
 import alexthw.ars_elemental.client.SpellFocusRenderer;
+import alexthw.ars_elemental.util.CompatUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -23,13 +24,15 @@ import software.bernie.geckolib3.GeckoLib;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
+import java.util.UUID;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsElemental.MODID)
 public class ArsElemental
 {
     /*
-    public static ForgeConfigSpec SERVER_CONFIG;
-    private static final Logger LOGGER = LogManager.getLogger();
+    *public static ForgeConfigSpec SERVER_CONFIG;
+    *private static final Logger LOGGER = LogManager.getLogger();
     */
 
     public static final ResourceLocation FOCUS_SLOT = prefix("gui/an_focus_slot");
@@ -41,20 +44,18 @@ public class ArsElemental
         }
     };
 
+    public static final UUID Dev = UUID.fromString("0e918660-22bf-4bed-8426-ece3b4bbd01d");
 
     public ArsElemental() {
 
-        GeckoLib.initialize();
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
-
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
         ModRegistry.registerRegistries(modbus);
         ArsNouveauRegistry.init();
         modbus.addListener(this::setup);
         modbus.addListener(this::sendImc);
-
         MinecraftForge.EVENT_BUS.register(this);
-
         DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
             modbus.addListener(this::doClientStuff);
@@ -67,8 +68,11 @@ public class ArsElemental
         return new ResourceLocation(MODID,path);
     }
 
-    private void setup(final FMLCommonSetupEvent event) {
-
+    public void setup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() ->{
+            ArsNouveauRegistry.postInit();
+            CompatUtils.checkCompats();
+        });
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -80,6 +84,7 @@ public class ArsElemental
         CuriosRendererRegistry.register(ModRegistry.NECRO_FOCUS.get(), SpellFocusRenderer::new);
 
     }
+
     public void sendImc(InterModEnqueueEvent evt) {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bundle").size(1).build());
         InterModComms.sendTo("curios", SlotTypeMessage.MODIFY_TYPE, () -> new SlotTypeMessage.Builder("an_focus").size(1).icon(FOCUS_SLOT).cosmetic().build());

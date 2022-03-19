@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.lib.GlyphLib;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
@@ -15,6 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Set;
 
 public class EffectConjureDirt extends AbstractEffect {
@@ -60,6 +62,13 @@ public class EffectConjureDirt extends AbstractEffect {
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
         return augmentSetOf(AugmentAOE.INSTANCE, AugmentPierce.INSTANCE, AugmentAmplify.INSTANCE);
+    }
+
+    @Override
+    protected Map<String, Integer> getDefaultAugmentLimits() {
+        Map<String, Integer> map = super.getDefaultAugmentLimits();
+        map.put(GlyphLib.AugmentAmplifyID, 1);
+        return map;
     }
 
     @Override

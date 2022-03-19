@@ -17,11 +17,11 @@ public class MermaidRock extends SummonBlock {
         super(string);
     }
 
-    /*
+
     public MermaidRock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(CONVERTED, false));
-    }*/
+    }
 
     @Nullable
     @Override

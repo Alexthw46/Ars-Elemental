@@ -21,13 +21,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EffectLaunch.class)
 public class EffectLaunchMixin {
 
-    @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false, cancellable = true)
+    @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false)
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
 
         if (rayTraceResult.getEntity() instanceof LivingEntity living && (ElementalFocus.hasFocus(world, shooter) == ModRegistry.AIR_FOCUS.get()) && (spellStats.hasBuff(AugmentExtendTime.INSTANCE) || spellStats.hasBuff(AugmentDurationDown.INSTANCE))){
             living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, (int) (50 * (1 + spellStats.getDurationMultiplier())), (int) spellStats.getAmpMultiplier()/2) );
-            ci.cancel();
         }
 
     }

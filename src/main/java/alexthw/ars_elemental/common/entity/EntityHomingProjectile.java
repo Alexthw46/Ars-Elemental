@@ -1,10 +1,13 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +24,12 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     Player owner;
     Entity ignore;
     LivingEntity target;
+    boolean targetPlayers = false;
+
+    public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver, boolean targetPlayers) {
+        this(world,shooter,resolver);
+        this.targetPlayers = targetPlayers;
+    }
 
     @Override
     public int getExpirationTime() {
@@ -74,7 +83,8 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     }
 
     private boolean shouldTarget(LivingEntity e) {
-        if (e instanceof FirenandoEntity) return false;
+        if (e instanceof FirenandoEntity || e instanceof IUndeadSummon || !targetPlayers && e instanceof Player) return false;
+        //if (CompatUtils.tooManyGlyphsLoaded());
         return e != owner && e != ignore && e.isAlive();
     }
 
@@ -92,6 +102,18 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
         }
     }
+
+    @Override
+    public void shoot(Entity entityThrower, float rotationPitchIn, float rotationYawIn, float pitchOffset, float velocity, float inaccuracy)
+    {
+        float f = -Mth.sin(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
+        float f1 = -Mth.sin((rotationPitchIn + pitchOffset) * ((float)Math.PI / 180F));
+        float f2 = Mth.cos(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
+        this.shoot(f, f1, f2, 0f, inaccuracy);
+        Vec3 vec3d = entityThrower.getLookAngle();
+        this.setDeltaMovement(this.getDeltaMovement().add(vec3d.x, vec3d.y, vec3d.z).scale(velocity));
+    }
+
 
     private void homeTo(BlockPos dest) {
 
@@ -135,6 +157,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     @Override
     public boolean save(CompoundTag pCompound) {
         pCompound.putUUID("owner", owner.getUUID());
+        pCompound.putBoolean("aimPlayers", targetPlayers);
         if (ignore != null) {
             pCompound.putInt("ignore", ignore.getId());
         }
@@ -144,6 +167,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        this.targetPlayers = tag.getBoolean("aimPlayers");
         this.owner = getCommandSenderWorld().getPlayerByUUID(tag.getUUID("owner"));
         this.ignore = getCommandSenderWorld().getEntity(tag.getInt("ignore"));
     }

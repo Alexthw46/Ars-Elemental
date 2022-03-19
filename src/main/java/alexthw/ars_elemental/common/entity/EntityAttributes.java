@@ -3,6 +3,8 @@ package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
+import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;

@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common.entity;
+package alexthw.ars_elemental.common.entity.summon;
 
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;

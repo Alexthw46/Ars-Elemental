@@ -103,7 +103,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()));
         EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner),this, resolver);
         projectileSpell.setColor(color.toWrapper());
-        projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.1f, 0.8f);
+        projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.5f, 0.8f);
         level.addFreshEntity(projectileSpell);
         this.castCooldown = 20;
     }

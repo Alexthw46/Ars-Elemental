@@ -48,7 +48,7 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
             projectiles.add(spell);
         }
 
-        float velocity = 0.3f + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 2.0f;
+        float velocity = 0.8f + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 2.0f;
 
         for(EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0,0.25,0));

@@ -1,12 +1,15 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.common.entity.EntityCurvedProjectile;
+import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
+import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
@@ -20,20 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
+
+//TODO namespace glyph names
 public class ArsNouveauRegistry {
     public static final List<AbstractSpellPart> registeredSpells = new ArrayList<>();
 
     public static final SpellSchool NECROMANCY = new SpellSchool("necromancy");
 
-    public static void init(){
+    public static void init() {
         registerGlyphs();
-        registerFamiliars();
-        addCustomThings();
+        registerFamiliars(ArsNouveauAPI.getInstance());
         GlyphConfigs.registerGlyphConfigs();
     }
 
-
-    public static void registerGlyphs(){
+    public static void registerGlyphs() {
         //effects
         register(EffectWaterGrave.INSTANCE);
         register(EffectConjureDirt.INSTANCE);
@@ -45,9 +49,10 @@ public class ArsNouveauRegistry {
 
     }
 
-    public static void addCustomThings(){
+    public static void postInit() {
+        //Schools
         EffectWaterGrave.INSTANCE.spellSchools.add(SpellSchools.ELEMENTAL_WATER);
-        EffectConjureDirt.INSTANCE.spellSchools.addAll(Set.of(SpellSchools.CONJURATION,SpellSchools.ELEMENTAL_EARTH));
+        EffectConjureDirt.INSTANCE.spellSchools.addAll(Set.of(SpellSchools.CONJURATION, SpellSchools.ELEMENTAL_EARTH));
 
         EffectHeal.INSTANCE.spellSchools.add(NECROMANCY);
         EffectSummonVex.INSTANCE.spellSchools.add(NECROMANCY);
@@ -56,43 +61,62 @@ public class ArsNouveauRegistry {
         EffectLifeLink.INSTANCE.spellSchools.add(NECROMANCY);
         EffectCharm.INSTANCE.spellSchools.add(NECROMANCY);
 
+        //Tweaks
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
     }
 
-    public static void register(AbstractSpellPart spellPart){
+    public static void register(AbstractSpellPart spellPart) {
         ArsNouveauAPI.getInstance().registerSpell(spellPart.getId(), spellPart);
         registeredSpells.add(spellPart);
     }
 
-    public static void registerFamiliars(){
-        ArsNouveauAPI.getInstance().registerFamiliar(new MermaidHolder());
-        ArsNouveauAPI.getInstance().registerFamiliar(new FirenandoHolder());
+    public static void registerFamiliars(ArsNouveauAPI api) {
+        api.registerFamiliar(new MermaidHolder());
+        api.registerFamiliar(new FirenandoHolder());
     }
 
-    public static void addLights(){
+    public static void addLights() {
+        LightManager.register(ModRegistry.HOMING_PROJECTILE.get(), (p -> 15));
         LightManager.register(ModRegistry.CURVED_PROJECTILE.get(), (p -> 15));
-        LightManager.register(ModRegistry.FIRENANDO_ENTITY.get(), (p ->{
-            if(p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6){
+        LightManager.register(ModRegistry.FIRENANDO_ENTITY.get(), (p -> {
+            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }
             return 0;
         }));
-        LightManager.register(ModRegistry.FIRENANDO_FAMILIAR.get(), (p ->{
-            if(p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6){
+        LightManager.register(ModRegistry.FIRENANDO_FAMILIAR.get(), (p -> {
+            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }
             return 0;
         }));
-        LightManager.register(EntityType.GLOW_SQUID, (p ->{
-            if(p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6){
+        LightManager.register(EntityType.GLOW_SQUID, (p -> {
+            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }
             return 0;
         }));
     }
 
+    static {
+        TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
+            EntityProjectileSpell spell = new EntityHomingProjectile(world, resolver);
+            spell.setOwner(fakePlayer);
+            spell.setPos(position.x(), position.y(), position.z());
+            spell.shoot(direction.getStepX(),  direction.getStepY(), direction.getStepZ(), 0.25f, 0);
+            world.addFreshEntity(spell);
+        });
 
+        TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
+            EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
+            spell.setOwner(fakePlayer);
+            spell.setPos(position.x(), position.y(), position.z());
+            spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
+            world.addFreshEntity(spell);
+        });
+
+    }
 }

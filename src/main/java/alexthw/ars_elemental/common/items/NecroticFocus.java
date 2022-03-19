@@ -1,10 +1,12 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.entity.AllyVhexEntity;
-import alexthw.ars_elemental.common.entity.IUndeadSummon;
-import alexthw.ars_elemental.common.entity.SummonDirewolf;
-import alexthw.ars_elemental.common.entity.SummonSkeleHorse;
+import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
+import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
+import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
+import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
+import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
@@ -161,5 +163,7 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
     static {
         sympatheticMethods.add(MethodTouch.INSTANCE);
         sympatheticMethods.add(MethodProjectile.INSTANCE);
+        sympatheticMethods.add(MethodHomingProjectile.INSTANCE);
+        sympatheticMethods.add(MethodCurvedProjectile.INSTANCE);
     }
 }

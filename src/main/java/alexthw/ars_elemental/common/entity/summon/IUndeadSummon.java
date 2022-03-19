@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common.entity;
+package alexthw.ars_elemental.common.entity.summon;
 
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 

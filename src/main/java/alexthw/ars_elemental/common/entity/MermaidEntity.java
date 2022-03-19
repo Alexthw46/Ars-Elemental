@@ -83,7 +83,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
         List<WrappedGoal> list = new ArrayList<>();
         list.add(new WrappedGoal(3, new RandomLookAroundGoal(this)));
         list.add(new WrappedGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F)));
-        list.add(new WrappedGoal(2, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null)));
+        list.add(new WrappedGoal(2, new GoBackHomeGoal(this, this::getHome, 5, () -> this.getTarget() == null)));
 
         return list;
     }

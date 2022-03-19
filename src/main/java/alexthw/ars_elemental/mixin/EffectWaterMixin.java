@@ -1,8 +1,10 @@
 package alexthw.ars_elemental.mixin;
 
+import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.items.ElementalFocus;
+import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
@@ -32,5 +34,9 @@ public class EffectWaterMixin {
             GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, toPlace);
             ci.cancel();
         }
+        if (CompatUtils.isBotaniaLoaded()){
+            if (BotaniaCompat.tryFillApothecary(rayTraceResult.getBlockPos(), world)) ci.cancel();
+        }
+
     }
 }

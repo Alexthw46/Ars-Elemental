@@ -22,6 +22,11 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
 
+        public static ForgeConfigSpec.IntValue SIREN_MANA_COST;
+        public static ForgeConfigSpec.IntValue SIREN_MAX_PROGRESS;
+        public static ForgeConfigSpec.IntValue SIREN_BASE_ITEM;
+        public static ForgeConfigSpec.IntValue SIREN_UNIQUE_BONUS;
+        public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
         public Common(ForgeConfigSpec.Builder builder) {
 
@@ -53,16 +58,45 @@ public class ConfigHandler {
             EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
 
             builder.pop();
+
+            SIREN_MANA_COST = builder.comment("How much source mermaids consume per generation").defineInRange("mermaidManaCost",1000,0,10000);
+            SIREN_MAX_PROGRESS = builder.comment("How many channels must occur before a mermaid produces loot").defineInRange("mermaidMaxProgress",20,0,300);
+            SIREN_UNIQUE_BONUS = builder.comment("Bonus number of items a mermaid produces per unique mob").defineInRange("mermaidUniqueBonus",2,0,300);
+            SIREN_BASE_ITEM = builder.comment("Base number of items a mermaid produces per cycle before bonuses.").defineInRange("mermaidBaseItems",1,Integer.MIN_VALUE,Integer.MAX_VALUE);
+            SIREN_QUANTITY_CAP = builder.comment("Max Bonus number of items a mermaid produces from nearby entities. Each entity equals 1 item.").defineInRange("mermaidQuantityCap",5,0,300);
+
         }
     }
 
     public static final Common COMMON;
     public static final ForgeConfigSpec COMMON_SPEC;
 
+    public static class Client{
+
+        public static ForgeConfigSpec.ConfigValue<Boolean> EnableSFRendering;
+
+        public Client(ForgeConfigSpec.Builder builder){
+            builder.push("Visual Configs");
+
+            EnableSFRendering = builder.comment("Enables the rendering of the spell focus while equipped").define("Enable SpellFocusRender", true);
+
+            builder.pop();
+        }
+    }
+
+    public static final Client CLIENT;
+    public static final ForgeConfigSpec CLIENT_SPEC;
+
     static {
+
         final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = specPair.getRight();
         COMMON = specPair.getLeft();
+
+        final Pair<Client,ForgeConfigSpec> specClientPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        CLIENT_SPEC = specClientPair.getRight();
+        CLIENT = specClientPair.getLeft();
+
     }
 
 }

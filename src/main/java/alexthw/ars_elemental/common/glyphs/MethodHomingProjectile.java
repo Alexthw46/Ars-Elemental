@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
+import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
@@ -32,22 +33,60 @@ public class MethodHomingProjectile extends AbstractCastMethod {
 
     public void summonProjectiles(Level world, Player shooter, SpellStats stats, SpellResolver resolver){
 
+        boolean targetPlayers = stats.hasBuff(AugmentSensitive.INSTANCE);
+
         ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(world, shooter, resolver);
+        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(world, shooter, resolver, targetPlayers);
         projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
+
+        if (numSplits > 0){
+            stats.setDamageModifier(stats.getDamageModifier() * 0.75D);
+        }
 
         for(int i =1; i < numSplits + 1; i++){
             Direction offset =shooter.getDirection().getClockWise();
             if(i%2==0) offset = offset.getOpposite();
             BlockPos projPos = shooter.blockPosition().relative(offset, i/2);
             projPos = projPos.offset(0, 1.5, 0);
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver);
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver, targetPlayers);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
 
-        float velocity = 0.05f + stats.getBuffCount(AugmentAccelerate.INSTANCE);
+        float velocity = 0.4F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
+
+        for(EntityHomingProjectile proj : projectiles) {
+            proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
+            world.addFreshEntity(proj);
+        }
+    }
+
+    public void summonProjectilesAlt(Level world, LivingEntity shooter, Player owner, SpellStats stats, SpellResolver resolver){
+
+        boolean targetPlayers = stats.hasBuff(AugmentSensitive.INSTANCE);
+
+        ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
+        projectiles.add(new EntityHomingProjectile(world, owner, resolver, targetPlayers));
+        int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
+
+        if (numSplits > 0){
+            stats.setDamageModifier(stats.getDamageModifier() * 0.5D);
+        }
+
+        int i =1;
+        while (i <= numSplits) {
+            Direction offset =shooter.getDirection().getClockWise();
+            if (i%2==0) offset = offset.getOpposite();
+            BlockPos projPos = shooter.blockPosition().relative(offset, i/2);
+            projPos = projPos.offset(0, 1.5, 0);
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, owner, resolver, targetPlayers);
+            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
+            projectiles.add(spell);
+            i++;
+        }
+
+        float velocity = 0.4F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
 
         for(EntityHomingProjectile proj : projectiles) {
             proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
@@ -60,6 +99,8 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         if (shooter instanceof Player) {
             summonProjectiles(world, (Player) shooter, spellStats, resolver);
             resolver.expendMana(shooter);
+        }else if (shooter instanceof ISummon summon && summon.getOwnerID() != null){
+            summonProjectilesAlt(world, shooter, world.getPlayerByUUID(summon.getOwnerID()), spellStats, resolver);
         }
     }
 

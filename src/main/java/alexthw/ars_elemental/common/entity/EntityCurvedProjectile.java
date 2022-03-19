@@ -3,6 +3,8 @@ package alexthw.ars_elemental.common.entity;
 import alexthw.ars_elemental.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -45,7 +47,15 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
        }
     }
 
-
+    public void shoot(Entity entityThrower, float rotationPitchIn, float rotationYawIn, float pitchOffset, float velocity, float inaccuracy)
+    {
+        float f = -Mth.sin(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
+        float f1 = -Mth.sin((rotationPitchIn + pitchOffset) * ((float)Math.PI / 180F));
+        float f2 = Mth.cos(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
+        this.shoot(f, f1, f2, 0, inaccuracy);
+        Vec3 vec3d = entityThrower.getLookAngle();
+        this.setDeltaMovement(this.getDeltaMovement().add(vec3d.x, vec3d.y, vec3d.z).scale(velocity));
+    }
 
 
 }

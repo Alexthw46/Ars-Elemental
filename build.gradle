@@ -41,7 +41,6 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             arg "-mixin.config=ars_elemental.mixins.json"
-
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -142,13 +141,17 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
+    implementation fg.deobf("vazkii.botania:Botania:${mc_version}-429")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-64")
 
+    //implementation fg.deobf("curse.maven:tmg-:")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
+    /*
     runtimeOnly fg.deobf("curse.maven:tomb-243707:3638380")
     runtimeOnly fg.deobf("curse.maven:spark-361579:3644347")
     runtimeOnly fg.deobf("curse.maven:occ-361026:3647913")
+     */
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

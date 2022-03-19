@@ -3,10 +3,14 @@ package alexthw.ars_elemental;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
+import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.*;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
+import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
+import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
+import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
@@ -128,8 +132,8 @@ public class ModRegistry {
         FIRENANDO_ENTITY = addEntity("firenando_entity", 1.0F, 2.2F, true, false, FirenandoEntity::new, MobCategory.CREATURE);
         FIRENANDO_FAMILIAR = addEntity("firenando_familiar", 1.0F, 2.2F, true, false, FirenandoFamiliar::new, MobCategory.CREATURE);
 
-        SKELEHORSE_SUMMON = registerEntity("summon_skelehorse",1.3964844F, 1.6F, SummonSkeleHorse::new, MobCategory.CREATURE);
-        DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 0.95F, SummonDirewolf::new, MobCategory.CREATURE);
+        SKELEHORSE_SUMMON = addEntity("summon_skelehorse",1.4F, 1.6F, true, true, SummonSkeleHorse::new, MobCategory.CREATURE);
+        DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 1.0F, SummonDirewolf::new, MobCategory.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         HOMING_PROJECTILE = addEntity("homing_projectile", 0.5F, 0.5F,true,true, EntityHomingProjectile::new, MobCategory.MISC);
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);
@@ -145,8 +149,7 @@ public class ModRegistry {
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
 
-        MERMAID_ROCK = addBlock("mermaid_rock", new Block(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
-        //addBlock("mermaid_rock", new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
+        MERMAID_ROCK = addBlock("mermaid_rock", new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
         UPSTREAM_BLOCK = addBlock("water_upstream", new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
     }
 

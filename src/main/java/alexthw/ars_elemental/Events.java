@@ -1,12 +1,15 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.common.items.ElementalFocus;
+import alexthw.ars_elemental.common.items.ISchoolItem;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -48,6 +51,16 @@ public class Events {
     public static void boostHealing(LivingHealEvent event){
         if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ElementalFocus.hasFocus(player.getLevel(), player) == ModRegistry.EARTH_FOCUS.get()) {
             event.setAmount(event.getAmount() * 1.5F);
+        }
+    }
+
+    @SubscribeEvent
+    public static void saveFromElytra(LivingHurtEvent event){
+        if (event.getSource() == DamageSource.FLY_INTO_WALL && event.getEntity() instanceof Player player){
+            ISchoolItem focus = ElementalFocus.hasFocus(event.getEntity().level, player);
+            if ( focus != null && focus.getSchool() == SpellSchools.ELEMENTAL_AIR){
+                event.setAmount(event.getAmount() * 0.1f);
+            }
         }
     }
 
