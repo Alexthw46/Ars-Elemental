@@ -1,6 +1,8 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.bag.CurioHolderScreen;
+import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
@@ -46,6 +48,9 @@ public class ClientEvents {
                 return VhexTexture;
             }
         });
+        RenderingRegistry.registerEntityRenderingHandler(ModRegistry.ARC_PROJECTILE.get(), manager -> new RenderSpell(manager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+        RenderingRegistry.registerEntityRenderingHandler(ModRegistry.HOMING_PROJECTILE.get(), manager -> new RenderSpell(manager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+
     }
 
     @SubscribeEvent

@@ -139,8 +139,9 @@ dependencies {
 
 
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.16.4-50")
+    implementation fg.deobf("vazkii.botania:Botania:1.16.5-420")
     implementation fg.deobf("mezz.jei:jei-1.16.2:7.3.2.25")
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.1.0")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3")
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.41')
 
     runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")

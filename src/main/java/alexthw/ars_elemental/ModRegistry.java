@@ -2,11 +2,9 @@ package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.bag.CurioHolder;
 import alexthw.ars_elemental.bag.CurioHolderContainer;
-import alexthw.ars_elemental.entity.AllyVhexEntity;
-import alexthw.ars_elemental.entity.SummonDirewolf;
+import alexthw.ars_elemental.entity.*;
 import alexthw.ars_elemental.item.ElementalFocus;
 import alexthw.ars_elemental.item.NecroticFocus;
-import alexthw.ars_elemental.entity.SummonSkeleHorse;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -35,6 +33,8 @@ public class ModRegistry {
     public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
     public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
+    public static final RegistryObject<EntityType<EntityHomingProjectile>> HOMING_PROJECTILE;
+    public static final RegistryObject<EntityType<EntityArcProjectile>> ARC_PROJECTILE;
 
     public static final RegistryObject<Effect> HELLFIRE;
     public static final RegistryObject<Item> CURIO_BAG;
@@ -60,6 +60,10 @@ public class ModRegistry {
         EARTH_FOCUS = ITEMS.register("earth_focus", ()-> new ElementalFocus(addTabProps(), SpellSchools.ELEMENTAL_EARTH));
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(addTabProps()));
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(addTabProps().stacksTo(1)));
+
+        HOMING_PROJECTILE = registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, EntityClassification.MISC);
+        ARC_PROJECTILE = registerEntity("arc_projectile", 0.5F, 0.5F, EntityArcProjectile::new, EntityClassification.MISC);
+
 
         SKELEHORSE_SUMMON = ENTITIES.register("summon_skelehorse", () -> EntityType.Builder.of(SummonSkeleHorse::new,EntityClassification.CREATURE).sized(1.3964844F, 1.6F).setTrackingRange(10).build("ars_elemental:" + "summon_skelehorse"));
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, EntityClassification.CREATURE);

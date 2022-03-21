@@ -5,7 +5,9 @@
   "refmap": "ars_elemental.refmap.json",
   "mixins": [
     "EffectIgniteMixin",
-    "FlareMixin"
+    "FlareMixin",
+    "SafeLightningMixin",
+    "WaterBotaniaMixin"
   ],
   "minVersion": "0.8"
 }
