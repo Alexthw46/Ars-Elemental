@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.lib.GlyphLib;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -21,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 public class MethodHomingProjectile extends AbstractCastMethod {
@@ -155,6 +157,13 @@ public class MethodHomingProjectile extends AbstractCastMethod {
     @Override
     public SpellTier getTier() {
         return SpellTier.THREE;
+    }
+
+    @Override
+    protected Map<String, Integer> getDefaultAugmentLimits() {
+        Map<String, Integer> map = super.getDefaultAugmentLimits();
+        map.put(GlyphLib.AugmentPierceID, 1);
+        return map;
     }
 
     @Nonnull

@@ -144,7 +144,7 @@ dependencies {
     implementation fg.deobf("vazkii.botania:Botania:${mc_version}-429")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-64")
 
-    //implementation fg.deobf("curse.maven:tmg-:")
+    implementation fg.deobf("curse.maven:tmg-560595:3706717")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     /*

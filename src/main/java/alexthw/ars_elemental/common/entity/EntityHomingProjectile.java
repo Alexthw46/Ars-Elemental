@@ -3,8 +3,10 @@ package alexthw.ars_elemental.common.entity;
 import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
 import alexthw.ars_elemental.util.CompatUtils;
+import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -13,22 +15,28 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class EntityHomingProjectile extends EntityProjectileSpell {
 
     Player owner;
     Entity ignore;
     LivingEntity target;
+    Set<AbstractEffectFilter> filters;
     boolean targetPlayers = false;
 
     public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver, boolean targetPlayers) {
         this(world,shooter,resolver);
         this.targetPlayers = targetPlayers;
+        filters = TooManyCompats.getFilters(resolver.spell.recipe);
     }
 
     @Override
@@ -44,6 +52,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
         super(ModRegistry.HOMING_PROJECTILE.get(), world, resolver);
+
     }
 
     public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver) {
@@ -83,9 +92,13 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     }
 
     private boolean shouldTarget(LivingEntity e) {
-        if (e instanceof FirenandoEntity || e instanceof IUndeadSummon || !targetPlayers && e instanceof Player) return false;
-        //if (CompatUtils.tooManyGlyphsLoaded());
-        return e != owner && e != ignore && e.isAlive();
+
+        boolean flag = !(e instanceof FirenandoEntity || e instanceof IUndeadSummon);
+
+        if (e instanceof Player) flag &= targetPlayers;
+        if (CompatUtils.tooManyGlyphsLoaded()) flag &= TooManyCompats.checkFilters(e, this.filters);
+
+        return flag && e != owner && e != ignore && e.isAlive();
     }
 
     @Override
@@ -97,9 +110,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         }else if (getHitResult().getType() == HitResult.Type.ENTITY){
 
             Vec3 vel = getDeltaMovement();
-            setDeltaMovement(vel.reverse().scale(1.2d));
-            target = null;
-
+            this.target = null;
         }
     }
 
@@ -126,7 +137,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
         if (dest.getX() != 0 || dest.getY() != 0 || dest.getZ() != 0){
             double targetX = dest.getX()+0.5;
-            double targetY = dest.getY()+0.5;
+            double targetY = dest.getY()+0.75;
             double targetZ = dest.getZ()+0.5;
             Vec3 targetVector = new Vec3(targetX-posX,targetY-posY,targetZ-posZ);
             double length = targetVector.length();
@@ -156,11 +167,13 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     @Override
     public boolean save(CompoundTag pCompound) {
-        pCompound.putUUID("owner", owner.getUUID());
-        pCompound.putBoolean("aimPlayers", targetPlayers);
+        if (owner != null) {
+            pCompound.putUUID("owner", owner.getUUID());
+        }
         if (ignore != null) {
             pCompound.putInt("ignore", ignore.getId());
         }
+        pCompound.putBoolean("aimPlayers", targetPlayers);
         return super.save(pCompound);
     }
 
@@ -168,8 +181,19 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.targetPlayers = tag.getBoolean("aimPlayers");
-        this.owner = getCommandSenderWorld().getPlayerByUUID(tag.getUUID("owner"));
+        this.owner = tag.hasUUID("owner") ? getCommandSenderWorld().getPlayerByUUID(tag.getUUID("owner")) : null;
         this.ignore = getCommandSenderWorld().getEntity(tag.getInt("ignore"));
     }
 
+    @Override
+    protected void onHit(HitResult result) {
+
+        if (!level.isClientSide && result instanceof BlockHitResult blockraytraceresult && !this.isRemoved() && !hitList.contains(((BlockHitResult) result).getBlockPos())) {
+
+            BlockState state = level.getBlockState(blockraytraceresult.getBlockPos());
+            if (state.getBlock() == Blocks.NETHER_PORTAL || state.getBlock() == Blocks.END_PORTAL) return;
+        }
+
+        super.onHit(result);
+    }
 }
