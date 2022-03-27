@@ -30,13 +30,14 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     Player owner;
     Entity ignore;
     LivingEntity target;
-    Set<AbstractEffectFilter> filters;
+    Set<AbstractEffectFilter> filters = null;
     boolean targetPlayers = false;
 
     public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver, boolean targetPlayers) {
         this(world,shooter,resolver);
         this.targetPlayers = targetPlayers;
-        filters = TooManyCompats.getFilters(resolver.spell.recipe);
+        if (CompatUtils.tooManyGlyphsLoaded())
+            filters = TooManyCompats.getFilters(resolver.spell.recipe);
     }
 
     @Override
