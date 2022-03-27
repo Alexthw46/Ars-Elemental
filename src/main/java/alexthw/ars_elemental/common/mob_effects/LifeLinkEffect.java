@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.mob_effects;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -17,11 +18,11 @@ public class LifeLinkEffect extends MobEffect {
 
     public void healForHeal(LivingHealEvent event){
         if (event.getEntityLiving() != null && event.getEntityLiving().hasEffect(this)){
-            EntityCarryMEI instance = (EntityCarryMEI) event.getEntityLiving().getEffect(this);
-            if (instance != null && instance.getTarget() == event.getEntityLiving()) {
-                if (instance.getOwner().isAlive()) {
+            MobEffectInstance instance = event.getEntityLiving().getEffect(this);
+            if (instance instanceof EntityCarryMEI mei && mei.getTarget() == event.getEntityLiving()) {
+                if (mei.getOwner().isAlive()) {
                     int shared = (int) (event.getAmount() / 2);
-                    instance.getOwner().heal(shared);
+                    mei.getOwner().heal(shared);
                     event.setAmount(shared);
                 }else {
                     event.getEntityLiving().removeEffect(this);

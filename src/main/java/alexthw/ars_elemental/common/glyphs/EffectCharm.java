@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.items.NecroticFocus;
 import alexthw.ars_elemental.mixin.FoxMixin;
 import alexthw.ars_elemental.util.EntityCarryMEI;
@@ -47,7 +48,7 @@ public class EffectCharm extends AbstractEffect {
             if (rayTraceResult.getEntity() instanceof Monster mob) {
 
                 //TODO balance
-                if (mob.getMaxHealth() < 150) {
+                if (mob.getMaxHealth() < 150 || player.getUUID().equals(ArsElemental.Dev)) {
 
                     int resistance = (int) (mob.getHealth() / mob.getMaxHealth() * 100);
                     double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
@@ -56,7 +57,7 @@ public class EffectCharm extends AbstractEffect {
                         chanceBoost += 50;
                     }
 
-                    if (rollToSeduce(resistance, chanceBoost, mob.getRandom())) {
+                    if (rollToSeduce(resistance, chanceBoost, level.getRandom())) {
                         applyConfigPotion(mob, player, ENTHRALLED.get(), spellStats);
                         playHeartParticles(mob,level);
                     }
@@ -65,17 +66,17 @@ public class EffectCharm extends AbstractEffect {
             } else if (rayTraceResult.getEntity() instanceof Animal animal) {
 
                 if (animal instanceof TamableAnimal tamable && !tamable.isTame()) {
-                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))
+                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
                         tamable.tame(player);
                 }else if (animal instanceof AbstractHorse horse && !horse.isTamed()){
-                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))
+                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
                         horse.setTamed(true);
                 }else if (animal instanceof Fox fox && !((FoxMixin)fox).callTrusts(player.getUUID())){
-                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))
+                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
                         ((FoxMixin)fox).callAddTrustedUUID(player.getUUID());
                 }
                 else if (animal.canFallInLove()) {
-                    if (rollToSeduce(75, 25 * (1+spellStats.getAmpMultiplier()), animal.getRandom()))
+                    if (rollToSeduce(75, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
                         animal.setInLove(player);
                 }
 

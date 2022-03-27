@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.mob_effects;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -31,8 +32,8 @@ public class EnthrallEffect extends MobEffect {
 
     private boolean isEnthralledBy(LivingEntity entity, Player player) {
         if (entity.hasEffect(this)){
-            EntityCarryMEI instance = (EntityCarryMEI) entity.getEffect(this);
-            if (instance != null) return instance.getOwner() == player;
+            MobEffectInstance instance = entity.getEffect(this);
+            if (instance instanceof EntityCarryMEI mei) return mei.getOwner() == player;
         }
         return false;
     }

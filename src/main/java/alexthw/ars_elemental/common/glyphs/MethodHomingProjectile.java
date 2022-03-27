@@ -56,7 +56,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
             projectiles.add(spell);
         }
 
-        float velocity = 0.4F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
+        float velocity = 0.45F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
 
         for(EntityHomingProjectile proj : projectiles) {
             proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
