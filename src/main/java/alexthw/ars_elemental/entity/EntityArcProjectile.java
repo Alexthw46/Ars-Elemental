@@ -34,7 +34,7 @@ public class EntityArcProjectile extends EntityProjectileSpell {
     public void tick() {
         age++;
 
-        if(this.age > 600 || (!level.isClientSide && spellResolver == null)){
+        if(this.age > 1200 || (!level.isClientSide && spellResolver == null)){
             this.remove();
             return;
         }

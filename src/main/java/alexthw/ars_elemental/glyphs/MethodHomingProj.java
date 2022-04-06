@@ -113,7 +113,7 @@ public class MethodHomingProj extends AbstractCastMethod {
 
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentPierce.INSTANCE, AugmentAmplify.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE);
+        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSensitive.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE);
     }
 
 }

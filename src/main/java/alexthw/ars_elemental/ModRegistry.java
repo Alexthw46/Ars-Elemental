@@ -14,7 +14,6 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.Effect;
-import net.minecraft.potion.Effects;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -61,8 +60,8 @@ public class ModRegistry {
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(addTabProps()));
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(addTabProps().stacksTo(1)));
 
-        HOMING_PROJECTILE = registerEntity("homing_projectile", 0.5F, 0.5F, EntityHomingProjectile::new, EntityClassification.MISC);
-        ARC_PROJECTILE = registerEntity("arc_projectile", 0.5F, 0.5F, EntityArcProjectile::new, EntityClassification.MISC);
+        HOMING_PROJECTILE = registerProjectile("homing_projectile", EntityHomingProjectile::new);
+        ARC_PROJECTILE = registerProjectile("arc_projectile", EntityArcProjectile::new);
 
 
         SKELEHORSE_SUMMON = ENTITIES.register("summon_skelehorse", () -> EntityType.Builder.of(SummonSkeleHorse::new,EntityClassification.CREATURE).sized(1.3964844F, 1.6F).setTrackingRange(10).build("ars_elemental:" + "summon_skelehorse"));
@@ -74,6 +73,11 @@ public class ModRegistry {
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.IFactory<T> factory, EntityClassification kind) {
         EntityType<T> type = EntityType.Builder.of(factory, kind).clientTrackingRange(10).setTrackingRange(64).setUpdateInterval(1).sized(width, height).build("ars_elemental:" + name);
+        return ENTITIES.register(name, () -> type);
+    }
+
+    static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String name, EntityType.IFactory<T> factory) {
+        EntityType<T> type = EntityType.Builder.of(factory, EntityClassification.MISC).noSave().clientTrackingRange(10).setTrackingRange(64).setUpdateInterval(1).sized((float) 0.5, (float) 0.5).build("ars_elemental:" + name);
         return ENTITIES.register(name, () -> type);
     }
 
