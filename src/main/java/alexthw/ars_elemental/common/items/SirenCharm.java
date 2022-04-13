@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.items;
 
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
+import alexthw.ars_elemental.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
@@ -25,7 +25,7 @@ public class SirenCharm extends Item {
             return InteractionResult.SUCCESS;
         BlockPos pos = context.getClickedPos();
         if (world.getBlockState(pos).getBlock() == Blocks.PRISMARINE) {
-            world.setBlockAndUpdate(pos, ModRegistry.MERMAID_ROCK.get().defaultBlockState());
+            world.setBlockAndUpdate(pos, ModItems.MERMAID_ROCK.get().defaultBlockState());
             context.getItemInHand().shrink(1);
         }else {
             MermaidEntity mermaid = new MermaidEntity(world, false);

@@ -1,8 +1,9 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
+import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
@@ -14,7 +15,10 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -29,8 +33,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Predicate;
-
-import static alexthw.ars_elemental.ModRegistry.ITEMS;
 
 @SuppressWarnings("ConstantConditions")
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -86,7 +88,7 @@ public class Datagen {
 
         @Override
             protected void registerModels() {
-                Set<RegistryObject<Item>> items = new HashSet<>(ITEMS.getEntries());
+            Set<RegistryObject<Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
                 takeAll(items, i -> i.get() instanceof BlockItem && ((BlockItem) i.get()).getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
                 takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
                 takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
@@ -142,7 +144,7 @@ public class Datagen {
 
         @Override
         protected void registerStatesAndModels() {
-            Set<RegistryObject<Block>> blocks = new HashSet<>(ModRegistry.BLOCKS.getEntries());
+            Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
             takeAll(blocks, b -> b.get() instanceof UpstreamBlock || b.get() instanceof SummonBlock);
             takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
             takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
@@ -182,8 +184,8 @@ public class Datagen {
 
         @Override
         protected void addTags() {
-            tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.AMETHYST_GOLEM_CHARM,ItemsRegistry.BOOKWYRM_CHARM, ItemsRegistry.DRYGMY_CHARM, ItemsRegistry.WIXIE_CHARM, ItemsRegistry.STARBUNCLE_CHARM, ItemsRegistry.WHIRLISPRIG_CHARM,
-                    ModRegistry.SIREN_CHARM.get(), ModRegistry.FIRENANDO_CHARM.get(), ItemsRegistry.DOMINION_ROD, ItemsRegistry.JAR_OF_LIGHT, ItemsRegistry.VOID_JAR, ItemsRegistry.RUNIC_CHALK, ItemsRegistry.WARP_SCROLL, ItemsRegistry.SPELL_PARCHMENT);
+            tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.AMETHYST_GOLEM_CHARM, ItemsRegistry.BOOKWYRM_CHARM, ItemsRegistry.DRYGMY_CHARM, ItemsRegistry.WIXIE_CHARM, ItemsRegistry.STARBUNCLE_CHARM, ItemsRegistry.WHIRLISPRIG_CHARM,
+                    ModItems.SIREN_CHARM.get(), ModItems.FIRENANDO_CHARM.get(), ItemsRegistry.DOMINION_ROD, ItemsRegistry.JAR_OF_LIGHT, ItemsRegistry.VOID_JAR, ItemsRegistry.RUNIC_CHALK, ItemsRegistry.WARP_SCROLL, ItemsRegistry.SPELL_PARCHMENT);
 
 
         }
@@ -202,7 +204,7 @@ public class Datagen {
 
         @Override
         protected void addTags() {
-            addPickMineable(1, ModRegistry.UPSTREAM_BLOCK.get());
+            addPickMineable(1, ModItems.UPSTREAM_BLOCK.get());
         }
 
         void addPickMineable(int level,Block...blocks){

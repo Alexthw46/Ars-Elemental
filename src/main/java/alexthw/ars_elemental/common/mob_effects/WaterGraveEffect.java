@@ -24,8 +24,10 @@ public class WaterGraveEffect extends MobEffect {
             double d0;
             d0 = Math.min(-0.5D, vec3.y - 0.03D);
             livingEntity.setDeltaMovement(vec3.x, d0, vec3.z);
-            int air = Math.max(-19, livingEntity.getAirSupply() - 5 * (1+amp));
+            int air = Math.max(-19, livingEntity.getAirSupply() - 5 * (1 + amp));
             livingEntity.setAirSupply(air);
+        } else {
+            livingEntity.setAirSupply(livingEntity.getAirSupply() - 5);
         }
     }
 }

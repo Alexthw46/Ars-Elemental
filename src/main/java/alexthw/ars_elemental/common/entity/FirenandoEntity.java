@@ -1,8 +1,9 @@
 package alexthw.ars_elemental.common.entity;
 
-import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.entity.ai.CastSpellGoal;
+import alexthw.ars_elemental.common.entity.ai.FireCannonGoal;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
@@ -11,7 +12,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
-import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
+import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
@@ -54,17 +55,17 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, IWandable, IDispellable {
+public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, IAnimationListener, IWandable, IDispellable {
     public FirenandoEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
 
-    public FirenandoEntity(Level world){
-        super(ModRegistry.FIRENANDO_ENTITY.get(),world);
+    public FirenandoEntity(Level world) {
+        super(ModEntities.FIRENANDO_ENTITY.get(), world);
     }
 
     private int castCooldown = 0;
-    private final ParticleColor color = new ParticleColor(250, 15, 15);
+    private final ParticleColor color = new ParticleColor(250, 50, 15);
     public final Spell spell = new Spell(MethodHomingProjectile.INSTANCE, EffectIgnite.INSTANCE, AugmentSensitive.INSTANCE, EffectFlare.INSTANCE);
     public UUID owner;
 
@@ -82,7 +83,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     @Override
     public void die(DamageSource source) {
         if(!level.isClientSide){
-            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModRegistry.FIRENANDO_CHARM.get())));
+            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
         }
         super.die(source);
     }
@@ -91,7 +92,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     public boolean onDispel(@Nullable LivingEntity caster) {
         if (this.isRemoved() || level.isClientSide) return false;
 
-        level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModRegistry.FIRENANDO_CHARM.get())));
+        level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
         ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
         this.remove(RemovalReason.DISCARDED);
 
@@ -100,10 +101,10 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
 
     @Override
     public void performRangedAttack(LivingEntity shooter, float p_82196_2_) {
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()));
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner),this, resolver);
+        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
+        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner), this, resolver);
         projectileSpell.setColor(color.toWrapper());
-        projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.5f, 0.8f);
+        projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);
         level.addFreshEntity(projectileSpell);
         this.castCooldown = 20;
     }
@@ -112,12 +113,12 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null));
+        this.goalSelector.addGoal(3, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, false, (entity) -> entity instanceof Enemy));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(2, new CastSpellGoal(this, 0.8d, 20,36f, () -> castCooldown <= 0, WealdWalker.Animations.CAST.ordinal(), 10));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new FireCannonGoal(this, 0.8d, 20, 55f, () -> castCooldown <= 0, Animations.SHOOT.ordinal(), 20));
     }
 
     @Override
@@ -167,7 +168,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         super.addAdditionalSaveData(tag);
         NBTUtil.storeBlockPos(tag, "home", getHome());
         tag.putInt("cast", castCooldown);
-        tag.putUUID("owner", owner);
+        if (owner != null) tag.putUUID("owner", owner);
     }
 
     @Override
@@ -180,41 +181,58 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if(NBTUtil.hasBlockPos(tag, "home")){
+        if (NBTUtil.hasBlockPos(tag, "home")) {
             setHome(NBTUtil.getBlockPos(tag, "home"));
         }
         this.castCooldown = tag.getInt("cast");
-        this.owner = tag.getUUID("owner");
+        this.owner = tag.hasUUID("owner") ? tag.getUUID("owner") : null;
     }
 
-    //TODO GeckoStuff
+    final AnimationFactory factory = new AnimationFactory(this);
+    AnimationController attackController;
+
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this,"idle_controller", 0, this::idlePredicate));
-        data.addAnimationController(new AnimationController<>(this,"attack_controller", 5f, this::attackPredicate));
+        data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));
+        attackController = new AnimationController<>(this, "attack_controller", 1f, this::attackPredicate);
+        data.addAnimationController(attackController);
     }
 
-    <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event){
-        if (entityData.get(SHOOTING)){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("shoot",true));
-        }else{
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
+    <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
+        if (attackController.getCurrentAnimation() == null) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         }
         return PlayState.CONTINUE;
     }
 
-    <T extends IAnimatable> PlayState idlePredicate(AnimationEvent<T> event){
+    <T extends IAnimatable> PlayState idlePredicate(AnimationEvent<T> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle.body"));
         return PlayState.CONTINUE;
     }
 
-     final AnimationFactory factory = new AnimationFactory(this);
     @Override
     public AnimationFactory getFactory() {
         return factory;
     }
 
+    @Override
+    public void startAnimation(int arg) {
+        if (arg == Animations.SHOOT.ordinal()) {
+
+            if (attackController.getCurrentAnimation() != null && (attackController.getCurrentAnimation().animationName.equals("shoot"))) {
+                return;
+            }
+            attackController.markNeedsReload();
+            attackController.setAnimation(new AnimationBuilder().addAnimation("shoot", false).addAnimation("idle", false));
+        }
+    }
+
     public void setOwner(Player player) {
         this.owner = player.getUUID();
     }
+
+    public enum Animations {
+        SHOOT
+    }
+
 }

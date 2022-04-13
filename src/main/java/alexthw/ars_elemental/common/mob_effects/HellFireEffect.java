@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.mob_effects;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;

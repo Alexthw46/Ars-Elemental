@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -79,15 +80,15 @@ public class ArsNouveauRegistry {
     }
 
     public static void addLights() {
-        LightManager.register(ModRegistry.HOMING_PROJECTILE.get(), (p -> 15));
-        LightManager.register(ModRegistry.CURVED_PROJECTILE.get(), (p -> 15));
-        LightManager.register(ModRegistry.FIRENANDO_ENTITY.get(), (p -> {
+        LightManager.register(ModEntities.HOMING_PROJECTILE.get(), (p -> 15));
+        LightManager.register(ModEntities.CURVED_PROJECTILE.get(), (p -> 15));
+        LightManager.register(ModEntities.FIRENANDO_ENTITY.get(), (p -> {
             if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }
             return 0;
         }));
-        LightManager.register(ModRegistry.FIRENANDO_FAMILIAR.get(), (p -> {
+        LightManager.register(ModEntities.FIRENANDO_FAMILIAR.get(), (p -> {
             if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }

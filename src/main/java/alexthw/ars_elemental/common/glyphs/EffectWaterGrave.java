@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.mixin.ZombieMixin;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import net.minecraft.world.damagesource.DamageSource;

@@ -1,9 +1,9 @@
 package alexthw.ars_elemental.datagen;
 
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
@@ -75,7 +75,7 @@ public class ANProviders {
         public void run(HashCache cache) throws IOException {
 
             recipes.add(builder()
-                    .withResult(ModRegistry.NECRO_FOCUS.get())
+                    .withResult(ModItems.NECRO_FOCUS.get())
                     .withReagent(ItemsRegistry.SUMMONING_FOCUS)
                     .withPedestalItem(2, Items.WITHER_ROSE)
                     .withPedestalItem(1, Items.WITHER_SKELETON_SKULL)
@@ -84,7 +84,7 @@ public class ANProviders {
             );
 
             recipes.add(builder()
-                            .withResult(ModRegistry.UPSTREAM_BLOCK.get())
+                    .withResult(ModItems.UPSTREAM_BLOCK.get())
                             .withReagent(Items.SOUL_SAND)
                             .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                             .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
@@ -121,28 +121,28 @@ public class ANProviders {
         @Override
         public void run(HashCache cache) throws IOException {
 
-            recipes.add(new ImbuementRecipe("fire_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModRegistry.FIRE_FOCUS.get(), 1),5000)
+            recipes.add(new ImbuementRecipe("fire_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.FIRE_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
             );
-            recipes.add(new ImbuementRecipe("water_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModRegistry.WATER_FOCUS.get(), 1),5000)
+            recipes.add(new ImbuementRecipe("water_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.WATER_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
             );
-            recipes.add(new ImbuementRecipe("earth_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModRegistry.EARTH_FOCUS.get(), 1),5000)
+            recipes.add(new ImbuementRecipe("earth_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.EARTH_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
             );
-            recipes.add(new ImbuementRecipe("air_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModRegistry.AIR_FOCUS.get(), 1),5000)
+            recipes.add(new ImbuementRecipe("air_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.AIR_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
@@ -178,66 +178,66 @@ public class ANProviders {
         @Override
         public void run(HashCache cache) throws IOException {
 
-            for (AbstractSpellPart spell : registeredSpells){
+            for (AbstractSpellPart spell : registeredSpells) {
                 addGlyphPage(spell);
             }
 
-            addBasicItem(ModRegistry.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModRegistry.UPSTREAM_BLOCK.get()));
-            addBasicItem(ModRegistry.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModRegistry.CURIO_BAG.get()));
+            addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
+            addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
 
-            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.NECRO_FOCUS.get())
-                            .withIcon(ModRegistry.NECRO_FOCUS.get())
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.NECRO_FOCUS.get())
+                            .withIcon(ModItems.NECRO_FOCUS.get())
                             .withTextPage("ars_elemental.page1.necrotic_focus")
-                            .withPage(new ApparatusPage(ModRegistry.NECRO_FOCUS.get()))
+                            .withPage(new ApparatusPage(ModItems.NECRO_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.necrotic_focus")
-                    ,getPath(EQUIPMENT,"necrotic_focus")
+                    , getPath(EQUIPMENT, "necrotic_focus")
             );
 
-            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.FIRE_FOCUS.get())
-                            .withIcon(ModRegistry.FIRE_FOCUS.get())
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.FIRE_FOCUS.get())
+                            .withIcon(ModItems.FIRE_FOCUS.get())
                             .withTextPage("ars_elemental.page1.fire_focus")
-                            .withPage(ImbuementPage(ModRegistry.FIRE_FOCUS.get()))
+                            .withPage(ImbuementPage(ModItems.FIRE_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.fire_focus")
-                    ,getPath(EQUIPMENT,"fire_focus")
+                    , getPath(EQUIPMENT, "fire_focus")
             );
-            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.WATER_FOCUS.get())
-                            .withIcon(ModRegistry.WATER_FOCUS.get())
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.WATER_FOCUS.get())
+                            .withIcon(ModItems.WATER_FOCUS.get())
                             .withTextPage("ars_elemental.page1.water_focus")
-                            .withPage(ImbuementPage(ModRegistry.WATER_FOCUS.get()))
+                            .withPage(ImbuementPage(ModItems.WATER_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.water_focus")
-                    ,getPath(EQUIPMENT,"water_focus")
+                    , getPath(EQUIPMENT, "water_focus")
             );
-            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.AIR_FOCUS.get())
-                            .withIcon(ModRegistry.AIR_FOCUS.get())
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.AIR_FOCUS.get())
+                            .withIcon(ModItems.AIR_FOCUS.get())
                             .withTextPage("ars_elemental.page1.air_focus")
-                            .withPage(ImbuementPage(ModRegistry.AIR_FOCUS.get()))
+                            .withPage(ImbuementPage(ModItems.AIR_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.air_focus")
-                    ,getPath(EQUIPMENT,"air_focus")
+                    , getPath(EQUIPMENT, "air_focus")
             );
-            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.EARTH_FOCUS.get())
-                            .withIcon(ModRegistry.EARTH_FOCUS.get())
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.EARTH_FOCUS.get())
+                            .withIcon(ModItems.EARTH_FOCUS.get())
                             .withTextPage("ars_elemental.page1.earth_focus")
-                            .withPage(ImbuementPage(ModRegistry.EARTH_FOCUS.get()))
+                            .withPage(ImbuementPage(ModItems.EARTH_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.earth_focus")
-                    ,getPath(EQUIPMENT,"earth_focus")
+                    , getPath(EQUIPMENT, "earth_focus")
             );
 
-            addPage(new PatchouliBuilder(AUTOMATION, ModRegistry.SIREN_CHARM.get())
-                            .withIcon(ModRegistry.SIREN_CHARM.get())
+            addPage(new PatchouliBuilder(AUTOMATION, ModItems.SIREN_CHARM.get())
+                            .withIcon(ModItems.SIREN_CHARM.get())
                             .withTextPage("ars_elemental.page1.mermaid")
                             .withPage(new EntityPage(prefix("siren_entity").toString()))
-                    ,getPath(AUTOMATION, "mermaid"));
+                    , getPath(AUTOMATION, "mermaid"));
 
-            addPage(new PatchouliBuilder(AUTOMATION, ModRegistry.FIRENANDO_CHARM.get())
-                            .withIcon(ModRegistry.FIRENANDO_CHARM.get())
+            addPage(new PatchouliBuilder(AUTOMATION, ModItems.FIRENANDO_CHARM.get())
+                            .withIcon(ModItems.FIRENANDO_CHARM.get())
                             .withTextPage("ars_elemental.page1.fire_golem")
                             .withPage(new EntityPage(prefix("firenando_entity").toString()))
-                    ,getPath(AUTOMATION, "fire_golem"));
+                    , getPath(AUTOMATION, "fire_golem"));
 
             addFamiliarPage(new MermaidHolder());
             addFamiliarPage(new FirenandoHolder());
 
-            for(PatchouliPage patchouliPage : pages){
+            for (PatchouliPage patchouliPage : pages) {
                 DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
             }
 

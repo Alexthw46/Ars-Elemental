@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.mixin;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;

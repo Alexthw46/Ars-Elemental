@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.common.blocks.mermaid_block;
 
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
@@ -42,7 +42,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     public boolean needsMana;
 
     public MermaidTile(BlockPos pos, BlockState state) {
-        super(ModRegistry.MERMAID_TILE, pos, state);
+        super(ModEntities.MERMAID_TILE, pos, state);
     }
 
     public void convertedEffect() {

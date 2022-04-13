@@ -145,6 +145,8 @@ dependencies {
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-64")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
+    implementation fg.deobf("curse.maven:arsenal-561848:3648153")
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     /*

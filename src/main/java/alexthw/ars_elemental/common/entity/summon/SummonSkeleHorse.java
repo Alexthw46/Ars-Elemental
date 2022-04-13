@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity.summon;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -23,7 +23,7 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
     }
 
     public SummonSkeleHorse(Level level) {
-        this(ModRegistry.SKELEHORSE_SUMMON.get(),level);
+        this(ModEntities.SKELEHORSE_SUMMON.get(), level);
     }
 
     public SummonSkeleHorse(SummonHorse oldHorse, Player summoner){

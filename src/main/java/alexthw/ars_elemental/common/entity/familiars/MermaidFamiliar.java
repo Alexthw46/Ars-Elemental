@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity.familiars;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
@@ -25,7 +25,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     public MermaidFamiliar(Level level) {
-        super(ModRegistry.SIREN_FAMILIAR.get(), level);
+        super(ModEntities.SIREN_FAMILIAR.get(), level);
     }
 
     public void onModifier(SpellModifierEvent event) {
@@ -67,7 +67,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
 
 
     public @NotNull EntityType<?> getType() {
-        return ModRegistry.SIREN_FAMILIAR.get();
+        return ModEntities.SIREN_FAMILIAR.get();
     }
 
     @Override

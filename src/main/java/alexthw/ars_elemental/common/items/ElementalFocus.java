@@ -1,18 +1,14 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -24,14 +20,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.UUID;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
@@ -40,7 +34,7 @@ import static com.hollingsworth.arsnouveau.common.potions.ModPotions.MANA_REGEN_
 @Mod.EventBusSubscriber(modid = ArsNouveau.MODID)
 public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
 
-    public final SpellSchool element;
+    protected SpellSchool element;
 
     public ElementalFocus(Properties properties, SpellSchool element) {
         super(properties);
@@ -61,29 +55,12 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
     @SubscribeEvent
     public static void onCast(SpellCastEvent event) {
         if (!event.getWorld().isClientSide) {
-            ElementalFocus focus = hasFocus(event.getWorld(), event.getEntityLiving());
+            SpellSchool focus = ISchoolItem.hasFocus(event.getWorld(), event.getEntityLiving());
             if (focus != null) {
-                if (event.spell.recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
+                if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
                     event.spell.setCost((int) (event.spell.getCastingCost() * (1 - COMMON.FocusDiscount.get())));
             }
         }
-    }
-
-    public static ElementalFocus hasFocus(Level world, Entity entity) {
-        if (!world.isClientSide && entity instanceof Player) {
-            Optional<IItemHandlerModifiable> curios = CuriosUtil.getAllWornItems((LivingEntity)entity).resolve();
-            if (curios.isPresent()) {
-                IItemHandlerModifiable items = curios.get();
-                for(int i = 0; i < items.getSlots(); ++i) {
-                    Item item = items.getStackInSlot(i).getItem();
-                    if (item instanceof ElementalFocus focus) {
-                        return focus;
-                    }
-                }
-            }
-        }
-        if (entity instanceof FirenandoEntity) return (ElementalFocus) ModRegistry.FIRE_FOCUS.get();
-        return null;
     }
 
     public SpellSchool getSchool() {
@@ -117,30 +94,33 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        if (slotContext.entity().getLevel().isClientSide() || !(slotContext.entity() instanceof Player player) || !COMMON.EnableRegenBonus.get()) return;
+        if (slotContext.entity().getLevel().isClientSide() || !(slotContext.entity() instanceof Player player) || !COMMON.EnableRegenBonus.get())
+            return;
 
-        if (player.tickCount % 20 == 0)
-        switch (getSchool().getId()){
-            case "fire" -> {
-                if (player.isOnFire() || player.isInLava()) player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,200 ,1));
-            }
-            case "water" -> {
-                if (player.isInWaterRainOrBubble()) {
-                    if (player.isSwimming()) {
-                        player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE,200 ,1));
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,1));
-                    }else{
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
+        if (player.tickCount % 20 == 0) {
+            switch (getSchool().getId()) {
+                case "fire" -> {
+                    if (player.isOnFire() || player.isInLava())
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 200, 1));
+                }
+                case "water" -> {
+                    if (player.isInWaterRainOrBubble()) {
+                        if (player.isSwimming()) {
+                            player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 200, 1));
+                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 1));
+                        } else {
+                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 0));
+                        }
                     }
                 }
-            }
-            case "air" ->{
-                if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
-                    player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
-            }
-            case "earth" ->{
-                if (player.getY() < 0)
-                    player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT,120 ,0));
+                case "air" -> {
+                    if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 0));
+                }
+                case "earth" -> {
+                    if (player.getY() < 0)
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 0));
+                }
             }
         }
 

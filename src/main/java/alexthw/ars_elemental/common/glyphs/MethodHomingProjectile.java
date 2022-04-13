@@ -1,6 +1,8 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
+import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
+import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.lib.GlyphLib;
@@ -10,6 +12,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,15 +49,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
             stats.setDamageModifier(stats.getDamageModifier() * 0.75D);
         }
 
-        for(int i =1; i < numSplits + 1; i++){
-            Direction offset =shooter.getDirection().getClockWise();
-            if(i%2==0) offset = offset.getOpposite();
-            BlockPos projPos = shooter.blockPosition().relative(offset, i/2);
-            projPos = projPos.offset(0, 1.5, 0);
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver, targetPlayers);
-            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
-            projectiles.add(spell);
-        }
+        splits(world, shooter, shooter, resolver, targetPlayers, projectiles, numSplits);
 
         float velocity = 0.45F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
 
@@ -72,27 +67,30 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         projectiles.add(new EntityHomingProjectile(world, owner, resolver, targetPlayers));
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        if (numSplits > 0){
+        if (numSplits > 0) {
             stats.setDamageModifier(stats.getDamageModifier() * 0.5D);
         }
 
-        int i =1;
-        while (i <= numSplits) {
-            Direction offset =shooter.getDirection().getClockWise();
-            if (i%2==0) offset = offset.getOpposite();
-            BlockPos projPos = shooter.blockPosition().relative(offset, i/2);
+        splits(world, shooter, owner, resolver, targetPlayers, projectiles, numSplits);
+
+        float velocity = 0.5F + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 10.0F;
+
+        for (EntityHomingProjectile proj : projectiles) {
+            proj.setIgnore(shooter);
+            proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
+            world.addFreshEntity(proj);
+        }
+    }
+
+    private void splits(Level world, LivingEntity shooter, Player owner, SpellResolver resolver, boolean targetPlayers, ArrayList<EntityHomingProjectile> projectiles, int numSplits) {
+        for (int i = 1; i < numSplits + 1; i++) {
+            Direction offset = shooter.getDirection().getClockWise();
+            if (i % 2 == 0) offset = offset.getOpposite();
+            BlockPos projPos = shooter.blockPosition().relative(offset, i / 2);
             projPos = projPos.offset(0, 1.5, 0);
             EntityHomingProjectile spell = new EntityHomingProjectile(world, owner, resolver, targetPlayers);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
-            i++;
-        }
-
-        float velocity = 0.4F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
-
-        for(EntityHomingProjectile proj : projectiles) {
-            proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
-            world.addFreshEntity(proj);
         }
     }
 
@@ -101,8 +99,10 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         if (shooter instanceof Player) {
             summonProjectiles(world, (Player) shooter, spellStats, resolver);
             resolver.expendMana(shooter);
-        }else if (shooter instanceof ISummon summon && summon.getOwnerID() != null){
+        } else if (shooter instanceof ISummon summon && summon.getOwnerID() != null) {
             summonProjectilesAlt(world, shooter, world.getPlayerByUUID(summon.getOwnerID()), spellStats, resolver);
+        } else if (shooter instanceof EntityMageBase) {
+            summonProjectilesAlt(world, shooter, ANFakePlayer.getPlayer((ServerLevel) world), spellStats, resolver);
         }
     }
 

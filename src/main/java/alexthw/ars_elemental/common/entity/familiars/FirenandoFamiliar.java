@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity.familiars;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
@@ -22,12 +22,18 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     public FirenandoFamiliar(Level world) {
-        super(ModRegistry.FIRENANDO_FAMILIAR.get(), world);
+        super(ModEntities.FIRENANDO_FAMILIAR.get(), world);
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+
     }
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this,"idle_controller", 0, this::idlePredicate));
+        data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));
     }
 
     public void onModifier(SpellModifierEvent event) {

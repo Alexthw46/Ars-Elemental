@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-import static alexthw.ars_elemental.ModRegistry.LIFE_LINK;
+import static alexthw.ars_elemental.registry.ModRegistry.LIFE_LINK;
 
 public class EffectLifeLink extends AbstractEffect {
 

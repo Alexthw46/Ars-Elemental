@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.util.Mth;
@@ -18,13 +18,13 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
     }
 
     public EntityCurvedProjectile(Level world, SpellResolver resolver) {
-        super(ModRegistry.CURVED_PROJECTILE.get(), world, resolver);
+        super(ModEntities.CURVED_PROJECTILE.get(), world, resolver);
         isNoGravity = false;
     }
 
     @Override
     public EntityType<?> getType() {
-        return ModRegistry.CURVED_PROJECTILE.get();
+        return ModEntities.CURVED_PROJECTILE.get();
     }
 
     @Override

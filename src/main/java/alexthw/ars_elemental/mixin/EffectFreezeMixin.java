@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.mixin;
 
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.items.ElementalFocus;
+import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFreeze;
@@ -16,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_WATER;
+
 @Mixin(EffectFreeze.class)
 public class EffectFreezeMixin {
 
@@ -23,8 +25,8 @@ public class EffectFreezeMixin {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
-            if (ElementalFocus.hasFocus(world, shooter) == ModRegistry.WATER_FOCUS.get()) {
-                if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON){
+            if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_WATER) {
+                if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON) {
                     skel.setFreezeConverting(true);
                 }
                 living.setIsInPowderSnow(true);
@@ -32,7 +34,7 @@ public class EffectFreezeMixin {
                 living.setTicksFrozen((int) newFrozenTicks);
                 if (living.isFullyFrozen()) living.invulnerableTime = 0;
             }
-            if (living.hasEffect(ModRegistry.HELLFIRE.get())){
+            if (living.hasEffect(ModRegistry.HELLFIRE.get())) {
                 living.removeEffect(ModRegistry.HELLFIRE.get());
             }
         }

@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity.summon;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -17,7 +17,7 @@ public class SummonDirewolf extends SummonWolf implements IUndeadSummon {
     }
 
     public SummonDirewolf(Level level){
-        super(ModRegistry.DIREWOLF_SUMMON.get(), level);
+        super(ModEntities.DIREWOLF_SUMMON.get(), level);
     }
 
     public SummonDirewolf(Level world, Player player, SummonWolf oldWolf) {

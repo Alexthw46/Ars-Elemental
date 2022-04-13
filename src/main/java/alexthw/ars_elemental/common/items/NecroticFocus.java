@@ -5,7 +5,6 @@ import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
-import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
@@ -16,14 +15,12 @@ import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,8 +36,6 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -142,15 +137,19 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
         }
     }
 
-    //TODO remember this exists
     @SubscribeEvent
     public static void castSpell(SpellCastEvent event) {
-        if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() != null && sympatheticMethods.contains(event.spell.getCastMethod())) {
-
-            for (LivingEntity i : world.getEntitiesOfClass(LivingEntity.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon)) {
-                Entity owner = ((ISummon)i).getOwner(world);
+        if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE) {
+            for (Mob i : world.getEntitiesOfClass(Mob.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon)) {
+                Entity owner = ((ISummon) i).getOwner(world);
                 if (player.equals(owner)) {
-                    i.lookAt(EntityAnchorArgument.Anchor.EYES, player.getLookAngle());
+                    LivingEntity target = i.getTarget();
+                    if (target == null) target = player.getLastHurtMob();
+                    if (target != null && target.isAlive()) {
+                        i.getLookControl().setLookAt(target);
+                    } else {
+                        i.getLookControl().setLookAt(player.getViewVector(1));
+                    }
                     EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
                     spellResolver.onCast(ItemStack.EMPTY, i, i.level);
                 }
@@ -158,12 +157,4 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
         }
     }
 
-    public static final List<AbstractCastMethod> sympatheticMethods = new ArrayList<>();
-
-    static {
-        sympatheticMethods.add(MethodTouch.INSTANCE);
-        sympatheticMethods.add(MethodProjectile.INSTANCE);
-        sympatheticMethods.add(MethodHomingProjectile.INSTANCE);
-        sympatheticMethods.add(MethodCurvedProjectile.INSTANCE);
-    }
 }

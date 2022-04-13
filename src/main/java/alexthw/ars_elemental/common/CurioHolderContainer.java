@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common;
 
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.common.items.CurioHolder;
+import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;

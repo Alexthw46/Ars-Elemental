@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-import static alexthw.ars_elemental.ModRegistry.CURIO_BAGGABLE;
+import static alexthw.ars_elemental.registry.ModRegistry.CURIO_BAGGABLE;
 
 public class CurioHolder extends Item {
     public CurioHolder(Properties pProperties) {

@@ -1,10 +1,9 @@
 package alexthw.ars_elemental.mixin;
 
-import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.items.ElementalFocus;
+import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.util.BotaniaCompat;
+import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
@@ -22,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_WATER;
+
 @Mixin(EffectConjureWater.class)
 public class EffectWaterMixin {
 
@@ -29,12 +30,12 @@ public class EffectWaterMixin {
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
 
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        if (ElementalFocus.hasFocus(world, shooter) == ModRegistry.WATER_FOCUS.get() && spellContext.getSpell().recipe.contains(EffectFreeze.INSTANCE)) {
+        if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_WATER && spellContext.getSpell().recipe.contains(EffectFreeze.INSTANCE)) {
             BlockState toPlace = Blocks.ICE.defaultBlockState();
             GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, toPlace);
             ci.cancel();
         }
-        if (CompatUtils.isBotaniaLoaded()){
+        if (CompatUtils.isBotaniaLoaded()) {
             if (BotaniaCompat.tryFillApothecary(rayTraceResult.getBlockPos(), world)) ci.cancel();
         }
 

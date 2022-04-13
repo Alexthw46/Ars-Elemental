@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 import java.util.Set;
 
-import static alexthw.ars_elemental.ModRegistry.ENTHRALLED;
+import static alexthw.ars_elemental.registry.ModRegistry.ENTHRALLED;
 
 public class EffectCharm extends AbstractEffect {
 
@@ -76,7 +76,7 @@ public class EffectCharm extends AbstractEffect {
                         ((FoxMixin)fox).callAddTrustedUUID(player.getUUID());
                 }
                 else if (animal.canFallInLove()) {
-                    if (rollToSeduce(75, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
+                    if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                         animal.setInLove(player);
                 }
 

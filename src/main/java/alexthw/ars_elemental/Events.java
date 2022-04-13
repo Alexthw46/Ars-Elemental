@@ -1,8 +1,7 @@
 package alexthw.ars_elemental;
 
-import alexthw.ars_elemental.common.items.ElementalFocus;
 import alexthw.ars_elemental.common.items.ISchoolItem;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -14,6 +13,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 
@@ -22,9 +23,9 @@ public class Events {
     @SubscribeEvent
     public static void bypassRes(LivingAttackEvent event) {
         if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof LivingEntity living) {
-            ElementalFocus focus = ElementalFocus.hasFocus(event.getEntity().level, player);
+            SpellSchool focus = ISchoolItem.hasFocus(event.getEntity().level, player);
             if (focus != null) {
-                switch (focus.getSchool().getId()) {
+                switch (focus.getId()) {
                     case "fire" -> {
                         if (event.getSource().isFire() && living.fireImmune()) {
                             event.setCanceled(true);
@@ -49,16 +50,16 @@ public class Events {
 
     @SubscribeEvent
     public static void boostHealing(LivingHealEvent event){
-        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ElementalFocus.hasFocus(player.getLevel(), player) == ModRegistry.EARTH_FOCUS.get()) {
+        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolItem.hasFocus(player.getLevel(), player) == ELEMENTAL_EARTH) {
             event.setAmount(event.getAmount() * 1.5F);
         }
     }
 
     @SubscribeEvent
-    public static void saveFromElytra(LivingHurtEvent event){
-        if (event.getSource() == DamageSource.FLY_INTO_WALL && event.getEntity() instanceof Player player){
-            ISchoolItem focus = ElementalFocus.hasFocus(event.getEntity().level, player);
-            if ( focus != null && focus.getSchool() == SpellSchools.ELEMENTAL_AIR){
+    public static void saveFromElytra(LivingHurtEvent event) {
+        if (event.getSource() == DamageSource.FLY_INTO_WALL && event.getEntity() instanceof Player player) {
+            SpellSchool focus = ISchoolItem.hasFocus(event.getEntity().level, player);
+            if (focus != null && focus == ELEMENTAL_AIR) {
                 event.setAmount(event.getAmount() * 0.1f);
             }
         }

@@ -1,6 +1,8 @@
 package alexthw.ars_elemental.common.entity;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.ai.HybridStrollGoal;
+import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -20,7 +22,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -58,7 +59,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     }
 
     public MermaidEntity(Level level, boolean tamed){
-        this(ModRegistry.SIREN_ENTITY.get(), level);
+        this(ModEntities.SIREN_ENTITY.get(), level);
         setTamed(tamed);
         addGoalsAfterConstructor();
     }
@@ -79,11 +80,12 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     @Override
     protected void registerGoals() { }
 
-    public List<WrappedGoal> getTamedGoals(){
+    public List<WrappedGoal> getTamedGoals() {
         List<WrappedGoal> list = new ArrayList<>();
         list.add(new WrappedGoal(3, new RandomLookAroundGoal(this)));
         list.add(new WrappedGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F)));
-        list.add(new WrappedGoal(2, new GoBackHomeGoal(this, this::getHome, 5, () -> this.getTarget() == null)));
+        list.add(new WrappedGoal(2, new HybridStrollGoal(this, 1.0f)));
+        list.add(new WrappedGoal(1, new GoBackHomeGoal(this, this::getHome, 5, () -> this.getTarget() == null)));
 
         return list;
     }
@@ -94,17 +96,17 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
 
     public List<WrappedGoal> getWildGoals() {
         List<WrappedGoal> list = new ArrayList<>();
-        list.add(new WrappedGoal(6, new FollowPlayerGoal(this, 1.0D, 5.0F, 5.0F)));
-        list.add(new WrappedGoal(0, new RandomSwimmingGoal(this,1.2f,30)));
+        list.add(new WrappedGoal(8, new FollowPlayerGoal(this, 1.0D, 5.0F, 5.0F)));
+        list.add(new WrappedGoal(0, new HybridStrollGoal(this, 1.0f)));
         list.add(new WrappedGoal(2, new RandomLookAroundGoal(this)));
-        list.add(new WrappedGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F)));
+        list.add(new WrappedGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F)));
         return list;
     }
 
     @Override
     public void die(DamageSource source) {
         if(!level.isClientSide && isTamed()){
-            ItemStack stack = new ItemStack(ModRegistry.SIREN_CHARM.get());
+            ItemStack stack = new ItemStack(ModItems.SIREN_CHARM.get());
             level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), stack));
         }
         super.die(source);
@@ -144,7 +146,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
             return false;
 
         if (!level.isClientSide && isTamed()) {
-            ItemStack stack = new ItemStack(ModRegistry.SIREN_CHARM.get());
+            ItemStack stack = new ItemStack(ModItems.SIREN_CHARM.get());
             level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), stack));
             ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
             this.remove(RemovalReason.DISCARDED);

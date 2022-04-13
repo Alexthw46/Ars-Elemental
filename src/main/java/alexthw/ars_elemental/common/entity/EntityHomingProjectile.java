@@ -1,7 +1,8 @@
 package alexthw.ars_elemental.common.entity;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
+import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
@@ -27,17 +28,21 @@ import java.util.Set;
 
 public class EntityHomingProjectile extends EntityProjectileSpell {
 
-    Player owner;
+    public Player owner;
     Entity ignore;
     LivingEntity target;
     Set<AbstractEffectFilter> filters = null;
     boolean targetPlayers = false;
 
     public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver, boolean targetPlayers) {
-        this(world,shooter,resolver);
+        this(world, shooter, resolver);
         this.targetPlayers = targetPlayers;
         if (CompatUtils.tooManyGlyphsLoaded())
             filters = TooManyCompats.getFilters(resolver.spell.recipe);
+    }
+
+    public void setIgnore(Entity ignore) {
+        this.ignore = ignore;
     }
 
     @Override
@@ -46,23 +51,31 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     }
 
     public EntityHomingProjectile(Level worldIn, Player owner, LivingEntity ignore, SpellResolver resolver) {
-        super(ModRegistry.HOMING_PROJECTILE.get(), worldIn, resolver);
+        super(ModEntities.HOMING_PROJECTILE.get(), worldIn, resolver);
         this.owner = owner;
         this.ignore = ignore;
     }
 
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
-        super(ModRegistry.HOMING_PROJECTILE.get(), world, resolver);
+        super(ModEntities.HOMING_PROJECTILE.get(), world, resolver);
 
     }
 
     public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver) {
-        this(world,resolver);
+        this(world, resolver);
         this.owner = shooter;
     }
 
     public EntityHomingProjectile(EntityType<EntityHomingProjectile> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    protected void attemptRemoval() {
+        super.attemptRemoval();
+        if (this.pierceLeft >= 0) {
+            this.age += 300;
+        }
     }
 
     @Override
@@ -83,36 +96,30 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
                 }
             }
 
-            if (target != null){
+            if (target != null) {
                 homeTo(target.blockPosition());
-            }else{
+            } else {
                 super.tickNextPosition();
             }
 
         }
     }
 
+    @Override
+    protected boolean canHitEntity(Entity entity) {
+        if (entity instanceof IUndeadSummon || entity == this.owner || this.owner instanceof IUndeadSummon && !targetPlayers)
+            return false;
+        return super.canHitEntity(entity);
+    }
+
     private boolean shouldTarget(LivingEntity e) {
 
-        boolean flag = !(e instanceof FirenandoEntity || e instanceof IUndeadSummon);
+        boolean flag = !((e instanceof FirenandoEntity && ignore instanceof FirenandoEntity) || e instanceof IUndeadSummon || (e instanceof EntityMageBase mage1 && ignore instanceof EntityMageBase mage2 && mage1.school == mage2.school));
 
         if (e instanceof Player) flag &= targetPlayers;
         if (CompatUtils.tooManyGlyphsLoaded()) flag &= TooManyCompats.checkFilters(e, this.filters);
 
         return flag && e != owner && e != ignore && e.isAlive();
-    }
-
-    @Override
-    protected void attemptRemoval() {
-        this.pierceLeft--;
-        if(this.pierceLeft < 0){
-            this.level.broadcastEntityEvent(this, (byte)3);
-            this.remove(RemovalReason.DISCARDED);
-        }else if (getHitResult().getType() == HitResult.Type.ENTITY){
-
-            Vec3 vel = getDeltaMovement();
-            this.target = null;
-        }
     }
 
     @Override
@@ -163,7 +170,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     @Override
     public EntityType<?> getType() {
-        return ModRegistry.HOMING_PROJECTILE.get();
+        return ModEntities.HOMING_PROJECTILE.get();
     }
 
     @Override

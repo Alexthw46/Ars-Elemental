@@ -2,6 +2,8 @@ package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.client.ClientEvents;
 import alexthw.ars_elemental.client.SpellFocusRenderer;
+import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,7 +22,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.GeckoLib;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
@@ -40,7 +41,7 @@ public class ArsElemental
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return ModRegistry.DEBUG_ICON.get().getDefaultInstance();
+            return ModItems.DEBUG_ICON.get().getDefaultInstance();
         }
     };
 
@@ -77,11 +78,11 @@ public class ArsElemental
 
     @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
-        CuriosRendererRegistry.register(ModRegistry.FIRE_FOCUS.get(), SpellFocusRenderer::new);
-        CuriosRendererRegistry.register(ModRegistry.WATER_FOCUS.get(), SpellFocusRenderer::new);
-        CuriosRendererRegistry.register(ModRegistry.AIR_FOCUS.get(), SpellFocusRenderer::new);
-        CuriosRendererRegistry.register(ModRegistry.EARTH_FOCUS.get(), SpellFocusRenderer::new);
-        CuriosRendererRegistry.register(ModRegistry.NECRO_FOCUS.get(), SpellFocusRenderer::new);
+        CuriosRendererRegistry.register(ModItems.FIRE_FOCUS.get(), SpellFocusRenderer::new);
+        CuriosRendererRegistry.register(ModItems.WATER_FOCUS.get(), SpellFocusRenderer::new);
+        CuriosRendererRegistry.register(ModItems.AIR_FOCUS.get(), SpellFocusRenderer::new);
+        CuriosRendererRegistry.register(ModItems.EARTH_FOCUS.get(), SpellFocusRenderer::new);
+        CuriosRendererRegistry.register(ModItems.NECRO_FOCUS.get(), SpellFocusRenderer::new);
 
     }
 

@@ -1,8 +1,7 @@
 package alexthw.ars_elemental.mixin;
 
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.items.ElementalFocus;
+import alexthw.ars_elemental.common.items.ISchoolItem;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
@@ -18,6 +17,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
+
 @Mixin(EffectLaunch.class)
 public class EffectLaunchMixin {
 
@@ -25,8 +26,8 @@ public class EffectLaunchMixin {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
 
-        if (rayTraceResult.getEntity() instanceof LivingEntity living && (ElementalFocus.hasFocus(world, shooter) == ModRegistry.AIR_FOCUS.get()) && (spellStats.hasBuff(AugmentExtendTime.INSTANCE) || spellStats.hasBuff(AugmentDurationDown.INSTANCE))){
-            living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, (int) (50 * (1 + spellStats.getDurationMultiplier())), (int) spellStats.getAmpMultiplier()/2) );
+        if (rayTraceResult.getEntity() instanceof LivingEntity living && (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_AIR) && (spellStats.hasBuff(AugmentExtendTime.INSTANCE) || spellStats.hasBuff(AugmentDurationDown.INSTANCE))) {
+            living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, (int) (50 * (1 + spellStats.getDurationMultiplier())), (int) spellStats.getAmpMultiplier() / 2));
         }
 
     }

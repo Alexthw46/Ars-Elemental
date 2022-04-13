@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity.summon;
 
-import alexthw.ars_elemental.ModRegistry;
+import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,7 +35,7 @@ public class AllyVhexEntity extends EntityAllyVex implements IUndeadSummon {
     }
 
     public EntityType<?> getType() {
-        return ModRegistry.VHEX_SUMMON.get();
+        return ModEntities.VHEX_SUMMON.get();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

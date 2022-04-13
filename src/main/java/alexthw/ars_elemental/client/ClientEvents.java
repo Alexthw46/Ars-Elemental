@@ -1,12 +1,14 @@
 package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
+import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
+import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import net.minecraft.client.KeyMapping;
@@ -44,30 +46,34 @@ public class ClientEvents {
 
 
     @SubscribeEvent
-    public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event){
-        event.registerEntityRenderer(ModRegistry.SIREN_ENTITY.get(), MermaidRenderer::new);
-        event.registerEntityRenderer(ModRegistry.SIREN_FAMILIAR.get(), MermaidRenderer::new);
+    public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.SIREN_ENTITY.get(), MermaidRenderer::new);
+        event.registerEntityRenderer(ModEntities.SIREN_FAMILIAR.get(), MermaidRenderer::new);
 
-        event.registerEntityRenderer(ModRegistry.FIRENANDO_ENTITY.get(), FirenandoRenderer::new);
-        event.registerEntityRenderer(ModRegistry.FIRENANDO_FAMILIAR.get(), FirenandoRenderer::new);
+        event.registerEntityRenderer(ModEntities.FIRENANDO_ENTITY.get(), FirenandoRenderer::new);
+        event.registerEntityRenderer(ModEntities.FIRENANDO_FAMILIAR.get(), FirenandoRenderer::new);
 
-        event.registerEntityRenderer(ModRegistry.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
+        event.registerEntityRenderer(ModEntities.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
             @Override
             public ResourceLocation getTextureLocation(AbstractHorse pEntity) {
                 return SkeleHorseTexture;
             }
         });
-        event.registerEntityRenderer(ModRegistry.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
-        event.registerEntityRenderer(ModRegistry.VHEX_SUMMON.get(), manager -> new VexRenderer(manager)
-        {
+        event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
+        event.registerEntityRenderer(ModEntities.VHEX_SUMMON.get(), manager -> new VexRenderer(manager) {
             @Override
             public ResourceLocation getTextureLocation(Vex p_110775_1_) {
                 return VhexTexture;
             }
         });
 
-        event.registerEntityRenderer(ModRegistry.HOMING_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
-        event.registerEntityRenderer(ModRegistry.CURVED_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+        event.registerEntityRenderer(ModEntities.FIRE_MAGE.get(), MageRenderer::new);
+        event.registerEntityRenderer(ModEntities.WATER_MAGE.get(), MageRenderer::new);
+        event.registerEntityRenderer(ModEntities.AIR_MAGE.get(), MageRenderer::new);
+        event.registerEntityRenderer(ModEntities.EARTH_MAGE.get(), MageRenderer::new);
+
+        event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+        event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
 
     }
 

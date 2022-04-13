@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.util;
 
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.client.particle.ColorParticleTypeData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,30 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Random;
 
 public class ParticleUtil {
+
+    public static ParticleColor fireColor = new ParticleColor(250, 15, 15);
+    public static ParticleColor waterColor = new ParticleColor(50, 50, 250);
+    public static ParticleColor earthColor = new ParticleColor(50, 250, 55);
+    public static ParticleColor airColor = new ParticleColor(255, 255, 26);
+    public static ParticleColor soulColor = new ParticleColor(250, 250, 250);
+
+
+    public static ParticleColor schoolToColor(SpellSchool school) {
+        return switch (school.getId()) {
+
+            case "fire" -> fireColor;
+
+            case "water" -> waterColor;
+
+            case "earth" -> earthColor;
+
+            case "air" -> airColor;
+
+            case "necromancy" -> soulColor;
+
+            default -> com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColor();
+        };
+    }
 
     public static class ParticleBuilder {
         Random random = new Random();

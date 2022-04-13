@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.mixin;
 
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.ModRegistry;
-import alexthw.ars_elemental.common.items.ElementalFocus;
+import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
@@ -30,6 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_FIRE;
+
 
 @Mixin(EffectIgnite.class)
 public class EffectIgniteMixin {
@@ -37,8 +39,8 @@ public class EffectIgniteMixin {
     @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false)
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        if (rayTraceResult.getEntity() instanceof LivingEntity living && ElementalFocus.hasFocus(world, shooter) == ModRegistry.FIRE_FOCUS.get() && shooter!=living){
-            living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) spellStats.getAmpMultiplier()/2));
+        if (rayTraceResult.getEntity() instanceof LivingEntity living && ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_FIRE && shooter != living) {
+            living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) spellStats.getAmpMultiplier() / 2));
         }
     }
 
@@ -46,13 +48,13 @@ public class EffectIgniteMixin {
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         BlockPos pos = rayTraceResult.getBlockPos();
         BlockState hitState = world.getBlockState(pos);
-        if (hitState.getBlock() instanceof IceBlock){
+        if (hitState.getBlock() instanceof IceBlock && shooter != null) {
             int aoeBuff = spellStats.getBuffCount(AugmentAOE.INSTANCE);
             int pierceBuff = spellStats.getBuffCount(AugmentPierce.INSTANCE);
             List<BlockPos> posList = SpellUtil.calcAOEBlocks(shooter, pos, rayTraceResult, aoeBuff, pierceBuff);
             BlockState state;
 
-            if (ElementalFocus.hasFocus(world, shooter) == ModRegistry.FIRE_FOCUS.get() && spellContext.getSpell().recipe.contains(EffectEvaporate.INSTANCE)){
+            if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_FIRE && spellContext.getSpell().recipe.contains(EffectEvaporate.INSTANCE)) {
                 //remove it
                 for (BlockPos pos1 : posList) {
                     state = world.getBlockState(pos1);
@@ -60,7 +62,7 @@ public class EffectIgniteMixin {
                         world.setBlock(pos1, Blocks.AIR.defaultBlockState(), 3);
                     }
                 }
-            }else {
+            } else {
                 ANFakePlayer fakePlayer = ANFakePlayer.getPlayer((ServerLevel) world);
                 //just break it
                 for (BlockPos pos1 : posList) {
