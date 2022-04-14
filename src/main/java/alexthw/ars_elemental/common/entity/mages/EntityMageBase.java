@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.entity.mages;
 
 import alexthw.ars_elemental.common.entity.ai.ProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
+import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.ElementalArsenal;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
@@ -70,6 +71,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     @Override
     protected void registerGoals() {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, EntityMageBase.class, true, (e) -> e instanceof EntityMageBase mage && school != mage.school));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolItem.hasFocus(player.level, player) != school)));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 
         this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.5d, 20, 36f, () -> castCooldown <= 0, WealdWalker.Animations.CAST.ordinal(), 10));
