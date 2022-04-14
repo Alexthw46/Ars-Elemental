@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -69,6 +70,12 @@ public class EffectConjureDirt extends AbstractEffect {
         Map<String, Integer> map = super.getDefaultAugmentLimits();
         map.put(GlyphLib.AugmentAmplifyID, 1);
         return map;
+    }
+
+    @NotNull
+    @Override
+    public Set<SpellSchool> getSchools() {
+        return setOf(SpellSchools.CONJURATION, SpellSchools.ELEMENTAL_EARTH);
     }
 
     @Override

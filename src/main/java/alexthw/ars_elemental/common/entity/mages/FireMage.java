@@ -17,6 +17,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class FireMage extends EntityMageBase {
 
@@ -39,7 +40,7 @@ public class FireMage extends EntityMageBase {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance pDifficulty) {
+    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
         book.getOrCreateTag().putInt("color", 14);

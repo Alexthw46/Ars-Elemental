@@ -36,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -73,9 +74,9 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, EntityMageBase.class, true, (e) -> e instanceof EntityMageBase mage && school != mage.school));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolItem.hasFocus(player.level, player) != school)));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-
-        this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.5d, 20, 36f, () -> castCooldown <= 0, WealdWalker.Animations.CAST.ordinal(), 10));
-        this.goalSelector.addGoal(6, new SelfCastGoal<>(this, 20, 0, () -> (castCooldown <= 0 && (getHealth() < getMaxHealth() / 4)), WealdWalker.Animations.CAST.ordinal(), 10));
+        this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
+        this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.5d, 20, 36f, () -> castCooldown <= 0, 0, 10));
+        this.goalSelector.addGoal(6, new SelfCastGoal<>(this, 20, 0, () -> (castCooldown <= 0 && (getHealth() < getMaxHealth() / 4)), 0, 10));
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -86,13 +87,13 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         this.populateDefaultEquipmentSlots(pDifficulty);
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance pDifficulty) {
+    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(pDifficulty);
         if (school != null && CompatUtils.isArsenalLoaded()) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -115,27 +116,27 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     @Override
-    public void performRangedAttack(LivingEntity pTarget, float pDistanceFactor) {
-        Spell spell = this.pSpells.get(random.nextInt(0, (pSpells.size())));
+    public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
+        Spell spell = this.pSpells.get(random.nextInt(pSpells.size()));
         ParticleColor color = schoolToColor(this.school);
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
         resolver.onCast(ItemStack.EMPTY, this, level);
         this.castCooldown = 40;
     }
 
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("cast", castCooldown);
     }
 
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.castCooldown = tag.getInt("cast");
     }
 
     //Monster overrides
     @Override
-    public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {
+    public float getWalkTargetValue(@NotNull BlockPos pPos, @NotNull LevelReader pLevel) {
         return 0f;
     }
 

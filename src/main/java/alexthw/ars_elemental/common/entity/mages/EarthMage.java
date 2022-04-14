@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class EarthMage extends EntityMageBase {
 
@@ -35,7 +36,7 @@ public class EarthMage extends EntityMageBase {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance pDifficulty) {
+    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
         book.getOrCreateTag().putInt("color", 13);

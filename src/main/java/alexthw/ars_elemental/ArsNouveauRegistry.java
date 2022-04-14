@@ -51,21 +51,25 @@ public class ArsNouveauRegistry {
 
     public static void postInit() {
         //Schools
-        EffectWaterGrave.INSTANCE.spellSchools.add(SpellSchools.ELEMENTAL_WATER);
-        EffectConjureDirt.INSTANCE.spellSchools.addAll(Set.of(SpellSchools.CONJURATION, SpellSchools.ELEMENTAL_EARTH));
+        addSchool(EffectWaterGrave.INSTANCE, SpellSchools.ELEMENTAL_WATER);
 
-        EffectHeal.INSTANCE.spellSchools.add(NECROMANCY);
-        EffectSummonVex.INSTANCE.spellSchools.add(NECROMANCY);
-        EffectWither.INSTANCE.spellSchools.add(NECROMANCY);
-        EffectHex.INSTANCE.spellSchools.add(NECROMANCY);
-        EffectLifeLink.INSTANCE.spellSchools.add(NECROMANCY);
-        EffectCharm.INSTANCE.spellSchools.add(NECROMANCY);
+        addSchool(EffectHeal.INSTANCE, NECROMANCY);
+        addSchool(EffectSummonVex.INSTANCE, NECROMANCY);
+        addSchool(EffectWither.INSTANCE, NECROMANCY);
+        addSchool(EffectHex.INSTANCE, NECROMANCY);
+        addSchool(EffectLifeLink.INSTANCE, NECROMANCY);
+        addSchool(EffectCharm.INSTANCE, NECROMANCY);
 
         //Tweaks
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
+    }
+
+    public static void addSchool(AbstractSpellPart part, SpellSchool school) {
+        part.spellSchools.add(school);
+        school.addSpellPart(part);
     }
 
     public static void register(AbstractSpellPart spellPart) {
