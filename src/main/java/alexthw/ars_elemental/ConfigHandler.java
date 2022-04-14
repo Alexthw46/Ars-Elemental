@@ -28,6 +28,8 @@ public class ConfigHandler {
         public static ForgeConfigSpec.IntValue SIREN_UNIQUE_BONUS;
         public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
+        public static ForgeConfigSpec.IntValue MAGES_WEIGHT;
+
         public Common(ForgeConfigSpec.Builder builder) {
 
             FocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the focus")
@@ -60,12 +62,15 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Mermaid Fishing");
-            SIREN_MANA_COST = builder.comment("How much source mermaids consume per generation").defineInRange("mermaidManaCost",1000,0,10000);
-            SIREN_MAX_PROGRESS = builder.comment("How many channels must occur before a mermaid produces loot").defineInRange("mermaidMaxProgress",20,0,300);
-            SIREN_UNIQUE_BONUS = builder.comment("Bonus number of items a mermaid produces per unique mob").defineInRange("mermaidUniqueBonus",2,0,300);
-            SIREN_BASE_ITEM = builder.comment("Base number of items a mermaid produces per cycle before bonuses.").defineInRange("mermaidBaseItems",1,Integer.MIN_VALUE,Integer.MAX_VALUE);
-            SIREN_QUANTITY_CAP = builder.comment("Max Bonus number of items a mermaid produces from nearby entities. Each entity equals 1 item.").defineInRange("mermaidQuantityCap",5,0,300);
+            SIREN_MANA_COST = builder.comment("How much source mermaids consume per generation").defineInRange("mermaidManaCost", 1000, 0, 10000);
+            SIREN_MAX_PROGRESS = builder.comment("How many channels must occur before a mermaid produces loot").defineInRange("mermaidMaxProgress", 20, 0, 300);
+            SIREN_UNIQUE_BONUS = builder.comment("Bonus number of items a mermaid produces per unique mob").defineInRange("mermaidUniqueBonus", 2, 0, 300);
+            SIREN_BASE_ITEM = builder.comment("Base number of items a mermaid produces per cycle before bonuses.").defineInRange("mermaidBaseItems", 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            SIREN_QUANTITY_CAP = builder.comment("Max Bonus number of items a mermaid produces from nearby entities. Each entity equals 1 item.").defineInRange("mermaidQuantityCap", 5, 0, 300);
+            builder.pop();
 
+            builder.push("Mob spawns");
+            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 50, 0, 200);
             builder.pop();
         }
     }
