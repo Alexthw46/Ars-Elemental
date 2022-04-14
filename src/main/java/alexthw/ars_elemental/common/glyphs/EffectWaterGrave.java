@@ -23,7 +23,7 @@ public class EffectWaterGrave extends AbstractEffect {
 
     @Override
     public boolean isRenderAsIcon() {
-        return true;
+        return false;
     }
 
     public static EffectWaterGrave INSTANCE = new EffectWaterGrave();

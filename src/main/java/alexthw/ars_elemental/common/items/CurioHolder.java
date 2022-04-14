@@ -28,6 +28,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosCapability;
 
 import javax.annotation.Nonnull;
@@ -77,7 +78,7 @@ public class CurioHolder extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         if (!level.isClientSide) {
             ItemStack stack = playerIn.getItemInHand(handIn);
             openContainer(level,playerIn,stack);
