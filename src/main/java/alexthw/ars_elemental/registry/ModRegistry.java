@@ -7,7 +7,7 @@ import alexthw.ars_elemental.common.mob_effects.LifeLinkEffect;
 import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
@@ -30,7 +30,7 @@ public class ModRegistry {
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
 
-    public static final Tag.Named<Item> CURIO_BAGGABLE = ItemTags.bind(prefix("curio_bag_item").toString());
+    public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
 
     public static void registerRegistries(IEventBus bus){
         BLOCKS.register(bus);

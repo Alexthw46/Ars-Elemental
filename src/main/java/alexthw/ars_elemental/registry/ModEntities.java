@@ -80,27 +80,28 @@ public class ModEntities {
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
-        EntityType<T> type = EntityType.Builder.of(factory, kind).setTrackingRange(64).setUpdateInterval(1).sized(width, height).build(MODID + ":" + name);
-        return ENTITIES.register(name, () -> type);
+        return ENTITIES.register(name, () -> EntityType.Builder.of( factory, kind).setTrackingRange(64).setUpdateInterval(1).sized(width, height).build(MODID + ":" + name));
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> addEntity(String name, float width, float height, boolean fire, boolean noSave, EntityType.EntityFactory<T> factory, MobCategory kind) {
-        EntityType.Builder<T> builder = EntityType.Builder.of(factory, kind)
-                .setTrackingRange(64)
-                .setUpdateInterval(1)
-                .sized(width, height);
-        if (noSave) {
-            builder.noSave();
-        }
-        if (fire) {
-            builder.fireImmune();
-        }
-        EntityType<T> type = builder.build(MODID + ":" + name);
-        return ENTITIES.register(name, () -> type);
+        return ENTITIES.register(name, () -> {
+            EntityType.Builder<T> builder = EntityType.Builder.of(factory, kind)
+                    .setTrackingRange(64)
+                    .setUpdateInterval(1)
+                    .sized(width, height);
+            if (noSave) {
+                builder.noSave();
+            }
+            if (fire) {
+                builder.fireImmune();
+            }
+            return builder.build(MODID + ":" + name);
+        });
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
+
         SpawnPlacements.register(FIRE_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
 
         ArsNouveauRegistry.addLights();

@@ -19,6 +19,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Supplier;
+
 import static alexthw.ars_elemental.ArsElemental.MODID;
 
 public class ModItems {
@@ -68,21 +70,22 @@ public class ModItems {
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
 
         //blocks
-        MERMAID_ROCK = addBlock("mermaid_rock", new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
-        UPSTREAM_BLOCK = addBlock("water_upstream", new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
+        MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f)));
+        UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
 
     }
 
-    static RegistryObject<Block> addBlock(String name, Block block) {
-        ITEMS.register(name, () -> new BlockItem(block, addTabProp()));
-        return BLOCKS.register(name, () -> block);
+    static RegistryObject<Block> addBlock(String name, Supplier<Block> blockSupp) {
+        RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
+        ITEMS.register(name, () -> new BlockItem(block.get(), addTabProp()));
+        return block;
     }
 
-    static RegistryObject<Block> addSlab(String name, SlabBlock slab) {
+    static RegistryObject<Block> addSlab(String name, Supplier<Block> slab) {
         return addBlock(name + "_slab", slab);
     }
 
-    static RegistryObject<Block> addStair(String name, StairBlock stair) {
+    static RegistryObject<Block> addStair(String name, Supplier<Block> stair) {
         return addBlock(name + "_stairs", stair);
     }
 

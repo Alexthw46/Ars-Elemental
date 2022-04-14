@@ -29,7 +29,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 
-    mappings channel: 'parchment', version: '2022.02.13-1.18.1'
+    mappings channel: 'parchment', version: '2022.03.13-1.18.2'
 
     //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -100,6 +100,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenCentral()
     flatDir {
         dirs 'externalmods'
     }
@@ -117,6 +118,12 @@ repositories {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+
     maven {
         url "https://maven.blamejared.com"
     }
@@ -141,11 +148,11 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-429")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-64")
+    compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-430")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-67")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
-    implementation fg.deobf("curse.maven:arsenal-561848:3648153")
+    compileOnly fg.deobf("curse.maven:arsenal-561848:3648153")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

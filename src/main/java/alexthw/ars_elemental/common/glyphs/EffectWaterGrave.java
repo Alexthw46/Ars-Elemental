@@ -21,6 +21,11 @@ import java.util.Set;
 
 public class EffectWaterGrave extends AbstractEffect {
 
+    @Override
+    public boolean isRenderAsIcon() {
+        return true;
+    }
+
     public static EffectWaterGrave INSTANCE = new EffectWaterGrave();
 
     private EffectWaterGrave() {
