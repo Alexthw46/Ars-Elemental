@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -89,14 +90,15 @@ public class Datagen {
         @Override
             protected void registerModels() {
             Set<RegistryObject<Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
-                takeAll(items, i -> i.get() instanceof BlockItem && ((BlockItem) i.get()).getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
-                takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
-                takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
-                takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
+            takeAll(items, i -> i.get() instanceof IAnimatable);
+            takeAll(items, i -> i.get() instanceof BlockItem && ((BlockItem) i.get()).getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
+            takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
+            takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
+            takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
 
-                items.forEach(this::generatedItem);
+            items.forEach(this::generatedItem);
 
-            }
+        }
 
             private void spawnEgg(RegistryObject<Item> i) {
                 String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();

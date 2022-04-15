@@ -1,12 +1,13 @@
 {
   "itemGroup.ars_elemental": "Elemental Spell Foci",
+  "item.ars_elemental.spell_horn": "Enchanter's Horn",
   "item.ars_elemental.fire_focus": "Focus of Fire",
   "item.ars_elemental.water_focus": "Focus of Water",
   "item.ars_elemental.air_focus": "Focus of Air",
   "item.ars_elemental.earth_focus": "Focus of Earth",
   "item.ars_elemental.necrotic_focus": "Focus of Necromancy",
   "item.ars_elemental.siren_charm": "Siren Charm - WIP",
-  "item.ars_elemental.firenando_charm": "Fire Golem Charm - WIP",
+  "item.ars_elemental.firenando_charm": "Fire Golem Charm",
   "item.ars_elemental.curio_bag": "Trinkets Pouch",
   "item.ars_elemental.debug": "Focus of Debug",
   "block.ars_elemental.water_upstream": "Upstream Flow Generator",
@@ -29,6 +30,7 @@
   "effect.ars_elemental.hellfire": "Hellfire Burn",
   "effect.ars_elemental.life_link": "Life Linked",
   "effect.ars_elemental.enthralled": "Enthralled",
+
   "ars_elemental.page1.fire_focus": "This spell focus is attuned to the school of Fire. While equipped, the glyphs of this school will be amplified by two and discount the total cost of the spell by a fifth. It will also grant Mana Regen II while the wearer is on fire or in lava. As a drawback, glyphs of the other elemental schools might be weakened (values are configurable)",
   "ars_elemental.page2.fire_focus": "This focus empowers Ignite to inflict Hellfire Burn. This effect reduces healing and allows flare to inflict damage and spread even on fire resistant mobs. Ignite + Evaporate combo will sublimate Ice.",
   "ars_elemental.page1.water_focus": "This spell focus is attuned to the school of Water. While equipped, the glyphs of this school will be amplified by two and discount the total cost of the spell by a fifth. It will also grant Mana Regen I while the wearer is wet or Mana Regen II and Dolphin Grace while swimming. As a drawback, glyphs of the other elemental schools might be weakened (values are configurable)",
@@ -46,8 +48,8 @@
   "item.ars_nouveau.familiar_siren": "Bound Script: Siren - WIP",
   "ars_nouveau.familiar_name.siren": "Siren - WIP do not summon",
   "ars_nouveau.familiar_desc.siren": "WORK IN PROGRESS. A Siren Familiar will increase the damage of Water spells by 2. It will also give Dolphin Grace II to the summoner while in water. Obtained by performing the Ritual of Binding near a Siren.",
-  "item.ars_nouveau.familiar_firenando": "Bound Script: Fire Golem - NYI",
-  "ars_nouveau.familiar_name.firenando": "Fire Golem - WIP do not summon",
+  "item.ars_nouveau.familiar_firenando": "Bound Script: Fire Golem",
+  "ars_nouveau.familiar_name.firenando": "Fire Golem",
   "ars_nouveau.familiar_desc.firenando": "A Fire Golem Familiar will increase the damage of Fire spells by 2 and discount projectile-based spells by 20%. You can feed it a Magma Cream to get a short Fire Resistance buff. Obtained by performing the Ritual of Binding near a Fire Golem.",
   "item.ars_nouveau.glyph_watery_grave": "Glyph of Watery Grave",
   "ars_nouveau.glyph_name.watery_grave": "Watery Grave",
@@ -58,17 +60,14 @@
   "item.ars_nouveau.glyph_homing_projectile": "Glyph of Homing Projectile",
   "ars_nouveau.glyph_name.homing_projectile": "Homing Projectile",
   "ars_nouveau.glyph_desc.homing_projectile": "This projectile seek the nearest entity and follow it, will behave as a classic projectile while there are no valid targets. Players will only be targeted if augmented by Sensitive.",
-	"item.ars_nouveau.glyph_curved_projectile" : "Glyph of Arc Projectile",
-	"ars_nouveau.glyph_name.curved_projectile" : "Arc Projectile",
-	"ars_nouveau.glyph_desc.curved_projectile" : "This projectile is affected by gravity. Every Pierce applied will make it bounce one time when it hit the ground.",
-
-
-	"ars_nouveau.school.necromancy" : "Anima",
-	"item.ars_nouveau.glyph_life_link" : "Glyph of Life Link",
-	"ars_nouveau.glyph_name.life_link" : "Life Link",
-	"ars_nouveau.glyph_desc.life_link" : "You create a link between your life force and the target's. Any damage dealt to you will be shared with the target and any healing of the target will be shared with you.",
-	"item.ars_nouveau.glyph_charm" : "Glyph of Charm",
-	"ars_nouveau.glyph_name.charm" : "Charm",
-	"ars_nouveau.glyph_desc.charm" : "Try to dominate the mind of enemy, making them fight for you as a temporary ally, a tamable mob, to tame it, or a wild animal, to make it fall in love. Each Amplify and damage dealt raises the chance of successfully charming the target, as stronger mobs will have higher resistance to your control."
-
+  "item.ars_nouveau.glyph_curved_projectile": "Glyph of Arc Projectile",
+  "ars_nouveau.glyph_name.curved_projectile": "Arc Projectile",
+  "ars_nouveau.glyph_desc.curved_projectile": "This projectile is affected by gravity. Every Pierce applied will make it bounce one time when it hit the ground.",
+  "ars_nouveau.school.necromancy": "Anima",
+  "item.ars_nouveau.glyph_life_link": "Glyph of Life Link",
+  "ars_nouveau.glyph_name.life_link": "Life Link",
+  "ars_nouveau.glyph_desc.life_link": "You create a link between your life force and the target's. Any damage dealt to you will be shared with the target and any healing of the target will be shared with you.",
+  "item.ars_nouveau.glyph_charm": "Glyph of Charm",
+  "ars_nouveau.glyph_name.charm": "Charm",
+  "ars_nouveau.glyph_desc.charm": "Try to dominate the mind of enemy, making them fight for you as a temporary ally, a tamable mob, to tame it, or a wild animal, to make it fall in love. Each Amplify and damage dealt raises the chance of successfully charming the target, as stronger mobs will have higher resistance to your control."
 }

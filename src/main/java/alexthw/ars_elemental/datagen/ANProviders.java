@@ -85,16 +85,25 @@ public class ANProviders {
 
             recipes.add(builder()
                     .withResult(ModItems.UPSTREAM_BLOCK.get())
-                            .withReagent(Items.SOUL_SAND)
-                            .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                            .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                            .withPedestalItem(4, Items.PRISMARINE_SHARD)
+                    .withReagent(Items.SOUL_SAND)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(4, Items.PRISMARINE_SHARD)
+                    .build()
+            );
+
+            recipes.add(builder()
+                    .withResult(ModItems.FIRENANDO_CHARM.get())
+                    .withReagent(Items.MAGMA_BLOCK)
+                    .withPedestalItem(2, ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(Items.NETHERITE_SCRAP)
+                    .withPedestalItem(2, Items.NETHER_BRICK)
                     .build()
             );
 
             Path output = this.generator.getOutputFolder();
-            for (EnchantingApparatusRecipe g : recipes){
-                if (g != null){
+            for (EnchantingApparatusRecipe g : recipes) {
+                if (g != null) {
                     Path path = getRecipePath(output, g.getId().getPath());
                     DataProvider.save(GSON, cache, g.asRecipe(), path);
                 }
@@ -232,6 +241,7 @@ public class ANProviders {
                             .withIcon(ModItems.FIRENANDO_CHARM.get())
                             .withTextPage("ars_elemental.page1.fire_golem")
                             .withPage(new EntityPage(prefix("firenando_entity").toString()))
+                            .withPage(new ApparatusPage(ModItems.FIRENANDO_CHARM.get()))
                     , getPath(AUTOMATION, "fire_golem"));
 
             addFamiliarPage(new MermaidHolder());
