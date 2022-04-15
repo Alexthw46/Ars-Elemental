@@ -10,17 +10,17 @@ public class SpellHornModel extends AnimatedGeoModel<SpellHorn> {
 
     @Override
     public ResourceLocation getModelLocation(SpellHorn object) {
-        return prefix("geo/spellhorn.geo.json");
+        return prefix("geo/spell_horn.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(SpellHorn object) {
-        return prefix("textures/item/spellhorn.png");
+        return prefix("textures/item/spell_horn.png");
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(SpellHorn animatable) {
-        return prefix("animations/item/spellhorn.animation.json");
+        return prefix("animations/item/spell_horn.animation.json");
     }
 
 }

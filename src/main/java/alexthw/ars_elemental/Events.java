@@ -1,5 +1,6 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -7,6 +8,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -47,11 +49,16 @@ public class Events {
                         }
                     }
                     case "air" -> {
-                        if (living.invulnerableTime > 0 && (event.getSource().isMagic() || event.getSource().isFall())) {
+                        if (living.invulnerableTime > 0 && event.getSource().isFall()) {
                             living.invulnerableTime = 0;
                         }
                     }
                 }
+            }
+        }else if (event.getSource().getEntity() instanceof FirenandoEntity FE){
+            if (event.getEntity().fireImmune() && event.getSource().isFire() && event.getEntity() instanceof Monster){
+                event.setCanceled(true);
+                event.getEntityLiving().hurt(DamageSource.mobAttack(FE).setMagic(), event.getAmount());
             }
         }
     }

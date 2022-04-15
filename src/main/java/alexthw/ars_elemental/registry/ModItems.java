@@ -56,7 +56,7 @@ public class ModItems {
     static {
 
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
-        FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp()));
+        FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp().fireResistant()));
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
 

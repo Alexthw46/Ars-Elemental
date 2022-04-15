@@ -10,6 +10,10 @@
     {
       "entity": "ars_elemental:firenando_entity",
       "type": "patchouli:entity"
+    },
+    {
+      "recipe": "ars_elemental:firenando_charm",
+      "type": "ars_nouveau:apparatus_recipe"
     }
   ]
 }

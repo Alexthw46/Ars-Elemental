@@ -13,6 +13,7 @@ import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -89,6 +90,15 @@ public class ANProviders {
                             .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                             .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                             .withPedestalItem(4, Items.PRISMARINE_SHARD)
+                    .build()
+            );
+
+            recipes.add(builder()
+                    .withResult(ModItems.FIRENANDO_CHARM.get())
+                            .withReagent(Items.MAGMA_BLOCK)
+                            .withPedestalItem(2,ItemsRegistry.FIRE_ESSENCE)
+                            .withPedestalItem(Items.NETHERITE_SCRAP)
+                            .withPedestalItem(2,Items.NETHER_BRICK)
                     .build()
             );
 
@@ -232,6 +242,7 @@ public class ANProviders {
                             .withIcon(ModItems.FIRENANDO_CHARM.get())
                             .withTextPage("ars_elemental.page1.fire_golem")
                             .withPage(new EntityPage(prefix("firenando_entity").toString()))
+                            .withPage(new ApparatusPage(ModItems.FIRENANDO_CHARM.get()))
                     , getPath(AUTOMATION, "fire_golem"));
 
             addFamiliarPage(new MermaidHolder());
