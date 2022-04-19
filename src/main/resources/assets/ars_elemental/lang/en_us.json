@@ -31,6 +31,7 @@
   "effect.ars_elemental.life_link": "Life Linked",
   "effect.ars_elemental.enthralled": "Enthralled",
 
+  "ars_elemental.page1.spell_horn": "The Enchanter's Horn can be used to cast Arc projectiles spells similar to a Casting Wand. An Horn always start with Arc -> Accelerate and MUST be inscribed with a spell that does not have another method, using a Scribing Table.",
   "ars_elemental.page1.fire_focus": "This spell focus is attuned to the school of Fire. While equipped, the glyphs of this school will be amplified by two and discount the total cost of the spell by a fifth. It will also grant Mana Regen II while the wearer is on fire or in lava. As a drawback, glyphs of the other elemental schools might be weakened (values are configurable)",
   "ars_elemental.page2.fire_focus": "This focus empowers Ignite to inflict Hellfire Burn. This effect reduces healing and allows flare to inflict damage and spread even on fire resistant mobs. Ignite + Evaporate combo will sublimate Ice.",
   "ars_elemental.page1.water_focus": "This spell focus is attuned to the school of Water. While equipped, the glyphs of this school will be amplified by two and discount the total cost of the spell by a fifth. It will also grant Mana Regen I while the wearer is wet or Mana Regen II and Dolphin Grace while swimming. As a drawback, glyphs of the other elemental schools might be weakened (values are configurable)",
@@ -51,7 +52,7 @@
   "ars_nouveau.familiar_desc.siren": "WORK IN PROGRESS. A Siren Familiar will increase the damage of Water spells by 2. It will also give Dolphin Grace II to the summoner while in water. Obtained by performing the Ritual of Binding near a Siren.",
   "item.ars_nouveau.familiar_firenando": "Bound Script: Fire Golem",
   "ars_nouveau.familiar_name.firenando": "Fire Golem",
-  "ars_nouveau.familiar_desc.firenando": "A Fire Golem Familiar will increase the damage of Fire spells by 2 and discount projectile-based spells by 20%. You can feed it a Magma Cream to get a short Fire Resistance buff. Obtained by performing the Ritual of Binding near a Fire Golem.",
+  "ars_nouveau.familiar_desc.firenando": "A Fire Golem Familiar will increase the damage of Fire spells by 2 and reduce projectile-based spells cost by a fifth. You can feed it a Magma Cream to get a short Fire Resistance buff. Obtained by performing the Ritual of Binding near a Fire Golem.",
 
   "item.ars_nouveau.glyph_watery_grave": "Glyph of Watery Grave",
   "ars_nouveau.glyph_name.watery_grave": "Watery Grave",

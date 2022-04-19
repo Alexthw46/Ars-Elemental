@@ -1,7 +1,7 @@
 package alexthw.ars_elemental;
 
-import alexthw.ars_elemental.common.entity.EntityCurvedProjectile;
-import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.LightLayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 
@@ -63,6 +62,8 @@ public class ArsNouveauRegistry {
         //Tweaks
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
+        EffectPull.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
+        EffectPull.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
     }

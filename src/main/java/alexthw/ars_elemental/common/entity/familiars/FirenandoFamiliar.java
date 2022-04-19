@@ -27,11 +27,9 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener {
-
     public FirenandoFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
-
     public FirenandoFamiliar(Level world) {
         super(ModEntities.FIRENANDO_FAMILIAR.get(), world);
     }
@@ -40,7 +38,6 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     protected void registerGoals() {
         super.registerGoals();
     }
-
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));

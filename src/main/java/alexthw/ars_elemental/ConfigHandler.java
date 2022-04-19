@@ -70,7 +70,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Mob spawns");
-            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 50, 0, 200);
+            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 5, 0, 200);
             builder.pop();
         }
     }
@@ -79,7 +79,6 @@ public class ConfigHandler {
     public static final ForgeConfigSpec COMMON_SPEC;
 
     public static class Client{
-
         public static ForgeConfigSpec.ConfigValue<Boolean> EnableSFRendering;
 
         public Client(ForgeConfigSpec.Builder builder){

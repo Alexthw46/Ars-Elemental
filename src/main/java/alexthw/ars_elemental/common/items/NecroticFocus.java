@@ -18,6 +18,8 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -70,6 +72,11 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
                     event.world.addFreshEntity(newHorse);
                 }
             }
+            if (event.summon.getLivingEntity() != null) {
+                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 1));
+                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 1));
+            }
+
         }
     }
 

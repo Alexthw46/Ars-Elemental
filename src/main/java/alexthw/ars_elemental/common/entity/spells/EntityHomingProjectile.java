@@ -1,10 +1,12 @@
-package alexthw.ars_elemental.common.entity;
+package alexthw.ars_elemental.common.entity.spells;
 
+import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.TooManyCompats;
+import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
@@ -28,7 +30,6 @@ import java.util.Set;
 
 public class EntityHomingProjectile extends EntityProjectileSpell {
 
-    public Player owner;
     Entity ignore;
     LivingEntity target;
     Set<AbstractEffectFilter> filters = null;
@@ -50,20 +51,14 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         return 20 * 30;
     }
 
-    public EntityHomingProjectile(Level worldIn, Player owner, LivingEntity ignore, SpellResolver resolver) {
+    public EntityHomingProjectile(Level worldIn, LivingEntity ignore, SpellResolver resolver) {
         super(ModEntities.HOMING_PROJECTILE.get(), worldIn, resolver);
-        this.owner = owner;
         this.ignore = ignore;
     }
 
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
         super(ModEntities.HOMING_PROJECTILE.get(), world, resolver);
 
-    }
-
-    public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver) {
-        this(world, resolver);
-        this.owner = shooter;
     }
 
     public EntityHomingProjectile(EntityType<EntityHomingProjectile> entityType, Level level) {
@@ -107,19 +102,33 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     @Override
     protected boolean canHitEntity(Entity entity) {
-        if (entity instanceof IUndeadSummon || entity == this.owner || this.owner instanceof IUndeadSummon && !targetPlayers)
-            return false;
-        return super.canHitEntity(entity);
+        boolean flag = true;
+
+        if (getOwner() instanceof IUndeadSummon summon && entity instanceof ISummon summon2){
+            flag = summon2.getOwnerID() != summon.getOwnerID();
+        }
+
+        if (entity == getOwner() || entity == ignore || entity instanceof Player && !targetPlayers) {
+            flag = false;
+        }
+        return flag && super.canHitEntity(entity);
     }
 
     private boolean shouldTarget(LivingEntity e) {
 
-        boolean flag = !((e instanceof FirenandoEntity && ignore instanceof FirenandoEntity) || e instanceof IUndeadSummon || (e instanceof EntityMageBase mage1 && ignore instanceof EntityMageBase mage2 && mage1.school == mage2.school));
-
+        boolean flag = !(e instanceof FirenandoEntity && getOwner() instanceof FirenandoEntity);
+        if (e instanceof ISummon summon){
+            if (getOwner() instanceof ISummon summon2) {
+                flag &= summon2.getOwnerID() != summon.getOwnerID();
+            } else if (getOwner() instanceof Player) {
+                flag &= summon.getOwnerID() != getOwner().getUUID();
+            }
+        }
+        if (e instanceof EntityMageBase mage1 && ignore instanceof EntityMageBase mage2) flag &= mage1.school != mage2.school;
         if (e instanceof Player) flag &= targetPlayers;
         if (CompatUtils.tooManyGlyphsLoaded()) flag &= TooManyCompats.checkFilters(e, this.filters);
 
-        return flag && e != owner && e != ignore && e.isAlive();
+        return flag && e != this.getOwner() && e != ignore && e.isAlive();
     }
 
     @Override
@@ -175,9 +184,6 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     @Override
     public boolean save(CompoundTag pCompound) {
-        if (owner != null) {
-            pCompound.putUUID("owner", owner.getUUID());
-        }
         if (ignore != null) {
             pCompound.putInt("ignore", ignore.getId());
         }
@@ -189,7 +195,6 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.targetPlayers = tag.getBoolean("aimPlayers");
-        this.owner = tag.hasUUID("owner") ? getCommandSenderWorld().getPlayerByUUID(tag.getUUID("owner")) : null;
         this.ignore = getCommandSenderWorld().getEntity(tag.getInt("ignore"));
     }
 

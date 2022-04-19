@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.common.entity.ai.FireCannonGoal;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
@@ -43,6 +44,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -81,7 +83,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    public void die(DamageSource source) {
+    public void die(@NotNull DamageSource source) {
         if(!level.isClientSide){
             level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
         }
@@ -102,7 +104,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     @Override
     public void performRangedAttack(LivingEntity shooter, float p_82196_2_) {
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner), this, resolver);
+        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner), resolver);
         projectileSpell.setColor(color.toWrapper());
         projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);
         level.addFreshEntity(projectileSpell);
@@ -127,7 +129,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    protected int getExperienceReward(Player p_70693_1_) {
+    protected int getExperienceReward(@NotNull Player p_70693_1_) {
         return 0;
     }
 
@@ -164,7 +166,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         this.entityData.define(HOME, Optional.empty());
     }
 
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         NBTUtil.storeBlockPos(tag, "home", getHome());
         tag.putInt("cast", castCooldown);
@@ -172,14 +174,14 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         if (source == DamageSource.CACTUS || source == DamageSource.SWEET_BERRY_BUSH || source == DamageSource.DROWN)
             return false;
         return super.hurt(source, amount);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (NBTUtil.hasBlockPos(tag, "home")) {
             setHome(NBTUtil.getBlockPos(tag, "home"));
@@ -189,7 +191,8 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     final AnimationFactory factory = new AnimationFactory(this);
-    AnimationController attackController;
+
+    AnimationController<FirenandoEntity> attackController;
 
     @Override
     public void registerControllers(AnimationData data) {
@@ -218,7 +221,6 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     @Override
     public void startAnimation(int arg) {
         if (arg == Animations.SHOOT.ordinal()) {
-
             if (attackController.getCurrentAnimation() != null && (attackController.getCurrentAnimation().animationName.equals("shoot"))) {
                 return;
             }

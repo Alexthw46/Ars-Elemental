@@ -13,7 +13,6 @@ import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -102,6 +101,15 @@ public class ANProviders {
                     .build()
             );
 
+            recipes.add(builder()
+                    .withResult(ModItems.SPELL_HORN.get())
+                            .withReagent(ItemsRegistry.WILDEN_HORN)
+                            .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                            .withPedestalItem(3,Items.GOLD_INGOT)
+                            .withPedestalItem(3,ItemsRegistry.SOURCE_GEM)
+                    .build()
+            );
+
             Path output = this.generator.getOutputFolder();
             for (EnchantingApparatusRecipe g : recipes){
                 if (g != null){
@@ -163,7 +171,7 @@ public class ANProviders {
             Path output = generator.getOutputFolder();
             for(ImbuementRecipe g : recipes){
                 Path path = getRecipePath(output, g.getId().getPath());
-                DataProvider.save(GSON, cache,  g.asRecipe(), path);
+                DataProvider.save(GSON, cache, g.asRecipe(), path);
             }
 
         }
@@ -194,6 +202,12 @@ public class ANProviders {
 
             addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
             addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
+
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.SPELL_HORN.get())
+                            .withIcon(ModItems.SPELL_HORN.get())
+                            .withTextPage("ars_elemental.page1.spell_horn")
+                            .withPage(new ApparatusPage(ModItems.SPELL_HORN.get()))
+                    , getPath(EQUIPMENT, "spell_horn"));
 
             addPage(new PatchouliBuilder(EQUIPMENT, ModItems.NECRO_FOCUS.get())
                             .withIcon(ModItems.NECRO_FOCUS.get())

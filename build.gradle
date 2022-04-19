@@ -148,7 +148,7 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-430")
+    implementation fg.deobf("vazkii.botania:Botania:${mc_version}-430")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-67")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
@@ -156,7 +156,7 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    /*
+    /*update those, eventually
     runtimeOnly fg.deobf("curse.maven:tomb-243707:3638380")
     runtimeOnly fg.deobf("curse.maven:spark-361579:3644347")
     runtimeOnly fg.deobf("curse.maven:occ-361026:3647913")

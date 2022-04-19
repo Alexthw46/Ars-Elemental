@@ -32,6 +32,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -39,7 +40,7 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
 
-    static final ResourceLocation SkeleHorseTexture = new ResourceLocation("textures/entity/horse/horse_skeleton.png");
+    static final ResourceLocation SkeletalHorseTexture = new ResourceLocation("textures/entity/horse/horse_skeleton.png");
     static final ResourceLocation VhexTexture = prefix("textures/entity/vhex.png");
 
     public static final KeyMapping CURIO_BAG_KEYBINDING = new KeyMapping("key.ars_elemental.open_pouch", GLFW.GLFW_KEY_J, "key.category.ars_nouveau.general");
@@ -55,14 +56,14 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
             @Override
-            public ResourceLocation getTextureLocation(AbstractHorse pEntity) {
-                return SkeleHorseTexture;
+            public @NotNull ResourceLocation getTextureLocation(@NotNull AbstractHorse pEntity) {
+                return SkeletalHorseTexture;
             }
         });
         event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
         event.registerEntityRenderer(ModEntities.VHEX_SUMMON.get(), manager -> new VexRenderer(manager) {
             @Override
-            public ResourceLocation getTextureLocation(Vex p_110775_1_) {
+            public @NotNull ResourceLocation getTextureLocation(@NotNull Vex p_110775_1_) {
                 return VhexTexture;
             }
         });
@@ -74,6 +75,7 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
         event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+        event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
 
     }
 
