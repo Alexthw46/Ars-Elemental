@@ -11,10 +11,13 @@ import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
+import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.VexRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +48,6 @@ public class ClientEvents {
 
     public static final KeyMapping CURIO_BAG_KEYBINDING = new KeyMapping("key.ars_elemental.open_pouch", GLFW.GLFW_KEY_J, "key.category.ars_nouveau.general");
 
-
     @SubscribeEvent
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.SIREN_ENTITY.get(), MermaidRenderer::new);
@@ -73,9 +75,9 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.AIR_MAGE.get(), MageRenderer::new);
         event.registerEntityRenderer(ModEntities.EARTH_MAGE.get(), MageRenderer::new);
 
-        event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
-        event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
-        event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), renderManager -> new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png")));
+        event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), ClientEvents::projectileRender);
+        event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), ClientEvents::projectileRender);
+        event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
 
     }
 
@@ -89,6 +91,10 @@ public class ClientEvents {
     @SubscribeEvent
     public static void bindContainerRenderers(FMLClientSetupEvent event) {
         MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
+    }
+
+    private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {
+        return new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png"));
     }
 
     @SubscribeEvent

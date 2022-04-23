@@ -26,7 +26,7 @@ public class EffectLaunchMixin {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
 
-        if (rayTraceResult.getEntity() instanceof LivingEntity living && (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_AIR) && (spellStats.hasBuff(AugmentExtendTime.INSTANCE) || spellStats.hasBuff(AugmentDurationDown.INSTANCE))) {
+        if (rayTraceResult.getEntity() instanceof LivingEntity living && (spellStats.hasBuff(AugmentExtendTime.INSTANCE) || spellStats.hasBuff(AugmentDurationDown.INSTANCE)) && (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_AIR) ) {
             living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, (int) (50 * (1 + spellStats.getDurationMultiplier())), (int) spellStats.getAmpMultiplier() / 2));
         }
 

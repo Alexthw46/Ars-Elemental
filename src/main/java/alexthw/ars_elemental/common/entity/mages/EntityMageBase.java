@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.entity.mages;
 
+import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.entity.ai.ProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
 import alexthw.ars_elemental.common.items.ISchoolItem;
@@ -72,7 +73,9 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     @Override
     protected void registerGoals() {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, EntityMageBase.class, true, (e) -> e instanceof EntityMageBase mage && school != mage.school));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolItem.hasFocus(player.level, player) != school)));
+        if (ConfigHandler.Common.MAGES_AGGRO.get()) {
+            this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolItem.hasFocus(player.level, player) != school)));
+        }
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
         this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.5d, 20, 36f, () -> castCooldown <= 0, 0, 10));

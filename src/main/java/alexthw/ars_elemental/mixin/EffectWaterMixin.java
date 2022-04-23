@@ -12,7 +12,6 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectFreeze;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,15 +28,18 @@ public class EffectWaterMixin {
     @Inject(method = "onResolveBlock", at = {@At("HEAD")}, remap = false, cancellable = true)
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
 
-        if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_WATER && spellContext.getSpell().recipe.contains(EffectFreeze.INSTANCE)) {
-            BlockState toPlace = Blocks.ICE.defaultBlockState();
-            GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, toPlace);
-            ci.cancel();
-        }
         if (CompatUtils.isBotaniaLoaded()) {
             if (BotaniaCompat.tryFillApothecary(rayTraceResult.getBlockPos(), world)) ci.cancel();
         }
 
+        if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
+        if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_WATER) {
+            if (GlyphEffectUtil.hasFollowingEffect(spellContext, EffectFreeze.INSTANCE)){
+                GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, Blocks.ICE.defaultBlockState());
+                ci.cancel();
+            }
+        }
     }
+
+
 }

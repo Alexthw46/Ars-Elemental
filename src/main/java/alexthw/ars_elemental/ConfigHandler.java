@@ -29,6 +29,7 @@ public class ConfigHandler {
         public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
         public static ForgeConfigSpec.IntValue MAGES_WEIGHT;
+        public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
 
         public Common(ForgeConfigSpec.Builder builder) {
 
@@ -71,6 +72,7 @@ public class ConfigHandler {
 
             builder.push("Mob spawns");
             MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 5, 0, 200);
+            MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
             builder.pop();
         }
     }

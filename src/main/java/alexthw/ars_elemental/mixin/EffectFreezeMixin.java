@@ -25,7 +25,7 @@ public class EffectFreezeMixin {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
-            if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_WATER) {
+            if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_WATER && living != shooter) {
                 if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON) {
                     skel.setFreezeConverting(true);
                 }

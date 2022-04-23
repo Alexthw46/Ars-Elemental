@@ -36,7 +36,6 @@ public class EffectConjureDirt extends AbstractEffect {
         if (spellContext.hasNextPart()) {
             while (spellContext.hasNextPart()){
                 AbstractSpellPart next = spellContext.nextPart();
-                if (next instanceof AbstractAugment) continue;
                 if (next instanceof AbstractEffect) {
                     if (next == EffectCrush.INSTANCE) {
                         toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
@@ -47,8 +46,8 @@ public class EffectConjureDirt extends AbstractEffect {
                         spell.setCost((int) (spell.getCastingCost() * 1.5F));
                         spellContext.setCanceled(true);
                     }
+                    break;
                 }
-                break;
             }
         }
         GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, toPlace);

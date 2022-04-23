@@ -106,7 +106,7 @@ public class ANProviders {
                             .withReagent(ItemsRegistry.WILDEN_HORN)
                             .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                             .withPedestalItem(3,Items.GOLD_INGOT)
-                            .withPedestalItem(3,ItemsRegistry.SOURCE_GEM)
+                            .withPedestalItem(4,ItemsRegistry.SOURCE_GEM)
                     .build()
             );
 

@@ -62,8 +62,7 @@ public class ArsNouveauRegistry {
         //Tweaks
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
-        EffectPull.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
-        EffectPull.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
+        EffectGravity.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
     }
