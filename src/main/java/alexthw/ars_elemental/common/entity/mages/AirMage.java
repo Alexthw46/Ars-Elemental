@@ -25,7 +25,7 @@ public class AirMage extends EntityMageBase {
      * SelfSpells
      * 0: Leap towards the enemy
      * 1: To use after leap, launch and shear enemies
-     * <p>
+     *
      * ProjSpells
      * 1: Bouncing Lightning
      */
@@ -35,6 +35,12 @@ public class AirMage extends EntityMageBase {
         sSpells.add(new Spell(MethodSelf.INSTANCE, EffectLeap.INSTANCE, AugmentAmplify.INSTANCE, EffectBounce.INSTANCE));
         sSpells.add(new Spell(MethodOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodCurvedProjectile.INSTANCE, AugmentPierce.INSTANCE, AugmentPierce.INSTANCE, EffectLightning.INSTANCE));
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+
     }
 
     public AirMage(Level level) {
