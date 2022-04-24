@@ -108,7 +108,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
             setItemSlot(EquipmentSlot.LEGS, ItemsRegistry.ARCHMAGE_LEGGINGS.getDefaultInstance());
             setItemSlot(EquipmentSlot.FEET, ItemsRegistry.ARCHMAGE_BOOTS.getDefaultInstance());
         }
-        setItemInHand(InteractionHand.MAIN_HAND, ItemsRegistry.ARCHMAGE_SPELLBOOK.getDefaultInstance());
+        setItemInHand(InteractionHand.MAIN_HAND, ItemsRegistry.APPRENTICE_SPELLBOOK.getDefaultInstance());
     }
 
     public static AttributeSupplier.Builder createAttributes() {

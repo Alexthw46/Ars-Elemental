@@ -64,6 +64,11 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void summonedEvent(SummonEvent event) {
         if (!event.world.isClientSide && hasFocus(event.world, event.shooter)) {
+            if (event.summon.getLivingEntity() != null) {
+                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 1));
+                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 1));
+            }
+
             if (event.summon instanceof SummonHorse oldHorse && event.shooter instanceof Player summoner) {
                 SummonSkeleHorse newHorse = new SummonSkeleHorse(oldHorse, summoner);
                 if (newHorse.getOwnerID() != null) {
@@ -72,11 +77,6 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
                     event.world.addFreshEntity(newHorse);
                 }
             }
-            if (event.summon.getLivingEntity() != null) {
-                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 1));
-                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 1));
-            }
-
         }
     }
 
