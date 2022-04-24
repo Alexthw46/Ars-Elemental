@@ -1,5 +1,6 @@
-package alexthw.ars_elemental.common.entity;
+package alexthw.ars_elemental.common.entity.spells;
 
+import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
 import alexthw.ars_elemental.registry.ModEntities;

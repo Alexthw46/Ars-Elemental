@@ -4,13 +4,14 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
-import alexthw.ars_elemental.common.entity.EntityCurvedProjectile;
-import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import alexthw.ars_elemental.common.entity.mages.*;
+import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
@@ -56,6 +57,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
     public static final RegistryObject<EntityType<EntityHomingProjectile>> HOMING_PROJECTILE;
     public static final RegistryObject<EntityType<EntityCurvedProjectile>> CURVED_PROJECTILE;
+    public static final RegistryObject<EntityType<EntityMagnetSpell>> LINGER_MAGNET;
 
     public static BlockEntityType<MermaidTile> MERMAID_TILE;
     public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
@@ -77,6 +79,7 @@ public class ModEntities {
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         HOMING_PROJECTILE = addEntity("homing_projectile", 0.5F, 0.5F, true, true, EntityHomingProjectile::new, MobCategory.MISC);
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);
+        LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {

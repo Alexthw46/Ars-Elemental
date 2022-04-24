@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;

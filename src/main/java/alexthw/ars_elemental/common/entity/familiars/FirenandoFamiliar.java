@@ -43,6 +43,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
 
     @Override
     public void registerControllers(AnimationData data) {
+        super.registerControllers(data);
         data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));
     }
 
@@ -77,7 +78,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
 
     @Override
     public PlayState walkPredicate(AnimationEvent event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         return PlayState.CONTINUE;
     }
 

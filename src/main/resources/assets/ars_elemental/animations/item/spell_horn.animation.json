@@ -3,7 +3,7 @@
   "animations": {
     "wand_gem_spin": {
       "loop": true,
-      "animation_length": 2,
+      "animation_length": 8,
       "bones": {
         "bone4": {
           "rotation": {
@@ -15,15 +15,6 @@
           }
         },
         "bone5": {
-          "rotation": {
-            "vector": [
-              "query.anim_time * 45",
-              0,
-              0
-            ]
-          }
-        },
-        "bone6": {
           "rotation": {
             "vector": [
               "query.anim_time * 45",

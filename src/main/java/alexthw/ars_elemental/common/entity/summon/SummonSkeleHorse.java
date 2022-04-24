@@ -35,6 +35,7 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
         getHorseInventory().setItem(0, new ItemStack(Items.SADDLE));
         setOwnerID(summoner.getUUID());
         setDropChance(EquipmentSlot.CHEST, 0.0F);
+        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
     }
 
     protected SoundEvent getAmbientSound() {

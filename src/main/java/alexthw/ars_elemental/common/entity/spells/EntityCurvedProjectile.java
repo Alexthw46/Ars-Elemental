@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common.entity;
+package alexthw.ars_elemental.common.entity.spells;
 
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;

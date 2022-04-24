@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.common.entity.ai.FireCannonGoal;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;

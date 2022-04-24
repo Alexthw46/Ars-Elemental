@@ -1,9 +1,9 @@
 package alexthw.ars_elemental;
 
-import alexthw.ars_elemental.common.entity.EntityCurvedProjectile;
-import alexthw.ars_elemental.common.entity.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
+import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
@@ -64,6 +64,8 @@ public class ArsNouveauRegistry {
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
+        EffectGravity.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
+
     }
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {

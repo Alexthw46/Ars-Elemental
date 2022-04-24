@@ -70,7 +70,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Mob spawns");
-            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 50, 0, 200);
+            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 0, 0, 200);
             builder.pop();
         }
     }

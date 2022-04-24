@@ -33,7 +33,7 @@ public class EffectCrushMixin {
         if (spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
             int aoeBuff = spellStats.getBuffCount(AugmentAOE.INSTANCE);
             int pierceBuff = spellStats.getBuffCount(AugmentPierce.INSTANCE);
-            int maxItemCrush = 4 + (4 * aoeBuff) + (4 * pierceBuff);
+            int maxItemCrush = 4 * (1 + aoeBuff + pierceBuff);
             List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, new AABB(rayTraceResult.getEntity().blockPosition()).inflate(aoeBuff + 1.0));
             if (!itemEntities.isEmpty()) {
                 crushItems(world, itemEntities, maxItemCrush);
@@ -49,7 +49,7 @@ public class EffectCrushMixin {
         if (spellStats.hasBuff(AugmentSensitive.INSTANCE)){
             int aoeBuff = spellStats.getBuffCount(AugmentAOE.INSTANCE);
             int pierceBuff = spellStats.getBuffCount(AugmentPierce.INSTANCE);
-            int maxItemCrush = 4 + (4 * aoeBuff) + (4 * pierceBuff);
+            int maxItemCrush = 4 * (1 + aoeBuff + pierceBuff);
             List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, new AABB(rayTraceResult.getBlockPos()).inflate(aoeBuff + 1.0));
             if (!itemEntities.isEmpty()) crushItems(world, itemEntities, maxItemCrush);
             ci.cancel();
