@@ -47,7 +47,7 @@
 
   "ars_elemental.page.water_upstream": "This block generates an upstream current that will make surrounding entities float upwards even if they are not in water source blocks.",
 
-  "ars_elemental.page1.fire_golem": "The fire golem can be used as a wandering sentry, like the weald walkers. It will shoot flare homing projectiles at enemies and patrol around the area assigned using the dominion wand.",
+  "ars_elemental.page1.fire_golem": "The fire golem can be used as a wandering sentry, like the weald walkers. It will shoot flare homing projectiles at enemies and patrol around the area assigned using the dominion wand. Soul Sand and Magma blocks can be used to change appearance.",
   "ars_elemental.page1.mermaid": "Not yet implemented. The mermaid can be summoned by right-clicking on Prismarine to transform it in a Siren Shrine.",
   "item.ars_nouveau.familiar_siren": "Bound Script: Siren - WIP",
   "ars_nouveau.familiar_name.siren": "Siren - WIP do not summon",

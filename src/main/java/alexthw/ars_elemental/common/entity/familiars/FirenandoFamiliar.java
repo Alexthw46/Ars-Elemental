@@ -1,18 +1,23 @@
 package alexthw.ars_elemental.common.entity.familiars;
 
+import alexthw.ars_elemental.common.entity.FirenandoEntity;
+import alexthw.ars_elemental.common.entity.FirenandoEntity.Variants;
 import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
+import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +31,9 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener {
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
+public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener, IVariantTextureProvider {
     public FirenandoFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
@@ -64,13 +71,24 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
                 player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200));
                 return InteractionResult.SUCCESS;
             }
-            //TODO Soul variant
-            if (stack.getItem() == Blocks.SOUL_SAND.asItem()) {
-
+            if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor().equals(Variants.MAGMA.toString())) {
+                this.entityData.set(COLOR, Variants.MAGMA.toString());
+                stack.shrink(1);
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.getItem() == Blocks.SOUL_SAND.asItem() && !getColor().equals(Variants.SOUL.toString())) {
+                this.entityData.set(COLOR, Variants.SOUL.toString());
+                stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
         }
         return super.mobInteract(player, hand);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.set(COLOR,Variants.MAGMA.toString());
     }
 
     @Override
@@ -83,4 +101,15 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle.body"));
         return PlayState.CONTINUE;
     }
+
+    public String getColor(){
+        return this.entityData.get(COLOR);
+    }
+
+    @Override
+    public ResourceLocation getTexture(LivingEntity entity) {
+        return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
+    }
+
+
 }

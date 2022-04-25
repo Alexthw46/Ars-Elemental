@@ -78,7 +78,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
         }
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
-        this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.5d, 20, 36f, () -> castCooldown <= 0, 0, 10));
+        this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.0d, 30, 36f, () -> castCooldown <= 0, 0, 10));
         this.goalSelector.addGoal(6, new SelfCastGoal<>(this, 20, 0, () -> (castCooldown <= 0 && (getHealth() < getMaxHealth() / 4)), 0, 10));
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
@@ -121,7 +121,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     @Override
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
         Spell spell = this.pSpells.get(random.nextInt(pSpells.size()));
-        ParticleColor color = schoolToColor(this.school);
+        ParticleColor color = schoolToColor(this.school.getId());
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
         resolver.onCast(ItemStack.EMPTY, this, level);
         this.castCooldown = 40;

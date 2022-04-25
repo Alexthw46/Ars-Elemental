@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.client.firenando;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
@@ -9,15 +10,15 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoModel extends AnimatedGeoModel<IAnimatable> {
+public class FirenandoModel<M extends LivingEntity & IAnimatable> extends AnimatedGeoModel<M> {
 
     @Override
-    public ResourceLocation getModelLocation(IAnimatable object) {
+    public ResourceLocation getModelLocation(M object) {
         return prefix("geo/fire_golem.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureLocation(IAnimatable object) {
+    public ResourceLocation getTextureLocation(M object) {
         return prefix("textures/entity/fire_golem.png");
     }
 
@@ -29,12 +30,12 @@ public class FirenandoModel extends AnimatedGeoModel<IAnimatable> {
      * @return the animation file location
      */
     @Override
-    public ResourceLocation getAnimationFileLocation(IAnimatable animatable) {
+    public ResourceLocation getAnimationFileLocation(M animatable) {
         return prefix("animations/fire_golem.animation.json");
     }
 
     @Override
-    public void setLivingAnimations(IAnimatable entity, Integer uniqueID, AnimationEvent customPredicate) {
+    public void setLivingAnimations(M entity, Integer uniqueID, AnimationEvent customPredicate) {
             super.setLivingAnimations(entity, uniqueID, customPredicate);
             if (customPredicate == null) return;
             IBone head = this.getAnimationProcessor().getBone("head");
@@ -42,4 +43,5 @@ public class FirenandoModel extends AnimatedGeoModel<IAnimatable> {
             head.setRotationX(extraData.headPitch * ((float) Math.PI / 330F));
             head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 330F));
     }
+
 }

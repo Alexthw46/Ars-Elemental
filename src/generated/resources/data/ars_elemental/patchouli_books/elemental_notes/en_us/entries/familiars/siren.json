@@ -1,5 +1,5 @@
 {
-  "name": "entity.ars_elemental.siren_entity",
+  "name": "entity.ars_elemental.siren_familiar",
   "category": "ars_nouveau:familiars",
   "icon": "ars_nouveau:familiar_siren",
   "pages": [
@@ -8,7 +8,7 @@
       "type": "patchouli:text"
     },
     {
-      "entity": "ars_elemental:siren_entity",
+      "entity": "ars_elemental:siren_familiar",
       "type": "patchouli:entity"
     }
   ]

@@ -52,4 +52,5 @@ public class DireWolfRenderer extends MobRenderer<Wolf, WolfModel<Wolf>> {
         super.scale(pLivingEntity, pMatrixStack, pPartialTickTime);
         pMatrixStack.scale(1.2F, 1.3F, 1.4F);
     }
+
 }

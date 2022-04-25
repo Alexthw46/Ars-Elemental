@@ -15,11 +15,11 @@ public class ParticleUtil {
     public static ParticleColor waterColor = new ParticleColor(50, 50, 250);
     public static ParticleColor earthColor = new ParticleColor(50, 250, 55);
     public static ParticleColor airColor = new ParticleColor(255, 255, 26);
-    public static ParticleColor soulColor = new ParticleColor(250, 250, 250);
+    public static ParticleColor soulColor = new ParticleColor(200, 200, 200);
 
 
-    public static ParticleColor schoolToColor(SpellSchool school) {
-        return switch (school.getId()) {
+    public static ParticleColor schoolToColor(String school) {
+        return switch (school) {
 
             case "fire" -> fireColor;
 
@@ -30,6 +30,19 @@ public class ParticleUtil {
             case "air" -> airColor;
 
             case "necromancy" -> soulColor;
+
+            default -> com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColor();
+        };
+    }
+
+    public static ParticleColor schoolToColor2(String school) {
+        return switch (school) {
+
+            case "fire", "water" -> airColor;
+
+            case "earth" -> waterColor;
+
+            case "air", "necromancy" -> fireColor;
 
             default -> com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColor();
         };

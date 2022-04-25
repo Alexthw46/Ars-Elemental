@@ -97,12 +97,6 @@ public class ArsNouveauRegistry {
             }
             return 0;
         }));
-        LightManager.register(EntityType.GLOW_SQUID, (p -> {
-            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
-                return 10;
-            }
-            return 0;
-        }));
     }
 
     static {

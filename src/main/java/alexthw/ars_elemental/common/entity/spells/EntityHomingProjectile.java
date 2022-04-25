@@ -1,22 +1,13 @@
 package alexthw.ars_elemental.common.entity.spells;
 
-import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
-import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
 import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.util.CompatUtils;
-import alexthw.ars_elemental.util.TooManyCompats;
-import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,25 +17,17 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Predicate;
 
 public class EntityHomingProjectile extends EntityProjectileSpell {
 
-    Entity ignore;
+    List<Predicate<LivingEntity>> ignore;
     LivingEntity target;
-    Set<AbstractEffectFilter> filters = null;
-    boolean targetPlayers = false;
 
-    public EntityHomingProjectile(Level world, Player shooter, SpellResolver resolver, boolean targetPlayers) {
-        this(world, shooter, resolver);
-        this.targetPlayers = targetPlayers;
-        if (CompatUtils.tooManyGlyphsLoaded())
-            filters = TooManyCompats.getFilters(resolver.spell.recipe);
-    }
-
-    public void setIgnore(Entity ignore) {
+    public void setIgnored(List<Predicate<LivingEntity>> ignore) {
         this.ignore = ignore;
     }
+    public List<Predicate<LivingEntity>> getIgnored(){return this.ignore;}
 
     @Override
     public int getExpirationTime() {
@@ -53,12 +36,10 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     public EntityHomingProjectile(Level worldIn, LivingEntity ignore, SpellResolver resolver) {
         super(ModEntities.HOMING_PROJECTILE.get(), worldIn, resolver);
-        this.ignore = ignore;
     }
 
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
         super(ModEntities.HOMING_PROJECTILE.get(), world, resolver);
-
     }
 
     public EntityHomingProjectile(EntityType<EntityHomingProjectile> entityType, Level level) {
@@ -102,33 +83,19 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     @Override
     protected boolean canHitEntity(Entity entity) {
-        boolean flag = true;
-
-        if (getOwner() instanceof IUndeadSummon summon && entity instanceof ISummon summon2){
-            flag = summon2.getOwnerID() != summon.getOwnerID();
-        }
-
-        if (entity == getOwner() || entity == ignore || entity instanceof Player && !targetPlayers) {
-            flag = false;
-        }
-        return flag && super.canHitEntity(entity);
+        boolean b = super.canHitEntity(entity);
+        if (entity instanceof LivingEntity) b &= shouldTarget((LivingEntity) entity);
+        return b;
     }
 
     private boolean shouldTarget(LivingEntity e) {
-
-        boolean flag = !(e instanceof FirenandoEntity && getOwner() instanceof FirenandoEntity);
-        if (e instanceof ISummon summon){
-            if (getOwner() instanceof ISummon summon2) {
-                flag &= summon2.getOwnerID() != summon.getOwnerID();
-            } else if (getOwner() instanceof Player) {
-                flag &= summon.getOwnerID() != getOwner().getUUID();
+        if (ignore == null) return false;
+        for (Predicate<LivingEntity> p : getIgnored()) {
+            if (p.test(e)) {
+                return false;
             }
         }
-        if (e instanceof EntityMageBase mage1 && ignore instanceof EntityMageBase mage2) flag &= mage1.school != mage2.school;
-        if (e instanceof Player) flag &= targetPlayers;
-        if (CompatUtils.tooManyGlyphsLoaded()) flag &= TooManyCompats.checkFilters(e, this.filters);
-
-        return flag && e != this.getOwner() && e != ignore && e.isAlive();
+        return true;
     }
 
     @Override
@@ -183,27 +150,11 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     }
 
     @Override
-    public boolean save(CompoundTag pCompound) {
-        if (ignore != null) {
-            pCompound.putInt("ignore", ignore.getId());
-        }
-        pCompound.putBoolean("aimPlayers", targetPlayers);
-        return super.save(pCompound);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        this.targetPlayers = tag.getBoolean("aimPlayers");
-        this.ignore = getCommandSenderWorld().getEntity(tag.getInt("ignore"));
-    }
-
-    @Override
     protected void onHit(HitResult result) {
 
-        if (!level.isClientSide && result instanceof BlockHitResult blockraytraceresult && !this.isRemoved() && !hitList.contains(((BlockHitResult) result).getBlockPos())) {
+        if (!level.isClientSide && result instanceof BlockHitResult blockRaytraceResult && !this.isRemoved() && !hitList.contains(((BlockHitResult) result).getBlockPos())) {
 
-            BlockState state = level.getBlockState(blockraytraceresult.getBlockPos());
+            BlockState state = level.getBlockState(blockRaytraceResult.getBlockPos());
             if (state.getBlock() == Blocks.NETHER_PORTAL || state.getBlock() == Blocks.END_PORTAL) return;
         }
 

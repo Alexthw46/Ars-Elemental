@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
+import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
@@ -25,7 +26,10 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,6 +48,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -54,10 +59,15 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Predicate;
 
-public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, IAnimationListener, IWandable, IDispellable {
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
+public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, IAnimationListener, IWandable, IDispellable, IVariantTextureProvider {
     public FirenandoEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
@@ -68,6 +78,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
 
     private int castCooldown = 0;
     private final ParticleColor color = new ParticleColor(250, 50, 15);
+    private final ParticleColor colorAlt = new ParticleColor(15, 100, 200);
     public final Spell spell = new Spell(MethodHomingProjectile.INSTANCE, EffectIgnite.INSTANCE, AugmentSensitive.INSTANCE, EffectFlare.INSTANCE);
     public UUID owner;
 
@@ -102,11 +113,16 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    public void performRangedAttack(LivingEntity shooter, float p_82196_2_) {
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner), resolver);
-        projectileSpell.setColor(color.toWrapper());
+    public void performRangedAttack(LivingEntity target, float p_82196_2_) {
+        ParticleColor spellColor = getColor().equals(Variants.MAGMA.toString()) ? color : colorAlt;
+        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(spellColor.toWrapper()).withType(SpellContext.CasterType.ENTITY));
+        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, this.getLevel().getPlayerByUUID(owner), resolver);
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false);
+        ignore.add(entity -> !(entity instanceof Enemy));
+        ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
+        projectileSpell.setColor(spellColor.toWrapper());
         projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);
+        projectileSpell.setIgnored(ignore);
         level.addFreshEntity(projectileSpell);
         this.castCooldown = 20;
     }
@@ -141,6 +157,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
 
     public static final EntityDataAccessor<Optional<BlockPos>> HOME = SynchedEntityData.defineId(FirenandoEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     public static final EntityDataAccessor<Boolean> SHOOTING = SynchedEntityData.defineId(FirenandoEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<String> COLOR = SynchedEntityData.defineId(FirenandoEntity.class, EntityDataSerializers.STRING);
 
     @Override
     public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable LivingEntity storedEntity, Player playerEntity) {
@@ -159,18 +176,25 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         return this.entityData.get(HOME).orElse(null);
     }
 
+    public UUID getOwner(){
+        return owner;
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(SHOOTING, false);
         this.entityData.define(HOME, Optional.empty());
+        this.entityData.define(COLOR, Variants.MAGMA.toString());
     }
 
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         NBTUtil.storeBlockPos(tag, "home", getHome());
         tag.putInt("cast", castCooldown);
+        tag.putString("color", this.entityData.get(COLOR));
         if (owner != null) tag.putUUID("owner", owner);
+
     }
 
     @Override
@@ -187,6 +211,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
             setHome(NBTUtil.getBlockPos(tag, "home"));
         }
         this.castCooldown = tag.getInt("cast");
+        this.entityData.set(COLOR, tag.getString("color"));
         this.owner = tag.hasUUID("owner") ? tag.getUUID("owner") : null;
     }
 
@@ -235,6 +260,44 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
 
     public enum Animations {
         SHOOT
+    }
+
+    public enum Variants{
+        MAGMA,
+        SOUL;
+
+        @Override
+        public String toString() {
+            return name().toLowerCase();
+        }
+    }
+
+    public String getColor(){
+        return this.entityData.get(COLOR);
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (!player.level.isClientSide && player.getUUID().equals(owner)) {
+            ItemStack stack = player.getItemInHand(hand);
+
+            if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor().equals(Variants.MAGMA.toString())) {
+                this.entityData.set(COLOR, Variants.MAGMA.toString());
+                stack.shrink(1);
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.getItem() == Blocks.SOUL_SAND.asItem() && !getColor().equals(Variants.SOUL.toString())) {
+                this.entityData.set(COLOR, Variants.SOUL.toString());
+                stack.shrink(1);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    @Override
+    public ResourceLocation getTexture(LivingEntity entity) {
+        return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
     }
 
 }

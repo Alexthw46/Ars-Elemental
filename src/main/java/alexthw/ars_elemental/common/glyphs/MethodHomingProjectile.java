@@ -1,18 +1,21 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
-import com.hollingsworth.arsnouveau.api.ANFakePlayer;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
+import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.util.CompatUtils;
+import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.lib.GlyphLib;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,8 +28,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public class MethodHomingProjectile extends AbstractCastMethod {
 
@@ -36,59 +41,34 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         super("homing_projectile", "Homing Projectile");
     }
 
-    public void summonProjectiles(Level world, Player shooter, SpellStats stats, SpellResolver resolver){
-
-        boolean targetPlayers = stats.hasBuff(AugmentSensitive.INSTANCE);
+    public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver, List<Predicate<LivingEntity>> ignore) {
 
         ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(world, shooter, resolver, targetPlayers);
-        projectiles.add(projectileSpell);
-        int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
-
-        if (numSplits > 0){
-            stats.setDamageModifier(stats.getDamageModifier() * 0.75D);
-        }
-
-        splits(world, shooter, shooter, resolver, targetPlayers, projectiles, numSplits);
-
-        float velocity = 0.45F + stats.getBuffCount(AugmentAccelerate.INSTANCE)/ 10.0F;
-
-        for(EntityHomingProjectile proj : projectiles) {
-            proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
-            world.addFreshEntity(proj);
-        }
-    }
-
-    public void summonProjectilesAlt(Level world, LivingEntity shooter, Player owner, SpellStats stats, SpellResolver resolver){
-
-        boolean targetPlayers = stats.hasBuff(AugmentSensitive.INSTANCE);
-
-        ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        projectiles.add(new EntityHomingProjectile(world, owner, resolver, targetPlayers));
+        projectiles.add(new EntityHomingProjectile(world, shooter, resolver));
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
         if (numSplits > 0) {
-            stats.setDamageModifier(stats.getDamageModifier() * 0.5D);
+            stats.setDamageModifier(stats.getDamageModifier() * 0.75D);
         }
 
-        splits(world, shooter, owner, resolver, targetPlayers, projectiles, numSplits);
+        splits(world, shooter, resolver, projectiles, numSplits);
 
         float velocity = 0.5F + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 10.0F;
 
         for (EntityHomingProjectile proj : projectiles) {
-            proj.setIgnore(shooter);
+            proj.setIgnored(ignore);
             proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
             world.addFreshEntity(proj);
         }
     }
 
-    private void splits(Level world, LivingEntity shooter, Player owner, SpellResolver resolver, boolean targetPlayers, ArrayList<EntityHomingProjectile> projectiles, int numSplits) {
+    private void splits(Level world, LivingEntity shooter, SpellResolver resolver, ArrayList<EntityHomingProjectile> projectiles, int numSplits) {
         for (int i = 1; i < numSplits + 1; i++) {
             Direction offset = shooter.getDirection().getClockWise();
             if (i % 2 == 0) offset = offset.getOpposite();
             BlockPos projPos = shooter.blockPosition().relative(offset, i / 2);
             projPos = projPos.offset(0, 1.5, 0);
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, owner, resolver, targetPlayers);
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
@@ -96,14 +76,27 @@ public class MethodHomingProjectile extends AbstractCastMethod {
 
     @Override
     public void onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
+
+        List<Predicate<LivingEntity>> ignore = basicIgnores(shooter, !spellStats.hasBuff(AugmentSensitive.INSTANCE));
+
+        if (CompatUtils.tooManyGlyphsLoaded()) {
+            Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(resolver.spell.recipe);
+            ignore.add(entity -> TooManyCompats.checkFilters(entity, filters));
+        }
+
         if (shooter instanceof Player) {
-            summonProjectiles(world, (Player) shooter, spellStats, resolver);
+            ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerID()));
+
             resolver.expendMana(shooter);
         } else if (shooter instanceof ISummon summon && summon.getOwnerID() != null) {
-            summonProjectilesAlt(world, shooter, world.getPlayerByUUID(summon.getOwnerID()), spellStats, resolver);
-        } else if (shooter instanceof EntityMageBase) {
-            summonProjectilesAlt(world, shooter, ANFakePlayer.getPlayer((ServerLevel) world), spellStats, resolver);
+            ignore.add(entity -> entity instanceof ISummon summon2 && summon.getOwnerID().equals(summon2.getOwnerID()));
+        } else if (shooter instanceof EntityMageBase mage) {
+            ignore.add(entity -> entity instanceof EntityMageBase mage2 && mage.school == mage2.school);
+            ignore.add(entity -> entity instanceof Player mage3 && mage.school == ISchoolItem.hasFocus(world,mage3));
         }
+
+        summonProjectiles(world, shooter, spellStats, resolver, ignore);
+
     }
 
     /**
@@ -113,7 +106,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
     public void onCastOnBlock(UseOnContext context, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Level world = context.getLevel();
         Player shooter = context.getPlayer();
-        summonProjectiles(world, shooter, spellStats, resolver);
+        onCast(null, shooter, world, spellStats, spellContext, resolver);
         resolver.expendMana(shooter);
     }
 
@@ -171,4 +164,17 @@ public class MethodHomingProjectile extends AbstractCastMethod {
     public Set<AbstractAugment> getCompatibleAugments() {
         return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentSensitive.INSTANCE);
     }
+
+    public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, Boolean targetPlayers){
+        List<Predicate<LivingEntity>> ignore = new ArrayList<>();
+
+        ignore.add((entity -> !entity.isAlive()));
+        ignore.add((entity -> entity == shooter));
+        ignore.add(entity -> entity instanceof FamiliarEntity);
+        if (targetPlayers) {
+            ignore.add(entity -> entity instanceof Player);
+        }
+        return ignore;
+    }
+
 }

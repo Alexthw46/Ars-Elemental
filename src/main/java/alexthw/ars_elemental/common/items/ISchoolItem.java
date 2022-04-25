@@ -29,9 +29,11 @@ public interface ISchoolItem extends ISpellModifierItem {
                     }
                 }
             }
-            Item hand = player.getItemInHand(InteractionHand.MAIN_HAND).getItem();
-            if (hand instanceof ISchoolItem focus) {
-                return focus.getSchool();
+            for (InteractionHand curHand : InteractionHand.values()){
+                Item hand = player.getItemInHand(curHand).getItem();
+                if (hand instanceof ISchoolItem focus) {
+                    return focus.getSchool();
+                }
             }
         }
         if (entity instanceof FirenandoEntity) return SpellSchools.ELEMENTAL_FIRE;

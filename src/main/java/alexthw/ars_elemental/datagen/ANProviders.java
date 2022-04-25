@@ -187,6 +187,7 @@ public class ANProviders {
 
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider {
 
         public PatchouliProvider(DataGenerator generatorIn) {
@@ -278,10 +279,10 @@ public class ANProviders {
         }
 
         public void addFamiliarPage(AbstractFamiliarHolder familiarHolder){
-            PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getId() + "_entity")
+            PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getId() + "_familiar")
                     .withIcon("ars_nouveau:familiar_" + familiarHolder.getId())
                     .withTextPage("ars_nouveau.familiar_desc." + familiarHolder.getId())
-                    .withPage(new EntityPage(prefix(familiarHolder.getEntityKey() + "_entity").toString()));
+                    .withPage(new EntityPage(prefix(familiarHolder.getEntityKey() + "_familiar").toString()));
             this.pages.add(new PatchouliPage(builder, getPath(FAMILIARS, familiarHolder.getId())));
         }
 
