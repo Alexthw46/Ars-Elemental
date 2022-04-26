@@ -60,7 +60,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -117,7 +116,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         ParticleColor spellColor = getColor().equals(Variants.MAGMA.toString()) ? color : colorAlt;
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(spellColor.toWrapper()).withType(SpellContext.CasterType.ENTITY));
         EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, this.getLevel().getPlayerByUUID(owner), resolver);
-        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false);
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver);
         ignore.add(entity -> !(entity instanceof Enemy));
         ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
         projectileSpell.setColor(spellColor.toWrapper());

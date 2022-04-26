@@ -140,7 +140,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     //Monster overrides
     @Override
     public float getWalkTargetValue(@NotNull BlockPos pPos, @NotNull LevelReader pLevel) {
-        return 0f;
+        return super.getWalkTargetValue(pPos,pLevel);
     }
 
     @Override
