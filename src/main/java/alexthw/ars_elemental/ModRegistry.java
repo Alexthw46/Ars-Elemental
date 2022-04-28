@@ -63,7 +63,6 @@ public class ModRegistry {
         HOMING_PROJECTILE = registerProjectile("homing_projectile", EntityHomingProjectile::new);
         ARC_PROJECTILE = registerProjectile("arc_projectile", EntityArcProjectile::new);
 
-
         SKELEHORSE_SUMMON = ENTITIES.register("summon_skelehorse", () -> EntityType.Builder.of(SummonSkeleHorse::new,EntityClassification.CREATURE).sized(1.3964844F, 1.6F).setTrackingRange(10).build("ars_elemental:" + "summon_skelehorse"));
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.6F, 0.85F, SummonDirewolf::new, EntityClassification.CREATURE);
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, EntityClassification.MONSTER);

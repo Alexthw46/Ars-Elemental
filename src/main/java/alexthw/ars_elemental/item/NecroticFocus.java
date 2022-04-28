@@ -5,6 +5,7 @@ import alexthw.ars_elemental.ModRegistry;
 import alexthw.ars_elemental.entity.AllyVhexEntity;
 import alexthw.ars_elemental.entity.SummonDirewolf;
 import alexthw.ars_elemental.entity.SummonSkeleHorse;
+import alexthw.ars_elemental.glyphs.MethodHomingProj;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
@@ -30,7 +31,6 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -44,6 +44,8 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.max;
 
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
@@ -173,7 +175,7 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
                 if (player.equals(owner)) {
                     EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
                     spellResolver.onCast(ItemStack.EMPTY, i, i.level);
-                    summon.setTicksLeft(summon.getTicksLeft()/2);
+                    summon.setTicksLeft(max(0, summon.getTicksLeft() - 100));
                 }
             }
         }
@@ -185,5 +187,6 @@ public class NecroticFocus extends Item implements ISpellModifierItem {
     static {
         sympatheticMethods.add(MethodTouch.INSTANCE);
         sympatheticMethods.add(MethodProjectile.INSTANCE);
+        sympatheticMethods.add(MethodHomingProj.INSTANCE);
     }
 }

@@ -17,25 +17,19 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class EntityHomingProjectile extends EntityProjectileSpell {
-
-    PlayerEntity owner;
     LivingEntity target;
-    boolean targetPlayers = false;
+    List<Predicate<LivingEntity>> ignore;
 
-    public EntityHomingProjectile(World world, PlayerEntity shooter, SpellResolver resolver, boolean targetPlayers) {
-        this(world,shooter,resolver);
-        this.targetPlayers = targetPlayers;
+    public EntityHomingProjectile(World world, SpellResolver resolver, List<Predicate<LivingEntity>> ignored) {
+        this(world,resolver);
+        this.ignore = ignored;
     }
 
     public EntityHomingProjectile(World world, SpellResolver resolver) {
         super(world, resolver);
-    }
-
-    public EntityHomingProjectile(World world, PlayerEntity shooter, SpellResolver resolver) {
-        this(world,resolver);
-        this.owner = shooter;
     }
 
     public EntityHomingProjectile(EntityType<EntityHomingProjectile> entityType, World level) {
@@ -200,22 +194,27 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         this.setDeltaMovement(motionX, motionY, motionZ);
     }
 
+    @Override
+    protected boolean canHitEntity(Entity p_230298_1_) {
+        if (p_230298_1_ instanceof LivingEntity) return shouldTarget((LivingEntity) p_230298_1_) && super.canHitEntity(p_230298_1_);
+        return super.canHitEntity(p_230298_1_);
+    }
+
     private boolean shouldTarget(LivingEntity e) {
-        if (!targetPlayers && e instanceof PlayerEntity) return false;
-        return e != owner && e.isAlive();
+        if (ignore != null && ignore.stream().anyMatch(p -> p.test(e))) {
+            return false;
+        }
+        return e != getOwner() && e.isAlive();
     }
 
     @Override
     public boolean save(CompoundNBT pCompound) {
-        pCompound.putUUID("owner", owner.getUUID());
-        pCompound.putBoolean("aimPlayers", targetPlayers);
         return super.save(pCompound);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT tag) {
         super.readAdditionalSaveData(tag);
-        this.targetPlayers = tag.getBoolean("aimPlayers");
-        this.owner = getCommandSenderWorld().getPlayerByUUID(tag.getUUID("owner"));
     }
+
 }
