@@ -17,7 +17,6 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -34,7 +33,6 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,9 +132,16 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     //Monster overrides
+
+
     @Override
-    public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {
-        return 0f;
+    public int getMaxSpawnClusterSize() {
+        return 1;
+    }
+
+    @Override
+    public boolean isAlliedTo(Entity pEntity) {
+        return super.isAlliedTo(pEntity) || school.equals(ISchoolItem.hasFocus(pEntity.level, pEntity));
     }
 
     @Override

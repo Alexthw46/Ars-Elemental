@@ -17,7 +17,6 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LightLayer;
 
 import java.util.ArrayList;
@@ -98,18 +97,14 @@ public class ArsNouveauRegistry {
             }
             return 0;
         }));
-        LightManager.register(EntityType.GLOW_SQUID, (p -> {
-            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
-                return 10;
-            }
-            return 0;
-        }));
+
     }
 
     static {
         TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
-            EntityProjectileSpell spell = new EntityHomingProjectile(world, resolver);
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
             spell.setOwner(fakePlayer);
+            spell.setIgnore(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver));
             spell.setPos(position.x(), position.y(), position.z());
             spell.shoot(direction.getStepX(),  direction.getStepY(), direction.getStepZ(), 0.25f, 0);
             world.addFreshEntity(spell);

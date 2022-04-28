@@ -58,8 +58,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -77,13 +79,17 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     public final Spell spell = new Spell(MethodHomingProjectile.INSTANCE, EffectIgnite.INSTANCE, AugmentSensitive.INSTANCE, EffectFlare.INSTANCE);
     public UUID owner;
 
+    public UUID getOwner() {
+        return owner;
+    }
+
     @Override
     public void tick() {
         super.tick();
         if (castCooldown > 0) {
             this.castCooldown--;
         }
-        if(!level.isClientSide() && level.getGameTime() % 20 == 0 && !this.isDeadOrDying()){
+        if (!level.isClientSide() && level.getGameTime() % 20 == 0 && !this.isDeadOrDying()) {
             this.heal(1.0f);
         }
     }
@@ -110,8 +116,12 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     @Override
     public void performRangedAttack(LivingEntity shooter, float p_82196_2_) {
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, shooter.getLevel().getPlayerByUUID(owner), this, resolver);
+        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, resolver);
         projectileSpell.setColor(color.toWrapper());
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver);
+        ignore.add(entity -> !(entity instanceof Enemy));
+        ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
+        projectileSpell.setIgnore(ignore);
         projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);
         level.addFreshEntity(projectileSpell);
         this.castCooldown = 20;
