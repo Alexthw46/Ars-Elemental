@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -81,13 +82,11 @@ public class MethodHomingProjectile extends AbstractCastMethod {
 
         if (shooter instanceof Player) {
             ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerID()));
-
+            ignore.add(entity -> entity instanceof OwnableEntity pet && shooter != pet.getOwner());
             resolver.expendMana(shooter);
         } else if (shooter instanceof ISummon summon && summon.getOwnerID() != null) {
             ignore.add(entity -> entity instanceof ISummon summon2 && summon.getOwnerID().equals(summon2.getOwnerID()));
-        } else if (shooter instanceof EntityMageBase mage) {
-            ignore.add(entity -> entity instanceof EntityMageBase mage2 && mage.school == mage2.school);
-            ignore.add(entity -> entity instanceof Player mage3 && mage.school == ISchoolItem.hasFocus(world,mage3));
+            ignore.add(entity -> entity instanceof OwnableEntity pet && summon.getOwnerID().equals(pet.getOwnerUUID()));
         }
 
         summonProjectiles(world, shooter, spellStats, resolver, ignore);
@@ -102,7 +101,6 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         Level world = context.getLevel();
         Player shooter = context.getPlayer();
         onCast(null, shooter, world, spellStats, spellContext, resolver);
-        resolver.expendMana(shooter);
     }
 
     /**
@@ -166,12 +164,15 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         ignore.add((entity -> !entity.isAlive()));
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity);
+        ignore.add(shooter::isAlliedTo);
         if (!targetPlayers) {
             ignore.add(entity -> entity instanceof Player);
         }
         if (CompatUtils.tooManyGlyphsLoaded()) {
             Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(resolver.spell.recipe);
-            ignore.add(entity -> TooManyCompats.checkFilters(entity, filters));
+            if (!filters.isEmpty()){
+                ignore.add(entity -> !TooManyCompats.checkFilters(entity, filters));
+            }
         }
         return ignore;
     }

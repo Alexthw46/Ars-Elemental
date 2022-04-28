@@ -22,9 +22,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -78,12 +80,13 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
         }
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
-        this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.0d, 30, 36f, () -> castCooldown <= 0, 0, 10));
+        this.goalSelector.addGoal(3, new ProjCastingGoal<>(this, 1.0d, 30, 64f, () -> castCooldown <= 0, 0, 10));
         this.goalSelector.addGoal(6, new SelfCastGoal<>(this, 20, 0, () -> (castCooldown <= 0 && (getHealth() < getMaxHealth() / 4)), 0, 10));
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(9, new FloatGoal(this));
 
         super.registerGoals();
     }
@@ -112,7 +115,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 60.0D)
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0D)
                 .add(Attributes.ATTACK_DAMAGE, 1)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.FOLLOW_RANGE, 16D);
@@ -138,14 +141,27 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     //Monster overrides
-    @Override
-    public float getWalkTargetValue(@NotNull BlockPos pPos, @NotNull LevelReader pLevel) {
-        return super.getWalkTargetValue(pPos,pLevel);
-    }
 
     @Override
     protected boolean shouldDropLoot() {
         return false;
     }
 
+    @Override
+    public boolean isAlliedTo(Entity pEntity) {
+        return super.isAlliedTo(pEntity) || school.equals(ISchoolItem.hasFocus(pEntity.level,pEntity));
+    }
+
+    public int getMaxSpawnClusterSize() {
+        return 1;
+    }
+
+    @Override
+    protected int getExperienceReward(Player pPlayer) {
+        return 15;
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+    }
 }

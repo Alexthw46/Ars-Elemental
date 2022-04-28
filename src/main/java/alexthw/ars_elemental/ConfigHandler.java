@@ -71,7 +71,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Mob spawns");
-            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesWeight", 1, 0, 200);
+            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesSpawnWeight", 0, 0, 200);
             MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
             builder.pop();
         }

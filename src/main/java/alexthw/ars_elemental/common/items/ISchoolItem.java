@@ -10,24 +10,24 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 public interface ISchoolItem extends ISpellModifierItem {
 
-    static SpellSchool hasFocus(Level world, Entity entity) {
+    static @Nullable SpellSchool hasFocus(Level world, Entity entity) {
+        if (entity instanceof FirenandoEntity) return SpellSchools.ELEMENTAL_FIRE;
+        if (entity instanceof EntityMageBase mage) return mage.school;
         if (!world.isClientSide && entity instanceof Player player) {
-            Optional<IItemHandlerModifiable> curios = CuriosUtil.getAllWornItems(player).resolve();
-            if (curios.isPresent()) {
-                IItemHandlerModifiable items = curios.get();
-                for (int i = 0; i < items.getSlots(); ++i) {
-                    Item item = items.getStackInSlot(i).getItem();
-                    if (item instanceof ISchoolItem focus) {
-                        return focus.getSchool();
-                    }
-                }
+            SlotResult curio = CuriosApi.getCuriosHelper().findFirstCurio(player, c -> (c.getItem() instanceof ISchoolItem)).orElse(null);
+            if (curio != null && curio.stack().getItem() instanceof ISchoolItem focus) {
+                return focus.getSchool();
             }
             for (InteractionHand curHand : InteractionHand.values()){
                 Item hand = player.getItemInHand(curHand).getItem();
@@ -36,8 +36,6 @@ public interface ISchoolItem extends ISpellModifierItem {
                 }
             }
         }
-        if (entity instanceof FirenandoEntity) return SpellSchools.ELEMENTAL_FIRE;
-        if (entity instanceof EntityMageBase mage) return mage.school;
         return null;
     }
 

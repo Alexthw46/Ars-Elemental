@@ -11,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectBreak;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHarm;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectSnare;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -30,9 +31,11 @@ public class EarthMage extends EntityMageBase {
     public EarthMage(EntityType<? extends EntityMageBase> p_21368_, Level level) {
         super(p_21368_, level);
         this.school = SpellSchools.ELEMENTAL_EARTH;
-        pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectHarm.INSTANCE, AugmentExtendTime.INSTANCE, EffectHarm.INSTANCE));
+        pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectHarm.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectCrush.INSTANCE, AugmentAmplify.INSTANCE, AugmentAmplify.INSTANCE));
-        pSpells.add(new Spell(MethodCurvedProjectile.INSTANCE, AugmentPierce.INSTANCE, EffectBreak.INSTANCE, AugmentPierce.INSTANCE, AugmentAOE.INSTANCE, AugmentAOE.INSTANCE));
+        pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectSnare.INSTANCE, AugmentExtendTime.INSTANCE));
+
+        //pSpells.add(new Spell(MethodCurvedProjectile.INSTANCE, AugmentPierce.INSTANCE, EffectBreak.INSTANCE, AugmentPierce.INSTANCE, AugmentAOE.INSTANCE, AugmentAOE.INSTANCE));
     }
 
     @Override
