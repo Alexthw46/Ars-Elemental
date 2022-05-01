@@ -1,5 +1,6 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
@@ -14,8 +15,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-//@Mod.EventBusSubscriber(modid = ArsElemental.MODID)
+@Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class ShieldEvents {
 
     @SubscribeEvent
@@ -25,9 +27,10 @@ public class ShieldEvents {
                 if (((EntityHitResult) event.getRayTraceResult()).getEntity() instanceof Player player && player.isBlocking()){
                     ItemStack stack = player.getOffhandItem();
                     if (stack.getItem() instanceof EnchantersShield){
-                        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack);
-                        if (level > 0 && player.getRandom().nextInt(10) < level){
+                        int level = EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.MIRROR.get(), stack);
+                        if (level > 0 && player.getRandom().nextInt(5) < level){
                             spell.setDeltaMovement(spell.getDeltaMovement().reverse());
+                            player.getCooldowns().addCooldown(stack.getItem(), 100);
                             event.setCanceled(true);
                         }
                     }

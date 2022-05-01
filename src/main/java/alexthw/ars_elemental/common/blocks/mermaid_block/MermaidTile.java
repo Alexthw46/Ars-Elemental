@@ -20,10 +20,15 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -31,7 +36,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -76,7 +83,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     }
 
     public void giveProgress(){
-        if(progress < getMaxProgress() && level != null){
+        if (progress < getMaxProgress() && level != null){
             progress += 1;
             level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
         }
@@ -84,8 +91,50 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     }
 
     //TODO make it balanced
-    public void refreshEntitiesAndBonus(){
+    public void evaluateAquarium(){
+        Level world = getLevel();
+        if (world == null) return;
+        Map<String, Integer> scoreMap = new HashMap<>();
+        int score = 0;
+        for(BlockPos b : BlockPos.betweenClosed(getBlockPos().north(10).west(10).below(1),getBlockPos().south(10).east(10).above(30))){
+            if (world.isOutsideBuildHeight(b))
+                continue;
+            Block block = world.getBlockState(b).getBlock();
+            int points = getScore(block.defaultBlockState());
+            if (points == 0)
+                continue;
 
+            scoreMap.putIfAbsent(block.getDescriptionId(), 0);
+            scoreMap.put(block.getDescriptionId(), scoreMap.get(block.getDescriptionId()) + 1);
+
+            score += scoreMap.get(block.getDescriptionId()) <= 50 ? points : 0;
+        }
+
+        if (score > 20){
+            for (LivingEntity b : world.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(6).west(6).below(6), getBlockPos().south(6).east(6).above(6)), (e) -> !(e instanceof MermaidEntity) && e.getMobType() == MobType.WATER)){
+
+                scoreMap.putIfAbsent(b.getType().getDescriptionId(), 0);
+                scoreMap.put(b.getType().getDescriptionId(), scoreMap.get(b.getType().getDescriptionId()) + 1);
+
+                score += scoreMap.get(b.getType().getDescriptionId()) <= 10 ? 10 : 0;
+            }
+        }
+
+        bonus = score;
+    }
+
+    public int getScore(BlockState state){
+
+        if (state.getMaterial() == Material.AIR)
+            return 0;
+
+        if (state == Blocks.WATER.defaultBlockState())
+            return 1;
+
+        if(state.getMaterial() == Material.WATER_PLANT)
+            return 2;
+
+        return 0;
     }
 
     ItemStack getRod(){ return Items.FISHING_ROD.getDefaultInstance();}
@@ -105,7 +154,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 .withParameter(LootContextParams.TOOL, rod)
                 .withOptionalParameter(LootContextParams.KILLER_ENTITY, fakePlayer)
                 .withOptionalParameter(LootContextParams.DIRECT_KILLER_ENTITY, damageSource.getDirectEntity())
-                .withLuck(fakePlayer.getLuck()+5).create(LootContextParamSets.FISHING);
+                .withLuck(50).create(LootContextParamSets.FISHING);
 
         list = lootTable.getRandomItems(lootContext);
 
@@ -123,20 +172,20 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         super.tick();
 
         if (level == null) return;
-        if (level.isClientSide()){
+        if (level.isClientSide() && !needsMana){
             for(int i = 0; i < progress/2; i++){
                 level.addParticle(
                         GlowParticleData.createData(new ParticleColor(20,50, 255),i/2F * 0.25f, i/2F * 0.75f,20),
                         getBlockPos().getX() + 0.5 + ParticleUtil.inRange(-0.1, 0.1),
-                        getBlockPos().getY() + 1.5  + ParticleUtil.inRange(-0.1, 0.1),
+                        getBlockPos().getY() + 1.0  + ParticleUtil.inRange(-0.1, 0.1),
                         getBlockPos().getZ() + 0.5 + ParticleUtil.inRange(-0.1, 0.1),
                         0,0,0);
             }
         }else {
 
             long gameTime = level.getGameTime();
-            if (gameTime % 100 == 0) {
-                refreshEntitiesAndBonus();
+            if (gameTime % 2400 == 0) {
+                evaluateAquarium();
             }
 
             if (gameTime % 80 == 0 && needsMana && SourceUtil.takeSourceNearbyWithParticles(worldPosition, level, 7, ConfigHandler.Common.SIREN_MANA_COST.get()) != null) {
@@ -148,8 +197,6 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 if (progress >= getMaxProgress()) {
                     generateItems();
                 }else{
-                    giveProgress();
-                    //TODO move this to Mermaid Goal
                     List<MermaidEntity> mermaids = level.getEntitiesOfClass(MermaidEntity.class, new AABB(getBlockPos().north(6).west(6).below(6), getBlockPos().south(6).east(6).above(6)));
                     if (!mermaids.isEmpty()){
                         int rand = level.random.nextInt(0, mermaids.size());
@@ -159,6 +206,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                                  mermaid.blockPosition().above(), getBlockPos(),
                                 20, 50,  255);
                         level.addFreshEntity(item);
+                        giveProgress();
                     }
                 }
             }
@@ -174,6 +222,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             tooltip.add(new TranslatableComponent("ars_nouveau.wixie.need_mana"));
         }else {
             tooltip.add(new TranslatableComponent("progress: " + progress));
+            tooltip.add(new TranslatableComponent("bonus: " + bonus));
         }
     }
 

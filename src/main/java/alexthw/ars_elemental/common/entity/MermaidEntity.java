@@ -51,63 +51,33 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     public BlockPos homePos;
     private boolean setBehaviors;
 
-
     public MermaidEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
         this.moveControl =  new FlyingMoveControl(this, 10, true);
-        addGoalsAfterConstructor();
     }
 
     public MermaidEntity(Level level, boolean tamed){
         this(ModEntities.SIREN_ENTITY.get(), level);
         setTamed(tamed);
-        addGoalsAfterConstructor();
-    }
-
-    protected void addGoalsAfterConstructor(){
-        if (this.level.isClientSide())
-            return;
-
-        for(WrappedGoal goal : getGoals()){
-            this.goalSelector.addGoal(goal.getPriority(), goal.getGoal());
-        }
-    }
-
-    public List<WrappedGoal> getGoals(){
-        return this.entityData.get(TAMED) ? getTamedGoals() : getWildGoals();
     }
 
     @Override
-    protected void registerGoals() { }
-
-    public List<WrappedGoal> getTamedGoals() {
-        List<WrappedGoal> list = new ArrayList<>();
-        list.add(new WrappedGoal(3, new RandomLookAroundGoal(this)));
-        list.add(new WrappedGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F)));
-        list.add(new WrappedGoal(2, new HybridStrollGoal(this, 1.0f)));
-        list.add(new WrappedGoal(1, new GoBackHomeGoal(this, this::getHome, 5, () -> this.getTarget() == null)));
-
-        return list;
+    protected void registerGoals() {
+        goalSelector.addGoal(8, new FollowPlayerGoal(this, 1.0D, 5.0F, 5.0F));
+        goalSelector.addGoal(0, new HybridStrollGoal(this, 1.0f));
+        goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+        goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        goalSelector.addGoal(1, new GoBackHomeGoal(this, this::getHome, 5, () -> this.getHome() != null));
     }
 
     public BlockPos getHome() {
         return this.homePos;
     }
 
-    public List<WrappedGoal> getWildGoals() {
-        List<WrappedGoal> list = new ArrayList<>();
-        list.add(new WrappedGoal(8, new FollowPlayerGoal(this, 1.0D, 5.0F, 5.0F)));
-        list.add(new WrappedGoal(0, new HybridStrollGoal(this, 1.0f)));
-        list.add(new WrappedGoal(2, new RandomLookAroundGoal(this)));
-        list.add(new WrappedGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F)));
-        return list;
-    }
-
     @Override
     public void die(DamageSource source) {
         if(!level.isClientSide && isTamed()){
-            ItemStack stack = new ItemStack(ModItems.SIREN_CHARM.get());
-            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), stack));
+            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), ModItems.SIREN_CHARM.get().getDefaultInstance()));
         }
         super.die(source);
     }
@@ -127,15 +97,15 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
         return false;
     }
-
+    @Override
     public boolean canBreatheUnderwater() {
         return true;
     }
-
+    @Override
     public MobType getMobType() {
         return MobType.WATER;
     }
-
+    @Override
     public boolean isPushedByFluid() {
         return false;
     }
@@ -155,7 +125,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
     }
 
     //start gecko stuff
-
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "idle", 0, this::idle));
@@ -192,7 +161,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
                 .build();
     }
 
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -221,14 +189,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
             this.homePos = NBTUtil.getBlockPos(tag, "home");
         setTamed(tag.getBoolean("tamed"));
         if(!setBehaviors){
-            tryResetGoals();
             setBehaviors = true;
         }
-    }
-
-    public void tryResetGoals(){
-        this.goalSelector.removeAllGoals();
-        this.addGoalsAfterConstructor();
     }
 
     //this is the hard part TODO
@@ -241,7 +203,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IDispel
         flyingpathnavigator.setCanPassDoors(true);
         return flyingpathnavigator;
     }
-
 
     public void travel(Vec3 pTravelVector) {
         if (this.isInLava()) {

@@ -1,8 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
-import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;

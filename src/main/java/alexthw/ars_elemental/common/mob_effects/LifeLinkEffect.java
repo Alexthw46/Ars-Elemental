@@ -21,7 +21,7 @@ public class LifeLinkEffect extends MobEffect {
             MobEffectInstance instance = event.getEntityLiving().getEffect(this);
             if (instance instanceof EntityCarryMEI mei && mei.getTarget() == event.getEntityLiving()) {
                 if (mei.getOwner().isAlive()) {
-                    int shared = (int) (event.getAmount() / 2);
+                    int shared = (int) (event.getAmount() / 2F);
                     mei.getOwner().heal(shared);
                     event.setAmount(shared);
                 }else {
@@ -33,11 +33,11 @@ public class LifeLinkEffect extends MobEffect {
 
     public void hurtForHurt(LivingHurtEvent event){
         if (event.getEntityLiving() != null && event.getEntityLiving().hasEffect(this)){
-            EntityCarryMEI instance = (EntityCarryMEI) event.getEntityLiving().getEffect(this);
-            if (instance != null && instance.getOwner() == event.getEntityLiving()) {
-                if (instance.getTarget().isAlive()) {
-                    int shared = (int) (event.getAmount() / 2);
-                    instance.getTarget().hurt(event.getSource(), shared);
+            MobEffectInstance instance = event.getEntityLiving().getEffect(this);
+            if (instance  instanceof EntityCarryMEI mei && mei.getOwner() == event.getEntityLiving()) {
+                if (mei.getTarget().isAlive()) {
+                    int shared = (int) (event.getAmount() / 2F);
+                    mei.getTarget().hurt(event.getSource(), shared);
                     event.setAmount(shared);
                 }else{
                     event.getEntityLiving().removeEffect(this);

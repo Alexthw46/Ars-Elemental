@@ -154,9 +154,12 @@ dependencies {
     implementation fg.deobf("curse.maven:tmg-560595:3706717")
     implementation fg.deobf("curse.maven:arsenal-561848:3769207")
 
-    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3758468")
+    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3767383")
+
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    runtimeOnly fg.deobf("curse.maven:jeed-532286:3736071")
 
     /*update those, eventually
     runtimeOnly fg.deobf("curse.maven:tomb-243707:3638380")
