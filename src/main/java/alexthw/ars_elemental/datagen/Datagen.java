@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.common.blocks.StrippableLog;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
@@ -15,10 +16,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -93,7 +91,6 @@ public class Datagen {
 
             takeAll(items, i -> i.get() instanceof IAnimatable);
             takeAll(items, i -> i.get() instanceof BlockItem && ((BlockItem) i.get()).getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
-            takeAll(items, i -> i.get() instanceof IAnimatable);
             takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
             takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
             takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
@@ -150,6 +147,7 @@ public class Datagen {
         protected void registerStatesAndModels() {
             Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
             takeAll(blocks, b -> b.get() instanceof UpstreamBlock || b.get() instanceof SummonBlock);
+            takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock || b.get() instanceof StrippableLog).forEach(this::logBlock);
             takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
             takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
             blocks.forEach(this::basicBlock);
@@ -159,6 +157,10 @@ public class Datagen {
             String name = ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath();
             String baseName = name.substring(0, name.length() - 5);
             slabBlock((SlabBlock) blockRegistryObject.get(), ArsElemental.prefix(baseName), ArsElemental.prefix("block/" + baseName));
+        }
+
+        public void logBlock(RegistryObject<Block> blockRegistryObject) {
+
         }
 
         public void stairsBlock(RegistryObject<Block> blockRegistryObject) {

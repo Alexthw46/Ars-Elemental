@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.common.entity.familiars;
 
-import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.entity.FirenandoEntity.Variants;
 import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
@@ -72,12 +71,12 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
                 return InteractionResult.SUCCESS;
             }
             if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor().equals(Variants.MAGMA.toString())) {
-                this.entityData.set(COLOR, Variants.MAGMA.toString());
+                setColor(Variants.MAGMA.toString());
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
             if (stack.getItem() == Blocks.SOUL_SAND.asItem() && !getColor().equals(Variants.SOUL.toString())) {
-                this.entityData.set(COLOR, Variants.SOUL.toString());
+                setColor(Variants.SOUL.toString());
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }

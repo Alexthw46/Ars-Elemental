@@ -10,12 +10,10 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,6 +26,7 @@ import static alexthw.ars_elemental.registry.ModEntities.ENTITIES;
 import static alexthw.ars_elemental.registry.ModEntities.TILES;
 import static alexthw.ars_elemental.registry.ModItems.BLOCKS;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
+import static alexthw.ars_elemental.world.ModFeatures.FEATURES;
 
 public class ModRegistry {
 
@@ -45,6 +44,7 @@ public class ModRegistry {
         CONTAINERS.register(bus);
         EFFECTS.register(bus);
         ENCHANTMENTS.register(bus);
+        FEATURES.register(bus);
     }
 
     public static final RegistryObject<MobEffect> HELLFIRE;

@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.items;
 
+import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,7 @@ public class SirenCharm extends Item {
      */
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
-        if (world.isClientSide)
+        if (world.isClientSide || context.getPlayer() == null)
             return InteractionResult.SUCCESS;
         BlockPos pos = context.getClickedPos();
         if (world.getBlockState(pos).getBlock() == Blocks.PRISMARINE) {
@@ -31,7 +32,7 @@ public class SirenCharm extends Item {
             MermaidEntity mermaid = new MermaidEntity(world, true);
             Vec3 vec = context.getClickLocation();
             mermaid.setPos(vec.x, vec.y, vec.z);
-            mermaid.setHome(pos);
+            if (world.getBlockEntity(pos) instanceof MermaidTile) mermaid.setHome(pos);
             world.addFreshEntity(mermaid);
             context.getItemInHand().shrink(1);
         }

@@ -1,20 +1,25 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.common.blocks.StrippableLog;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
+import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
+import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,14 +27,25 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
+import static com.hollingsworth.arsnouveau.setup.BlockRegistry.LOG_PROP;
+import static com.hollingsworth.arsnouveau.setup.BlockRegistry.SAP_PROP;
 
 @SuppressWarnings("SameParameterValue")
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
 
     public static final RegistryObject<Block> MERMAID_ROCK;
+    public static final RegistryObject<Block> FLASHING_ARCHWOOD_LOG;
+    public static final RegistryObject<Block> FLASHING_ARCHWOOD_LOG_STRIPPED;
+    public static final RegistryObject<Block> FLASHING_ARCHWOOD_STRIPPED;
+    public static final RegistryObject<Block> FLASHING_ARCHWOOD;
+    public static final RegistryObject<Block> FLASHING_SAPLING;
+    public static final RegistryObject<Block> FLASHING_LEAVES;
+
+
     public static final RegistryObject<Block> UPSTREAM_BLOCK;
 
     public static final RegistryObject<Item> FIRE_FOCUS;
@@ -74,6 +90,14 @@ public class ModItems {
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion()));
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
 
+        //Trees
+        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldEvents.FLASHING_TREE), SAP_PROP));
+        FLASHING_LEAVES = addBlock("yellow_archwood_leaves", BlockRegistry.RegistryEvents::createLeavesBlock);
+        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW)));
+        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW)));
+        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW), FLASHING_ARCHWOOD_LOG_STRIPPED));
+        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW), FLASHING_ARCHWOOD_STRIPPED));
+
     }
 
     static RegistryObject<Block> addBlock(String name, Supplier<Block> blockSupp) {
@@ -93,4 +117,5 @@ public class ModItems {
     static BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {
         return BlockBehaviour.Properties.of(mat, color);
     }
+
 }

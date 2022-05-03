@@ -5,6 +5,7 @@ import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,20 +35,26 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantTextureProvider {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        this.moveControl = new FlyingMoveControl(this, 10, false);
     }
 
     public MermaidFamiliar(Level level) {
-        super(ModEntities.SIREN_FAMILIAR.get(), level);
+        this(ModEntities.SIREN_FAMILIAR.get(), level);
+    }
+
+    @Override
+    public boolean canBreatheUnderwater() {
+        return true;
     }
 
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand hand) {
-        if(hand != InteractionHand.MAIN_HAND || pPlayer.getCommandSenderWorld().isClientSide)
+        if (hand != InteractionHand.MAIN_HAND || pPlayer.getCommandSenderWorld().isClientSide)
             return InteractionResult.PASS;
 
         ItemStack stack = pPlayer.getItemInHand(hand);
         String color = Variants.getColorFromStack(stack);
-        if(color != null && !getColor().equals(color)){
-            this.entityData.set(COLOR, color);
+        if (color != null && !getColor().equals(color)) {
+            setColor(color);
             stack.shrink(1);
             return InteractionResult.SUCCESS;
         }
@@ -82,9 +90,9 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     private <T extends IAnimatable>  PlayState actionPredicate(AnimationEvent<T> event) {
-        if (getDeltaMovement().length() > 0 || isInWater()) {
+        if (getDeltaMovement().length() > 0 || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim"));
-        }else{
+        } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
         }
         return PlayState.CONTINUE;

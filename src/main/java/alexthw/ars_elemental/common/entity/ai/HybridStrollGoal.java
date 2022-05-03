@@ -6,8 +6,8 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.phys.Vec3;
 
 public class HybridStrollGoal extends RandomStrollGoal {
-    public HybridStrollGoal(PathfinderMob pMob, double pSpeedModifier) {
-        super(pMob, pSpeedModifier);
+    public HybridStrollGoal(PathfinderMob pMob, double pSpeedModifier, int interval) {
+        super(pMob, pSpeedModifier, interval);
     }
 
     protected Vec3 getPosition() {

@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.blocks.mermaid_block;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.registry.ModEntities;
+import com.google.common.collect.ImmutableList;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
@@ -60,7 +61,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(SummoningTile.CONVERTED, true));
                 MermaidEntity mermaid = new MermaidEntity(level, true);
                 mermaid.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 1.0, worldPosition.getZ() + 0.5);
-                mermaid.homePos = new BlockPos(getBlockPos());
+                mermaid.setHome(getBlockPos());
                 level.addFreshEntity(mermaid);
                 ParticleUtil.spawnPoof(world, worldPosition.above());
                 tickCounter = 0;
@@ -111,7 +112,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         }
 
         if (score > 20){
-            for (LivingEntity b : world.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(6).west(6).below(6), getBlockPos().south(6).east(6).above(6)), (e) -> !(e instanceof MermaidEntity) && e.getMobType() == MobType.WATER)){
+            for (LivingEntity b : getNearbyEntities()) {
 
                 scoreMap.putIfAbsent(b.getType().getDescriptionId(), 0);
                 scoreMap.put(b.getType().getDescriptionId(), scoreMap.get(b.getType().getDescriptionId()) + 1);
@@ -193,18 +194,18 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
             }
 
-            if (gameTime % 20 == 0 && !needsMana){
+            if (gameTime % 200 == 0 && !needsMana) {
                 if (progress >= getMaxProgress()) {
                     generateItems();
-                }else{
-                    List<MermaidEntity> mermaids = level.getEntitiesOfClass(MermaidEntity.class, new AABB(getBlockPos().north(6).west(6).below(6), getBlockPos().south(6).east(6).above(6)));
-                    if (!mermaids.isEmpty()){
+                } else {
+                    List<MermaidEntity> mermaids = level.getEntitiesOfClass(MermaidEntity.class, new AABB(getBlockPos().north(8).west(8).below(16), getBlockPos().south(8).east(8).above(16)));
+                    if (!mermaids.isEmpty()) {
                         int rand = level.random.nextInt(0, mermaids.size());
 
                         LivingEntity mermaid = mermaids.get(rand);
                         EntityFlyingItem item = new EntityFlyingItem(level,
-                                 mermaid.blockPosition().above(), getBlockPos(),
-                                20, 50,  255);
+                                mermaid.blockPosition().above(), getBlockPos(),
+                                20, 50, 255);
                         level.addFreshEntity(item);
                         giveProgress();
                     }
@@ -242,4 +243,14 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         tag.putBoolean("needsMana", needsMana);
     }
 
+    public LivingEntity getRandomEntity() {
+        if (getNearbyEntities().isEmpty())
+            return null;
+        return getNearbyEntities().get(new Random().nextInt(getNearbyEntities().size()));
+    }
+
+    private List<LivingEntity> getNearbyEntities() {
+        if (level == null) return ImmutableList.of();
+        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(6).west(6).below(6), getBlockPos().south(6).east(6).above(6)), (LivingEntity e) -> e.getMobType() == MobType.WATER);
+    }
 }
