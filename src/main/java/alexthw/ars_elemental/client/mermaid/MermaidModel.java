@@ -11,15 +11,15 @@ import javax.annotation.Nullable;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidModel extends AnimatedGeoModel<IAnimatable> {
+public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
 
     @Override
-    public ResourceLocation getModelLocation(IAnimatable object) {
+    public ResourceLocation getModelLocation(T object) {
         return prefix("geo/mermaid.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureLocation(IAnimatable object) {
+    public ResourceLocation getTextureLocation(T object) {
         return prefix("textures/entity/mermaid.png");
     }
 
@@ -31,12 +31,12 @@ public class MermaidModel extends AnimatedGeoModel<IAnimatable> {
      * @return the animation file location
      */
     @Override
-    public ResourceLocation getAnimationFileLocation(IAnimatable animatable) {
+    public ResourceLocation getAnimationFileLocation(T animatable) {
         return prefix("animations/mermaid.animation.json");
     }
 
     @Override
-    public void setLivingAnimations(IAnimatable entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+    public void setLivingAnimations(T entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
         if (customPredicate == null) return;
         IBone head = this.getAnimationProcessor().getBone("head");

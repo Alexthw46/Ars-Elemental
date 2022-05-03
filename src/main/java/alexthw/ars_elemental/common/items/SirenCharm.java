@@ -28,9 +28,10 @@ public class SirenCharm extends Item {
             world.setBlockAndUpdate(pos, ModItems.MERMAID_ROCK.get().defaultBlockState());
             context.getItemInHand().shrink(1);
         }else {
-            MermaidEntity mermaid = new MermaidEntity(world, false);
+            MermaidEntity mermaid = new MermaidEntity(world, true);
             Vec3 vec = context.getClickLocation();
             mermaid.setPos(vec.x, vec.y, vec.z);
+            mermaid.setHome(pos);
             world.addFreshEntity(mermaid);
             context.getItemInHand().shrink(1);
         }

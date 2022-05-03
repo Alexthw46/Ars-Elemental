@@ -12,6 +12,14 @@
   "item.ars_elemental.debug": "Focus of Debug",
   "block.ars_elemental.water_upstream": "Upstream Flow Generator",
   "block.ars_elemental.mermaid_rock": "Siren Shrine",
+
+  "block.ars_elemental.yellow_archwood" : "Flashing Archwood Wood",
+  "block.ars_elemental.yellow_archwood_log" : "Flashing Archwood Log",
+  "block.ars_elemental.stripped_yellow_archwood" : "Stripped Flashing Archwood Wood",
+  "block.ars_elemental.stripped_yellow_archwood_log" : "Stripped Flashing Archwood Log",
+  "block.ars_elemental.yellow_archwood_sapling" : "Flashing Archwood Sapling",
+  "block.ars_elemental.yellow_archwood_leaves" : "Flashing Archwood Leaves",
+
   "entity.ars_elemental.summon_skelehorse": "Summoned Skeletal Steed",
   "entity.ars_elemental.summon_direwolf": "Summoned Direwolf",
   "entity.ars_elemental.summon_vhex": "Summoned Vhex",
