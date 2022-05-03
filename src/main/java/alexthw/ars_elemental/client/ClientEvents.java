@@ -9,14 +9,18 @@ import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
@@ -92,6 +96,12 @@ public class ClientEvents {
     @SubscribeEvent
     public static void bindContainerRenderers(FMLClientSetupEvent event) {
         MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void rendererLayers(FMLClientSetupEvent event) {
+        ItemBlockRenderTypes.setRenderLayer(ModItems.FLASHING_SAPLING.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModItems.MERMAID_ROCK.get(), RenderType.cutout());
     }
 
     private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {

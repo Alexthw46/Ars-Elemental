@@ -1,0 +1,7 @@
+{
+	"parent":"block/cube_all",
+	"textures":{
+		"all":"ars_elemental:block/yellow_archwood_leaves",
+		"particle":"ars_elemental:block/yellow_archwood_leaves"
+	}
+}

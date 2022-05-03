@@ -1,0 +1,9 @@
+{
+	"variants":{
+		"":[
+			{"model":"ars_elemental:block/archwood/yellow_archwood_leaves"},
+			{"model":"ars_elemental:block/archwood/yellow_archwood_leaves_1"},
+			{"model":"ars_elemental:block/archwood/yellow_archwood_leaves_2"}
+		]
+	}
+}
