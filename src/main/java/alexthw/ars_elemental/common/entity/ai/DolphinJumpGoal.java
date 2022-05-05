@@ -3,17 +3,16 @@ package alexthw.ars_elemental.common.entity.ai;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.JumpGoal;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 
 public class DolphinJumpGoal extends JumpGoal {
     private static final int[] STEPS_TO_CHECK = new int[]{0, 1, 4, 5, 6, 7};
     private final MermaidEntity dolphin;
     private final int interval;
+
     private boolean breached;
 
     public DolphinJumpGoal(MermaidEntity pDolphin, int pInterval) {
@@ -70,7 +69,7 @@ public class DolphinJumpGoal extends JumpGoal {
      */
     public void start() {
         Direction direction = this.dolphin.getMotionDirection();
-        this.dolphin.setDeltaMovement(this.dolphin.getDeltaMovement().add((double) direction.getStepX() * 0.6D, 0.4D, (double) direction.getStepZ() * 0.6D));
+        this.dolphin.setDeltaMovement(this.dolphin.getDeltaMovement().add((double) direction.getStepX() * 0.5D, 0.8D, (double) direction.getStepZ() * 0.5D));
         this.dolphin.getNavigation().stop();
     }
 
@@ -85,16 +84,6 @@ public class DolphinJumpGoal extends JumpGoal {
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        boolean flag = this.breached;
-        if (!flag) {
-            FluidState fluidstate = this.dolphin.level.getFluidState(this.dolphin.blockPosition());
-            this.breached = fluidstate.is(FluidTags.WATER);
-        }
-
-        if (this.breached && !flag) {
-            this.dolphin.playSound(SoundEvents.DOLPHIN_JUMP, 1.0F, 1.0F);
-        }
-
         Vec3 vec3 = this.dolphin.getDeltaMovement();
         if (vec3.y * vec3.y < (double) 0.03F && this.dolphin.getXRot() != 0.0F) {
             this.dolphin.setXRot(Mth.rotlerp(this.dolphin.getXRot(), 0.0F, 0.2F));
@@ -103,6 +92,5 @@ public class DolphinJumpGoal extends JumpGoal {
             double d1 = Math.atan2(-vec3.y, d0) * (double) (180F / (float) Math.PI);
             this.dolphin.setXRot((float) d1);
         }
-
     }
 }

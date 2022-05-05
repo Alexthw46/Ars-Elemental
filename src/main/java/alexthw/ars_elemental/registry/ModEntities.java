@@ -15,7 +15,10 @@ import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -60,8 +63,8 @@ public class ModEntities {
     public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
 
     static {
-        SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.4F, MermaidEntity::new, MobCategory.WATER_CREATURE);
-        SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F, 1.4F, MermaidFamiliar::new, MobCategory.WATER_CREATURE);
+        SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
+        SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F, 1.0F, MermaidFamiliar::new, MobCategory.WATER_CREATURE);
 
         FIRENANDO_ENTITY = addEntity("firenando_entity", 1.0F, 2.2F, true, false, FirenandoEntity::new, MobCategory.CREATURE);
         FIRENANDO_FAMILIAR = addEntity("firenando_familiar", 1.0F, 1.8F, true, false, FirenandoFamiliar::new, MobCategory.CREATURE);
@@ -102,7 +105,7 @@ public class ModEntities {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
 
-        SpawnPlacements.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        SpawnPlacements.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_));
 
         SpawnPlacements.register(FIRE_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
         SpawnPlacements.register(AIR_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);

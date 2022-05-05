@@ -6,13 +6,14 @@
   "mixins": [
     "EffectCrushMixin",
     "EffectFreezeMixin",
+    "EffectGravityMixin",
     "EffectIgniteMixin",
     "EffectLaunchMixin",
-    "EffectGravityMixin",
     "EffectWaterMixin",
     "FlareMixin",
     "FoxMixin",
     "LightningMixin",
+    "WhirlispirgTileMixin",
     "ZombieMixin"
   ],
   "minVersion": "0.8"

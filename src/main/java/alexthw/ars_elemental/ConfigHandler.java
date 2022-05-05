@@ -26,10 +26,15 @@ public class ConfigHandler {
         public static ForgeConfigSpec.IntValue SIREN_MAX_PROGRESS;
         public static ForgeConfigSpec.IntValue SIREN_BASE_ITEM;
         public static ForgeConfigSpec.IntValue SIREN_UNIQUE_BONUS;
+        public static ForgeConfigSpec.DoubleValue SIREN_TREASURE_BONUS;
         public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
+        public static ForgeConfigSpec.IntValue SIREN_WEIGHT;
         public static ForgeConfigSpec.IntValue MAGES_WEIGHT;
         public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
+
+        public static ForgeConfigSpec.IntValue TREE_SPAWN_RATE;
+
 
         public Common(ForgeConfigSpec.Builder builder) {
 
@@ -57,22 +62,28 @@ public class ConfigHandler {
 
             builder.comment("Enable or disable the passive bonus of the foci").push("Elemental Spell Foci - Abilities");
 
-            EnableGlyphEmpowering = builder.define("Enable glyph empowering (ignite & freeze)",true);
+            EnableGlyphEmpowering = builder.define("Enable glyph empowering (ignite & freeze)", true);
             EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
 
             builder.pop();
 
             builder.push("Mermaid Fishing");
             SIREN_MANA_COST = builder.comment("How much source mermaids consume per generation").defineInRange("mermaidManaCost", 1000, 0, 10000);
-            SIREN_MAX_PROGRESS = builder.comment("How many channels must occur before a mermaid produces loot").defineInRange("mermaidMaxProgress", 20, 0, 300);
-            SIREN_UNIQUE_BONUS = builder.comment("Bonus number of items a mermaid produces per unique mob").defineInRange("mermaidUniqueBonus", 2, 0, 300);
-            SIREN_BASE_ITEM = builder.comment("Base number of items a mermaid produces per cycle before bonuses.").defineInRange("mermaidBaseItems", 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
-            SIREN_QUANTITY_CAP = builder.comment("Max Bonus number of items a mermaid produces from nearby entities. Each entity equals 1 item.").defineInRange("mermaidQuantityCap", 5, 0, 300);
+            SIREN_MAX_PROGRESS = builder.comment("How many channels must occur before a siren produces loot.").defineInRange("mermaidMaxProgress", 30, 0, 300);
+            SIREN_UNIQUE_BONUS = builder.comment("Max number of extra item rolls a shrine produces if the mood is high.").defineInRange("mermaidScoreBonus", 2, 0, 10);
+            SIREN_TREASURE_BONUS = builder.comment("Chance multiplier to produce a treasure relative to the siren shrine score.").defineInRange("mermaidTreasureBonus", 0.003D, 0D, 1D);
+            SIREN_BASE_ITEM = builder.comment("Base number of items rolls a shrine produces per cycle.").defineInRange("mermaidBaseItems", 1, 0, 300);
+            SIREN_QUANTITY_CAP = builder.comment("Max number of items a siren shrine can produce per cycle.").defineInRange("mermaidQuantityCap", 5, 0, 300);
             builder.pop();
 
-            builder.push("Mob spawns");
+            builder.push("Spawn and Worldgen");
+            SIREN_WEIGHT = builder.comment("How often sirens spawn").defineInRange("sirenSpawnWeight", 5, 0, 200);
+
             MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesSpawnWeight", 0, 0, 200);
             MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
+
+            TREE_SPAWN_RATE = builder.comment("Rate of flashing archwood trees spawn per chunk").defineInRange("flashTreeWeight", 15, 0, Integer.MAX_VALUE);
+
             builder.pop();
         }
     }

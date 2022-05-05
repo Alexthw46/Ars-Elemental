@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.blocks.mermaid_block;
 
-import alexthw.ars_elemental.ConfigHandler;
+import alexthw.ars_elemental.ConfigHandler.Common;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.google.common.collect.ImmutableList;
@@ -12,20 +12,17 @@ import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.SummoningTile;
-import com.hollingsworth.arsnouveau.common.entity.EntityFlyingItem;
 import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,10 +34,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 
 public class MermaidTile extends SummoningTile implements ITooltipProvider {
@@ -80,45 +77,35 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     }
 
     public int getMaxProgress(){
-        return ConfigHandler.Common.SIREN_MAX_PROGRESS.get();
+        return Common.SIREN_MAX_PROGRESS.get();
     }
 
-    public void giveProgress(){
-        if (progress < getMaxProgress() && level != null){
+    public void giveProgress() {
+        if (progress < getMaxProgress() && level != null) {
             progress += 1;
-            level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
+            updateBlock();
         }
 
     }
 
-    //TODO make it balanced
-    public void evaluateAquarium(){
-        Level world = getLevel();
-        if (world == null) return;
-        Map<String, Integer> scoreMap = new HashMap<>();
+    public void evaluateAquarium() {
+        if (!(getLevel() instanceof ServerLevel world)) return;
+        Set<BlockState> blocks = new HashSet<>();
         int score = 0;
-        for(BlockPos b : BlockPos.betweenClosed(getBlockPos().north(10).west(10).below(1),getBlockPos().south(10).east(10).above(30))){
+        int water = 0;
+        for (BlockPos b : BlockPos.betweenClosed(getBlockPos().north(8).west(8).below(10), getBlockPos().south(8).east(8).above(10))) {
             if (world.isOutsideBuildHeight(b))
                 continue;
             Block block = world.getBlockState(b).getBlock();
             int points = getScore(block.defaultBlockState());
-            if (points == 0)
-                continue;
-
-            scoreMap.putIfAbsent(block.getDescriptionId(), 0);
-            scoreMap.put(block.getDescriptionId(), scoreMap.get(block.getDescriptionId()) + 1);
-
-            score += scoreMap.get(block.getDescriptionId()) <= 50 ? points : 0;
+            if (points == 0) continue;
+            if (points == 1) water++;
+            score += blocks.add(world.getBlockState(b)) ? points : 0;
         }
 
-        if (score > 20){
-            for (LivingEntity b : getNearbyEntities()) {
-
-                scoreMap.putIfAbsent(b.getType().getDescriptionId(), 0);
-                scoreMap.put(b.getType().getDescriptionId(), scoreMap.get(b.getType().getDescriptionId()) + 1);
-
-                score += scoreMap.get(b.getType().getDescriptionId()) <= 10 ? 10 : 0;
-            }
+        if (water > 50) {
+            Set<EntityType<?>> entities = new HashSet<>();
+            score += getNearbyEntities().stream().filter(b -> entities.add(b.getType())).mapToInt(b -> 5).sum();
         }
 
         bonus = score;
@@ -132,40 +119,50 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         if (state == Blocks.WATER.defaultBlockState())
             return 1;
 
-        if(state.getMaterial() == Material.WATER_PLANT)
+        if (state.getMaterial() == Material.WATER_PLANT)
             return 2;
+
+        if (state.getMaterial() == Material.EGG)
+            return 3;
 
         return 0;
     }
 
     ItemStack getRod(){ return Items.FISHING_ROD.getDefaultInstance();}
 
-    public void generateItems(){
+    public void generateItems() {
         if (!(this.level instanceof ServerLevel server)) return;
-        List<ItemStack> list;
 
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer(server);
-        DamageSource damageSource = DamageSource.playerAttack(fakePlayer);
-        ItemStack rod = getRod();
-        rod.enchant(Enchantments.FISHING_LUCK, 2);
-        LootTable lootTable = server.getServer().getLootTables().get(BuiltInLootTables.FISHING);
+        LootTable lootTable = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_FISH);
+        LootTable lootTableTreasure = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_TREASURE);
+
         LootContext lootContext = (new LootContext.Builder(server)).withRandom(level.getRandom())
                 .withParameter(LootContextParams.ORIGIN, fakePlayer.position())
-                .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
-                .withParameter(LootContextParams.TOOL, rod)
-                .withOptionalParameter(LootContextParams.KILLER_ENTITY, fakePlayer)
-                .withOptionalParameter(LootContextParams.DIRECT_KILLER_ENTITY, damageSource.getDirectEntity())
-                .withLuck(50).create(LootContextParamSets.FISHING);
+                .withParameter(LootContextParams.TOOL, getRod())
+                .create(LootContextParamSets.FISHING);
 
-        list = lootTable.getRandomItems(lootContext);
+        boolean flag = true;
+        List<ItemStack> list;
 
-        for (ItemStack item : list){
-            BlockUtil.insertItemAdjacent(level, worldPosition, item);
+        int bonus_rolls = Math.min(bonus / 25, Common.SIREN_UNIQUE_BONUS.get());
+        int counter = 0;
+        for (int i = 0; i < Common.SIREN_BASE_ITEM.get() + bonus_rolls; i++) {
+            if (flag && this.level.random.nextDouble() < 0.1 + bonus * Common.SIREN_TREASURE_BONUS.get()) {
+                list = lootTableTreasure.getRandomItems(lootContext);
+                flag = false;
+            } else list = lootTable.getRandomItems(lootContext);
+
+            for (ItemStack item : list) {
+                BlockUtil.insertItemAdjacent(level, worldPosition, item);
+                counter++;
+            }
+            if (counter >= Common.SIREN_QUANTITY_CAP.get()) break;
         }
 
         this.progress = 0;
         this.needsMana = true;
-        level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
+        updateBlock();
     }
 
     @Override
@@ -176,11 +173,11 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         if (level.isClientSide() && !needsMana){
             for(int i = 0; i < progress/2; i++){
                 level.addParticle(
-                        GlowParticleData.createData(new ParticleColor(20,50, 255),i/2F * 0.25f, i/2F * 0.75f,20),
+                        GlowParticleData.createData(new ParticleColor(20, 50, 255), i / 2F * 0.2f, i / 2F * 0.75f, 20),
                         getBlockPos().getX() + 0.5 + ParticleUtil.inRange(-0.1, 0.1),
-                        getBlockPos().getY() + 1.0  + ParticleUtil.inRange(-0.1, 0.1),
+                        getBlockPos().getY() + 1.0 + ParticleUtil.inRange(-0.1, 0.1),
                         getBlockPos().getZ() + 0.5 + ParticleUtil.inRange(-0.1, 0.1),
-                        0,0,0);
+                        0, 0, 0);
             }
         }else {
 
@@ -189,24 +186,21 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 evaluateAquarium();
             }
 
-            if (gameTime % 80 == 0 && needsMana && SourceUtil.takeSourceNearbyWithParticles(worldPosition, level, 7, ConfigHandler.Common.SIREN_MANA_COST.get()) != null) {
+            if (gameTime % 80 == 0 && needsMana && SourceUtil.takeSourceNearbyWithParticles(worldPosition, level, 7, Common.SIREN_MANA_COST.get()) != null) {
                 this.needsMana = false;
-                level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
+                updateBlock();
             }
 
             if (gameTime % 200 == 0 && !needsMana) {
                 if (progress >= getMaxProgress()) {
                     generateItems();
                 } else {
-                    List<MermaidEntity> mermaids = level.getEntitiesOfClass(MermaidEntity.class, new AABB(getBlockPos().north(8).west(8).below(16), getBlockPos().south(8).east(8).above(16)));
-                    if (!mermaids.isEmpty()) {
-                        int rand = level.random.nextInt(0, mermaids.size());
-
-                        LivingEntity mermaid = mermaids.get(rand);
-                        EntityFlyingItem item = new EntityFlyingItem(level,
-                                mermaid.blockPosition().above(), getBlockPos(),
+                    LivingEntity rnd = getRandomEntity();
+                    if (rnd != null) {
+                        EntityFollowProjectile orb = new EntityFollowProjectile(level,
+                                rnd.blockPosition(), this.getBlockPos(),
                                 20, 50, 255);
-                        level.addFreshEntity(item);
+                        level.addFreshEntity(orb);
                         giveProgress();
                     }
                 }
@@ -244,13 +238,13 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     }
 
     public LivingEntity getRandomEntity() {
-        if (getNearbyEntities().isEmpty())
+        if (getNearbyEntities().isEmpty() || level == null)
             return null;
-        return getNearbyEntities().get(new Random().nextInt(getNearbyEntities().size()));
+        return getNearbyEntities().get(level.random.nextInt(getNearbyEntities().size()));
     }
 
     private List<LivingEntity> getNearbyEntities() {
         if (level == null) return ImmutableList.of();
-        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(6).west(6).below(6), getBlockPos().south(6).east(6).above(6)), (LivingEntity e) -> e.getMobType() == MobType.WATER);
+        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(8).west(8).below(8), getBlockPos().south(8).east(8).above(8)), e -> e.getMobType() == MobType.WATER);
     }
 }

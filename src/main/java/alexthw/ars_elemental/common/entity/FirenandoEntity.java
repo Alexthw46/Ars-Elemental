@@ -144,7 +144,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player p_70693_1_) {
+    protected int getExperienceReward(@NotNull Player player) {
         return 0;
     }
 

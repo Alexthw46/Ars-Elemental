@@ -1,11 +1,11 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.ConfigHandler.Common;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.setup.Config;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
@@ -84,19 +84,19 @@ public class Events {
         if (e.getCategory() == Biome.BiomeCategory.NETHER || e.getCategory() == Biome.BiomeCategory.THEEND || e.getCategory() == Biome.BiomeCategory.NONE)
             return;
         if (e.getCategory() == Biome.BiomeCategory.OCEAN || e.getCategory() == Biome.BiomeCategory.BEACH) {
-            if (e.getClimate().temperature > 0.4) {
-                e.getSpawns().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(), 5, 1, 1));
+            if (e.getClimate().temperature >= 0.5) {
+                e.getSpawns().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(), 5, 1, 3));
             }
         }
 
-        if (ConfigHandler.Common.MAGES_WEIGHT.get() > 0) {
+        if (Common.MAGES_WEIGHT.get() > 0) {
             e.getSpawns().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.FIRE_MAGE.get(), ConfigHandler.Common.MAGES_WEIGHT.get(), 1, 1));
             e.getSpawns().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.WATER_MAGE.get(), ConfigHandler.Common.MAGES_WEIGHT.get(), 1, 1));
             e.getSpawns().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.AIR_MAGE.get(), ConfigHandler.Common.MAGES_WEIGHT.get(), 1, 1));
             e.getSpawns().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.EARTH_MAGE.get(), ConfigHandler.Common.MAGES_WEIGHT.get(), 1, 1));
         }
 
-        if (Config.TREE_SPAWN_RATE.get() > 0)
+        if (Common.TREE_SPAWN_RATE.get() > 0)
             e.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldEvents.PLACED_FLASHING_CONFIGURED);
 
     }

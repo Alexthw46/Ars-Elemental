@@ -11,26 +11,88 @@
 				"visible_bounds_offset": [0, 0.75, 0]
 			},
 			"bones": [
-				{
-					"name": "master",
-					"pivot": [0, 12, 0]
-				},
-				{
-					"name": "lower_body",
-					"parent": "master",
-					"pivot": [-0.75, 8.21139, -2.66083],
-					"cubes": [
-						{"origin": [-3.75, 6.22959, -4.64416], "size": [6, 4, 4], "inflate": -0.1, "pivot": [-0.75, 8.02959, -2.44416], "rotation": [5, 0, 0], "uv": [19, 21]}
-					]
-				},
-				{
-					"name": "upper_body",
-					"parent": "master",
-					"pivot": [-0.75, 11.5, -2.75],
-					"cubes": [
-						{"origin": [-3.75, 9.5, -5], "size": [6, 4, 4.5], "uv": [0, 11]}
-					]
-				},
+              {
+                "name": "mmaster",
+                "pivot": [
+                  0,
+                  12,
+                  0
+                ]
+              },
+              {
+                "name": "master",
+                "parent": "mmaster",
+                "pivot": [
+                  0,
+                  12,
+                  0
+                ]
+              },
+              {
+                "name": "lower_body",
+                "parent": "master",
+                "pivot": [
+                  -0.75,
+                  8.21139,
+                  -2.66083
+                ],
+                "cubes": [
+                  {
+                    "origin": [
+                      -3.75,
+                      6.22959,
+                      -4.64416
+                    ],
+                    "size": [
+                      6,
+                      4,
+                      4
+                    ],
+                    "inflate": -0.1,
+                    "pivot": [
+                      -0.75,
+                      8.02959,
+                      -2.44416
+                    ],
+                    "rotation": [
+                      5,
+                      0,
+                      0
+                    ],
+                    "uv": [
+                      19,
+                      21
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "upper_body",
+                "parent": "master",
+                "pivot": [
+                  -0.75,
+                  11.5,
+                  -2.75
+                ],
+                "cubes": [
+                  {
+                    "origin": [
+                      -3.75,
+                      9.5,
+                      -5
+                    ],
+                    "size": [
+                      6,
+                      4,
+                      4.5
+                    ],
+                    "uv": [
+                      0,
+                      11
+                    ]
+                  }
+                ]
+              },
 				{
 					"name": "arm_left",
 					"parent": "upper_body",
