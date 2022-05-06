@@ -8,8 +8,16 @@
       "type": "patchouli:text"
     },
     {
+      "recipe": "ars_elemental:siren_charm",
+      "type": "ars_nouveau:apparatus_recipe"
+    },
+    {
       "entity": "ars_elemental:siren_entity",
       "type": "patchouli:entity"
+    },
+    {
+      "text": "ars_elemental.page2.mermaid",
+      "type": "patchouli:text"
     }
   ]
 }

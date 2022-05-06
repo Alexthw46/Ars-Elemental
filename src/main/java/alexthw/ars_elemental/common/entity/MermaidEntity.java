@@ -21,6 +21,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -185,12 +187,13 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     private PlayState idle(AnimationEvent<?> event) {
         if (isJumping()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
             return PlayState.CONTINUE;
         }
         if (getDeltaMovement().y > 0.2) {
             setJump(true);
             event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
-        } else if (isOnGround() && !isInWater()) {
+        } else if (isOnGround() && !isInWater() || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));
@@ -327,6 +330,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     int animTicks;
+    boolean taming;
 
     @Override
     protected void customServerAiStep() {
@@ -337,12 +341,19 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     @Override
     public void aiStep() {
         super.aiStep();
-        if (isJumping() && animTicks <= 40) {
+        if (isJumping() && animTicks <= 30) {
             animTicks++;
         }
-        if (animTicks > 40) {
+        if (animTicks > 30) {
             setJump(false);
             animTicks = 0;
+            if (!isTamed() && taming) {
+                taming = false;
+                ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level.random.nextInt(2));
+                level.addFreshEntity(new ItemEntity(level, getX(), getY() + 0.5, getZ(), stack));
+                this.remove(RemovalReason.DISCARDED);
+                level.playSound(null, getX(), getY(), getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 1f);
+            }
         }
     }
 
@@ -353,9 +364,19 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             return InteractionResult.PASS;
 
         ItemStack stack = pPlayer.getItemInHand(hand);
-        String color = Variants.getColorFromStack(stack);
-        if (color != null && !getColor().equals(color)) {
-            this.entityData.set(COLOR, color);
+
+        if (isTamed()) {
+            String color = Variants.getColorFromStack(stack);
+            if (color != null && !getColor().equals(color)) {
+                this.entityData.set(COLOR, color);
+                stack.shrink(1);
+                return InteractionResult.SUCCESS;
+            }
+        } else if (stack.getItem() == Items.SEA_PICKLE && !taming) {
+            this.setDeltaMovement(getDeltaMovement().add(0, 0.8, 0));
+            this.setJump(true);
+            this.markHurt();
+            taming = true;
             stack.shrink(1);
             return InteractionResult.SUCCESS;
         }

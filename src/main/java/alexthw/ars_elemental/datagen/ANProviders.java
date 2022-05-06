@@ -3,21 +3,26 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.rituals.SquirrelRitual;
+import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
+import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
+import com.hollingsworth.arsnouveau.common.datagen.Recipes;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -85,28 +90,37 @@ public class ANProviders {
 
             recipes.add(builder()
                     .withResult(ModItems.UPSTREAM_BLOCK.get())
-                            .withReagent(Items.SOUL_SAND)
-                            .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                            .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                            .withPedestalItem(4, Items.PRISMARINE_SHARD)
+                    .withReagent(Items.SOUL_SAND)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(4, Items.PRISMARINE_SHARD)
+                    .build()
+            );
+
+            recipes.add(builder()
+                    .withResult(ModItems.SIREN_CHARM.get())
+                    .withReagent(ModItems.SIREN_SHARDS.get())
+                    .withPedestalItem(Items.PRISMARINE_SHARD)
+                    .withPedestalItem(3, Ingredient.of(ItemTags.FISHES))
+                    .withPedestalItem(3, Recipes.SOURCE_GEM)
                     .build()
             );
 
             recipes.add(builder()
                     .withResult(ModItems.FIRENANDO_CHARM.get())
-                            .withReagent(Items.MAGMA_BLOCK)
-                            .withPedestalItem(2,ItemsRegistry.FIRE_ESSENCE)
-                            .withPedestalItem(Items.NETHERITE_SCRAP)
-                            .withPedestalItem(2,Items.NETHER_BRICK)
+                    .withReagent(Items.MAGMA_BLOCK)
+                    .withPedestalItem(2, ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(Items.NETHERITE_SCRAP)
+                    .withPedestalItem(2, Items.NETHER_BRICK)
                     .build()
             );
 
             recipes.add(builder()
                     .withResult(ModItems.SPELL_HORN.get())
-                            .withReagent(ItemsRegistry.WILDEN_HORN)
-                            .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                            .withPedestalItem(3,Items.GOLD_INGOT)
-                            .withPedestalItem(4,ItemsRegistry.SOURCE_GEM)
+                    .withReagent(ItemsRegistry.WILDEN_HORN)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(3, Items.GOLD_INGOT)
+                    .withPedestalItem(4, Recipes.SOURCE_GEM)
                     .build()
             );
 
@@ -250,7 +264,9 @@ public class ANProviders {
             addPage(new PatchouliBuilder(AUTOMATION, ModItems.SIREN_CHARM.get())
                             .withIcon(ModItems.SIREN_CHARM.get())
                             .withTextPage("ars_elemental.page1.mermaid")
+                            .withPage(new ApparatusPage(ModItems.SIREN_CHARM.get()))
                             .withPage(new EntityPage(prefix("siren_entity").toString()))
+                            .withTextPage("ars_elemental.page2.mermaid")
                     , getPath(AUTOMATION, "mermaid"));
 
             addPage(new PatchouliBuilder(AUTOMATION, ModItems.FIRENANDO_CHARM.get())
@@ -262,6 +278,9 @@ public class ANProviders {
 
             addFamiliarPage(new MermaidHolder());
             addFamiliarPage(new FirenandoHolder());
+
+            addRitualPage(new SquirrelRitual());
+            addRitualPage(new TeslaRitual());
 
             for (PatchouliPage patchouliPage : pages) {
                 DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
@@ -278,12 +297,21 @@ public class ANProviders {
             this.pages.add(new PatchouliPage(builder, getPath(category, item.asItem().getRegistryName().getPath())));
         }
 
-        public void addFamiliarPage(AbstractFamiliarHolder familiarHolder){
+        public void addFamiliarPage(AbstractFamiliarHolder familiarHolder) {
             PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getId() + "_familiar")
                     .withIcon("ars_nouveau:familiar_" + familiarHolder.getId())
                     .withTextPage("ars_nouveau.familiar_desc." + familiarHolder.getId())
                     .withPage(new EntityPage(prefix(familiarHolder.getEntityKey() + "_familiar").toString()));
             this.pages.add(new PatchouliPage(builder, getPath(FAMILIARS, familiarHolder.getId())));
+        }
+
+        public void addRitualPage(AbstractRitual ritual) {
+            PatchouliBuilder builder = new PatchouliBuilder(RITUALS, "item.ars_nouveau.ritual_" + ritual.getID())
+                    .withIcon("ars_nouveau:ritual_" + ritual.getID())
+                    .withTextPage("ars_nouveau.ritual_desc." + ritual.getID())
+                    .withPage(new CraftingPage("ars_elemental:ritual_" + ritual.getID()));
+
+            this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getID())));
         }
 
         /**

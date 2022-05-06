@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ars_elemental:yellow_archwood_log"
+    },
+    {
+      "item": "ars_nouveau:starbuncle_shards"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    }
+  ],
+  "result": {
+    "item": "ars_nouveau:ritual_ae_squirrels"
+  }
+}

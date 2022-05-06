@@ -1,10 +1,12 @@
 package alexthw.ars_elemental.common.entity.spells;
 
+import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -62,7 +64,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
             if (target == null && tickCount % 5 == 0) {
                 List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,
-                        this.getBoundingBox().inflate(4), this::shouldTarget);
+                        this.getBoundingBox().inflate(4), (LivingEntity e) -> shouldTarget(e) && glowCheck(e));
 
                 //update target or keep going
                 if (entities.isEmpty() && target == null) {
@@ -159,5 +161,12 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         }
 
         super.onHit(result);
+    }
+
+    public static boolean glowCheck(LivingEntity e) {
+        if (ConfigHandler.Common.HOMING_GLOWING.get()) {
+            return e.hasEffect(MobEffects.GLOWING);
+        }
+        return true;
     }
 }

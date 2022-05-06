@@ -151,7 +151,7 @@ dependencies {
     implementation fg.deobf("vazkii.botania:Botania:${mc_version}-430")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-67")
 
-    implementation fg.deobf("curse.maven:tmg-560595:3706717")
+    compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
     implementation fg.deobf("curse.maven:arsenal-561848:3769207")
 
     runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3767383")

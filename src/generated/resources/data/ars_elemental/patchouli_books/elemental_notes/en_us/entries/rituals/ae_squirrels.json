@@ -1,0 +1,15 @@
+{
+  "name": "item.ars_nouveau.ritual_ae_squirrels",
+  "category": "ars_nouveau:rituals",
+  "icon": "ars_nouveau:ritual_ae_squirrels",
+  "pages": [
+    {
+      "text": "ars_nouveau.ritual_desc.ae_squirrels",
+      "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_elemental:ritual_ae_squirrels",
+      "type": "patchouli:crafting"
+    }
+  ]
+}

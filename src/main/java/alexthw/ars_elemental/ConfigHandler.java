@@ -22,6 +22,8 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
 
+        public static ForgeConfigSpec.BooleanValue HOMING_GLOWING;
+
         public static ForgeConfigSpec.IntValue SIREN_MANA_COST;
         public static ForgeConfigSpec.IntValue SIREN_MAX_PROGRESS;
         public static ForgeConfigSpec.IntValue SIREN_BASE_ITEM;
@@ -66,6 +68,8 @@ public class ConfigHandler {
             EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
 
             builder.pop();
+
+            HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
 
             builder.push("Mermaid Fishing");
             SIREN_MANA_COST = builder.comment("How much source mermaids consume per generation").defineInRange("mermaidManaCost", 1000, 0, 10000);

@@ -1,12 +1,15 @@
 package alexthw.ars_elemental;
 
-import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
+import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.rituals.SquirrelRitual;
+import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
+import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
@@ -31,6 +34,7 @@ public class ArsNouveauRegistry {
 
     public static void init() {
         registerGlyphs();
+        registerRituals();
         registerFamiliars(ArsNouveauAPI.getInstance());
         GlyphConfigs.registerGlyphConfigs();
     }
@@ -45,6 +49,16 @@ public class ArsNouveauRegistry {
         register(MethodHomingProjectile.INSTANCE);
         register(MethodCurvedProjectile.INSTANCE);
 
+    }
+
+    public static void registerRituals() {
+
+        registerRitual(new SquirrelRitual());
+        registerRitual(new TeslaRitual());
+    }
+
+    public static void registerRitual(AbstractRitual ritual) {
+        ArsNouveauAPI.getInstance().registerRitual(ritual.getID(), ritual);
     }
 
     public static void postInit() {

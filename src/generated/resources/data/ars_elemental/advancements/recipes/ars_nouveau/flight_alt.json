@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "ars_elemental:flight_alt"
+    ]
+  },
+  "criteria": {
+    "has_journal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ars_nouveau:worn_notebook"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "ars_elemental:flight_alt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_journal",
+      "has_the_recipe"
+    ]
+  ]
+}

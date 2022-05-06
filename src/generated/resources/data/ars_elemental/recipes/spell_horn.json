@@ -28,22 +28,22 @@
     },
     {
       "item": {
-        "item": "ars_nouveau:source_gem"
+        "tag": "forge:gems/source"
       }
     },
     {
       "item": {
-        "item": "ars_nouveau:source_gem"
+        "tag": "forge:gems/source"
       }
     },
     {
       "item": {
-        "item": "ars_nouveau:source_gem"
+        "tag": "forge:gems/source"
       }
     },
     {
       "item": {
-        "item": "ars_nouveau:source_gem"
+        "tag": "forge:gems/source"
       }
     }
   ],

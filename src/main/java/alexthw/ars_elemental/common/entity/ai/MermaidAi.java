@@ -20,12 +20,11 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 
 public class MermaidAi {
-
-    private static final UniformInt ADULT_FOLLOW_RANGE = UniformInt.of(5, 16);
     private static final float SPEED_MULTIPLIER_ON_LAND = 0.15F;
     private static final float SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER = 0.5F;
     private static final float SPEED_MULTIPLIER_WHEN_CHASING_IN_WATER = 0.6F;
 
+    //TODO Needs Sensors and Memory
 
     public static Brain<?> makeBrain(Brain<MermaidEntity> p_149291_) {
         initCoreActivity(p_149291_);
@@ -46,6 +45,7 @@ public class MermaidAi {
         p_149309_.addActivity(Activity.IDLE,
                 ImmutableList.of(
                         Pair.of(0, new RunSometimes<>(new SetEntityLookTarget(EntityType.PLAYER, 6.0F), UniformInt.of(30, 60))),
+                        //Pair.of(2, new FollowTemptation(MermaidAi::getSpeedModifier)),
                         Pair.of(3, new StartAttacking<>(MermaidAi::findNearestValidAttackTarget)),
                         Pair.of(3, new TryFindWater(6, SPEED_MULTIPLIER_ON_LAND)),
                         Pair.of(4, new GateBehavior<>(

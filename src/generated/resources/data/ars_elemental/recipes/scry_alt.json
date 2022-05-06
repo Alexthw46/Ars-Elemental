@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ars_elemental:yellow_archwood_log"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "tag": "forge:storage_blocks/source"
+    }
+  ],
+  "result": {
+    "item": "ars_nouveau:ritual_scrying"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "reagent": [
+    {
+      "item": "ars_elemental:siren_shards"
+    }
+  ],
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "item": {
+        "tag": "minecraft:fishes"
+      }
+    },
+    {
+      "item": {
+        "tag": "minecraft:fishes"
+      }
+    },
+    {
+      "item": {
+        "tag": "minecraft:fishes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:gems/source"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:gems/source"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:gems/source"
+      }
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:siren_charm"
+  },
+  "sourceCost": 0,
+  "keepNbtOfReagent": false
+}

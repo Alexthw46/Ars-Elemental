@@ -57,6 +57,7 @@ public class ModItems {
     public static final RegistryObject<Item> CURIO_BAG;
     public static final RegistryObject<Item> DEBUG_ICON;
 
+    public static final RegistryObject<Item> SIREN_SHARDS;
     public static final RegistryObject<Item> SIREN_CHARM;
     public static final RegistryObject<Item> FIRENANDO_CHARM;
 
@@ -72,6 +73,7 @@ public class ModItems {
 
     static {
 
+        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new Item(addTabProp()));
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp().fireResistant()));
 

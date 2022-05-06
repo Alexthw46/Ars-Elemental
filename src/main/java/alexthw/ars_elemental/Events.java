@@ -4,7 +4,6 @@ import alexthw.ars_elemental.ConfigHandler.Common;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -73,7 +71,7 @@ public class Events {
     public static void saveFromElytra(LivingHurtEvent event) {
         if (event.getSource() == DamageSource.FLY_INTO_WALL && event.getEntity() instanceof Player player) {
             SpellSchool focus = ISchoolItem.hasFocus(event.getEntity().level, player);
-            if (focus != null && focus == ELEMENTAL_AIR) {
+            if (focus == ELEMENTAL_AIR) {
                 event.setAmount(event.getAmount() * 0.1f);
             }
         }
@@ -96,8 +94,8 @@ public class Events {
             e.getSpawns().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.EARTH_MAGE.get(), ConfigHandler.Common.MAGES_WEIGHT.get(), 1, 1));
         }
 
-        if (Common.TREE_SPAWN_RATE.get() > 0)
-            e.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldEvents.PLACED_FLASHING_CONFIGURED);
+        //if (Common.TREE_SPAWN_RATE.get() > 0)
+        //e.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldEvents.PLACED_FLASHING_CONFIGURED);
 
     }
 

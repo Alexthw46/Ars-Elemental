@@ -47,7 +47,6 @@ public class EffectCharm extends AbstractEffect {
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
             if (rayTraceResult.getEntity() instanceof Monster mob) {
 
-                //TODO balance
                 if (mob.getMaxHealth() < 150 || player.getUUID().equals(ArsElemental.Dev)) {
 
                     int resistance = (int) (mob.getHealth() / mob.getMaxHealth() * 100);
