@@ -13,8 +13,8 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
+import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerRenderer;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -74,6 +74,9 @@ public class ClientEvents {
                 return VhexTexture;
             }
         });
+
+        //noinspection unchecked
+        event.registerEntityRenderer(ModEntities.FLASHING_WEALD_WALKER.get(), (manager) -> new WealdWalkerRenderer(manager, "flashing_weald"));
 
         event.registerEntityRenderer(ModEntities.FIRE_MAGE.get(), MageRenderer::new);
         event.registerEntityRenderer(ModEntities.WATER_MAGE.get(), MageRenderer::new);

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "ars_elemental:scry_alt"
+      "ars_elemental:ritual_ae_detection"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ars_elemental:scry_alt"
+        "recipe": "ars_elemental:ritual_ae_detection"
       }
     }
   },

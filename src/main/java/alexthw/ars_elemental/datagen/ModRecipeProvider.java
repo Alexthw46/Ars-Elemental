@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
+import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.datagen.Recipes;
@@ -34,13 +35,6 @@ public class ModRecipeProvider extends RecipeProvider {
         Recipes.makeWood(FLASHING_ARCHWOOD_LOG.get(), FLASHING_ARCHWOOD.get(), 3).save(consumer);
         strippedLogToWood(consumer, FLASHING_ARCHWOOD_LOG_STRIPPED.get(), FLASHING_ARCHWOOD_STRIPPED.get());
 
-        shapelessBuilder(getRitualItem(RitualLib.SCRYING))
-                .requires(FLASHING_ARCHWOOD_LOG.get())
-                .requires(Items.SPIDER_EYE, 2)
-                .requires(Items.GLOWSTONE_DUST)
-                .requires(Recipes.SOURCE_GEM_BLOCK)
-                .save(consumer, prefix("scry_alt"));
-
         shapelessBuilder(getRitualItem(RitualLib.FLIGHT))
                 .requires(FLASHING_ARCHWOOD_LOG.get())
                 .requires(ItemsRegistry.WILDEN_WING, 1)
@@ -65,6 +59,13 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .requires(Items.RABBIT_FOOT)
                 .save(consumer, prefix("ritual_" + SquirrelRitual.ID));
+
+        shapelessBuilder(getRitualItem(DetectionRitual.ID))
+                .requires(FLASHING_ARCHWOOD_LOG.get())
+                .requires(Items.SPIDER_EYE, 2)
+                .requires(Items.GLOWSTONE_DUST)
+                .requires(Recipes.SOURCE_GEM_BLOCK)
+                .save(consumer, prefix("ritual_" + DetectionRitual.ID));
 
     }
 

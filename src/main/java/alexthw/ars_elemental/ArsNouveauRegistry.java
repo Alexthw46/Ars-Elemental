@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -55,6 +56,8 @@ public class ArsNouveauRegistry {
 
         registerRitual(new SquirrelRitual());
         registerRitual(new TeslaRitual());
+        registerRitual(new DetectionRitual());
+
     }
 
     public static void registerRitual(AbstractRitual ritual) {

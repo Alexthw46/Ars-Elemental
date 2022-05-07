@@ -1,4 +1,59 @@
 package alexthw.ars_elemental.common.rituals;
 
-public class DetectionRitual {
+import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
+import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.phys.AABB;
+
+import java.util.List;
+
+public class DetectionRitual extends AbstractRitual {
+    @Override
+    protected void tick() {
+
+        if (getWorld() == null) return;
+
+        ParticleUtil.spawnFallingSkyEffect(tile.ritual, tile, rand, getCenterColor().toWrapper());
+        if (getWorld().getGameTime() % 20 == 0 && !getWorld().isClientSide())
+            incrementProgress();
+
+
+        if (getWorld() instanceof ServerLevel level && getProgress() >= 15) {
+            List<Monster> entities = level.getEntitiesOfClass(Monster.class, new AABB(tile.getBlockPos()).inflate(128));
+            for (LivingEntity entity : entities) {
+                entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 12000, 0, false, false));
+            }
+            setFinished();
+        }
+    }
+
+    @Override
+    public ParticleColor getCenterColor() {
+        return new ParticleColor(
+                100 + rand.nextInt(155),
+                50 + rand.nextInt(200),
+                rand.nextInt(250));
+    }
+
+    @Override
+    public int getManaCost() {
+        return 250;
+    }
+
+    @Override
+    public String getLangName() {
+        return "Detection";
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    public static String ID = "ae_detection";
 }

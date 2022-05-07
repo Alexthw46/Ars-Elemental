@@ -13,6 +13,7 @@
     "FlareMixin",
     "FoxMixin",
     "LightningMixin",
+    "RitualAwakeningMixin",
     "WhirlispirgTileMixin",
     "ZombieMixin"
   ],

@@ -3,6 +3,7 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModItems;
@@ -281,6 +282,7 @@ public class ANProviders {
 
             addRitualPage(new SquirrelRitual());
             addRitualPage(new TeslaRitual());
+            addRitualPage(new DetectionRitual());
 
             for (PatchouliPage patchouliPage : pages) {
                 DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
