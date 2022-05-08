@@ -9,7 +9,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 public class MirrorShieldEnchantment extends Enchantment {
 
     public MirrorShieldEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.create("shield", EnchantersShield.class::isInstance), new EquipmentSlot[]{EquipmentSlot.OFFHAND});
+        super(Rarity.VERY_RARE, EnchantmentCategory.create("magic_shield", EnchantersShield.class::isInstance), new EquipmentSlot[]{EquipmentSlot.OFFHAND});
     }
 
     /**

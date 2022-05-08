@@ -77,7 +77,6 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         }
     }
 
-
     @Override
     public void registerControllers(AnimationData data) {
         super.registerControllers(data);
@@ -85,7 +84,11 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     public PlayState walkPredicate(AnimationEvent event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));
+        if (isOnGround() && !isInWater() || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));
+        }
         return PlayState.CONTINUE;
     }
 

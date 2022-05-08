@@ -47,7 +47,7 @@ public class TeslaRitual extends AbstractRitual {
 
     @Override
     public int getManaCost() {
-        return 150;
+        return 1000;
     }
 
     @Override

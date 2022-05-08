@@ -35,7 +35,7 @@ public class SquirrelRitual extends AbstractRitual {
 
     @Override
     public int getManaCost() {
-        return 100;
+        return 150;
     }
 
     @Override

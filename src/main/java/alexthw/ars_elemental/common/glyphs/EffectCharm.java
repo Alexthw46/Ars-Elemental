@@ -47,7 +47,7 @@ public class EffectCharm extends AbstractEffect {
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
             if (rayTraceResult.getEntity() instanceof Monster mob) {
 
-                if (mob.getMaxHealth() < 150 || player.getUUID().equals(ArsElemental.Dev)) {
+                if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
 
                     int resistance = (int) (mob.getHealth() / mob.getMaxHealth() * 100);
                     double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
