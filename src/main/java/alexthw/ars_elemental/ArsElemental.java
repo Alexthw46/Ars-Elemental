@@ -8,6 +8,7 @@ import alexthw.ars_elemental.util.CompatUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
@@ -29,12 +31,11 @@ import java.util.UUID;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsElemental.MODID)
-public class ArsElemental
-{
+public class ArsElemental {
     /*
-    *public static ForgeConfigSpec SERVER_CONFIG;
-    *private static final Logger LOGGER = LogManager.getLogger();
-    */
+     *public static ForgeConfigSpec SERVER_CONFIG;
+     *private static final Logger LOGGER = LogManager.getLogger();
+     */
 
     public static final ResourceLocation FOCUS_SLOT = prefix("gui/an_focus_slot");
     public static final String MODID = "ars_elemental";
@@ -56,6 +57,7 @@ public class ArsElemental
         ArsNouveauRegistry.init();
         modbus.addListener(this::setup);
         modbus.addListener(this::sendImc);
+        modbus.addListener(this::loadComplete);
         MinecraftForge.EVENT_BUS.register(this);
         DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
@@ -65,12 +67,12 @@ public class ArsElemental
 
     }
 
-    public static ResourceLocation prefix(String path){
-        return new ResourceLocation(MODID,path);
+    public static ResourceLocation prefix(String path) {
+        return new ResourceLocation(MODID, path);
     }
 
     public void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() ->{
+        event.enqueueWork(() -> {
             ArsNouveauRegistry.postInit();
             CompatUtils.checkCompats();
         });
@@ -91,4 +93,9 @@ public class ArsElemental
         InterModComms.sendTo("curios", SlotTypeMessage.MODIFY_TYPE, () -> new SlotTypeMessage.Builder("an_focus").size(1).icon(FOCUS_SLOT).cosmetic().build());
     }
 
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        event.enqueueWork(() -> {
+            ComposterBlock.COMPOSTABLES.putIfAbsent(ModItems.FLASHING_SAPLING.get().asItem(), 0.3F);
+        });
+    }
 }

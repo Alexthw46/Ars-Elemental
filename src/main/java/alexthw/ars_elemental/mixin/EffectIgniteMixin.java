@@ -3,6 +3,7 @@ package alexthw.ars_elemental.mixin;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
@@ -54,7 +55,7 @@ public class EffectIgniteMixin {
             List<BlockPos> posList = SpellUtil.calcAOEBlocks(shooter, pos, rayTraceResult, aoeBuff, pierceBuff);
             BlockState state;
 
-            if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_FIRE && spellContext.getSpell().recipe.contains(EffectEvaporate.INSTANCE)) {
+            if (ISchoolItem.hasFocus(world, shooter) == ELEMENTAL_FIRE && GlyphEffectUtil.hasFollowingEffect(spellContext, EffectEvaporate.INSTANCE)) {
                 //remove it
                 for (BlockPos pos1 : posList) {
                     state = world.getBlockState(pos1);

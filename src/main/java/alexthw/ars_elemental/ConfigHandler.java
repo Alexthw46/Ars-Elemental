@@ -31,6 +31,8 @@ public class ConfigHandler {
         public static ForgeConfigSpec.DoubleValue SIREN_TREASURE_BONUS;
         public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
+        public static ForgeConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
+
         public static ForgeConfigSpec.IntValue SIREN_WEIGHT;
         public static ForgeConfigSpec.IntValue MAGES_WEIGHT;
         public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
@@ -69,13 +71,11 @@ public class ConfigHandler {
 
             builder.pop();
 
-            HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
-
             builder.push("Mermaid Fishing");
             SIREN_MANA_COST = builder.comment("How much source mermaids consume per generation").defineInRange("mermaidManaCost", 1000, 0, 10000);
             SIREN_MAX_PROGRESS = builder.comment("How many channels must occur before a siren produces loot.").defineInRange("mermaidMaxProgress", 30, 0, 300);
             SIREN_UNIQUE_BONUS = builder.comment("Max number of extra item rolls a shrine produces if the mood is high.").defineInRange("mermaidScoreBonus", 2, 0, 10);
-            SIREN_TREASURE_BONUS = builder.comment("Chance multiplier to produce a treasure relative to the siren shrine score.").defineInRange("mermaidTreasureBonus", 0.003D, 0D, 1D);
+            SIREN_TREASURE_BONUS = builder.comment("Chance multiplier to produce a treasure relative to the siren shrine score.").defineInRange("mermaidTreasureBonus", 0.002D, 0D, 1D);
             SIREN_BASE_ITEM = builder.comment("Base number of items rolls a shrine produces per cycle.").defineInRange("mermaidBaseItems", 1, 0, 300);
             SIREN_QUANTITY_CAP = builder.comment("Max number of items a siren shrine can produce per cycle.").defineInRange("mermaidQuantityCap", 5, 0, 300);
             builder.pop();
@@ -88,6 +88,11 @@ public class ConfigHandler {
 
             TREE_SPAWN_RATE = builder.comment("Rate of flashing archwood trees spawn per chunk").defineInRange("flashTreeWeight", 15, 0, Integer.MAX_VALUE);
 
+            builder.pop();
+
+            builder.push("Misc");
+            HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
+            SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);
             builder.pop();
         }
     }

@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.mixin.ZombieMixin;
+import alexthw.ars_elemental.mixin.ZombieInvoker;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
@@ -43,7 +43,7 @@ public class EffectWaterGrave extends AbstractEffect {
                 living.setDeltaMovement(delta.x, dy, delta.z);
             }
             if (living instanceof Zombie zombie && ! (living instanceof Drowned)){
-                ((ZombieMixin)zombie).callStartUnderWaterConversion(20);
+                ((ZombieInvoker) zombie).callStartUnderWaterConversion(20);
                 return;
             }
             int airSupply = living.getAirSupply();

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:item/generated",
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "ars_elemental:item/focus/air_focus"
+  },
+  "perspectives": {
+    "head": {
+      "parent": "ars_elemental:item/focus/air_focus_3d"
+    }
+  }
+}

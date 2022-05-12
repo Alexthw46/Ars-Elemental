@@ -3,6 +3,7 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.blocks.StrippableLog;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
+import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.google.common.collect.ImmutableList;
@@ -115,7 +116,7 @@ public class Datagen {
             takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
             takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
             takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
-
+            takeAll(items, i -> i.get() instanceof ISchoolItem).forEach(this::focusModel);
             items.forEach(this::generatedItem);
 
         }
@@ -133,6 +134,11 @@ public class Datagen {
         private void generatedItem(RegistryObject<Item> i) {
             String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
             withExistingParent(name, GENERATED).texture("layer0", ArsElemental.prefix("item/" + name));
+        }
+
+        private void focusModel(RegistryObject<Item> i) {
+            String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+            withExistingParent("item/focus/" + name, GENERATED).texture("layer0", ArsElemental.prefix("item/" + name));
         }
 
         private void blockGeneratedItem(RegistryObject<Item> i) {

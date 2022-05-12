@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,22 +30,29 @@ public class EffectConjureDirt extends AbstractEffect {
     }
 
     @Override
+    public boolean isRenderAsIcon() {
+        return false;
+    }
+
+    @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
         BlockState toPlace = Blocks.DIRT.defaultBlockState();
-
         if (spellStats.hasBuff(AugmentAmplify.INSTANCE)) toPlace = Blocks.COBBLESTONE.defaultBlockState();
         if (spellContext.hasNextPart()) {
-            while (spellContext.hasNextPart()){
+            while (spellContext.hasNextPart()) {
                 AbstractSpellPart next = spellContext.nextPart();
+
                 if (next instanceof AbstractEffect) {
                     if (next == EffectCrush.INSTANCE) {
                         toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
-                        spellContext.setCanceled(true);
                     } else if (next == EffectSmelt.INSTANCE && spellStats.hasBuff(AugmentAmplify.INSTANCE)) {
                         toPlace = Blocks.STONE.defaultBlockState();
                         Spell spell = spellContext.getSpell();
                         spell.setCost((int) (spell.getCastingCost() * 1.5F));
-                        spellContext.setCanceled(true);
+                    } else {
+                        //TODO swap this with the api change of the PR
+                        List<AbstractSpellPart> spell = spellContext.getSpell().recipe;
+                        spell.add(spellContext.getCurrentIndex(), spell.get(spellContext.getCurrentIndex() - 1));
                     }
                     break;
                 }

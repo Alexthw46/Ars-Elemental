@@ -23,8 +23,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CoralBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -96,11 +96,17 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         for (BlockPos b : BlockPos.betweenClosed(getBlockPos().north(8).west(8).below(10), getBlockPos().south(8).east(8).above(10))) {
             if (world.isOutsideBuildHeight(b))
                 continue;
-            Block block = world.getBlockState(b).getBlock();
-            int points = getScore(block.defaultBlockState());
-            if (points == 0) continue;
-            if (points == 1) water++;
-            score += blocks.add(world.getBlockState(b)) ? points : 0;
+            BlockState block = world.getBlockState(b);
+            int points = getScore(block);
+            switch (points) {
+                case 0: //continue
+                case 1: {
+                    water++;
+                }
+                default: {
+                    score += blocks.add(block) ? points : 0;
+                }
+            }
         }
 
         if (water > 50) {
@@ -119,7 +125,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         if (state == Blocks.WATER.defaultBlockState())
             return 1;
 
-        if (state.getMaterial() == Material.WATER_PLANT)
+        if (state.getMaterial() == Material.WATER_PLANT || state.getBlock() instanceof CoralBlock)
             return 2;
 
         if (state.getMaterial() == Material.EGG)

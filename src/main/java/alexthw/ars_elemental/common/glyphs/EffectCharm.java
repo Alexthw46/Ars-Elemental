@@ -2,7 +2,7 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.items.NecroticFocus;
-import alexthw.ars_elemental.mixin.FoxMixin;
+import alexthw.ars_elemental.mixin.FoxInvoker;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.core.particles.ParticleTypes;
@@ -67,14 +67,13 @@ public class EffectCharm extends AbstractEffect {
                 if (animal instanceof TamableAnimal tamable && !tamable.isTame()) {
                     if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
                         tamable.tame(player);
-                }else if (animal instanceof AbstractHorse horse && !horse.isTamed()){
-                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
+                }else if (animal instanceof AbstractHorse horse && !horse.isTamed()) {
+                    if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                         horse.setTamed(true);
-                }else if (animal instanceof Fox fox && !((FoxMixin)fox).callTrusts(player.getUUID())){
-                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
-                        ((FoxMixin)fox).callAddTrustedUUID(player.getUUID());
-                }
-                else if (animal.canFallInLove()) {
+                } else if (animal instanceof Fox fox && !((FoxInvoker) fox).callTrusts(player.getUUID())) {
+                    if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
+                        ((FoxInvoker) fox).callAddTrustedUUID(player.getUUID());
+                } else if (animal.canFallInLove()) {
                     if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                         animal.setInLove(player);
                 }
@@ -89,7 +88,7 @@ public class EffectCharm extends AbstractEffect {
     }
 
     private boolean rollToSeduce(int resistance, double chanceBoost, Random rand) {
-        return (rand.nextInt(0,100) + chanceBoost) >= resistance;
+        return (rand.nextInt(0, 75) + chanceBoost) >= resistance;
     }
 
     @Override

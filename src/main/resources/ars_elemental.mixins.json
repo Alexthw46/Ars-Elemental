@@ -11,11 +11,10 @@
     "EffectLaunchMixin",
     "EffectWaterMixin",
     "FlareMixin",
-    "FoxMixin",
+    "FoxInvoker",
     "LightningMixin",
     "RitualAwakeningMixin",
-    "WhirlispirgTileMixin",
-    "ZombieMixin"
+    "ZombieInvoker"
   ],
   "minVersion": "0.8"
 }

@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.rituals;
 
+import alexthw.ars_elemental.ConfigHandler.Common;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.Starbuncle;
@@ -17,11 +18,12 @@ public class SquirrelRitual extends AbstractRitual {
     @Override
     protected void tick() {
         int modifier = didConsumeItem(Items.GOLD_BLOCK) ? 2 : 1;
-        if (getWorld() instanceof ServerLevel level && level.getGameTime() % 600 == 0 && this.tile != null) {
+        if (getWorld() instanceof ServerLevel level && level.getGameTime() % Common.SQUIRREL_REFRESH_RATE.get() == 0 && this.tile != null) {
             List<Starbuncle> entities = level.getEntitiesOfClass(Starbuncle.class, new AABB(tile.getBlockPos()).inflate(10 * modifier));
             for (Starbuncle entity : entities) {
                 if (entity != null) {
                     entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2400, 1, false, false));
+                    entity.addEffect(new MobEffectInstance(MobEffects.JUMP, 2400, 1, false, false));
                 }
                 setNeedsMana(true);
             }

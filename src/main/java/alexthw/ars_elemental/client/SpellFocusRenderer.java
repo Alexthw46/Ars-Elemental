@@ -16,7 +16,7 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 import java.util.List;
 
-import static alexthw.ars_elemental.util.ParticleUtil.*;
+import static alexthw.ars_elemental.util.ParticleUtil.ParticleBuilder;
 
 public class SpellFocusRenderer implements ICurioRenderer {
 
@@ -28,23 +28,38 @@ public class SpellFocusRenderer implements ICurioRenderer {
             if (player.getUUID().equals(ArsElemental.Dev)) {
                 specialRender(player, ageInTicks);
             } else {
+                double XRot = getRelativeAngleX(player, 0.5, 0);
+                double ZRot = getRelativeAngleZ(player, 0.5, 0);
                 new ParticleBuilder(ParticleUtil.schoolToColor(focus.getSchool().getId()))
-                        .scale(1/4F)
+                        .scale(1 / 4F)
                         .alpha(0.4F)
                         .spawn(player.getLevel(),
-                                getRelativeAngleX(player, 0.5, 0),
+                                XRot,
                                 player.getEyeY() + 0.2 + 0.05 * Math.sin(ageInTicks / 10),
-                                getRelativeAngleZ(player, 0.5, 0));
+                                ZRot);
                 new ParticleBuilder(ParticleUtil.schoolToColor2(focus.getSchool().getId()))
-                        .scale(1/6F)
+                        .scale(1 / 6F)
                         .alpha(0.2F)
                         .setLifetime(10)
                         .spawn(player.getLevel(),
-                                getRelativeAngleX(player, 0.5, 0),
+                                XRot,
                                 player.getEyeY() + 0.2 + 0.05 * Math.sin(ageInTicks / 10),
-                                getRelativeAngleZ(player, 0.5, 0));
+                                ZRot);
             }
             //TODO render a model
+
+            /*
+            matrixStack.pushPose();
+
+            matrixStack.scale(0.5F,0.5F,0.5F);
+            matrixStack.translate(0.45, -player.getEyeHeight() + 1, 0);
+            matrixStack.translate(-Math.sin(Math.toRadians(270)),-0.05 * Math.sin(ageInTicks / 10), Math.cos(Math.toRadians(270)));
+            //matrixStack.scale(0.75F,0.75F,0.75F);
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(ageInTicks * 2 + partialTicks));
+            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.HEAD, light, OverlayTexture.NO_OVERLAY, matrixStack, buffers, 0);
+
+            matrixStack.popPose();
+            */
 
         }
 
@@ -76,12 +91,16 @@ public class SpellFocusRenderer implements ICurioRenderer {
         }
     }
 
-    public double getRelativeAngleX(Player player, double rad, float spin){
-        return player.getX() + Math.sin(Math.toRadians(player.yBodyRot + rad * 180 + spin))/1.5;
+    public double getRelativeAngleX(Player player, double rad, float spin) {
+        return player.getX() + Math.sin(getRadians(player, rad, spin)) / 1.5;
     }
 
-    public double getRelativeAngleZ(Player player, double rad, float spin){
-        return player.getZ() - Math.cos(Math.toRadians(player.yBodyRot + rad * 180 + spin))/1.5;
+    public double getRelativeAngleZ(Player player, double rad, float spin) {
+        return player.getZ() - Math.cos(getRadians(player, rad, spin)) / 1.5;
+    }
+
+    private double getRadians(Player player, double rad, float spin) {
+        return Math.toRadians(player.yBodyRot + rad * 180 + spin);
     }
 
 
