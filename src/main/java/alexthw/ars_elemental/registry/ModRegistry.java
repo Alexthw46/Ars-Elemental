@@ -27,6 +27,7 @@ import static alexthw.ars_elemental.registry.ModEntities.TILES;
 import static alexthw.ars_elemental.registry.ModItems.BLOCKS;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
 import static alexthw.ars_elemental.world.ModFeatures.FEATURES;
+import static alexthw.ars_elemental.world.ModFeatures.STRUCTURE_FEATURES;
 
 public class ModRegistry {
 
@@ -45,6 +46,7 @@ public class ModRegistry {
         EFFECTS.register(bus);
         ENCHANTMENTS.register(bus);
         FEATURES.register(bus);
+        STRUCTURE_FEATURES.register(bus);
     }
 
     public static final RegistryObject<MobEffect> HELLFIRE;
