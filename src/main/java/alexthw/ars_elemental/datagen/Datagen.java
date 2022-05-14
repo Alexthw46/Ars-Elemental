@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.blocks.StrippableLog;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.google.common.collect.ImmutableList;
+import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;

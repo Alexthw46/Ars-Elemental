@@ -7,6 +7,7 @@ import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
@@ -27,6 +28,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
@@ -277,12 +279,20 @@ public class ANProviders {
                             .withPage(new ApparatusPage(ModItems.FIRENANDO_CHARM.get()))
                     , getPath(AUTOMATION, "fire_golem"));
 
+            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.MIRROR.get().getDescriptionId())
+                            .withIcon(Items.ENCHANTED_BOOK.getRegistryName().toString())
+                            .withTextPage("ars_elemental.enchantment_desc." + ModRegistry.MIRROR.get().getRegistryName().getPath()),
+                    getPath(EQUIPMENT, "mirror_shield")
+            );
+
             addFamiliarPage(new MermaidHolder());
             addFamiliarPage(new FirenandoHolder());
 
             addRitualPage(new SquirrelRitual());
             addRitualPage(new TeslaRitual());
             addRitualPage(new DetectionRitual());
+
+            //addEnchantmentPage(ModRegistry.MIRROR.get());
 
             for (PatchouliPage patchouliPage : pages) {
                 DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
@@ -316,6 +326,17 @@ public class ANProviders {
             this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getID())));
         }
 
+        public void addEnchantmentPage(Enchantment enchantment) {
+            PatchouliBuilder builder = new PatchouliBuilder(ENCHANTMENTS, enchantment.getDescriptionId())
+                    .withIcon(Items.ENCHANTED_BOOK.getRegistryName().toString())
+                    .withTextPage("ars_elemental.enchantment_desc." + enchantment.getRegistryName().getPath());
+
+            for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++) {
+                builder.withPage(new EnchantingPage("ars_elemental:" + enchantment.getRegistryName().getPath() + "_" + i));
+            }
+            this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, enchantment.getRegistryName().getPath())));
+        }
+
         /**
          * Gets a name for this provider, to use in logging.
          */
@@ -325,8 +346,8 @@ public class ANProviders {
         }
 
         @Override
-        public Path getPath(ResourceLocation category, String fileName){
-            return this.generator.getOutputFolder().resolve("data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/" + category.getPath() +"/" + fileName + ".json");
+        public Path getPath(ResourceLocation category, String fileName) {
+            return this.generator.getOutputFolder().resolve("data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
         }
 
         ImbuementPage ImbuementPage(ItemLike item){

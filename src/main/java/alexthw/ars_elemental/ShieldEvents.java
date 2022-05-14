@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -30,6 +29,7 @@ public class ShieldEvents {
                         int level = EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.MIRROR.get(), stack);
                         if (level > 0 && player.getRandom().nextInt(5) < level){
                             spell.setDeltaMovement(spell.getDeltaMovement().reverse());
+                            //spell.spellResolver.expendMana(player);
                             player.getCooldowns().addCooldown(stack.getItem(), 100);
                             event.setCanceled(true);
                         }

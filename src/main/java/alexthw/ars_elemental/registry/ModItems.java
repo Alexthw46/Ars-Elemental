@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.blocks.StrippableLog;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import net.minecraft.world.item.BlockItem;
@@ -89,16 +89,16 @@ public class ModItems {
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
 
         //blocks
-        MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion()));
+        MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
 
         //Trees
         FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldEvents.FLASHING_TREE), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", BlockRegistry.RegistryEvents::createLeavesBlock);
-        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW)));
-        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW)));
-        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW), FLASHING_ARCHWOOD_LOG_STRIPPED));
-        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW), FLASHING_ARCHWOOD_STRIPPED));
+        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 4)));
+        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 4)));
+        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6), FLASHING_ARCHWOOD_LOG_STRIPPED));
+        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6), FLASHING_ARCHWOOD_STRIPPED));
 
     }
 

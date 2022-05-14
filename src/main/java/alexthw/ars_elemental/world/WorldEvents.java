@@ -33,9 +33,9 @@ public class WorldEvents {
 
     //TODO use Flashing Archwood instead of placeholders
     public static Holder<ConfiguredFeature<TreeConfiguration, ?>> FLASHING_TREE = FeatureUtils.register("ars_elemental:flashing_feature", Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-            new SupplierBlockStateProvider(ModItems.FLASHING_ARCHWOOD_LOG.getId().getPath()),
+            new SupplierBlockStateProvider(ModItems.FLASHING_ARCHWOOD_LOG.getId()),
             new MagicTrunkPlacer(9, 1, 0),
-            new SupplierBlockStateProvider(ModItems.FLASHING_LEAVES.getId().getPath()),
+            new SupplierBlockStateProvider(ModItems.FLASHING_LEAVES.getId()),
             new BlobFoliagePlacer(UniformInt.of(0, 0), UniformInt.of(0, 0), 0),
             new TwoLayersFeatureSize(2, 0, 2)).ignoreVines().build());
 

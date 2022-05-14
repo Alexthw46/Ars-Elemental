@@ -1,0 +1,11 @@
+{
+  "name": "enchantment.ars_elemental.mirror_shield",
+  "category": "ars_nouveau:equipment",
+  "icon": "minecraft:enchanted_book",
+  "pages": [
+    {
+      "text": "ars_elemental.enchantment_desc.mirror_shield",
+      "type": "patchouli:text"
+    }
+  ]
+}

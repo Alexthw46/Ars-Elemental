@@ -161,10 +161,11 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     runtimeOnly fg.deobf("curse.maven:jeed-532286:3736071")
+    /*
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:2.0.0+1.18.2")
     runtimeOnly fg.deobf("com.alcatrazescapee:cyanide-forge-1.18.2:2.1.0") { transitive = false }
 
-    /*update those, eventually
+    update those, eventually
     runtimeOnly fg.deobf("curse.maven:tomb-243707:3638380")
     runtimeOnly fg.deobf("curse.maven:spark-361579:3644347")
     runtimeOnly fg.deobf("curse.maven:occ-361026:3647913")

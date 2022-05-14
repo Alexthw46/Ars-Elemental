@@ -86,7 +86,7 @@ public class ConfigHandler {
             MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesSpawnWeight", 0, 0, 200);
             MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
 
-            TREE_SPAWN_RATE = builder.comment("Rate of flashing archwood trees spawn per chunk").defineInRange("flashTreeWeight", 15, 0, Integer.MAX_VALUE);
+            TREE_SPAWN_RATE = builder.comment("Rate of flashing archwood trees spawn per chunk. 0 disable, higher value -> more rare").defineInRange("flashingTreesRarity", 200, 0, Integer.MAX_VALUE);
 
             builder.pop();
 
