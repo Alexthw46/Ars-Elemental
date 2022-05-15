@@ -53,8 +53,8 @@ This Ars Nouveau add-on is about the Elemental Schools. More spell foci, each po
 [[dependencies.ars_elemental]]
     modId = "ars_nouveau"
     mandatory = true
-    versionRange = "[2.2.10.110,)"
-    ordering = "AFTER"
+versionRange = "[2.4.0,)"
+ordering = "AFTER"
     side = "BOTH"
 [[dependencies.ars_elemental]]
     modId = "toomanyglyphs"

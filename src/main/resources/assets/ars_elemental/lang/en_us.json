@@ -69,7 +69,7 @@
   "ars_nouveau.ritual_desc.ae_tesla_coil": "Calls lightnings on entities that approach the ritual area of effect. Will target players if augmented with Air Essence. [11x7x11 cube centered on the brazier]. No recipe yet.",
   "item.ars_nouveau.ritual_ae_detection": "Tablet of Detection",
   "ars_nouveau.ritual_desc.ae_detection": "Makes all monsters in a 128 blocks radius glow for 10 minutes.",
-  "ars_elemental.enchantment_desc.mirror_shield": "Can only be applied on the Enchanter's Shield. Gives a chance of reflecting spell projectile while blocking with the shield. No recipe yet.",
+  "ars_elemental.enchantment_desc.mirror_shield": "Can only be applied on the Enchanter's Shield. Gives a chance of reflecting spell projectile while blocking with the shield. No recipe yet, report if found around (unless a modpack make the recipe).",
   "item.ars_nouveau.familiar_siren": "Bound Script: Siren",
   "ars_nouveau.familiar_name.siren": "Siren",
   "ars_nouveau.familiar_desc.siren": "A Siren Familiar will increase the damage of Water spells by 2. It will also give Dolphin Grace II to the summoner while in water. Obtained by performing the Ritual of Binding near a Siren.",

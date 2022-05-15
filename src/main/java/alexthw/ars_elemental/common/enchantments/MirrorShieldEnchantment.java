@@ -2,7 +2,6 @@ package alexthw.ars_elemental.common.enchantments;
 
 import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
@@ -47,11 +46,6 @@ public class MirrorShieldEnchantment extends Enchantment {
     @Override
     public boolean isTradeable() {
         return false;
-    }
-
-    @Override
-    public boolean canEnchant(ItemStack pStack) {
-        return pStack.getItem() instanceof EnchantersShield;
     }
 
     /**
