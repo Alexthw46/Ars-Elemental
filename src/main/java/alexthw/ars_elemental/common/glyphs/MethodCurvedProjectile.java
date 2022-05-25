@@ -3,10 +3,7 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -48,7 +45,7 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
             projectiles.add(spell);
         }
 
-        float velocity = 0.8f + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 2.0f;
+        float velocity = Math.max(0.2f, 1.0f + stats.getAccMultiplier() / 2.0f);
 
         for(EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0,0.25,0));
@@ -119,6 +116,6 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentSensitive.INSTANCE);
+        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE);
     }
 }

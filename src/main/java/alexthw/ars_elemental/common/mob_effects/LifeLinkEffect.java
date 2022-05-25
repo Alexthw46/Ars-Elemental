@@ -4,27 +4,36 @@ import alexthw.ars_elemental.util.EntityCarryMEI;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LifeLinkEffect extends MobEffect {
 
-    public LifeLinkEffect(){
-        super(MobEffectCategory.NEUTRAL,1);
+    public LifeLinkEffect() {
+        super(MobEffectCategory.NEUTRAL, 1);
         MinecraftForge.EVENT_BUS.addListener(this::healForHeal);
         MinecraftForge.EVENT_BUS.addListener(this::hurtForHurt);
     }
 
-    public void healForHeal(LivingHealEvent event){
-        if (event.getEntityLiving() != null && event.getEntityLiving().hasEffect(this)){
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        return new ArrayList<>();
+    }
+
+    public void healForHeal(LivingHealEvent event) {
+        if (event.getEntityLiving() != null && event.getEntityLiving().hasEffect(this)) {
             MobEffectInstance instance = event.getEntityLiving().getEffect(this);
             if (instance instanceof EntityCarryMEI mei && mei.getTarget() == event.getEntityLiving()) {
                 if (mei.getOwner().isAlive()) {
                     int shared = (int) (event.getAmount() / 2F);
                     mei.getOwner().heal(shared);
                     event.setAmount(shared);
-                }else {
+                } else {
                     event.getEntityLiving().removeEffect(this);
                 }
             }

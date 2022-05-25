@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -50,9 +49,7 @@ public class EffectConjureDirt extends AbstractEffect {
                         Spell spell = spellContext.getSpell();
                         spell.setCost((int) (spell.getCastingCost() * 1.5F));
                     } else {
-                        //TODO swap this with the api change of the PR
-                        List<AbstractSpellPart> spell = spellContext.getSpell().recipe;
-                        spell.add(spellContext.getCurrentIndex(), spell.get(spellContext.getCurrentIndex() - 1));
+                        spellContext.setCurrentIndex(spellContext.getCurrentIndex() - 1);
                     }
                     break;
                 }

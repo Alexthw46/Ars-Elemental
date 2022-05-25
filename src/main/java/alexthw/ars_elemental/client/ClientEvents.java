@@ -33,7 +33,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -131,12 +130,6 @@ public class ClientEvents {
                 }
             }
         }
-    }
-
-    @SubscribeEvent
-    public static void stitch(TextureStitchEvent.Pre event)
-    {
-        event.addSprite(ArsElemental.FOCUS_SLOT);
     }
 
 }

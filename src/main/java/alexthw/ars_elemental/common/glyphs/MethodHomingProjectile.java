@@ -7,10 +7,7 @@ import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.lib.GlyphLib;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,13 +43,9 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         projectiles.add(new EntityHomingProjectile(world, shooter, resolver));
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        if (numSplits > 0) {
-            stats.setDamageModifier(stats.getDamageModifier() * 0.75D);
-        }
-
         splits(world, shooter, resolver, projectiles, numSplits);
 
-        float velocity = 0.5F + stats.getBuffCount(AugmentAccelerate.INSTANCE) / 10.0F;
+        float velocity = Math.max(0.2F, 0.5F + stats.getAccMultiplier() / 5.0F);
 
         for (EntityHomingProjectile proj : projectiles) {
             proj.setIgnored(ignore);
@@ -153,7 +146,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentSensitive.INSTANCE);
+        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE);
     }
 
     public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, Boolean targetPlayers, SpellResolver resolver){

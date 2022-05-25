@@ -151,11 +151,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    public boolean isPushedByFluid() {
-        return false;
-    }
-
-    @Override
     protected int getExperienceReward(@NotNull Player player) {
         return 0;
     }
@@ -190,7 +185,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
             return PlayState.CONTINUE;
         }
-        if (getDeltaMovement().y > 0.2) {
+        if (getDeltaMovement().y > 0.3) {
             setJump(true);
             event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
         } else if (isOnGround() && !isInWater() || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {

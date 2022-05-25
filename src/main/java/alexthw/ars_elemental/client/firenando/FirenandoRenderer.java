@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.client.firenando;
 
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -17,8 +16,6 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 import javax.annotation.Nullable;
-
-import static alexthw.ars_elemental.common.entity.FirenandoEntity.COLOR;
 
 public class FirenandoRenderer<M extends LivingEntity & IVariantTextureProvider & IAnimatable> extends GeoEntityRenderer<M> {
 
@@ -42,12 +39,13 @@ public class FirenandoRenderer<M extends LivingEntity & IVariantTextureProvider 
     @Override
     public void render(M entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
-        entity.getLevel().addParticle(GlowParticleData.createData(sideColor,false,0.15f, 0.7f, 15),
-                entity.getX() + ParticleUtil.inRange(-0.1,0.1)/4, entity.getY() + 0.6, entity.getZ() + ParticleUtil.inRange(-0.1,0.1)/4,
-                0,-0.05F,0);
-        if (entity instanceof FirenandoEntity fe) {
+
+        if (entity instanceof FirenandoEntity fe && fe.isActive()) {
             ParticleColor color = fe.getColor().equals("soul") ? color2 : color1;
             entity.getLevel().addParticle(GlowParticleData.createData(color, false, 0.30f, 0.7f, 15),
+                    entity.getX() + ParticleUtil.inRange(-0.1, 0.1) / 4, entity.getY() + 0.6, entity.getZ() + ParticleUtil.inRange(-0.1, 0.1) / 4,
+                    0, -0.05F, 0);
+            entity.getLevel().addParticle(GlowParticleData.createData(sideColor, false, 0.15f, 0.7f, 15),
                     entity.getX() + ParticleUtil.inRange(-0.1, 0.1) / 4, entity.getY() + 0.6, entity.getZ() + ParticleUtil.inRange(-0.1, 0.1) / 4,
                     0, -0.05F, 0);
         }

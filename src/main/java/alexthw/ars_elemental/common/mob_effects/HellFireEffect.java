@@ -5,15 +5,24 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HellFireEffect extends MobEffect implements IForgeMobEffect {
 
     public HellFireEffect() {
         super(MobEffectCategory.HARMFUL, 14981690);
         MinecraftForge.EVENT_BUS.addListener(this::burn);
+    }
+
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        return new ArrayList<>();
     }
 
     @Override

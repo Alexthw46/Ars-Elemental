@@ -102,14 +102,13 @@ public class ModEntities {
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
-        return ENTITIES.register(name, () -> EntityType.Builder.of( factory, kind).setTrackingRange(64).setUpdateInterval(1).sized(width, height).build(MODID + ":" + name));
+        return ENTITIES.register(name, () -> EntityType.Builder.of(factory, kind).setTrackingRange(16).sized(width, height).build(MODID + ":" + name));
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> addEntity(String name, float width, float height, boolean fire, boolean noSave, EntityType.EntityFactory<T> factory, MobCategory kind) {
         return ENTITIES.register(name, () -> {
             EntityType.Builder<T> builder = EntityType.Builder.of(factory, kind)
-                    .setTrackingRange(64)
-                    .setUpdateInterval(1)
+                    .setTrackingRange(32)
                     .sized(width, height);
             if (noSave) {
                 builder.noSave();

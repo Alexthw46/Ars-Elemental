@@ -37,7 +37,7 @@ public class ArsElemental {
      *private static final Logger LOGGER = LogManager.getLogger();
      */
 
-    public static final ResourceLocation FOCUS_SLOT = prefix("gui/an_focus_slot");
+    public static final ResourceLocation FOCUS_SLOT = new ResourceLocation("curios:slot/an_focus_slot");
     public static final String MODID = "ars_elemental";
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override

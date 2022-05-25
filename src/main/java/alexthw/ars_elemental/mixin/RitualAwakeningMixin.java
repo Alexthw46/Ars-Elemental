@@ -29,7 +29,7 @@ public abstract class RitualAwakeningMixin {
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/hollingsworth/arsnouveau/common/ritual/RitualAwakening;findTargets(Lnet/minecraft/world/level/Level;)V"), remap = false)
     public void findFlashing(RitualAwakening instance, Level level) {
         if (instance.getPos() == null) return;
-        for (BlockPos p : BlockPos.betweenClosed(instance.getPos().east(3).south(3).below(1), instance.getPos().west(3).north(3).above(1))) {
+        for (BlockPos p : BlockPos.withinManhattan(instance.getPos(), 3, 1, 3)) {
             Set<BlockPos> flashing = SpellUtil.DFSBlockstates(level, p, 350, (b) -> b.getBlock() == ModItems.FLASHING_ARCHWOOD_LOG.get() || b.getBlock() == ModItems.FLASHING_LEAVES.get());
             if (flashing.size() >= 50) {
                 entity = ModEntities.FLASHING_WEALD_WALKER.get();

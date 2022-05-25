@@ -7,6 +7,7 @@ import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobType;
@@ -38,7 +39,7 @@ public class Events {
                     case "fire" -> {
                         if (event.getSource().isFire() && living.fireImmune()) {
                             event.setCanceled(true);
-                            living.hurt(DamageSource.playerAttack(player).setMagic(), event.getAmount());
+                            living.hurt(new EntityDamageSource("hellflare", player).setMagic(), event.getAmount());
                         }
                     }
                     case "water" -> {

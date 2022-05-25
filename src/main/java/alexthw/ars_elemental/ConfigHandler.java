@@ -23,6 +23,7 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
 
         public static ForgeConfigSpec.BooleanValue HOMING_GLOWING;
+        public static ForgeConfigSpec.BooleanValue FIRENANDO_KILL;
 
         public static ForgeConfigSpec.IntValue SIREN_MANA_COST;
         public static ForgeConfigSpec.IntValue SIREN_MAX_PROGRESS;
@@ -91,6 +92,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Misc");
+            FIRENANDO_KILL = builder.comment("If enabled, flarecannons will simply die and drop the charm, instead of deactivating, if killed by their owner").define("flarecannon_owner_kill", false);
             HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
             SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);
             builder.pop();

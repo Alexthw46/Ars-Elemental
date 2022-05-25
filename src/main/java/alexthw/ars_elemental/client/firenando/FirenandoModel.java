@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.client.firenando;
 
+import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -10,6 +11,7 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
+@SuppressWarnings("unchecked")
 public class FirenandoModel<M extends LivingEntity & IAnimatable> extends AnimatedGeoModel<M> {
 
     @Override
@@ -36,12 +38,12 @@ public class FirenandoModel<M extends LivingEntity & IAnimatable> extends Animat
 
     @Override
     public void setLivingAnimations(M entity, Integer uniqueID, AnimationEvent customPredicate) {
-            super.setLivingAnimations(entity, uniqueID, customPredicate);
-            if (customPredicate == null) return;
-            IBone head = this.getAnimationProcessor().getBone("head");
-            EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-            head.setRotationX(extraData.headPitch * ((float) Math.PI / 330F));
-            head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 330F));
+        super.setLivingAnimations(entity, uniqueID, customPredicate);
+        if (customPredicate == null || entity instanceof FirenandoEntity fe && !fe.isActive()) return;
+        IBone head = this.getAnimationProcessor().getBone("head");
+        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+        head.setRotationX(extraData.headPitch * ((float) Math.PI / 330F));
+        head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 330F));
     }
 
 }

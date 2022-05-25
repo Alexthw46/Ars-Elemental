@@ -5,11 +5,11 @@ import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -63,9 +63,16 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
             if ((target != null) && (!target.isAlive() || (target.distanceToSqr(this) > 50))) target = null;
 
             if (target == null && tickCount % 5 == 0) {
-                List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,
-                        this.getBoundingBox().inflate(4), (LivingEntity e) -> shouldTarget(e) && glowCheck(e));
 
+
+                List<LivingEntity> entities;
+                if (getOwner() instanceof Player) {
+                    entities = level.getEntitiesOfClass(LivingEntity.class,
+                            this.getBoundingBox().inflate(4), (LivingEntity e) -> shouldTarget(e) && glowCheck(e));
+                } else {
+                    entities = level.getEntitiesOfClass(LivingEntity.class,
+                            this.getBoundingBox().inflate(4), this::shouldTarget);
+                }
                 //update target or keep going
                 if (entities.isEmpty() && target == null) {
                     super.tickNextPosition();
@@ -99,18 +106,6 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         }
         return true;
     }
-
-    @Override
-    public void shoot(Entity entityThrower, float rotationPitchIn, float rotationYawIn, float pitchOffset, float velocity, float inaccuracy)
-    {
-        float f = -Mth.sin(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
-        float f1 = -Mth.sin((rotationPitchIn + pitchOffset) * ((float)Math.PI / 180F));
-        float f2 = Mth.cos(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
-        this.shoot(f, f1, f2, 0f, inaccuracy);
-        Vec3 vec3d = entityThrower.getLookAngle();
-        this.setDeltaMovement(this.getDeltaMovement().add(vec3d.x, vec3d.y, vec3d.z).scale(velocity));
-    }
-
 
     private void homeTo(BlockPos dest) {
 

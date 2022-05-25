@@ -7,8 +7,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnthrallEffect extends MobEffect {
 
@@ -31,11 +35,15 @@ public class EnthrallEffect extends MobEffect {
     }
 
     private boolean isEnthralledBy(LivingEntity entity, Player player) {
-        if (entity.hasEffect(this)){
+        if (entity.hasEffect(this)) {
             MobEffectInstance instance = entity.getEffect(this);
             if (instance instanceof EntityCarryMEI mei) return mei.getOwner() == player;
         }
         return false;
     }
 
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        return new ArrayList<>();
+    }
 }

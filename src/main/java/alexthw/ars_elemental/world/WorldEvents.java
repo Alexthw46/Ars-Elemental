@@ -30,8 +30,6 @@ import static alexthw.ars_elemental.ArsElemental.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WorldEvents {
-
-    //TODO use Flashing Archwood instead of placeholders
     public static Holder<ConfiguredFeature<TreeConfiguration, ?>> FLASHING_TREE = FeatureUtils.register("ars_elemental:flashing_feature", Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
             new SupplierBlockStateProvider(ModItems.FLASHING_ARCHWOOD_LOG.getId()),
             new MagicTrunkPlacer(9, 1, 0),

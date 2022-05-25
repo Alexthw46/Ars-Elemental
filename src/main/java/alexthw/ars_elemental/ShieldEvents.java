@@ -1,6 +1,8 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.util.ManaUtil;
+import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
@@ -27,9 +29,10 @@ public class ShieldEvents {
                     ItemStack stack = player.getOffhandItem();
                     if (stack.getItem() instanceof EnchantersShield){
                         int level = EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.MIRROR.get(), stack);
-                        if (level > 0 && player.getRandom().nextInt(5) < level){
+                        if (level > 0 && player.getRandom().nextInt(4) < level){
                             spell.setDeltaMovement(spell.getDeltaMovement().reverse());
-                            //spell.spellResolver.expendMana(player);
+                            float pay = spell.spellResolver.spell.getCastingCost() / 10f;
+                            CapabilityRegistry.getMana(player).ifPresent(mana -> mana.removeMana(pay));
                             player.getCooldowns().addCooldown(stack.getItem(), 100);
                             event.setCanceled(true);
                         }

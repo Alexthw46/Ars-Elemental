@@ -2,6 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
+import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.datagen.Recipes;
 import com.hollingsworth.arsnouveau.common.lib.RitualLib;
@@ -42,7 +43,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.FEATHER)
                 .save(consumer, prefix("flight_alt"));
 
-        /*
+
         shapelessBuilder(getRitualItem(TeslaRitual.ID))
                 .requires(FLASHING_ARCHWOOD_LOG.get())
                 .requires(ItemsRegistry.AIR_ESSENCE)
@@ -51,7 +52,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Recipes.SOURCE_GEM_BLOCK)
                 .save(consumer, prefix("ritual_" + TeslaRitual.ID));
 
-         */
 
         shapelessBuilder(getRitualItem(SquirrelRitual.ID))
                 .requires(FLASHING_ARCHWOOD_LOG.get())

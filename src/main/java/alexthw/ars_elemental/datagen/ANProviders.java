@@ -31,6 +31,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -126,6 +127,26 @@ public class ANProviders {
                     .withPedestalItem(4, Recipes.SOURCE_GEM)
                     .build()
             );
+
+            recipes.add(builder()
+                    .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)
+                    .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
+                    .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 1, 3000));
+
+            recipes.add(builder()
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS))
+                    .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 2, 6000));
+
+            recipes.add(builder()
+                    .withPedestalItem(Items.TOTEM_OF_UNDYING)
+                    .withPedestalItem(Recipes.SOURCE_GEM_BLOCK)
+                    .withPedestalItem(Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS))
+                    .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 9000));
 
             Path output = this.generator.getOutputFolder();
             for (EnchantingApparatusRecipe g : recipes){
@@ -279,12 +300,6 @@ public class ANProviders {
                             .withPage(new ApparatusPage(ModItems.FIRENANDO_CHARM.get()))
                     , getPath(AUTOMATION, "fire_golem"));
 
-            addPage(new PatchouliBuilder(EQUIPMENT, ModRegistry.MIRROR.get().getDescriptionId())
-                            .withIcon(Items.ENCHANTED_BOOK.getRegistryName().toString())
-                            .withTextPage("ars_elemental.enchantment_desc." + ModRegistry.MIRROR.get().getRegistryName().getPath()),
-                    getPath(EQUIPMENT, "mirror_shield")
-            );
-
             addFamiliarPage(new MermaidHolder());
             addFamiliarPage(new FirenandoHolder());
 
@@ -292,7 +307,7 @@ public class ANProviders {
             addRitualPage(new TeslaRitual());
             addRitualPage(new DetectionRitual());
 
-            //addEnchantmentPage(ModRegistry.MIRROR.get());
+            addEnchantmentPage(ModRegistry.MIRROR.get());
 
             for (PatchouliPage patchouliPage : pages) {
                 DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
@@ -332,7 +347,7 @@ public class ANProviders {
                     .withTextPage("ars_elemental.enchantment_desc." + enchantment.getRegistryName().getPath());
 
             for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++) {
-                builder.withPage(new EnchantingPage("ars_elemental:" + enchantment.getRegistryName().getPath() + "_" + i));
+                builder.withPage(new EnchantingPage("ars_nouveau:" + enchantment.getRegistryName().getPath() + "_" + i));
             }
             this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, enchantment.getRegistryName().getPath())));
         }
