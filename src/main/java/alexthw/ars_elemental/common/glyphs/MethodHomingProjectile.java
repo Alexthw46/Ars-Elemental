@@ -43,23 +43,26 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         projectiles.add(new EntityHomingProjectile(world, shooter, resolver));
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        splits(world, shooter, resolver, projectiles, numSplits);
+        splits(world, shooter, shooter.blockPosition(), resolver, projectiles, numSplits);
 
-        float velocity = Math.max(0.2F, 0.5F + stats.getAccMultiplier() / 5.0F);
+        float velocity = getProjectileSpeed(stats);
 
         for (EntityHomingProjectile proj : projectiles) {
             proj.setIgnored(ignore);
-            proj.shoot(shooter, shooter.getYRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
+            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
             world.addFreshEntity(proj);
         }
     }
 
-    private void splits(Level world, LivingEntity shooter, SpellResolver resolver, ArrayList<EntityHomingProjectile> projectiles, int numSplits) {
+    public static float getProjectileSpeed(SpellStats stats) {
+        return Math.max(0.2F, 0.5F + stats.getAccMultiplier() / 5.0F);
+    }
+
+    public static void splits(Level world, LivingEntity shooter, BlockPos position, SpellResolver resolver, ArrayList<EntityHomingProjectile> projectiles, int numSplits) {
         for (int i = 1; i < numSplits + 1; i++) {
             Direction offset = shooter.getDirection().getClockWise();
             if (i % 2 == 0) offset = offset.getOpposite();
-            BlockPos projPos = shooter.blockPosition().relative(offset, i / 2);
-            projPos = projPos.offset(0, 1.5, 0);
+            BlockPos projPos = position.relative(offset, i / 2).offset(0, 1.5, 0);
             EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
@@ -73,7 +76,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
 
         if (shooter instanceof Player) {
             ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerID()));
-            ignore.add(entity -> entity instanceof OwnableEntity pet && shooter != pet.getOwner());
+            ignore.add(entity -> entity instanceof OwnableEntity pet && shooter.equals(pet.getOwner()));
             resolver.expendMana(shooter);
         } else if (shooter instanceof ISummon summon && summon.getOwnerID() != null) {
             ignore.add(entity -> entity instanceof ISummon summon2 && summon.getOwnerID().equals(summon2.getOwnerID()));

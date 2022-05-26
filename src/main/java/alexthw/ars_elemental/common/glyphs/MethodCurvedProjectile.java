@@ -24,6 +24,10 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
 
     public static MethodCurvedProjectile INSTANCE = new MethodCurvedProjectile();
 
+    public static float getProjectileSpeed(SpellStats stats) {
+        return Math.max(0.2f, 1.0f + stats.getAccMultiplier() / 2.0f);
+    }
+
     public MethodCurvedProjectile() {
         super("curved_projectile", "Parable Projectile");
     }
@@ -45,7 +49,7 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
             projectiles.add(spell);
         }
 
-        float velocity = Math.max(0.2f, 1.0f + stats.getAccMultiplier() / 2.0f);
+        float velocity = getProjectileSpeed(stats);
 
         for(EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0,0.25,0));

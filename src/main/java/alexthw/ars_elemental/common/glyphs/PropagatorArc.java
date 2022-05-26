@@ -1,0 +1,86 @@
+package alexthw.ars_elemental.common.glyphs;
+
+import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
+import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Set;
+
+public class PropagatorArc extends AbstractEffect implements IPropagator {
+
+    public static PropagatorArc INSTANCE = new PropagatorArc();
+
+    public PropagatorArc() {
+        super("propagate_arc", "Propagate Arc");
+    }
+
+    @Override
+    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
+        ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
+        EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
+        projectileSpell.setPos(pos.add(0, 1, 0));
+        projectiles.add(projectileSpell);
+        int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
+
+        for (int i = 1; i < numSplits + 1; i++) {
+            Direction offset = shooter.getDirection().getClockWise();
+            if (i % 2 == 0) offset = offset.getOpposite();
+            // Alternate sides
+            BlockPos projPos = new BlockPos(pos).relative(offset, i).offset(0, 1.5, 0);
+            EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
+            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
+            projectiles.add(spell);
+        }
+
+        float velocity = MethodCurvedProjectile.getProjectileSpeed(stats);
+
+        for (EntityProjectileSpell proj : projectiles) {
+            proj.setPos(proj.position().add(0, 0.25, 0));
+            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
+            world.addFreshEntity(proj);
+        }
+    }
+
+    @Override
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
+        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext);
+    }
+
+    @Override
+    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
+        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext);
+    }
+
+    @Override
+    public int getDefaultManaCost() {
+        return 200;
+    }
+
+    @NotNull
+    @Override
+    public Set<AbstractAugment> getCompatibleAugments() {
+        return MethodCurvedProjectile.INSTANCE.getCompatibleAugments();
+    }
+
+    public SpellTier getTier() {
+        return SpellTier.TWO;
+    }
+
+    @Nonnull
+    public Set<SpellSchool> getSchools() {
+        return this.setOf(SpellSchools.MANIPULATION);
+    }
+
+}

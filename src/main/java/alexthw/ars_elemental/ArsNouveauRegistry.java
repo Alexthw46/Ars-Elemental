@@ -46,6 +46,10 @@ public class ArsNouveauRegistry {
         register(EffectConjureDirt.INSTANCE);
         register(EffectCharm.INSTANCE);
         register(EffectLifeLink.INSTANCE);
+
+        register(PropagatorHoming.INSTANCE);
+        register(PropagatorArc.INSTANCE);
+
         //methods
         register(MethodHomingProjectile.INSTANCE);
         register(MethodCurvedProjectile.INSTANCE);

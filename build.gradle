@@ -140,9 +140,7 @@ repositories {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
@@ -157,18 +155,16 @@ dependencies {
     implementation fg.deobf("curse.maven:arsenal-561848:3769207")
 
     runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3767383")
+    runtimeOnly fg.deobf("curse.maven:omega-597007:3803056")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     runtimeOnly fg.deobf("curse.maven:jeed-532286:3736071")
+
     /*
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:2.0.0+1.18.2")
     runtimeOnly fg.deobf("com.alcatrazescapee:cyanide-forge-1.18.2:2.1.0") { transitive = false }
-
-    update those, eventually
-    runtimeOnly fg.deobf("curse.maven:tomb-243707:3638380")
-    runtimeOnly fg.deobf("curse.maven:spark-361579:3644347")
-    runtimeOnly fg.deobf("curse.maven:occ-361026:3647913")
+    runtimeOnly fg.deobf("curse.maven:spark-361579:3767286")
      */
 }
 
