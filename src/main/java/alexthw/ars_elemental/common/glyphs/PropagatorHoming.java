@@ -24,7 +24,7 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
     public static PropagatorHoming INSTANCE = new PropagatorHoming();
 
     public PropagatorHoming() {
-        super("propagate_homing", "Propagate Homing");
+        super("propagator_homing", "Propagate Homing");
     }
 
     public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {

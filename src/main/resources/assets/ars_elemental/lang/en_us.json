@@ -85,15 +85,15 @@
   "item.ars_nouveau.glyph_homing_projectile": "Glyph of Homing Projectile",
   "ars_nouveau.glyph_name.homing_projectile": "Homing Projectile",
   "ars_nouveau.glyph_desc.homing_projectile": "This projectile seek the nearest entity and follow it, will behave as a classic projectile while there are no valid targets. Players will only be targeted if augmented by Sensitive.",
-  "item.ars_nouveau.glyph_propagate_homing": "Glyph of Propagate Homing",
-  "ars_nouveau.glyph_name.propagate_homing": "Propagate Homing",
-  "ars_nouveau.glyph_desc.propagate_homing": "Convert the remainder of the spell into an Homing Projectile.",
+  "item.ars_nouveau.glyph_propagator_homing": "Glyph of Propagate Homing",
+  "ars_nouveau.glyph_name.propagator_homing": "Propagate Homing",
+  "ars_nouveau.glyph_desc.propagator_homing": "Convert the remainder of the spell into an Homing Projectile.",
   "item.ars_nouveau.glyph_curved_projectile": "Glyph of Arc Projectile",
   "ars_nouveau.glyph_name.curved_projectile": "Arc Projectile",
   "ars_nouveau.glyph_desc.curved_projectile": "This projectile is affected by gravity. Every Pierce applied will make it bounce one time when it hit the ground.",
-  "item.ars_nouveau.glyph_propagate_arc": "Glyph of Propagate Arc",
-  "ars_nouveau.glyph_name.propagate_arc": "Propagate Arc",
-  "ars_nouveau.glyph_desc.propagate_arc": "Convert the remainder of the spell into an Arc Projectile.",
+  "item.ars_nouveau.glyph_propagator_arc": "Glyph of Propagate Arc",
+  "ars_nouveau.glyph_name.propagator_arc": "Propagate Arc",
+  "ars_nouveau.glyph_desc.propagator_arc": "Convert the remainder of the spell into an Arc Projectile.",
   "ars_nouveau.school.necromancy": "Anima",
   "item.ars_nouveau.glyph_life_link": "Glyph of Life Link",
   "ars_nouveau.glyph_name.life_link": "Life Link",
@@ -101,5 +101,4 @@
   "item.ars_nouveau.glyph_charm": "Glyph of Charm",
   "ars_nouveau.glyph_name.charm": "Charm",
   "ars_nouveau.glyph_desc.charm": "Try to dominate the mind of enemy, making them fight for you as a temporary ally, a tamable mob, to tame it, or a wild animal, to make it fall in love. Each Amplify and damage dealt raises the chance of successfully charming the target, as stronger mobs will have higher resistance to your control."
-
 }

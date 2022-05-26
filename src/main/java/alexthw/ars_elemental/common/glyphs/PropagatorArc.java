@@ -23,7 +23,7 @@ public class PropagatorArc extends AbstractEffect implements IPropagator {
     public static PropagatorArc INSTANCE = new PropagatorArc();
 
     public PropagatorArc() {
-        super("propagate_arc", "Propagate Arc");
+        super("propagator_arc", "Propagate Arc");
     }
 
     @Override
