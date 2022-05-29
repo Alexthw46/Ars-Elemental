@@ -13,8 +13,6 @@ public class DolphinJumpGoal extends JumpGoal {
     private final MermaidEntity dolphin;
     private final int interval;
 
-    private boolean breached;
-
     public DolphinJumpGoal(MermaidEntity pDolphin, int pInterval) {
         this.dolphin = pDolphin;
         this.interval = reducedTickDelay(pInterval);
@@ -86,7 +84,7 @@ public class DolphinJumpGoal extends JumpGoal {
     public void tick() {
         Vec3 vec3 = this.dolphin.getDeltaMovement();
         if (vec3.y * vec3.y < (double) 0.03F && this.dolphin.getXRot() != 0.0F) {
-            this.dolphin.setXRot(Mth.rotlerp(this.dolphin.getXRot(), 0.0F, 0.2F));
+            this.dolphin.setXRot(Mth.rotLerp(this.dolphin.getXRot(), 0.0F, 0.2F));
         } else if (vec3.length() > (double) 1.0E-5F) {
             double d0 = vec3.horizontalDistance();
             double d1 = Math.atan2(-vec3.y, d0) * (double) (180F / (float) Math.PI);

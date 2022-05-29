@@ -17,8 +17,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Set;
 
-import static alexthw.ars_elemental.common.glyphs.MethodHomingProjectile.basicIgnores;
-
 public class PropagatorHoming extends AbstractEffect implements IPropagator {
 
     public static PropagatorHoming INSTANCE = new PropagatorHoming();
@@ -29,7 +27,7 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
 
     public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        EntityHomingProjectile first = new EntityHomingProjectile(world, shooter, resolver);
+        EntityHomingProjectile first = new EntityHomingProjectile(world, resolver);
         first.setPos(pos.add(0, 1, 0));
         projectiles.add(first);
 
@@ -39,7 +37,7 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
 
         Vec3 direction = pos.subtract(shooter.position());
         for (EntityHomingProjectile proj : projectiles) {
-            proj.setIgnored(basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver));
+            proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver));
             if (direction.distanceTo(Vec3.ZERO) < 0.25) {
                 proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
             } else {
@@ -62,7 +60,7 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
 
     @Override
     public int getDefaultManaCost() {
-        return 200;
+        return 400;
     }
 
     @NotNull

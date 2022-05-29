@@ -5,7 +5,6 @@ import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.entity.EntityLingeringSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,7 +30,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
     static public void createMagnet(Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, Vec3 location) {
         EntityMagnetSpell magnet = new EntityMagnetSpell(world);
         magnet.setPos(location);
-        magnet.setAoe(spellStats.getBuffCount(AugmentAOE.INSTANCE));
+        magnet.setAoe((float) spellStats.getAoeMultiplier());
         magnet.setOwner(shooter);
         magnet.extendedTime = spellStats.getDurationMultiplier();
         magnet.setColor(spellContext.colors);
@@ -39,8 +38,8 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
     }
 
     @Override
-    public int getAoe() {
-        return super.getAoe()/2;
+    public float getAoe() {
+        return super.getAoe() / 2;
     }
 
     @Override

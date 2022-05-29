@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.util;
 
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.client.particle.ColorParticleTypeData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.core.BlockPos;

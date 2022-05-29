@@ -1,7 +1,6 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.hollingsworth.arsnouveau.api.util.ManaUtil;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;

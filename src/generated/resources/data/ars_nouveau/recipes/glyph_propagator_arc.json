@@ -4,6 +4,11 @@
   "inputItems": [
     {
       "item": {
+        "item": "ars_nouveau:manipulation_essence"
+      }
+    },
+    {
+      "item": {
         "item": "ars_nouveau:glyph_curved_projectile"
       }
     }

@@ -3,7 +3,6 @@ package alexthw.ars_elemental.mixin;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.CrushRecipe;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
@@ -31,9 +30,9 @@ public class EffectCrushMixin {
     @Inject(method = "onResolveEntity", at = {@At("HEAD")}, remap = false, cancellable = true)
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
-            int aoeBuff = spellStats.getBuffCount(AugmentAOE.INSTANCE);
+            double aoeBuff = spellStats.getAoeMultiplier();
             int pierceBuff = spellStats.getBuffCount(AugmentPierce.INSTANCE);
-            int maxItemCrush = 4 + (4 * aoeBuff) + (4 * pierceBuff);
+            int maxItemCrush = (int) (4 + (4 * aoeBuff) + (4 * pierceBuff));
             List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, new AABB(rayTraceResult.getEntity().blockPosition()).inflate(aoeBuff + 1.0));
             if (!itemEntities.isEmpty()) {
                 crushItems(world, itemEntities, maxItemCrush);
@@ -47,9 +46,9 @@ public class EffectCrushMixin {
     @Inject(method = "onResolveBlock", at = {@At("HEAD")}, remap = false, cancellable = true)
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, CallbackInfo ci) {
         if (spellStats.hasBuff(AugmentSensitive.INSTANCE)){
-            int aoeBuff = spellStats.getBuffCount(AugmentAOE.INSTANCE);
+            double aoeBuff = spellStats.getAoeMultiplier();
             int pierceBuff = spellStats.getBuffCount(AugmentPierce.INSTANCE);
-            int maxItemCrush = 4 + (4 * aoeBuff) + (4 * pierceBuff);
+            int maxItemCrush = (int) (4 + (4 * aoeBuff) + (4 * pierceBuff));
             List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, new AABB(rayTraceResult.getBlockPos()).inflate(aoeBuff + 1.0));
             if (!itemEntities.isEmpty()) crushItems(world, itemEntities, maxItemCrush);
             ci.cancel();
@@ -68,7 +67,7 @@ public class EffectCrushMixin {
             ItemStack stack = IE.getItem();
             Item item = stack.getItem();
 
-            if(lastHit == null || !lastHit.matches(item.getDefaultInstance(), world)){
+            if (lastHit == null || !lastHit.matches(item.getDefaultInstance(), world)) {
                 lastHit = recipes.stream().filter(recipe -> recipe.matches(item.getDefaultInstance(), world)).findFirst().orElse(null);
             }
 

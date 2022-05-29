@@ -7,6 +7,8 @@ public class ConfigHandler {
 
     public static class Common {
 
+        public final ForgeConfigSpec.ConfigValue<Boolean> GlobalMagic;
+
         public final ForgeConfigSpec.ConfigValue<Double> FocusDiscount;
 
         public final ForgeConfigSpec.ConfigValue<Double> FireMasteryBuff;
@@ -82,7 +84,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Spawn and Worldgen");
-            SIREN_WEIGHT = builder.comment("How often sirens spawn").defineInRange("sirenSpawnWeight", 5, 0, 200);
+            SIREN_WEIGHT = builder.comment("How often sirens spawn").defineInRange("sirenSpawnWeight", 2, 0, 200);
 
             MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesSpawnWeight", 0, 0, 200);
             MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
@@ -92,6 +94,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Misc");
+            GlobalMagic = builder.comment("If enabled, all damage dealt by spells will be marked as magic. This does not include bypassing armor, only for compat with other magic mods").define("globalMagic", false);
             FIRENANDO_KILL = builder.comment("If enabled, flarecannons will simply die and drop the charm, instead of deactivating, if killed by their owner").define("flarecannon_owner_kill", false);
             HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
             SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);

@@ -40,7 +40,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver, List<Predicate<LivingEntity>> ignore) {
 
         ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        projectiles.add(new EntityHomingProjectile(world, shooter, resolver));
+        projectiles.add(new EntityHomingProjectile(world, resolver));
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
         splits(world, shooter, shooter.blockPosition(), resolver, projectiles, numSplits);
@@ -63,7 +63,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
             Direction offset = shooter.getDirection().getClockWise();
             if (i % 2 == 0) offset = offset.getOpposite();
             BlockPos projPos = position.relative(offset, i / 2).offset(0, 1.5, 0);
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, shooter, resolver);
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }

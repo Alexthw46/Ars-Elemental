@@ -36,10 +36,6 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
         return 20 * 30;
     }
 
-    public EntityHomingProjectile(Level worldIn, LivingEntity ignore, SpellResolver resolver) {
-        super(ModEntities.HOMING_PROJECTILE.get(), worldIn, resolver);
-    }
-
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
         super(ModEntities.HOMING_PROJECTILE.get(), world, resolver);
     }

@@ -35,6 +35,7 @@ public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
         return prefix("animations/mermaid.animation.json");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void setLivingAnimations(T entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);

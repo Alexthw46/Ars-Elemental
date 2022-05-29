@@ -273,6 +273,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         this.entityData.set(COLOR, tag.getString("color"));
     }
 
+    public int getMaxSpawnClusterSize() {
+        return 3;
+    }
+
     public static boolean checkSurfaceWaterAnimalSpawnRules(LevelAccessor levelAccessor, BlockPos pos) {
         int i = levelAccessor.getSeaLevel();
         int j = i - 23;
