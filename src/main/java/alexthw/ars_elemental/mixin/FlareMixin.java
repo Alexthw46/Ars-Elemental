@@ -12,6 +12,7 @@ public class FlareMixin {
 
     @Redirect(method = "onResolveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isOnFire()Z" ))
     public boolean isOnFire(LivingEntity instance) {
-        return instance.hasEffect(ModRegistry.HELLFIRE.get()) || (instance.isOnFire() && !instance.isInWaterOrRain());
+        return instance.hasEffect(ModRegistry.HELLFIRE.get()) || (instance.isOnFire() && !instance.isInWaterOrBubble());
     }
+
 }
