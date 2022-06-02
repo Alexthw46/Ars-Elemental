@@ -47,12 +47,12 @@ public class ArsNouveauRegistry {
         register(EffectCharm.INSTANCE);
         register(EffectLifeLink.INSTANCE);
 
-        register(PropagatorHoming.INSTANCE);
-        register(PropagatorArc.INSTANCE);
-
         //methods
         register(MethodHomingProjectile.INSTANCE);
         register(MethodCurvedProjectile.INSTANCE);
+        //propagators
+        register(PropagatorHoming.INSTANCE);
+        register(PropagatorArc.INSTANCE);
 
     }
 
@@ -78,6 +78,7 @@ public class ArsNouveauRegistry {
         addSchool(EffectHex.INSTANCE, NECROMANCY);
         addSchool(EffectLifeLink.INSTANCE, NECROMANCY);
         addSchool(EffectCharm.INSTANCE, NECROMANCY);
+        addSchool(EffectSummonUndead.INSTANCE, NECROMANCY);
 
         //Tweaks
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);

@@ -53,7 +53,7 @@ This Ars Nouveau add-on is about the Elemental Schools. More spell foci, each po
 [[dependencies.ars_elemental]]
     modId = "ars_nouveau"
     mandatory = true
-versionRange = "[2.4.0,)"
+versionRange = "[2.5.0,)"
 ordering = "AFTER"
     side = "BOTH"
 [[dependencies.ars_elemental]]

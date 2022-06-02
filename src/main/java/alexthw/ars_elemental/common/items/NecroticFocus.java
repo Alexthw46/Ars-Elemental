@@ -1,10 +1,7 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
-import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
-import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
-import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
+import alexthw.ars_elemental.common.entity.summon.*;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
@@ -13,8 +10,10 @@ import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
+import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectSummonUndead;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -89,10 +88,12 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
                     LivingEntity toRaise = null;
                     if (event.summon instanceof SummonWolf wolf) {
                         toRaise = new SummonDirewolf(world, player, wolf);
-                    }else if (event.summon instanceof EntityAllyVex vex){
+                    } else if (event.summon instanceof EntityAllyVex vex) {
                         toRaise = new AllyVhexEntity(world, vex, player);
+                    } else if (event.summon instanceof SummonSkeleton skel) {
+                        toRaise = new SummonUndead(world, skel, player);
                     }
-                    if (toRaise instanceof IUndeadSummon undead){
+                    if (toRaise instanceof IUndeadSummon undead) {
                         undead.inherit(event.summon);
                         event.world.addFreshEntity(toRaise);
                         spawnDeathPoof(world, toRaise.blockPosition());
@@ -127,7 +128,7 @@ public class NecroticFocus extends Item implements ISchoolItem, ICurioItem {
         builder.addDamageModifier(1.0f);
         if (NECROMANCY.isPartOfSchool(spellPart)) {
             builder.addDurationModifier(2.0f);
-            if (spellPart == EffectHeal.INSTANCE){
+            if (spellPart == EffectHeal.INSTANCE || spellPart == EffectSummonUndead.INSTANCE) {
                 builder.addAmplification(2.0f);
             }
         }

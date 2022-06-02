@@ -15,6 +15,7 @@ import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;
+import alexthw.ars_elemental.common.entity.summon.SummonUndead;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
@@ -65,6 +66,8 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
     public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
+    public static final RegistryObject<EntityType<SummonUndead>> WSKELETON_SUMMON;
+
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
     public static final RegistryObject<EntityType<EntityHomingProjectile>> HOMING_PROJECTILE;
     public static final RegistryObject<EntityType<EntityCurvedProjectile>> CURVED_PROJECTILE;
@@ -95,6 +98,8 @@ public class ModEntities {
 
         SKELEHORSE_SUMMON = addEntity("summon_skelehorse", 1.4F, 1.6F, true, true, SummonSkeleHorse::new, MobCategory.CREATURE);
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 1.0F, SummonDirewolf::new, MobCategory.CREATURE);
+        WSKELETON_SUMMON = registerEntity("summon_wskeleton", 1.0F, 1.8F, SummonUndead::new, MobCategory.CREATURE);
+
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         HOMING_PROJECTILE = addEntity("homing_projectile", 0.5F, 0.5F, true, true, EntityHomingProjectile::new, MobCategory.MISC);
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);

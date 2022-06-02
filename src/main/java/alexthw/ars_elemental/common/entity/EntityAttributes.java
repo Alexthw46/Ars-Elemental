@@ -6,6 +6,7 @@ import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import alexthw.ars_elemental.registry.ModEntities;
+import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -27,6 +28,7 @@ public class EntityAttributes {
         event.put(ModEntities.FLASHING_WEALD_WALKER.get(), WealdWalker.attributes().build());
         event.put(ModEntities.SKELEHORSE_SUMMON.get(), AbstractHorse.createBaseHorseAttributes().build());
         event.put(ModEntities.DIREWOLF_SUMMON.get(), SummonDirewolf.createAttributes().build());
+        event.put(ModEntities.WSKELETON_SUMMON.get(), SummonSkeleton.createAttributes().build());
         event.put(ModEntities.VHEX_SUMMON.get(), AllyVhexEntity.createAttributes().build());
 
         event.put(ModEntities.FIRE_MAGE.get(), EntityMageBase.createAttributes().build());

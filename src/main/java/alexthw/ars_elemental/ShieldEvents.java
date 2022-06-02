@@ -29,7 +29,7 @@ public class ShieldEvents {
                     if (stack.getItem() instanceof EnchantersShield){
                         int level = EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.MIRROR.get(), stack);
                         if (level > 0 && player.getRandom().nextInt(4) < level){
-                            spell.setDeltaMovement(spell.getDeltaMovement().reverse());
+                            spell.setDeltaMovement(spell.getDeltaMovement().reverse().add(0, 0.5, 0));
                             float pay = spell.spellResolver.spell.getCastingCost() / 10f;
                             CapabilityRegistry.getMana(player).ifPresent(mana -> mana.removeMana(pay));
                             player.getCooldowns().addCooldown(stack.getItem(), 100);

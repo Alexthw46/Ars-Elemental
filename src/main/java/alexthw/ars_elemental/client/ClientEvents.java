@@ -21,10 +21,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
-import net.minecraft.client.renderer.entity.VexRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Vex;
@@ -67,6 +64,7 @@ public class ClientEvents {
             }
         });
         event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
+        event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), WitherSkeletonRenderer::new);
         event.registerEntityRenderer(ModEntities.VHEX_SUMMON.get(), manager -> new VexRenderer(manager) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull Vex p_110775_1_) {
