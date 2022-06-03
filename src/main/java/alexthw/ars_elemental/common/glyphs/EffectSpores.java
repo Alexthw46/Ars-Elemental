@@ -39,17 +39,17 @@ public class EffectSpores extends AbstractEffect {
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
         double range = 3 + spellStats.getAoeMultiplier();
         int snareSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
-        boolean focus = ISchoolItem.hasFocus(level, shooter) == ELEMENTAL_EARTH;
+        if (ISchoolItem.hasFocus(level, shooter) == ELEMENTAL_EARTH)
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareSec));
 
-        if (!(canDamage(livingEntity) || focus))
-            return;
+        if (!canDamage(livingEntity)) return;
 
         damage(vec, world, shooter, spellStats, damage, snareSec, livingEntity);
 
         for (LivingEntity e : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.position().add(range, range, range), livingEntity.position().subtract(range, range, range)))) {
             if (e.equals(livingEntity) || e.equals(shooter))
                 continue;
-            if (canDamage(e) || focus) {
+            if (canDamage(e)) {
                 vec = e.position();
                 damage(vec, world, shooter, spellStats, damage, snareSec, e);
             } else {
@@ -76,8 +76,8 @@ public class EffectSpores extends AbstractEffect {
         super.buildConfig(builder);
         addDamageConfig(builder, 6.0);
         addAmpConfig(builder, 2.5);
-        addPotionConfig(builder, 5);
-        addExtendTimeConfig(builder, 1);
+        addPotionConfig(builder, 10);
+        addExtendTimeConfig(builder, 3);
 
     }
 
