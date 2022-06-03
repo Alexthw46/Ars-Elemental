@@ -60,18 +60,17 @@ public class EffectLifeLink extends AbstractEffect {
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return getPotionAugments();
-    }
+        return getSummonAugments();
+    } //just time boosters
 
     public void applyConfigPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats spellStats){
         applyPotion(entity, owner,  potionEffect, spellStats, POTION_TIME == null ? 30 : POTION_TIME.get(), EXTEND_TIME == null ? 8 : EXTEND_TIME.get(), true);
     }
 
-    public void applyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles){
+    public void applyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles) {
         if (entity == null || owner == null) return;
         int ticks = baseDurationSeconds * 20 + durationBuffSeconds * stats.getDurationInTicks();
-        int amp = (int) stats.getAmpMultiplier();
-        entity.addEffect(new EntityCarryMEI(potionEffect, ticks, amp, false, showParticles, owner, entity));
-        owner.addEffect(new EntityCarryMEI(potionEffect, ticks, amp, false, showParticles, owner, entity));
+        entity.addEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, showParticles, owner, entity));
+        owner.addEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, showParticles, owner, entity));
     }
 }

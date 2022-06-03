@@ -1,0 +1,23 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:spore_blossom"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:red_mushroom"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:earth_essence"
+      }
+    }
+  ],
+  "exp": 55,
+  "output": "ars_nouveau:glyph_poison_spores"
+}
