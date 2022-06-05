@@ -1,5 +1,6 @@
-package alexthw.ars_elemental;
+package alexthw.ars_elemental.event;
 
+import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;

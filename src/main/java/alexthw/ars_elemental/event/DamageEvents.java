@@ -3,7 +3,6 @@ package alexthw.ars_elemental.event;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.ISchoolItem;
-import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -23,11 +22,6 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EART
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class DamageEvents {
-
-    @SubscribeEvent
-    public static void makeMagic(SpellDamageEvent event) {
-        if (COMMON.GlobalMagic.get()) event.damageSource.setMagic();
-    }
 
     @SubscribeEvent
     public static void bypassRes(LivingAttackEvent event) {

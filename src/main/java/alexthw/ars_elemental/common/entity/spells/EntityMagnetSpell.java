@@ -1,10 +1,15 @@
 package alexthw.ars_elemental.common.entity.spells;
 
 import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.util.CompatUtils;
+import alexthw.ars_elemental.util.TooManyCompats;
+import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.entity.EntityLingeringSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
+import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,8 +17,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+
 public class EntityMagnetSpell extends EntityLingeringSpell {
 
+    List<Predicate<Entity>> ignored;
     public EntityMagnetSpell(EntityType<? extends EntityProjectileSpell> type, Level worldIn) {
         super(type, worldIn);
     }
@@ -29,6 +40,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
 
     static public void createMagnet(Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, Vec3 location) {
         EntityMagnetSpell magnet = new EntityMagnetSpell(world);
+        magnet.ignored = makeIgnores(shooter, spellContext.getSpell(), spellContext.getCurrentIndex() + 1);
         magnet.setPos(location);
         magnet.setAoe((float) spellStats.getAoeMultiplier());
         magnet.setOwner(shooter);
@@ -47,18 +59,18 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
 
         age++;
 
-        if (this.age > getExpirationTime()){
+        if (this.age > getExpirationTime()) {
             this.remove(RemovalReason.DISCARDED);
             return;
         }
         if (level.isClientSide() && this.age > getParticleDelay()) {
             playParticles();
         }
-        if (!level.isClientSide() && this.age % 5 == 0){
-            for(Entity entity : level.getEntities(null, new AABB(this.blockPosition()).inflate(getAoe()))) {
-                if(entity.equals(this) || entity instanceof EntityLingeringSpell || entity.equals(getOwner()))
-                    continue;
+        if (!level.isClientSide() && this.age % 5 == 0) {
+            for (Entity entity : level.getEntities(this, new AABB(this.blockPosition()).inflate(getAoe()))) {
+                if (testFilters(entity)) continue;
                 Vec3 vec3d = new Vec3(this.getX() - entity.getX(), this.getY() - entity.getY(), this.getZ() - entity.getZ());
+                if (vec3d.length() < 1) continue;
                 entity.setDeltaMovement(entity.getDeltaMovement().add(vec3d.normalize()).scale(0.5F));
                 entity.hurtMarked = true;
             }
@@ -66,5 +78,24 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
 
     }
 
+    public boolean testFilters(Entity entity) {
+        return ignored.stream().anyMatch(filter -> filter.test(entity));
+    }
+
+    public static List<Predicate<Entity>> makeIgnores(LivingEntity shooter, Spell spell, int index) {
+        List<Predicate<Entity>> ignore = new ArrayList<>();
+
+        ignore.add((entity -> entity instanceof EntityLingeringSpell));
+        ignore.add((entity -> entity == shooter));
+        ignore.add(entity -> entity instanceof FamiliarEntity);
+        ignore.add(shooter::isAlliedTo);
+        if (CompatUtils.tooManyGlyphsLoaded()) {
+            Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(spell.recipe, index);
+            if (!filters.isEmpty()) {
+                ignore.add(entity -> !TooManyCompats.checkFilters(entity, filters));
+            }
+        }
+        return ignore;
+    }
 
 }

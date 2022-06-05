@@ -42,7 +42,8 @@
   "effect.ars_elemental.life_link.description": "Caster will split incoming damage with the target and the target will split incoming healing with the caster.",
   "effect.ars_elemental.enthralled": "Enthralled",
   "effect.ars_elemental.enthralled.description": "Enthralled mobs won't attack the caster but defend them.",
-
+  "effect.ars_elemental.hymn_of_order": "Hymn of Order",
+  "effect.ars_elemental.hymn_of_order.description": "Unobtainable potion, for Admin use. Sets the punished player's mana to 1, greatly reducing their chances to create chaos in the server.",
   "enchantment.ars_elemental.mirror_shield": "Spell Reflection",
   "enchantment.ars_elemental.mirror_shield.desc": "Shield have a chance to reflect projectile spells",
   "ars_elemental.page1.spell_horn": "The Enchanter's Horn can be used to cast Arc projectiles spells similar to a Casting Wand. An Horn always start with Arc -> Accelerate and MUST be inscribed with a spell that does not have another method, using a Scribing Table.",

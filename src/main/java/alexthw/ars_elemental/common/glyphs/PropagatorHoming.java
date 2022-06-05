@@ -37,7 +37,7 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
 
         Vec3 direction = pos.subtract(shooter.position());
         for (EntityHomingProjectile proj : projectiles) {
-            proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver));
+            proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
             if (direction.distanceTo(Vec3.ZERO) < 0.25) {
                 proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
             } else {

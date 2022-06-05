@@ -2,10 +2,7 @@ package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
-import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
-import alexthw.ars_elemental.common.mob_effects.HellFireEffect;
-import alexthw.ars_elemental.common.mob_effects.LifeLinkEffect;
-import alexthw.ars_elemental.common.mob_effects.WaterGraveEffect;
+import alexthw.ars_elemental.common.mob_effects.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -52,6 +49,8 @@ public class ModRegistry {
     public static final RegistryObject<MobEffect> HELLFIRE;
     public static final RegistryObject<MobEffect> WATER_GRAVE;
     public static final RegistryObject<MobEffect> ENTHRALLED;
+    public static final RegistryObject<MobEffect> HYMN_OF_ORDER;
+
     public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
@@ -63,6 +62,7 @@ public class ModRegistry {
         WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
         ENTHRALLED = EFFECTS.register("enthralled", EnthrallEffect::new);
         LIFE_LINK = EFFECTS.register("life_link", LifeLinkEffect::new);
+        HYMN_OF_ORDER = EFFECTS.register("hymn_of_order", OrderEffect::new);
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
 

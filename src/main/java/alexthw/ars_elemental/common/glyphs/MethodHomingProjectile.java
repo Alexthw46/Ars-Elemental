@@ -72,7 +72,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
     @Override
     public void onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
 
-        List<Predicate<LivingEntity>> ignore = basicIgnores(shooter, spellStats.hasBuff(AugmentSensitive.INSTANCE), resolver);
+        List<Predicate<LivingEntity>> ignore = basicIgnores(shooter, spellStats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell);
 
         if (shooter instanceof Player) {
             ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerID()));
@@ -152,7 +152,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
         return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE);
     }
 
-    public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, Boolean targetPlayers, SpellResolver resolver){
+    public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, Boolean targetPlayers, Spell spell) {
         List<Predicate<LivingEntity>> ignore = new ArrayList<>();
 
         ignore.add((entity -> !entity.isAlive()));
@@ -163,7 +163,7 @@ public class MethodHomingProjectile extends AbstractCastMethod {
             ignore.add(entity -> entity instanceof Player);
         }
         if (CompatUtils.tooManyGlyphsLoaded()) {
-            Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(resolver.spell.recipe);
+            Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(spell.recipe, 0);
             if (!filters.isEmpty()){
                 ignore.add(entity -> !TooManyCompats.checkFilters(entity, filters));
             }

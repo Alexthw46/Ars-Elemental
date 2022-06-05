@@ -147,7 +147,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         ParticleColor spellColor = getColor().equals(Variants.MAGMA.toString()) ? color : colorAlt;
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(spellColor.toWrapper()).withType(SpellContext.CasterType.ENTITY));
         EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, resolver);
-        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver);
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver.spell);
         ignore.add(entity -> !(entity instanceof Enemy));
         ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
         projectileSpell.setColor(spellColor.toWrapper());

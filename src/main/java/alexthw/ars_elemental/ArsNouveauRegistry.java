@@ -125,8 +125,8 @@ public class ArsNouveauRegistry {
             EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
             spell.setOwner(fakePlayer);
             spell.setPos(position.x(), position.y(), position.z());
-            spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0,null).contains(AugmentSensitive.INSTANCE), resolver));
-            spell.shoot(direction.getStepX(),  direction.getStepY(), direction.getStepZ(), 0.25f, 0);
+            spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+            spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
             world.addFreshEntity(spell);
         });
 

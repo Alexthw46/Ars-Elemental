@@ -4,7 +4,6 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
@@ -25,22 +24,12 @@ public class HellFireEffect extends MobEffect implements IForgeMobEffect {
         return new ArrayList<>();
     }
 
-    @Override
-    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
-        return true;
-    }
-
-    @Override
-    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-        if (pLivingEntity.isInWaterOrRain()) pLivingEntity.removeEffect(this);
-        super.applyEffectTick(pLivingEntity, pAmplifier);
-    }
-
     public void burn(LivingHealEvent event){
         if (event.getEntityLiving().hasEffect(ModRegistry.HELLFIRE.get())){
             MobEffectInstance inst = event.getEntityLiving().getEffect(ModRegistry.HELLFIRE.get());
             if (inst == null) return;
-            event.setAmount(event.getAmount()/inst.getAmplifier());
+            int amplifier = Math.max(2, inst.getAmplifier());
+            event.setAmount(event.getAmount() / amplifier);
             event.getEntityLiving().invulnerableTime = 0;
         }
     }
