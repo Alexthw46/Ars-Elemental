@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModItems;
@@ -10,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
+import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
@@ -110,6 +112,7 @@ public class Datagen {
             protected void registerModels() {
             Set<RegistryObject<Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
 
+            takeAll(items, i -> i.get() instanceof AnimBlockItem).forEach(this::blockItem);
             takeAll(items, i -> i.get() instanceof IAnimatable);
             takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
             takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof SaplingBlock).forEach(this::blockGeneratedItem);
@@ -176,7 +179,7 @@ public class Datagen {
         @Override
         protected void registerStatesAndModels() {
             Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
-            takeAll(blocks, b -> b.get() instanceof UpstreamBlock || b.get() instanceof SummonBlock);
+            takeAll(blocks, b -> b.get() instanceof UpstreamBlock || b.get() instanceof SummonBlock || b.get() instanceof ElementalTurret);
             takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock || b.get() instanceof StrippableLog).forEach(this::logBlock);
             takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
             takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
@@ -253,6 +256,7 @@ public class Datagen {
         @Override
         protected void addTags() {
             addPickMineable(1, ModItems.UPSTREAM_BLOCK.get());
+            addPickMineable(0, ModItems.AIR_TURRET.get(), ModItems.FIRE_TURRET.get(), ModItems.EARTH_TURRET.get(), ModItems.WATER_TURRET.get());
             logsTag(ModItems.FLASHING_ARCHWOOD_LOG.get(),
                     ModItems.FLASHING_ARCHWOOD.get(),
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get(),

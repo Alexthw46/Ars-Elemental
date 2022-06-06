@@ -1,14 +1,19 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.client.ElementalTurretRenderer;
+import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.client.renderer.item.GenericItemBlockRenderer;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
+import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -23,6 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import java.util.function.Supplier;
 
@@ -47,6 +53,11 @@ public class ModItems {
 
 
     public static final RegistryObject<Block> UPSTREAM_BLOCK;
+    public static final RegistryObject<Block> FIRE_TURRET;
+    public static final RegistryObject<Block> WATER_TURRET;
+    public static final RegistryObject<Block> AIR_TURRET;
+    public static final RegistryObject<Block> EARTH_TURRET;
+
 
     public static final RegistryObject<Item> FIRE_FOCUS;
     public static final RegistryObject<Item> AIR_FOCUS;
@@ -92,6 +103,11 @@ public class ModItems {
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
 
+        FIRE_TURRET = addSpecialBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_FIRE), ElementalTurretRenderer.modelFire);
+        WATER_TURRET = addSpecialBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_WATER), ElementalTurretRenderer.modelWater);
+        AIR_TURRET = addSpecialBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_AIR), ElementalTurretRenderer.modelAir);
+        EARTH_TURRET = addSpecialBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_EARTH), ElementalTurretRenderer.modelEarth);
+
         //Trees
         FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldEvents.FLASHING_TREE), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", BlockRegistry.RegistryEvents::createLeavesBlock);
@@ -107,6 +123,18 @@ public class ModItems {
         ITEMS.register(name, () -> new BlockItem(block.get(), addTabProp()));
         return block;
     }
+
+    static RegistryObject<Block> addSpecialBlock(String name, Supplier<Block> blockSupp, AnimatedGeoModel<?> model) {
+        RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
+        ITEMS.register(name, () -> new RendererBlockItem(block.get(), addTabProp()) {
+            @Override
+            public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
+                return () -> new GenericItemBlockRenderer(model);
+            }
+        });
+        return block;
+    }
+
 
     static RegistryObject<Block> addSlab(String name, Supplier<Block> slab) {
         return addBlock(name + "_slab", slab);

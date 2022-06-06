@@ -51,6 +51,8 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModEntities.ELEMENTAL_TURRET, ElementalTurretRenderer::new);
+
         event.registerEntityRenderer(ModEntities.SIREN_ENTITY.get(), MermaidRenderer::new);
         event.registerEntityRenderer(ModEntities.SIREN_FAMILIAR.get(), MermaidRenderer::new);
 

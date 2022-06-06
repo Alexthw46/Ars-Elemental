@@ -2,6 +2,7 @@ package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
+import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
@@ -75,6 +76,8 @@ public class ModEntities {
 
     public static BlockEntityType<MermaidTile> MERMAID_TILE;
     public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
+    public static BlockEntityType<ElementalSpellTurretTile> ELEMENTAL_TURRET;
+
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -142,6 +145,7 @@ public class ModEntities {
     public static void registerTiles(RegistryEvent.Register<BlockEntityType<?>> evt) {
         MERMAID_TILE = addTileEntity(evt.getRegistry(), "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
         UPSTREAM_TILE = addTileEntity(evt.getRegistry(), "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
+        ELEMENTAL_TURRET = addTileEntity(evt.getRegistry(), "elemental_turret_tile", ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get());
     }
 
     @SuppressWarnings("ConstantConditions")

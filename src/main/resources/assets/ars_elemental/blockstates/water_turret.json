@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "aars_elemental:block/water_turret"
+    }
+  }
+}

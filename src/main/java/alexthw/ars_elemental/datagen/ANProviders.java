@@ -20,6 +20,7 @@ import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.Recipes;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -211,8 +212,33 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
             );
 
+            recipes.add(new ImbuementRecipe("fire_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.FIRE_TURRET.get(), 1), 5000)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ModItems.FIRE_FOCUS.get())
+            );
+            recipes.add(new ImbuementRecipe("water_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.WATER_TURRET.get(), 1), 5000)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ModItems.WATER_FOCUS.get())
+            );
+            recipes.add(new ImbuementRecipe("air_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.AIR_TURRET.get(), 1), 5000)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ModItems.AIR_FOCUS.get())
+            );
+            recipes.add(new ImbuementRecipe("earth_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.EARTH_TURRET.get(), 1), 5000)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ModItems.EARTH_FOCUS.get())
+            );
+
             Path output = generator.getOutputFolder();
-            for(ImbuementRecipe g : recipes){
+            for (ImbuementRecipe g : recipes) {
                 Path path = getRecipePath(output, g.getId().getPath());
                 DataProvider.save(GSON, cache, g.asRecipe(), path);
             }
@@ -246,6 +272,15 @@ public class ANProviders {
 
             addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
             addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
+
+            addPage(new PatchouliBuilder(MACHINES, "elemental_turrets")
+                            .withIcon(ModItems.FIRE_TURRET.get())
+                            .withTextPage("ars_elemental.page1.elemental_turrets")
+                            .withPage(ImbuementPage(ModItems.FIRE_TURRET.get()))
+                            .withPage(ImbuementPage(ModItems.WATER_TURRET.get()))
+                            .withPage(ImbuementPage(ModItems.AIR_TURRET.get()))
+                            .withPage(ImbuementPage(ModItems.EARTH_TURRET.get()))
+                    , getPath(MACHINES, "elemental_turrets"));
 
             addPage(new PatchouliBuilder(EQUIPMENT, ModItems.SPELL_HORN.get())
                             .withIcon(ModItems.SPELL_HORN.get())

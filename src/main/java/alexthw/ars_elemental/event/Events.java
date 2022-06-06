@@ -4,11 +4,17 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.ConfigHandler.Common;
 import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.world.WorldEvents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,4 +45,20 @@ public class Events {
 
     }
 
+    public static void keepOrder(LivingDeathEvent event) {
+        if (event.getEntity() instanceof Player player && player.hasEffect(ModRegistry.HYMN_OF_ORDER.get())) {
+            CompoundTag data = player.getPersistentData();
+            data.putBoolean("magic_locked", true);
+            data.putInt("magic_lock_duration", player.getEffect(ModRegistry.HYMN_OF_ORDER.get()).getDuration());
+        }
+    }
+
+    public static void onPlayerRespawnHW(PlayerEvent.PlayerRespawnEvent event) {
+        CompoundTag data = event.getPlayer().getPersistentData();
+        if (data.contains("magic_locked") && data.contains("magic_lock_duration") && data.getBoolean("magic_locked")) {
+            event.getPlayer().addEffect(new MobEffectInstance(ModRegistry.HYMN_OF_ORDER.get(), data.getInt("magic_lock_duration")));
+            data.remove("magic_locked");
+            data.remove("magic_lock_duration");
+        }
+    }
 }

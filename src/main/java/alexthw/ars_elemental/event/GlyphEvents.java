@@ -2,6 +2,7 @@ package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
+import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.items.ISchoolItem;
 import alexthw.ars_elemental.registry.ModRegistry;
@@ -58,12 +59,28 @@ public class GlyphEvents {
     }
 
     @SubscribeEvent
-    public static void empowerResolveOnEntities(EffectResolveEvent.Pre event) {
+    public static void empowerGlyphs(EffectResolveEvent.Pre event) {
 
-        if (!(ConfigHandler.COMMON.EnableGlyphEmpowering.get() && event.rayTraceResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof LivingEntity living))
+        if (event.resolveEffect == EffectConjureWater.INSTANCE && CompatUtils.isBotaniaLoaded() && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
+            if (BotaniaCompat.tryFillApothecary(blockHitResult.getBlockPos(), event.world)) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+
+        if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
+        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolItem.hasFocus(event.world, event.shooter);
+        if (event.rayTraceResult instanceof BlockHitResult blockHitResult)
+            empowerResolveOnBlocks(event, blockHitResult, school);
+        else if (event.rayTraceResult instanceof EntityHitResult entityHitResult)
+            empowerResolveOnEntities(event, entityHitResult, school);
+    }
+
+
+    public static void empowerResolveOnEntities(EffectResolveEvent.Pre event, EntityHitResult entityHitResult, SpellSchool school) {
+
+        if (!(entityHitResult.getEntity() instanceof LivingEntity living))
             return;
-
-        SpellSchool school = ISchoolItem.hasFocus(event.world, event.shooter);
 
         if (event.resolveEffect == EffectIgnite.INSTANCE) {
             if (event.shooter != living && school == ELEMENTAL_FIRE)
@@ -96,20 +113,7 @@ public class GlyphEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void empowerResolveOnBlocks(EffectResolveEvent.Pre event) {
-
-        if (!(event.rayTraceResult instanceof BlockHitResult blockHitResult)) return;
-        if (event.resolveEffect == EffectConjureWater.INSTANCE && CompatUtils.isBotaniaLoaded()) {
-            if (BotaniaCompat.tryFillApothecary(blockHitResult.getBlockPos(), event.world)) {
-                event.setCanceled(true);
-                return;
-            }
-        }
-
-        if (!(ConfigHandler.COMMON.EnableGlyphEmpowering.get())) return;
-        SpellSchool school = ISchoolItem.hasFocus(event.world, event.shooter);
-
+    public static void empowerResolveOnBlocks(EffectResolveEvent.Pre event, BlockHitResult blockHitResult, SpellSchool school) {
 
         if (event.resolveEffect == EffectConjureWater.INSTANCE) {
             if (school == ELEMENTAL_WATER) {
