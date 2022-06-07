@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "aars_elemental:block/water_turret"
+      "model": "ars_elemental:block/water_turret"
     }
   }
 }
