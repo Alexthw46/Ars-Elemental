@@ -8,7 +8,6 @@ import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import com.hollingsworth.arsnouveau.client.renderer.item.GenericItemBlockRenderer;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
@@ -24,11 +23,12 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import java.util.function.Supplier;
 
@@ -103,10 +103,10 @@ public class ModItems {
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
 
-        FIRE_TURRET = addSpecialBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_FIRE), ElementalTurretRenderer.modelFire);
-        WATER_TURRET = addSpecialBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_WATER), ElementalTurretRenderer.modelWater);
-        AIR_TURRET = addSpecialBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_AIR), ElementalTurretRenderer.modelAir);
-        EARTH_TURRET = addSpecialBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_EARTH), ElementalTurretRenderer.modelEarth);
+        FIRE_TURRET = addSpecialBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_FIRE), "fire");
+        WATER_TURRET = addSpecialBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_WATER), "water");
+        AIR_TURRET = addSpecialBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_AIR), "air");
+        EARTH_TURRET = addSpecialBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_EARTH), "earth");
 
         //Trees
         FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldEvents.FLASHING_TREE), SAP_PROP));
@@ -124,12 +124,13 @@ public class ModItems {
         return block;
     }
 
-    static RegistryObject<Block> addSpecialBlock(String name, Supplier<Block> blockSupp, AnimatedGeoModel<?> model) {
+    static RegistryObject<Block> addSpecialBlock(String name, Supplier<Block> blockSupp, String model) {
         RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
         ITEMS.register(name, () -> new RendererBlockItem(block.get(), addTabProp()) {
             @Override
+            @OnlyIn(Dist.CLIENT)
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
-                return () -> new GenericItemBlockRenderer(model);
+                return () -> ElementalTurretRenderer.getISTER(model);
             }
         });
         return block;

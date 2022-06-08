@@ -3,6 +3,7 @@ package alexthw.ars_elemental.client;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.client.renderer.item.GenericItemBlockRenderer;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -40,6 +41,16 @@ public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extend
         super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 
         matrixStackIn.popPose();
+    }
+
+    public static GenericItemBlockRenderer getISTER(String element) {
+        AnimatedGeoModel<?> model = switch (element) {
+            case "fire" -> modelFire;
+            case "water" -> modelWater;
+            case "air" -> modelAir;
+            default -> modelEarth;
+        };
+        return new GenericItemBlockRenderer(model);
     }
 
     @Override
