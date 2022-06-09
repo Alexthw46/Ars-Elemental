@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "ars_elemental:air_focus",
+    "ars_elemental:fire_focus",
+    "ars_elemental:earth_focus",
+    "ars_elemental:necrotic_focus",
+    "ars_elemental:water_focus"
+  ]
+}

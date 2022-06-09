@@ -2,10 +2,13 @@ package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.common.items.ISchoolBangle;
+import alexthw.ars_elemental.common.items.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Monster;
@@ -26,7 +29,7 @@ public class DamageEvents {
     @SubscribeEvent
     public static void bypassRes(LivingAttackEvent event) {
         if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof LivingEntity living) {
-            SpellSchool focus = ISchoolItem.hasFocus(event.getEntity().level, player);
+            SpellSchool focus = ISchoolFocus.hasFocus(event.getEntity().level, player);
             if (focus != null) {
                 switch (focus.getId()) {
                     case "fire" -> {
@@ -63,20 +66,38 @@ public class DamageEvents {
     }
 
     @SubscribeEvent
+    public static void banglesSpecials(LivingAttackEvent event) {
+        if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof LivingEntity living) {
+            SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level, player);
+            if (bangle != null) {
+                switch (bangle.getId()) {
+                    case "fire" -> living.setSecondsOnFire(5);
+                    case "water" -> living.setTicksFrozen(living.getTicksFrozen() + 100);
+                    case "earth" -> living.addEffect(new MobEffectInstance(ModPotions.SNARE_EFFECT, 60));
+                }
+            }
+        }
+        if (event.getEntity() instanceof Player player && (event.getSource() == DamageSource.CACTUS || event.getSource() == DamageSource.SWEET_BERRY_BUSH)) {
+            if (ISchoolBangle.hasBangle(event.getEntity().level, player) == ELEMENTAL_EARTH) {
+                event.setCanceled(true);
+            }
+        }
+    }
+
+
+    @SubscribeEvent
     public static void boostHealing(LivingHealEvent event) {
-        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolItem.hasFocus(player.getLevel(), player) == ELEMENTAL_EARTH) {
+        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolFocus.hasFocus(player.getLevel(), player) == ELEMENTAL_EARTH) {
             event.setAmount(event.getAmount() * 1.5F);
         }
     }
 
     @SubscribeEvent
-    public static void saveFromElytra(LivingHurtEvent event) {
-        if (event.getSource() == DamageSource.FLY_INTO_WALL && event.getEntity() instanceof Player player) {
-            SpellSchool focus = ISchoolItem.hasFocus(event.getEntity().level, player);
-            if (focus == ELEMENTAL_AIR) {
+    public static void damageReduction(LivingHurtEvent event) {
+        if (event.getEntity() instanceof Player player && event.getSource() == DamageSource.FLY_INTO_WALL)
+            if (ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
                 event.setAmount(event.getAmount() * 0.1f);
             }
-        }
     }
 
 }

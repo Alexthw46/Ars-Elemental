@@ -1,0 +1,15 @@
+{
+  "name": "item.ars_elemental.air_bangle",
+  "icon": "ars_elemental:air_bangle",
+  "category": "ars_nouveau:equipment",
+  "pages": [
+    {
+      "text": "ars_elemental.page1.air_bangle",
+      "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_elemental:air_bangle",
+      "type": "ars_nouveau:apparatus_recipe"
+    }
+  ]
+}

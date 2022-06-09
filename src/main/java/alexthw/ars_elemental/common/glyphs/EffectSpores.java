@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
-import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.common.items.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -41,7 +41,7 @@ public class EffectSpores extends AbstractEffect {
         double range = 3 + spellStats.getAoeMultiplier();
         int snareSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
 
-        SpellSchool focus = spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolItem.hasFocus(world, shooter);
+        SpellSchool focus = spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter);
 
         if (focus == ELEMENTAL_EARTH)
             livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareSec));

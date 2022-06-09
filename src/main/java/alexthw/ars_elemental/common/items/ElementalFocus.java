@@ -18,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -28,7 +27,6 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -37,7 +35,7 @@ import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static com.hollingsworth.arsnouveau.common.potions.ModPotions.MANA_REGEN_EFFECT;
 
 @Mod.EventBusSubscriber(modid = ArsNouveau.MODID)
-public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
+public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
 
     protected SpellSchool element;
 
@@ -68,7 +66,7 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
     @SubscribeEvent
     public static void onCast(SpellCastEvent event) {
         if (!event.getWorld().isClientSide) {
-            SpellSchool focus = ISchoolItem.hasFocus(event.getWorld(), event.getEntityLiving());
+            SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntityLiving());
             if (focus != null) {
                 if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
                     event.spell.setCost((int) (event.spell.getCastingCost() * (1 - COMMON.FocusDiscount.get())));
@@ -139,8 +137,6 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
 
     }
 
-    private final UUID ATTR_ID = new UUID(370177938288222399L, 503574982077300549L);
-
     @NotNull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
@@ -148,8 +144,8 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
             case "fire" -> new ICurio.SoundInfo(SoundEvents.FIRE_AMBIENT,1,1);
             case "water" -> new ICurio.SoundInfo(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT,1,1);
             case "earth" -> new ICurio.SoundInfo(SoundEvents.ROOTED_DIRT_BREAK,1,1);
-            case "air" -> new ICurio.SoundInfo(SoundEvents.LIGHTNING_BOLT_THUNDER,1,1);
-            default ->  ICurioItem.super.getEquipSound(slotContext, stack);
+            case "air" -> new ICurio.SoundInfo(SoundEvents.LIGHTNING_BOLT_THUNDER, 1, 1);
+            default -> super.getEquipSound(slotContext, stack);
         };
     }
 
@@ -157,9 +153,9 @@ public class ElementalFocus extends Item implements ISchoolItem, ICurioItem {
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         if (element.equals(SpellSchools.ELEMENTAL_EARTH)){
                 Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(ATTR_ID, ArsElemental.MODID + ":earth_focus", 0.3f, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, ArsElemental.MODID + ":earth_focus", 0.3f, AttributeModifier.Operation.ADDITION));
                 return map;
         }
-        return ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
+        return super.getAttributeModifiers(slotContext, uuid, stack);
     }
 }

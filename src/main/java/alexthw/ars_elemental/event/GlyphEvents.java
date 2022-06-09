@@ -4,7 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
-import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.common.items.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
@@ -69,7 +69,7 @@ public class GlyphEvents {
         }
 
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolItem.hasFocus(event.world, event.shooter);
+        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.world, event.shooter);
         if (event.rayTraceResult instanceof BlockHitResult blockHitResult)
             empowerResolveOnBlocks(event, blockHitResult, school);
         else if (event.rayTraceResult instanceof EntityHitResult entityHitResult)
@@ -103,6 +103,11 @@ public class GlyphEvents {
             }
             if (living.hasEffect(ModRegistry.HELLFIRE.get())) {
                 living.removeEffect(ModRegistry.HELLFIRE.get());
+            }
+        }
+        if (event.resolveEffect == EffectColdSnap.INSTANCE) {
+            if (living.getPercentFrozen() > 0.75) {
+                event.spellStats.setDamageModifier(event.spellStats.getDamageModifier() + 1);
             }
         }
         if (event.resolveEffect == EffectGravity.INSTANCE) {

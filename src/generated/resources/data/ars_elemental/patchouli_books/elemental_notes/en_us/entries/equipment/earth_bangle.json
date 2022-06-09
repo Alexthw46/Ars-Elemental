@@ -1,0 +1,15 @@
+{
+  "name": "item.ars_elemental.earth_bangle",
+  "icon": "ars_elemental:earth_bangle",
+  "category": "ars_nouveau:equipment",
+  "pages": [
+    {
+      "text": "ars_elemental.page1.earth_bangle",
+      "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_elemental:earth_bangle",
+      "type": "ars_nouveau:apparatus_recipe"
+    }
+  ]
+}

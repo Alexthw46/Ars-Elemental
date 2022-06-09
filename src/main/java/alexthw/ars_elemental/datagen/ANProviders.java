@@ -135,6 +135,51 @@ public class ANProviders {
             );
 
             recipes.add(builder()
+                    .withResult(ModItems.ENCHANTER_BANGLE.get())
+                    .withReagent(ItemsRegistry.RING_OF_POTENTIAL)
+                    .withPedestalItem(Recipes.SOURCE_GEM_BLOCK)
+                    .withPedestalItem(Items.GOLD_BLOCK)
+                    .withPedestalItem(Items.GOLD_BLOCK)
+                    .withPedestalItem(Items.END_CRYSTAL)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withResult(ModItems.AIR_BANGLE.get())
+                    .withReagent(ModItems.ENCHANTER_BANGLE.get())
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withResult(ModItems.FIRE_BANGLE.get())
+                    .withReagent(ModItems.ENCHANTER_BANGLE.get())
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withResult(ModItems.EARTH_BANGLE.get())
+                    .withReagent(ModItems.ENCHANTER_BANGLE.get())
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withResult(ModItems.WATER_BANGLE.get())
+                    .withReagent(ModItems.ENCHANTER_BANGLE.get())
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .build()
+            );
+            recipes.add(builder()
                     .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)
                     .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                     .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
@@ -272,6 +317,7 @@ public class ANProviders {
 
             addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
             addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
+            addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
 
             addPage(new PatchouliBuilder(MACHINES, "elemental_turrets")
                             .withIcon(ModItems.FIRE_TURRET.get())
@@ -303,12 +349,24 @@ public class ANProviders {
                             .withTextPage("ars_elemental.page2.fire_focus")
                     , getPath(EQUIPMENT, "fire_focus")
             );
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.FIRE_BANGLE.get())
+                            .withIcon(ModItems.FIRE_BANGLE.get())
+                            .withTextPage("ars_elemental.page1.fire_bangle")
+                            .withPage(new ApparatusPage(ModItems.FIRE_BANGLE.get()))
+                    , getPath(EQUIPMENT, "fire_bangle")
+            );
             addPage(new PatchouliBuilder(EQUIPMENT, ModItems.WATER_FOCUS.get())
                             .withIcon(ModItems.WATER_FOCUS.get())
                             .withTextPage("ars_elemental.page1.water_focus")
                             .withPage(ImbuementPage(ModItems.WATER_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.water_focus")
                     , getPath(EQUIPMENT, "water_focus")
+            );
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.WATER_BANGLE.get())
+                            .withIcon(ModItems.WATER_BANGLE.get())
+                            .withTextPage("ars_elemental.page1.water_bangle")
+                            .withPage(new ApparatusPage(ModItems.WATER_BANGLE.get()))
+                    , getPath(EQUIPMENT, "water_bangle")
             );
             addPage(new PatchouliBuilder(EQUIPMENT, ModItems.AIR_FOCUS.get())
                             .withIcon(ModItems.AIR_FOCUS.get())
@@ -317,12 +375,24 @@ public class ANProviders {
                             .withTextPage("ars_elemental.page2.air_focus")
                     , getPath(EQUIPMENT, "air_focus")
             );
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.AIR_BANGLE.get())
+                            .withIcon(ModItems.AIR_BANGLE.get())
+                            .withTextPage("ars_elemental.page1.air_bangle")
+                            .withPage(new ApparatusPage(ModItems.AIR_BANGLE.get()))
+                    , getPath(EQUIPMENT, "air_bangle")
+            );
             addPage(new PatchouliBuilder(EQUIPMENT, ModItems.EARTH_FOCUS.get())
                             .withIcon(ModItems.EARTH_FOCUS.get())
                             .withTextPage("ars_elemental.page1.earth_focus")
                             .withPage(ImbuementPage(ModItems.EARTH_FOCUS.get()))
                             .withTextPage("ars_elemental.page2.earth_focus")
                     , getPath(EQUIPMENT, "earth_focus")
+            );
+            addPage(new PatchouliBuilder(EQUIPMENT, ModItems.EARTH_BANGLE.get())
+                            .withIcon(ModItems.EARTH_BANGLE.get())
+                            .withTextPage("ars_elemental.page1.earth_bangle")
+                            .withPage(new ApparatusPage(ModItems.EARTH_BANGLE.get()))
+                    , getPath(EQUIPMENT, "earth_bangle")
             );
 
             addPage(new PatchouliBuilder(AUTOMATION, ModItems.SIREN_CHARM.get())

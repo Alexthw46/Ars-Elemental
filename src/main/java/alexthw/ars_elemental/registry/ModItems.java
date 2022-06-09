@@ -6,6 +6,7 @@ import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
+import alexthw.ars_elemental.common.items.bangles.*;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
@@ -65,6 +66,12 @@ public class ModItems {
     public static final RegistryObject<Item> EARTH_FOCUS;
     public static final RegistryObject<Item> NECRO_FOCUS;
 
+    public static final RegistryObject<Item> ENCHANTER_BANGLE;
+    public static final RegistryObject<Item> FIRE_BANGLE;
+    public static final RegistryObject<Item> WATER_BANGLE;
+    public static final RegistryObject<Item> AIR_BANGLE;
+    public static final RegistryObject<Item> EARTH_BANGLE;
+
     public static final RegistryObject<Item> CURIO_BAG;
     public static final RegistryObject<Item> DEBUG_ICON;
 
@@ -92,12 +99,19 @@ public class ModItems {
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(addTabProp()));
 
+        //curio
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(addTabProp().fireResistant().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
         WATER_FOCUS = ITEMS.register("water_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
         AIR_FOCUS = ITEMS.register("air_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
         EARTH_FOCUS = ITEMS.register("earth_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
+        //bangles
+        ENCHANTER_BANGLE = ITEMS.register("base_bangle", () -> new BaseBangle(addTabProp().stacksTo(1)));
+        FIRE_BANGLE = ITEMS.register("fire_bangle", () -> new FireBangles(FocusProp()));
+        WATER_BANGLE = ITEMS.register("water_bangle", () -> new WaterBangles(FocusProp()));
+        AIR_BANGLE = ITEMS.register("air_bangle", () -> new AirBangles(FocusProp()));
+        EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(FocusProp()));
 
         //blocks
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
@@ -134,15 +148,6 @@ public class ModItems {
             }
         });
         return block;
-    }
-
-
-    static RegistryObject<Block> addSlab(String name, Supplier<Block> slab) {
-        return addBlock(name + "_slab", slab);
-    }
-
-    static RegistryObject<Block> addStair(String name, Supplier<Block> stair) {
-        return addBlock(name + "_stairs", stair);
     }
 
     static BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {

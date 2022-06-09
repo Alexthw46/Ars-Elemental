@@ -3,7 +3,7 @@ package alexthw.ars_elemental.common.entity.mages;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.entity.ai.ProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
-import alexthw.ars_elemental.common.items.ISchoolItem;
+import alexthw.ars_elemental.common.items.ISchoolFocus;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.ElementalArsenal;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
@@ -73,7 +73,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     protected void registerGoals() {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, EntityMageBase.class, true, (e) -> e instanceof EntityMageBase mage && school != mage.school));
         if (ConfigHandler.Common.MAGES_AGGRO.get()) {
-            this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolItem.hasFocus(player.level, player) != school)));
+            this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolFocus.hasFocus(player.level, player) != school)));
         }
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
@@ -146,7 +146,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
 
     @Override
     public boolean isAlliedTo(Entity pEntity) {
-        return super.isAlliedTo(pEntity) || school.equals(ISchoolItem.hasFocus(pEntity.level,pEntity));
+        return super.isAlliedTo(pEntity) || school.equals(ISchoolFocus.hasFocus(pEntity.level, pEntity));
     }
 
     public int getMaxSpawnClusterSize() {

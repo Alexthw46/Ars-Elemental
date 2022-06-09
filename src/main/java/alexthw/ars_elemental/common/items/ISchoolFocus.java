@@ -15,19 +15,19 @@ import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
 
-public interface ISchoolItem extends ISpellModifierItem {
+public interface ISchoolFocus extends ISpellModifierItem {
 
     static @Nullable SpellSchool hasFocus(Level world, Entity entity) {
         if (entity instanceof FirenandoEntity) return SpellSchools.ELEMENTAL_FIRE;
         if (entity instanceof EntityMageBase mage) return mage.school;
         if (!world.isClientSide && entity instanceof Player player) {
-            SlotResult curio = CuriosApi.getCuriosHelper().findFirstCurio(player, c -> (c.getItem() instanceof ISchoolItem)).orElse(null);
-            if (curio != null && curio.stack().getItem() instanceof ISchoolItem focus) {
+            SlotResult curio = CuriosApi.getCuriosHelper().findFirstCurio(player, c -> (c.getItem() instanceof ISchoolFocus)).orElse(null);
+            if (curio != null && curio.stack().getItem() instanceof ISchoolFocus focus) {
                 return focus.getSchool();
             }
-            for (InteractionHand curHand : InteractionHand.values()){
+            for (InteractionHand curHand : InteractionHand.values()) {
                 Item hand = player.getItemInHand(curHand).getItem();
-                if (hand instanceof ISchoolItem focus) {
+                if (hand instanceof ISchoolFocus focus) {
                     return focus.getSchool();
                 }
             }
