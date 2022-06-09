@@ -15,10 +15,7 @@ import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
-import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
-import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
-import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
-import com.hollingsworth.arsnouveau.common.datagen.Recipes;
+import com.hollingsworth.arsnouveau.common.datagen.*;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
@@ -302,9 +299,9 @@ public class ANProviders {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider {
+    public static class AEPatchouliProvider extends PatchouliProvider {
 
-        public PatchouliProvider(DataGenerator generatorIn) {
+        public AEPatchouliProvider(DataGenerator generatorIn) {
             super(generatorIn);
         }
 
@@ -315,9 +312,20 @@ public class ANProviders {
                 addGlyphPage(spell);
             }
 
+            addPage(new PatchouliBuilder(GETTING_STARTED, "elemental_tweaks")
+                            .withIcon(ModItems.DEBUG_ICON.get())
+                            .withTextPage("ars_elemental.page.elemental_tweaks")
+                    , getPath(GETTING_STARTED, "elemental_tweaks"));
+
+            addPage(new PatchouliBuilder(RESOURCES, ModItems.FLASHING_ARCHWOOD.get())
+                            .withTextPage("ars_elemental.page1.flashing_archwood")
+                            .withPage(new EntityPage(prefix("flashing_weald_walker").toString()))
+                    , getPath(RESOURCES, "flashing_archwood"));
+
             addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
             addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
             addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
+
 
             addPage(new PatchouliBuilder(MACHINES, "elemental_turrets")
                             .withIcon(ModItems.FIRE_TURRET.get())

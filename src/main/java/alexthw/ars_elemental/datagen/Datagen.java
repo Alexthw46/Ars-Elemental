@@ -51,7 +51,7 @@ public class Datagen {
         gen.addProvider(new ANProviders.GlyphProvider(gen));
         gen.addProvider(new ANProviders.EnchantingAppProvider(gen));
 
-        gen.addProvider(new ANProviders.PatchouliProvider(gen));
+        gen.addProvider(new ANProviders.AEPatchouliProvider(gen));
     }
 
     public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> predicate) {
