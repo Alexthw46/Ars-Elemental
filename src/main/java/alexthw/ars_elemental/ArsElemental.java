@@ -38,6 +38,8 @@ public class ArsElemental {
      */
 
     public static final ResourceLocation FOCUS_SLOT = new ResourceLocation("curios:slot/an_focus_slot");
+    public static final ResourceLocation BANGLE_SLOT = new ResourceLocation("curios:slot/an_focus_slot");
+
     public static final String MODID = "ars_elemental";
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override
@@ -90,7 +92,7 @@ public class ArsElemental {
 
     public void sendImc(InterModEnqueueEvent evt) {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bundle").size(1).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bangle").size(1).build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bangle").size(1).icon(BANGLE_SLOT).build());
         InterModComms.sendTo("curios", SlotTypeMessage.MODIFY_TYPE, () -> new SlotTypeMessage.Builder("an_focus").size(1).icon(FOCUS_SLOT).cosmetic().build());
     }
 
