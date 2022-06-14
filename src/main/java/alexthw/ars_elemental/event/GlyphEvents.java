@@ -5,10 +5,12 @@ import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.items.ISchoolFocus;
+import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
+import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
@@ -18,19 +20,26 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.setup.RecipeRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -79,7 +88,7 @@ public class GlyphEvents {
 
     public static void empowerResolveOnEntities(EffectResolveEvent.Pre event, EntityHitResult entityHitResult, SpellSchool school) {
 
-        if (!(entityHitResult.getEntity() instanceof LivingEntity living))
+        if (!(entityHitResult.getEntity() instanceof LivingEntity living && event.world instanceof ServerLevel))
             return;
 
         if (event.resolveEffect == EffectIgnite.INSTANCE) {
@@ -97,8 +106,8 @@ public class GlyphEvents {
                     skel.setFreezeConverting(true);
                 }
                 living.setIsInPowderSnow(true);
-                double newFrozenTicks = living.getTicksFrozen() + 60 * event.spellStats.getAmpMultiplier();
-                living.setTicksFrozen((int) newFrozenTicks);
+                int newFrozenTicks = living.getTicksFrozen() + (int) (60 * event.spellStats.getAmpMultiplier());
+                living.setTicksFrozen(newFrozenTicks);
                 if (living.isFullyFrozen()) living.invulnerableTime = 0;
             }
             if (living.hasEffect(ModRegistry.HELLFIRE.get())) {
@@ -108,6 +117,20 @@ public class GlyphEvents {
         if (event.resolveEffect == EffectColdSnap.INSTANCE) {
             if (living.getPercentFrozen() > 0.75) {
                 event.spellStats.setDamageModifier(event.spellStats.getDamageModifier() + 1);
+            }
+        }
+        if (event.resolveEffect == EffectGrow.INSTANCE) {
+            if (living.getMobType() == MobType.UNDEAD && school == ELEMENTAL_EARTH) {
+                living.hurt(DamageSource.MAGIC, (float) (3 + 2 * event.spellStats.getAmpMultiplier() + event.spellStats.getDamageModifier()));
+                if (living.isDeadOrDying() && event.world.getRandom().nextInt(10) < 3) {
+                    BlockPos feet = living.getOnPos();
+                    Material underfoot = event.world.getBlockState(feet).getMaterial();
+                    Block blossom = ModItems.GROUND_BLOSSOM.get();
+                    if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS) && event.world.getBlockState(feet.above()).isAir()) {
+                        EffectPlaceBlock.attemptPlace(event.world, blossom.asItem().getDefaultInstance(), (BlockItem) blossom.asItem(), new BlockHitResult(living.position(), Direction.UP, feet, false), ANFakePlayer.getPlayer((ServerLevel) event.world));
+                        //event.world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
+                    }
+                }
             }
         }
         if (event.resolveEffect == EffectGravity.INSTANCE) {

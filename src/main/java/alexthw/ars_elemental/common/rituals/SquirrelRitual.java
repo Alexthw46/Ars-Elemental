@@ -19,11 +19,11 @@ public class SquirrelRitual extends AbstractRitual {
     protected void tick() {
         int modifier = didConsumeItem(Items.GOLD_BLOCK) ? 2 : 1;
         if (getWorld() instanceof ServerLevel level && level.getGameTime() % Common.SQUIRREL_REFRESH_RATE.get() == 0 && this.tile != null) {
-            List<Starbuncle> entities = level.getEntitiesOfClass(Starbuncle.class, new AABB(tile.getBlockPos()).inflate(10 * modifier));
+            List<Starbuncle> entities = level.getEntitiesOfClass(Starbuncle.class, new AABB(tile.getBlockPos()).inflate(15 * modifier));
             for (Starbuncle entity : entities) {
                 if (entity != null) {
                     entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2400, 1, false, false));
-                    entity.addEffect(new MobEffectInstance(MobEffects.JUMP, 2400, 1, false, false));
+                    entity.addEffect(new MobEffectInstance(MobEffects.JUMP, 2400, 0, false, false));
                 }
                 setNeedsMana(true);
             }

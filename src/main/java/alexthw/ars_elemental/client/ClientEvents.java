@@ -104,6 +104,7 @@ public class ClientEvents {
     public static void rendererLayers(FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModItems.FLASHING_SAPLING.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModItems.MERMAID_ROCK.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModItems.GROUND_BLOSSOM.get(), RenderType.cutout());
     }
 
     private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {

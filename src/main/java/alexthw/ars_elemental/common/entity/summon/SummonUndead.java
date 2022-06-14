@@ -26,7 +26,7 @@ public class SummonUndead extends SummonSkeleton implements IUndeadSummon {
 
     public SummonUndead(Level level, SummonSkeleton oldSkeleton, Player summoner) {
         this(level);
-        this.setWeapon(oldSkeleton.getMainHandItem().getItem());
+        this.setWeapon(oldSkeleton.getMainHandItem());
         setOwner(summoner);
         setLimitedLife(oldSkeleton.getTicksLeft());
         Vec3 hit = oldSkeleton.position();

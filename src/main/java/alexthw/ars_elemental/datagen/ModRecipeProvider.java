@@ -17,6 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
@@ -32,6 +33,9 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+
+        shapelessBuilder(GROUND_BLOSSOM.get()).requires(Blocks.SPORE_BLOSSOM).save(consumer);
+        shapelessBuilder(Blocks.SPORE_BLOSSOM).requires(GROUND_BLOSSOM.get()).save(consumer, prefix("alt_blossom"));
 
         Recipes.makeWood(FLASHING_ARCHWOOD_LOG.get(), FLASHING_ARCHWOOD.get(), 3).save(consumer);
         strippedLogToWood(consumer, FLASHING_ARCHWOOD_LOG_STRIPPED.get(), FLASHING_ARCHWOOD_STRIPPED.get());

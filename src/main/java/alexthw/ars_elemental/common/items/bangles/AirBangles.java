@@ -29,8 +29,8 @@ public class AirBangles extends ElementalCurio implements ISchoolBangle {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-        map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ArsElemental.MODID + ":air_bangle_speed", 0.05f, AttributeModifier.Operation.ADDITION));
-        map.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(uuid, ArsElemental.MODID + ":air_bangle_kback", 0.5f, AttributeModifier.Operation.ADDITION));
+        map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ArsElemental.MODID + ":air_bangle_speed", 0.06f, AttributeModifier.Operation.ADDITION));
+        map.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(uuid, ArsElemental.MODID + ":air_bangle_kback", 1.2f, AttributeModifier.Operation.ADDITION));
         return map;
     }
 

@@ -8,6 +8,7 @@ import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import net.minecraft.core.Holder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,12 +31,16 @@ public class FireBangles extends ElementalCurio implements ISchoolBangle {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        Holder<Biome> biome = slotContext.entity().getLevel().getBiome(slotContext.entity().getOnPos());
-        if (biome.value().getBaseTemperature() > 1.8f) {
-            Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-            map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ArsElemental.MODID + ":fire_bangle", 0.035f, AttributeModifier.Operation.ADDITION));
-            return map;
+        LivingEntity entity = slotContext.entity();
+        if (entity != null) {
+            Holder<Biome> biome = entity.getLevel().getBiome(slotContext.entity().getOnPos());
+            if (biome.value().getBaseTemperature() > 1.8f) {
+                Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+                map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ArsElemental.MODID + ":fire_bangle", 0.035f, AttributeModifier.Operation.ADDITION));
+                return map;
+            }
         }
         return super.getAttributeModifiers(slotContext, uuid, stack);
     }
+
 }

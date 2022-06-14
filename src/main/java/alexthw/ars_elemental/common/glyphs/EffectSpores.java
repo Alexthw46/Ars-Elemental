@@ -39,25 +39,25 @@ public class EffectSpores extends AbstractEffect {
         Vec3 vec = safelyGetHitPos(rayTraceResult);
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
         double range = 3 + spellStats.getAoeMultiplier();
-        int snareSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
+        int effectSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
 
         SpellSchool focus = spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter);
 
         if (focus == ELEMENTAL_EARTH)
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareSec));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * effectSec));
 
         if (!canDamage(livingEntity)) return;
 
-        damage(vec, world, shooter, spellStats, damage, snareSec, livingEntity);
+        damage(vec, world, shooter, spellStats, damage, effectSec, livingEntity);
 
         for (LivingEntity e : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.position().add(range, range, range), livingEntity.position().subtract(range, range, range)))) {
             if (e.equals(livingEntity) || e.equals(shooter))
                 continue;
             if (canDamage(e)) {
                 vec = e.position();
-                damage(vec, world, shooter, spellStats, damage, snareSec, e);
+                damage(vec, world, shooter, spellStats, damage, effectSec, e);
             } else {
-                e.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * snareSec, (int) spellStats.getAmpMultiplier()));
+                e.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * effectSec, (int) spellStats.getAmpMultiplier()));
             }
         }
     }

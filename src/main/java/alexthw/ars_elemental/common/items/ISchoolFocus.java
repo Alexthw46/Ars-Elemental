@@ -15,8 +15,7 @@ import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
 
-public interface ISchoolFocus extends ISpellModifierItem {
-
+public interface ISchoolFocus extends ISpellModifierItem, ISchoolItem {
     static @Nullable SpellSchool hasFocus(Level world, Entity entity) {
         if (entity instanceof FirenandoEntity) return SpellSchools.ELEMENTAL_FIRE;
         if (entity instanceof EntityMageBase mage) return mage.school;
@@ -34,7 +33,5 @@ public interface ISchoolFocus extends ISpellModifierItem {
         }
         return null;
     }
-
-    SpellSchool getSchool();
 
 }

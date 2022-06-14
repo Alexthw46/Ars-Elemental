@@ -1,8 +1,10 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.client.ElementalTurretRenderer;
 import alexthw.ars_elemental.common.blocks.ElementalTurret;
+import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
@@ -52,6 +54,7 @@ public class ModItems {
     public static final RegistryObject<Block> FLASHING_SAPLING;
     public static final RegistryObject<Block> FLASHING_LEAVES;
 
+    public static final RegistryObject<Block> GROUND_BLOSSOM;
 
     public static final RegistryObject<Block> UPSTREAM_BLOCK;
     public static final RegistryObject<Block> FIRE_TURRET;
@@ -65,6 +68,12 @@ public class ModItems {
     public static final RegistryObject<Item> WATER_FOCUS;
     public static final RegistryObject<Item> EARTH_FOCUS;
     public static final RegistryObject<Item> NECRO_FOCUS;
+
+    public static final RegistryObject<Item> FIRE_CTOME;
+    public static final RegistryObject<Item> AIR_CTOME;
+    public static final RegistryObject<Item> WATER_CTOME;
+    public static final RegistryObject<Item> EARTH_CTOME;
+    public static final RegistryObject<Item> NECRO_CTOME;
 
     public static final RegistryObject<Item> ENCHANTER_BANGLE;
     public static final RegistryObject<Item> FIRE_BANGLE;
@@ -106,6 +115,7 @@ public class ModItems {
         AIR_FOCUS = ITEMS.register("air_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
         EARTH_FOCUS = ITEMS.register("earth_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
+
         //bangles
         ENCHANTER_BANGLE = ITEMS.register("base_bangle", () -> new BaseBangle(addTabProp().stacksTo(1)));
         FIRE_BANGLE = ITEMS.register("fire_bangle", () -> new FireBangles(FocusProp()));
@@ -113,10 +123,19 @@ public class ModItems {
         AIR_BANGLE = ITEMS.register("air_bangle", () -> new AirBangles(FocusProp()));
         EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(FocusProp()));
 
+        //caster tomes
+        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
+        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_WATER));
+        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_AIR));
+        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_EARTH));
+        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), ArsNouveauRegistry.NECROMANCY));
+
         //blocks
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
+        GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Material.PLANT, MaterialColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
 
+        //turrets
         FIRE_TURRET = addSpecialBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_FIRE), "fire");
         WATER_TURRET = addSpecialBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_WATER), "water");
         AIR_TURRET = addSpecialBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f).noOcclusion(), SpellSchools.ELEMENTAL_AIR), "air");
