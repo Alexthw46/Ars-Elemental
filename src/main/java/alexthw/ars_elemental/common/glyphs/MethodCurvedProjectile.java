@@ -37,13 +37,13 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
         EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
         projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
+        float sizeRatio = shooter.getEyeHeight() / Player.DEFAULT_EYE_HEIGHT;
 
         for(int i =1; i < numSplits + 1; i++){
             Direction offset =shooter.getDirection().getClockWise();
             if(i%2==0) offset = offset.getOpposite();
             // Alternate sides
-            BlockPos projPos = shooter.blockPosition().relative(offset, i);
-            projPos = projPos.offset(0, 1.5, 0);
+            BlockPos projPos = shooter.blockPosition().relative(offset, i).offset(0, 1.5 * sizeRatio, 0);
             EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
@@ -52,7 +52,7 @@ public class MethodCurvedProjectile extends AbstractCastMethod {
         float velocity = getProjectileSpeed(stats);
 
         for(EntityProjectileSpell proj : projectiles) {
-            proj.setPos(proj.position().add(0,0.25,0));
+            proj.setPos(proj.position().add(0, 0.25 * sizeRatio, 0));
             proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
             world.addFreshEntity(proj);
         }
