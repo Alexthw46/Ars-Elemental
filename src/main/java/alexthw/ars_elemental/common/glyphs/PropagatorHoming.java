@@ -49,13 +49,13 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
     }
 
     @Override
-    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
-        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext);
+    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
-        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext);
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
 
     @Override

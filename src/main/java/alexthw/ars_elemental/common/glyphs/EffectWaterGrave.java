@@ -33,16 +33,16 @@ public class EffectWaterGrave extends AbstractEffect {
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
-        if(rayTraceResult.getEntity() instanceof LivingEntity living){
-            if(spellStats.hasBuff(AugmentExtendTime.INSTANCE)){
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        if (rayTraceResult.getEntity() instanceof LivingEntity living) {
+            if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
                 applyConfigPotion(living, ModRegistry.WATER_GRAVE.get(), spellStats);
-            }else{
+            } else {
                 Vec3 delta = living.getDeltaMovement();
                 double dy = Math.min(-1.0D, delta.y - 0.05D);
                 living.setDeltaMovement(delta.x, dy, delta.z);
             }
-            if (living instanceof Zombie zombie && ! (living instanceof Drowned)){
+            if (living instanceof Zombie zombie && !(living instanceof Drowned)) {
                 ((ZombieInvoker) zombie).callStartUnderWaterConversion(20);
                 return;
             }

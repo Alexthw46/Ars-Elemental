@@ -97,12 +97,6 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
             default -> 0;
         };
     }
-
-    @Override
-    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-        return true;
-    }
-
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         if (slotContext.entity().getLevel().isClientSide() || !(slotContext.entity() instanceof Player player) || !COMMON.EnableRegenBonus.get())
@@ -152,7 +146,7 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         if (element.equals(SpellSchools.ELEMENTAL_EARTH)){
-                Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+            Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
             map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, ArsElemental.MODID + ":earth_focus", 0.3f, AttributeModifier.Operation.ADDITION));
                 return map;
         }

@@ -87,7 +87,6 @@ public class ArsElemental {
         CuriosRendererRegistry.register(ModItems.AIR_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.EARTH_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.NECRO_FOCUS.get(), SpellFocusRenderer::new);
-
     }
 
     public void sendImc(InterModEnqueueEvent evt) {

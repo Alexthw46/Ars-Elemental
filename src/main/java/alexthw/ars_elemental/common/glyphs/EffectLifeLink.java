@@ -25,15 +25,14 @@ public class EffectLifeLink extends AbstractEffect {
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
-        if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity && shooter instanceof Player player && player != livingEntity){
+        if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity && shooter instanceof Player player && player != livingEntity) {
 
             applyConfigPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
 
         }
 
-        super.onResolveEntity(rayTraceResult, world, shooter, spellStats, spellContext);
     }
 
     @Override

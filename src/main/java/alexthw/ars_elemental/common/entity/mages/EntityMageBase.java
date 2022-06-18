@@ -123,7 +123,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
         Spell spell = this.pSpells.get(random.nextInt(pSpells.size()));
         ParticleColor color = schoolToColor(this.school.getId());
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(spell, this).withColors(color.toWrapper()).withType(SpellContext.CasterType.ENTITY));
-        resolver.onCast(ItemStack.EMPTY, this, level);
+        resolver.onCast(ItemStack.EMPTY, level);
         this.castCooldown = 40;
     }
 

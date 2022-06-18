@@ -31,14 +31,14 @@ public class SpellFocusRenderer implements ICurioRenderer {
                 double XRot = getRelativeAngleX(player, 0.5, 0);
                 double ZRot = getRelativeAngleZ(player, 0.5, 0);
                 new ParticleBuilder(ParticleUtil.schoolToColor(focus.getSchool().getId()))
-                        .scale(1 / 4F)
+                        .scale(1 / 6F)
                         .alpha(0.4F)
                         .spawn(player.getLevel(),
                                 XRot,
                                 player.getEyeY() + 0.2 + 0.05 * Math.sin(ageInTicks / 10),
                                 ZRot);
                 new ParticleBuilder(ParticleUtil.schoolToColor2(focus.getSchool().getId()))
-                        .scale(1 / 6F)
+                        .scale(1 / 8F)
                         .alpha(0.2F)
                         .setLifetime(10)
                         .spawn(player.getLevel(),
@@ -74,13 +74,13 @@ public class SpellFocusRenderer implements ICurioRenderer {
 
             double bob = 0.05 * Math.sin(ageInTicks/10);
 
-            new ParticleBuilder(ParticleUtil.schoolToColor(school)).scale(1/4F)
+            new ParticleBuilder(ParticleUtil.schoolToColor(school)).scale(1 / 6F)
                     .alpha(0.6F)
                     .spawn(player.level,
                             getRelativeAngleX(player, i * 0.5, ageInTicks),
                             player.getEyeY() + 0.2 + bob,
                             getRelativeAngleZ(player, i * 0.5, ageInTicks));
-            new ParticleBuilder(ParticleUtil.schoolToColor2(school)).scale(1/5F)
+            new ParticleBuilder(ParticleUtil.schoolToColor2(school)).scale(1 / 8F)
                     .alpha(0.4F)
                     .setLifetime(10)
                     .spawn(player.level,

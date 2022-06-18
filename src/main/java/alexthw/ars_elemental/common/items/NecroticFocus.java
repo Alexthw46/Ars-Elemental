@@ -3,7 +3,6 @@ package alexthw.ars_elemental.common.items;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.entity.summon.*;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
-import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
@@ -140,20 +139,17 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     @SubscribeEvent
     public static void castSpell(SpellCastEvent event) {
-        if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(event.getWorld(), event.getEntityLiving()) && event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE) {
-            for (Mob i : world.getEntitiesOfClass(Mob.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon)) {
-                Entity owner = ((ISummon) i).getOwner(world);
-                if (player.equals(owner)) {
-                    LivingEntity target = i.getTarget();
-                    if (target == null) target = player.getLastHurtMob();
-                    if (target != null && target.isAlive()) {
-                        i.getLookControl().setLookAt(target);
-                    } else {
-                        i.getLookControl().setLookAt(player.getViewVector(1));
-                    }
-                    EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
-                    spellResolver.onCast(ItemStack.EMPTY, i, i.level);
+        if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(world, player) && event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE) {
+            for (Mob i : world.getEntitiesOfClass(Mob.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon summon && player.getUUID().equals(summon.getOwnerID()))) {
+                LivingEntity target = i.getTarget();
+                if (target == null) target = player.getLastHurtMob();
+                if (target != null && target.isAlive()) {
+                    i.getLookControl().setLookAt(target);
+                } else {
+                    i.getLookControl().setLookAt(player.getViewVector(1));
                 }
+                EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
+                spellResolver.onCast(ItemStack.EMPTY, world);
             }
         }
     }
