@@ -1,28 +1,19 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.ConfigHandler.Common;
-import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModRegistry;
-import alexthw.ars_elemental.world.WorldEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class Events {
 
-    @SubscribeEvent
+/*
     public static void addMobSpawns(BiomeLoadingEvent e) {
         if (e.getCategory() == Biome.BiomeCategory.NETHER || e.getCategory() == Biome.BiomeCategory.THEEND || e.getCategory() == Biome.BiomeCategory.NONE)
             return;
@@ -44,6 +35,8 @@ public class Events {
             e.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldEvents.PLACED_FLASHING_CONFIGURED);
 
     }
+
+ */
 
     @SubscribeEvent
     public static void keepOrder(LivingDeathEvent event) {

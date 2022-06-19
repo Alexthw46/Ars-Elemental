@@ -29,7 +29,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 
-    mappings channel: 'parchment', version: '2022.03.13-1.18.2'
+    mappings channel: 'parchment', version: '1.18.2-2022.06.05-1.19'
 
     //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -143,25 +143,31 @@ dependencies {
 
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-1.18-forge:${gecko_version}")
-    implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
+    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-1.18.2:${ars_version}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_version}:${gecko_version}")
+
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+    // at runtime, use the full JEI
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    implementation fg.deobf("vazkii.botania:Botania:${mc_version}-430")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-67")
+    compileOnly fg.deobf("vazkii.botania:Botania:1.18.2-430")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-67")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
-    implementation fg.deobf("curse.maven:arsenal-561848:3769207")
+    compileOnly fg.deobf("curse.maven:arsenal-561848:3769207")
 
-    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
-    runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
+    //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
+    //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    runtimeOnly fg.deobf("curse.maven:jeed-532286:3736071")
 
     /*
+    runtimeOnly fg.deobf("curse.maven:jeed-532286:3736071")
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:2.0.0+1.18.2")
     runtimeOnly fg.deobf("com.alcatrazescapee:cyanide-forge-1.18.2:2.1.0") { transitive = false }
     runtimeOnly fg.deobf("curse.maven:spark-361579:3767286")

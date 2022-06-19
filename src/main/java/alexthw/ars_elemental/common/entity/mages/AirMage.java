@@ -12,6 +12,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -40,19 +41,13 @@ public class AirMage extends EntityMageBase {
         pSpells.add(new Spell(MethodCurvedProjectile.INSTANCE, AugmentPierce.INSTANCE, AugmentPierce.INSTANCE, EffectLightning.INSTANCE));
     }
 
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-
-    }
-
     public AirMage(Level level) {
         this(ModEntities.AIR_MAGE.get(), level);
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(pDifficulty);
+    protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
         book.getOrCreateTag().putInt("color", 4);
     }

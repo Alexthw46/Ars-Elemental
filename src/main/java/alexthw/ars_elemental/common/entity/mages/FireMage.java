@@ -11,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectFirework;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -40,8 +41,8 @@ public class FireMage extends EntityMageBase {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(pDifficulty);
+    protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
         book.getOrCreateTag().putInt("color", 14);
     }

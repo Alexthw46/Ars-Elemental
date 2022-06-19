@@ -11,7 +11,6 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -52,7 +51,7 @@ public class SpellHorn extends Item implements IAnimatable, ICasterTool {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         ISpellCaster caster = getSpellCaster(stack);
-        return caster.castSpell(worldIn, playerIn, handIn, new TranslatableComponent("ars_nouveau.wand.invalid"));
+        return caster.castSpell(worldIn, playerIn, handIn, null);//TODO Component.translatable("ars_nouveau.wand.invalid"));
     }
 
     @Override
@@ -83,7 +82,7 @@ public class SpellHorn extends Item implements IAnimatable, ICasterTool {
 
     @Override
     public void sendInvalidMessage(Player player) {
-        PortUtil.sendMessageNoSpam(player, new TranslatableComponent("ars_nouveau.wand.invalid"));
+        PortUtil.sendMessageNoSpam(player, Component.translatable("ars_nouveau.wand.invalid"));
     }
 
     @Override

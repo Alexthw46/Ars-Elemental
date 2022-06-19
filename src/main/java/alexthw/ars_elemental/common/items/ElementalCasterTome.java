@@ -3,7 +3,6 @@ package alexthw.ars_elemental.common.items;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -27,7 +26,7 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip2, TooltipFlag flagIn) {
-        tooltip2.add(new TranslatableComponent("tooltip.ars_elemental.caster_tome"));
+        tooltip2.add(Component.translatable("tooltip.ars_elemental.caster_tome"));
         super.appendHoverText(stack, worldIn, tooltip2, flagIn);
     }
 }

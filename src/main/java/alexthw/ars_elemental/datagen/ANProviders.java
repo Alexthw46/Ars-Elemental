@@ -9,9 +9,9 @@ import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -29,7 +29,7 @@ public class ANProviders {
         }
 
         @Override
-        public void run(HashCache cache) throws IOException {
+        public void run(CachedOutput cache) throws IOException {
 
             Path output = this.generator.getOutputFolder();
 
@@ -48,7 +48,7 @@ public class ANProviders {
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
-                DataProvider.save(GSON, cache, recipe.asRecipe(), path);
+                DataProvider.saveStable(cache, recipe.asRecipe(), path);
             }
 
         }
@@ -66,7 +66,7 @@ public class ANProviders {
         }
 
         @Override
-        public void run(HashCache cache) throws IOException {
+        public void run(CachedOutput cache) throws IOException {
 
             recipes.add(new ImbuementRecipe("fire_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.FIRE_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
@@ -125,7 +125,7 @@ public class ANProviders {
             Path output = generator.getOutputFolder();
             for (ImbuementRecipe g : recipes) {
                 Path path = getRecipePath(output, g.getId().getPath());
-                DataProvider.save(GSON, cache, g.asRecipe(), path);
+                DataProvider.saveStable(cache, g.asRecipe(), path);
             }
 
         }

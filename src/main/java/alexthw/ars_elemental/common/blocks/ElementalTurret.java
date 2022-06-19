@@ -11,9 +11,10 @@ import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.network.PacketOneShotAnimation;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.*;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +39,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
@@ -57,7 +57,7 @@ public class ElementalTurret extends TickableModBlock implements SimpleWaterlogg
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
         this.shootSpell(worldIn, pos);
     }
 
@@ -149,12 +149,12 @@ public class ElementalTurret extends TickableModBlock implements SimpleWaterlogg
             if (spell.isEmpty())
                 return InteractionResult.SUCCESS;
             if (!(TURRET_BEHAVIOR_MAP.containsKey(spell.getCastMethod()))) {
-                PortUtil.sendMessage(player, new TranslatableComponent("ars_nouveau.alert.turret_type"));
+                PortUtil.sendMessage(player, Component.translatable("ars_nouveau.alert.turret_type"));
                 return InteractionResult.SUCCESS;
             }
             if (worldIn.getBlockEntity(pos) instanceof BasicSpellTurretTile tile) {
                 tile.spellCaster.copyFromCaster(CasterUtil.getCaster(stack));
-                PortUtil.sendMessage(player, new TranslatableComponent("ars_nouveau.alert.spell_set"));
+                PortUtil.sendMessage(player, Component.translatable("ars_nouveau.alert.spell_set"));
                 worldIn.sendBlockUpdated(pos, state, state, 2);
             }
         }

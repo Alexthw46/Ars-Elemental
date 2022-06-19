@@ -9,7 +9,6 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
@@ -19,10 +18,8 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.List;
 
@@ -41,9 +38,7 @@ public class WorldEvents {
     public static Holder<PlacedFeature> PLACED_FLASHING_CONFIGURED;
     public static Holder<ConfiguredFeature<RandomFeatureConfiguration, ?>> ARCHWOOD_TREES;
 
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void registerFeature(RegistryEvent.Register<Block> e) {
+    public static void registerFeature(IForgeRegistry<Feature> registry) {
         PLACED_FLASHING = PlacementUtils.register("ars_elemental:placed_flashing", FLASHING_TREE, PlacementUtils.filteredByBlockSurvival(ModItems.FLASHING_SAPLING.get()));
         ARCHWOOD_TREES = FeatureUtils.register("ars_elemental:random_flashing", Feature.RANDOM_SELECTOR,
                 new RandomFeatureConfiguration(List.of(

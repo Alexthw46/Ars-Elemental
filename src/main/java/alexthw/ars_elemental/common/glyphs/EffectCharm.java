@@ -7,6 +7,7 @@ import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -23,7 +24,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
 import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModRegistry.ENTHRALLED;
@@ -87,7 +87,7 @@ public class EffectCharm extends AbstractEffect {
         return SpellTier.TWO;
     }
 
-    private boolean rollToSeduce(int resistance, double chanceBoost, Random rand) {
+    private boolean rollToSeduce(int resistance, double chanceBoost, RandomSource rand) {
         return (rand.nextInt(0, 75) + chanceBoost) >= resistance;
     }
 

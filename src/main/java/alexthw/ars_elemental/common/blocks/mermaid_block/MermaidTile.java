@@ -16,8 +16,8 @@ import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -36,7 +36,6 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 
@@ -66,7 +65,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             }
 
             if (tickCounter % 10 == 0) {
-                Random r = level.random;
+                RandomSource r = level.random;
                 int min = -2;
                 int max = 2;
                 EntityFollowProjectile proj1 = new EntityFollowProjectile(level, worldPosition.offset(r.nextInt(max - min) + min, 3, r.nextInt(max - min) + min), worldPosition, r.nextInt(255), r.nextInt(255), r.nextInt(255));
@@ -220,10 +219,10 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     @Override
     public void getTooltip(List<Component> tooltip) {
         if(this.needsMana){
-            tooltip.add(new TranslatableComponent("ars_nouveau.wixie.need_mana"));
+            tooltip.add(Component.translatable("ars_nouveau.wixie.need_mana"));
         }else {
-            tooltip.add(new TranslatableComponent("progress: " + progress));
-            tooltip.add(new TranslatableComponent("bonus: " + bonus));
+            tooltip.add(Component.translatable("progress: " + progress));
+            tooltip.add(Component.translatable("bonus: " + bonus));
         }
     }
 

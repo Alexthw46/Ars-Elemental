@@ -7,9 +7,9 @@ import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.Recipes;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,7 +25,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    public void run(CachedOutput cache) throws IOException {
 
         recipes.add(builder()
                 .withResult(ModItems.NECRO_FOCUS.get())
@@ -143,7 +143,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         for (EnchantingApparatusRecipe g : recipes) {
             if (g != null) {
                 Path path = getRecipePath(output, g.getId().getPath());
-                DataProvider.save(GSON, cache, g.asRecipe(), path);
+                DataProvider.saveStable(cache, g.asRecipe(), path);
             }
         }
 

@@ -7,15 +7,18 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
+
+import java.util.Objects;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -24,7 +27,6 @@ import static alexthw.ars_elemental.registry.ModEntities.TILES;
 import static alexthw.ars_elemental.registry.ModItems.BLOCKS;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
 import static alexthw.ars_elemental.world.ModFeatures.FEATURES;
-import static alexthw.ars_elemental.world.ModFeatures.STRUCTURE_FEATURES;
 
 public class ModRegistry {
 
@@ -34,7 +36,7 @@ public class ModRegistry {
 
     public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
 
-    public static void registerRegistries(IEventBus bus){
+    public static void registerRegistries(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         ENTITIES.register(bus);
@@ -43,7 +45,17 @@ public class ModRegistry {
         EFFECTS.register(bus);
         ENCHANTMENTS.register(bus);
         FEATURES.register(bus);
-        STRUCTURE_FEATURES.register(bus);
+        bus.addListener(EventPriority.LOW, ModRegistry::registerEvent);
+    }
+
+    public static void registerEvent(RegisterEvent event) {
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)) {
+            IForgeRegistry<EntityType<?>> registry = Objects.requireNonNull(event.getForgeRegistry());
+            ModEntities.registerEntities(registry);
+        } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES)) {
+            IForgeRegistry<BlockEntityType<?>> registry = Objects.requireNonNull(event.getForgeRegistry());
+            ModEntities.registerTiles(registry);
+        }
     }
 
     public static final RegistryObject<MobEffect> HELLFIRE;

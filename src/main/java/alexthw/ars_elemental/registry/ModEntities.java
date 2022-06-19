@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.registry;
 
-import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
@@ -34,9 +33,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -128,8 +124,7 @@ public class ModEntities {
         });
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
+    public static void registerEntities(final IForgeRegistry<EntityType<?>> event) {
 
         SpawnPlacements.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_));
 
@@ -141,18 +136,16 @@ public class ModEntities {
         ArsNouveauRegistry.addLights();
     }
 
-    @SubscribeEvent
-    public static void registerTiles(RegistryEvent.Register<BlockEntityType<?>> evt) {
-        MERMAID_TILE = addTileEntity(evt.getRegistry(), "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
-        UPSTREAM_TILE = addTileEntity(evt.getRegistry(), "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
-        ELEMENTAL_TURRET = addTileEntity(evt.getRegistry(), "elemental_turret_tile", ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get());
+    public static void registerTiles(IForgeRegistry<BlockEntityType<?>> registry) {
+        MERMAID_TILE = addTileEntity(registry, "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
+        UPSTREAM_TILE = addTileEntity(registry, "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
+        ELEMENTAL_TURRET = addTileEntity(registry, "elemental_turret_tile", ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get());
     }
 
     @SuppressWarnings("ConstantConditions")
     static <T extends BlockEntity> BlockEntityType<T> addTileEntity(IForgeRegistry<BlockEntityType<?>> registry, String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
         BlockEntityType<T> type = BlockEntityType.Builder.of(factory, blocks).build(null);
-        type.setRegistryName(ArsElemental.MODID, name);
-        registry.register(type);
+        registry.register(name, type);
         return type;
     }
 

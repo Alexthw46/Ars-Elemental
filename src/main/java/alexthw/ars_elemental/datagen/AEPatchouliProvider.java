@@ -12,13 +12,15 @@ import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -26,7 +28,6 @@ import java.nio.file.Path;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
 
-@SuppressWarnings("ConstantConditions")
 public class AEPatchouliProvider extends PatchouliProvider {
 
     public AEPatchouliProvider(DataGenerator generatorIn) {
@@ -34,7 +35,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    public void run(CachedOutput cache) throws IOException {
 
         for (AbstractSpellPart spell : registeredSpells) {
             addGlyphPage(spell);
@@ -156,7 +157,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addEnchantmentPage(ModRegistry.MIRROR.get());
 
         for (PatchouliPage patchouliPage : pages) {
-            DataProvider.save(GSON, cache, patchouliPage.build(), patchouliPage.path());
+            DataProvider.saveStable(cache, patchouliPage.build(), patchouliPage.path());
         }
 
     }
@@ -165,9 +166,9 @@ public class AEPatchouliProvider extends PatchouliProvider {
     public void addBasicItem(ItemLike item, ResourceLocation category, IPatchouliPage recipePage) {
         PatchouliBuilder builder = new PatchouliBuilder(category, item.asItem().getDescriptionId())
                 .withIcon(item.asItem())
-                .withPage(new TextPage("ars_elemental.page." + item.asItem().getRegistryName().getPath()))
+                .withPage(new TextPage("ars_elemental.page." + getRegistryName(item.asItem()).getPath()))
                 .withPage(recipePage);
-        this.pages.add(new PatchouliPage(builder, getPath(category, item.asItem().getRegistryName().getPath())));
+        this.pages.add(new PatchouliPage(builder, getPath(category, getRegistryName(item.asItem()).getPath())));
     }
 
     public void addFamiliarPage(AbstractFamiliarHolder familiarHolder) {
@@ -189,13 +190,13 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
     public void addEnchantmentPage(Enchantment enchantment) {
         PatchouliBuilder builder = new PatchouliBuilder(ENCHANTMENTS, enchantment.getDescriptionId())
-                .withIcon(Items.ENCHANTED_BOOK.getRegistryName().toString())
-                .withTextPage("ars_elemental.enchantment_desc." + enchantment.getRegistryName().getPath());
+                .withIcon(getRegistryName(Items.ENCHANTED_BOOK).toString())
+                .withTextPage("ars_elemental.enchantment_desc." + getRegistryName(enchantment).getPath());
 
         for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++) {
-            builder.withPage(new EnchantingPage("ars_nouveau:" + enchantment.getRegistryName().getPath() + "_" + i));
+            builder.withPage(new EnchantingPage("ars_nouveau:" + getRegistryName(enchantment).getPath() + "_" + i));
         }
-        this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, enchantment.getRegistryName().getPath())));
+        this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, getRegistryName(enchantment).getPath())));
     }
 
     /**
@@ -212,7 +213,15 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     ImbuementPage ImbuementPage(ItemLike item) {
-        return new ImbuementPage("ars_elemental:imbuement_" + item.asItem().getRegistryName().getPath());
+        return new ImbuementPage("ars_elemental:imbuement_" + getRegistryName(item.asItem()).getPath());
+    }
+
+    private ResourceLocation getRegistryName(Item asItem) {
+        return ForgeRegistries.ITEMS.getKey(asItem);
+    }
+
+    private ResourceLocation getRegistryName(Enchantment enchantment) {
+        return ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
     }
 
 }

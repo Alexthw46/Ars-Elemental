@@ -9,6 +9,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHarm;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSnare;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -31,12 +32,11 @@ public class EarthMage extends EntityMageBase {
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectCrush.INSTANCE, AugmentAmplify.INSTANCE, AugmentAmplify.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectSnare.INSTANCE, AugmentExtendTime.INSTANCE));
 
-        //pSpells.add(new Spell(MethodCurvedProjectile.INSTANCE, AugmentPierce.INSTANCE, EffectBreak.INSTANCE, AugmentPierce.INSTANCE, AugmentAOE.INSTANCE, AugmentAOE.INSTANCE));
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(pDifficulty);
+    protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
         book.getOrCreateTag().putInt("color", 13);
     }

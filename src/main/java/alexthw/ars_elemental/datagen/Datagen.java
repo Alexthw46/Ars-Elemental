@@ -38,20 +38,20 @@ public class Datagen {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        gen.addProvider(new AEBlockStateProvider(gen, existingFileHelper));
-        gen.addProvider(new AEItemModelProvider(gen, existingFileHelper));
+        gen.addProvider(true, new AEBlockStateProvider(gen, existingFileHelper));
+        gen.addProvider(true, new AEItemModelProvider(gen, existingFileHelper));
         BlockTagsProvider BTP = new AETagsProvider.BlockTagsProvider(gen, existingFileHelper);
-        gen.addProvider(BTP);
-        gen.addProvider(new AETagsProvider.ItemTagsProvider(gen, BTP, existingFileHelper));
+        gen.addProvider(true, BTP);
+        gen.addProvider(true, new AETagsProvider.ItemTagsProvider(gen, BTP, existingFileHelper));
 
-        gen.addProvider(new ModRecipeProvider(gen));
-        gen.addProvider(new ModLootTables(gen));
+        gen.addProvider(true, new ModRecipeProvider(gen));
+        gen.addProvider(true, new ModLootTables(gen));
 
-        gen.addProvider(new ANProviders.ImbuementProvider(gen));
-        gen.addProvider(new ANProviders.GlyphProvider(gen));
-        gen.addProvider(new AEApparatusProvider(gen));
+        gen.addProvider(true, new ANProviders.ImbuementProvider(gen));
+        gen.addProvider(true, new ANProviders.GlyphProvider(gen));
+        gen.addProvider(true, new AEApparatusProvider(gen));
 
-        gen.addProvider(new AEPatchouliProvider(gen));
+        //TODO restore gen.addProvider(new AEPatchouliProvider(gen));
     }
 
     public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> predicate) {

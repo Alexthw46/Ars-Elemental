@@ -25,7 +25,6 @@ import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -175,7 +174,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 0;
     }
 
@@ -194,7 +193,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable LivingEntity storedEntity, Player playerEntity) {
         if (storedPos != null) {
             setHome(storedPos);
-            PortUtil.sendMessage(playerEntity, new TranslatableComponent("ars_nouveau.home_set"));
+            PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.home_set"));
         }
     }
 
@@ -298,9 +297,9 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     public void getTooltip(List<Component> tooltip) {
         if (getHome() != null) {
             String home = getHome().getX() + ", " + getHome().getY() + ", " + getHome().getZ();
-            tooltip.add(new TranslatableComponent("ars_nouveau.weald_walker.home", home));
+            tooltip.add(Component.translatable("ars_nouveau.weald_walker.home", home));
         } else {
-            tooltip.add(new TranslatableComponent("ars_nouveau.weald_walker.home", new TranslatableComponent("ars_nouveau.nothing").getString()));
+            tooltip.add(Component.translatable("ars_nouveau.weald_walker.home", Component.translatable("ars_nouveau.nothing").getString()));
         }
     }
 

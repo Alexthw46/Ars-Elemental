@@ -18,6 +18,7 @@ import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -91,13 +92,13 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        this.populateDefaultEquipmentSlots(pDifficulty);
+        this.populateDefaultEquipmentSlots(pLevel.getRandom(), pDifficulty);
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(pDifficulty);
+    protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         if (school != null && CompatUtils.isArsenalLoaded()) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 setItemSlot(slot, ElementalArsenal.getArmorForSlot(slot, this.school));
@@ -154,7 +155,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     @Override
-    protected int getExperienceReward(Player pPlayer) {
+    public int getExperienceReward() {
         return 15;
     }
 

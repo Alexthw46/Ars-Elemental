@@ -67,17 +67,17 @@ public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extend
         }
 
         @Override
-        public ResourceLocation getModelLocation(T t) {
+        public ResourceLocation getModelResource(T t) {
             return new ResourceLocation(ArsNouveau.MODID, "geo/basic_spell_turret.geo.json");
         }
 
         @Override
-        public ResourceLocation getTextureLocation(T t) {
+        public ResourceLocation getTextureResource(T t) {
             return new ResourceLocation(ArsElemental.MODID, "textures/block/" + element + "_turret.png");
         }
 
         @Override
-        public ResourceLocation getAnimationFileLocation(T t) {
+        public ResourceLocation getAnimationResource(T t) {
             return new ResourceLocation(ArsNouveau.MODID, "animations/basic_spell_turret_animations.json");
         }
     }
