@@ -19,7 +19,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,17 +27,12 @@ import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModRegistry.ENTHRALLED;
 
-public class EffectCharm extends AbstractEffect {
+public class EffectCharm extends ElementalAbstractEffect {
 
     public static EffectCharm INSTANCE = new EffectCharm();
 
     public EffectCharm() {
         super("charm", "Charm");
-    }
-
-    @Override
-    public boolean wouldSucceed(HitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
-        return livingEntityHitSuccess(rayTraceResult);
     }
 
     @Override

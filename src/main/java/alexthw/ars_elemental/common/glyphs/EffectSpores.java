@@ -24,7 +24,7 @@ import java.util.Set;
 
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
-public class EffectSpores extends AbstractEffect {
+public class EffectSpores extends ElementalAbstractEffect {
 
     public static EffectSpores INSTANCE = new EffectSpores();
 

@@ -73,7 +73,7 @@ public class DamageEvents {
                 switch (bangle.getId()) {
                     case "fire" -> living.setSecondsOnFire(5);
                     case "water" -> living.setTicksFrozen(living.getTicksFrozen() + 100);
-                    case "earth" -> living.addEffect(new MobEffectInstance(ModPotions.SNARE_EFFECT, 60));
+                    case "earth" -> living.addEffect(new MobEffectInstance(ModPotions.SNARE_EFFECT.get(), 60));
                 }
             }
         }

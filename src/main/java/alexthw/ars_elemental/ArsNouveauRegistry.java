@@ -65,7 +65,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void registerRitual(AbstractRitual ritual) {
-        ArsNouveauAPI.getInstance().registerRitual(ritual.getID(), ritual);
+        ArsNouveauAPI.getInstance().registerRitual(ritual);
     }
 
     public static void postInit() {
@@ -94,7 +94,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void register(AbstractSpellPart spellPart) {
-        ArsNouveauAPI.getInstance().registerSpell(spellPart.getId(), spellPart);
+        ArsNouveauAPI.getInstance().registerSpell(spellPart);
         registeredSpells.add(spellPart);
     }
 

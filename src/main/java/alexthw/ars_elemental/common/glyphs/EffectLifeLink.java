@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +15,7 @@ import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModRegistry.LIFE_LINK;
 
-public class EffectLifeLink extends AbstractEffect {
+public class EffectLifeLink extends ElementalAbstractEffect {
 
     public static EffectLifeLink INSTANCE = new EffectLifeLink();
 
@@ -33,11 +32,6 @@ public class EffectLifeLink extends AbstractEffect {
 
         }
 
-    }
-
-    @Override
-    public boolean wouldSucceed(HitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext) {
-        return livingEntityHitSuccess(rayTraceResult);
     }
 
     @Override

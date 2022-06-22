@@ -6,10 +6,12 @@ import com.hollingsworth.arsnouveau.api.familiar.IFamiliar;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
 public class FirenandoHolder extends AbstractFamiliarHolder {
 
     public FirenandoHolder() {
-        super("firenando", (e) -> e instanceof FirenandoEntity);
+        super(prefix("firenando_familiar"), (e) -> e instanceof FirenandoEntity);
     }
 
     @Override

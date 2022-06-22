@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class PropagatorHoming extends AbstractEffect implements IPropagator {
+public class PropagatorHoming extends ElementalAbstractEffect implements IPropagator {
 
     public static PropagatorHoming INSTANCE = new PropagatorHoming();
 

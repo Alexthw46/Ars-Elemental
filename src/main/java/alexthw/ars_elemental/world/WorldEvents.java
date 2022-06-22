@@ -43,7 +43,7 @@ public class WorldEvents {
         ARCHWOOD_TREES = FeatureUtils.register("ars_elemental:random_flashing", Feature.RANDOM_SELECTOR,
                 new RandomFeatureConfiguration(List.of(
                         new WeightedPlacedFeature(PLACED_FLASHING, 0.25f)), PLACED_FLASHING));
-        PLACED_FLASHING_CONFIGURED = PlacementUtils.register("ars_elemental:archwood", ARCHWOOD_TREES, VegetationPlacements.treePlacement(RarityFilter.onAverageOnceEvery(ConfigHandler.Common.TREE_SPAWN_RATE.get())));
+        PLACED_FLASHING_CONFIGURED = PlacementUtils.register("ars_elemental:archwood", ARCHWOOD_TREES, VegetationPlacements.treePlacement(RarityFilter.onAverageOnceEvery(ConfigHandler.Common.TREE_SPAWN_RATE)));
     }
 
 

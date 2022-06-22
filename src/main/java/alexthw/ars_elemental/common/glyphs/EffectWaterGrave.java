@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public class EffectWaterGrave extends AbstractEffect {
+public class EffectWaterGrave extends ElementalAbstractEffect {
 
     @Override
     public boolean isRenderAsIcon() {

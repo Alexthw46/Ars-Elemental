@@ -2,12 +2,12 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.lib.GlyphLib;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSmelt;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Set;
 
-public class EffectConjureDirt extends AbstractEffect {
+public class EffectConjureDirt extends ElementalAbstractEffect {
 
     public static EffectConjureDirt INSTANCE = new EffectConjureDirt();
 
@@ -70,9 +70,8 @@ public class EffectConjureDirt extends AbstractEffect {
     }
 
     @Override
-    protected Map<String, Integer> getDefaultAugmentLimits() {
-        Map<String, Integer> map = super.getDefaultAugmentLimits();
-        map.put(GlyphLib.AugmentAmplifyID, 1);
+    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> map) {
+        map.put(AugmentAmplify.INSTANCE.getRegistryName(), 1);
         return map;
     }
 

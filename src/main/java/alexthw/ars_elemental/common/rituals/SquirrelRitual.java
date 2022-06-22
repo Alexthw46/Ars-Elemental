@@ -4,6 +4,7 @@ import alexthw.ars_elemental.ConfigHandler.Common;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.Starbuncle;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -12,6 +13,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+
+import static alexthw.ars_elemental.ArsElemental.prefix;
 
 public class SquirrelRitual extends AbstractRitual {
 
@@ -49,10 +52,10 @@ public class SquirrelRitual extends AbstractRitual {
     }
 
     @Override
-    public String getID() {
-        return ID;
+    public ResourceLocation getRegistryName() {
+        return prefix(ID);
     }
 
-    public static String ID = "ae_squirrels";
+    public static String ID = "ritual_squirrels";
 
 }

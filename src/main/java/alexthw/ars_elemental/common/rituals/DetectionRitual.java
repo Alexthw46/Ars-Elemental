@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.rituals;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -11,6 +12,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+
+import static alexthw.ars_elemental.ArsElemental.prefix;
 
 public class DetectionRitual extends AbstractRitual {
     @Override
@@ -51,9 +54,10 @@ public class DetectionRitual extends AbstractRitual {
     }
 
     @Override
-    public String getID() {
-        return ID;
+    public ResourceLocation getRegistryName() {
+        return prefix(ID);
     }
 
-    public static String ID = "ae_detection";
+    public static String ID = "ritual_detection";
+
 }

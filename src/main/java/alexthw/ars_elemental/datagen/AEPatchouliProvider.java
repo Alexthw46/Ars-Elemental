@@ -172,20 +172,20 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     public void addFamiliarPage(AbstractFamiliarHolder familiarHolder) {
-        PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getId() + "_familiar")
-                .withIcon("ars_nouveau:familiar_" + familiarHolder.getId())
-                .withTextPage("ars_nouveau.familiar_desc." + familiarHolder.getId())
-                .withPage(new EntityPage(prefix(familiarHolder.getEntityKey() + "_familiar").toString()));
-        this.pages.add(new PatchouliPage(builder, getPath(FAMILIARS, familiarHolder.getId())));
+        PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getRegistryName().getPath())
+                .withIcon("ars_nouveau:" + familiarHolder.getRegistryName().getPath())
+                .withTextPage("ars_nouveau.familiar_desc." + familiarHolder.getRegistryName().getPath())
+                .withPage(new EntityPage(familiarHolder.getRegistryName().toString()));
+        this.pages.add(new PatchouliPage(builder, getPath(FAMILIARS, familiarHolder.getRegistryName().getPath())));
     }
 
     public void addRitualPage(AbstractRitual ritual) {
-        PatchouliBuilder builder = new PatchouliBuilder(RITUALS, "item.ars_nouveau.ritual_" + ritual.getID())
-                .withIcon("ars_nouveau:ritual_" + ritual.getID())
-                .withTextPage("ars_nouveau.ritual_desc." + ritual.getID())
-                .withPage(new CraftingPage("ars_elemental:ritual_" + ritual.getID()));
+        PatchouliBuilder builder = new PatchouliBuilder(RITUALS, "item.ars_nouveau.ritual_" + ritual.getRegistryName())
+                .withIcon("ars_nouveau:ritual_" + ritual.getRegistryName())
+                .withTextPage("ars_nouveau.ritual_desc." + ritual.getRegistryName())
+                .withPage(new CraftingPage("ars_elemental:ritual_" + ritual.getRegistryName()));
 
-        this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getID())));
+        this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getRegistryName())));
     }
 
     public void addEnchantmentPage(Enchantment enchantment) {

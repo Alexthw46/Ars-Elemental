@@ -47,7 +47,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
-import java.util.Random;
 
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.*;
 
@@ -185,7 +184,7 @@ public class GlyphEvents {
     }
 
     public static void crushItems(Level world, List<ItemEntity> itemEntities, int maxItemCrush) {
-        List<CrushRecipe> recipes = world.getRecipeManager().getAllRecipesFor(RecipeRegistry.CRUSH_TYPE);
+        List<CrushRecipe> recipes = world.getRecipeManager().getAllRecipesFor(RecipeRegistry.CRUSH_TYPE.get());
         CrushRecipe lastHit = null; // Cache this for AOE hits
         int itemsCrushed = 0;
         for (ItemEntity IE : itemEntities) {
@@ -203,7 +202,7 @@ public class GlyphEvents {
             if (lastHit == null)
                 continue;
 
-            List<ItemStack> outputs = lastHit.getRolledOutputs(new Random());//lastHit.getRolledOutputs(world.random);
+            List<ItemStack> outputs = lastHit.getRolledOutputs(world.random);
 
             for (ItemStack result : outputs) {
                 if (result.isEmpty())

@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class PropagatorArc extends AbstractEffect implements IPropagator {
+public class PropagatorArc extends ElementalAbstractEffect implements IPropagator {
 
     public static PropagatorArc INSTANCE = new PropagatorArc();
 

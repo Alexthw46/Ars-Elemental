@@ -106,25 +106,25 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
             switch (getSchool().getId()) {
                 case "fire" -> {
                     if (player.isOnFire() || player.isInLava())
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 200, 1));
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 200, 1));
                 }
                 case "water" -> {
                     if (player.isInWaterRainOrBubble()) {
                         if (player.isSwimming()) {
                             player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 200, 1));
-                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 1));
+                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 1));
                         } else {
-                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 0));
+                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
                         }
                     }
                 }
                 case "air" -> {
                     if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 0));
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
                 }
                 case "earth" -> {
                     if (player.getY() < 0)
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT, 120, 0));
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
                 }
             }
         }

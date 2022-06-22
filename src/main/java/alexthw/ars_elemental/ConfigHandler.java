@@ -34,11 +34,11 @@ public class ConfigHandler {
 
         public static ForgeConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
 
-        public static ForgeConfigSpec.IntValue SIREN_WEIGHT;
+        public static final Integer SIREN_WEIGHT = 2;
         public static ForgeConfigSpec.IntValue MAGES_WEIGHT;
         public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
 
-        public static ForgeConfigSpec.IntValue TREE_SPAWN_RATE;
+        public static final Integer TREE_SPAWN_RATE = 200;
 
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -82,12 +82,9 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Spawn and Worldgen");
-            SIREN_WEIGHT = builder.comment("How often sirens spawn").defineInRange("sirenSpawnWeight", 2, 0, 200);
 
             MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesSpawnWeight", 0, 0, 200);
             MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
-
-            TREE_SPAWN_RATE = builder.comment("Rate of flashing archwood trees spawn per chunk. 0 disable, higher value -> more rare").defineInRange("flashingTreesRarity", 200, 0, Integer.MAX_VALUE);
 
             builder.pop();
 
