@@ -1,16 +1,16 @@
 {
-  "name": "ars_nouveau.glyph_name.propagator_arc",
   "category": "ars_nouveau:glyphs_2",
-  "icon": "ars_nouveau:glyph_propagator_arc",
-  "sortnum": 2,
+  "icon": "ars_elemental:glyph_propagator_arc",
+  "name": "ars_elemental.glyph_name.glyph_propagator_arc",
   "pages": [
     {
-      "text": "ars_nouveau.glyph_desc.propagator_arc",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.glyph_desc.glyph_propagator_arc"
     },
     {
-      "recipe": "ars_nouveau:glyph_propagator_arc",
-      "type": "ars_nouveau:glyph_recipe"
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_elemental:glyph_propagator_arc"
     }
-  ]
+  ],
+  "sortnum": 2
 }

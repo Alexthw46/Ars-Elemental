@@ -1,15 +1,15 @@
 {
-  "name": "block.ars_elemental.yellow_archwood",
-  "icon": "ars_elemental:yellow_archwood",
   "category": "ars_nouveau:resources",
+  "icon": "ars_elemental:yellow_archwood",
+  "name": "block.ars_elemental.yellow_archwood",
   "pages": [
     {
-      "text": "ars_elemental.page1.flashing_archwood",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page1.flashing_archwood"
     },
     {
-      "entity": "ars_elemental:flashing_weald_walker",
-      "type": "patchouli:entity"
+      "type": "patchouli:entity",
+      "entity": "ars_elemental:flashing_weald_walker"
     }
   ]
 }

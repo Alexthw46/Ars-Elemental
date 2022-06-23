@@ -1,16 +1,16 @@
 {
-  "name": "ars_nouveau.glyph_name.watery_grave",
   "category": "ars_nouveau:glyphs_2",
-  "icon": "ars_nouveau:glyph_watery_grave",
-  "sortnum": 2,
+  "icon": "ars_elemental:glyph_watery_grave",
+  "name": "ars_elemental.glyph_name.glyph_watery_grave",
   "pages": [
     {
-      "text": "ars_nouveau.glyph_desc.watery_grave",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.glyph_desc.glyph_watery_grave"
     },
     {
-      "recipe": "ars_nouveau:glyph_watery_grave",
-      "type": "ars_nouveau:glyph_recipe"
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_elemental:glyph_watery_grave"
     }
-  ]
+  ],
+  "sortnum": 2
 }

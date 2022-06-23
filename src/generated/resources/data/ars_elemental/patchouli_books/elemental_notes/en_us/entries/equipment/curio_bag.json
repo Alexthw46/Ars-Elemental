@@ -1,15 +1,15 @@
 {
-  "name": "item.ars_elemental.curio_bag",
   "category": "ars_nouveau:equipment",
   "icon": "ars_elemental:curio_bag",
+  "name": "item.ars_elemental.curio_bag",
   "pages": [
     {
-      "text": "ars_elemental.page.curio_bag",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.curio_bag"
     },
     {
-      "recipe": "ars_elemental:curio_bag",
-      "type": "patchouli:crafting"
+      "type": "patchouli:crafting",
+      "recipe": "ars_elemental:curio_bag"
     }
   ]
 }

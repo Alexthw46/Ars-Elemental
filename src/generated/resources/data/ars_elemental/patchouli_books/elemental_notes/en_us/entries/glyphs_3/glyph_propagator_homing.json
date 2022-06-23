@@ -1,16 +1,16 @@
 {
-  "name": "ars_nouveau.glyph_name.propagator_homing",
   "category": "ars_nouveau:glyphs_3",
-  "icon": "ars_nouveau:glyph_propagator_homing",
-  "sortnum": 2,
+  "icon": "ars_elemental:glyph_propagator_homing",
+  "name": "ars_elemental.glyph_name.glyph_propagator_homing",
   "pages": [
     {
-      "text": "ars_nouveau.glyph_desc.propagator_homing",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.glyph_desc.glyph_propagator_homing"
     },
     {
-      "recipe": "ars_nouveau:glyph_propagator_homing",
-      "type": "ars_nouveau:glyph_recipe"
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_elemental:glyph_propagator_homing"
     }
-  ]
+  ],
+  "sortnum": 2
 }

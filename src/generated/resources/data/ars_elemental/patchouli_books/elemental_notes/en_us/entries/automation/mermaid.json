@@ -1,23 +1,23 @@
 {
-  "name": "item.ars_elemental.siren_charm",
-  "icon": "ars_elemental:siren_charm",
   "category": "ars_nouveau:automation",
+  "icon": "ars_elemental:siren_charm",
+  "name": "item.ars_elemental.siren_charm",
   "pages": [
     {
-      "text": "ars_elemental.page1.mermaid",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page1.mermaid"
     },
     {
-      "recipe": "ars_elemental:siren_charm",
-      "type": "ars_nouveau:apparatus_recipe"
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:siren_charm"
     },
     {
-      "entity": "ars_elemental:siren_entity",
-      "type": "patchouli:entity"
+      "type": "patchouli:entity",
+      "entity": "ars_elemental:siren_entity"
     },
     {
-      "text": "ars_elemental.page2.mermaid",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page2.mermaid"
     }
   ]
 }

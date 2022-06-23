@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "bark",
-  "pattern": [
-    "##",
-    "##"
-  ],
   "key": {
     "#": {
       "item": "ars_elemental:stripped_yellow_archwood_log"
     }
   },
+  "pattern": [
+    "##",
+    "##"
+  ],
   "result": {
-    "item": "ars_elemental:stripped_yellow_archwood",
-    "count": 3
+    "count": 3,
+    "item": "ars_elemental:stripped_yellow_archwood"
   }
 }

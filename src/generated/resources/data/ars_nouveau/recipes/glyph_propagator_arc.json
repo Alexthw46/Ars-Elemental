@@ -1,6 +1,7 @@
 {
   "type": "ars_nouveau:glyph",
   "count": 1,
+  "exp": 55,
   "inputItems": [
     {
       "item": {
@@ -9,10 +10,9 @@
     },
     {
       "item": {
-        "item": "ars_nouveau:glyph_curved_projectile"
+        "item": "ars_elemental:glyph_curved_projectile"
       }
     }
   ],
-  "exp": 55,
-  "output": "ars_nouveau:glyph_propagator_arc"
+  "output": "ars_elemental:glyph_propagator_arc"
 }

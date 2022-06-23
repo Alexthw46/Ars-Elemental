@@ -9,6 +9,8 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
+import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
+import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
@@ -173,17 +175,17 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
     public void addFamiliarPage(AbstractFamiliarHolder familiarHolder) {
         PatchouliBuilder builder = new PatchouliBuilder(FAMILIARS, "entity.ars_elemental." + familiarHolder.getRegistryName().getPath())
-                .withIcon("ars_nouveau:" + familiarHolder.getRegistryName().getPath())
-                .withTextPage("ars_nouveau.familiar_desc." + familiarHolder.getRegistryName().getPath())
+                .withIcon("ars_elemental:" + familiarHolder.getRegistryName().getPath())
+                .withTextPage("ars_elemental.familiar_desc." + familiarHolder.getRegistryName().getPath())
                 .withPage(new EntityPage(familiarHolder.getRegistryName().toString()));
         this.pages.add(new PatchouliPage(builder, getPath(FAMILIARS, familiarHolder.getRegistryName().getPath())));
     }
 
     public void addRitualPage(AbstractRitual ritual) {
-        PatchouliBuilder builder = new PatchouliBuilder(RITUALS, "item.ars_nouveau.ritual_" + ritual.getRegistryName())
-                .withIcon("ars_nouveau:ritual_" + ritual.getRegistryName())
-                .withTextPage("ars_nouveau.ritual_desc." + ritual.getRegistryName())
-                .withPage(new CraftingPage("ars_elemental:ritual_" + ritual.getRegistryName()));
+        PatchouliBuilder builder = new PatchouliBuilder(RITUALS, "item.ars_elemental." + ritual.getRegistryName().getPath())
+                .withIcon(ritual.getRegistryName().toString())
+                .withTextPage(ritual.getDescriptionKey())
+                .withPage(new CraftingPage("ars_elemental:tablet_" + ritual.getRegistryName().getPath()));
 
         this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getRegistryName())));
     }
@@ -198,6 +200,22 @@ public class AEPatchouliProvider extends PatchouliProvider {
         }
         this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, getRegistryName(enchantment).getPath())));
     }
+
+    public void addGlyphPage(AbstractSpellPart spellPart) {
+        ResourceLocation category = switch (spellPart.getTier().value) {
+            case 1 -> GLYPHS_1;
+            case 2 -> GLYPHS_2;
+            default -> GLYPHS_3;
+        };
+        PatchouliBuilder builder = new PatchouliBuilder(category, spellPart.getName())
+                .withName("ars_elemental.glyph_name." + spellPart.getRegistryName().getPath())
+                .withIcon(spellPart.getRegistryName().toString())
+                .withSortNum(spellPart instanceof AbstractCastMethod ? 1 : spellPart instanceof AbstractEffect ? 2 : 3)
+                .withPage(new TextPage("ars_elemental.glyph_desc." + spellPart.getRegistryName().getPath()))
+                .withPage(new GlyphScribePage(spellPart));
+        this.pages.add(new PatchouliPage(builder, getPath(category, spellPart.getRegistryName().getPath())));
+    }
+
 
     /**
      * Gets a name for this provider, to use in logging.

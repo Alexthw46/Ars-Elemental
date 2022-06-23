@@ -1,6 +1,7 @@
 {
   "type": "ars_nouveau:glyph",
   "count": 1,
+  "exp": 160,
   "inputItems": [
     {
       "item": {
@@ -9,10 +10,9 @@
     },
     {
       "item": {
-        "item": "ars_nouveau:glyph_homing_projectile"
+        "item": "ars_elemental:glyph_homing_projectile"
       }
     }
   ],
-  "exp": 160,
-  "output": "ars_nouveau:glyph_propagator_homing"
+  "output": "ars_elemental:glyph_propagator_homing"
 }

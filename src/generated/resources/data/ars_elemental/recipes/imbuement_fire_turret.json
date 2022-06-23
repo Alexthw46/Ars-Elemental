@@ -1,11 +1,10 @@
 {
   "type": "ars_nouveau:imbuement",
+  "count": 1,
   "input": {
     "item": "ars_nouveau:spell_turret"
   },
   "output": "ars_elemental:fire_turret",
-  "count": 1,
-  "source": 5000,
   "pedestalItems": [
     {
       "item": {
@@ -27,5 +26,6 @@
         "item": "ars_elemental:fire_focus"
       }
     }
-  ]
+  ],
+  "source": 5000
 }

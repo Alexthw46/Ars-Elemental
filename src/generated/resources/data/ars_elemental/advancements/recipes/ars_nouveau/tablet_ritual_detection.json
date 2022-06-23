@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "ars_elemental:ritual_ae_tesla_coil"
-    ]
-  },
   "criteria": {
     "has_journal": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -16,13 +10,14 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ars_elemental:ritual_ae_tesla_coil"
-      }
+        "recipe": "ars_elemental:tablet_ritual_detection"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
@@ -30,5 +25,10 @@
       "has_journal",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ars_elemental:tablet_ritual_detection"
+    ]
+  }
 }

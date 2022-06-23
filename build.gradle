@@ -133,6 +133,8 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+
+
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
     maven { url "https://alcatrazescapee.jfrog.io/artifactory/mods" }
@@ -159,6 +161,8 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
     compileOnly fg.deobf("curse.maven:arsenal-561848:3769207")
+
+    implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:${mc_version}-2.0.0.112")
 
     //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
     //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")

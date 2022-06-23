@@ -1,15 +1,15 @@
 {
-  "name": "block.ars_elemental.water_upstream",
   "category": "ars_nouveau:machines",
   "icon": "ars_elemental:water_upstream",
+  "name": "block.ars_elemental.water_upstream",
   "pages": [
     {
-      "text": "ars_elemental.page.water_upstream",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.water_upstream"
     },
     {
-      "recipe": "ars_elemental:water_upstream",
-      "type": "ars_nouveau:apparatus_recipe"
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:water_upstream"
     }
   ]
 }

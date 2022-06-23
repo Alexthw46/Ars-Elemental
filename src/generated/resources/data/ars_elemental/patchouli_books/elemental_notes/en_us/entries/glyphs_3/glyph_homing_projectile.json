@@ -1,16 +1,16 @@
 {
-  "name": "ars_nouveau.glyph_name.homing_projectile",
   "category": "ars_nouveau:glyphs_3",
-  "icon": "ars_nouveau:glyph_homing_projectile",
-  "sortnum": 1,
+  "icon": "ars_elemental:glyph_homing_projectile",
+  "name": "ars_elemental.glyph_name.glyph_homing_projectile",
   "pages": [
     {
-      "text": "ars_nouveau.glyph_desc.homing_projectile",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.glyph_desc.glyph_homing_projectile"
     },
     {
-      "recipe": "ars_nouveau:glyph_homing_projectile",
-      "type": "ars_nouveau:glyph_recipe"
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_elemental:glyph_homing_projectile"
     }
-  ]
+  ],
+  "sortnum": 1
 }

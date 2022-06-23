@@ -2,7 +2,6 @@
   "type": "ars_nouveau:enchantment",
   "enchantment": "ars_elemental:mirror_shield",
   "level": 2,
-  "sourceCost": 6000,
   "pedestalItems": [
     {
       "item": {
@@ -29,5 +28,6 @@
         "tag": "forge:storage_blocks/lapis"
       }
     }
-  ]
+  ],
+  "sourceCost": 6000
 }

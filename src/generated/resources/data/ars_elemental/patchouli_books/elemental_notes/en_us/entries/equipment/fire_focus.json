@@ -1,19 +1,19 @@
 {
-  "name": "item.ars_elemental.fire_focus",
-  "icon": "ars_elemental:fire_focus",
   "category": "ars_nouveau:equipment",
+  "icon": "ars_elemental:fire_focus",
+  "name": "item.ars_elemental.fire_focus",
   "pages": [
     {
-      "text": "ars_elemental.page1.fire_focus",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page1.fire_focus"
     },
     {
-      "recipe": "ars_elemental:imbuement_fire_focus",
-      "type": "ars_nouveau:imbuement_recipe"
+      "type": "ars_nouveau:imbuement_recipe",
+      "recipe": "ars_elemental:imbuement_fire_focus"
     },
     {
-      "text": "ars_elemental.page2.fire_focus",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.page2.fire_focus"
     }
   ]
 }

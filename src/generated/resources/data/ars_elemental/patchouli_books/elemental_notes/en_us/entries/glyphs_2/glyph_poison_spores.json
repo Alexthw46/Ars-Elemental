@@ -1,16 +1,16 @@
 {
-  "name": "ars_nouveau.glyph_name.poison_spores",
   "category": "ars_nouveau:glyphs_2",
-  "icon": "ars_nouveau:glyph_poison_spores",
-  "sortnum": 2,
+  "icon": "ars_elemental:glyph_poison_spores",
+  "name": "ars_elemental.glyph_name.glyph_poison_spores",
   "pages": [
     {
-      "text": "ars_nouveau.glyph_desc.poison_spores",
-      "type": "patchouli:text"
+      "type": "patchouli:text",
+      "text": "ars_elemental.glyph_desc.glyph_poison_spores"
     },
     {
-      "recipe": "ars_nouveau:glyph_poison_spores",
-      "type": "ars_nouveau:glyph_recipe"
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_elemental:glyph_poison_spores"
     }
-  ]
+  ],
+  "sortnum": 2
 }
