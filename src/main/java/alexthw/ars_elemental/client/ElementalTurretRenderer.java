@@ -25,6 +25,7 @@ public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extend
     public static AnimatedGeoModel modelAir = new TurretModel<>("air");
     public static AnimatedGeoModel modelEarth = new TurretModel<>("earth");
 
+    @SuppressWarnings("unchecked")
     public ElementalTurretRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
         super(rendererDispatcherIn, modelFire);
     }

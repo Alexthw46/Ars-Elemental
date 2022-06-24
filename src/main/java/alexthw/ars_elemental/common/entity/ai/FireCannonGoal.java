@@ -16,7 +16,6 @@ public class FireCannonGoal extends ProjCastingGoal<FirenandoEntity> {
         super(entity, speed, attackInterval, attackRange, canUse, animId, delayTicks);
     }
 
-    @Override
     public void stop() {
         super.stop();
         mob.getEntityData().set(SHOOTING, false);

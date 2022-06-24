@@ -61,7 +61,7 @@ public class AETagsProvider {
     }
 
     public static class AEBlockTagsProvider extends BlockTagsProvider {
-        TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(new ResourceLocation("minecraft", "leaves/archwood_leaves"));
+        final TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(new ResourceLocation("minecraft", "leaves/archwood_leaves"));
 
         public AEBlockTagsProvider(DataGenerator gen, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen, ArsElemental.MODID, existingFileHelper);
@@ -112,12 +112,12 @@ public class AETagsProvider {
             super(generator, ArsElemental.MODID, existingFileHelper);
         }
 
-        public static TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registry.BIOME_REGISTRY, prefix("siren_spawn"));
+        public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registry.BIOME_REGISTRY, prefix("siren_spawn"));
 
         @Override
         protected void addTags() {
 
-            this.tag(SIREN_SPAWN_TAG).addTags(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL);
+            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL);
 
         }
     }

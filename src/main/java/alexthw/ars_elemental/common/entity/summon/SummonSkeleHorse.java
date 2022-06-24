@@ -5,7 +5,6 @@ import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -40,7 +39,7 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
 
     protected SoundEvent getAmbientSound() {
         super.getAmbientSound();
-        return this.isEyeInFluid(FluidTags.WATER) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
+        return this.isEyeInFluidType(net.minecraftforge.common.ForgeMod.WATER_TYPE.get()) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {

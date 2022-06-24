@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Set;
 
 public class TooManyCompats {
-    public static boolean checkFilters(Entity e, Set<AbstractEffectFilter> filters) {
+    public static boolean checkIgnoreFilters(Entity e, Set<AbstractEffectFilter> filters) {
         boolean flag = true;
-        if (filters == null) return false;
+        if (filters == null) return true;
         for (AbstractEffectFilter spellPart : filters) {
             flag &= spellPart.matches(new EntityHitResult(e));
         }
-        return flag;
+        return !flag;
     }
 
     public static Set<AbstractEffectFilter> getFilters(List<AbstractSpellPart> recipe, int index) {

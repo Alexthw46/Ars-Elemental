@@ -92,7 +92,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         if (CompatUtils.tooManyGlyphsLoaded()) {
             Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(spell.recipe, index);
             if (!filters.isEmpty()) {
-                ignore.add(entity -> !TooManyCompats.checkFilters(entity, filters));
+                ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
             }
         }
         return ignore;

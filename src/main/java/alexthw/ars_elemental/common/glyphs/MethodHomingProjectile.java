@@ -148,7 +148,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         if (CompatUtils.tooManyGlyphsLoaded()) {
             Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(spell.recipe, 0);
             if (!filters.isEmpty()){
-                ignore.add(entity -> !TooManyCompats.checkFilters(entity, filters));
+                ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
             }
         }
         return ignore;

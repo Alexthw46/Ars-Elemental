@@ -19,11 +19,6 @@ public class ProjCastingGoal<T extends Mob & RangedAttackMob> extends CastGoal<T
     }
 
     @Override
-    public void stop() {
-        super.stop();
-    }
-
-    @Override
     public void tick() {
         LivingEntity livingentity = this.mob.getTarget();
         if (livingentity == null) return;
