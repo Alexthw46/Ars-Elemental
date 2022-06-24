@@ -12,6 +12,7 @@ import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -19,6 +20,8 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.io.IOException;
 import java.nio.file.Path;
+
+import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
 
 public class ANProviders {
 
@@ -51,6 +54,10 @@ public class ANProviders {
                 DataProvider.saveStable(cache, recipe.asRecipe(), path);
             }
 
+        }
+
+        protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
+            return pathIn.resolve("data/ars_elemental/recipes/" + getRegistryName(glyph).getPath() + ".json");
         }
 
         @Override

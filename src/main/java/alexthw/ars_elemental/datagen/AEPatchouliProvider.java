@@ -187,7 +187,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
                 .withTextPage(ritual.getDescriptionKey())
                 .withPage(new CraftingPage("ars_elemental:tablet_" + ritual.getRegistryName().getPath()));
 
-        this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getRegistryName())));
+        this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getRegistryName().getPath())));
     }
 
     public void addEnchantmentPage(Enchantment enchantment) {

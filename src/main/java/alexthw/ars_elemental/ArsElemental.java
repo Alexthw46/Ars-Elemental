@@ -24,6 +24,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.NotNull;
+import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
@@ -90,9 +91,9 @@ public class ArsElemental {
     }
 
     public void sendImc(InterModEnqueueEvent evt) {
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bundle").size(1).build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bundle").size(1).icon(new ResourceLocation(Curios.MODID, "slot/empty_curio_slot")).build());
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bangle").size(1).icon(BANGLE_SLOT).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.MODIFY_TYPE, () -> new SlotTypeMessage.Builder("an_focus").size(1).icon(FOCUS_SLOT).cosmetic().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.MODIFY_TYPE, () -> new SlotTypeMessage.Builder("an_focus").size(1).icon(FOCUS_SLOT).build());
     }
 
     public void loadComplete(FMLLoadCompleteEvent event) {

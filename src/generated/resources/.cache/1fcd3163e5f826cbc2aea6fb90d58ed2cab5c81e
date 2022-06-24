@@ -1,4 +1,4 @@
-// 1.19	2022-06-23T10:02:08.4163628	Ars Elemental Patchouli Datagen
+// 1.19	2022-06-24T11:57:39.1467897	Ars Elemental Patchouli Datagen
 8d83e73962205e06b4ead38a734e588da07a6a15 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/fire_golem.json
 6c3b3c025a56278426717da87ba6a148bf8012e3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/mermaid.json
 f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
@@ -29,6 +29,6 @@ f289806ea755e0627cd0f7cda97e11e627ce4173 data/ars_elemental/patchouli_books/elem
 dd337f36d973615076ccf2f7564651f73c56a1ca data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/machines/elemental_turrets.json
 c8c5c6920a9199646d3fb1593d5a55386442f4a4 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/machines/water_upstream.json
 e6e3e7526d58f61d6f09ee31b965b0508cfb93bc data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/resources/flashing_archwood.json
-38840054e279c3295c83ecbd850e713e6f384c7a data/ars_nouveau/patchouli/rituals/ritual_detection.json
-96ffd294c74db0d9d320ed52539be7fdb7f31369 data/ars_nouveau/patchouli/rituals/ritual_squirrels.json
-c82bd465a8e8a3707396fd0adab4f7d89c0919fc data/ars_nouveau/patchouli/rituals/ritual_tesla_coil.json
+38840054e279c3295c83ecbd850e713e6f384c7a data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/rituals/ritual_detection.json
+96ffd294c74db0d9d320ed52539be7fdb7f31369 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/rituals/ritual_squirrels.json
+c82bd465a8e8a3707396fd0adab4f7d89c0919fc data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/rituals/ritual_tesla_coil.json

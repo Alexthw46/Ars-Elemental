@@ -6,25 +6,33 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BiomeTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
 public class AETagsProvider {
 
-    public static class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
+    public static class AEItemTagsProvider extends ItemTagsProvider {
         public static final TagKey<Item> CURIO_SPELL_FOCUS = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "an_focus"));
         public static final TagKey<Item> CURIO_BANGLE = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "bangle"));
 
-        public ItemTagsProvider(DataGenerator gen, net.minecraft.data.tags.BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
+        public AEItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen, blockTagsProvider, ArsElemental.MODID, existingFileHelper);
         }
 
@@ -52,10 +60,10 @@ public class AETagsProvider {
         }
     }
 
-    public static class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider {
+    public static class AEBlockTagsProvider extends BlockTagsProvider {
         TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(new ResourceLocation("minecraft", "leaves/archwood_leaves"));
 
-        public BlockTagsProvider(DataGenerator gen, @Nullable ExistingFileHelper existingFileHelper) {
+        public AEBlockTagsProvider(DataGenerator gen, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen, ArsElemental.MODID, existingFileHelper);
         }
 
@@ -96,6 +104,21 @@ public class AETagsProvider {
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Block Tags";
+        }
+    }
+
+    public static class AEBiomeTagsProvider extends BiomeTagsProvider {
+        public AEBiomeTagsProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
+            super(generator, ArsElemental.MODID, existingFileHelper);
+        }
+
+        public static TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registry.BIOME_REGISTRY, prefix("siren_spawn"));
+
+        @Override
+        protected void addTags() {
+
+            this.tag(SIREN_SPAWN_TAG).addTags(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL);
+
         }
     }
 

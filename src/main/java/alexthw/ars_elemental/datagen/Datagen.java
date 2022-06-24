@@ -40,9 +40,9 @@ public class Datagen {
 
         gen.addProvider(event.includeClient(), new AEBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(event.includeClient(), new AEItemModelProvider(gen, existingFileHelper));
-        BlockTagsProvider BTP = new AETagsProvider.BlockTagsProvider(gen, existingFileHelper);
+        BlockTagsProvider BTP = new AETagsProvider.AEBlockTagsProvider(gen, existingFileHelper);
         gen.addProvider(event.includeServer(), BTP);
-        gen.addProvider(event.includeServer(), new AETagsProvider.ItemTagsProvider(gen, BTP, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEItemTagsProvider(gen, BTP, existingFileHelper));
 
         gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
         gen.addProvider(event.includeServer(), new ModLootTables(gen));
@@ -53,7 +53,9 @@ public class Datagen {
 
         gen.addProvider(event.includeServer(), new AEPatchouliProvider(gen));
 
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEBiomeTagsProvider(gen, existingFileHelper));
 
+        AEBiomeModifiersProvider.generateBiomeModifiers(event);
     }
 
     public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> predicate) {

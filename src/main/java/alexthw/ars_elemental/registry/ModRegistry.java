@@ -3,6 +3,7 @@ package alexthw.ars_elemental.registry;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
 import alexthw.ars_elemental.common.mob_effects.*;
+import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -13,6 +14,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,6 +35,7 @@ public class ModRegistry {
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MODID);
+    public static final DeferredRegister<BlockStateProviderType<?>> BS_PROVIDERS = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, MODID);
 
     public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
 
@@ -45,6 +48,7 @@ public class ModRegistry {
         EFFECTS.register(bus);
         ENCHANTMENTS.register(bus);
         FEATURES.register(bus);
+        BS_PROVIDERS.register(bus);
         bus.addListener(EventPriority.LOW, ModRegistry::registerEvent);
     }
 
@@ -67,6 +71,8 @@ public class ModRegistry {
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
 
+    public static final RegistryObject<BlockStateProviderType<?>> AE_BLOCKSTATE_PROVIDER;
+
     public static final RegistryObject<Enchantment> MIRROR;
 
     static {
@@ -77,6 +83,8 @@ public class ModRegistry {
         HYMN_OF_ORDER = EFFECTS.register("hymn_of_order", OrderEffect::new);
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
+
+        AE_BLOCKSTATE_PROVIDER = BS_PROVIDERS.register("ae_stateprovider", () -> new BlockStateProviderType<>(SupplierBlockStateProviderAE.CODEC));
 
         MIRROR = ENCHANTMENTS.register("mirror_shield", MirrorShieldEnchantment::new);
 
