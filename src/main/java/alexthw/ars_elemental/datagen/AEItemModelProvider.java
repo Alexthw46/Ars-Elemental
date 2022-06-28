@@ -1,8 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.items.ElementalFocus;
-import alexthw.ars_elemental.common.items.NecroticFocus;
+import alexthw.ars_elemental.common.items.SpellHorn;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;
@@ -22,7 +21,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.IAnimatable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,14 +43,14 @@ public class AEItemModelProvider extends ItemModelProvider {
         Set<RegistryObject<Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
 
         takeAll(items, i -> i.get() instanceof AnimBlockItem).forEach(this::blockItem);
-        takeAll(items, i -> i.get() instanceof IAnimatable);
+        takeAll(items, i -> i.get() instanceof SpellHorn);
         takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
         takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof SaplingBlock).forEach(this::blockGeneratedItem);
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
-        takeAll(items, i -> i.get() instanceof ElementalFocus).forEach(this::focusModel);
-        takeAll(items, i -> i.get() instanceof NecroticFocus).forEach(this::focusModel);
+        //takeAll(items, i -> i.get() instanceof ElementalFocus).forEach(this::focusModel);
+        //takeAll(items, i -> i.get() instanceof NecroticFocus).forEach(this::focusModel);
         items.forEach(this::generatedItem);
 
     }

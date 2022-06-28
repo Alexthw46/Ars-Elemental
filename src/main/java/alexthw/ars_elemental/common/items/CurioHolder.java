@@ -5,6 +5,7 @@ import alexthw.ars_elemental.util.ItemInventory;
 import com.hollingsworth.arsnouveau.api.item.AbstractSummonCharm;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
+import com.hollingsworth.arsnouveau.common.items.ItemScroll;
 import com.hollingsworth.arsnouveau.common.items.PotionFlask;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -68,7 +69,7 @@ public class CurioHolder extends Item {
     public static boolean canStore(ItemStack stack) {
         Item item = stack.getItem();
         if (item instanceof CurioHolder) return false;
-        return item instanceof ISpellModifierItem || item instanceof AbstractSummonCharm || stack.is(CURIO_BAGGABLE) || item instanceof ICurioItem || item instanceof PotionFlask;
+        return item instanceof ISpellModifierItem || item instanceof ItemScroll || item instanceof AbstractSummonCharm || stack.is(CURIO_BAGGABLE) || item instanceof ICurioItem || item instanceof PotionFlask;
     }
 
     @Nullable

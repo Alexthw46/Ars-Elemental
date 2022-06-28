@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.common.items.bangles;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.api.ISchoolBangle;
 import alexthw.ars_elemental.common.items.ElementalCurio;
-import alexthw.ars_elemental.common.items.ISchoolBangle;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;

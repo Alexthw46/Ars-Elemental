@@ -5,6 +5,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
+import com.hollingsworth.arsnouveau.common.world.biome.ModBiomes;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -38,7 +39,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags() {
-            tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get());
+            tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get());
             tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.DOMINION_ROD.get(), ItemsRegistry.JAR_OF_LIGHT.get(), ItemsRegistry.VOID_JAR.get(), ItemsRegistry.RUNIC_CHALK.get(), ItemsRegistry.WARP_SCROLL.get(), ItemsRegistry.SPELL_PARCHMENT.get());
             this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
@@ -117,7 +118,7 @@ public class AETagsProvider {
         @Override
         protected void addTags() {
 
-            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL);
+            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).add(ModBiomes.ARCHWOOD_FOREST);
 
         }
     }

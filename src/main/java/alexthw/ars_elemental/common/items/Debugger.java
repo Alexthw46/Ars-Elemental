@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.items;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.entity.mages.*;
+import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.core.BlockPos;

@@ -9,7 +9,11 @@
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
-      "recipe": "ars_elemental:imbuement_fire_focus"
+      "recipe": "ars_elemental:lesser_fire_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:fire_focus"
     },
     {
       "type": "patchouli:text",

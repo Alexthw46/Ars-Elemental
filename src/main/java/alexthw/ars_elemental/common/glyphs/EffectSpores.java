@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.api.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
-import alexthw.ars_elemental.common.items.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;

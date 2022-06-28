@@ -1,5 +1,6 @@
 {
   "values": [
-    "#minecraft:produces_corals_from_bonemeal"
+    "#minecraft:produces_corals_from_bonemeal",
+    "ars_nouveau:archwood_forest"
   ]
 }

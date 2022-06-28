@@ -29,11 +29,6 @@ public class EffectConjureDirt extends ElementalAbstractEffect {
     }
 
     @Override
-    public boolean isRenderAsIcon() {
-        return false;
-    }
-
-    @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         BlockState toPlace = Blocks.DIRT.defaultBlockState();
         if (spellStats.hasBuff(AugmentAmplify.INSTANCE)) toPlace = Blocks.COBBLESTONE.defaultBlockState();
@@ -55,7 +50,7 @@ public class EffectConjureDirt extends ElementalAbstractEffect {
                 }
             }
         }
-        GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, toPlace);
+        GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, spellContext, resolver, toPlace);
     }
 
     @Override

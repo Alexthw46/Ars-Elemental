@@ -1,9 +1,9 @@
 package alexthw.ars_elemental.common.entity.mages;
 
 import alexthw.ars_elemental.ConfigHandler;
+import alexthw.ars_elemental.api.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.ai.ProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
-import alexthw.ars_elemental.common.items.ISchoolFocus;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.ElementalArsenal;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;

@@ -84,7 +84,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.FIRE_FOCUS.get())
                         .withIcon(ModItems.FIRE_FOCUS.get())
                         .withTextPage("ars_elemental.page1.fire_focus")
-                        .withPage(ImbuementPage(ModItems.FIRE_FOCUS.get()))
+                        .withPage(new ImbuementPage(ModItems.LESSER_FIRE_FOCUS.get()))
+                        .withPage(new ApparatusPage(ModItems.FIRE_FOCUS.get()))
                         .withTextPage("ars_elemental.page2.fire_focus")
                 , getPath(EQUIPMENT, "fire_focus")
         );
@@ -97,7 +98,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.WATER_FOCUS.get())
                         .withIcon(ModItems.WATER_FOCUS.get())
                         .withTextPage("ars_elemental.page1.water_focus")
-                        .withPage(ImbuementPage(ModItems.WATER_FOCUS.get()))
+                        .withPage(ImbuementPage(ModItems.LESSER_WATER_FOCUS.get()))
+                        .withPage(new ApparatusPage(ModItems.WATER_FOCUS.get()))
                         .withTextPage("ars_elemental.page2.water_focus")
                 , getPath(EQUIPMENT, "water_focus")
         );
@@ -110,7 +112,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.AIR_FOCUS.get())
                         .withIcon(ModItems.AIR_FOCUS.get())
                         .withTextPage("ars_elemental.page1.air_focus")
-                        .withPage(ImbuementPage(ModItems.AIR_FOCUS.get()))
+                        .withPage(ImbuementPage(ModItems.LESSER_AIR_FOCUS.get()))
+                        .withPage(new ApparatusPage(ModItems.AIR_FOCUS.get()))
                         .withTextPage("ars_elemental.page2.air_focus")
                 , getPath(EQUIPMENT, "air_focus")
         );
@@ -123,7 +126,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.EARTH_FOCUS.get())
                         .withIcon(ModItems.EARTH_FOCUS.get())
                         .withTextPage("ars_elemental.page1.earth_focus")
-                        .withPage(ImbuementPage(ModItems.EARTH_FOCUS.get()))
+                        .withPage(ImbuementPage(ModItems.LESSER_EARTH_FOCUS.get()))
+                        .withPage(new ApparatusPage(ModItems.EARTH_FOCUS.get()))
                         .withTextPage("ars_elemental.page2.earth_focus")
                 , getPath(EQUIPMENT, "earth_focus")
         );

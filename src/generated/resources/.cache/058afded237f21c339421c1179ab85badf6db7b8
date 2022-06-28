@@ -1,6 +1,6 @@
-// 1.19	2022-06-23T09:53:16.5344365	Ars Elemental Item Tags
+// 1.19	2022-06-27T14:21:39.0320704	Ars Elemental Item Tags
 8a1b7edce53d4ac7af95c20e5f11a46ce22931ce data/ars_elemental/tags/items/curio_bag_item.json
-acea6a3ac59df005efaaf508a8857609df705961 data/curios/tags/items/an_focus.json
+f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/items/an_focus.json
 e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bangle.json
 d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/forge/tags/items/logs/archwood.json
 525c1a35787919fd6060975646b2c0a2a41ca910 data/minecraft/tags/items/leaves.json

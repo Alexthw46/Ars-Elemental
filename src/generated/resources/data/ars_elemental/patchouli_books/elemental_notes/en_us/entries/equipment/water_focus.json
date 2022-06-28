@@ -9,7 +9,11 @@
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
-      "recipe": "ars_elemental:imbuement_water_focus"
+      "recipe": "ars_elemental:imbuement_lesser_water_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:water_focus"
     },
     {
       "type": "patchouli:text",

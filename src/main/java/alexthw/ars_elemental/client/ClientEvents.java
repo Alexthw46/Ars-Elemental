@@ -6,6 +6,7 @@ import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.items.CurioHolder;
+import alexthw.ars_elemental.common.items.armor.ElementalHat;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -86,6 +88,11 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
 
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(final EntityRenderersEvent.AddLayers event) {
+        GeoArmorRenderer.registerArmorRenderer(ElementalHat.class, MagicHatRenderer::new);
     }
 
     //keybinding

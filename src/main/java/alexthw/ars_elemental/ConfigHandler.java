@@ -44,15 +44,15 @@ public class ConfigHandler {
         public Common(ForgeConfigSpec.Builder builder) {
 
             FocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the focus")
-                    .defineInRange("Elemental Focus discount", 0.2D, 0.0D, 0.99D);
+                    .defineInRange("Elemental Focus discount", 0.15D, 0.0D, 0.99D);
 
-            builder.comment("Adjust these values to balance how much a spell gets amplified by the matching spell focus")
+            builder.comment("Adjust these values to balance how much a spell gets amplified by the matching spell focus, doubled for major foci.")
                     .push("Elemental Spell Foci - Amplify");
 
-            FireMasteryBuff = builder.define("Fire Focus buff", 2.0D);
-            WaterMasteryBuff = builder.define("Water Focus buff", 2.0D);
-            AirMasteryBuff = builder.define("Air Focus buff", 2.0D);
-            EarthMasteryBuff = builder.define("Earth Focus buff", 2.0D);
+            FireMasteryBuff = builder.define("Fire Focus buff", 1.0D);
+            WaterMasteryBuff = builder.define("Water Focus buff", 1.0D);
+            AirMasteryBuff = builder.define("Air Focus buff", 1.0D);
+            EarthMasteryBuff = builder.define("Earth Focus buff", 1.0D);
 
             builder.pop();
 

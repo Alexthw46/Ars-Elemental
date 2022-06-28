@@ -75,33 +75,34 @@ public class ANProviders {
         @Override
         public void run(CachedOutput cache) throws IOException {
 
-            recipes.add(new ImbuementRecipe("fire_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.FIRE_FOCUS.get(), 1), 5000)
+            recipes.add(new ImbuementRecipe("lesser_fire_focus", Ingredient.of(Items.AMETHYST_SHARD), ModItems.LESSER_FIRE_FOCUS.get().getDefaultInstance(), 5000)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
-            );
-            recipes.add(new ImbuementRecipe("water_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.WATER_FOCUS.get(), 1), 5000)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT));
+            recipes.add(new ImbuementRecipe("lesser_water_focus", Ingredient.of(Items.AMETHYST_SHARD), ModItems.LESSER_WATER_FOCUS.get().getDefaultInstance(), 5000)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
-            );
-            recipes.add(new ImbuementRecipe("earth_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.EARTH_FOCUS.get(), 1), 5000)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT));
+            recipes.add(new ImbuementRecipe("lesser_earth_focus", Ingredient.of(Items.AMETHYST_SHARD), ModItems.LESSER_EARTH_FOCUS.get().getDefaultInstance(), 5000)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
-            );
-            recipes.add(new ImbuementRecipe("air_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.AIR_FOCUS.get(), 1), 5000)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT));
+            recipes.add(new ImbuementRecipe("lesser_air_focus", Ingredient.of(Items.AMETHYST_SHARD), ModItems.LESSER_AIR_FOCUS.get().getDefaultInstance(), 5000)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT)
+                    .withPedestalItem(Items.GOLD_INGOT)
             );
 
             recipes.add(new ImbuementRecipe("fire_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.FIRE_TURRET.get(), 1), 5000)

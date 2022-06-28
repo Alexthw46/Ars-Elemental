@@ -2,9 +2,9 @@ package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
+import alexthw.ars_elemental.api.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
-import alexthw.ars_elemental.common.items.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.BotaniaCompat;
@@ -12,6 +12,7 @@ import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.CrushRecipe;
@@ -146,7 +147,7 @@ public class GlyphEvents {
         if (event.resolveEffect == EffectConjureWater.INSTANCE) {
             if (school == ELEMENTAL_WATER) {
                 if (GlyphEffectUtil.hasFollowingEffect(event.context, EffectFreeze.INSTANCE)) {
-                    GlyphEffectUtil.placeBlocks(blockHitResult, event.world, event.shooter, event.spellStats, Blocks.ICE.defaultBlockState());
+                    GlyphEffectUtil.placeBlocks(blockHitResult, event.world, event.shooter, event.spellStats, event.context, new SpellResolver(event.context), Blocks.ICE.defaultBlockState());
                     event.setCanceled(true);
                 }
             }

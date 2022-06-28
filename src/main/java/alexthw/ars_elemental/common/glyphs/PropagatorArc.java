@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.api.IPropagator;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;

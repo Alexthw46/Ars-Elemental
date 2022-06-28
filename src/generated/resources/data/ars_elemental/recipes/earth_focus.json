@@ -1,0 +1,20 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": true,
+  "output": {
+    "item": "ars_elemental:earth_focus"
+  },
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:wilden_tribute"
+      }
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_elemental:lesser_earth_focus"
+    }
+  ],
+  "sourceCost": 0
+}

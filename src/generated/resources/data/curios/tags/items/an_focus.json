@@ -4,6 +4,10 @@
     "ars_elemental:fire_focus",
     "ars_elemental:earth_focus",
     "ars_elemental:necrotic_focus",
-    "ars_elemental:water_focus"
+    "ars_elemental:water_focus",
+    "ars_elemental:lesser_air_focus",
+    "ars_elemental:lesser_fire_focus",
+    "ars_elemental:lesser_earth_focus",
+    "ars_elemental:lesser_water_focus"
   ]
 }

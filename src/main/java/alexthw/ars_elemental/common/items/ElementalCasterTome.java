@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.items;
 
+import alexthw.ars_elemental.api.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
 import net.minecraft.network.chat.Component;

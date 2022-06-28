@@ -118,6 +118,37 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .build()
         );
 
+        //focus upgrade
+
+        recipes.add(builder()
+                .withResult(ModItems.FIRE_FOCUS.get())
+                .withReagent(ModItems.LESSER_FIRE_FOCUS.get())
+                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .keepNbtOfReagent(true)
+                .build()
+        );
+        recipes.add(builder()
+                .withResult(ModItems.AIR_FOCUS.get())
+                .withReagent(ModItems.LESSER_AIR_FOCUS.get())
+                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .keepNbtOfReagent(true)
+                .build()
+        );
+        recipes.add(builder()
+                .withResult(ModItems.EARTH_FOCUS.get())
+                .withReagent(ModItems.LESSER_EARTH_FOCUS.get())
+                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .keepNbtOfReagent(true)
+                .build()
+        );
+        recipes.add(builder()
+                .withResult(ModItems.WATER_FOCUS.get())
+                .withReagent(ModItems.LESSER_WATER_FOCUS.get())
+                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .keepNbtOfReagent(true)
+                .build()
+        );
+
         //mirror shield enchant
         recipes.add(builder()
                 .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)

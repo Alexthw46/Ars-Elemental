@@ -1,9 +1,12 @@
-// 1.19	2022-06-23T09:53:16.5354311	Ars Elemental Apparatus
+// 1.19	2022-06-27T14:21:39.0320704	Ars Elemental Apparatus
 3266636b6a20e5dcb1100675d7e6071f41e998bb data/ars_elemental/recipes/air_bangle.json
+bf9aab214a0d8ccd3e6f63558e9e53a4289cdf95 data/ars_elemental/recipes/air_focus.json
 063b8ef430bbda4aa7d994452eb0515a24371a6c data/ars_elemental/recipes/base_bangle.json
 2ab302a7a5e7aa8558ad397528e178cc4564e33e data/ars_elemental/recipes/earth_bangle.json
+90ab79b8cd4ba097187bed28942ae06130645676 data/ars_elemental/recipes/earth_focus.json
 8dbd73eef67debafb62032693a2968187b1e8754 data/ars_elemental/recipes/firenando_charm.json
 ab22e066a5e1e0ea6a4f5103e68f646d05690065 data/ars_elemental/recipes/fire_bangle.json
+28d892f3194b8a305caf05fd198fae4edb2d10a6 data/ars_elemental/recipes/fire_focus.json
 15ec154a23c105b48b9adbeaf92b1c85c545e3e7 data/ars_elemental/recipes/mirror_shield_1.json
 53b9831123f690d520f9d26d6536566df9e477c7 data/ars_elemental/recipes/mirror_shield_2.json
 c6e3e1a040e141e3d0b31d500bf23d7dc1f895f8 data/ars_elemental/recipes/mirror_shield_3.json
@@ -11,4 +14,5 @@ c6e3e1a040e141e3d0b31d500bf23d7dc1f895f8 data/ars_elemental/recipes/mirror_shiel
 a53cec3094c3e7fca6f11a3e92808e6c462b9e8d data/ars_elemental/recipes/siren_charm.json
 6e72fb5e90c22c37eabd7bce523b52afa0eaa2d4 data/ars_elemental/recipes/spell_horn.json
 52692af1f641fc59f7c7d1c4a62bd424321c0b94 data/ars_elemental/recipes/water_bangle.json
+332c3f42d2371d8ec3090e073bd599daf9110730 data/ars_elemental/recipes/water_focus.json
 e2c22e53d80051b9edd6d36194b287443905d30a data/ars_elemental/recipes/water_upstream.json
