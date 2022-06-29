@@ -146,7 +146,7 @@ public class GlyphEvents {
         if (event.resolveEffect == EffectConjureWater.INSTANCE) {
             if (school == ELEMENTAL_WATER) {
                 if (GlyphEffectUtil.hasFollowingEffect(event.context, EffectFreeze.INSTANCE)) {
-                    GlyphEffectUtil.placeBlocks(blockHitResult, event.world, event.shooter, event.spellStats, Blocks.ICE.defaultBlockState());
+                    GlyphEffectUtil.placeBlocks(blockHitResult, event.world, event.shooter, event.spellStats, Blocks.ICE.defaultBlockState(), event.context, null);
                     event.setCanceled(true);
                 }
             }

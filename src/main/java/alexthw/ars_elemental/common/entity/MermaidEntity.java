@@ -278,11 +278,11 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     public static boolean checkSurfaceWaterAnimalSpawnRules(LevelAccessor levelAccessor, BlockPos pos) {
-        int i = levelAccessor.getSeaLevel();
-        int j = i - 23;
+        int i = 70;
+        int j = i - 25;
         boolean f1 = pos.getY() >= j && pos.getY() <= i;
-        boolean f2 = levelAccessor.getBiome(pos).is(Biomes.COLD_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.DEEP_COLD_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.FROZEN_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.DEEP_FROZEN_OCEAN);
-        return f1 && !f2 && levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getBlockState(pos.above()).is(Blocks.WATER);
+        boolean f2 = levelAccessor.getBiome(pos).is(Biomes.WARM_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.DEEP_LUKEWARM_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.LUKEWARM_OCEAN);
+        return f1 && f2 && levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getBlockState(pos.above()).is(Blocks.WATER);
     }
 
     //Pathfinder

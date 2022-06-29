@@ -58,9 +58,11 @@ public class DamageEvents {
                 }
             }
         } else if (event.getSource().getEntity() instanceof FirenandoEntity FE) {
-            if (event.getEntity().fireImmune() && event.getSource().isFire() && event.getEntity() instanceof Monster) {
+            if (event.getEntity().fireImmune() && event.getSource().isFire()) {
                 event.setCanceled(true);
                 event.getEntityLiving().hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
+            } else if (!(event.getEntity() instanceof Monster)) {
+                event.setCanceled(true);
             }
         }
     }

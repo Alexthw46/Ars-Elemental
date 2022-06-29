@@ -27,9 +27,9 @@ public class Events {
         if (e.getCategory() == Biome.BiomeCategory.NETHER || e.getCategory() == Biome.BiomeCategory.THEEND || e.getCategory() == Biome.BiomeCategory.NONE)
             return;
         if (Common.SIREN_WEIGHT.get() > 0) {
-            if (e.getCategory() == Biome.BiomeCategory.OCEAN || e.getCategory() == Biome.BiomeCategory.BEACH) {
+            if (e.getCategory() == Biome.BiomeCategory.OCEAN) {
                 if (e.getClimate().temperature >= 0.5)
-                    e.getSpawns().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(), Common.SIREN_WEIGHT.get(), 1, 2));
+                    e.getSpawns().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(), Common.SIREN_WEIGHT.get(), 1, 3));
             }
         }
 
