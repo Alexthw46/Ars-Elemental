@@ -68,7 +68,7 @@ public class EffectCharm extends ElementalAbstractEffect {
                     if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                         ((FoxInvoker) fox).callAddTrustedUUID(player.getUUID());
                 } else if (animal.canFallInLove()) {
-                    if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
+                    if (rollToSeduce(90, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                         animal.setInLove(player);
                 }
 

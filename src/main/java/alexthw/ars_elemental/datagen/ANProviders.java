@@ -130,6 +130,15 @@ public class ANProviders {
                     .withPedestalItem(ModItems.EARTH_FOCUS.get())
             );
 
+            recipes.add(new ImbuementRecipe("mark_of_mastery_temp", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5), 10000)
+                    .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
+                    .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+            );
+
             Path output = generator.getOutputFolder();
             for (ImbuementRecipe g : recipes) {
                 Path path = getRecipePath(output, g.getId().getPath());

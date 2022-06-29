@@ -5,6 +5,7 @@ import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectConjureWater;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSmelt;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +38,9 @@ public class EffectConjureDirt extends ElementalAbstractEffect {
                 AbstractSpellPart next = spellContext.nextPart();
 
                 if (next instanceof AbstractEffect) {
-                    if (next == EffectCrush.INSTANCE) {
+                    if (next == EffectConjureWater.INSTANCE) {
+                        toPlace = Blocks.MUD.defaultBlockState();
+                    } else if (next == EffectCrush.INSTANCE) {
                         toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
                     } else if (next == EffectSmelt.INSTANCE && spellStats.hasBuff(AugmentAmplify.INSTANCE)) {
                         toPlace = Blocks.STONE.defaultBlockState();

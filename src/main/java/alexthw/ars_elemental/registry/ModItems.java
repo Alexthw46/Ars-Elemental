@@ -104,7 +104,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> CURIO_BAG;
     public static final RegistryObject<Item> DEBUG_ICON;
-
+    public static final RegistryObject<Item> MARK_OF_MASTERY;
     public static final RegistryObject<Item> SIREN_SHARDS;
     public static final RegistryObject<Item> SIREN_CHARM;
     public static final RegistryObject<Item> FIRENANDO_CHARM;
@@ -126,6 +126,7 @@ public class ModItems {
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp().fireResistant()));
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
+        MARK_OF_MASTERY = ITEMS.register("mark_of_mastery", () -> new Item(addTabProp()));
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(addTabProp()));
 
@@ -208,7 +209,7 @@ public class ModItems {
         return false;
     }
 
-    static class ArmorSet {
+    public static class ArmorSet {
         public ArmorSet(String name, SpellSchool element) {
             this.head = ITEMS.register(name + "_hat", () -> new ElementalHat(element, addTabProp()));
             this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, addTabProp()));

@@ -7,7 +7,7 @@
   "pedestalItems": [
     {
       "item": {
-        "item": "ars_nouveau:wilden_tribute"
+        "item": "ars_elemental:mark_of_mastery"
       }
     }
   ],
@@ -16,5 +16,5 @@
       "item": "ars_elemental:lesser_air_focus"
     }
   ],
-  "sourceCost": 0
+  "sourceCost": 2000
 }

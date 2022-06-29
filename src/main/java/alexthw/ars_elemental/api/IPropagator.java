@@ -14,10 +14,9 @@ public interface IPropagator {
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
         spellContext.setCanceled(true);
-        if (spellContext.getCurrentIndex() >= spellContext.getSpell().recipe.size())
-            return;
         Spell newSpell = spellContext.getRemainingSpell();
-        SpellContext newContext = new SpellContext(newSpell, shooter).withColors(spellContext.colors).withCastingTile(spellContext.castingTile).withType(spellContext.getType());
+        if (newSpell.isEmpty()) return;
+        SpellContext newContext = spellContext.clone().withSpell(newSpell);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
         propagate(world, rayTraceResult.getLocation(), shooter, stats, newResolver);
 

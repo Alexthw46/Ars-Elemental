@@ -1,17 +1,41 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.api.ISchoolFocus;
+import alexthw.ars_elemental.common.items.armor.IElementalArmor;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static alexthw.ars_elemental.ConfigHandler.COMMON;
+
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class Events {
+
+    public static void focusDiscount(SpellCastEvent event) {
+        if (!event.getWorld().isClientSide) {
+            double finalDiscount = 0;
+            SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntityLiving());
+            if (focus != null) {
+                if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
+                    finalDiscount += COMMON.FocusDiscount.get();
+            }
+            for (ItemStack stack : event.getEntity().getArmorSlots()) {
+                if (stack.getItem() instanceof IElementalArmor armor && event.spell.recipe.stream().anyMatch(armor.getSchool()::isPartOfSchool))
+                    finalDiscount += 0.1;
+            }
+            event.spell.setCost((int) (event.spell.getCastingCost() * Math.max(0.05, 1 - finalDiscount)));
+
+        }
+    }
 
     @SubscribeEvent
     public static void keepOrder(LivingDeathEvent event) {

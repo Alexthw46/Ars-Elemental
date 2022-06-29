@@ -45,7 +45,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         magnet.setAoe((float) spellStats.getAoeMultiplier());
         magnet.setOwner(shooter);
         magnet.extendedTime = spellStats.getDurationMultiplier();
-        magnet.setColor(spellContext.colors);
+        magnet.setColor(spellContext.getColors());
         world.addFreshEntity(magnet);
     }
 

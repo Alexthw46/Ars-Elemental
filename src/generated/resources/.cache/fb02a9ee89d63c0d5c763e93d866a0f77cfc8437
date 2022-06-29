@@ -1,4 +1,4 @@
-// 1.19	2022-06-27T14:21:39.0320704	Ars Elemental Item Models
+// 1.19	2022-06-29T23:38:43.9248075	Ars Elemental Item Models
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
 9b7a442f93c41c299a0eda4f3da50307817803b5 assets/ars_elemental/models/item/air_caster_tome.json
@@ -36,6 +36,7 @@ d29a7a9b17845242022427392737b4faa456f6fc assets/ars_elemental/models/item/fire_f
 e326e14fa8470667a133916991e22ce84ebcc6d8 assets/ars_elemental/models/item/lesser_earth_focus.json
 3c095e71ede593ddf9b6f0f58860c89088cd4300 assets/ars_elemental/models/item/lesser_fire_focus.json
 3bfebea068e4b6e7807981deb4f88fa473c4af56 assets/ars_elemental/models/item/lesser_water_focus.json
+ed40950dfbebf15fbb9395bc4a141fdc692d3404 assets/ars_elemental/models/item/mark_of_mastery.json
 12e40d6e25ac2983ae7ba220b5317a5d24f5447b assets/ars_elemental/models/item/mermaid_rock.json
 97d103aedc6c499fa3eb1447fae55ceb83c0c877 assets/ars_elemental/models/item/necrotic_focus.json
 aac5a91982593f22b9053427218dd70a7ea9f0c1 assets/ars_elemental/models/item/siren_charm.json

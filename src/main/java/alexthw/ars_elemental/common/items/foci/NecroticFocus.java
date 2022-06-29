@@ -154,7 +154,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
                 } else {
                     i.getLookControl().setLookAt(player.getViewVector(1));
                 }
-                EntitySpellResolver spellResolver = new EntitySpellResolver((new SpellContext(event.spell, i)).withColors(event.context.colors));
+                EntitySpellResolver spellResolver = new EntitySpellResolver(event.context.withCaster(i));
                 spellResolver.onCast(ItemStack.EMPTY, world);
             }
         }

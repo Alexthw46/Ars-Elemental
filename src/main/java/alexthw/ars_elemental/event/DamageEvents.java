@@ -15,6 +15,7 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -89,6 +90,9 @@ public class DamageEvents {
             if (ISchoolBangle.hasBangle(event.getEntity().level, player) == ELEMENTAL_EARTH) {
                 event.setCanceled(true);
             }
+        }
+        if (event.getSource().getEntity() instanceof FirenandoEntity && event.getEntity() instanceof Animal) {
+            event.setCanceled(true);
         }
     }
 

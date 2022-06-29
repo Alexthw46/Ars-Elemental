@@ -26,3 +26,4 @@ classes
 forge*changelog.txt
 /gradle/
 /externalmods/
+/src/main/resources/assets/ars_arsenal/lang/

@@ -5,7 +5,6 @@ import alexthw.ars_elemental.api.ISchoolFocus;
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -16,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
@@ -53,17 +51,6 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
             }
         }
         return builder;
-    }
-
-    @SubscribeEvent
-    public static void onCast(SpellCastEvent event) {
-        if (!event.getWorld().isClientSide) {
-            SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntityLiving());
-            if (focus != null) {
-                if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
-                    event.spell.setCost((int) (event.spell.getCastingCost() * (1 - COMMON.FocusDiscount.get())));
-            }
-        }
     }
 
     public SpellSchool getSchool() {

@@ -2,19 +2,24 @@
   "type": "ars_nouveau:enchanting_apparatus",
   "keepNbtOfReagent": true,
   "output": {
-    "item": "ars_elemental:water_focus"
+    "item": "ars_elemental:air_leggings"
   },
   "pedestalItems": [
     {
       "item": {
         "item": "ars_elemental:mark_of_mastery"
       }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:air_essence"
+      }
     }
   ],
   "reagent": [
     {
-      "item": "ars_elemental:lesser_water_focus"
+      "item": "ars_nouveau:archmage_leggings"
     }
   ],
-  "sourceCost": 2000
+  "sourceCost": 0
 }

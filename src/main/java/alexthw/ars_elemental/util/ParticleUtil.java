@@ -30,7 +30,8 @@ public class ParticleUtil {
 
             case "necromancy" -> soulColor;
 
-            default -> com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColor();
+            default ->
+                    com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColorWrapper().toParticleColor();
         };
     }
 
@@ -43,7 +44,8 @@ public class ParticleUtil {
 
             case "air", "necromancy" -> fireColor;
 
-            default -> com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColor();
+            default ->
+                    com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColorWrapper().toParticleColor();
         };
     }
 

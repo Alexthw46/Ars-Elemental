@@ -13,6 +13,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 
 import java.io.IOException;
@@ -123,28 +124,32 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         recipes.add(builder()
                 .withResult(ModItems.FIRE_FOCUS.get())
                 .withReagent(ModItems.LESSER_FIRE_FOCUS.get())
-                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
+                .withSourceCost(2000)
                 .keepNbtOfReagent(true)
                 .build()
         );
         recipes.add(builder()
                 .withResult(ModItems.AIR_FOCUS.get())
                 .withReagent(ModItems.LESSER_AIR_FOCUS.get())
-                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
+                .withSourceCost(2000)
                 .keepNbtOfReagent(true)
                 .build()
         );
         recipes.add(builder()
                 .withResult(ModItems.EARTH_FOCUS.get())
                 .withReagent(ModItems.LESSER_EARTH_FOCUS.get())
-                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
+                .withSourceCost(2000)
                 .keepNbtOfReagent(true)
                 .build()
         );
         recipes.add(builder()
                 .withResult(ModItems.WATER_FOCUS.get())
                 .withReagent(ModItems.LESSER_WATER_FOCUS.get())
-                .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
+                .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
+                .withSourceCost(2000)
                 .keepNbtOfReagent(true)
                 .build()
         );
@@ -170,6 +175,12 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(Recipes.SOURCE_GEM_BLOCK)
                 .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 9000));
 
+        addArmorRecipes(ModItems.FIRE_ARMOR, ItemsRegistry.FIRE_ESSENCE);
+        addArmorRecipes(ModItems.WATER_ARMOR, ItemsRegistry.WATER_ESSENCE);
+        addArmorRecipes(ModItems.AIR_ARMOR, ItemsRegistry.AIR_ESSENCE);
+        addArmorRecipes(ModItems.EARTH_ARMOR, ItemsRegistry.EARTH_ESSENCE);
+
+
         Path output = this.generator.getOutputFolder();
         for (EnchantingApparatusRecipe g : recipes) {
             if (g != null) {
@@ -178,6 +189,13 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
             }
         }
 
+    }
+
+    protected void addArmorRecipes(ModItems.ArmorSet armorSet, ItemLike essence) {
+        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.ARCHMAGE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.ARCHMAGE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.ARCHMAGE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.ARCHMAGE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
     }
 
     protected static Path getRecipePath(Path pathIn, String str) {
