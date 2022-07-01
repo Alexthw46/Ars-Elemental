@@ -15,7 +15,6 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -67,9 +66,14 @@ public class DamageEvents {
                 }
             }
         } else if (event.getSource().getEntity() instanceof FirenandoEntity FE) {
-            if (event.getEntity().fireImmune() && event.getSource().isFire() && event.getEntity() instanceof Monster) {
+            if (!(event.getEntity() instanceof Monster mob)) {
                 event.setCanceled(true);
-                event.getEntityLiving().hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
+                event.getEntity().clearFire();
+            } else {
+                if (mob.fireImmune() && event.getSource().isFire()) {
+                    event.setCanceled(true);
+                    mob.hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
+                }
             }
         }
     }
@@ -90,9 +94,6 @@ public class DamageEvents {
             if (ISchoolBangle.hasBangle(event.getEntity().level, player) == ELEMENTAL_EARTH) {
                 event.setCanceled(true);
             }
-        }
-        if (event.getSource().getEntity() instanceof FirenandoEntity && event.getEntity() instanceof Animal) {
-            event.setCanceled(true);
         }
     }
 

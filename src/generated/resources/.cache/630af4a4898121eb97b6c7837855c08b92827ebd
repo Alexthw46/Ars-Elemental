@@ -1,6 +1,6 @@
-// 1.19	2022-06-24T12:09:37.2497035	Ars Elemental Glyph Recipes
+// 1.19	2022-07-01T14:48:50.5385349	Ars Elemental Glyph Recipes
 ddf7a774dcab7b30450887a2556fe4c0cce5e890 data/ars_elemental/recipes/glyph_charm.json
-cf46f279e8978e95c5c34f86337828c116a486c3 data/ars_elemental/recipes/glyph_conjure_dirt.json
+bfe325c8b34e888365ca61a9c8b71463e342607a data/ars_elemental/recipes/glyph_conjure_terrain.json
 1307b22ca34b64015bd959f14e6e8bf3f46adf7f data/ars_elemental/recipes/glyph_curved_projectile.json
 ce46e1df5010a705d4de3e18584ec1c27d2d4c13 data/ars_elemental/recipes/glyph_homing_projectile.json
 a61ce0669a1b3ea3eb6b011bc09a033cd59cd5ab data/ars_elemental/recipes/glyph_life_link.json

@@ -1,4 +1,4 @@
-// 1.19	2022-06-27T14:24:22.9662556	Ars Elemental Patchouli Datagen
+// 1.19	2022-07-01T14:48:50.5475121	Ars Elemental Patchouli Datagen
 8d83e73962205e06b4ead38a734e588da07a6a15 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/fire_golem.json
 6c3b3c025a56278426717da87ba6a148bf8012e3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/mermaid.json
 f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
@@ -17,7 +17,7 @@ c93a1956480f950013c433c0173aeafea96a394d data/ars_elemental/patchouli_books/elem
 9ca84005c6a5f36eca78ec8489bc0553255e68e9 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/familiars/firenando_familiar.json
 6676b196b2b0226ed298457754c4b6e5971e8aa7 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/familiars/siren_familiar.json
 33e38533c5c6f18264bfde002d312f9893d59b30 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/getting_started/elemental_tweaks.json
-e567bc45100438377208f9a00aa6a47510ff44d0 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_conjure_dirt.json
+aa58c026d2964293308ee9c59a22f242088724f4 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_conjure_terrain.json
 50d796671924d7ca6d053f38e74df8297e4650bf data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_charm.json
 95e019adafd5e863ea5f36981651125e8354da18 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_curved_projectile.json
 f631dea1bfb2e8119a1129a5f76b390d87bd8dd0 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_poison_spores.json

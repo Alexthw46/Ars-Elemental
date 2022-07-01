@@ -26,7 +26,7 @@ public class EffectConjureDirt extends ElementalAbstractEffect {
     public static EffectConjureDirt INSTANCE = new EffectConjureDirt();
 
     private EffectConjureDirt() {
-        super("conjure_dirt", "Conjure Dirt");
+        super("conjure_terrain", "Conjure Terrain");
     }
 
     @Override

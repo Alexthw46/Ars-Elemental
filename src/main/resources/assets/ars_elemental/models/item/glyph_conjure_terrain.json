@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ars_nouveau:items/conjure_dirt"
+    "layer0": "ars_nouveau:items/conjure_terrain"
   }
 }

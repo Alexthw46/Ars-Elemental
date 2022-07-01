@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.client.castertools;
 
-import alexthw.ars_elemental.common.items.SpellHorn;
+import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import com.hollingsworth.arsnouveau.client.renderer.item.FixedGeoItemRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
