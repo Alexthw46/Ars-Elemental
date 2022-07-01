@@ -36,7 +36,7 @@ public class ANProviders {
 
             Path output = this.generator.getOutputFolder();
 
-            recipes.add(get(EffectConjureDirt.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.DIRT));
+            recipes.add(get(EffectConjureTerrain.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.DIRT));
             recipes.add(get(EffectWaterGrave.INSTANCE).withItem(Items.KELP).withItem(Items.PRISMARINE_SHARD).withItem(ItemsRegistry.WATER_ESSENCE));
             recipes.add(get(EffectSpores.INSTANCE).withItem(Items.SPORE_BLOSSOM).withItem(Items.RED_MUSHROOM).withItem(ItemsRegistry.EARTH_ESSENCE));
 

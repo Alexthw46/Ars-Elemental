@@ -25,9 +25,9 @@ public class ElementalSpellTurretTile extends BasicSpellTurretTile {
     public int getManaCost() {
         Spell spell = this.spellCaster.getSpell();
         if (spell.recipe.stream().anyMatch(p -> this.school.isPartOfSchool(p))) {
-            return (int) (spell.getCastingCost() * 0.35);
+            return (int) (spell.getNoDiscountCost() * 0.35);
         } else {
-            return (int) (spell.getCastingCost() * 0.6);
+            return (int) (spell.getNoDiscountCost() * 0.6);
         }
     }
 

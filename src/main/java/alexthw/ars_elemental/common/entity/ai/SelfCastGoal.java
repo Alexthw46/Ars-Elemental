@@ -27,7 +27,7 @@ public class SelfCastGoal<T extends EntityMageBase> extends CastGoal<T> {
         if (spell == null) spell = mob.sSpells.get(index);
 
         ParticleColor color = schoolToColor(mob.school.getId());
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(this.spell, this.mob).withColors(color).withType(SpellContext.CasterType.ENTITY));
+        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(mob.level, this.spell, this.mob).withColors(color).withType(SpellContext.CasterType.ENTITY));
         resolver.onCast(ItemStack.EMPTY, mob.level);
         mob.castCooldown = 40;
     }

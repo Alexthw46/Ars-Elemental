@@ -35,7 +35,6 @@ public class AEBiomeModifiersProvider {
         Map<ResourceLocation, BiomeModifier> modifierMap = new HashMap<>();
 
         HolderSet.Named<Biome> OVERWORLD_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), BiomeTags.IS_OVERWORLD);
-        HolderSet.Named<Biome> RARE_ARCHWOOD_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), BiomeTagProvider.RARE_ARCHWOOD_BIOME_TAG);
         HolderSet.Named<Biome> COMMON_ARCHWOOD_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), BiomeTagProvider.ARCHWOOD_BIOME_TAG);
         HolderSet.Named<Biome> SIREN_SPAWN_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), AETagsProvider.AEBiomeTagsProvider.SIREN_SPAWN_TAG);
 

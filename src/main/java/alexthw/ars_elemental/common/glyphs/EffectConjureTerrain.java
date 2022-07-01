@@ -21,11 +21,11 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Set;
 
-public class EffectConjureDirt extends ElementalAbstractEffect {
+public class EffectConjureTerrain extends ElementalAbstractEffect {
 
-    public static EffectConjureDirt INSTANCE = new EffectConjureDirt();
+    public static EffectConjureTerrain INSTANCE = new EffectConjureTerrain();
 
-    private EffectConjureDirt() {
+    private EffectConjureTerrain() {
         super("conjure_terrain", "Conjure Terrain");
     }
 
@@ -44,8 +44,6 @@ public class EffectConjureDirt extends ElementalAbstractEffect {
                         toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
                     } else if (next == EffectSmelt.INSTANCE && spellStats.hasBuff(AugmentAmplify.INSTANCE)) {
                         toPlace = Blocks.STONE.defaultBlockState();
-                        Spell spell = spellContext.getSpell();
-                        spell.setCost((int) (spell.getCastingCost() * 1.5F));
                     } else {
                         spellContext.setCurrentIndex(spellContext.getCurrentIndex() - 1);
                     }

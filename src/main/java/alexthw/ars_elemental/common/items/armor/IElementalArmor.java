@@ -48,6 +48,6 @@ public interface IElementalArmor extends ISpellModifierItem, IManaEquipment {
     SpellSchool getSchool();
 
     default boolean doAbsorb(DamageSource damageSource) {
-        return false;
+        return ElementalArmor.damageResistances.getOrDefault(getSchool(), List.of()).contains(damageSource);
     }
 }

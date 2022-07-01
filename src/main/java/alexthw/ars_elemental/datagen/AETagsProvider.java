@@ -3,6 +3,7 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.world.biome.ModBiomes;
@@ -32,6 +33,7 @@ public class AETagsProvider {
     public static class AEItemTagsProvider extends ItemTagsProvider {
         public static final TagKey<Item> CURIO_SPELL_FOCUS = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "an_focus"));
         public static final TagKey<Item> CURIO_BANGLE = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "bangle"));
+        public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "magic_shards"));
 
         public AEItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen, blockTagsProvider, ArsElemental.MODID, existingFileHelper);
@@ -41,7 +43,8 @@ public class AETagsProvider {
         protected void addTags() {
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get());
-            tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.DOMINION_ROD.get(), ItemsRegistry.JAR_OF_LIGHT.get(), ItemsRegistry.VOID_JAR.get(), ItemsRegistry.RUNIC_CHALK.get(), ItemsRegistry.WARP_SCROLL.get(), ItemsRegistry.SPELL_PARCHMENT.get());
+            tag(SUMMON_SHARDS).add(ModItems.SIREN_SHARDS.get(), ItemsRegistry.DRYGMY_SHARD.get(), ItemsRegistry.STARBUNCLE_SHARD.get(), ItemsRegistry.WIXIE_SHARD.get(), ItemsRegistry.WHIRLISPRIG_SHARDS.get());
+            tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.DOMINION_ROD.get(), ItemsRegistry.JAR_OF_LIGHT.get(), ItemsRegistry.VOID_JAR.get(), ItemsRegistry.RUNIC_CHALK.get(), ItemsRegistry.WARP_SCROLL.get(), ItemsRegistry.SPELL_PARCHMENT.get()).addTag(SUMMON_SHARDS);
             this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
             this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
             this.copy(BlockTags.LOGS, ItemTags.LOGS);

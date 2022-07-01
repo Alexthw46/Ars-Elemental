@@ -5,6 +5,7 @@
     "ars_nouveau:void_jar",
     "ars_nouveau:runic_chalk",
     "ars_nouveau:warp_scroll",
-    "ars_nouveau:spell_parchment"
+    "ars_nouveau:spell_parchment",
+    "#ars_nouveau:magic_shards"
   ]
 }

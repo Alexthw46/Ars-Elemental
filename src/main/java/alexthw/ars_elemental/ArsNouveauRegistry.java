@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.items.armor.ElementalArmor;
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
@@ -21,9 +22,11 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.LightLayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
@@ -37,13 +40,41 @@ public class ArsNouveauRegistry {
         registerGlyphs();
         registerRituals();
         registerFamiliars(ArsNouveauAPI.getInstance());
-        //GlyphConfigs.registerGlyphConfigs();
+        addDamageReductions();
+    }
+
+    private static void addDamageReductions() {
+        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_FIRE, Arrays.asList(
+                DamageSource.ON_FIRE,
+                DamageSource.LAVA,
+                DamageSource.IN_FIRE,
+                DamageSource.HOT_FLOOR,
+                DamageSource.DRAGON_BREATH)
+        );
+        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
+                DamageSource.DROWN,
+                DamageSource.FREEZE,
+                DamageSource.MAGIC,
+                DamageSource.LIGHTNING_BOLT)
+        );
+        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
+                DamageSource.FALL,
+                DamageSource.FLY_INTO_WALL,
+                DamageSource.IN_WALL,
+                DamageSource.LIGHTNING_BOLT)
+        );
+        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageSource.CACTUS,
+                DamageSource.STARVE,
+                DamageSource.SWEET_BERRY_BUSH,
+                DamageSource.IN_WALL,
+                DamageSource.FALLING_BLOCK)
+        );
     }
 
     public static void registerGlyphs() {
         //effects
         register(EffectWaterGrave.INSTANCE);
-        register(EffectConjureDirt.INSTANCE);
+        register(EffectConjureTerrain.INSTANCE);
         register(EffectCharm.INSTANCE);
         register(EffectLifeLink.INSTANCE);
         register(EffectSpores.INSTANCE);

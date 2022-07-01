@@ -77,24 +77,23 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
     @Override
     public void releaseUsing(ItemStack stack, Level pLevel, LivingEntity pLivingEntity, int remainingTicks) {
 
-        double j = getUseDuration(stack) - remainingTicks;
+        float j = getUseDuration(stack) - remainingTicks;
 
         if (j >= getMinUseDuration() && pLivingEntity instanceof Player player) {
-            double aoeMult = Math.min(8, 0.5 + j / getMinUseDuration());
+            float aoeMult = 0.5F + j / getMinUseDuration();
             if (pLevel instanceof ServerLevel) {
                 ISpellCaster caster = getSpellCaster(stack);
-                SpellResolver resolver = new SpellResolver(new SpellContext(caster.getSpell(), pLivingEntity).withColors(caster.getColor()));
+                SpellResolver resolver = new SpellResolver(new SpellContext(pLevel, caster.getSpell(), pLivingEntity).withColors(caster.getColor()));
                 Predicate<Entity> filter = CompatUtils.tooManyGlyphsLoaded() ? TooManyCompats.getFilterPredicate(caster.getSpell()) : (e -> e instanceof LivingEntity);
                 for (Entity l : pLevel.getEntities((Entity) null, new AABB(player.blockPosition()).inflate(aoeMult), filter)) {
                     resolver.onResolveEffect(pLevel, new EntityHitResult(l));
                 }
                 resolver.expendMana();
-                //player.sendSystemMessage(Component.literal(j +"-"+ aoeMult));
             }
             if (j + 50 >= getMaxUseDuration()) {
                 player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), getMaxUseDuration() * 4));
             }
-            play(pLevel, player, (float) aoeMult * 16);
+            play(pLevel, player, aoeMult * 16);
             player.getCooldowns().addCooldown(this, 200);
         }
 

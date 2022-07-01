@@ -32,7 +32,7 @@ public class Events {
                 if (stack.getItem() instanceof IElementalArmor armor && event.spell.recipe.stream().anyMatch(armor.getSchool()::isPartOfSchool))
                     finalDiscount += 0.1;
             }
-            event.spell.setCost((int) (event.spell.getCastingCost() * Math.max(0.05, 1 - finalDiscount)));
+            event.spell.addDiscount((int) (event.spell.getDiscountedCost() * finalDiscount));
 
         }
     }

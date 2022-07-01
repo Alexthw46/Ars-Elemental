@@ -56,7 +56,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
                 event.builder.addDamageModifier(2.0D);
             }
             if (event.spellPart instanceof MethodProjectile || event.spellPart instanceof MethodHomingProjectile || event.spellPart instanceof MethodCurvedProjectile) {
-                event.spellContext.getSpell().setCost((int) (event.spellContext.getSpell().getCastingCost() * 0.8));
+                event.spellContext.getSpell().addDiscount((int) (event.spellContext.getSpell().getDiscountedCost() * 0.2));
             }
         }
     }
