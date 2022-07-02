@@ -27,8 +27,8 @@ public class SporeBlossomGround extends Block {
     private static final int PARTICLE_XZ_RADIUS = 4;
     private static final int PARTICLE_Y_MAX = 4;
 
-    public boolean canSurvive(BlockState p_154709_, LevelReader p_154710_, BlockPos p_154711_) {
-        return Block.canSupportCenter(p_154710_, p_154711_.below(), Direction.UP) && !p_154710_.isWaterAt(p_154711_);
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        return !level.getBlockState(pos.below()).isAir();
     }
 
     /**

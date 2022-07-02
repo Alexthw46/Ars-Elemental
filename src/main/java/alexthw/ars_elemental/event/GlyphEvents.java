@@ -2,7 +2,7 @@ package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.api.ISchoolFocus;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.registry.ModItems;

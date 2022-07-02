@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.items.foci;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.ISchoolFocus;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.ArsNouveau;

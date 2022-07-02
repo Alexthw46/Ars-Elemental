@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
+import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
@@ -191,11 +192,11 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
 
     }
 
-    protected void addArmorRecipes(ModItems.ArmorSet armorSet, ItemLike essence) {
-        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.ARCHMAGE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.ARCHMAGE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.ARCHMAGE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.ARCHMAGE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(essence).keepNbtOfReagent(true).build());
+    protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
+        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.ARCHMAGE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.ARCHMAGE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.ARCHMAGE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.ARCHMAGE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
     }
 
     protected static Path getRecipePath(Path pathIn, String str) {

@@ -1,8 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.api.ISchoolFocus;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
-import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -19,7 +18,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Set;
 
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
@@ -33,7 +31,7 @@ public class EffectSpores extends ElementalAbstractEffect {
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level level, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level level, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (!(rayTraceResult.getEntity() instanceof LivingEntity livingEntity && level instanceof ServerLevel world))
             return;
         Vec3 vec = safelyGetHitPos(rayTraceResult);
@@ -66,8 +64,8 @@ public class EffectSpores extends ElementalAbstractEffect {
         return livingEntity.hasEffect(MobEffects.POISON) || livingEntity.hasEffect(MobEffects.HUNGER);
     }
 
-    public void damage(Vec3 vec, ServerLevel world, @Nullable LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity) {
-        EntityDamageSource damageSource = new EntityDamageSource("poison", shooter == null ? ANFakePlayer.getPlayer(world) : shooter);
+    public void damage(Vec3 vec, ServerLevel world, @Nonnull LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity) {
+        EntityDamageSource damageSource = new EntityDamageSource("poison", shooter);
         damageSource.setMagic();
         dealDamage(world, shooter, damage, stats, livingEntity, damageSource);
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,

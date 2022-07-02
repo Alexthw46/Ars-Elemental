@@ -8,15 +8,13 @@ import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
-import alexthw.ars_elemental.common.items.armor.ElementalArmor;
-import alexthw.ars_elemental.common.items.armor.ElementalHat;
+import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.bangles.*;
 import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.world.WorldEvents;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
@@ -25,7 +23,6 @@ import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -112,7 +109,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> SPELL_HORN;
 
-    static Item.Properties addTabProp() {
+    public static Item.Properties addTabProp() {
         return new Item.Properties().tab(ArsElemental.TAB);
     }
 
@@ -210,36 +207,7 @@ public class ModItems {
         return false;
     }
 
-    public static class ArmorSet {
-        public ArmorSet(String name, SpellSchool element) {
-            this.head = ITEMS.register(name + "_hat", () -> new ElementalHat(element, addTabProp()));
-            this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, addTabProp()));
-            this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(EquipmentSlot.LEGS, element, addTabProp()));
-            this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(EquipmentSlot.FEET, element, addTabProp()));
-        }
 
-        RegistryObject<Item> head;
-        RegistryObject<Item> chest;
-        RegistryObject<Item> legs;
-        RegistryObject<Item> feet;
-
-        public Item getHat() {
-            return head.get();
-        }
-
-        public Item getChest() {
-            return chest.get();
-        }
-
-        public Item getLegs() {
-            return legs.get();
-        }
-
-        public Item getBoots() {
-            return feet.get();
-        }
-
-    }
 
 
 }

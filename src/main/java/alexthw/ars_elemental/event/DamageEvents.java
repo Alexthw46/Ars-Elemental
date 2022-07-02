@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.ISchoolBangle;
-import alexthw.ars_elemental.api.ISchoolFocus;
+import alexthw.ars_elemental.api.item.ISchoolBangle;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.armor.IElementalArmor;
 import alexthw.ars_elemental.registry.ModRegistry;

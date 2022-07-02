@@ -1,11 +1,12 @@
 package alexthw.ars_elemental.common.entity.mages;
 
+import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.api.ISchoolFocus;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.ai.ProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
-import alexthw.ars_elemental.util.CompatUtils;
-import alexthw.ars_elemental.util.ElementalArsenal;
+import alexthw.ars_elemental.common.items.armor.ArmorSet;
+import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
@@ -34,6 +35,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -99,9 +101,9 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     @Override
     protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
-        if (school != null && CompatUtils.isArsenalLoaded()) {
+        if (school != null) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
-                setItemSlot(slot, ElementalArsenal.getArmorForSlot(slot, this.school));
+                setItemSlot(slot, getArmorForSlot(slot, this.school));
             }
         } else {
             setItemSlot(EquipmentSlot.HEAD, ItemsRegistry.ARCHMAGE_HOOD.get().getDefaultInstance());
@@ -161,5 +163,29 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
 
     @Override
     protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+    }
+
+    public static ItemStack getArmorForSlot(EquipmentSlot slot, SpellSchool school) {
+        Item item = switch (slot) {
+            case HEAD -> getArmorSetFromElement(school).getHat();
+            case CHEST -> getArmorSetFromElement(school).getChest();
+            case LEGS -> getArmorSetFromElement(school).getLegs();
+            case FEET -> getArmorSetFromElement(school).getBoots();
+            default -> null;
+        };
+
+        if (item == null) return ItemStack.EMPTY;
+
+        return item.getDefaultInstance();
+    }
+
+    private static ArmorSet getArmorSetFromElement(SpellSchool school) {
+        return switch (school.getId()) {
+            case "fire" -> ModItems.FIRE_ARMOR;
+            case "water" -> ModItems.WATER_ARMOR;
+            case "earth" -> ModItems.EARTH_ARMOR;
+            case "air" -> ModItems.AIR_ARMOR;
+            default -> new ArmorSet("necro", ArsNouveauRegistry.NECROMANCY);
+        };
     }
 }

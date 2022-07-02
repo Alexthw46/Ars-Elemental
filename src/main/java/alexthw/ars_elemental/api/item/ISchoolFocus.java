@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.api;
+package alexthw.ars_elemental.api.item;
 
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;

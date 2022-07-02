@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.common.items.foci;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.ISchoolFocus;
 import alexthw.ars_elemental.api.IUndeadSummon;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
 import alexthw.ars_elemental.common.entity.summon.SummonSkeleHorse;

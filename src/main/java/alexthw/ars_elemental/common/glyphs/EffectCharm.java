@@ -21,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
@@ -36,14 +35,14 @@ public class EffectCharm extends ElementalAbstractEffect {
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
             if (rayTraceResult.getEntity() instanceof Monster mob) {
 
                 if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
 
-                    int resistance = (int) (mob.getHealth() / mob.getMaxHealth() * 100);
+                    int resistance = 110 * (int) (mob.getHealth() / mob.getMaxHealth());
                     double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
 
                     if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
@@ -82,7 +81,7 @@ public class EffectCharm extends ElementalAbstractEffect {
     }
 
     private boolean rollToSeduce(int resistance, double chanceBoost, RandomSource rand) {
-        return (rand.nextInt(0, 75) + chanceBoost) >= resistance;
+        return (rand.nextInt(0, resistance) + chanceBoost) >= resistance;
     }
 
     @Override
