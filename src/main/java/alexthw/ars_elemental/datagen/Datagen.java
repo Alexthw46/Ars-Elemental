@@ -11,6 +11,7 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
@@ -95,6 +96,9 @@ public class Datagen {
                 takeAll(blocks, b -> b.get() instanceof LeavesBlock);
                 takeAll(blocks, b -> !(b.get() instanceof SummonBlock)).forEach(b -> registerDropSelf(b.get()));
                 registerLeavesAndSticks(ModItems.FLASHING_LEAVES.get(), ModItems.FLASHING_SAPLING.get());
+
+                list.add(ModItems.MERMAID_ROCK.get());
+                dropOther(ModItems.MERMAID_ROCK.get(), Blocks.PRISMARINE);
             }
 
             public void registerLeavesAndSticks(Block leaves, Block sapling) {
