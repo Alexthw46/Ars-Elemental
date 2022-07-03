@@ -1,0 +1,18 @@
+{
+  "type": "ars_nouveau:crush",
+  "input": {
+    "item": "minecraft:blaze_rod"
+  },
+  "output": [
+    {
+      "chance": 1.0,
+      "count": 3,
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "chance": 0.5,
+      "count": 1,
+      "item": "minecraft:blaze_powder"
+    }
+  ]
+}

@@ -15,7 +15,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
@@ -28,7 +27,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect {
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
             if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
                 applyConfigPotion(living, ModRegistry.WATER_GRAVE.get(), spellStats);
@@ -44,7 +43,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect {
             int airSupply = living.getAirSupply();
             if (airSupply <= 0 || living.getMobType() == MobType.WATER) {
                 double damage = DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier();
-                dealDamage(world,shooter, (float) damage, spellStats, living, shooter != null ? new EntityDamageSource(DamageSource.DROWN.getMsgId(),shooter) : DamageSource.DROWN);
+                dealDamage(world, shooter, (float) damage, spellStats, living, new EntityDamageSource(DamageSource.DROWN.getMsgId(), shooter));
             } else {
                 double newSupply = Math.max(-19, airSupply - 50 * (3 + spellStats.getAmpMultiplier()));
                 living.setAirSupply((int) newSupply);

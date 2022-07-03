@@ -56,15 +56,15 @@ public class GlyphEvents {
 
     @SubscribeEvent
     public static void sensitiveCrush(EffectResolveEvent.Pre event) {
-        if (event.resolveEffect != EffectCrush.INSTANCE) return;
-        if (!(event.spellStats.hasBuff(AugmentSensitive.INSTANCE))) return;
-        event.setCanceled(true);
-        double aoeBuff = event.spellStats.getAoeMultiplier();
-        int pierceBuff = event.spellStats.getBuffCount(AugmentPierce.INSTANCE);
-        int maxItemCrush = (int) (4 + (4 * aoeBuff) + (4 * pierceBuff));
-        List<ItemEntity> itemEntities = event.world.getEntitiesOfClass(ItemEntity.class, new AABB(new BlockPos(event.rayTraceResult.getLocation())).inflate(aoeBuff + 1.0));
-        if (!itemEntities.isEmpty()) {
-            crushItems(event.world, itemEntities, maxItemCrush);
+        if (event.resolveEffect == EffectCrush.INSTANCE && event.spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
+            event.setCanceled(true);
+            double aoeBuff = event.spellStats.getAoeMultiplier();
+            int pierceBuff = event.spellStats.getBuffCount(AugmentPierce.INSTANCE);
+            int maxItemCrush = (int) (4 + (4 * aoeBuff) + (4 * pierceBuff));
+            List<ItemEntity> itemEntities = event.world.getEntitiesOfClass(ItemEntity.class, new AABB(new BlockPos(event.rayTraceResult.getLocation())).inflate(aoeBuff + 1.0));
+            if (!itemEntities.isEmpty()) {
+                crushItems(event.world, itemEntities, maxItemCrush);
+            }
         }
     }
 
@@ -200,18 +200,14 @@ public class GlyphEvents {
                 lastHit = recipes.stream().filter(recipe -> recipe.matches(item.getDefaultInstance(), world)).findFirst().orElse(null);
             }
 
-            if (lastHit == null)
-                continue;
+            if (lastHit == null) continue;
 
-            List<ItemStack> outputs = lastHit.getRolledOutputs(world.random);
-
-            for (ItemStack result : outputs) {
-                if (result.isEmpty())
-                    continue;
-                while (itemsCrushed <= maxItemCrush && !stack.isEmpty()) {
-                    stack.shrink(1);
+            while (!stack.isEmpty() && itemsCrushed <= maxItemCrush) {
+                List<ItemStack> outputs = lastHit.getRolledOutputs(world.random);
+                stack.shrink(1);
+                itemsCrushed++;
+                for (ItemStack result : outputs) {
                     world.addFreshEntity(new ItemEntity(world, IE.getX(), IE.getY(), IE.getZ(), result.copy()));
-                    itemsCrushed++;
                 }
             }
 

@@ -29,8 +29,8 @@ public class Events {
                     finalDiscount += COMMON.FocusDiscount.get();
             }
             for (ItemStack stack : event.getEntity().getArmorSlots()) {
-                if (stack.getItem() instanceof IElementalArmor armor && event.spell.recipe.stream().anyMatch(armor.getSchool()::isPartOfSchool))
-                    finalDiscount += 0.1;
+                if (stack.getItem() instanceof IElementalArmor armor)
+                    finalDiscount += armor.getDiscount(event.spell.recipe);
             }
             event.spell.addDiscount((int) (event.spell.getDiscountedCost() * finalDiscount));
 
