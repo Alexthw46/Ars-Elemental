@@ -8,12 +8,16 @@
       "type": "patchouli:text"
     },
     {
-      "recipe": "ars_elemental:imbuement_earth_focus",
+      "recipe": "ars_elemental:imbuement_lesser_earth_focus",
       "type": "ars_nouveau:imbuement_recipe"
     },
     {
       "text": "ars_elemental.page2.earth_focus",
       "type": "patchouli:text"
+    },
+    {
+      "recipe": "ars_elemental:earth_focus",
+      "type": "ars_nouveau:apparatus_recipe"
     }
   ]
 }

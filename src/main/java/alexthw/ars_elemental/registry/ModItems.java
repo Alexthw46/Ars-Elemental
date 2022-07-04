@@ -73,6 +73,11 @@ public class ModItems {
     public static final RegistryObject<Item> EARTH_FOCUS;
     public static final RegistryObject<Item> NECRO_FOCUS;
 
+    public static final RegistryObject<Item> LESSER_FIRE_FOCUS;
+    public static final RegistryObject<Item> LESSER_AIR_FOCUS;
+    public static final RegistryObject<Item> LESSER_WATER_FOCUS;
+    public static final RegistryObject<Item> LESSER_EARTH_FOCUS;
+
     public static final RegistryObject<Item> FIRE_CTOME;
     public static final RegistryObject<Item> AIR_CTOME;
     public static final RegistryObject<Item> WATER_CTOME;
@@ -119,6 +124,11 @@ public class ModItems {
         AIR_FOCUS = ITEMS.register("air_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
         EARTH_FOCUS = ITEMS.register("earth_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
+
+        LESSER_FIRE_FOCUS = ITEMS.register("lesser_fire_focus", () -> new LesserElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
+        LESSER_WATER_FOCUS = ITEMS.register("lesser_water_focus", () -> new LesserElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
+        LESSER_AIR_FOCUS = ITEMS.register("lesser_air_focus", () -> new LesserElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
+        LESSER_EARTH_FOCUS = ITEMS.register("lesser_earth_focus", () -> new LesserElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
 
         //bangles
         ENCHANTER_BANGLE = ITEMS.register("base_bangle", () -> new BaseBangle(addTabProp().stacksTo(1)));

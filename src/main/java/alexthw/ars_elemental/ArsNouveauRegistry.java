@@ -37,7 +37,6 @@ public class ArsNouveauRegistry {
         registerGlyphs();
         registerRituals();
         registerFamiliars(ArsNouveauAPI.getInstance());
-        //GlyphConfigs.registerGlyphConfigs();
     }
 
     public static void registerGlyphs() {

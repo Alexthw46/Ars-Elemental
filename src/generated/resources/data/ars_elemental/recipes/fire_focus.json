@@ -1,0 +1,20 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "reagent": [
+    {
+      "item": "ars_elemental:lesser_fire_focus"
+    }
+  ],
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:wilden_tribute"
+      }
+    }
+  ],
+  "output": {
+    "item": "ars_elemental:fire_focus"
+  },
+  "sourceCost": 0,
+  "keepNbtOfReagent": true
+}

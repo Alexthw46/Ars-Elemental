@@ -31,5 +31,5 @@
     "item": "ars_elemental:necrotic_focus"
   },
   "sourceCost": 0,
-  "keepNbtOfReagent": false
+  "keepNbtOfReagent": true
 }

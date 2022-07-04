@@ -1,8 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.items.ElementalFocus;
-import alexthw.ars_elemental.common.items.NecroticFocus;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;
@@ -51,8 +49,6 @@ public class AEItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
-        takeAll(items, i -> i.get() instanceof ElementalFocus).forEach(this::focusModel);
-        takeAll(items, i -> i.get() instanceof NecroticFocus).forEach(this::focusModel);
         items.forEach(this::generatedItem);
 
     }

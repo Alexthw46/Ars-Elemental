@@ -93,7 +93,7 @@ public class GlyphEvents {
 
         if (event.resolveEffect == EffectIgnite.INSTANCE) {
             if (event.shooter != living && school == ELEMENTAL_FIRE)
-                living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) event.spellStats.getAmpMultiplier() / 2));
+                living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) Math.max(1, event.spellStats.getAmpMultiplier())));
         }
         if (event.resolveEffect == EffectLaunch.INSTANCE) {
             if (event.spellStats.getDurationMultiplier() != 0 && school == ELEMENTAL_AIR) {
@@ -102,7 +102,7 @@ public class GlyphEvents {
         }
         if (event.resolveEffect == EffectFreeze.INSTANCE) {
             if (event.shooter != living && school == ELEMENTAL_WATER) {
-                if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON) {
+                if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON && skel.getPercentFrozen() > 0.5) {
                     skel.setFreezeConverting(true);
                 }
                 living.setIsInPowderSnow(true);
@@ -128,7 +128,6 @@ public class GlyphEvents {
                     Block blossom = ModItems.GROUND_BLOSSOM.get();
                     if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS) && event.world.getBlockState(feet.above()).isAir()) {
                         EffectPlaceBlock.attemptPlace(event.world, blossom.asItem().getDefaultInstance(), (BlockItem) blossom.asItem(), new BlockHitResult(living.position(), Direction.UP, feet, false), ANFakePlayer.getPlayer((ServerLevel) event.world));
-                        //event.world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
                     }
                 }
             }
@@ -199,18 +198,14 @@ public class GlyphEvents {
                 lastHit = recipes.stream().filter(recipe -> recipe.matches(item.getDefaultInstance(), world)).findFirst().orElse(null);
             }
 
-            if (lastHit == null)
-                continue;
+            if (lastHit == null) continue;
 
-            List<ItemStack> outputs = lastHit.getRolledOutputs(world.random);
-
-            for (ItemStack result : outputs) {
-                if (result.isEmpty())
-                    continue;
-                while (itemsCrushed <= maxItemCrush && !stack.isEmpty()) {
-                    stack.shrink(1);
+            while (!stack.isEmpty() && itemsCrushed <= maxItemCrush) {
+                List<ItemStack> outputs = lastHit.getRolledOutputs(world.random);
+                stack.shrink(1);
+                itemsCrushed++;
+                for (ItemStack result : outputs) {
                     world.addFreshEntity(new ItemEntity(world, IE.getX(), IE.getY(), IE.getZ(), result.copy()));
-                    itemsCrushed++;
                 }
             }
 

@@ -44,9 +44,9 @@ public class ConfigHandler {
         public Common(ForgeConfigSpec.Builder builder) {
 
             FocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the focus")
-                    .defineInRange("Elemental Focus discount", 0.2D, 0.0D, 0.99D);
+                    .defineInRange("Elemental Focus discount", 0.15D, 0.0D, 0.99D);
 
-            builder.comment("Adjust these values to balance how much a spell gets amplified by the matching spell focus")
+            builder.comment("Adjust these values to balance how much a spell gets amplified by the matching spell focus, halved for lesser focus")
                     .push("Elemental Spell Foci - Amplify");
 
             FireMasteryBuff = builder.define("Fire Focus buff", 2.0D);
@@ -56,7 +56,7 @@ public class ConfigHandler {
 
             builder.pop();
 
-            builder.comment("Adjust these values to balance how much an elemental spell gets dampened by a not-matching spell focus")
+            builder.comment("Adjust these values to balance how much an elemental spell gets dampened by a not-matching lesser spell focus")
                     .push("Elemental Spell Foci - Dampening");
             FireMasteryDebuff = builder.define("Fire Focus debuff", -1.0D);
             WaterMasteryDebuff = builder.define("Water Focus debuff", -1.0D);

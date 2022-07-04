@@ -3,7 +3,7 @@
   "input": {
     "item": "minecraft:amethyst_shard"
   },
-  "output": "ars_elemental:air_focus",
+  "output": "ars_elemental:lesser_air_focus",
   "count": 1,
   "source": 5000,
   "pedestalItems": [
@@ -24,12 +24,17 @@
     },
     {
       "item": {
-        "item": "ars_nouveau:air_essence"
+        "item": "minecraft:gold_ingot"
       }
     },
     {
       "item": {
-        "item": "ars_nouveau:wilden_tribute"
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:apprentice_spell_book"
       }
     }
   ]

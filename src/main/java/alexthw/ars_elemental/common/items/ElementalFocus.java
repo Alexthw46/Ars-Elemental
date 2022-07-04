@@ -1,25 +1,19 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.registry.ModItems;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,21 +38,9 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
         this.element = element;
     }
 
-    @Override
-    public InteractionResult useOn(UseOnContext pContext) {
-        if (pContext.getPlayer() instanceof ServerPlayer player && player.getUUID().equals(ArsElemental.Dev) && player.isCrouching()) {
-            pContext.getLevel().addFreshEntity(new ItemEntity(pContext.getLevel(), player.getX(), player.getY(), player.getZ(), ModItems.DEBUG_ICON.get().getDefaultInstance()));
-        }
-        return super.useOn(pContext);
-    }
-
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
-        if (SpellSchools.ELEMENTAL.isPartOfSchool(spellPart)) {
-            if (element.isPartOfSchool(spellPart)) {
-                builder.addAmplification(getBoostMultiplier());
-            } else {
-                builder.addAmplification(getMalusMultiplier());
-            }
+        if (element.isPartOfSchool(spellPart)) {
+            builder.addAmplification(getBoostMultiplier());
         }
         return builder;
     }
@@ -145,11 +127,10 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        if (element.equals(SpellSchools.ELEMENTAL_EARTH)){
-            Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
+        Multimap<Attribute, AttributeModifier> map = super.getAttributeModifiers(slotContext, uuid, stack);
+        if (element.equals(SpellSchools.ELEMENTAL_EARTH) && !(this instanceof LesserElementalFocus)) {
             map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, ArsElemental.MODID + ":earth_focus", 0.3f, AttributeModifier.Operation.ADDITION));
-                return map;
         }
-        return super.getAttributeModifiers(slotContext, uuid, stack);
+        return map;
     }
 }

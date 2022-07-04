@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#ars_nouveau:magic_shards",
     "ars_nouveau:amethyst_golem_charm",
     "ars_nouveau:bookwyrm_charm",
     "ars_nouveau:drygmy_charm",
