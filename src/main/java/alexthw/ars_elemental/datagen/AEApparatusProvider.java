@@ -5,7 +5,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
-import com.hollingsworth.arsnouveau.common.datagen.Recipes;
+import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
@@ -52,7 +52,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ModItems.SIREN_SHARDS.get())
                 .withPedestalItem(Items.PRISMARINE_SHARD)
                 .withPedestalItem(3, Ingredient.of(ItemTags.FISHES))
-                .withPedestalItem(3, Recipes.SOURCE_GEM)
+                .withPedestalItem(3, RecipeDatagen.SOURCE_GEM)
                 .build()
         );
 
@@ -70,14 +70,14 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ItemsRegistry.WILDEN_HORN)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(3, Items.GOLD_INGOT)
-                .withPedestalItem(4, Recipes.SOURCE_GEM)
+                .withPedestalItem(4, RecipeDatagen.SOURCE_GEM)
                 .build()
         );
 
         recipes.add(builder()
                 .withResult(ModItems.ENCHANTER_BANGLE.get())
                 .withReagent(ItemsRegistry.RING_OF_POTENTIAL)
-                .withPedestalItem(Recipes.SOURCE_GEM_BLOCK)
+                .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .withPedestalItem(Items.GOLD_BLOCK)
                 .withPedestalItem(Items.GOLD_BLOCK)
                 .withPedestalItem(Items.END_CRYSTAL)
@@ -88,7 +88,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ModItems.ENCHANTER_BANGLE.get())
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                .withPedestalItem(Items.PISTON)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .build()
         );
@@ -97,7 +97,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ModItems.ENCHANTER_BANGLE.get())
                 .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                 .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
-                .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                .withPedestalItem(Items.FIRE_CHARGE)
                 .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                 .build()
         );
@@ -106,7 +106,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ModItems.ENCHANTER_BANGLE.get())
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
-                .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                .withPedestalItem(Items.COBWEB)
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .build()
         );
@@ -115,7 +115,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ModItems.ENCHANTER_BANGLE.get())
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                .withPedestalItem(Items.POWDER_SNOW_BUCKET)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                 .build()
         );
@@ -126,7 +126,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withResult(ModItems.FIRE_FOCUS.get())
                 .withReagent(ModItems.LESSER_FIRE_FOCUS.get())
                 .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
-                .withSourceCost(2000)
+                .withSourceCost(5000)
                 .keepNbtOfReagent(true)
                 .build()
         );
@@ -134,7 +134,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withResult(ModItems.AIR_FOCUS.get())
                 .withReagent(ModItems.LESSER_AIR_FOCUS.get())
                 .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
-                .withSourceCost(2000)
+                .withSourceCost(5000)
                 .keepNbtOfReagent(true)
                 .build()
         );
@@ -142,7 +142,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withResult(ModItems.EARTH_FOCUS.get())
                 .withReagent(ModItems.LESSER_EARTH_FOCUS.get())
                 .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
-                .withSourceCost(2000)
+                .withSourceCost(5000)
                 .keepNbtOfReagent(true)
                 .build()
         );
@@ -150,7 +150,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withResult(ModItems.WATER_FOCUS.get())
                 .withReagent(ModItems.LESSER_WATER_FOCUS.get())
                 .withPedestalItem(ModItems.MARK_OF_MASTERY.get())
-                .withSourceCost(2000)
+                .withSourceCost(5000)
                 .keepNbtOfReagent(true)
                 .build()
         );
@@ -173,7 +173,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         recipes.add(builder()
                 .withPedestalItem(BlockRegistry.SPELL_PRISM)
                 .withPedestalItem(Items.TOTEM_OF_UNDYING)
-                .withPedestalItem(Recipes.SOURCE_GEM_BLOCK)
+                .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 9000));
 
         addArmorRecipes(ModItems.FIRE_ARMOR, ItemsRegistry.FIRE_ESSENCE);
@@ -193,10 +193,10 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
     }
 
     protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
-        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.ARCHMAGE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.ARCHMAGE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.ARCHMAGE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.ARCHMAGE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.ARCHMAGE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.ARCHMAGE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.ARCHMAGE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.ARCHMAGE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
     }
 
     protected static Path getRecipePath(Path pathIn, String str) {

@@ -84,7 +84,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.FIRE_FOCUS.get())
                         .withIcon(ModItems.FIRE_FOCUS.get())
                         .withTextPage("ars_elemental.page1.fire_focus")
-                        .withPage(new ImbuementPage(ModItems.LESSER_FIRE_FOCUS.get()))
+                        .withPage(ImbuementPage(ModItems.LESSER_FIRE_FOCUS.get()))
                         .withPage(new ApparatusPage(ModItems.FIRE_FOCUS.get()))
                         .withTextPage("ars_elemental.page2.fire_focus")
                 , getPath(EQUIPMENT, "fire_focus")

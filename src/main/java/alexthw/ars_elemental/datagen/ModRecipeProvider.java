@@ -5,7 +5,7 @@ import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
-import com.hollingsworth.arsnouveau.common.datagen.Recipes;
+import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
 import com.hollingsworth.arsnouveau.common.lib.RitualLib;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -39,7 +39,7 @@ public class ModRecipeProvider extends RecipeProvider {
         shapelessBuilder(GROUND_BLOSSOM.get()).requires(Blocks.SPORE_BLOSSOM).save(consumer);
         shapelessBuilder(Blocks.SPORE_BLOSSOM).requires(GROUND_BLOSSOM.get()).save(consumer, prefix("alt_blossom"));
 
-        Recipes.makeWood(FLASHING_ARCHWOOD_LOG.get(), FLASHING_ARCHWOOD.get(), 3).save(consumer);
+        RecipeDatagen.makeWood(FLASHING_ARCHWOOD_LOG.get(), FLASHING_ARCHWOOD.get(), 3).save(consumer);
         strippedLogToWood(consumer, FLASHING_ARCHWOOD_LOG_STRIPPED.get(), FLASHING_ARCHWOOD_STRIPPED.get());
 
         shapelessBuilder(getRitualItem(new ResourceLocation(ArsNouveau.MODID, RitualLib.FLIGHT)))
@@ -55,7 +55,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ItemsRegistry.AIR_ESSENCE)
                 .requires(Ingredient.of(Tags.Items.GEMS_DIAMOND), 2)
                 .requires(Items.LIGHTNING_ROD)
-                .requires(Recipes.SOURCE_GEM_BLOCK)
+                .requires(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .save(consumer, prefix("tablet_" + TeslaRitual.ID));
 
 
@@ -70,7 +70,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(FLASHING_ARCHWOOD_LOG.get())
                 .requires(Items.SPIDER_EYE, 2)
                 .requires(Items.GLOWSTONE_DUST)
-                .requires(Recipes.SOURCE_GEM_BLOCK)
+                .requires(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .save(consumer, prefix("tablet_" + DetectionRitual.ID));
 
     }

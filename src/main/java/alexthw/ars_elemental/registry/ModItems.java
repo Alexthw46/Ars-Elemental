@@ -109,13 +109,22 @@ public class ModItems {
 
     public static final RegistryObject<Item> SPELL_HORN;
 
-    public static Item.Properties addTabProp() {
+    static Item.Properties addTabProp() {
         return new Item.Properties().tab(ArsElemental.TAB);
     }
 
     static Item.Properties FocusProp() {
-        return addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE);
+        return addTabProp().stacksTo(1).fireResistant().rarity(Rarity.EPIC);
     }
+
+    static Item.Properties UncommonProp() {
+        return addTabProp().stacksTo(1).rarity(Rarity.UNCOMMON);
+    }
+
+    public static Item.Properties ArmorProp() {
+        return addTabProp().rarity(Rarity.RARE);
+    }
+
 
     static {
 
@@ -136,17 +145,17 @@ public class ModItems {
         EARTH_FOCUS = ITEMS.register("earth_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
         NECRO_FOCUS = ITEMS.register("necrotic_focus", () -> new NecroticFocus(FocusProp()));
 
-        LESSER_FIRE_FOCUS = ITEMS.register("lesser_fire_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
-        LESSER_WATER_FOCUS = ITEMS.register("lesser_water_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
-        LESSER_AIR_FOCUS = ITEMS.register("lesser_air_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
-        LESSER_EARTH_FOCUS = ITEMS.register("lesser_earth_focus", () -> new ElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_EARTH));
+        LESSER_FIRE_FOCUS = ITEMS.register("lesser_fire_focus", () -> new ElementalFocus(UncommonProp(), SpellSchools.ELEMENTAL_FIRE));
+        LESSER_WATER_FOCUS = ITEMS.register("lesser_water_focus", () -> new ElementalFocus(UncommonProp(), SpellSchools.ELEMENTAL_WATER));
+        LESSER_AIR_FOCUS = ITEMS.register("lesser_air_focus", () -> new ElementalFocus(UncommonProp(), SpellSchools.ELEMENTAL_AIR));
+        LESSER_EARTH_FOCUS = ITEMS.register("lesser_earth_focus", () -> new ElementalFocus(UncommonProp(), SpellSchools.ELEMENTAL_EARTH));
 
         //bangles
         ENCHANTER_BANGLE = ITEMS.register("base_bangle", () -> new BaseBangle(addTabProp().stacksTo(1)));
-        FIRE_BANGLE = ITEMS.register("fire_bangle", () -> new FireBangles(FocusProp()));
-        WATER_BANGLE = ITEMS.register("water_bangle", () -> new WaterBangles(FocusProp()));
-        AIR_BANGLE = ITEMS.register("air_bangle", () -> new AirBangles(FocusProp()));
-        EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(FocusProp()));
+        FIRE_BANGLE = ITEMS.register("fire_bangle", () -> new FireBangles(UncommonProp()));
+        WATER_BANGLE = ITEMS.register("water_bangle", () -> new WaterBangles(UncommonProp()));
+        AIR_BANGLE = ITEMS.register("air_bangle", () -> new AirBangles(UncommonProp()));
+        EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(UncommonProp()));
 
         //caster tomes
         FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
@@ -206,8 +215,5 @@ public class ModItems {
     private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
         return false;
     }
-
-
-
 
 }

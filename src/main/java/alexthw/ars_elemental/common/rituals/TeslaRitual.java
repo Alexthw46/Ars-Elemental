@@ -30,7 +30,7 @@ public class TeslaRitual extends AbstractRitual {
                 lightningBoltEntity.setPos(pos.x(), pos.y(), pos.z());
                 lightningBoltEntity.setCause(null);
                 level.addFreshEntity(lightningBoltEntity);
-                setNeedsMana(true);
+                setNeedsSource(true);
             }
         }
     }
@@ -49,7 +49,7 @@ public class TeslaRitual extends AbstractRitual {
     }
 
     @Override
-    public int getManaCost() {
+    public int getSourceCost() {
         return 1000;
     }
 

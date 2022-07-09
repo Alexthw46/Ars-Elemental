@@ -28,7 +28,7 @@ public class SquirrelRitual extends AbstractRitual {
                     entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2400, 1, false, false));
                     entity.addEffect(new MobEffectInstance(MobEffects.JUMP, 2400, 0, false, false));
                 }
-                setNeedsMana(true);
+                setNeedsSource(true);
             }
         }
     }
@@ -39,7 +39,7 @@ public class SquirrelRitual extends AbstractRitual {
     }
 
     @Override
-    public int getManaCost() {
+    public int getSourceCost() {
         return 150;
     }
 

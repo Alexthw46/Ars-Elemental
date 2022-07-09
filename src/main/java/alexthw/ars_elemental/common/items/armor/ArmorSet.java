@@ -5,16 +5,16 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
+import static alexthw.ars_elemental.registry.ModItems.ArmorProp;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
-import static alexthw.ars_elemental.registry.ModItems.addTabProp;
 
 
 public class ArmorSet {
     public ArmorSet(String name, SpellSchool element) {
-        this.head = ITEMS.register(name + "_hat", () -> new ElementalHat(element, addTabProp()));
-        this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, addTabProp()));
-        this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(EquipmentSlot.LEGS, element, addTabProp()));
-        this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(EquipmentSlot.FEET, element, addTabProp()));
+        this.head = ITEMS.register(name + "_hat", () -> new ElementalHat(element, ArmorProp()));
+        this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, ArmorProp()));
+        this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(EquipmentSlot.LEGS, element, ArmorProp()));
+        this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(EquipmentSlot.FEET, element, ArmorProp()));
     }
 
     RegistryObject<Item> head;

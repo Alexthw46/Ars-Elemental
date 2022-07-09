@@ -44,7 +44,7 @@ public class DetectionRitual extends AbstractRitual {
     }
 
     @Override
-    public int getManaCost() {
+    public int getSourceCost() {
         return 250;
     }
 
