@@ -88,7 +88,6 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
-                    .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
                     .withPedestalItem(Items.GOLD_INGOT)
                     .withPedestalItem(Items.GOLD_INGOT)
                     .withPedestalItem(ItemsRegistry.APPRENTICE_SPELLBOOK)
