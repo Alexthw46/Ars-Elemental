@@ -6,6 +6,7 @@
     "flower": "block/spore_blossom",
     "base": "block/spore_blossom_base"
   },
+  "render_type": "cutout",
   "elements": [
     {
       "from": [

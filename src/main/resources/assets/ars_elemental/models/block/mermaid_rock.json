@@ -4,6 +4,7 @@
 	"textures": {
 		"0": "ars_elemental:block/siren_shrine"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"from": [4, 0, 13],

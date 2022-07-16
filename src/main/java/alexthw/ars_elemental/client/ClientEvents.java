@@ -107,13 +107,6 @@ public class ClientEvents {
         MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
     }
 
-    @SubscribeEvent
-    public static void rendererLayers(FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(ModItems.FLASHING_SAPLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModItems.MERMAID_ROCK.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModItems.GROUND_BLOSSOM.get(), RenderType.cutout());
-    }
-
     private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {
         return new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png"));
     }
