@@ -146,7 +146,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
     @SubscribeEvent
     public static void castSpell(SpellCastEvent event) {
         if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(world, player) && event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE) {
-            for (Mob i : world.getEntitiesOfClass(Mob.class, (new AABB(event.getEntityLiving().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon summon && player.getUUID().equals(summon.getOwnerID()))) {
+            for (Mob i : world.getEntitiesOfClass(Mob.class, (new AABB(event.getEntity().blockPosition())).inflate(30.0D), (l) -> l instanceof IUndeadSummon summon && player.getUUID().equals(summon.getOwnerID()))) {
                 LivingEntity target = i.getTarget();
                 if (target == null) target = player.getLastHurtMob();
                 if (target != null && target.isAlive()) {

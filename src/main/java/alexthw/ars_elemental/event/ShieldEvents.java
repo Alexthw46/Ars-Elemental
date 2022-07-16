@@ -43,7 +43,7 @@ public class ShieldEvents {
     @SubscribeEvent
     public static void onBlockReactive(ShieldBlockEvent event){
 
-        if(!(event.getEntityLiving() instanceof Player player) || player.getCommandSenderWorld().isClientSide)
+        if (!(event.getEntity() instanceof Player player) || player.getCommandSenderWorld().isClientSide)
             return;
         ItemStack s = player.getOffhandItem();
         if (s.getItem() instanceof EnchantersShield) {

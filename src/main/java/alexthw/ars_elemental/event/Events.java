@@ -23,7 +23,7 @@ public class Events {
     public static void focusDiscount(SpellCastEvent event) {
         if (!event.getWorld().isClientSide) {
             double finalDiscount = 0;
-            SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntityLiving());
+            SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntity());
             if (focus != null) {
                 if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
                     finalDiscount += COMMON.FocusDiscount.get();
@@ -55,11 +55,11 @@ public class Events {
 
     @SubscribeEvent
     public static void onPlayerRespawnHW(PlayerEvent.PlayerRespawnEvent event) {
-        CompoundTag data = event.getPlayer().getPersistentData();
+        CompoundTag data = event.getEntity().getPersistentData();
         if (data.contains(Player.PERSISTED_NBT_TAG)) {
             CompoundTag persist = data.getCompound(Player.PERSISTED_NBT_TAG);
             if (persist.contains("magic_locked") && persist.contains("magic_lock_duration")) {
-                event.getPlayer().addEffect(new MobEffectInstance(ModRegistry.HYMN_OF_ORDER.get(), persist.getInt("magic_lock_duration")));
+                event.getEntity().addEffect(new MobEffectInstance(ModRegistry.HYMN_OF_ORDER.get(), persist.getInt("magic_lock_duration")));
                 persist.remove("magic_locked");
                 persist.remove("magic_lock_duration");
             }

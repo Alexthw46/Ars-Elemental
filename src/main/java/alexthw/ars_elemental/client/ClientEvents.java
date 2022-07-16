@@ -29,8 +29,8 @@ import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -97,8 +97,8 @@ public class ClientEvents {
 
     //keybinding
     @SubscribeEvent
-    public static void registerKeybinding(FMLClientSetupEvent event) {
-        ClientRegistry.registerKeyBinding(CURIO_BAG_KEYBINDING);
+    public static void registerKeyBindings(RegisterKeyMappingsEvent event) {
+        event.register(CURIO_BAG_KEYBINDING);
     }
 
     //Curio bag stuff

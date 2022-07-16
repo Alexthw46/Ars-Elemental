@@ -28,13 +28,13 @@ public class OrderEffect extends MobEffect {
     }
 
     public void block(SpellCastEvent event) {
-        if (event.getEntityLiving() instanceof Player player) {
+        if (event.getEntity() instanceof Player player) {
             if (player.hasEffect(ModRegistry.HYMN_OF_ORDER.get())) event.setCanceled(true);
         }
     }
 
     public void punish(MaxManaCalcEvent event) {
-        if (event.getEntityLiving() instanceof Player player) {
+        if (event.getEntity() instanceof Player player) {
             if (player.hasEffect(ModRegistry.HYMN_OF_ORDER.get())) event.setMax(1);
         }
     }

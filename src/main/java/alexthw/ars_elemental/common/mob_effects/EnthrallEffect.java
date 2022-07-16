@@ -24,7 +24,7 @@ public class EnthrallEffect extends MobEffect {
 
     public void onTarget(LivingSetAttackTargetEvent event) {
         if (!(event.getTarget() instanceof Player player)) return;
-        if (event.getEntityLiving() instanceof Mob thrall && isEnthralledBy(thrall, player)) {
+        if (event.getEntity() instanceof Mob thrall && isEnthralledBy(thrall, player)) {
             if (player.getLastHurtMob() != null && player.getLastHurtMob() != thrall) {
                 thrall.setTarget(player.getLastHurtMob());
                 if (thrall instanceof NeutralMob angry)

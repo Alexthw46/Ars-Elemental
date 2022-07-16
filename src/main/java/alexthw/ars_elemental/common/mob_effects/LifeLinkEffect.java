@@ -26,30 +26,30 @@ public class LifeLinkEffect extends MobEffect {
     }
 
     public void healForHeal(LivingHealEvent event) {
-        if (event.getEntityLiving() != null && event.getEntityLiving().hasEffect(this)) {
-            MobEffectInstance instance = event.getEntityLiving().getEffect(this);
-            if (instance instanceof EntityCarryMEI mei && mei.getTarget() == event.getEntityLiving()) {
+        if (event.getEntity() != null && event.getEntity().hasEffect(this)) {
+            MobEffectInstance instance = event.getEntity().getEffect(this);
+            if (instance instanceof EntityCarryMEI mei && mei.getTarget() == event.getEntity()) {
                 if (mei.getOwner().isAlive()) {
                     int shared = (int) (event.getAmount() / 2F);
                     mei.getOwner().heal(shared);
                     event.setAmount(shared);
                 } else {
-                    event.getEntityLiving().removeEffect(this);
+                    event.getEntity().removeEffect(this);
                 }
             }
         }
     }
 
-    public void hurtForHurt(LivingHurtEvent event){
-        if (event.getEntityLiving() != null && event.getEntityLiving().hasEffect(this)){
-            MobEffectInstance instance = event.getEntityLiving().getEffect(this);
-            if (instance  instanceof EntityCarryMEI mei && mei.getOwner() == event.getEntityLiving()) {
+    public void hurtForHurt(LivingHurtEvent event) {
+        if (event.getEntity() != null && event.getEntity().hasEffect(this)) {
+            MobEffectInstance instance = event.getEntity().getEffect(this);
+            if (instance instanceof EntityCarryMEI mei && mei.getOwner() == event.getEntity()) {
                 if (mei.getTarget().isAlive()) {
                     int shared = (int) (event.getAmount() / 2F);
                     mei.getTarget().hurt(event.getSource(), shared);
                     event.setAmount(shared);
-                }else{
-                    event.getEntityLiving().removeEffect(this);
+                } else {
+                    event.getEntity().removeEffect(this);
                 }
             }
         }
