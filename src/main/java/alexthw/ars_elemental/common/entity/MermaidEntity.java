@@ -50,6 +50,7 @@ import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -281,7 +282,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         int i = 70;
         int j = i - 25;
         boolean f1 = pos.getY() >= j && pos.getY() <= i;
-        boolean f2 = levelAccessor.getBiome(pos).is(Biomes.WARM_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.DEEP_LUKEWARM_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.LUKEWARM_OCEAN);
+        boolean f2 = levelAccessor.getBiome(pos).is(Biomes.DEEP_LUKEWARM_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.LUKEWARM_OCEAN) || levelAccessor.getBiome(pos).is(Tags.Biomes.IS_HOT_OVERWORLD);
         return f1 && f2 && levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getBlockState(pos.above()).is(Blocks.WATER);
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,9 +28,8 @@ public class GlyphEffectUtil {
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer((ServerLevel) world);
         if (shooter == null) return;
         for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
-            pos = rayTraceResult.isInside() ? pos : pos.relative(rayTraceResult.getDirection());
-            if (!BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, pos))
-                continue;
+            pos = rayTraceResult.isInside() && !(shooter instanceof FakePlayer) ? pos : pos.relative(rayTraceResult.getDirection());
+            if (!BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, pos)) continue;
             BlockState state = world.getBlockState(pos);
             if (state.getMaterial().isReplaceable() && world.isUnobstructed(toPlace, pos, CollisionContext.of(fakePlayer))) {
                 world.setBlockAndUpdate(pos, toPlace);

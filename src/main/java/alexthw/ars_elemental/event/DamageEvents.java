@@ -4,6 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.ISchoolBangle;
 import alexthw.ars_elemental.common.items.ISchoolFocus;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import net.minecraft.world.damagesource.DamageSource;
@@ -33,11 +34,10 @@ public class DamageEvents {
             if (focus != null) {
                 switch (focus.getId()) {
                     case "fire" -> {
-                        if (event.getSource().isFire() && living.fireImmune()) {
+                        if (event.getSource().isFire() && living.hasEffect(ModRegistry.HELLFIRE.get())) {
                             event.setCanceled(true);
                             DamageSource newDamage = new EntityDamageSource("hellflare", player).setMagic();
                             if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
-                            if (event.getSource().isBypassMagic()) newDamage.bypassMagic();
                             living.hurt(newDamage, event.getAmount());
                         }
                     }
@@ -48,11 +48,6 @@ public class DamageEvents {
                             if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
                             if (event.getSource().isBypassMagic()) newDamage.bypassMagic();
                             living.hurt(newDamage, event.getAmount());
-                        }
-                    }
-                    case "air" -> {
-                        if (living.invulnerableTime > 0 && event.getSource().isFall()) {
-                            living.invulnerableTime = 0;
                         }
                     }
                 }
