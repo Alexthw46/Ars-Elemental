@@ -1,0 +1,27 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "ars_elemental:fire_hat",
+  "name": "ars_elemental.armorset.fire",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armorset.fire"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:fire_hat"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:fire_robes"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:fire_leggings"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:fire_boots"
+    }
+  ]
+}

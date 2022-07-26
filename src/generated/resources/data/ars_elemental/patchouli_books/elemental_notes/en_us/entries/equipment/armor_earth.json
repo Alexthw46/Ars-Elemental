@@ -1,0 +1,27 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "ars_elemental:earth_hat",
+  "name": "ars_elemental.armorset.earth",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armorset.earth"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:earth_hat"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:earth_robes"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:earth_leggings"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:earth_boots"
+    }
+  ]
+}

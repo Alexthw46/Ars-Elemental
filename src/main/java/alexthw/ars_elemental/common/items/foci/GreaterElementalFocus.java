@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static com.hollingsworth.arsnouveau.common.potions.ModPotions.MANA_REGEN_EFFECT;
+import static com.hollingsworth.arsnouveau.common.potions.ModPotions.SPELL_DAMAGE_EFFECT;
 
 public class GreaterElementalFocus extends ElementalFocus {
     public GreaterElementalFocus(Properties properties, SpellSchool element) {
@@ -43,7 +44,7 @@ public class GreaterElementalFocus extends ElementalFocus {
             switch (getSchool().getId()) {
                 case "fire" -> {
                     if (player.isOnFire() || player.isInLava())
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 200, 1));
+                        player.addEffect(new MobEffectInstance(SPELL_DAMAGE_EFFECT.get(), 200, 2));
                 }
                 case "water" -> {
                     if (player.isInWaterRainOrBubble()) {

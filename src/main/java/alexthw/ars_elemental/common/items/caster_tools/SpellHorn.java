@@ -116,11 +116,11 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
     }
 
     public int getMaxUseDuration() {
-        return 300;
+        return 200;
     }
 
     public int getMinUseDuration() {
-        return 30;
+        return 10;
     }
 
     public UseAnim getUseAnimation(ItemStack pStack) {

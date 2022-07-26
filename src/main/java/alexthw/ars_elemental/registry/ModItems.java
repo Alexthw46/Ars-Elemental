@@ -122,7 +122,7 @@ public class ModItems {
     }
 
     public static Item.Properties ArmorProp() {
-        return addTabProp().rarity(Rarity.RARE);
+        return addTabProp().rarity(Rarity.EPIC);
     }
 
 

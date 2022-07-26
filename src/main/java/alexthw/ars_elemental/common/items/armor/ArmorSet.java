@@ -10,7 +10,14 @@ import static alexthw.ars_elemental.registry.ModItems.ITEMS;
 
 
 public class ArmorSet {
+    public String getName() {
+        return name;
+    }
+
+    private final String name;
+
     public ArmorSet(String name, SpellSchool element) {
+        this.name = name;
         this.head = ITEMS.register(name + "_hat", () -> new ElementalHat(element, ArmorProp()));
         this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, ArmorProp()));
         this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(EquipmentSlot.LEGS, element, ArmorProp()));
@@ -38,5 +45,17 @@ public class ArmorSet {
         return feet.get();
     }
 
+    public Item getArmorFromSlot(EquipmentSlot slot) {
+        return switch (slot) {
+            case CHEST -> getChest();
+            case LEGS -> getLegs();
+            case FEET -> getBoots();
+            default -> getHat();
+        };
+    }
+
+    public String getTranslationKey() {
+        return "ars_elemental.armorset." + this.name;
+    }
 }
 

@@ -84,7 +84,7 @@ public class DamageEvents {
 
         LivingEntity living = event.getEntity();
 
-        if (event.getSource().getEntity() instanceof Player player && living != null) {
+        if (event.getSource().getEntity() instanceof Player player && living != null && living != player) {
             SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level, player);
             if (bangle != null) {
                 switch (bangle.getId()) {
@@ -143,8 +143,8 @@ public class DamageEvents {
                 player.setAirSupply(player.getMaxAirSupply());
                 event.setAmount(event.getAmount() / 2);
             }
-            if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && player.getEyePosition().y() < 60 && player.getFoodData().getFoodLevel() < 1) {
-                player.getFoodData().setFoodLevel(10);
+            if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && player.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 2) {
+                player.getFoodData().setFoodLevel(20);
             }
             if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().isFall()) {
                 event.setAmount(event.getAmount() / 2);
@@ -152,7 +152,10 @@ public class DamageEvents {
 
             if (bonusReduction > 0) {
                 int finalBonusReduction = bonusReduction;
-                CapabilityRegistry.getMana(player).ifPresent(mana -> event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2)));
+                CapabilityRegistry.getMana(player).ifPresent(mana -> {
+                    if (finalBonusReduction > 3) mana.addMana(event.getAmount());
+                    event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
+                });
                 event.setAmount(event.getAmount() * (1 - (bonusReduction / 10F)));
             }
 

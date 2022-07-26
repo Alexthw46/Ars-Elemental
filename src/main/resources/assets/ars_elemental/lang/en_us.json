@@ -76,7 +76,7 @@
   "ars_elemental.page1.flashing_archwood": "This golden tree have an affinity with the sky. Just like the other archwood trees it can be found anywhere with a bit of luck and it can be used to make ritual tablets. The corresponding Weald Walker launches enemies in the air and wind shear them.",
   "ars_elemental.page1.spell_horn": "The Enchanter's Horn can be used to cast spells on you and nearby entities. Hold the Horn to increase the range, at max charge it will also give a Spell Damage effect to the player. It MUST be inscribed with a spell that does NOT have another method, using a Scribing Table.",
   "ars_elemental.page.curio_bag": "All those trinkets can easily clutter your inventory, but you never know when they will be useful. Using some magebloom fiber you can make a pouch to store and carry around curios, potion flasks, mirrors, charms and other small items. You can also open it with $(k:ars_elemental.open_pouch) while in the hotbar or in a curio slot.",
-  "ars_elemental.page1.fire_focus": "This spell focus is attuned to the school of Fire. While equipped, the glyphs of this school will be amplified and discounted. The lesser focus, as a drawback, will weaken glyphs of the other elemental schools. The major focus will also grant Mana Regen II while the wearer is on fire or in lava.",
+  "ars_elemental.page1.fire_focus": "This spell focus is attuned to the school of Fire. While equipped, the glyphs of this school will be amplified and discounted. The lesser focus, as a drawback, will weaken glyphs of the other elemental schools. The major focus will also grant Spell Damage II while the wearer is on fire or in lava.",
   "ars_elemental.page2.fire_focus": "This focus empowers Ignite to inflict Hellfire Burn. This effect reduces healing and allows flare to inflict damage and spread even on fire resistant mobs. Ignite + Evaporate combo will sublimate Ice.",
   "ars_elemental.page1.water_focus": "This spell focus is attuned to the school of Water. While equipped, the glyphs of this school will be amplified and discounted. The lesser focus, as a drawback, will weaken glyphs of the other elemental schools. The major focus will also grant Mana Regen I while the wearer is wet or Mana Regen II and Dolphin Grace while swimming.",
   "ars_elemental.page2.water_focus": "This focus empowers Freeze, adding Freezing seconds to the target (it might take an additional Amplify to start damage). If used after Conjure Water, the conjured water will become ice. All Drowning damage against water creature will be converted to magic.",
@@ -157,5 +157,18 @@
   "item.ars_elemental.air_hat": "Aethermancer's Hat",
   "item.ars_elemental.air_robes": "Aethermancer's Robes",
   "item.ars_elemental.air_leggings": "Aethermancer's Leggings",
-  "item.ars_elemental.air_boots": "Aethermancer's Boots"
+  "item.ars_elemental.air_boots": "Aethermancer's Boots",
+  "ars_elemental.armorset.shiftinfo": "Hold %s for set info",
+  "ars_elemental.armorset.fire": "Pyromancer's Set",
+  "ars_elemental.armorset.fire.desc": "Absorb some fire-related damage and convert into mana, instantly clears fire.",
+  "ars_elemental.armorset.aqua": "Aquamancer's Set",
+  "ars_elemental.armorset.aqua.desc": "Absorb some water-related damage and convert into mana, refill air if about to drown.",
+  "ars_elemental.armorset.earth": "Geomancer's Set",
+  "ars_elemental.armorset.earth.desc": "Absorb some earth-related damage and convert into mana, gives food deep underground if about to starve.",
+  "ars_elemental.armorset.air": "Aethermancer's Set",
+  "ars_elemental.armorset.air.desc": "Absorb some air-related damage and convert into mana, falling won't be a problem anymore!",
+  "ars_elemental.page.armorset.fire": "Attuned to the School of Fire, each piece of this armor will amplify fire glyphs, make them cheaper, and reduce damage related to fire, like lava, dragon breath and magma.$(br)When all the pieces are equipped, the damage reduced is converted into mana and fire is immediately put out.",
+  "ars_elemental.page.armorset.aqua": "Attuned to the School of Water, each piece of this armor will amplify water glyphs, make them cheaper and reduce damage related to water, like drowning, freezing and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and refill air if about to drown.",
+  "ars_elemental.page.armorset.air": "Attuned to the School of Air, each piece of this armor will amplify air glyphs, make them cheaper and reduce damage related to air, like falling, hitting walls while flying and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and falling won't be a problem anymore!.",
+  "ars_elemental.page.armorset.earth": "Attuned to the School of Earth, each piece of this armor will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve."
 }

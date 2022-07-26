@@ -1,0 +1,27 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "ars_elemental:aqua_hat",
+  "name": "ars_elemental.armorset.aqua",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armorset.aqua"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:aqua_hat"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:aqua_robes"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:aqua_leggings"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_elemental:aqua_boots"
+    }
+  ]
+}

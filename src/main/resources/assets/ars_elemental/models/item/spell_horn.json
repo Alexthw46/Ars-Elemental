@@ -5,7 +5,7 @@
     32,
     32
   ],
-  "gui_light": "front",
+  "gui_light": "side",
   "display": {
     "thirdperson_righthand": {
       "rotation": [

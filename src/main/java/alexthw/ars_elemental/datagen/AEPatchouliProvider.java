@@ -2,6 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
+import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
@@ -153,6 +154,12 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withPage(new ApparatusPage(ModItems.FIRENANDO_CHARM.get()))
                 , getPath(AUTOMATION, "fire_golem"));
 
+        addArmorPage(ModItems.FIRE_ARMOR);
+        addArmorPage(ModItems.WATER_ARMOR);
+        addArmorPage(ModItems.AIR_ARMOR);
+        addArmorPage(ModItems.EARTH_ARMOR);
+
+
         addFamiliarPage(new MermaidHolder());
         addFamiliarPage(new FirenandoHolder());
 
@@ -166,6 +173,18 @@ public class AEPatchouliProvider extends PatchouliProvider {
             DataProvider.saveStable(cache, patchouliPage.build(), patchouliPage.path());
         }
 
+    }
+
+    private void addArmorPage(ArmorSet armorSet) {
+        PatchouliBuilder builder = new PatchouliBuilder(EQUIPMENT, armorSet.getTranslationKey())
+                .withIcon(armorSet.getHat())
+                .withPage(new TextPage("ars_elemental.page.armorset." + armorSet.getName()))
+                .withPage(new ApparatusPage(armorSet.getHat()))
+                .withPage(new ApparatusPage(armorSet.getChest()))
+                .withPage(new ApparatusPage(armorSet.getLegs()))
+                .withPage(new ApparatusPage(armorSet.getBoots()));
+
+        this.pages.add(new PatchouliPage(builder, getPath(EQUIPMENT, "armor_" + armorSet.getName())));
     }
 
     @Override

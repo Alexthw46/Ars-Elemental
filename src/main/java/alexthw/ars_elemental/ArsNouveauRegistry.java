@@ -66,8 +66,9 @@ public class ArsNouveauRegistry {
         ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageSource.CACTUS,
                 DamageSource.STARVE,
                 DamageSource.SWEET_BERRY_BUSH,
+                DamageSource.CACTUS,
                 DamageSource.IN_WALL,
-                DamageSource.FALLING_BLOCK)
+                DamageSource.CRAMMING)
         );
     }
 

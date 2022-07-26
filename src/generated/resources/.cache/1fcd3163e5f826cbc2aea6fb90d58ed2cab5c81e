@@ -1,9 +1,13 @@
-// 1.19	2022-07-09T23:18:06.3127378	Ars Elemental Patchouli Datagen
+// 1.19	2022-07-26T12:22:48.9840521	Ars Elemental Patchouli Datagen
 8d83e73962205e06b4ead38a734e588da07a6a15 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/fire_golem.json
 6c3b3c025a56278426717da87ba6a148bf8012e3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/mermaid.json
 f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
 7e1fc9d52f52adc5943c0204cc24c7f276cc18e5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/air_bangle.json
 1a87fa43078be6950fa6c67876364a8e49bafa86 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/air_focus.json
+5f95c17b68d920723321fcac84c7a7d9f2246a59 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/armor_air.json
+821ac3099556697d66f633c9eb7755fefb7060b6 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/armor_aqua.json
+53cc3216e6c61629e5fccea9c233ef4348957d49 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/armor_earth.json
+3686fcfa6b4040ddb082fdab3e80d9ae71e9d62d data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/armor_fire.json
 85ee7f012a6fcf06c71330f26db018458497781b data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/base_bangle.json
 1bd17cc2790b775a31dfa515f28f59932b232910 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/curio_bag.json
 94498bd90e39367efe93bd982407328850e21940 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/earth_bangle.json
