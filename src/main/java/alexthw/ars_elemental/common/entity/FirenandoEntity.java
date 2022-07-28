@@ -317,8 +317,12 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         }
     }
 
-    public String getColor(){
+    public String getColor() {
         return this.entityData.get(COLOR);
+    }
+
+    public void setColor(String color) {
+        this.entityData.set(COLOR, color);
     }
 
     @Override
@@ -327,12 +331,12 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
             ItemStack stack = player.getItemInHand(hand);
 
             if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor().equals(Variants.MAGMA.toString())) {
-                this.entityData.set(COLOR, Variants.MAGMA.toString());
+                this.setColor(Variants.MAGMA.toString());
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
             if (stack.getItem() == Blocks.SOUL_SAND.asItem() && !getColor().equals(Variants.SOUL.toString())) {
-                this.entityData.set(COLOR, Variants.SOUL.toString());
+                this.setColor(Variants.SOUL.toString());
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }

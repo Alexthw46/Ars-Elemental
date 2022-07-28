@@ -9,6 +9,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
+import alexthw.ars_elemental.util.EntityCarryMEI;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
@@ -91,6 +92,15 @@ public class GlyphEvents {
 
         if (!(entityHitResult.getEntity() instanceof LivingEntity living && event.world instanceof ServerLevel))
             return;
+
+        if (event.resolveEffect == EffectCut.INSTANCE) {
+            if (living.hasEffect(ModRegistry.LIFE_LINK.get())) {
+                if (living.getEffect(ModRegistry.LIFE_LINK.get()) instanceof EntityCarryMEI effect) {
+                    if (effect.getOwner() != null) effect.getOwner().removeEffect(ModRegistry.LIFE_LINK.get());
+                    if (effect.getTarget() != null) effect.getTarget().removeEffect(ModRegistry.LIFE_LINK.get());
+                }
+            }
+        }
 
         if (event.resolveEffect == EffectIgnite.INSTANCE) {
             if (event.shooter != living && school == ELEMENTAL_FIRE)

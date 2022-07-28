@@ -366,7 +366,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         if (isTamed()) {
             String color = Variants.getColorFromStack(stack);
             if (color != null && !getColor().equals(color)) {
-                this.entityData.set(COLOR, color);
+                this.setColor(color);
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
@@ -413,6 +413,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     public String getColor() {
         return this.entityData.get(COLOR);
+    }
+
+    public void setColor(String color) {
+        this.entityData.set(COLOR, color);
     }
 
     @Override
