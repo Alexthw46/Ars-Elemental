@@ -16,15 +16,21 @@ import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.world.WorldEvents;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
+import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -62,6 +68,8 @@ public class ModItems {
     public static final RegistryObject<Block> FLASHING_ARCHWOOD;
     public static final RegistryObject<Block> FLASHING_SAPLING;
     public static final RegistryObject<Block> FLASHING_LEAVES;
+    public static final RegistryObject<Block> FLASHING_POD;
+
 
     public static final RegistryObject<Block> GROUND_BLOSSOM;
 
@@ -125,6 +133,10 @@ public class ModItems {
         return addTabProp().rarity(Rarity.EPIC);
     }
 
+    public static FoodProperties FLASHPINE_FOOD = new FoodProperties.Builder().nutrition(4).saturationMod(0.6F)
+            .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 30 * 20), 1.0f)
+            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 30 * 20, 2), 1.0f)
+            .alwaysEat().build();
 
     static {
 
@@ -170,10 +182,10 @@ public class ModItems {
         GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Material.PLANT, MaterialColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
 
         //turrets
-        FIRE_TURRET = addSpecialBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
-        WATER_TURRET = addSpecialBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
-        AIR_TURRET = addSpecialBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
-        EARTH_TURRET = addSpecialBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
+        FIRE_TURRET = addGeckoBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
+        WATER_TURRET = addGeckoBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
+        AIR_TURRET = addGeckoBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
+        EARTH_TURRET = addGeckoBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
 
         //Trees
         FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldEvents.FLASHING_TREE), SAP_PROP));
@@ -183,6 +195,8 @@ public class ModItems {
         FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 4)));
         FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6), FLASHING_ARCHWOOD_LOG_STRIPPED));
         FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6), FLASHING_ARCHWOOD_STRIPPED));
+        FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(FLASHING_ARCHWOOD_LOG));
+        ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), addTabProp().food(FLASHPINE_FOOD)));
 
     }
 
@@ -192,7 +206,7 @@ public class ModItems {
         return block;
     }
 
-    static RegistryObject<Block> addSpecialBlock(String name, Supplier<Block> blockSupp, String model) {
+    static RegistryObject<Block> addGeckoBlock(String name, Supplier<Block> blockSupp, String model) {
         RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
         ITEMS.register(name, () -> new RendererBlockItem(block.get(), addTabProp()) {
             @Override

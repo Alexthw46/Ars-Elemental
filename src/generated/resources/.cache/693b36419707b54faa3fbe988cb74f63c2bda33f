@@ -1,7 +1,8 @@
-// 1.19	2022-07-04T01:12:31.7399216	Ars Elemental Loot Tables
+// 1.19.1	2022-07-29T15:23:41.89612	Ars Elemental Loot Tables
 ae960c5c327360d4d1d303f735fc9143bb39a7cd data/ars_elemental/loot_tables/blocks/air_turret.json
 4f1416981a7c26c409e7f73c5417d06ae78e2c60 data/ars_elemental/loot_tables/blocks/earth_turret.json
 6d5a4f452cc68938103a7ce8be72f7683ec4ccd9 data/ars_elemental/loot_tables/blocks/fire_turret.json
+d919b2d99c79eebb9da5c1ee71fb0654686033ae data/ars_elemental/loot_tables/blocks/flashpine_pod.json
 d9f53b01cf9b51749741ee1b803f4d97536abf47 data/ars_elemental/loot_tables/blocks/mermaid_rock.json
 4e773c5f77ace17457845ec3c41264c539cc870f data/ars_elemental/loot_tables/blocks/spore_blossom_up.json
 adae5a6f5f3c18dcfced066d5762c1429dc34476 data/ars_elemental/loot_tables/blocks/stripped_yellow_archwood.json

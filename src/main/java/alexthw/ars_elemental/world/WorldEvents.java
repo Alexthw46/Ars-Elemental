@@ -33,14 +33,14 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 public class WorldEvents {
     public static Holder<ConfiguredFeature<TreeConfiguration, ?>> FLASHING_TREE = FeatureUtils.register("ars_elemental:flashing_feature", Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
             new SupplierBlockStateProviderAE("yellow_archwood_log"),
-            new MagicTrunkPlacer(10, 2, 0),
+            new MagicTrunkPlacer(10, 2, 0, false, "ars_elemental:flashpine_pod"),
             new SupplierBlockStateProviderAE("yellow_archwood_leaves"),
             new BlobFoliagePlacer(UniformInt.of(0, 0), UniformInt.of(0, 0), 0),
             new TwoLayersFeatureSize(2, 0, 2)).ignoreVines().build());
 
     public static Holder<ConfiguredFeature<TreeConfiguration, ?>> NATURAL_FLASHING_TREE = FeatureUtils.register("ars_elemental:natural_flashing_feature", Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
             new SupplierBlockStateProviderAE("yellow_archwood_log"),
-            new MagicTrunkPlacer(10, 3, 0, true),
+            new MagicTrunkPlacer(10, 3, 0, true, "ars_elemental:flashpine_pod"),
             new SupplierBlockStateProviderAE("yellow_archwood_leaves"),
             new BlobFoliagePlacer(UniformInt.of(0, 0), UniformInt.of(0, 0), 0),
             new TwoLayersFeatureSize(3, 0, 2)).build());

@@ -18,9 +18,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
-
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.longPotion;
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.potion;
+import static com.hollingsworth.arsnouveau.common.potions.ModPotions.SHOCKED_EFFECT;
 
 public class ModPotions {
 
@@ -37,15 +37,25 @@ public class ModPotions {
     public static final RegistryObject<Potion> ENDERFERENCE_POTION;
     public static final RegistryObject<Potion> LONG_ENDERFERENCE_POTION;
 
+    public static final RegistryObject<Potion> SHOCK_POTION;
+    public static final RegistryObject<Potion> LONG_SHOCK_POTION;
 
-    public static void addPotionRecipes(){
+
+    public static void addPotionRecipes() {
         ItemStack AWKWARD = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
 
         ItemStack enderPot = PotionUtils.setPotion(new ItemStack(Items.POTION), ENDERFERENCE_POTION.get());
         ItemStack enderPotLong = PotionUtils.setPotion(new ItemStack(Items.POTION), LONG_ENDERFERENCE_POTION.get());
 
+        ItemStack shockPot = PotionUtils.setPotion(new ItemStack(Items.POTION), SHOCK_POTION.get());
+        ItemStack shockPotLong = PotionUtils.setPotion(new ItemStack(Items.POTION), LONG_SHOCK_POTION.get());
+
         BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(AWKWARD), Ingredient.of(ItemsRegistry.END_FIBER), enderPot));
         BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(enderPot), Ingredient.of(Items.GLOWSTONE_DUST), enderPotLong));
+
+        BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(AWKWARD), Ingredient.of(ModItems.FLASHING_POD.get().asItem()), shockPot));
+        BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(shockPot), Ingredient.of(Items.GLOWSTONE_DUST), shockPotLong));
+
     }
 
     static {
@@ -58,6 +68,8 @@ public class ModPotions {
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 1200)));
+        SHOCK_POTION = POTIONS.register(potion("shock"), () -> new Potion(new MobEffectInstance(SHOCKED_EFFECT.get(), 600, 1)));
+        LONG_SHOCK_POTION = POTIONS.register(longPotion("shock"), () -> new Potion(new MobEffectInstance(SHOCKED_EFFECT.get(), 2400, 1)));
 
     }
 

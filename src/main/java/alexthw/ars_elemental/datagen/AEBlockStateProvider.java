@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.registry.ModItems;
+import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import net.minecraft.data.DataGenerator;
@@ -35,6 +36,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
         takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
         takeAll(blocks, b -> b.get() instanceof LeavesBlock);
         takeAll(blocks, b -> b.get() instanceof SaplingBlock);
+        takeAll(blocks, b -> b.get() instanceof ArchfruitPod);
         takeAll(blocks, b -> b.get() instanceof SporeBlossomGround);
         blocks.forEach(this::basicBlock);
     }

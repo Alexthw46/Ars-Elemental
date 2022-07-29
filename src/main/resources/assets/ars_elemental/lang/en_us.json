@@ -27,7 +27,8 @@
   "item.ars_elemental.curio_bag": "Trinkets Pouch",
   "item.ars_elemental.debug": "Focus of Debug",
   "item.ars_elemental.mark_of_mastery": "Mark of Mastery",
-  "block.ars_elemental.water_upstream": "Upstream Flow Generator",
+  "item.ars_elemental.flashpine_pod": "Flashpine",
+  "block.ars_elemental.water_upstream": "Upstream Current Elevator",
   "block.ars_elemental.mermaid_rock": "Siren Shrine",
   "block.ars_elemental.yellow_archwood": "Flashing Archwood Wood",
   "block.ars_elemental.yellow_archwood_log": "Flashing Archwood Log",
@@ -184,5 +185,17 @@
   "item.minecraft.lingering_potion.effect.enderference_potion_long": "Lingering Potion of Enderference",
   "item.minecraft.tipped_arrow.effect.enderference_potion_strong": "Arrow of Enderference",
   "item.minecraft.tipped_arrow.effect.enderference_potion": "Arrow of Enderference",
-  "item.minecraft.tipped_arrow.effect.enderference_potion_long": "Arrow of Enderference"
+  "item.minecraft.tipped_arrow.effect.enderference_potion_long": "Arrow of Enderference",
+  "item.minecraft.splash_potion.effect.shocking_potion_potion_strong": "Splash Potion of Shocking",
+  "item.minecraft.splash_potion.effect.shocking_potion": "Splash Potion of Shocking",
+  "item.minecraft.splash_potion.effect.shocking_potion_long": "Splash Potion of Shocking",
+  "item.minecraft.potion.effect.shocking_potion_strong": "Potion of Shocking",
+  "item.minecraft.potion.effect.shocking_potion": "Potion of Shocking",
+  "item.minecraft.potion.effect.shocking_potion_long": "Potion of Shocking",
+  "item.minecraft.lingering_potion.effect.shocking_potion_strong": "Lingering Potion of Shocking",
+  "item.minecraft.lingering_potion.effect.shocking_potion": "Lingering Potion of Shocking",
+  "item.minecraft.lingering_potion.effect.shocking_potion_long": "Lingering Potion of Shocking",
+  "item.minecraft.tipped_arrow.effect.shocking_potion_strong": "Arrow of Shocking",
+  "item.minecraft.tipped_arrow.effect.shocking_potion": "Arrow of Shocking",
+  "item.minecraft.tipped_arrow.effect.shocking_potion_long": "Arrow of Shocking"
 }
