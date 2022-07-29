@@ -386,7 +386,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         BUBBLE,
         FIRE,
         TUBE,
-        HORN;
+        HORN,
+        BRAIN;
 
         public static String getColorFromStack(ItemStack stack) {
 
@@ -395,6 +396,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             if (stack.getItem() == Items.HORN_CORAL) return HORN.toString();
             if (stack.getItem() == Items.TUBE_CORAL) return TUBE.toString();
             if (stack.getItem() == Items.FIRE_CORAL) return FIRE.toString();
+            if (stack.getItem() == Items.BRAIN_CORAL) return BRAIN.toString();
 
             return null;
         }
