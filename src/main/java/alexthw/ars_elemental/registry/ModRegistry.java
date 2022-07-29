@@ -2,7 +2,6 @@ package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
-import alexthw.ars_elemental.common.mob_effects.*;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
@@ -12,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
@@ -28,12 +28,14 @@ import static alexthw.ars_elemental.registry.ModEntities.ENTITIES;
 import static alexthw.ars_elemental.registry.ModEntities.TILES;
 import static alexthw.ars_elemental.registry.ModItems.BLOCKS;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
+import static alexthw.ars_elemental.registry.ModPotions.EFFECTS;
+import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
 import static alexthw.ars_elemental.world.ModFeatures.FEATURES;
 
 public class ModRegistry {
 
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
-    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
+
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MODID);
     public static final DeferredRegister<BlockStateProviderType<?>> BS_PROVIDERS = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, MODID);
 
@@ -46,6 +48,7 @@ public class ModRegistry {
         TILES.register(bus);
         CONTAINERS.register(bus);
         EFFECTS.register(bus);
+        POTIONS.register(bus);
         ENCHANTMENTS.register(bus);
         FEATURES.register(bus);
         BS_PROVIDERS.register(bus);
@@ -62,12 +65,6 @@ public class ModRegistry {
         }
     }
 
-    public static final RegistryObject<MobEffect> HELLFIRE;
-    public static final RegistryObject<MobEffect> WATER_GRAVE;
-    public static final RegistryObject<MobEffect> ENTHRALLED;
-    public static final RegistryObject<MobEffect> HYMN_OF_ORDER;
-
-    public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
 
@@ -76,11 +73,6 @@ public class ModRegistry {
     public static final RegistryObject<Enchantment> MIRROR;
 
     static {
-        HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
-        WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
-        ENTHRALLED = EFFECTS.register("enthralled", EnthrallEffect::new);
-        LIFE_LINK = EFFECTS.register("life_link", LifeLinkEffect::new);
-        HYMN_OF_ORDER = EFFECTS.register("hymn_of_order", OrderEffect::new);
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
 

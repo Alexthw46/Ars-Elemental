@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-import static alexthw.ars_elemental.registry.ModRegistry.LIFE_LINK;
+import static alexthw.ars_elemental.registry.ModPotions.LIFE_LINK;
 
 public class EffectLifeLink extends ElementalAbstractEffect {
 

@@ -6,7 +6,7 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.registry.ModItems;
-import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.EntityCarryMEI;
@@ -94,17 +94,17 @@ public class GlyphEvents {
             return;
 
         if (event.resolveEffect == EffectCut.INSTANCE) {
-            if (living.hasEffect(ModRegistry.LIFE_LINK.get())) {
-                if (living.getEffect(ModRegistry.LIFE_LINK.get()) instanceof EntityCarryMEI effect) {
-                    if (effect.getOwner() != null) effect.getOwner().removeEffect(ModRegistry.LIFE_LINK.get());
-                    if (effect.getTarget() != null) effect.getTarget().removeEffect(ModRegistry.LIFE_LINK.get());
+            if (living.hasEffect(ModPotions.LIFE_LINK.get())) {
+                if (living.getEffect(ModPotions.LIFE_LINK.get()) instanceof EntityCarryMEI effect) {
+                    if (effect.getOwner() != null) effect.getOwner().removeEffect(ModPotions.LIFE_LINK.get());
+                    if (effect.getTarget() != null) effect.getTarget().removeEffect(ModPotions.LIFE_LINK.get());
                 }
             }
         }
 
         if (event.resolveEffect == EffectIgnite.INSTANCE) {
             if (event.shooter != living && school == ELEMENTAL_FIRE)
-                living.addEffect(new MobEffectInstance(ModRegistry.HELLFIRE.get(), 200, (int) event.spellStats.getAmpMultiplier() / 2));
+                living.addEffect(new MobEffectInstance(ModPotions.HELLFIRE.get(), 200, (int) event.spellStats.getAmpMultiplier() / 2));
         }
         if (event.resolveEffect == EffectLaunch.INSTANCE) {
             if (event.spellStats.getDurationMultiplier() != 0 && school == ELEMENTAL_AIR) {
@@ -121,8 +121,8 @@ public class GlyphEvents {
                 living.setTicksFrozen(newFrozenTicks);
                 if (living.isFullyFrozen()) living.invulnerableTime = 0;
             }
-            if (living.hasEffect(ModRegistry.HELLFIRE.get())) {
-                living.removeEffect(ModRegistry.HELLFIRE.get());
+            if (living.hasEffect(ModPotions.HELLFIRE.get())) {
+                living.removeEffect(ModPotions.HELLFIRE.get());
             }
         }
         if (event.resolveEffect == EffectColdSnap.INSTANCE) {

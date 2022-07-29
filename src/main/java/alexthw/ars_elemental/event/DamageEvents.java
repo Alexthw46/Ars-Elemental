@@ -5,7 +5,6 @@ import alexthw.ars_elemental.api.item.ISchoolBangle;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.items.armor.IElementalArmor;
-import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
@@ -28,6 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.HashMap;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
+import static alexthw.ars_elemental.registry.ModPotions.*;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
@@ -107,8 +107,8 @@ public class DamageEvents {
         if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolFocus.hasFocus(player.getLevel(), player) == ELEMENTAL_EARTH) {
             event.setAmount(event.getAmount() * 1.5F);
         }
-        if (event.getEntity().hasEffect(ModRegistry.HELLFIRE.get())) {
-            MobEffectInstance inst = event.getEntity().getEffect(ModRegistry.HELLFIRE.get());
+        if (event.getEntity().hasEffect(HELLFIRE.get())) {
+            MobEffectInstance inst = event.getEntity().getEffect(HELLFIRE.get());
             if (inst == null) return;
             int amplifier = Math.min(9, inst.getAmplifier());
             event.setAmount(event.getAmount() * (10 - amplifier) / 10);

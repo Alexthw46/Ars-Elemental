@@ -4,7 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.entity.mages.*;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
-import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -48,7 +48,7 @@ public class Debugger extends ElementalFocus {
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (player.getUUID().equals(ArsElemental.Dev) && entity instanceof Player target)
-            target.addEffect(new MobEffectInstance(ModRegistry.HYMN_OF_ORDER.get(), 6400));
+            target.addEffect(new MobEffectInstance(ModPotions.HYMN_OF_ORDER.get(), 6400));
         return super.onLeftClickEntity(stack, player, entity);
     }
 

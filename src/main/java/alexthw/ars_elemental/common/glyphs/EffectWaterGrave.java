@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.mixin.ZombieInvoker;
-import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,7 +30,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
             if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
-                applyConfigPotion(living, ModRegistry.WATER_GRAVE.get(), spellStats);
+                applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
             } else {
                 Vec3 delta = living.getDeltaMovement();
                 double dy = Math.min(-1.0D, delta.y - 0.05D);

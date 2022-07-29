@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-import static alexthw.ars_elemental.registry.ModRegistry.ENTHRALLED;
+import static alexthw.ars_elemental.registry.ModPotions.ENTHRALLED;
 
 public class EffectCharm extends ElementalAbstractEffect {
 

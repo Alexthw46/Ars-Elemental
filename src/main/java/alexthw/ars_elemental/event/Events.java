@@ -3,7 +3,7 @@ package alexthw.ars_elemental.event;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.items.armor.IElementalArmor;
-import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.nbt.CompoundTag;
@@ -39,8 +39,8 @@ public class Events {
 
     @SubscribeEvent
     public static void keepOrder(LivingDeathEvent event) {
-        if (event.getEntity() instanceof Player player && player.hasEffect(ModRegistry.HYMN_OF_ORDER.get())) {
-            MobEffectInstance effect = player.getEffect(ModRegistry.HYMN_OF_ORDER.get());
+        if (event.getEntity() instanceof Player player && player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) {
+            MobEffectInstance effect = player.getEffect(ModPotions.HYMN_OF_ORDER.get());
             if (effect == null) return;
             CompoundTag data = player.getPersistentData();
             if (!data.contains(Player.PERSISTED_NBT_TAG)) {
@@ -59,7 +59,7 @@ public class Events {
         if (data.contains(Player.PERSISTED_NBT_TAG)) {
             CompoundTag persist = data.getCompound(Player.PERSISTED_NBT_TAG);
             if (persist.contains("magic_locked") && persist.contains("magic_lock_duration")) {
-                event.getEntity().addEffect(new MobEffectInstance(ModRegistry.HYMN_OF_ORDER.get(), persist.getInt("magic_lock_duration")));
+                event.getEntity().addEffect(new MobEffectInstance(ModPotions.HYMN_OF_ORDER.get(), persist.getInt("magic_lock_duration")));
                 persist.remove("magic_locked");
                 persist.remove("magic_lock_duration");
             }

@@ -3,6 +3,7 @@ package alexthw.ars_elemental;
 import alexthw.ars_elemental.client.ClientEvents;
 import alexthw.ars_elemental.client.SpellFocusRenderer;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -76,6 +77,7 @@ public class ArsElemental {
 
     public void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            ModPotions.addPotionRecipes();
             ArsNouveauRegistry.postInit();
             CompatUtils.checkCompats();
         });

@@ -90,7 +90,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         if (castCooldown > 0) {
             this.castCooldown--;
         }
-        if (!level.isClientSide() && level.getGameTime() % 20 == 0 && this.isActive()) {
+        if (!level.isClientSide() && level.getGameTime() % 20 == 0 && this.isActive() && this.getHealth() < this.getMaxHealth()) {
             this.heal(1.0f);
         }
     }

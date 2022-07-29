@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.mixin;
 
-import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +12,7 @@ public class FlareMixin {
 
     @Redirect(method = "onResolveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isOnFire()Z" ))
     public boolean isOnFire(LivingEntity instance) {
-        return instance.hasEffect(ModRegistry.HELLFIRE.get()) || (instance.isOnFire() && !instance.isInWaterOrBubble());
+        return instance.hasEffect(ModPotions.HELLFIRE.get()) || (instance.isOnFire() && !instance.isInWaterOrBubble());
     }
 
 }

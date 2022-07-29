@@ -59,6 +59,8 @@
   "curios.modifiers.bangle": "While in bangle slot:",
   "curios.identifier.bundle": "Bundle",
   "curios.identifier.bangle": "Bangle",
+  "effect.ars_elemental.enderference": "Enderference",
+  "effect.ars_elemental.enderference.description": "Makes the target unable to teleport or be teleported.",
   "effect.ars_elemental.watery_grave": "Watery Grave",
   "effect.ars_elemental.watery_grave.description": "Makes the target sink and run out of air quicker.",
   "effect.ars_elemental.hellfire": "Hellfire Burn",
@@ -170,5 +172,17 @@
   "ars_elemental.page.armorset.fire": "Attuned to the School of Fire, each piece of this armor will amplify fire glyphs, make them cheaper, and reduce damage related to fire, like lava, dragon breath and magma.$(br)When all the pieces are equipped, the damage reduced is converted into mana and fire is immediately put out.",
   "ars_elemental.page.armorset.aqua": "Attuned to the School of Water, each piece of this armor will amplify water glyphs, make them cheaper and reduce damage related to water, like drowning, freezing and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and refill air if about to drown.",
   "ars_elemental.page.armorset.air": "Attuned to the School of Air, each piece of this armor will amplify air glyphs, make them cheaper and reduce damage related to air, like falling, hitting walls while flying and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and falling won't be a problem anymore!.",
-  "ars_elemental.page.armorset.earth": "Attuned to the School of Earth, each piece of this armor will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve."
+  "ars_elemental.page.armorset.earth": "Attuned to the School of Earth, each piece of this armor will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve.",
+  "item.minecraft.splash_potion.effect.enderference_potion_strong": "Splash Potion of Enderference",
+  "item.minecraft.splash_potion.effect.enderference_potion": "Splash Potion of Enderference",
+  "item.minecraft.splash_potion.effect.enderference_potion_long": "Splash Potion of Enderference",
+  "item.minecraft.potion.effect.enderference_potion_strong": "Potion of Enderference",
+  "item.minecraft.potion.effect.enderference_potion": "Potion of Enderference",
+  "item.minecraft.potion.effect.enderference_potion_long": "Potion of Enderference",
+  "item.minecraft.lingering_potion.effect.enderference_potion_strong": "Lingering Potion of Enderference",
+  "item.minecraft.lingering_potion.effect.enderference_potion": "Lingering Potion of Enderference",
+  "item.minecraft.lingering_potion.effect.enderference_potion_long": "Lingering Potion of Enderference",
+  "item.minecraft.tipped_arrow.effect.enderference_potion_strong": "Arrow of Enderference",
+  "item.minecraft.tipped_arrow.effect.enderference_potion": "Arrow of Enderference",
+  "item.minecraft.tipped_arrow.effect.enderference_potion_long": "Arrow of Enderference"
 }

@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.mob_effects;
 
-import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.event.MaxManaCalcEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import net.minecraft.world.effect.MobEffect;
@@ -29,13 +29,13 @@ public class OrderEffect extends MobEffect {
 
     public void block(SpellCastEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.hasEffect(ModRegistry.HYMN_OF_ORDER.get())) event.setCanceled(true);
+            if (player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) event.setCanceled(true);
         }
     }
 
     public void punish(MaxManaCalcEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.hasEffect(ModRegistry.HYMN_OF_ORDER.get())) event.setMax(1);
+            if (player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) event.setMax(1);
         }
     }
 
