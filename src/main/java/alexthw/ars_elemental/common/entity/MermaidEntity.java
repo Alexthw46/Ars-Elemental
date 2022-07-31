@@ -52,6 +52,7 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -60,8 +61,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -122,7 +121,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float p_70097_2_) {
+    public boolean hurt(DamageSource source, float p_70097_2_) {
         if (source == DamageSource.DROWN || source == DamageSource.IN_WALL || source == DamageSource.SWEET_BERRY_BUSH || source == DamageSource.CACTUS)
             return false;
         return super.hurt(source, p_70097_2_);
@@ -388,7 +387,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         BUBBLE,
         FIRE,
         TUBE,
-        HORN;
+        HORN,
+        BRAIN;
 
         public static String getColorFromStack(ItemStack stack) {
 
@@ -397,6 +397,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             if (stack.getItem() == Items.HORN_CORAL) return HORN.toString();
             if (stack.getItem() == Items.TUBE_CORAL) return TUBE.toString();
             if (stack.getItem() == Items.FIRE_CORAL) return FIRE.toString();
+            if (stack.getItem() == Items.BRAIN_CORAL) return BRAIN.toString();
+
 
             return null;
         }

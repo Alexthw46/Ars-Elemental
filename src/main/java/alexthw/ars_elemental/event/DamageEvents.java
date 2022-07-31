@@ -64,7 +64,7 @@ public class DamageEvents {
 
     @SubscribeEvent
     public static void banglesSpecials(LivingAttackEvent event) {
-        if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof LivingEntity living) {
+        if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof LivingEntity living && living != player) {
             SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level, player);
             if (bangle != null) {
                 switch (bangle.getId()) {

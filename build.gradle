@@ -135,7 +135,6 @@ repositories {
     }
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
-    maven { url "https://alcatrazescapee.jfrog.io/artifactory/mods" }
 
 }
 
