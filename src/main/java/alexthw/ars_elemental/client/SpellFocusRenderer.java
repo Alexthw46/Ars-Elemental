@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.util.ParticleUtil;
 import alexthw.ars_elemental.util.ParticleUtil.ParticleBuilder;
@@ -22,7 +21,7 @@ public class SpellFocusRenderer implements ICurioRenderer {
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffers, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 
-        if (ConfigHandler.Client.EnableSFRendering.get() && stack.getItem() instanceof ISchoolFocus focus && slotContext.entity() instanceof Player player) {
+        if (stack.getItem() instanceof ISchoolFocus focus && slotContext.entity() instanceof Player player) {
 
             if (player.getUUID().equals(ArsElemental.Dev)) {
                 specialRender(player, ageInTicks);

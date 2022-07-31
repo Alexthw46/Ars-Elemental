@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.registry;
 
-import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
@@ -133,7 +132,6 @@ public class ModEntities {
         SpawnPlacements.register(WATER_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
         SpawnPlacements.register(EARTH_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
 
-        ArsNouveauRegistry.addLights();
     }
 
     public static void registerTiles(IForgeRegistry<BlockEntityType<?>> registry) {

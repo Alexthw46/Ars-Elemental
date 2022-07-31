@@ -10,6 +10,7 @@ import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
@@ -17,10 +18,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.LightLayer;
@@ -30,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
+import static com.hollingsworth.arsnouveau.setup.Config.ITEM_LIGHTMAP;
 
 public class ArsNouveauRegistry {
     public static final List<AbstractSpellPart> registeredSpells = new ArrayList<>();
@@ -113,11 +112,14 @@ public class ArsNouveauRegistry {
         addSchool(EffectSummonUndead.INSTANCE, NECROMANCY);
 
         //Tweaks
+        EffectFirework.INSTANCE.compatibleAugments.add(AugmentDampen.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectGravity.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
+
+        ArsNouveauRegistry.addLights();
     }
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {
@@ -136,6 +138,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void addLights() {
+        ITEM_LIGHTMAP.put(ModItems.FLASHING_POD.getId(), 14);
         LightManager.register(ModEntities.HOMING_PROJECTILE.get(), (p -> 15));
         LightManager.register(ModEntities.CURVED_PROJECTILE.get(), (p -> 15));
         LightManager.register(ModEntities.FIRENANDO_ENTITY.get(), (p -> {
@@ -150,6 +153,7 @@ public class ArsNouveauRegistry {
             }
             return 0;
         }));
+
     }
 
     static {

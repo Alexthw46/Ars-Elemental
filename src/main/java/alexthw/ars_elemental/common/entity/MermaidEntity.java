@@ -45,7 +45,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -277,11 +276,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     public static boolean checkSurfaceWaterAnimalSpawnRules(LevelAccessor levelAccessor, BlockPos pos) {
-        int i = levelAccessor.getSeaLevel();
-        int j = i - 23;
+        int i = levelAccessor.getSeaLevel() + 10;
+        int j = i - 30;
         boolean f1 = pos.getY() >= j && pos.getY() <= i;
-        boolean f2 = levelAccessor.getBiome(pos).is(Biomes.COLD_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.DEEP_COLD_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.FROZEN_OCEAN) || levelAccessor.getBiome(pos).is(Biomes.DEEP_FROZEN_OCEAN);
-        return f1 && !f2 && levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getBlockState(pos.above()).is(Blocks.WATER);
+        return f1 && levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getBlockState(pos.above()).is(Blocks.WATER);
     }
 
     //Pathfinder

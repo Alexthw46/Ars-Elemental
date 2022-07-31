@@ -85,6 +85,7 @@ public class ArsElemental {
 
     @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
+        if (!ConfigHandler.Client.EnableSFRendering.get()) return;
         CuriosRendererRegistry.register(ModItems.FIRE_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.WATER_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.AIR_FOCUS.get(), SpellFocusRenderer::new);
@@ -101,6 +102,7 @@ public class ArsElemental {
     public void loadComplete(FMLLoadCompleteEvent event) {
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.putIfAbsent(ModItems.FLASHING_SAPLING.get().asItem(), 0.3F);
+            ComposterBlock.COMPOSTABLES.putIfAbsent(ModItems.FLASHING_POD.get().asItem(), 0.3F);
         });
     }
 }

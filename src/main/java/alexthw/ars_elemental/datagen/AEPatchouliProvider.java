@@ -49,8 +49,10 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withTextPage("ars_elemental.page.elemental_tweaks")
                 , getPath(GETTING_STARTED, "elemental_tweaks"));
 
-        addPage(new PatchouliBuilder(RESOURCES, ModItems.FLASHING_ARCHWOOD.get())
+        addPage(new PatchouliBuilder(RESOURCES, "flashing_archwood")
+                        .withIcon(ModItems.FLASHING_ARCHWOOD.get())
                         .withTextPage("ars_elemental.page1.flashing_archwood")
+                        .withPage(new SpotlightPage(ModItems.FLASHING_POD.get().asItem()).withText("ars_elemental.page2.flashing_archwood").linkRecipe(true))
                         .withPage(new EntityPage(prefix("flashing_weald_walker").toString()))
                 , getPath(RESOURCES, "flashing_archwood"));
 
