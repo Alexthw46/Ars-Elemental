@@ -4,6 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,7 +58,10 @@ public class GreaterElementalFocus extends ElementalFocus {
                     }
                 }
                 case "air" -> {
-                    if (player.getY() > 200 || player.fallDistance > 3 || (player.hasEffect(MobEffects.SLOW_FALLING) && player.getDeltaMovement().y() < -0.3))
+                    if (player.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
+                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 60, 1));
+                        player.addEffect(new MobEffectInstance(SPELL_DAMAGE_EFFECT.get(), 60, 1));
+                    } else if (player.getY() > 200)
                         player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
                 }
                 case "earth" -> {

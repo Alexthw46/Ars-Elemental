@@ -49,7 +49,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.FEATHER)
                 .save(consumer, prefix("flight_alt"));
 
-
         shapelessBuilder(getRitualItem(prefix(TeslaRitual.ID)))
                 .requires(FLASHING_ARCHWOOD_LOG.get())
                 .requires(ItemsRegistry.AIR_ESSENCE)
@@ -72,7 +71,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.GLOWSTONE_DUST)
                 .requires(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .save(consumer, prefix("tablet_" + DetectionRitual.ID));
-
     }
 
     public Item getRitualItem(ResourceLocation id) {

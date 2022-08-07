@@ -56,6 +56,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withPage(new EntityPage(prefix("flashing_weald_walker").toString()))
                 , getPath(RESOURCES, "flashing_archwood"));
 
+        addBasicItem(ModItems.WATER_URN.get(), MACHINES, new ApparatusPage(ModItems.WATER_URN.get()));
         addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
         addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
         addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
@@ -170,6 +171,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addRitualPage(new DetectionRitual());
 
         addEnchantmentPage(ModRegistry.MIRROR.get());
+        addEnchantmentPage(ModRegistry.SOULBOUND.get());
 
         for (PatchouliPage patchouliPage : pages) {
             DataProvider.saveStable(cache, patchouliPage.build(), patchouliPage.path());

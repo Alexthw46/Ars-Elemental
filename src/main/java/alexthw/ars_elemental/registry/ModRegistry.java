@@ -2,16 +2,15 @@ package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
+import alexthw.ars_elemental.common.enchantments.SoulboundEnchantment;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
@@ -40,6 +39,7 @@ public class ModRegistry {
     public static final DeferredRegister<BlockStateProviderType<?>> BS_PROVIDERS = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, MODID);
 
     public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
+    public static final TagKey<Item> SOULBOUND_ABLE = ItemTags.create(prefix("soulbound_extra"));
 
     public static void registerRegistries(IEventBus bus) {
         BLOCKS.register(bus);
@@ -71,6 +71,8 @@ public class ModRegistry {
     public static final RegistryObject<BlockStateProviderType<?>> AE_BLOCKSTATE_PROVIDER;
 
     public static final RegistryObject<Enchantment> MIRROR;
+    public static final RegistryObject<Enchantment> SOULBOUND;
+
 
     static {
 
@@ -79,6 +81,7 @@ public class ModRegistry {
         AE_BLOCKSTATE_PROVIDER = BS_PROVIDERS.register("ae_stateprovider", () -> new BlockStateProviderType<>(SupplierBlockStateProviderAE.CODEC));
 
         MIRROR = ENCHANTMENTS.register("mirror_shield", MirrorShieldEnchantment::new);
+        SOULBOUND = ENCHANTMENTS.register("soulbound", SoulboundEnchantment::new);
 
     }
 

@@ -5,6 +5,11 @@
   "inputItems": [
     {
       "item": {
+        "item": "ars_elemental:anima_essence"
+      }
+    },
+    {
+      "item": {
         "item": "minecraft:golden_apple"
       }
     },

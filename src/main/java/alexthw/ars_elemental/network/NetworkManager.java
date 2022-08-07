@@ -14,11 +14,12 @@ public class NetworkManager {
     public static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(prefix("main"), () -> NetworkManager.PROTOCOL_VERSION, NetworkManager.PROTOCOL_VERSION::equals, NetworkManager.PROTOCOL_VERSION::equals);
 
+    @SuppressWarnings("UnusedAssignment")
     @SubscribeEvent
-    public static void registerNetworkStuff(FMLCommonSetupEvent event)
-    {
+    public static void registerNetworkStuff(FMLCommonSetupEvent event) {
         int index = 0;
         INSTANCE.registerMessage(index++, OpenCurioBagPacket.class, OpenCurioBagPacket::encode, OpenCurioBagPacket::decode, OpenCurioBagPacket::whenThisPacketIsReceived);
+        INSTANCE.registerMessage(index++, RayEffectPacket.class, RayEffectPacket::encode, RayEffectPacket::decode, RayEffectPacket::whenThisPacketIsReceived);
 
     }
 

@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.world.WorldEvents;
+import alexthw.ars_elemental.world.WorldRegistry;
 import com.google.gson.JsonElement;
 import com.hollingsworth.arsnouveau.common.datagen.BiomeTagProvider;
 import com.mojang.serialization.JsonOps;
@@ -41,8 +41,8 @@ public class AEBiomeModifiersProvider {
         modifierMap.put(prefix("siren_spawns"), ForgeBiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(SIREN_SPAWN_TAG, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(),
                 3, 1, 3)));
 
-        HolderSet<PlacedFeature> TREESET_RARE = new HolderSet.Named<>(ops.registry(Registry.PLACED_FEATURE_REGISTRY).orElseThrow(), TagKey.create(Registry.PLACED_FEATURE_REGISTRY, WorldEvents.RARE_FLASHING_RL));
-        HolderSet<PlacedFeature> TREESET_CMN = new HolderSet.Named<>(ops.registry(Registry.PLACED_FEATURE_REGISTRY).orElseThrow(), TagKey.create(Registry.PLACED_FEATURE_REGISTRY, WorldEvents.COMMON_FLASHING_RL));
+        HolderSet<PlacedFeature> TREESET_RARE = new HolderSet.Named<>(ops.registry(Registry.PLACED_FEATURE_REGISTRY).orElseThrow(), TagKey.create(Registry.PLACED_FEATURE_REGISTRY, WorldRegistry.RARE_FLASHING_RL));
+        HolderSet<PlacedFeature> TREESET_CMN = new HolderSet.Named<>(ops.registry(Registry.PLACED_FEATURE_REGISTRY).orElseThrow(), TagKey.create(Registry.PLACED_FEATURE_REGISTRY, WorldRegistry.COMMON_FLASHING_RL));
 
         //modifierMap.put(prefix("rare_flash_archwood"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(OVERWORLD_TAG, TREESET_RARE, GenerationStep.Decoration.VEGETAL_DECORATION));
         //modifierMap.put(prefix("common_flash_archwood"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(COMMON_ARCHWOOD_TAG, TREESET_CMN, GenerationStep.Decoration.VEGETAL_DECORATION));

@@ -1,0 +1,15 @@
+{
+  "category": "ars_nouveau:enchantments",
+  "icon": "minecraft:enchanted_book",
+  "name": "enchantment.ars_elemental.soulbound",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.enchantment_desc.soulbound"
+    },
+    {
+      "type": "ars_nouveau:enchanting_recipe",
+      "recipe": "ars_nouveau:soulbound_1"
+    }
+  ]
+}

@@ -67,7 +67,7 @@ public class ArsNouveauRegistry {
                 DamageSource.SWEET_BERRY_BUSH,
                 DamageSource.CACTUS,
                 DamageSource.IN_WALL,
-                DamageSource.CRAMMING)
+                new DamageSource("poison"))
         );
     }
 
@@ -78,6 +78,8 @@ public class ArsNouveauRegistry {
         register(EffectCharm.INSTANCE);
         register(EffectLifeLink.INSTANCE);
         register(EffectSpores.INSTANCE);
+        register(EffectDischarge.INSTANCE);
+
         //methods
         register(MethodHomingProjectile.INSTANCE);
         register(MethodCurvedProjectile.INSTANCE);

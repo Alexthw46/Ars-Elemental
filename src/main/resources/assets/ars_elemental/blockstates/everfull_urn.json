@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ars_elemental:block/everfull_urn"
+    },
+    "facing=up": {
+      "model": "ars_elemental:block/everfull_urn"
+    },
+    "facing=down": {
+      "model": "ars_elemental:block/everfull_urn"
+    },
+    "facing=south": {
+      "model": "ars_elemental:block/everfull_urn",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ars_elemental:block/everfull_urn",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "ars_elemental:block/everfull_urn",
+      "y": 90
+    }
+  }
+}

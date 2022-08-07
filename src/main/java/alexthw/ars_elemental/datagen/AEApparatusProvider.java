@@ -15,6 +15,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ItemsRegistry.SUMMONING_FOCUS)
                 .withPedestalItem(2, Items.WITHER_ROSE)
                 .withPedestalItem(1, Items.WITHER_SKELETON_SKULL)
-                .withPedestalItem(1, ItemsRegistry.CONJURATION_ESSENCE)
+                .withPedestalItem(1, ModItems.ANIMA_ESSENCE.get())
                 .build()
         );
 
@@ -44,6 +45,15 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                 .withPedestalItem(4, Items.PRISMARINE_SHARD)
+                .build()
+        );
+
+        recipes.add(builder()
+                .withResult(ModItems.WATER_URN.get())
+                .withReagent(Blocks.FLOWER_POT)
+                .withPedestalItem(RecipeDatagen.SOURCE_GEM)
+                .withPedestalItem(2, ItemsRegistry.WATER_ESSENCE)
+                .withPedestalItem(2, Items.PRISMARINE_SHARD)
                 .build()
         );
 
@@ -160,7 +170,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
-                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 1, 3000));
+                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 1, 2000));
 
         recipes.add(builder()
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
@@ -168,13 +178,20 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                 .withPedestalItem(Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS))
-                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 2, 6000));
+                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 2, 5000));
 
         recipes.add(builder()
                 .withPedestalItem(BlockRegistry.SPELL_PRISM)
                 .withPedestalItem(Items.TOTEM_OF_UNDYING)
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
-                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 9000));
+                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 8000));
+
+        recipes.add(builder()
+                .withPedestalItem(ModItems.ANIMA_ESSENCE)
+                .withPedestalItem(Items.TOTEM_OF_UNDYING)
+                .withPedestalItem(Blocks.LAPIS_BLOCK)
+                .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
+                .buildEnchantmentRecipe(ModRegistry.SOULBOUND.get(), 1, 10000));
 
         addArmorRecipes(ModItems.FIRE_ARMOR, ItemsRegistry.FIRE_ESSENCE);
         addArmorRecipes(ModItems.WATER_ARMOR, ItemsRegistry.WATER_ESSENCE);

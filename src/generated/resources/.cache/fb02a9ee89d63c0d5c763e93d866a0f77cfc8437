@@ -1,4 +1,4 @@
-// 1.19.1	2022-07-29T15:23:41.8921304	Ars Elemental Item Models
+// 1.19.1	2022-08-04T12:19:28.8567129	Ars Elemental Item Models
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
 9b7a442f93c41c299a0eda4f3da50307817803b5 assets/ars_elemental/models/item/air_caster_tome.json
@@ -8,6 +8,7 @@
 f76249799ea44b24f5a7d1d72fa8f0e7d3d7315b assets/ars_elemental/models/item/air_robes.json
 2669502bb6936a273700592c0608aba0beb89194 assets/ars_elemental/models/item/air_turret.json
 c4ba07c5c7130e9734c1ea3691ac71eaed4c97f9 assets/ars_elemental/models/item/anima_caster_tome.json
+c23ded919ec2e7048013124b58167bcaff925569 assets/ars_elemental/models/item/anima_essence.json
 4a6fa79090a4ec5637e757aa4d1f0a8b219016f2 assets/ars_elemental/models/item/aqua_boots.json
 f93b93df834cd0cd38da310473cbd4358199669e assets/ars_elemental/models/item/aqua_hat.json
 6edacc4a92515b78fdc6edc949565934596554f8 assets/ars_elemental/models/item/aqua_leggings.json
@@ -23,6 +24,7 @@ ae2b2da91d77724e2744c0cd32ed9c86cbaffcb9 assets/ars_elemental/models/item/earth_
 82366443aac0ab0638f1f8a3b8aa1c171f3d2dea assets/ars_elemental/models/item/earth_leggings.json
 56bfcc594fbcf9d1cc93d7b5050c97a5b33f507b assets/ars_elemental/models/item/earth_robes.json
 2defb3914a4f62da27ed12fe2ce908edeac24548 assets/ars_elemental/models/item/earth_turret.json
+26d04e26bf270a74a1713090b90139ad93a1c292 assets/ars_elemental/models/item/everfull_urn.json
 ddbe9c78434532d0914dffa6a55600039439b3e9 assets/ars_elemental/models/item/firenando_charm.json
 ef99bca1c7b816a277121f8d365ea28507713a81 assets/ars_elemental/models/item/fire_bangle.json
 db0c63037e3de615b2893a674143d4c20f45a852 assets/ars_elemental/models/item/fire_boots.json

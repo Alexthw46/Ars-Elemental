@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
+import alexthw.ars_elemental.common.blocks.EverfullUrnTile;
 import alexthw.ars_elemental.common.blocks.UpstreamTile;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
@@ -71,6 +72,7 @@ public class ModEntities {
 
     public static BlockEntityType<MermaidTile> MERMAID_TILE;
     public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
+    public static BlockEntityType<EverfullUrnTile> URN_TILE;
     public static BlockEntityType<ElementalSpellTurretTile> ELEMENTAL_TURRET;
 
 
@@ -138,6 +140,7 @@ public class ModEntities {
         MERMAID_TILE = addTileEntity(registry, "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
         UPSTREAM_TILE = addTileEntity(registry, "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
         ELEMENTAL_TURRET = addTileEntity(registry, "elemental_turret_tile", ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get());
+        URN_TILE = addTileEntity(registry, "everfull_urn", EverfullUrnTile::new, ModItems.WATER_URN.get());
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -1,0 +1,40 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "output": {
+    "item": "ars_elemental:everfull_urn"
+  },
+  "pedestalItems": [
+    {
+      "item": {
+        "tag": "forge:gems/source"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:prismarine_shard"
+      }
+    }
+  ],
+  "reagent": [
+    {
+      "item": "minecraft:flower_pot"
+    }
+  ],
+  "sourceCost": 0
+}

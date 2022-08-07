@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.common.enchantment.EnchantmentRegistry;
@@ -29,7 +30,10 @@ public class ShieldEvents {
                         int level = stack.getEnchantmentLevel(ModRegistry.MIRROR.get());
                         if (level > 0 && player.getRandom().nextInt(4) < level) {
                             projectileSpell.setDeltaMovement(projectileSpell.getDeltaMovement().reverse().add(0, 0.3, 0));
-                            float pay = projectileSpell.spellResolver.getResolveCost() / 10f;
+                            if (projectileSpell instanceof EntityHomingProjectile homing && level > 3) {
+                                homing.getIgnored().add((e) -> e == player);
+                            }
+                            float pay = projectileSpell.spellResolver.getResolveCost() / (level * 2f);
                             CapabilityRegistry.getMana(player).ifPresent(mana -> mana.removeMana(pay));
                             player.getCooldowns().addCooldown(stack.getItem(), 100);
                             event.setCanceled(true);

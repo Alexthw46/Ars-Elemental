@@ -1,5 +1,6 @@
-// 1.19.1	2022-07-29T15:06:25.8021508	Ars Elemental Imbuement
+// 1.19.1	2022-08-04T12:36:48.6270465	Ars Elemental Imbuement
 7638c551327bb9dfc1a1a089f6a8084693b93ea6 data/ars_elemental/recipes/imbuement_air_turret.json
+e0ad023fbc707d6d8ebbcf097bf39d4345e1a77a data/ars_elemental/recipes/imbuement_anima_essence.json
 90fe54e0343abb96669fa428cdbf296f80516e01 data/ars_elemental/recipes/imbuement_earth_turret.json
 5f0be60c8671b0574a3bf1e1242cf23b71f39076 data/ars_elemental/recipes/imbuement_fire_turret.json
 16f587f027e333b866c20d37b3f4d933193e4719 data/ars_elemental/recipes/imbuement_lesser_air_focus.json

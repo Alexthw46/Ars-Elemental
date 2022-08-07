@@ -3,11 +3,10 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
-import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
-import com.hollingsworth.arsnouveau.common.block.SummonBlock;
+import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -30,7 +29,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
-        takeAll(blocks, b -> b.get() instanceof UpstreamBlock || b.get() instanceof SummonBlock || b.get() instanceof ElementalTurret);
+        takeAll(blocks, b -> b.get() instanceof TickableModBlock || b.get() instanceof ElementalTurret);
         takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock || b.get() instanceof StrippableLog).forEach(this::logBlock);
         takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
         takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);

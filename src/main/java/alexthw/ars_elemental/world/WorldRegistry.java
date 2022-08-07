@@ -30,7 +30,7 @@ import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class WorldEvents {
+public class WorldRegistry {
     public static Holder<ConfiguredFeature<TreeConfiguration, ?>> FLASHING_TREE = FeatureUtils.register("ars_elemental:flashing_feature", Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
             new SupplierBlockStateProviderAE("yellow_archwood_log"),
             new MagicTrunkPlacer(10, 2, 0, false, "ars_elemental:flashpine_pod"),

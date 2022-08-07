@@ -221,7 +221,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         if(this.needsMana){
             tooltip.add(Component.translatable("ars_nouveau.wixie.need_mana"));
         }else {
-            tooltip.add(Component.translatable("Progress: " + progress + "/" + Common.SIREN_MAX_PROGRESS));
+            //tooltip.add(Component.translatable("Progress: " + progress + "/" + Common.SIREN_MAX_PROGRESS));
             tooltip.add(Component.translatable("Aquarium Bonus: " + bonus));
         }
     }

@@ -1,0 +1,28 @@
+{
+  "type": "ars_nouveau:enchantment",
+  "enchantment": "ars_elemental:soulbound",
+  "level": 1,
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_elemental:anima_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:totem_of_undying"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:lapis_block"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:storage_blocks/source"
+      }
+    }
+  ],
+  "sourceCost": 10000
+}

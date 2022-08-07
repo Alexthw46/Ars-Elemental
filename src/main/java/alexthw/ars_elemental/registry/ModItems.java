@@ -4,6 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.client.ElementalTurretRenderer;
 import alexthw.ars_elemental.common.blocks.ElementalTurret;
+import alexthw.ars_elemental.common.blocks.EverfullUrnBlock;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
@@ -14,7 +15,7 @@ import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
-import alexthw.ars_elemental.world.WorldEvents;
+import alexthw.ars_elemental.world.WorldRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
@@ -62,6 +63,7 @@ public class ModItems {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
 
     public static final RegistryObject<Block> MERMAID_ROCK;
+    public static final RegistryObject<Block> WATER_URN;
     public static final RegistryObject<Block> FLASHING_ARCHWOOD_LOG;
     public static final RegistryObject<Block> FLASHING_ARCHWOOD_LOG_STRIPPED;
     public static final RegistryObject<Block> FLASHING_ARCHWOOD_STRIPPED;
@@ -111,6 +113,8 @@ public class ModItems {
     public static final RegistryObject<Item> CURIO_BAG;
     public static final RegistryObject<Item> DEBUG_ICON;
     public static final RegistryObject<Item> MARK_OF_MASTERY;
+    public static final RegistryObject<Item> ANIMA_ESSENCE;
+
     public static final RegistryObject<Item> SIREN_SHARDS;
     public static final RegistryObject<Item> SIREN_CHARM;
     public static final RegistryObject<Item> FIRENANDO_CHARM;
@@ -146,6 +150,7 @@ public class ModItems {
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
         MARK_OF_MASTERY = ITEMS.register("mark_of_mastery", () -> new Item(addTabProp()));
+        ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new Item(addTabProp()));
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(addTabProp()));
 
@@ -177,6 +182,7 @@ public class ModItems {
         NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), ArsNouveauRegistry.NECROMANCY));
 
         //blocks
+        WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Material.CLAY, MaterialColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
         GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Material.PLANT, MaterialColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
@@ -188,7 +194,7 @@ public class ModItems {
         EARTH_TURRET = addGeckoBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
 
         //Trees
-        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldEvents.FLASHING_TREE), SAP_PROP));
+        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldRegistry.FLASHING_TREE), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Material.LEAVES, MaterialColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
                 ModItems::allowsSpawnOnLeaves).isSuffocating(ModItems::isntSolid).isViewBlocking(ModItems::isntSolid)));
         FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 4)));

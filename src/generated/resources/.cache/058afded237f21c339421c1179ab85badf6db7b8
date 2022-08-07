@@ -1,5 +1,7 @@
-// 1.19.1	2022-07-29T15:06:25.7991595	Ars Elemental Item Tags
-7322fcfec5d15451d33b05c88ad4d6484591b44e data/ars_elemental/tags/items/curio_bag_item.json
+// 1.19.1	2022-08-04T14:35:09.6594319	Ars Elemental Item Tags
+6f0212a350ec5540b2ca6c5e8abf6e9293e017eb data/ars_elemental/tags/items/curio_bag_item.json
+55ebe60e91db1b8c82d4c050e5058b125796e4f9 data/ars_elemental/tags/items/soulbound_extra.json
+1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/items/magic_food.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/items/magic_shards.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/items/an_focus.json
 e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bangle.json

@@ -6,12 +6,16 @@ import vazkii.botania.api.block.IPetalApothecary;
 
 public class BotaniaCompat {
 
-    public static boolean tryFillApothecary(BlockPos pos, Level world){
-        if (world.getBlockEntity(pos) instanceof IPetalApothecary apothecary){
+    public static boolean tryFillApothecary(BlockPos pos, Level world) {
+        if (world.getBlockEntity(pos) instanceof IPetalApothecary apothecary) {
             apothecary.setFluid(IPetalApothecary.State.WATER);
             return true;
         }
         return false;
+    }
+
+    public static boolean isApothecary(BlockPos pos, Level world) {
+        return world.getBlockEntity(pos) instanceof IPetalApothecary;
     }
 
 

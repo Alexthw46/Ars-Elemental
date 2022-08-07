@@ -20,7 +20,6 @@ import net.minecraftforge.registries.RegistryObject;
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.longPotion;
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.potion;
-import static com.hollingsworth.arsnouveau.common.potions.ModPotions.SHOCKED_EFFECT;
 
 public class ModPotions {
 
@@ -33,6 +32,8 @@ public class ModPotions {
     public static final RegistryObject<MobEffect> HYMN_OF_ORDER;
     public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
     public static final RegistryObject<EnderferenceEffect> ENDERFERENCE;
+    public static final RegistryObject<LightningLureEffect> LIGHTNING_LURE;
+
 
     public static final RegistryObject<Potion> ENDERFERENCE_POTION;
     public static final RegistryObject<Potion> LONG_ENDERFERENCE_POTION;
@@ -65,11 +66,12 @@ public class ModPotions {
         LIFE_LINK = EFFECTS.register("life_link", LifeLinkEffect::new);
         HYMN_OF_ORDER = EFFECTS.register("hymn_of_order", OrderEffect::new);
         ENDERFERENCE = EFFECTS.register("enderference", EnderferenceEffect::new);
+        LIGHTNING_LURE = EFFECTS.register("static_charged", LightningLureEffect::new);
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 1200)));
-        SHOCK_POTION = POTIONS.register(potion("shock"), () -> new Potion(new MobEffectInstance(SHOCKED_EFFECT.get(), 600, 1)));
-        LONG_SHOCK_POTION = POTIONS.register(longPotion("shock"), () -> new Potion(new MobEffectInstance(SHOCKED_EFFECT.get(), 2400, 1)));
+        SHOCK_POTION = POTIONS.register(potion("shock"), () -> new Potion(new MobEffectInstance(LIGHTNING_LURE.get(), 600)));
+        LONG_SHOCK_POTION = POTIONS.register(longPotion("shock"), () -> new Potion(new MobEffectInstance(LIGHTNING_LURE.get(), 400)));
 
     }
 
