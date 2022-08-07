@@ -8,12 +8,20 @@
       "text": "ars_elemental.page1.necrotic_focus"
     },
     {
+      "type": "ars_nouveau:imbuement_recipe",
+      "recipe": "ars_elemental:imbuement_anima_essence"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page2.necrotic_focus"
+    },
+    {
       "type": "ars_nouveau:apparatus_recipe",
       "recipe": "ars_elemental:necrotic_focus"
     },
     {
       "type": "patchouli:text",
-      "text": "ars_elemental.page2.necrotic_focus"
+      "text": "ars_elemental.page3.necrotic_focus"
     }
   ]
 }

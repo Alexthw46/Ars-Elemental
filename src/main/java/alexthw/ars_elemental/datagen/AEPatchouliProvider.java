@@ -61,7 +61,6 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
         addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
 
-
         addPage(new PatchouliBuilder(MACHINES, "elemental_turrets")
                         .withIcon(ModItems.FIRE_TURRET.get())
                         .withTextPage("ars_elemental.page1.elemental_turrets")
@@ -80,8 +79,10 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.NECRO_FOCUS.get())
                         .withIcon(ModItems.NECRO_FOCUS.get())
                         .withTextPage("ars_elemental.page1.necrotic_focus")
-                        .withPage(new ApparatusPage(ModItems.NECRO_FOCUS.get()))
+                        .withPage(ImbuementPage(ModItems.ANIMA_ESSENCE.get()))
                         .withTextPage("ars_elemental.page2.necrotic_focus")
+                        .withPage(new ApparatusPage(ModItems.NECRO_FOCUS.get()))
+                        .withTextPage("ars_elemental.page3.necrotic_focus")
                 , getPath(EQUIPMENT, "necrotic_focus")
         );
 

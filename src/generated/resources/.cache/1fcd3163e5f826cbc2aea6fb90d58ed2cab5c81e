@@ -1,4 +1,4 @@
-// 1.19.1	2022-08-03T16:52:14.5128181	Ars Elemental Patchouli Datagen
+// 1.19.1	2022-08-07T16:32:02.9395721	Ars Elemental Patchouli Datagen
 8d83e73962205e06b4ead38a734e588da07a6a15 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/fire_golem.json
 6c3b3c025a56278426717da87ba6a148bf8012e3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/mermaid.json
 f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
@@ -15,7 +15,7 @@ f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elem
 1813563e8f1f84a62648c61de8c5244bbc310cce data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/earth_focus.json
 4a96aaf346fee2871248d6483a3b2c23ea35124c data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/fire_bangle.json
 50a4bae810617ff1e12ad7236b2b2e700b2c7b83 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/fire_focus.json
-49fbd33734ee48b9b30ffb954bbbb9fee6777d38 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/necrotic_focus.json
+764699a5c3c61978f25e48f68b7ae7828f4320cc data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/necrotic_focus.json
 c93a1956480f950013c433c0173aeafea96a394d data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/spell_horn.json
 32ffbd96aa5a94b287812294afeb575999cb0ee3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/water_bangle.json
 3943c3d19937deb509cdac1fb83d8b767f5ba0a7 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/water_focus.json

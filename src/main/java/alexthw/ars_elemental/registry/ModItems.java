@@ -150,7 +150,7 @@ public class ModItems {
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
         MARK_OF_MASTERY = ITEMS.register("mark_of_mastery", () -> new Item(addTabProp()));
-        ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new Item(addTabProp()));
+        ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence(addTabProp()));
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(addTabProp()));
 
