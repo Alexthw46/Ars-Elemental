@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,6 +28,11 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 import static net.minecraft.world.phys.shapes.BooleanOp.OR;
 
 public class MermaidRock extends SummonBlock implements SimpleWaterloggedBlock {
+
+    @Override
+    public boolean isConduitFrame(BlockState state, LevelReader level, BlockPos pos, BlockPos conduit) {
+        return true;
+    }
 
     public static VoxelShape shape = Stream.of(
             Block.box(1, 0, 1, 15, 5, 15),
