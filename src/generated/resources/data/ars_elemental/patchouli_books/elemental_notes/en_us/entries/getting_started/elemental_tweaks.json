@@ -6,6 +6,10 @@
     {
       "type": "patchouli:text",
       "text": "ars_elemental.page.elemental_tweaks"
+    },
+    {
+      "type": "ars_nouveau:imbuement_recipe",
+      "recipe": "ars_elemental:imbuement_mark_of_mastery"
     }
   ]
 }

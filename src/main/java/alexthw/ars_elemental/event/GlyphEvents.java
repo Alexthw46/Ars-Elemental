@@ -127,7 +127,7 @@ public class GlyphEvents {
         }
         if (event.resolveEffect == EffectColdSnap.INSTANCE) {
             if (living.getPercentFrozen() > 0.75) {
-                event.spellStats.setDamageModifier(event.spellStats.getDamageModifier() + 1);
+                event.spellStats.setDamageModifier(1 + event.spellStats.getDamageModifier() * 2);
             }
         }
         if (event.resolveEffect == EffectGrow.INSTANCE) {

@@ -41,8 +41,8 @@ public class ANProviders {
             recipes.add(get(EffectWaterGrave.INSTANCE).withItem(Items.KELP).withItem(Items.PRISMARINE_SHARD).withItem(ItemsRegistry.WATER_ESSENCE));
             recipes.add(get(EffectSpores.INSTANCE).withItem(Items.SPORE_BLOSSOM).withItem(Items.RED_MUSHROOM).withItem(ItemsRegistry.EARTH_ESSENCE));
             recipes.add(get(EffectDischarge.INSTANCE).withItem(Items.LIGHTNING_ROD).withItem(ModItems.FLASHING_POD.get().asItem()).withItem(ItemsRegistry.AIR_ESSENCE));
-            recipes.add(get(EffectCharm.INSTANCE).withItem(ModItems.ANIMA_ESSENCE.get()).withItem(Items.GOLDEN_APPLE).withItem(Items.GOLDEN_CARROT).withItem(ItemsRegistry.SOURCE_BERRY_PIE).withItem(Blocks.CAKE));
-            recipes.add(get(EffectLifeLink.INSTANCE).withItem(Items.LEAD).withItem(ModItems.ANIMA_ESSENCE.get()).withItem(Items.GLISTERING_MELON_SLICE).withItem(Items.IRON_SWORD).withItem(Items.FERMENTED_SPIDER_EYE));
+            recipes.add(get(EffectCharm.INSTANCE).withItem(ModItems.ANIMA_ESSENCE.get()).withItem(Items.GOLDEN_CARROT).withItem(ItemsRegistry.SOURCE_BERRY_PIE).withItem(Blocks.CAKE));
+            recipes.add(get(EffectLifeLink.INSTANCE).withItem(Items.LEAD).withItem(ModItems.ANIMA_ESSENCE.get()).withItem(Items.SCULK_SENSOR));
 
             recipes.add(get(MethodCurvedProjectile.INSTANCE).withItem(Items.ARROW).withItem(Items.SNOWBALL).withItem(Items.SLIME_BALL).withItem(Items.ENDER_PEARL));
             recipes.add(get(MethodHomingProjectile.INSTANCE).withItem(Items.NETHER_STAR).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ItemsRegistry.DOWSING_ROD).withItem(Items.ENDER_EYE));
@@ -136,7 +136,7 @@ public class ANProviders {
                     .withPedestalItem(ModItems.EARTH_FOCUS.get())
             );
 
-            recipes.add(new ImbuementRecipe("mark_of_mastery_temp", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5), 10000)
+            recipes.add(new ImbuementRecipe("mark_of_mastery", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5), 10000)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)

@@ -42,7 +42,7 @@ public class EffectDischarge extends ElementalAbstractEffect {
 
         if (livingEntity.hasEffect(ModPotions.SHOCKED_EFFECT.get()) || livingEntity.hasEffect(LIGHTNING_LURE.get())) {
             if (livingEntity.hasEffect(LIGHTNING_LURE.get())) {
-                damage *= 1.2;
+                damage *= 1.5;
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
             }
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {

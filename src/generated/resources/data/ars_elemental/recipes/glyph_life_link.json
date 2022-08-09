@@ -15,17 +15,7 @@
     },
     {
       "item": {
-        "item": "minecraft:glistering_melon_slice"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:iron_sword"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:fermented_spider_eye"
+        "item": "minecraft:sculk_sensor"
       }
     }
   ],

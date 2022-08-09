@@ -47,6 +47,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(GETTING_STARTED, "elemental_tweaks")
                         .withIcon(ModItems.DEBUG_ICON.get())
                         .withTextPage("ars_elemental.page.elemental_tweaks")
+                        .withPage(ImbuementPage(ModItems.MARK_OF_MASTERY.get()))
                 , getPath(GETTING_STARTED, "elemental_tweaks"));
 
         addPage(new PatchouliBuilder(RESOURCES, "flashing_archwood")

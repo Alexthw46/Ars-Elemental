@@ -1,10 +1,10 @@
-// 1.19.1	2022-08-04T12:36:48.6234204	Ars Elemental Glyph Recipes
-93799b95c37a8b47b6265f4f3cabb72202404fa7 data/ars_elemental/recipes/glyph_charm.json
+// 1.19.1	2022-08-10T00:44:12.3585876	Ars Elemental Glyph Recipes
+137fb0b6d400ab5d213fafa3f825fffc5a9a0f60 data/ars_elemental/recipes/glyph_charm.json
 bfe325c8b34e888365ca61a9c8b71463e342607a data/ars_elemental/recipes/glyph_conjure_terrain.json
 1307b22ca34b64015bd959f14e6e8bf3f46adf7f data/ars_elemental/recipes/glyph_curved_projectile.json
 63dda80758f39cea3aba03c28b0d356346bcaaa2 data/ars_elemental/recipes/glyph_discharge.json
 ce46e1df5010a705d4de3e18584ec1c27d2d4c13 data/ars_elemental/recipes/glyph_homing_projectile.json
-8802465ec1a0e2dbf857f9ec1ec75c5e70b5a656 data/ars_elemental/recipes/glyph_life_link.json
+cf2d2c759a9f3f9e833d5712f630e50d22ba7978 data/ars_elemental/recipes/glyph_life_link.json
 da61ddaf337e776ae5cb9bc12f7b3fff659eb8b3 data/ars_elemental/recipes/glyph_poison_spores.json
 16d03cfdbec586ae3329db494f70ebc8fc9cd57f data/ars_elemental/recipes/glyph_propagator_arc.json
 765c5fab7534d669be9f95f6acface391590fe3d data/ars_elemental/recipes/glyph_propagator_homing.json
