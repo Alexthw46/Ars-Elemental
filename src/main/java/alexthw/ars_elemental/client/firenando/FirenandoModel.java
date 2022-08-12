@@ -14,14 +14,18 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 @SuppressWarnings("unchecked")
 public class FirenandoModel<M extends LivingEntity & IAnimatable> extends AnimatedGeoModel<M> {
 
+    ResourceLocation MODEL = prefix("geo/fire_golem.geo.json");
+    ResourceLocation DEF_TEXTURE = prefix("textures/entity/fire_golem.png");
+    ResourceLocation ANIMATIONS = prefix("animations/fire_golem.animation.json");
+
     @Override
     public ResourceLocation getModelResource(M object) {
-        return prefix("geo/fire_golem.geo.json");
+        return MODEL;
     }
 
     @Override
     public ResourceLocation getTextureResource(M object) {
-        return prefix("textures/entity/fire_golem.png");
+        return DEF_TEXTURE;
     }
 
     /**
@@ -33,7 +37,7 @@ public class FirenandoModel<M extends LivingEntity & IAnimatable> extends Animat
      */
     @Override
     public ResourceLocation getAnimationResource(M animatable) {
-        return prefix("animations/fire_golem.animation.json");
+        return ANIMATIONS;
     }
 
     @Override

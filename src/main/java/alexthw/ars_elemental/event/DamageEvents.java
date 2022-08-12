@@ -121,7 +121,6 @@ public class DamageEvents {
         if (event.getEntity() instanceof Player player) {
             if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
                 event.setAmount(event.getAmount() * 0.1f);
-                return;
             }
             HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
             int bonusReduction = 0;
@@ -141,13 +140,13 @@ public class DamageEvents {
             }
             if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource() == DamageSource.DROWN) {
                 player.setAirSupply(player.getMaxAirSupply());
-                event.setAmount(event.getAmount() / 2);
+                bonusReduction += 5;
             }
             if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && player.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 2) {
                 player.getFoodData().setFoodLevel(20);
             }
             if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().isFall()) {
-                event.setAmount(event.getAmount() / 2);
+                bonusReduction += 5;
             }
 
             if (bonusReduction > 0) {

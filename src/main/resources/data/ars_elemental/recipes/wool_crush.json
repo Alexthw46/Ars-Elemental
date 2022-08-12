@@ -1,0 +1,18 @@
+{
+  "type": "ars_nouveau:crush",
+  "input": {
+    "tag": "minecraft:wool"
+  },
+  "output": [
+    {
+      "chance": 1.0,
+      "count": 3,
+      "item": "minecraft:string"
+    },
+    {
+      "chance": 0.5,
+      "count": 1,
+      "item": "minecraft:string"
+    }
+  ]
+}

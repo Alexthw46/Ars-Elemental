@@ -13,14 +13,18 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 
 public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
 
+    ResourceLocation MODEL = prefix("geo/mermaid.geo.json");
+    ResourceLocation TEXTURE = prefix("textures/entity/mermaid.png");
+    ResourceLocation ANIM = prefix("animations/mermaid.animation.json");
+
     @Override
     public ResourceLocation getModelResource(T object) {
-        return prefix("geo/mermaid.geo.json");
+        return MODEL;
     }
 
     @Override
     public ResourceLocation getTextureResource(T object) {
-        return prefix("textures/entity/mermaid.png");
+        return TEXTURE;
     }
 
     /**
@@ -32,7 +36,7 @@ public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
      */
     @Override
     public ResourceLocation getAnimationResource(T animatable) {
-        return prefix("animations/mermaid.animation.json");
+        return ANIM;
     }
 
     @SuppressWarnings("unchecked")
