@@ -24,7 +24,7 @@ public class AETagsProvider {
     public static class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
         public static final TagKey<Item> CURIO_SPELL_FOCUS = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "an_focus"));
         public static final TagKey<Item> CURIO_BANGLE = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "bangle"));
-
+        public static final TagKey<Item> ADVANCED_SPELLBOOK = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "advanced_spellbook"));
         public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "magic_shards"));
 
         public ItemTagsProvider(DataGenerator gen, net.minecraft.data.tags.BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -33,6 +33,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags() {
+            tag(ADVANCED_SPELLBOOK).add(ItemsRegistry.ARCHMAGE_SPELLBOOK, ItemsRegistry.APPRENTICE_SPELLBOOK);
             tag(SUMMON_SHARDS).add(ModItems.SIREN_SHARDS.get(), ItemsRegistry.DRYGMY_SHARD, ItemsRegistry.STARBUNCLE_SHARD, ItemsRegistry.WIXIE_SHARD, ItemsRegistry.WHIRLISPRIG_SHARDS);
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get());

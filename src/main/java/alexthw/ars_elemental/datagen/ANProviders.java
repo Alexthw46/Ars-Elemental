@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.Blocks;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static alexthw.ars_elemental.datagen.AETagsProvider.ItemTagsProvider.ADVANCED_SPELLBOOK;
+
 public class ANProviders {
 
     public static class GlyphProvider extends GlyphRecipeProvider {
@@ -74,7 +76,7 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                     .withPedestalItem(Items.GOLD_INGOT)
                     .withPedestalItem(Items.GOLD_INGOT)
-                    .withPedestalItem(ItemsRegistry.APPRENTICE_SPELLBOOK)
+                    .withPedestalItem(Ingredient.of(ADVANCED_SPELLBOOK))
             );
             recipes.add(new ImbuementRecipe("lesser_water_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.LESSER_WATER_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
@@ -82,7 +84,7 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                     .withPedestalItem(Items.GOLD_INGOT)
                     .withPedestalItem(Items.GOLD_INGOT)
-                    .withPedestalItem(ItemsRegistry.APPRENTICE_SPELLBOOK)
+                    .withPedestalItem(Ingredient.of(ADVANCED_SPELLBOOK))
             );
             recipes.add(new ImbuementRecipe("lesser_earth_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.LESSER_EARTH_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
@@ -90,7 +92,7 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                     .withPedestalItem(Items.GOLD_INGOT)
                     .withPedestalItem(Items.GOLD_INGOT)
-                    .withPedestalItem(ItemsRegistry.APPRENTICE_SPELLBOOK)
+                    .withPedestalItem(Ingredient.of(ADVANCED_SPELLBOOK))
             );
             recipes.add(new ImbuementRecipe("lesser_air_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.LESSER_AIR_FOCUS.get(), 1), 5000)
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
@@ -98,7 +100,7 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                     .withPedestalItem(Items.GOLD_INGOT)
                     .withPedestalItem(Items.GOLD_INGOT)
-                    .withPedestalItem(ItemsRegistry.APPRENTICE_SPELLBOOK)
+                    .withPedestalItem(Ingredient.of(ADVANCED_SPELLBOOK))
             );
 
             recipes.add(new ImbuementRecipe("fire_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.FIRE_TURRET.get(), 1), 5000)

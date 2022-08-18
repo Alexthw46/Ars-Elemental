@@ -7,8 +7,6 @@ import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.items.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
-import alexthw.ars_elemental.util.BotaniaCompat;
-import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
@@ -38,7 +36,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -70,8 +70,10 @@ public class GlyphEvents {
     @SubscribeEvent
     public static void empowerGlyphs(EffectResolveEvent.Pre event) {
 
-        if (event.resolveEffect == EffectConjureWater.INSTANCE && CompatUtils.isBotaniaLoaded() && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
-            if (BotaniaCompat.tryFillApothecary(blockHitResult.getBlockPos(), event.world)) {
+        if (event.resolveEffect == EffectConjureWater.INSTANCE && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
+            BlockState blockstate = event.world.getBlockState(blockHitResult.getBlockPos());
+            if (blockstate.getBlock() instanceof LiquidBlockContainer container) {
+                container.placeLiquid(event.world, blockHitResult.getBlockPos(), blockstate, Fluids.WATER.defaultFluidState());
                 event.setCanceled(true);
                 return;
             }

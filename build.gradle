@@ -147,7 +147,7 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    implementation fg.deobf("vazkii.botania:Botania:${mc_version}-430")
+    implementation fg.deobf("vazkii.botania:Botania:${mc_version}-435")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-67")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
