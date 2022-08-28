@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.entity.spells;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.TooManyCompats;
+import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
@@ -89,11 +90,9 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity);
         ignore.add(shooter::isAlliedTo);
-        if (CompatUtils.tooManyGlyphsLoaded()) {
-            Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(spell.recipe, index);
-            if (!filters.isEmpty()) {
-                ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
-            }
+        Set<IFilter> filters = TooManyCompats.getFilters(spell.recipe, index);
+        if (!filters.isEmpty()) {
+            ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
         }
         return ignore;
     }

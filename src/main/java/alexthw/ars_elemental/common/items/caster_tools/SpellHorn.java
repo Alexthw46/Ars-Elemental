@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.common.items.caster_tools;
 
 import alexthw.ars_elemental.client.castertools.SpellHornRenderer;
-import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
@@ -84,7 +83,7 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
             if (pLevel instanceof ServerLevel) {
                 ISpellCaster caster = getSpellCaster(stack);
                 SpellResolver resolver = new SpellResolver(new SpellContext(pLevel, caster.getSpell(), pLivingEntity).withColors(caster.getColor()));
-                Predicate<Entity> filter = CompatUtils.tooManyGlyphsLoaded() ? TooManyCompats.getFilterPredicate(caster.getSpell()) : (e -> e instanceof LivingEntity);
+                Predicate<Entity> filter = TooManyCompats.getFilterPredicate(caster.getSpell(), (e -> e instanceof LivingEntity));
                 for (Entity l : pLevel.getEntities((Entity) null, new AABB(player.blockPosition()).inflate(aoeMult), filter)) {
                     resolver.onResolveEffect(pLevel, new EntityHitResult(l));
                 }

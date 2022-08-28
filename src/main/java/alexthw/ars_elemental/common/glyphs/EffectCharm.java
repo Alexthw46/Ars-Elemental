@@ -42,14 +42,14 @@ public class EffectCharm extends ElementalAbstractEffect {
 
                 if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
 
-                    int resistance = 110 * (int) (mob.getHealth() / mob.getMaxHealth());
+                    float resistance = 10 +  100 * (mob.getHealth() / mob.getMaxHealth());
                     double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
 
                     if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
                         chanceBoost += 50;
                     }
 
-                    if (rollToSeduce(resistance, chanceBoost, level.getRandom())) {
+                    if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
                         applyConfigPotion(mob, player, ENTHRALLED.get(), spellStats);
                         playHeartParticles(mob,level);
                     }

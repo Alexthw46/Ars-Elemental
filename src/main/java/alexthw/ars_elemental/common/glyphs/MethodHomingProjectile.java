@@ -1,13 +1,11 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
-import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
-import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -100,7 +98,6 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     /**
      * Cast by others.
-     *
      * */
     @Override
     public CastResolveType onCastOnBlock(BlockHitResult blockRayTraceResult, LivingEntity caster, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
@@ -145,11 +142,9 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         if (!targetPlayers) {
             ignore.add(entity -> entity instanceof Player);
         }
-        if (CompatUtils.tooManyGlyphsLoaded()) {
-            Set<AbstractEffectFilter> filters = TooManyCompats.getFilters(spell.recipe, 0);
-            if (!filters.isEmpty()){
-                ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
-            }
+        Set<IFilter> filters = TooManyCompats.getFilters(spell.recipe, 0);
+        if (!filters.isEmpty()){
+            ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
         }
         return ignore;
     }

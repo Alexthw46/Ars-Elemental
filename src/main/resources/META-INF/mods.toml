@@ -56,15 +56,3 @@ mandatory = true
 versionRange = "[1.19.0-3.2.0,)"
 ordering = "AFTER"
 side = "BOTH"
-[[dependencies.ars_elemental]]
-modId = "toomanyglyphs"
-mandatory = false
-versionRange = "[1.0,)"
-ordering = "AFTER"
-side = "BOTH"
-[[dependencies.ars_elemental]]
-    modId = "botania"
-    mandatory = false
-    versionRange = "[1.18.1-400,)"
-    ordering = "AFTER"
-    side = "BOTH"
