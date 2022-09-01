@@ -30,19 +30,22 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        BlockState toPlace = Blocks.DIRT.defaultBlockState();
-        if (spellStats.hasBuff(AugmentAmplify.INSTANCE)) toPlace = Blocks.COBBLESTONE.defaultBlockState();
+        int amps = spellStats.getBuffCount(AugmentAmplify.INSTANCE);
+        BlockState toPlace = switch (amps){
+            default -> Blocks.DIRT.defaultBlockState();
+            case 1 -> Blocks.COBBLESTONE.defaultBlockState();
+            case 2 -> Blocks.COBBLED_DEEPSLATE.defaultBlockState();
+        };
         if (spellContext.hasNextPart()) {
             while (spellContext.hasNextPart()) {
                 AbstractSpellPart next = spellContext.nextPart();
-
                 if (next instanceof AbstractEffect) {
                     if (next == EffectConjureWater.INSTANCE) {
                         toPlace = Blocks.MUD.defaultBlockState();
                     } else if (next == EffectCrush.INSTANCE) {
-                        toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
-                    } else if (next == EffectSmelt.INSTANCE && spellStats.hasBuff(AugmentAmplify.INSTANCE)) {
-                        toPlace = Blocks.STONE.defaultBlockState();
+                        toPlace = amps > 0 ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
+                    } else if (next == EffectSmelt.INSTANCE && amps > 0) {
+                        toPlace = amps > 1 ? Blocks.DEEPSLATE.defaultBlockState() : Blocks.STONE.defaultBlockState();
                     } else {
                         spellContext.setCurrentIndex(spellContext.getCurrentIndex() - 1);
                     }
