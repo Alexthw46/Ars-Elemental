@@ -6,18 +6,21 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
+import com.hollingsworth.arsnouveau.common.entity.ModEntities;
 import com.hollingsworth.arsnouveau.common.world.biome.ModBiomes;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
@@ -27,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
 public class AETagsProvider {
@@ -128,4 +132,19 @@ public class AETagsProvider {
         }
     }
 
+    public static class AEEntityTagProvider extends EntityTypeTagsProvider {
+
+        public AEEntityTagProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
+            super(pGenerator, MODID, existingFileHelper);
+        }
+
+        @Override
+        protected void addTags() {
+            this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
+            this.tag(ModRegistry.FIERY).add(EntityType.BLAZE);
+            this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);
+            this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG);
+            this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
+        }
+    }
 }

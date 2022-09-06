@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.items.caster_tools;
 
-import alexthw.ars_elemental.client.castertools.SpellHornRenderer;
+import alexthw.ars_elemental.client.caster_tools.SpellHornRenderer;
 import alexthw.ars_elemental.util.TooManyCompats;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;

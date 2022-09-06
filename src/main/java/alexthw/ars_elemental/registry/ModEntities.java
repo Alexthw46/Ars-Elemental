@@ -11,6 +11,7 @@ import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import alexthw.ars_elemental.common.entity.mages.*;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.entity.summon.AllyVhexEntity;
 import alexthw.ars_elemental.common.entity.summon.SummonDirewolf;
@@ -69,6 +70,8 @@ public class ModEntities {
     public static final RegistryObject<EntityType<EntityHomingProjectile>> HOMING_PROJECTILE;
     public static final RegistryObject<EntityType<EntityCurvedProjectile>> CURVED_PROJECTILE;
     public static final RegistryObject<EntityType<EntityMagnetSpell>> LINGER_MAGNET;
+    public static final RegistryObject<EntityType<EntityLerpedProjectile>> LERP_PROJECTILE;
+
 
     public static BlockEntityType<MermaidTile> MERMAID_TILE;
     public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
@@ -104,6 +107,7 @@ public class ModEntities {
         HOMING_PROJECTILE = addEntity("homing_projectile", 0.5F, 0.5F, true, true, EntityHomingProjectile::new, MobCategory.MISC);
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
+        LERP_PROJECTILE = addEntity("lerp", 0.5F, 0.5F, true, true, EntityLerpedProjectile::new, MobCategory.MISC);
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {

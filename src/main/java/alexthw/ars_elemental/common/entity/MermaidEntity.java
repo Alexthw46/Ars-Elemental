@@ -106,7 +106,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         goalSelector.addGoal(3, new BreathAirGoal(this));
         goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6F));
         goalSelector.addGoal(4, new DolphinJumpGoal(this, 10));
-        goalSelector.addGoal(5, new GoBackHomeGoal(this, this::getHome, 12, () -> this.getHome() != null));
+        goalSelector.addGoal(5, new GoBackHomeGoal(this, this::getHome, 20, () -> this.getHome() != null));
         goalSelector.addGoal(8, new FollowBoatGoalM(this, () -> this.getHome() == null));
     }
 
@@ -216,7 +216,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 10)
                 .add(Attributes.FOLLOW_RANGE, 10)
-                .add(Attributes.MOVEMENT_SPEED, 0.2F)
+                .add(Attributes.MOVEMENT_SPEED, 0.4F)
                 .build();
     }
 

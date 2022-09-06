@@ -13,6 +13,7 @@ import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -49,6 +50,22 @@ public class ANProviders {
 
             recipes.add(get(PropagatorArc.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodCurvedProjectile.INSTANCE)));
             recipes.add(get(PropagatorHoming.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodHomingProjectile.INSTANCE)));
+
+            recipes.add(get(AquaticFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));
+            recipes.add(get(AquaticFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));
+
+            recipes.add(get(AerialFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.PHANTOM_MEMBRANE));
+            recipes.add(get(AerialFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.PHANTOM_MEMBRANE));
+
+            recipes.add(get(FieryFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.BLAZE_POWDER));
+            recipes.add(get(FieryFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.BLAZE_POWDER));
+
+            recipes.add(get(UndeadFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.ROTTEN_FLESH));
+            recipes.add(get(UndeadFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.ROTTEN_FLESH));
+
+            recipes.add(get(InsectFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.SPIDER_EYE));
+            recipes.add(get(InsectFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.SPIDER_EYE));
+
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());

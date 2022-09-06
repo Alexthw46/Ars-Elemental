@@ -11,11 +11,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -44,6 +47,13 @@ public class EffectDischarge extends ElementalAbstractEffect {
             if (livingEntity.hasEffect(LIGHTNING_LURE.get())) {
                 damage *= 1.5;
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
+            }
+            for (ItemStack i : livingEntity.getArmorSlots()) {
+                IEnergyStorage energyStorage = i.getCapability(ForgeCapabilities.ENERGY).orElse(null);
+                if (energyStorage != null) {
+                    energyStorage.extractEnergy((int) spellStats.getAmpMultiplier() * 500, false);
+                    damage *= 1.1;
+                }
             }
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
                 dealDamage(world, shooter, damage, spellStats, entity, source);

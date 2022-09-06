@@ -111,6 +111,8 @@ public class ModItems {
     public static final RegistryObject<Item> EARTH_BANGLE;
 
     public static final RegistryObject<Item> CURIO_BAG;
+    public static final RegistryObject<Item> CASTER_BAG;
+
     public static final RegistryObject<Item> DEBUG_ICON;
     public static final RegistryObject<Item> MARK_OF_MASTERY;
     public static final RegistryObject<Item> ANIMA_ESSENCE;
@@ -175,6 +177,7 @@ public class ModItems {
         EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(UncommonProp()));
 
         //caster tomes
+        CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(addTabProp().fireResistant().stacksTo(1)));
         FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
         WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_WATER));
         AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_AIR));

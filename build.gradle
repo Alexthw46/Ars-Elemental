@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = "${mc_version}-${mod_version}"
+version = "${mc_version}.1-${mod_version}"
 group = 'alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.mod_id
 
@@ -141,25 +141,25 @@ repositories {
 
 dependencies {
 
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:${mc_version}.2-${forge_version}"
 
-    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_dep_version}:${gecko_version}")
+    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}.1:${ars_version}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_version}:${gecko_version}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${mc_dep_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${mc_dep_version}-forge-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // at runtime, use the full JEI
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_dep_version}-common:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_dep_version}-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}.2-${curio_version}")
 
     compileOnly fg.deobf("vazkii.botania:Botania:1.18.2-430")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_dep_version}-75")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-75")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
 
-    implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:${mc_dep_version}-2.0.0.120")
+    implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:${mc_version}-2.0.0.120")
 
     //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
     //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")

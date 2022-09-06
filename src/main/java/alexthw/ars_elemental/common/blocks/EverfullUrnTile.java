@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.blocks;
 
+import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
@@ -11,7 +12,6 @@ import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.ITickable;
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
-import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
@@ -112,7 +112,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
     public void createParticles(BlockPos from, BlockPos to) {
         if (level == null) return;
-        EntityFollowProjectile orb = new EntityFollowProjectile(level,
+        EntityLerpedProjectile orb = new EntityLerpedProjectile(level,
                 from, to,
                 20, 50, 255);
         level.addFreshEntity(orb);

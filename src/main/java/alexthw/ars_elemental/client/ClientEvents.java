@@ -5,12 +5,12 @@ import alexthw.ars_elemental.client.firenando.FirenandoFamiliarRenderer;
 import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
+import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.common.items.armor.ElementalHat;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
@@ -20,8 +20,6 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -87,6 +85,12 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
+        event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
+            @Override
+            public ResourceLocation getTextureLocation(EntityLerpedProjectile pEntity) {
+                return new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png");
+            }
+        });
 
     }
 
@@ -105,6 +109,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void bindContainerRenderers(FMLClientSetupEvent event) {
         MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
+        MenuScreens.register(ModRegistry.CASTER_HOLDER.get(), CurioHolderScreen::new);
     }
 
     private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {

@@ -3,7 +3,6 @@ package alexthw.ars_elemental.common.items;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.util.ItemInventory;
 import com.hollingsworth.arsnouveau.api.item.AbstractSummonCharm;
-import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.items.ItemScroll;
 import com.hollingsworth.arsnouveau.common.items.PotionFlask;
@@ -22,9 +21,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -69,7 +68,7 @@ public class CurioHolder extends Item {
     public static boolean canStore(ItemStack stack) {
         Item item = stack.getItem();
         if (item instanceof CurioHolder) return false;
-        return item instanceof ISpellModifierItem || item instanceof ItemScroll || item instanceof AbstractSummonCharm || stack.is(CURIO_BAGGABLE) || item instanceof ICurioItem || item instanceof PotionFlask;
+        return item instanceof ItemScroll || item instanceof AbstractSummonCharm || stack.is(CURIO_BAGGABLE) || item instanceof ICurioItem || item instanceof PotionFlask;
     }
 
     @Nullable
@@ -106,7 +105,7 @@ public class CurioHolder extends Item {
         @Nonnull
         @Override
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(capability, opt);
+            return ForgeCapabilities.ITEM_HANDLER.orEmpty(capability, opt);
         }
     }
 

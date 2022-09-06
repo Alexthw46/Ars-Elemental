@@ -1,0 +1,40 @@
+package alexthw.ars_elemental.common.items;
+
+import alexthw.ars_elemental.common.CasterHolderContainer;
+import com.hollingsworth.arsnouveau.api.item.ICasterTool;
+import com.hollingsworth.arsnouveau.common.armor.MagicArmor;
+import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
+import com.hollingsworth.arsnouveau.common.items.SpellArrow;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
+
+public class CasterHolder extends CurioHolder {
+
+    public CasterHolder(Properties pProperties) {
+        super(pProperties);
+    }
+
+    public static boolean canStore(ItemStack stack) {
+        Item item = stack.getItem();
+        if (item instanceof CurioHolder) return false;
+        return item instanceof ICasterTool || item instanceof MagicArmor || item instanceof EnchantersShield || item instanceof SpellArrow;
+    }
+
+    @Override
+    public void openContainer(Level level, Player player, ItemStack bag) {
+        if (!level.isClientSide) {
+            MenuProvider container = new SimpleMenuProvider((w, p, pl) -> new CasterHolderContainer(w, p, bag), bag.getHoverName());
+            NetworkHooks.openScreen((ServerPlayer) player, container, b -> b.writeItem(bag));
+            player.level.playSound(null, player.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 1, 1);
+        }
+    }
+
+}

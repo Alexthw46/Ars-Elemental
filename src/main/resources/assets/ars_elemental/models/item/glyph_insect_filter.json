@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ars_nouveau:items/filter",
+    "layer1": "ars_nouveau:items/insect",
+    "layer2": "ars_nouveau:items/filter_allow"
+  }
+}

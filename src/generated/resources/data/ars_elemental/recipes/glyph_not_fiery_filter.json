@@ -1,0 +1,18 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 27,
+  "inputItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:deny_scroll"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:blaze_powder"
+      }
+    }
+  ],
+  "output": "ars_elemental:glyph_not_fiery_filter"
+}

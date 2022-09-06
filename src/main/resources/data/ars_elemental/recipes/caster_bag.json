@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MDM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "ars_nouveau:blaze_fiber"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "ars_elemental:caster_bag"
+  }
+}

@@ -1,9 +1,11 @@
 package alexthw.ars_elemental.registry;
 
+import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
 import alexthw.ars_elemental.common.enchantments.SoulboundEnchantment;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -41,6 +43,13 @@ public class ModRegistry {
     public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
     public static final TagKey<Item> SOULBOUND_ABLE = ItemTags.create(prefix("soulbound_extra"));
 
+    public static final TagKey<EntityType<?>> AQUATIC = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("aquatic"));
+    public static final TagKey<EntityType<?>> FIERY = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("fiery"));
+    public static final TagKey<EntityType<?>> AERIAL = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("aerial"));
+    public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("insect"));
+    public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("undead"));
+
+
     public static void registerRegistries(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -67,6 +76,8 @@ public class ModRegistry {
 
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
+    public static final RegistryObject<MenuType<CasterHolderContainer>> CASTER_HOLDER;
+
 
     public static final RegistryObject<BlockStateProviderType<?>> AE_BLOCKSTATE_PROVIDER;
 
@@ -77,6 +88,7 @@ public class ModRegistry {
     static {
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
+        CASTER_HOLDER = CONTAINERS.register("caster_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CasterHolderContainer(id, inv, extraData.readItem())));
 
         AE_BLOCKSTATE_PROVIDER = BS_PROVIDERS.register("ae_stateprovider", () -> new BlockStateProviderType<>(SupplierBlockStateProviderAE.CODEC));
 

@@ -1,0 +1,15 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "ars_elemental:caster_bag",
+  "name": "item.ars_elemental.caster_bag",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.caster_bag"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "ars_elemental:caster_bag"
+    }
+  ]
+}

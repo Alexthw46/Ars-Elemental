@@ -60,6 +60,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addBasicItem(ModItems.WATER_URN.get(), MACHINES, new ApparatusPage(ModItems.WATER_URN.get()));
         addBasicItem(ModItems.UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.UPSTREAM_BLOCK.get()));
         addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
+        addBasicItem(ModItems.CASTER_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CASTER_BAG.get()));
         addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
 
         addPage(new PatchouliBuilder(MACHINES, "elemental_turrets")

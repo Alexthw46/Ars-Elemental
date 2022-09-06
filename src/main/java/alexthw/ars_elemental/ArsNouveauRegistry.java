@@ -72,6 +72,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void registerGlyphs() {
+
         //effects
         register(EffectWaterGrave.INSTANCE);
         register(EffectConjureTerrain.INSTANCE);
@@ -83,10 +84,22 @@ public class ArsNouveauRegistry {
         //methods
         register(MethodHomingProjectile.INSTANCE);
         register(MethodCurvedProjectile.INSTANCE);
+
         //propagators
         register(PropagatorHoming.INSTANCE);
         register(PropagatorArc.INSTANCE);
 
+        //filters
+        register(AquaticFilter.INSTANCE);
+        register(AquaticFilter.NOT_INSTANCE);
+        register(FieryFilter.INSTANCE);
+        register(FieryFilter.NOT_INSTANCE);
+        register(AerialFilter.INSTANCE);
+        register(AerialFilter.NOT_INSTANCE);
+        register(InsectFilter.INSTANCE);
+        register(InsectFilter.NOT_INSTANCE);
+        register(UndeadFilter.INSTANCE);
+        register(UndeadFilter.NOT_INSTANCE);
     }
 
     public static void registerRituals() {

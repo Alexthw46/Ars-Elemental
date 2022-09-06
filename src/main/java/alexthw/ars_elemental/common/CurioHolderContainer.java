@@ -11,6 +11,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -28,13 +29,7 @@ public class CurioHolderContainer extends AbstractContainerMenu {
         for (int i = 0; i < inventory.getContainerSize() / 9f; ++i) {
             for (int j = 0; j < 9; ++j) {
                 int index = i * 9 + j;
-                addSlot(new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
-                    @Override
-                    public boolean mayPlace(ItemStack stack) {
-                        return CurioHolder.canStore(stack);
-                    }
-
-                });
+                addSlot(this.makeSlot(inventory, i, j, index));
             }
         }
         int offset = offset();
@@ -47,6 +42,17 @@ public class CurioHolderContainer extends AbstractContainerMenu {
         for (int i1 = 0; i1 < 9; ++i1) {
             this.addSlot(new Slot(playerInv, i1, 8 + i1 * 18, offset + 142));
         }
+    }
+
+    @NotNull
+    protected Slot makeSlot(Container inventory, int i, int j, int index) {
+        return new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return CurioHolder.canStore(stack);
+            }
+
+        };
     }
 
     @Override
