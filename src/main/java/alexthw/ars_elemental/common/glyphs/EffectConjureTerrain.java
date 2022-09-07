@@ -69,7 +69,7 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
 
     @Override
     protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> map) {
-        map.put(AugmentAmplify.INSTANCE.getRegistryName(), 1);
+        map.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
         return map;
     }
 

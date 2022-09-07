@@ -140,10 +140,10 @@ public class AETagsProvider {
 
         @Override
         protected void addTags() {
-            this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
-            this.tag(ModRegistry.FIERY).add(EntityType.BLAZE);
+            this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
+            this.tag(ModRegistry.FIERY).add(EntityType.ENDER_DRAGON);
             this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);
-            this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG);
+            this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
         }
     }

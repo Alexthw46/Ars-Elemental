@@ -3,7 +3,9 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.mixin.ZombieInvoker;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,6 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Set;
 
 public class EffectWaterGrave extends ElementalAbstractEffect {
@@ -69,6 +72,13 @@ public class EffectWaterGrave extends ElementalAbstractEffect {
         addDamageConfig(builder, 5.0);
         addAmpConfig(builder, 2.0);
         addExtendTimeConfig(builder, 5);
+    }
+
+    @Override
+    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        super.getDefaultAugmentLimits(defaults);
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
+        return defaults;
     }
 
     /**

@@ -1,11 +1,13 @@
 {
   "values": [
     "minecraft:phantom",
+    "minecraft:wither",
     "minecraft:bat",
     "minecraft:allay",
     "minecraft:ender_dragon",
     "minecraft:parrot",
     "minecraft:ghast",
+    "minecraft:vex",
     "minecraft:bee",
     "ars_nouveau:wilden_stalker",
     "ars_nouveau:wilden_boss"
