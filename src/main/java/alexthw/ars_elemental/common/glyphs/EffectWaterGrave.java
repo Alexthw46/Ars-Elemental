@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Set;
 
-public class EffectWaterGrave extends ElementalAbstractEffect {
+public class EffectWaterGrave extends ElementalAbstractEffect implements IDamageEffect {
 
     public static EffectWaterGrave INSTANCE = new EffectWaterGrave();
 

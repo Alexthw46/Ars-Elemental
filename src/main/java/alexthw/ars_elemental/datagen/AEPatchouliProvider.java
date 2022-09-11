@@ -3,18 +3,23 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
+import alexthw.ars_elemental.common.items.armor.ShockPerk;
+import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
+import com.hollingsworth.arsnouveau.api.perk.IPerk;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
 import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import com.hollingsworth.arsnouveau.common.items.PerkItem;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -160,6 +165,9 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withPage(new ApparatusPage(ModItems.FIRENANDO_CHARM.get()))
                 , getPath(AUTOMATION, "fire_golem"));
 
+        addPerkPage(ShockPerk.INSTANCE);
+        addPerkPage(SporePerk.INSTANCE);
+
         addArmorPage(ModItems.FIRE_ARMOR);
         addArmorPage(ModItems.WATER_ARMOR);
         addArmorPage(ModItems.AIR_ARMOR);
@@ -183,15 +191,26 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     private void addArmorPage(ArmorSet armorSet) {
-        PatchouliBuilder builder = new PatchouliBuilder(EQUIPMENT, armorSet.getTranslationKey())
+        PatchouliBuilder builder = new PatchouliBuilder(ARMOR, armorSet.getTranslationKey())
                 .withIcon(armorSet.getHat())
-                .withPage(new TextPage("ars_elemental.page.armorset." + armorSet.getName()))
+                .withPage(new TextPage("ars_elemental.page.armor_set.wip"))
+                .withPage(new TextPage("ars_elemental.page.armor_set." + armorSet.getName()))
                 .withPage(new ApparatusPage(armorSet.getHat()))
                 .withPage(new ApparatusPage(armorSet.getChest()))
                 .withPage(new ApparatusPage(armorSet.getLegs()))
                 .withPage(new ApparatusPage(armorSet.getBoots()));
 
         this.pages.add(new PatchouliPage(builder, getPath(EQUIPMENT, "armor_" + armorSet.getName())));
+    }
+
+    @Override
+    public void addPerkPage(IPerk perk) {
+        PerkItem perkItem = ArsNouveauAPI.getInstance().getPerkItemMap().get(perk.getRegistryName());
+        PatchouliBuilder builder = new PatchouliBuilder(ARMOR, perkItem)
+                .withIcon(perkItem)
+                .withTextPage(perk.getDescriptionKey())
+                .withPage(new ApparatusPage(perkItem)).withSortNum(99);
+        this.pages.add(new PatchouliPage(builder, getPath(ARMOR, perk.getRegistryName().getPath() + ".json")));
     }
 
     @Override

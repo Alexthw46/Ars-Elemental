@@ -2,9 +2,14 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
+import alexthw.ars_elemental.registry.ModItems;
+import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectPlaceBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -12,8 +17,12 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -24,7 +33,7 @@ import java.util.Set;
 
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
-public class EffectSpores extends ElementalAbstractEffect {
+public class EffectSpores extends ElementalAbstractEffect implements IDamageEffect {
 
     public static EffectSpores INSTANCE = new EffectSpores();
 
@@ -41,21 +50,16 @@ public class EffectSpores extends ElementalAbstractEffect {
         double range = 3 + spellStats.getAoeMultiplier();
         int effectSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
 
-        SpellSchool focus = spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter);
-
-        if (focus == ELEMENTAL_EARTH)
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * effectSec));
-
         if (!canDamage(livingEntity)) return;
 
-        damage(vec, world, shooter, spellStats, damage, effectSec, livingEntity);
+        damage(vec, world, shooter, spellStats, damage, effectSec, livingEntity, spellContext);
 
         for (LivingEntity e : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.position().add(range, range, range), livingEntity.position().subtract(range, range, range)))) {
             if (e.equals(livingEntity) || e.equals(shooter))
                 continue;
             if (canDamage(e)) {
                 vec = e.position();
-                damage(vec, world, shooter, spellStats, damage, effectSec, e);
+                damage(vec, world, shooter, spellStats, damage, effectSec, e, spellContext);
             } else {
                 e.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * effectSec, (int) spellStats.getAmpMultiplier()));
             }
@@ -66,13 +70,21 @@ public class EffectSpores extends ElementalAbstractEffect {
         return livingEntity.hasEffect(MobEffects.POISON) || livingEntity.hasEffect(MobEffects.HUNGER);
     }
 
-    public void damage(Vec3 vec, ServerLevel world, @Nonnull LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity) {
+    public void damage(Vec3 vec, ServerLevel world, @Nonnull LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity, SpellContext spellContext) {
         EntityDamageSource damageSource = new EntityDamageSource("poison", shooter);
         damageSource.setMagic();
         dealDamage(world, shooter, damage, stats, livingEntity, damageSource);
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime));
+        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(10) < 3 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter)) == ELEMENTAL_EARTH) {
+            BlockPos feet = livingEntity.getOnPos();
+            Material underfoot = world.getBlockState(feet).getMaterial();
+            Block blossom = ModItems.GROUND_BLOSSOM.get();
+            if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS) && world.getBlockState(feet.above()).isAir()) {
+                EffectPlaceBlock.attemptPlace(world, blossom.asItem().getDefaultInstance(), (BlockItem) blossom.asItem(), new BlockHitResult(livingEntity.position(), Direction.UP, feet, false), ANFakePlayer.getPlayer(world));
+            }
+        } else livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime));
+
     }
 
     @Override

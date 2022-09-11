@@ -28,7 +28,7 @@ import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 
-public class EffectDischarge extends ElementalAbstractEffect {
+public class EffectDischarge extends ElementalAbstractEffect implements IDamageEffect {
 
     public static EffectDischarge INSTANCE = new EffectDischarge();
 

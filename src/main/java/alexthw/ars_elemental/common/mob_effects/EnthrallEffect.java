@@ -10,7 +10,7 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +22,19 @@ public class EnthrallEffect extends MobEffect {
         MinecraftForge.EVENT_BUS.addListener(this::onTarget);
     }
 
-    public void onTarget(LivingSetAttackTargetEvent event) {
-        if (!(event.getTarget() instanceof Player player)) return;
+    public void onTarget(LivingChangeTargetEvent event) {
+        if (!(event.getNewTarget() instanceof Player player)) return;
         if (event.getEntity() instanceof Mob thrall && isEnthralledBy(thrall, player)) {
             if (player.getLastHurtMob() != null && player.getLastHurtMob() != thrall) {
-                thrall.setTarget(player.getLastHurtMob());
+                event.setNewTarget(player.getLastHurtMob());
                 if (thrall instanceof NeutralMob angry)
                     angry.setPersistentAngerTarget(player.getLastHurtMob().getUUID());
             } else if (player.getLastHurtByMob() != null && player.getLastHurtByMob() != thrall) {
-                thrall.setTarget(player.getLastHurtByMob());
+                event.setNewTarget(player.getLastHurtByMob());
                 if (thrall instanceof NeutralMob angry)
                     angry.setPersistentAngerTarget(player.getLastHurtByMob().getUUID());
             } else {
-                thrall.setTarget(null);
+                event.setNewTarget(null);
                 if (thrall instanceof NeutralMob angry) angry.setRemainingPersistentAngerTime(0);
             }
         }

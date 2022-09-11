@@ -1,17 +1,22 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
-import alexthw.ars_elemental.common.items.armor.ElementalArmor;
+import alexthw.ars_elemental.common.items.armor.ArmorSet;
+import alexthw.ars_elemental.common.items.armor.ShockPerk;
+import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
+import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
+import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -20,6 +25,7 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
+import com.hollingsworth.arsnouveau.setup.APIRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.LightLayer;
 
@@ -39,30 +45,31 @@ public class ArsNouveauRegistry {
         registerGlyphs();
         registerRituals();
         registerFamiliars(ArsNouveauAPI.getInstance());
+        registerPerks();
         addDamageReductions();
     }
 
     private static void addDamageReductions() {
-        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_FIRE, Arrays.asList(
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_FIRE, Arrays.asList(
                 DamageSource.ON_FIRE,
                 DamageSource.LAVA,
                 DamageSource.IN_FIRE,
                 DamageSource.HOT_FLOOR,
                 DamageSource.DRAGON_BREATH)
         );
-        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
                 DamageSource.DROWN,
                 DamageSource.FREEZE,
                 DamageSource.MAGIC,
                 DamageSource.LIGHTNING_BOLT)
         );
-        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
                 DamageSource.FALL,
                 DamageSource.FLY_INTO_WALL,
                 DamageSource.IN_WALL,
                 DamageSource.LIGHTNING_BOLT)
         );
-        ElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageSource.CACTUS,
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageSource.CACTUS,
                 DamageSource.STARVE,
                 DamageSource.SWEET_BERRY_BUSH,
                 DamageSource.CACTUS,
@@ -135,6 +142,7 @@ public class ArsNouveauRegistry {
         EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
 
         ArsNouveauRegistry.addLights();
+        ArsNouveauRegistry.addPerkSlots();
     }
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {
@@ -150,6 +158,25 @@ public class ArsNouveauRegistry {
     public static void registerFamiliars(ArsNouveauAPI api) {
         api.registerFamiliar(new MermaidHolder());
         api.registerFamiliar(new FirenandoHolder());
+    }
+
+    public static void registerPerks() {
+        APIRegistry.registerPerk(SporePerk.INSTANCE);
+        APIRegistry.registerPerk(ShockPerk.INSTANCE);
+    }
+
+    private static void addPerkSlots() {
+
+        ArsNouveauAPI api = ArsNouveauAPI.getInstance();
+        ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
+
+        for (ArmorSet set : medium_armors) {
+            api.registerPerkProvider(set.getHat(), stack -> new ArmorPerkHolder(stack, List.of(List.of(), List.of(), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
+            api.registerPerkProvider(set.getChest(), stack -> new ArmorPerkHolder(stack, List.of(List.of(), List.of(), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
+            api.registerPerkProvider(set.getLegs(), stack -> new ArmorPerkHolder(stack, List.of(List.of(), List.of(), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
+            api.registerPerkProvider(set.getBoots(), stack -> new ArmorPerkHolder(stack, List.of(List.of(), List.of(), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
+        }
+
     }
 
     public static void addLights() {

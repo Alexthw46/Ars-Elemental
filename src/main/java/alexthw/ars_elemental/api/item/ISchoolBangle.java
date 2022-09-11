@@ -31,7 +31,7 @@ public interface ISchoolBangle extends ISpellModifierItem, ISchoolItem {
     default SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
 
         if (getSchool().isPartOfSchool(spellPart)) {
-            builder.addDamageModifier(1.0D);
+            builder.addDamageModifier(2.0D);
         }
 
         return applyModifiers(builder, spellPart, rayTraceResult, world, shooter, spellContext);

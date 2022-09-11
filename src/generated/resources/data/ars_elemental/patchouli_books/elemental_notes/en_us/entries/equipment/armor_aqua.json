@@ -1,11 +1,15 @@
 {
-  "category": "ars_nouveau:equipment",
+  "category": "ars_nouveau:armor",
   "icon": "ars_elemental:aqua_hat",
-  "name": "ars_elemental.armorset.aqua",
+  "name": "ars_elemental.armor_set.aqua",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "ars_elemental.page.armorset.aqua"
+      "text": "ars_elemental.page.armor_set.wip"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armor_set.aqua"
     },
     {
       "type": "ars_nouveau:apparatus_recipe",

@@ -1,10 +1,10 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.api.item.ISchoolBangle;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import alexthw.ars_elemental.common.items.armor.IElementalArmor;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.HashMap;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
-import static alexthw.ars_elemental.registry.ModPotions.*;
+import static alexthw.ars_elemental.registry.ModPotions.HELLFIRE;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 

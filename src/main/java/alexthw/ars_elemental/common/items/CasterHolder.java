@@ -2,7 +2,7 @@ package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.common.CasterHolderContainer;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
-import com.hollingsworth.arsnouveau.common.armor.MagicArmor;
+import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
 import com.hollingsworth.arsnouveau.common.items.SpellArrow;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +25,7 @@ public class CasterHolder extends CurioHolder {
     public static boolean canStore(ItemStack stack) {
         Item item = stack.getItem();
         if (item instanceof CurioHolder) return false;
-        return item instanceof ICasterTool || item instanceof MagicArmor || item instanceof EnchantersShield || item instanceof SpellArrow;
+        return item instanceof ICasterTool || item instanceof AnimatedMagicArmor || item instanceof EnchantersShield || item instanceof SpellArrow;
     }
 
     @Override

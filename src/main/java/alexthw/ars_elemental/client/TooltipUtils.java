@@ -10,7 +10,7 @@ public class TooltipUtils {
 
     public static Component getShiftInfoTooltip(String type) {
         Component shift = Component.literal("SHIFT").withStyle(ChatFormatting.AQUA);
-        return Component.translatable("ars_elemental." + type + ".shiftinfo", shift).withStyle(ChatFormatting.GRAY);
+        return Component.translatable("ars_elemental." + type + ".shift_info", shift).withStyle(ChatFormatting.GRAY);
     }
 
     public static void addOnShift(List<Component> tooltip, Runnable lambda, String type) {

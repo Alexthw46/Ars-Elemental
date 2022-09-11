@@ -1,29 +1,30 @@
 package alexthw.ars_elemental.common.items.armor;
 
+import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.client.TooltipUtils;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
+import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.common.armor.MagicArmor;
+import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class ElementalArmor extends MagicArmor implements IElementalArmor {
 
-    public static final Map<SpellSchool, List<DamageSource>> damageResistances = new ConcurrentHashMap<>();
+public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmor {
 
     final SpellSchool element;
 
@@ -36,23 +37,25 @@ public class ElementalArmor extends MagicArmor implements IElementalArmor {
         return element;
     }
 
-    @Override
-    public int getMaxManaBoost(ItemStack i) {
-        return 100;
+    public String getTier() {
+        return "medium";
     }
 
     @Override
-    public int getManaRegenBonus(ItemStack i) {
-        return 9;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flags) {
-        TooltipUtils.addOnShift(list, () -> addInformationAfterShift(stack, world, list, flags), "armorset");
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flags) {
+        IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
+        if (perkProvider != null) {
+            //TODO Remove after transition is complete
+            if (perkProvider.getPerkHolder(stack).getTier() != 2) perkProvider.getPerkHolder(stack).setTier(2);
+            perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
+        }
+        TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, world, tooltip, flags), "armor_set");
     }
 
     EquipmentSlot[] OrderedSlots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
+    @OnlyIn(Dist.CLIENT)
     public void addInformationAfterShift(ItemStack stack, Level world, List<Component> list, TooltipFlag flags) {
         Player player = ArsNouveau.proxy.getPlayer();
         if (player != null) {
@@ -62,7 +65,11 @@ public class ElementalArmor extends MagicArmor implements IElementalArmor {
             for (EquipmentSlot slot : OrderedSlots) {
                 Item armor = set.getArmorFromSlot(slot);
                 MutableComponent cmp = Component.literal(" - ").append(armor.getDefaultInstance().getHoverName());
-                cmp.withStyle(hasArmorSetItem(player.getItemBySlot(slot), armor) ? ChatFormatting.GREEN : ChatFormatting.GRAY);
+                if (hasArmorSetItem(player.getItemBySlot(slot), armor)) {
+                    cmp.withStyle(ChatFormatting.GREEN);
+                    equippedCounter++;
+                } else cmp.withStyle(ChatFormatting.GRAY);
+
                 equippedList.add(cmp);
             }
             list.add(getArmorSetTitle(set, equippedCounter));
@@ -92,7 +99,7 @@ public class ElementalArmor extends MagicArmor implements IElementalArmor {
     }
 
     public void addArmorSetDescription(ArmorSet set, List<Component> list) {
-        list.add(Component.translatable("ars_elemental.armorset." + set.getName() + ".desc").withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("ars_elemental.armor_set." + set.getName() + ".desc").withStyle(ChatFormatting.GRAY));
     }
 
 }

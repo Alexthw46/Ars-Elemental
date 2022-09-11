@@ -1,7 +1,7 @@
-package alexthw.ars_elemental.common.items.armor;
+package alexthw.ars_elemental.api.item;
 
+import alexthw.ars_elemental.common.items.armor.AAMaterials;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
-import com.hollingsworth.arsnouveau.api.mana.IManaEquipment;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -16,8 +16,13 @@ import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public interface IElementalArmor extends ISpellModifierItem, IManaEquipment {
+public interface IElementalArmor extends ISpellModifierItem {
+
+    Map<SpellSchool, List<DamageSource>> damageResistances = new ConcurrentHashMap<>();
+
     static ArmorMaterial schoolToMaterial(SpellSchool element) {
         return switch (element.getId()) {
             case "fire" -> AAMaterials.fire;
@@ -25,7 +30,7 @@ public interface IElementalArmor extends ISpellModifierItem, IManaEquipment {
             case "earth" -> AAMaterials.earth;
             case "water" -> AAMaterials.water;
 
-            default -> Materials.master;
+            default -> Materials.MEDIUM;
         };
     }
 
@@ -47,9 +52,12 @@ public interface IElementalArmor extends ISpellModifierItem, IManaEquipment {
 
     SpellSchool getSchool();
 
+    String getTier();
+
     default boolean doAbsorb(DamageSource damageSource) {
-        return ElementalArmor.damageResistances.getOrDefault(getSchool(), List.of()).
+        return damageResistances.getOrDefault(getSchool(), List.of()).
                 stream().map(d -> d.msgId)
                 .anyMatch(msg -> msg.equals(damageSource.msgId));
     }
+
 }

@@ -18,7 +18,7 @@ public class ArmorSet {
 
     public ArmorSet(String name, SpellSchool element) {
         this.name = name;
-        this.head = ITEMS.register(name + "_hat", () -> new ElementalHat(element, ArmorProp()));
+        this.head = ITEMS.register(name + "_hat", () -> new ElementalArmor(EquipmentSlot.HEAD, element, ArmorProp()));
         this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, ArmorProp()));
         this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(EquipmentSlot.LEGS, element, ArmorProp()));
         this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(EquipmentSlot.FEET, element, ArmorProp()));
@@ -55,7 +55,7 @@ public class ArmorSet {
     }
 
     public String getTranslationKey() {
-        return "ars_elemental.armorset." + this.name;
+        return "ars_elemental.armor_set." + this.name;
     }
 }
 

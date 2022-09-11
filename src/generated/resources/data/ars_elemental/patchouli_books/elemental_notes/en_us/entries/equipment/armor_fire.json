@@ -1,11 +1,15 @@
 {
-  "category": "ars_nouveau:equipment",
+  "category": "ars_nouveau:armor",
   "icon": "ars_elemental:fire_hat",
-  "name": "ars_elemental.armorset.fire",
+  "name": "ars_elemental.armor_set.fire",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "ars_elemental.page.armorset.fire"
+      "text": "ars_elemental.page.armor_set.wip"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armor_set.fire"
     },
     {
       "type": "ars_nouveau:apparatus_recipe",

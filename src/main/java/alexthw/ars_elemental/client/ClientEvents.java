@@ -1,13 +1,15 @@
 package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.client.armor.ElementalArmorModel;
+import alexthw.ars_elemental.client.armor.ElementalArmorRenderer;
 import alexthw.ars_elemental.client.firenando.FirenandoFamiliarRenderer;
 import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
-import alexthw.ars_elemental.common.items.armor.ElementalHat;
+import alexthw.ars_elemental.common.items.armor.ElementalArmor;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -94,9 +96,11 @@ public class ClientEvents {
 
     }
 
+    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.AddLayers event) {
-        GeoArmorRenderer.registerArmorRenderer(ElementalHat.class, MagicHatRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(ElementalArmor.class, () -> new ElementalArmorRenderer<>(new ElementalArmorModel("medium_armor_e").withEmptyAnim()));
+
     }
 
     //keybinding

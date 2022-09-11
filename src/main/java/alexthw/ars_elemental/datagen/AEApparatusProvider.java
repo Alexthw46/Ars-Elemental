@@ -1,6 +1,8 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
+import alexthw.ars_elemental.common.items.armor.ShockPerk;
+import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
@@ -29,6 +31,24 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
 
     @Override
     public void run(CachedOutput cache) throws IOException {
+
+        recipes.add(builder()
+                .withResult(getPerkItem(ShockPerk.INSTANCE.getRegistryName()))
+                .withReagent(ItemsRegistry.BLANK_THREAD)
+                .withPedestalItem(2, ItemsRegistry.AIR_ESSENCE)
+                .withPedestalItem(1, Items.LIGHTNING_ROD)
+                .withPedestalItem(1, ModItems.FLASHING_POD.get())
+                .build()
+        );
+
+        recipes.add(builder()
+                .withResult(getPerkItem(SporePerk.INSTANCE.getRegistryName()))
+                .withReagent(ItemsRegistry.BLANK_THREAD)
+                .withPedestalItem(2, ItemsRegistry.EARTH_ESSENCE)
+                .withPedestalItem(1, Items.SPORE_BLOSSOM)
+                .withPedestalItem(1, Items.SPIDER_EYE)
+                .build()
+        );
 
         recipes.add(builder()
                 .withResult(ModItems.NECRO_FOCUS.get())
@@ -210,10 +230,12 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
     }
 
     protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
-        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.ARCHMAGE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.ARCHMAGE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.ARCHMAGE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.ARCHMAGE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+
+        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.APPRENTICE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.APPRENTICE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.APPRENTICE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.APPRENTICE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+
     }
 
     protected static Path getRecipePath(Path pathIn, String str) {

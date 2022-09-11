@@ -1,11 +1,15 @@
 {
-  "category": "ars_nouveau:equipment",
+  "category": "ars_nouveau:armor",
   "icon": "ars_elemental:earth_hat",
-  "name": "ars_elemental.armorset.earth",
+  "name": "ars_elemental.armor_set.earth",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "ars_elemental.page.armorset.earth"
+      "text": "ars_elemental.page.armor_set.wip"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armor_set.earth"
     },
     {
       "type": "ars_nouveau:apparatus_recipe",

@@ -139,7 +139,6 @@ public class GlyphEvents {
                     Block blossom = ModItems.GROUND_BLOSSOM.get();
                     if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS) && event.world.getBlockState(feet.above()).isAir()) {
                         EffectPlaceBlock.attemptPlace(event.world, blossom.asItem().getDefaultInstance(), (BlockItem) blossom.asItem(), new BlockHitResult(living.position(), Direction.UP, feet, false), ANFakePlayer.getPlayer((ServerLevel) event.world));
-                        //event.world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
                     }
                 }
             }

@@ -1,11 +1,15 @@
 {
-  "category": "ars_nouveau:equipment",
+  "category": "ars_nouveau:armor",
   "icon": "ars_elemental:air_hat",
-  "name": "ars_elemental.armorset.air",
+  "name": "ars_elemental.armor_set.air",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "ars_elemental.page.armorset.air"
+      "text": "ars_elemental.page.armor_set.wip"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.page.armor_set.air"
     },
     {
       "type": "ars_nouveau:apparatus_recipe",
