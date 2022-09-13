@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
-import alexthw.ars_elemental.util.TooManyCompats;
+import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
@@ -142,9 +142,9 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         if (!targetPlayers) {
             ignore.add(entity -> entity instanceof Player);
         }
-        Set<IFilter> filters = TooManyCompats.getFilters(spell.recipe, 0);
+        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.recipe, 0);
         if (!filters.isEmpty()){
-            ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
+            ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
         }
         return ignore;
     }

@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.api.util.SpellUtil;
 import com.hollingsworth.arsnouveau.common.items.curios.ShapersFocus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -17,8 +18,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
-public class GlyphEffectUtil {
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
+public class GlyphEffectUtil {
     public static Player getPlayer(LivingEntity entity, ServerLevel world) {
         return entity instanceof Player ? (Player) entity : FakePlayerFactory.getMinecraft(world);
     }
@@ -49,6 +54,32 @@ public class GlyphEffectUtil {
             }
         }
         return false;
+    }
+
+    public static boolean checkIgnoreFilters(Entity e, Set<IFilter> filters) {
+        boolean flag = true;
+        if (filters == null) return true;
+        for (IFilter spellPart : filters) {
+            flag &= spellPart.shouldResolveOnEntity(e);
+        }
+        return !flag;
+    }
+
+    public static Set<IFilter> getFilters(List<AbstractSpellPart> recipe, int index) {
+        Set<IFilter> list = new HashSet<>();
+        for (AbstractSpellPart glyph : recipe.subList(index, recipe.size())) {
+            if (glyph instanceof AbstractCastMethod) continue;
+            if (glyph instanceof IFilter filter) {
+                list.add(filter);
+            } else if (glyph instanceof AbstractEffect) break;
+        }
+        return list;
+    }
+
+    public static Predicate<Entity> getFilterPredicate(Spell spell, Predicate<Entity> defaultFilter) {
+        Set<IFilter> set = getFilters(spell.recipe, 0);
+        if (set.isEmpty()) return defaultFilter;
+        return (entity -> !checkIgnoreFilters(entity, set));
     }
 
 }

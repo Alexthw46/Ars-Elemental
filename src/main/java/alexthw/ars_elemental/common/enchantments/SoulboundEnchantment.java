@@ -50,7 +50,7 @@ public class SoulboundEnchantment extends Enchantment {
 
     @Override
     public boolean isAllowedOnBooks() {
-        return false;
+        return true;
     }
 
     @Override

@@ -40,10 +40,10 @@ public class WorldRegistry {
 
     public static Holder<ConfiguredFeature<TreeConfiguration, ?>> NATURAL_FLASHING_TREE = FeatureUtils.register("ars_elemental:natural_flashing_feature", Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
             new SupplierBlockStateProviderAE("yellow_archwood_log"),
-            new MagicTrunkPlacer(10, 3, 0, true, "ars_elemental:flashpine_pod"),
+            new MagicTrunkPlacer(10, 1, 1, true, "ars_elemental:flashpine_pod"),
             new SupplierBlockStateProviderAE("yellow_archwood_leaves"),
             new BlobFoliagePlacer(UniformInt.of(0, 0), UniformInt.of(0, 0), 0),
-            new TwoLayersFeatureSize(3, 0, 2)).build());
+            new TwoLayersFeatureSize(2, 0, 2)).build());
 
     public static Holder<PlacedFeature> PLACED_FLASHING;
     public static Holder<PlacedFeature> COMMON_FLASHING;
@@ -61,7 +61,7 @@ public class WorldRegistry {
     @SubscribeEvent
     public static void registerFeature(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            PLACED_FLASHING = PlacementUtils.register(SIMPLE_FLASHING_RL.toString(), FLASHING_TREE, PlacementUtils.filteredByBlockSurvival(ModItems.FLASHING_SAPLING.get()));
+            PLACED_FLASHING = PlacementUtils.register(SIMPLE_FLASHING_RL.toString(), NATURAL_FLASHING_TREE, PlacementUtils.filteredByBlockSurvival(ModItems.FLASHING_SAPLING.get()));
             COMMON_FLASHING = PlacementUtils.register(COMMON_FLASHING_RL.toString(), NATURAL_FLASHING_TREE, List.of(PlacementUtils.countExtra(5, 0.01F, 1), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, PlacementUtils.filteredByBlockSurvival(ModItems.FLASHING_SAPLING.get())));
 
             ARCHWOOD_TREES = FeatureUtils.register("ars_elemental:random_flashing", Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(HolderSet.direct(PLACED_FLASHING)));

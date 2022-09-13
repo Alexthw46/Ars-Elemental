@@ -1,8 +1,7 @@
 package alexthw.ars_elemental.common.entity.spells;
 
 import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.util.CompatUtils;
-import alexthw.ars_elemental.util.TooManyCompats;
+import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
@@ -10,7 +9,6 @@ import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.entity.EntityLingeringSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
-import io.github.derringersmods.toomanyglyphs.common.glyphs.AbstractEffectFilter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -90,9 +88,9 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity);
         ignore.add(shooter::isAlliedTo);
-        Set<IFilter> filters = TooManyCompats.getFilters(spell.recipe, index);
+        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.recipe, index);
         if (!filters.isEmpty()) {
-            ignore.add(entity -> TooManyCompats.checkIgnoreFilters(entity, filters));
+            ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
         }
         return ignore;
     }
