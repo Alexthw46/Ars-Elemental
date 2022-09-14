@@ -69,6 +69,8 @@ public class ClientEvents {
         });
         event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
         event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), WitherSkeletonRenderer::new);
+        event.registerEntityRenderer(ModEntities.DOLPHIN_SUMMON.get(), DolphinRenderer::new);
+        event.registerEntityRenderer(ModEntities.STRIDER_SUMMON.get(), StriderRenderer::new);
         event.registerEntityRenderer(ModEntities.VHEX_SUMMON.get(), manager -> new VexRenderer(manager) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull Vex p_110775_1_) {

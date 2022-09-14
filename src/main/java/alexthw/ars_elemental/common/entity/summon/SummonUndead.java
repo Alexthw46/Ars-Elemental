@@ -40,6 +40,6 @@ public class SummonUndead extends SummonSkeleton implements IUndeadSummon {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("LifeTicks", getTicksLeft());
-
     }
+
 }
