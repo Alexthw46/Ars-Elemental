@@ -231,10 +231,10 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
 
     protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
 
-        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.APPRENTICE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.APPRENTICE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.APPRENTICE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
-        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.APPRENTICE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getHat()).withReagent(ItemsRegistry.APPRENTICE_HOOD).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getChest()).withReagent(ItemsRegistry.APPRENTICE_ROBES).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(ItemsRegistry.APPRENTICE_LEGGINGS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(ItemsRegistry.APPRENTICE_BOOTS).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build());
 
     }
 

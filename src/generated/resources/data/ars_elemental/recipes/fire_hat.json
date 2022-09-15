@@ -12,6 +12,11 @@
     },
     {
       "item": {
+        "item": "minecraft:netherite_ingot"
+      }
+    },
+    {
+      "item": {
         "item": "ars_nouveau:fire_essence"
       }
     },
