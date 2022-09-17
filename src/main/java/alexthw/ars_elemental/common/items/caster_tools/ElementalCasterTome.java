@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common.items;
+package alexthw.ars_elemental.common.items.caster_tools;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;

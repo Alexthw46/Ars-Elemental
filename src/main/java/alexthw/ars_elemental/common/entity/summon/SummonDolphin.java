@@ -126,9 +126,14 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
                 }
 
                 if (this.isControlledByLocalInstance()) {
-                    this.flyingSpeed = 0.3F;
+                    if (getMoistnessLevel() > 2350) {
+                        this.flyingSpeed = 0.2F;
+                    } else {
+                        this.flyingSpeed = 0.02F;
+                        this.setSpeed((float) Math.min(this.getSpeed(), this.getAttributeValue(Attributes.MOVEMENT_SPEED) + 0.5F));
+                    }
                     if (this.isInWater()) {
-                        this.setSpeed((float) Math.max(this.getSpeed(), this.getAttributeValue(Attributes.MOVEMENT_SPEED) + 2.5F));
+                        this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) + 2.5F);
                         float vert = (float) (pTravelVector.y - 0.4 * (0.2 + livingentity.getXRot()));
                         super.travel(new Vec3(strafe, vert + 0.5, forward));
                     } else {
@@ -147,7 +152,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
     @Override
     protected float getWaterSlowDown() {
-        return 0.98F;
+        return 0.97F;
     }
 
     @Override
@@ -161,6 +166,11 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
     public int ticksLeft;
     private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(SummonDolphin.class, EntityDataSerializers.OPTIONAL_UUID);
+
+    @Override
+    public int getExperienceReward() {
+        return 0;
+    }
 
     @Override
     protected void defineSynchedData() {
@@ -235,7 +245,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
     @Override
     public boolean canJump() {
-        return !this.onGround;
+        return this.isInWater() || getMoistnessLevel() > 2300;
     }
 
     @Override

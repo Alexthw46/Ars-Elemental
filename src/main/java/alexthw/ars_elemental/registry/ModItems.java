@@ -11,6 +11,7 @@ import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.bangles.*;
+import alexthw.ars_elemental.common.items.caster_tools.ElementalCasterTome;
 import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;

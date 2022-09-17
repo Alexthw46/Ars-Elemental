@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -113,6 +114,11 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(SummonStrider.class, EntityDataSerializers.OPTIONAL_UUID);
 
     @Override
+    public int getExperienceReward() {
+        return 0;
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(OWNER_UUID, Optional.of(Util.NIL_UUID));
@@ -189,5 +195,20 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     protected void dropEquipment() {
+    }
+
+    @Override
+    public boolean canMate(Animal pOtherAnimal) {
+        return false;
+    }
+
+    @Override
+    public boolean canBreed() {
+        return false;
+    }
+
+    @Override
+    public boolean canFallInLove() {
+        return false;
     }
 }
