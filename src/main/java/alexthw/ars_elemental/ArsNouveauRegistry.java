@@ -169,12 +169,12 @@ public class ArsNouveauRegistry {
 
         ArsNouveauAPI api = ArsNouveauAPI.getInstance();
         ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
-
+        List<PerkSlot> perkSlots = Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE);
         for (ArmorSet set : medium_armors) {
-            api.registerPerkProvider(set.getHat(), stack -> new ArmorPerkHolder(stack, List.of(Arrays.asList(PerkSlot.ONE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
-            api.registerPerkProvider(set.getChest(), stack -> new ArmorPerkHolder(stack, List.of(Arrays.asList(PerkSlot.ONE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
-            api.registerPerkProvider(set.getLegs(), stack -> new ArmorPerkHolder(stack, List.of(Arrays.asList(PerkSlot.ONE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
-            api.registerPerkProvider(set.getBoots(), stack -> new ArmorPerkHolder(stack, List.of(Arrays.asList(PerkSlot.ONE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE), Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE))));
+            api.registerPerkProvider(set.getHat(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            api.registerPerkProvider(set.getChest(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            api.registerPerkProvider(set.getLegs(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            api.registerPerkProvider(set.getBoots(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
         }
 
     }

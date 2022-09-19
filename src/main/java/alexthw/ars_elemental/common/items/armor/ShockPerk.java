@@ -36,7 +36,7 @@ public class ShockPerk extends Perk implements IEffectResolvePerk {
 
     @Override
     public void onPreResolve(HitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, AbstractEffect effect, PerkInstance perkInstance) {
-        if (effect instanceof IDamageEffect damageEffect && rayTraceResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+        if (effect instanceof IDamageEffect damageEffect && rayTraceResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof LivingEntity livingEntity && livingEntity != shooter) {
             if (damageEffect.canDamage(shooter, spellStats, spellContext, resolver, entityHitResult.getEntity())) {
                 int value = perkInstance.getSlot().value;
                 livingEntity.addEffect(new MobEffectInstance(value < 3 ? ModPotions.SHOCKED_EFFECT.get() : LIGHTNING_LURE.get(), value * 5 * 20, value < 3 ? value : 1));
