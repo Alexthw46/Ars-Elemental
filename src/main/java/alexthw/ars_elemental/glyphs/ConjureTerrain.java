@@ -31,6 +31,7 @@ public class ConjureTerrain extends AbstractEffect {
         BlockState toPlace = spellStats.hasBuff(AugmentAmplify.INSTANCE) ? Blocks.COBBLESTONE.defaultBlockState() : Blocks.DIRT.defaultBlockState();
 
         for (int i = spellContext.getCurrentIndex(); i < spellContext.getSpell().getSpellSize(); i++) {
+            if (spellContext.getCurrentIndex() >= spellContext.getSpell().getSpellSize()) break;
             AbstractSpellPart next = spellContext.nextSpell();
                 if (next instanceof AbstractAugment) continue;
                 if (next instanceof AbstractEffect) {
