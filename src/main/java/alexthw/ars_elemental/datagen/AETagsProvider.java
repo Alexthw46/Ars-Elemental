@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.entity.ModEntities;
+import com.hollingsworth.arsnouveau.common.lib.EntityTags;
 import com.hollingsworth.arsnouveau.common.world.biome.ModBiomes;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.Registry;
@@ -32,6 +33,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
+import static alexthw.ars_elemental.registry.ModEntities.*;
 
 public class AETagsProvider {
 
@@ -140,6 +142,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags() {
+            this.tag(EntityTags.FAMILIAR).add(FIRENANDO_FAMILIAR.get(), SIREN_FAMILIAR.get());
             this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
             this.tag(ModRegistry.FIERY).add(EntityType.ENDER_DRAGON);
             this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);

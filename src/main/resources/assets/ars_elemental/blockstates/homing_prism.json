@@ -1,0 +1,26 @@
+{
+  "variants": {
+	"facing=east": {
+      "model": "ars_elemental:block/homing_prism",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ars_elemental:block/homing_prism"
+    },
+    "facing=south": {
+      "model": "ars_elemental:block/homing_prism",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ars_elemental:block/homing_prism",
+      "y": 270
+    },
+	  "facing=down": {
+      "model": "ars_elemental:block/homing_prism",
+      "x": 90
+    }, "facing=up": {
+      "model": "ars_elemental:block/homing_prism",
+      "x": -90
+    }
+  }
+}

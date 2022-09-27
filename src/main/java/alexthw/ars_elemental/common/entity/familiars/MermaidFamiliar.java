@@ -14,7 +14,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -32,7 +31,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantTextureProvider {
+public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantTextureProvider<MermaidFamiliar> {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -124,7 +123,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     @Override
-    public ResourceLocation getTexture(LivingEntity entity) {
+    public ResourceLocation getTexture(MermaidFamiliar entity) {
         return prefix("textures/entity/mermaid_" + (getColor().isEmpty() ? Variants.KELP.toString() : getColor()) + ".png");
     }
 

@@ -1,14 +1,16 @@
 package alexthw.ars_elemental.client.firenando;
 
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
+import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 
-public class FirenandoFamiliarRenderer <M extends FirenandoFamiliar> extends FirenandoRenderer<M>{
+public class FirenandoFamiliarRenderer <M extends FirenandoFamiliar & IVariantTextureProvider<FirenandoFamiliar>> extends FirenandoRenderer<M>{
 
     public FirenandoFamiliarRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager);
@@ -26,4 +28,8 @@ public class FirenandoFamiliarRenderer <M extends FirenandoFamiliar> extends Fir
         stack.popPose();
     }
 
+    @Override
+    public ResourceLocation getTextureLocation(M instance) {
+        return instance.getTexture(instance);
+    }
 }

@@ -32,7 +32,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener, IVariantTextureProvider {
+public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener, IVariantTextureProvider<FirenandoFamiliar> {
     public FirenandoFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
@@ -106,7 +106,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     @Override
-    public ResourceLocation getTexture(LivingEntity entity) {
+    public ResourceLocation getTexture(FirenandoFamiliar entity) {
         return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
     }
 

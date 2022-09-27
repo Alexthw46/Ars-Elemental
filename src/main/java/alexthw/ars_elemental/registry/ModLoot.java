@@ -25,6 +25,7 @@ import static com.hollingsworth.arsnouveau.api.loot.DungeonLootTables.RARE_LOOT;
 
 public class ModLoot {
 
+    public static void init(){}
     //Hooking to Ars GLM
     static {
 

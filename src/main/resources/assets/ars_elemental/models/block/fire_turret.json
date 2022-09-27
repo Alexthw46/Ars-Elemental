@@ -6,6 +6,9 @@
     32,
     32
   ],
+  "textures": {
+    "particle": "ars_elemental:block/fire_turret"
+  },
   "display": {
     "thirdperson_righthand": {
       "rotation": [

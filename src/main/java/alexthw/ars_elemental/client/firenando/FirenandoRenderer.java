@@ -17,7 +17,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 import javax.annotation.Nullable;
 
-public class FirenandoRenderer<M extends LivingEntity & IVariantTextureProvider & IAnimatable> extends GeoEntityRenderer<M> {
+public class FirenandoRenderer<M extends LivingEntity & IAnimatable> extends GeoEntityRenderer<M> {
 
     ParticleColor color1 = new ParticleColor(230, 45, 15);
     ParticleColor color2 = new ParticleColor(15, 100, 200);
@@ -29,7 +29,7 @@ public class FirenandoRenderer<M extends LivingEntity & IVariantTextureProvider 
 
     @Override
     public ResourceLocation getTextureLocation(M instance) {
-        return instance.getTexture(instance);
+        return instance instanceof FirenandoEntity var ? var.getTexture(var) : super.getTextureLocation(instance);
     }
 
     public RenderType getRenderType(M animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {

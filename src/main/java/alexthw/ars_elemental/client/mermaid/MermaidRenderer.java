@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.client.mermaid;
 
-import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
+import alexthw.ars_elemental.common.entity.MermaidEntity;
+import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -13,7 +14,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 import javax.annotation.Nullable;
 
-public class MermaidRenderer<T extends LivingEntity & IAnimatable & IVariantTextureProvider> extends GeoEntityRenderer<T> {
+public class MermaidRenderer<T extends LivingEntity & IAnimatable> extends GeoEntityRenderer<T> {
 
     public MermaidRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MermaidModel<>());
@@ -21,7 +22,9 @@ public class MermaidRenderer<T extends LivingEntity & IAnimatable & IVariantText
 
     @Override
     public ResourceLocation getTextureLocation(T instance) {
-        return instance.getTexture(instance);
+        if (instance instanceof MermaidEntity var) return var.getTexture(var);
+        if (instance instanceof MermaidFamiliar var) return var.getTexture(var);
+        return super.getTextureLocation(instance);
     }
 
     public RenderType getRenderType(T animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {

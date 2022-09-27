@@ -2,30 +2,28 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
+import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
-import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectPlaceBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -76,12 +74,13 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         dealDamage(world, shooter, damage, stats, livingEntity, damageSource);
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
-        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(10) < 3 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter)) == ELEMENTAL_EARTH) {
+        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter)) == ELEMENTAL_EARTH) {
             BlockPos feet = livingEntity.getOnPos();
             Material underfoot = world.getBlockState(feet).getMaterial();
             Block blossom = ModItems.GROUND_BLOSSOM.get();
-            if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS) && world.getBlockState(feet.above()).isAir()) {
-                EffectPlaceBlock.attemptPlace(world, blossom.asItem().getDefaultInstance(), (BlockItem) blossom.asItem(), new BlockHitResult(livingEntity.position(), Direction.UP, feet, false), ANFakePlayer.getPlayer(world));
+            if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS || underfoot == Material.LEAVES) && world.getBlockState(feet.above()).isAir()) {
+                world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
+                if (shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer)) ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
             }
         } else livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime));
 

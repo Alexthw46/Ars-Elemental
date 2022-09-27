@@ -2,6 +2,9 @@
   "credit": "Made with Blockbench",
   "parent": "builtin/entity",
   "render_type": "cutout",
+  "textures": {
+    "particle": "ars_elemental:block/water_turret"
+  },
   "texture_size": [
     32,
     32

@@ -10,6 +10,7 @@ import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
@@ -68,7 +69,7 @@ import java.util.stream.Collectors;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
 @SuppressWarnings("unchecked")
-public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantTextureProvider, IDispellable {
+public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantTextureProvider<MermaidEntity>, IDispellable {
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
@@ -347,6 +348,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
                 taming = false;
                 ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level.random.nextInt(2));
                 level.addFreshEntity(new ItemEntity(level, getX(), getY() + 0.5, getZ(), stack));
+                ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.POOF_MOB, (ServerLevel) this.level, this.getOnPos(), 10);
                 this.remove(RemovalReason.DISCARDED);
                 level.playSound(null, getX(), getY(), getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 1f);
             }
@@ -420,7 +422,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    public ResourceLocation getTexture(LivingEntity entity) {
+    public ResourceLocation getTexture(MermaidEntity entity) {
         return prefix("textures/entity/mermaid_" + (getColor().isEmpty() ? Variants.KELP.toString() : getColor()) + ".png");
     }
 

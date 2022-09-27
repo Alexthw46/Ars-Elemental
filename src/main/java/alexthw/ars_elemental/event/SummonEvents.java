@@ -12,7 +12,9 @@ import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -39,7 +41,7 @@ public class SummonEvents {
                 }
             }
 
-            if (event.summon instanceof SummonHorse oldHorse && event.shooter instanceof Player summoner) {
+            if (event.summon instanceof SummonHorse oldHorse && event.shooter instanceof ServerPlayer summoner) {
                 switch (focus.getId()) {
                     case "water" -> {
                         SummonDolphin newHorse = new SummonDolphin(oldHorse, summoner);
@@ -47,6 +49,7 @@ public class SummonEvents {
                             oldHorse.remove(Entity.RemovalReason.DISCARDED);
                             event.summon = newHorse;
                             event.world.addFreshEntity(newHorse);
+                            CriteriaTriggers.SUMMONED_ENTITY.trigger(summoner, newHorse);
                         }
                     }
                     case "fire" -> {
@@ -55,6 +58,7 @@ public class SummonEvents {
                             oldHorse.remove(Entity.RemovalReason.DISCARDED);
                             event.summon = newHorse;
                             event.world.addFreshEntity(newHorse);
+                            CriteriaTriggers.SUMMONED_ENTITY.trigger(summoner, newHorse);
                         }
                     }
                     case "necromancy" -> {
@@ -63,6 +67,7 @@ public class SummonEvents {
                             oldHorse.remove(Entity.RemovalReason.DISCARDED);
                             event.summon = newHorse;
                             event.world.addFreshEntity(newHorse);
+                            CriteriaTriggers.SUMMONED_ENTITY.trigger(summoner, newHorse);
                         }
                     }
                     default -> {

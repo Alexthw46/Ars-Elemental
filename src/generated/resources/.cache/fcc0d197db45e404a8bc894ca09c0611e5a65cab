@@ -1,6 +1,7 @@
-// 1.19.2	2022-09-07T11:13:19.0914521	Tags for minecraft:entity_type
+// 1.19.2	2022-09-24T11:57:02.6539564	Tags for minecraft:entity_type
 5a1b665b20647aaf991e2e9e62362101dfdb2b8b data/ars_elemental/tags/entity_types/aerial.json
 b14f85b439342f538d0435da3f1a031c23d869bc data/ars_elemental/tags/entity_types/aquatic.json
 e00f2931577049b9a4400a87ed9c249373be376c data/ars_elemental/tags/entity_types/fiery.json
 938693c0d925c28b546fc000571541b1f61e42c1 data/ars_elemental/tags/entity_types/insect.json
 bfa5943a99eb5bf10495ae60b03df16794502725 data/ars_elemental/tags/entity_types/undead.json
+dbc6cbd7bb32b7011a4f6df206946967d12c4c69 data/ars_nouveau/tags/entity_types/familiar.json

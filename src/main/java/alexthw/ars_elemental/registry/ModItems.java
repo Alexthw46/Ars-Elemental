@@ -3,10 +3,7 @@ package alexthw.ars_elemental.registry;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.client.ElementalTurretRenderer;
-import alexthw.ars_elemental.common.blocks.ElementalTurret;
-import alexthw.ars_elemental.common.blocks.EverfullUrnBlock;
-import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
-import alexthw.ars_elemental.common.blocks.UpstreamBlock;
+import alexthw.ars_elemental.common.blocks.*;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
@@ -82,6 +79,7 @@ public class ModItems {
     public static final RegistryObject<Block> AIR_TURRET;
     public static final RegistryObject<Block> EARTH_TURRET;
 
+    //public static final RegistryObject<Block> HOMING_PRISM;public static final RegistryObject<Block> ARC_PRISM;
 
     public static final RegistryObject<Item> FIRE_FOCUS;
     public static final RegistryObject<Item> AIR_FOCUS;
@@ -191,6 +189,11 @@ public class ModItems {
         UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
         GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Material.PLANT, MaterialColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
 
+        /*
+        HOMING_PRISM = addBlock("homing_prism", () -> new HomingPrism(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));
+        ARC_PRISM = addBlock("arc_prism", () -> new ArcPrism(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));
+         */
+
         //turrets
         FIRE_TURRET = addGeckoBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
         WATER_TURRET = addGeckoBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
@@ -201,10 +204,10 @@ public class ModItems {
         FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldRegistry.FLASHING_TREE), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Material.LEAVES, MaterialColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
                 ModItems::allowsSpawnOnLeaves).isSuffocating(ModItems::isntSolid).isViewBlocking(ModItems::isntSolid)));
-        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 4)));
-        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 4)));
-        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6), FLASHING_ARCHWOOD_LOG_STRIPPED));
-        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6), FLASHING_ARCHWOOD_STRIPPED));
+        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6)));
+        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6)));
+        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_LOG_STRIPPED));
+        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED));
         FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(FLASHING_ARCHWOOD_LOG));
         ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), addTabProp().food(FLASHPINE_FOOD)));
 

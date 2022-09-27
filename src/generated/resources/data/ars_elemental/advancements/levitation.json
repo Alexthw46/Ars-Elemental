@@ -1,0 +1,29 @@
+{
+  "parent": "ars_elemental:lesser_air_focus",
+  "criteria": {
+    "levitation": {
+      "conditions": {},
+      "trigger": "ars_elemental:levitating"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "ars_elemental.adv.desc.levitation"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "ars_elemental:air_caster_tome"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "ars_elemental.adv.title.levitation"
+    }
+  },
+  "requirements": [
+    [
+      "levitation"
+    ]
+  ]
+}

@@ -69,7 +69,7 @@ import java.util.function.Predicate;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantTextureProvider {
+public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantTextureProvider<FirenandoEntity> {
     public FirenandoEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
@@ -237,7 +237,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (NBTUtil.hasBlockPos(tag, "home")) {
-            setHome(NBTUtil.getBlockPos(tag, "home"));
+            setHome(NBTUtil.getNullablePos(tag, "home"));
         }
         this.castCooldown = tag.getInt("cast");
         this.entityData.set(ACTIVE, tag.getBoolean("active"));
@@ -356,7 +356,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     }
 
     @Override
-    public ResourceLocation getTexture(LivingEntity entity) {
+    public ResourceLocation getTexture(FirenandoEntity entity) {
         if (!isActive()) return prefix("textures/entity/firenando_inactive.png");
         return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
     }
