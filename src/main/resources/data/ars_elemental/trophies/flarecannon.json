@@ -1,0 +1,6 @@
+{
+  "drop_chance": 0.001,
+  "entity": "ars_elemental:firenando_entity",
+  "offset": 0.0,
+  "scale": 0.95
+}

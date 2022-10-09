@@ -11,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,13 +42,12 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         return "medium";
     }
 
-
     @Override
-    public void onArmorTick(ItemStack stack, Level world, Player player) {
-        super.onArmorTick(stack, world, player);
+    public void inventoryTick(ItemStack stack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        super.inventoryTick(stack, pLevel, pEntity, pSlotId, pIsSelected);
         IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
         if (perkProvider != null) {
-            //TODO Remove after transition is complete
+            //TODO Remove after transition is complete - serverside
             if (perkProvider.getPerkHolder(stack).getTier() != 2) perkProvider.getPerkHolder(stack).setTier(2);
         }
     }
@@ -57,6 +57,8 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flags) {
         IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
         if (perkProvider != null) {
+            //TODO Remove after transition is complete - clientside
+            if (perkProvider.getPerkHolder(stack).getTier() != 2) perkProvider.getPerkHolder(stack).setTier(2);
             perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
         }
         TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, world, tooltip, flags), "armor_set");

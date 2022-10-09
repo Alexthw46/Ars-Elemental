@@ -160,6 +160,7 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                     .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
                     .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                    .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
             );
 
             Path output = generator.getOutputFolder();

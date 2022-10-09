@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-24T18:39:40.2247906	Ars Elemental Item Models
+// 1.19.2	2022-10-09T23:28:02.6277575	Ars Elemental Item Models
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
 9b7a442f93c41c299a0eda4f3da50307817803b5 assets/ars_elemental/models/item/air_caster_tome.json
@@ -13,7 +13,6 @@ c23ded919ec2e7048013124b58167bcaff925569 assets/ars_elemental/models/item/anima_
 f93b93df834cd0cd38da310473cbd4358199669e assets/ars_elemental/models/item/aqua_hat.json
 6edacc4a92515b78fdc6edc949565934596554f8 assets/ars_elemental/models/item/aqua_leggings.json
 a6f4862cb5edf7b396834e19e3f48f2979eb3175 assets/ars_elemental/models/item/aqua_robes.json
-7a24b6da6cbd8c568ce38dd76b92d5c405529741 assets/ars_elemental/models/item/arc_prism.json
 5d62036867bfe8af37005aef074c35a8e76f96d4 assets/ars_elemental/models/item/base_bangle.json
 5c4950466d5186118ff69f6674bdc3765379b047 assets/ars_elemental/models/item/caster_bag.json
 e679315b353940bdbd2256fb1d81afe6febcf2f3 assets/ars_elemental/models/item/curio_bag.json
@@ -37,7 +36,6 @@ d29a7a9b17845242022427392737b4faa456f6fc assets/ars_elemental/models/item/fire_f
 7e57c35d7605064907965dea755d5e8dc9fefbc9 assets/ars_elemental/models/item/fire_robes.json
 3f1a18eed8a94bdc00f6d3176137916a1b6858c6 assets/ars_elemental/models/item/fire_turret.json
 eeed7a1e3d0108489f86af935b841830da3b88d1 assets/ars_elemental/models/item/flashpine_pod.json
-327f415f3167d65ec059b3f1e957043635e4c286 assets/ars_elemental/models/item/homing_prism.json
 627d48580387e0ae6b132aa709fa777e1eadda45 assets/ars_elemental/models/item/lesser_air_focus.json
 e326e14fa8470667a133916991e22ce84ebcc6d8 assets/ars_elemental/models/item/lesser_earth_focus.json
 3c095e71ede593ddf9b6f0f58860c89088cd4300 assets/ars_elemental/models/item/lesser_fire_focus.json
