@@ -75,6 +75,15 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
             world.setBlockAndUpdate(toPos, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
             return true;
         }
+        /* TODO allow tank refilling
+        BlockEntity be = world.getBlockEntity(toPos);
+        if ( be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()){
+            Optional<IFluidHandler> tankO = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve();
+            if (tankO.isPresent()) {
+                IFluidHandler tank = tankO.get();
+            }
+        }
+         */
         return CompatUtils.isBotaniaLoaded() && BotaniaCompat.tryFillApothecary(toPos, world);
     }
 
@@ -95,11 +104,15 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         if (storedPos == null || !(level instanceof ServerLevel) || storedPos.equals(getBlockPos()))
             return;
         // Let relays take from us, no action needed.
-        if (this.isRefillable(storedPos, level) && this.setSendTo(storedPos.immutable())) {
-            PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.send", DominionWand.getPosString(storedPos)));
-            ParticleUtil.beam(storedPos, worldPosition, level);
+        if (this.isRefillable(storedPos, level)) {
+            if (this.setSendTo(storedPos.immutable())) {
+                PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.send", DominionWand.getPosString(storedPos)));
+                ParticleUtil.beam(storedPos, worldPosition, level);
+            } else {
+                PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.fail"));
+            }
         } else {
-            PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.fail"));
+            PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.fail.urn"));
         }
     }
 

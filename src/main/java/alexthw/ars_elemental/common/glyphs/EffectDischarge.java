@@ -51,9 +51,9 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
             }
             for (ItemStack i : livingEntity.getArmorSlots()) {
-                IEnergyStorage energyStorage = i.getCapability(ForgeCapabilities.ENERGY).orElse(null);
+                IEnergyStorage energyStorage = i.getCapability(ForgeCapabilities.ENERGY).orElseGet(null);
                 if (energyStorage != null) {
-                    energyStorage.extractEnergy((int) spellStats.getAmpMultiplier() * 500, false);
+                    energyStorage.extractEnergy((int) (energyStorage.getEnergyStored() * 0.25), false);
                     damage *= 1.1;
                 }
             }

@@ -238,6 +238,7 @@
   "item.minecraft.tipped_arrow.effect.shock_potion_strong": "Arrow of Static Charge",
   "item.minecraft.tipped_arrow.effect.shock_potion": "Arrow of Static Charge",
   "item.minecraft.tipped_arrow.effect.shock_potion_long": "Arrow of Static Charge",
+  "ars_nouveau.connections.fail.urn": "This block is not compatible with the urn.",
   "ars_elemental.adv.title.siren_charm": "Not a Manatee",
   "ars_elemental.adv.desc.siren_charm": "Acquire a Siren Charm",
   "ars_elemental.adv.title.firenando_charm": "They call me Firenando Mc Cannon",

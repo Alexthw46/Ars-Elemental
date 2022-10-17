@@ -37,7 +37,7 @@ public interface IElementalArmor extends ISpellModifierItem {
     @Override
     default SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         if (getSchool().isPartOfSchool(spellPart)) {
-            builder.addAmplification(1);
+            builder.addAmplification(0.5);
         }
         return builder;
     }

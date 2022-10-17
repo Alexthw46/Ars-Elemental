@@ -77,7 +77,7 @@ public class GreaterElementalFocus extends ElementalFocus {
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         if (element.equals(SpellSchools.ELEMENTAL_EARTH)) {
             Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-            map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, ArsElemental.MODID + ":earth_focus", 0.3f, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, ArsElemental.MODID + ":earth_focus", 0.2f, AttributeModifier.Operation.ADDITION));
             return map;
         }
         return super.getAttributeModifiers(slotContext, uuid, stack);
