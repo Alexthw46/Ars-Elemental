@@ -19,11 +19,13 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
@@ -51,10 +53,13 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
             }
             for (ItemStack i : livingEntity.getArmorSlots()) {
-                IEnergyStorage energyStorage = i.getCapability(ForgeCapabilities.ENERGY).orElseGet(null);
-                if (energyStorage != null) {
-                    energyStorage.extractEnergy((int) (energyStorage.getEnergyStored() * 0.25), false);
-                    damage *= 1.1;
+                LazyOptional<IEnergyStorage> lazyEnergyStorage = i.getCapability(ForgeCapabilities.ENERGY);
+                if (lazyEnergyStorage.isPresent()) {
+                    Optional<IEnergyStorage> energyStorage = lazyEnergyStorage.resolve();
+                    if (energyStorage.isPresent()) {
+                        energyStorage.get().extractEnergy((int) (energyStorage.get().getEnergyStored() * 0.25), false);
+                        damage *= 1.1;
+                    }
                 }
             }
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
