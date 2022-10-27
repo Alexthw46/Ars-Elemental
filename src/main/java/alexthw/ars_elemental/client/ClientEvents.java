@@ -39,7 +39,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.ars_nouveau.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 

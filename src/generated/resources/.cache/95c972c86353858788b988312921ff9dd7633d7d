@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-06T17:11:44.700928	Ars Elemental Imbuement
+// 1.19.2	2022-10-26T13:05:01.3640699	Ars Elemental Imbuement
 7638c551327bb9dfc1a1a089f6a8084693b93ea6 data/ars_elemental/recipes/imbuement_air_turret.json
 e0ad023fbc707d6d8ebbcf097bf39d4345e1a77a data/ars_elemental/recipes/imbuement_anima_essence.json
 90fe54e0343abb96669fa428cdbf296f80516e01 data/ars_elemental/recipes/imbuement_earth_turret.json
@@ -7,5 +7,5 @@ e0ad023fbc707d6d8ebbcf097bf39d4345e1a77a data/ars_elemental/recipes/imbuement_an
 f286c9ba3d230a754c77ded2f9030add9ebf737d data/ars_elemental/recipes/imbuement_lesser_earth_focus.json
 f11521731c8bc23be3bf7e61637aa80c16dd4592 data/ars_elemental/recipes/imbuement_lesser_fire_focus.json
 a52358d1c97edac299cab9d18e7a85d4981c5f19 data/ars_elemental/recipes/imbuement_lesser_water_focus.json
-d94585dd6ae707aa7e8821086589c05f646c8418 data/ars_elemental/recipes/imbuement_mark_of_mastery.json
+9ca97e28c4ed7683399940ebf8a669d383460017 data/ars_elemental/recipes/imbuement_mark_of_mastery.json
 e29c2e06ff95604b94a7b11576b9ad0799e062ea data/ars_elemental/recipes/imbuement_water_turret.json

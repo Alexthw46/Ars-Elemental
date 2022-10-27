@@ -16,8 +16,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib3.core.easing.EasingManager;
-import software.bernie.geckolib3.core.easing.EasingType;
+import software.bernie.ars_nouveau.geckolib3.core.easing.EasingManager;
+import software.bernie.ars_nouveau.geckolib3.core.easing.EasingType;
 
 public class EntityLerpedProjectile extends ColoredProjectile {
 

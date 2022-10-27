@@ -35,6 +35,11 @@
       "item": {
         "item": "ars_nouveau:manipulation_essence"
       }
+    },
+    {
+      "item": {
+        "item": "ars_elemental:anima_essence"
+      }
     }
   ],
   "source": 10000

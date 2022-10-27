@@ -5,7 +5,7 @@ import alexthw.ars_elemental.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.client.renderer.item.ArmorRenderer;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
 
 public class ElementalArmorRenderer<ElementalArmor> extends ArmorRenderer {
 

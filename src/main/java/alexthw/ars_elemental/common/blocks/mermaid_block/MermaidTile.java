@@ -195,7 +195,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 evaluateAquarium();
             }
 
-            if (gameTime % 80 == 0 && needsMana && SourceUtil.takeSourceNearbyWithParticles(worldPosition, level, 7, Common.SIREN_MANA_COST.get()) != null) {
+            if (gameTime % 80 == 0 && needsMana && SourceUtil.takeSourceWithParticles(worldPosition, level, 7, Common.SIREN_MANA_COST.get()) != null) {
                 this.needsMana = false;
                 updateBlock();
             }

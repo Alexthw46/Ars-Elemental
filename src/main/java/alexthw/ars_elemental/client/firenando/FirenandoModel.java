@@ -3,11 +3,11 @@ package alexthw.ars_elemental.client.firenando;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.model.provider.data.EntityModelData;
+import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
+import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.ars_nouveau.geckolib3.core.processor.IBone;
+import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
+import software.bernie.ars_nouveau.geckolib3.model.provider.data.EntityModelData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
