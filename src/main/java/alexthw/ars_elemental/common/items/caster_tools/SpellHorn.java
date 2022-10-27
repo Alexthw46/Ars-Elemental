@@ -5,6 +5,7 @@ import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -82,7 +83,7 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
             float aoeMult = 0.5F + j / getMinUseDuration();
             if (pLevel instanceof ServerLevel) {
                 ISpellCaster caster = getSpellCaster(stack);
-                SpellResolver resolver = new SpellResolver(new SpellContext(pLevel, caster.getSpell(), pLivingEntity).withColors(caster.getColor()));
+                SpellResolver resolver = new SpellResolver(new SpellContext(pLevel, caster.getSpell(), pLivingEntity, new LivingCaster(pLivingEntity)));
                 Predicate<Entity> filter = GlyphEffectUtil.getFilterPredicate(caster.getSpell(), (e -> e instanceof LivingEntity));
                 for (Entity l : pLevel.getEntities((Entity) null, new AABB(player.blockPosition()).inflate(aoeMult), filter)) {
                     resolver.onResolveEffect(pLevel, new EntityHitResult(l));

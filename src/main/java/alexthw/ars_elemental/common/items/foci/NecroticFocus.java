@@ -7,6 +7,7 @@ import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSummonUndead;
@@ -99,7 +100,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
                 } else {
                     i.getLookControl().setLookAt(player.getViewVector(1));
                 }
-                EntitySpellResolver spellResolver = new EntitySpellResolver(event.context.withCaster(i));
+                EntitySpellResolver spellResolver = new EntitySpellResolver(new SpellContext(event.getWorld(), event.spell, i, new LivingCaster(i)));
                 spellResolver.onCast(ItemStack.EMPTY, world);
             }
         }
