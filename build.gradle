@@ -143,7 +143,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-1.18-forge:${gecko_version}")
+    //implementation fg.deobf("software.bernie.geckolib:geckolib-1.18-forge:${gecko_version}")
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
@@ -151,10 +151,10 @@ dependencies {
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-67")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
-    implementation fg.deobf("curse.maven:arsenal-561848:3769207")
+    compileOnly fg.deobf("curse.maven:arsenal-561848:3769207")
 
-    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
-    runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
+    //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
+    //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

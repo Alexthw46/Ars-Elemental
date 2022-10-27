@@ -1,23 +1,16 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.entity.summon.*;
+import alexthw.ars_elemental.common.entity.summon.IUndeadSummon;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
-import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
-import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
-import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
-import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
-import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSummonUndead;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -28,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -50,49 +42,6 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
     @Override
     public SpellSchool getSchool() {
         return NECROMANCY;
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void summonedEvent(SummonEvent event) {
-        if (!event.world.isClientSide && hasFocus(event.world, event.shooter)) {
-            if (event.summon.getLivingEntity() != null) {
-                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 1));
-                event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 1));
-            }
-
-            if (event.summon instanceof SummonHorse oldHorse && event.shooter instanceof Player summoner) {
-                SummonSkeleHorse newHorse = new SummonSkeleHorse(oldHorse, summoner);
-                if (newHorse.getOwnerID() != null) {
-                    oldHorse.remove(Entity.RemovalReason.DISCARDED);
-                    event.summon = newHorse;
-                    event.world.addFreshEntity(newHorse);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void reRaiseSummon(SummonEvent.Death event) {
-        if (!event.world.isClientSide) {
-            ServerLevel world = (ServerLevel) event.world;
-            if (event.summon.getOwner(world) instanceof Player player && !(event.summon instanceof IUndeadSummon)) {
-                if (hasFocus(event.world, player)) {
-                    LivingEntity toRaise = null;
-                    if (event.summon instanceof SummonWolf wolf) {
-                        toRaise = new SummonDirewolf(world, player, wolf);
-                    } else if (event.summon instanceof EntityAllyVex vex) {
-                        toRaise = new AllyVhexEntity(world, vex, player);
-                    } else if (event.summon instanceof SummonSkeleton skel) {
-                        toRaise = new SummonUndead(world, skel, player);
-                    }
-                    if (toRaise instanceof IUndeadSummon undead) {
-                        undead.inherit(event.summon);
-                        event.world.addFreshEntity(toRaise);
-                        spawnDeathPoof(world, toRaise.blockPosition());
-                    }
-                }
-            }
-        }
     }
 
     public static void spawnDeathPoof(ServerLevel world, BlockPos pos){

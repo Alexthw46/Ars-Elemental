@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
+@SuppressWarnings("removal")
 public class MethodHomingProjectile extends AbstractCastMethod {
 
     public static MethodHomingProjectile INSTANCE = new MethodHomingProjectile();

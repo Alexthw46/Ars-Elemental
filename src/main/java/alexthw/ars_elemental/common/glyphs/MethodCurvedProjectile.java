@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Set;
 
+@SuppressWarnings("removal")
 public class MethodCurvedProjectile extends AbstractCastMethod {
 
     public static MethodCurvedProjectile INSTANCE = new MethodCurvedProjectile();

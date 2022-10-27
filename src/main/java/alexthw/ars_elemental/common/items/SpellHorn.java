@@ -21,13 +21,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
+import software.bernie.ars_nouveau.geckolib3.core.PlayState;
+import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
+import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
+import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class SpellHorn extends Item implements IAnimatable, ICasterTool {
     }
 
     private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("wand_gem_spin", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("wand_gem_spin"));
         return PlayState.CONTINUE;
     }
 

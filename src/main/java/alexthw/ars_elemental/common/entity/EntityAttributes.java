@@ -9,7 +9,10 @@ import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.Strider;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,6 +33,8 @@ public class EntityAttributes {
         event.put(ModEntities.DIREWOLF_SUMMON.get(), SummonDirewolf.createAttributes().build());
         event.put(ModEntities.WSKELETON_SUMMON.get(), SummonSkeleton.createAttributes().build());
         event.put(ModEntities.VHEX_SUMMON.get(), AllyVhexEntity.createAttributes().build());
+        event.put(ModEntities.DOLPHIN_SUMMON.get(), Dolphin.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 1.5).build());
+        event.put(ModEntities.STRIDER_SUMMON.get(), Strider.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.2).build());
 
         event.put(ModEntities.FIRE_MAGE.get(), EntityMageBase.createAttributes().build());
         event.put(ModEntities.WATER_MAGE.get(), EntityMageBase.createAttributes().build());

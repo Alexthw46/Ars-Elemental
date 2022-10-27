@@ -2,7 +2,7 @@ package alexthw.ars_elemental.client.castertools;
 
 import alexthw.ars_elemental.common.items.SpellHorn;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 

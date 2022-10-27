@@ -20,7 +20,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
 
 import java.util.HashSet;
 import java.util.Set;
