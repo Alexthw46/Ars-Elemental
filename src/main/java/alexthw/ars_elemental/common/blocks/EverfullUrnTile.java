@@ -15,6 +15,7 @@ import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -24,13 +25,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static net.minecraft.world.level.material.Fluids.WATER;
 
 public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable, ITooltipProvider {
 
@@ -58,6 +65,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
                 stale.add(toPos);
                 continue;
             }
+            //noinspection removal
             if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, 100) && tryRefill(level, toPos)) {
                 SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, 100);
                 createParticles(this.worldPosition, toPos);
@@ -69,21 +77,24 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         updateBlock();
     }
 
+    static final FluidStack waterStack = new FluidStack(WATER, 1000);
+
     private boolean tryRefill(Level world, BlockPos toPos) {
 
         if (world.getBlockState(toPos) == Blocks.CAULDRON.defaultBlockState()) {
             world.setBlockAndUpdate(toPos, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
             return true;
         }
-        /* TODO allow tank refilling
+
         BlockEntity be = world.getBlockEntity(toPos);
-        if ( be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent()){
-            Optional<IFluidHandler> tankO = be.getCapability(ForgeCapabilities.FLUID_HANDLER).resolve();
-            if (tankO.isPresent()) {
-                IFluidHandler tank = tankO.get();
+        if (be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent() && be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).resolve().isPresent()) {
+            IFluidHandler tank = be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).resolve().get();
+            if (tank.fill(waterStack, IFluidHandler.FluidAction.SIMULATE) > 100) {
+                tank.fill(waterStack, IFluidHandler.FluidAction.EXECUTE);
+                return true;
             }
         }
-         */
+
         return CompatUtils.isBotaniaLoaded() && BotaniaCompat.tryFillApothecary(toPos, world);
     }
 
@@ -103,7 +114,6 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable LivingEntity storedEntity, Player playerEntity) {
         if (storedPos == null || !(level instanceof ServerLevel) || storedPos.equals(getBlockPos()))
             return;
-        // Let relays take from us, no action needed.
         if (this.isRefillable(storedPos, level)) {
             if (this.setSendTo(storedPos.immutable())) {
                 PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.send", DominionWand.getPosString(storedPos)));
@@ -118,7 +128,10 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
     private boolean isRefillable(BlockPos storedPos, Level level) {
         if (storedPos == null) return false;
+
         if (level.getBlockState(storedPos).getBlock() instanceof AbstractCauldronBlock) {
+            return true;
+        } else if (level.getBlockEntity(storedPos) != null && level.getBlockEntity(storedPos).getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent()) {
             return true;
         } else return CompatUtils.isBotaniaLoaded() && BotaniaCompat.isApothecary(storedPos, level);
     }
