@@ -14,23 +14,21 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.*;
-
-import java.util.Objects;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.ENTITIES;
-import static alexthw.ars_elemental.registry.ModEntities.TILES;
 import static alexthw.ars_elemental.registry.ModItems.BLOCKS;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
 import static alexthw.ars_elemental.registry.ModPotions.EFFECTS;
 import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
+import static alexthw.ars_elemental.registry.ModTiles.TILES;
 import static alexthw.ars_elemental.world.ModFeatures.FEATURES;
 
 public class ModRegistry {
@@ -61,19 +59,7 @@ public class ModRegistry {
         ENCHANTMENTS.register(bus);
         FEATURES.register(bus);
         BS_PROVIDERS.register(bus);
-        bus.addListener(EventPriority.LOW, ModRegistry::registerEvent);
     }
-
-    public static void registerEvent(RegisterEvent event) {
-        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)) {
-            IForgeRegistry<EntityType<?>> registry = Objects.requireNonNull(event.getForgeRegistry());
-            ModEntities.registerEntities(registry);
-        } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES)) {
-            IForgeRegistry<BlockEntityType<?>> registry = Objects.requireNonNull(event.getForgeRegistry());
-            ModEntities.registerTiles(registry);
-        }
-    }
-
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
     public static final RegistryObject<MenuType<CasterHolderContainer>> CASTER_HOLDER;

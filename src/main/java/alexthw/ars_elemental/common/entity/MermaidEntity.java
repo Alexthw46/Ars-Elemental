@@ -6,7 +6,7 @@ import alexthw.ars_elemental.common.entity.ai.HybridStrollGoal;
 import alexthw.ars_elemental.common.entity.ai.MermaidAi;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
-import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
+import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -69,7 +69,7 @@ import java.util.stream.Collectors;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
 @SuppressWarnings("unchecked")
-public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantTextureProvider<MermaidEntity>, IDispellable {
+public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantColorProvider<MermaidEntity>, IDispellable {
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
@@ -365,8 +365,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
         if (isTamed()) {
             String color = Variants.getColorFromStack(stack);
-            if (color != null && !getColor().equals(color)) {
-                this.setColor(color);
+            if (color != null && !getColor(this).equals(color)) {
+                this.setColor(color, this);
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
@@ -413,17 +413,22 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         }
     }
 
-    public String getColor() {
+    public String getColor(MermaidEntity mermaidEntity) {
         return this.entityData.get(COLOR);
     }
 
-    public void setColor(String color) {
+    public void setColor(String color, MermaidEntity mermaidEntity) {
         this.entityData.set(COLOR, color);
     }
 
     @Override
+    public void setColor(String color) {
+        setColor(color, null);
+    }
+
+    @Override
     public ResourceLocation getTexture(MermaidEntity entity) {
-        return prefix("textures/entity/mermaid_" + (getColor().isEmpty() ? Variants.KELP.toString() : getColor()) + ".png");
+        return prefix("textures/entity/mermaid_" + (getColor(entity).isEmpty() ? Variants.KELP.toString() : getColor(entity)) + ".png");
     }
 
 }

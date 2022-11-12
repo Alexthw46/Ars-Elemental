@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = "${mc_version}.2-${mod_version}"
+version = "${mc_version}-${mod_version}"
 group = 'alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.mod_id
 
@@ -153,7 +153,7 @@ dependencies {
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    //compileOnly fg.deobf("vazkii.botania:Botania:1.18.2-430")
+    compileOnly fg.deobf("vazkii.botania:Botania:1.18.2-430")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-77")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")

@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.blocks;
 
-import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
@@ -14,7 +14,7 @@ public class ElementalSpellTurretTile extends BasicSpellTurretTile {
     private SpellSchool school;
 
     public ElementalSpellTurretTile(BlockPos pos, BlockState state) {
-        super(ModEntities.ELEMENTAL_TURRET, pos, state);
+        super(ModTiles.ELEMENTAL_TURRET.get(), pos, state);
     }
 
     public SpellSchool getSchool() {

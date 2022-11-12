@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.client.firenando;
 
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -41,7 +40,7 @@ public class FirenandoRenderer<M extends LivingEntity & IAnimatable> extends Geo
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
 
         if (entity instanceof FirenandoEntity fe && fe.isActive()) {
-            ParticleColor color = fe.getColor().equals("soul") ? color2 : color1;
+            ParticleColor color = fe.getColor(fe).equals("soul") ? color2 : color1;
             entity.getLevel().addParticle(GlowParticleData.createData(color, false, 0.30f, 0.7f, 15),
                     entity.getX() + ParticleUtil.inRange(-0.1, 0.1) / 4, entity.getY() + 0.6, entity.getZ() + ParticleUtil.inRange(-0.1, 0.1) / 4,
                     0, -0.05F, 0);

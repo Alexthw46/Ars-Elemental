@@ -46,6 +46,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
@@ -56,7 +57,9 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.*;
 public class GlyphEvents {
 
     @SubscribeEvent
+    @Deprecated(forRemoval = true)
     public static void sensitiveCrush(EffectResolveEvent.Pre event) {
+        if (ModList.get().getModFileById("ars_nouveau").versionString().equals("3.4.7")) return;
         if (event.resolveEffect == EffectCrush.INSTANCE && event.spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
             event.setCanceled(true);
             double aoeBuff = event.spellStats.getAoeMultiplier();

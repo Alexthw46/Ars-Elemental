@@ -14,6 +14,7 @@ import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerRenderer;
@@ -53,7 +54,7 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModEntities.ELEMENTAL_TURRET, ElementalTurretRenderer::new);
+        event.registerBlockEntityRenderer(ModTiles.ELEMENTAL_TURRET.get(), ElementalTurretRenderer::new);
 
         event.registerEntityRenderer(ModEntities.SIREN_ENTITY.get(), MermaidRenderer::new);
         event.registerEntityRenderer(ModEntities.SIREN_FAMILIAR.get(), MermaidRenderer::new);

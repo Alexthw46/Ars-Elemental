@@ -2,7 +2,7 @@ package alexthw.ars_elemental.common.entity.familiars;
 
 import alexthw.ars_elemental.common.entity.MermaidEntity.Variants;
 import alexthw.ars_elemental.registry.ModEntities;
-import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
+import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
@@ -31,7 +31,7 @@ import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantTextureProvider<MermaidFamiliar> {
+public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantColorProvider<MermaidFamiliar> {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -118,7 +118,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         this.entityData.set(COLOR, Variants.KELP.toString());
     }
 
-    public String getColor(){
+    public String getColor(MermaidFamiliar mermaidFamiliar) {
         return this.entityData.get(COLOR);
     }
 

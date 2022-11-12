@@ -1,9 +1,5 @@
 package alexthw.ars_elemental.registry;
 
-import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
-import alexthw.ars_elemental.common.blocks.EverfullUrnTile;
-import alexthw.ars_elemental.common.blocks.UpstreamTile;
-import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
@@ -27,25 +23,20 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryObject;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
-import static alexthw.ars_elemental.registry.ModItems.MERMAID_ROCK;
-import static alexthw.ars_elemental.registry.ModItems.UPSTREAM_BLOCK;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEntities {
 
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
-    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
 
     public static final RegistryObject<EntityType<MermaidEntity>> SIREN_ENTITY;
     public static final RegistryObject<EntityType<MermaidFamiliar>> SIREN_FAMILIAR;
@@ -70,13 +61,6 @@ public class ModEntities {
     public static final RegistryObject<EntityType<EntityCurvedProjectile>> CURVED_PROJECTILE;
     public static final RegistryObject<EntityType<EntityMagnetSpell>> LINGER_MAGNET;
     public static final RegistryObject<EntityType<EntityLerpedProjectile>> LERP_PROJECTILE;
-
-
-    public static BlockEntityType<MermaidTile> MERMAID_TILE;
-    public static BlockEntityType<UpstreamTile> UPSTREAM_TILE;
-    public static BlockEntityType<EverfullUrnTile> URN_TILE;
-    public static BlockEntityType<ElementalSpellTurretTile> ELEMENTAL_TURRET;
-
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -109,6 +93,7 @@ public class ModEntities {
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
         LERP_PROJECTILE = addEntity("lerp", 0.5F, 0.5F, true, true, EntityLerpedProjectile::new, MobCategory.MISC);
+
     }
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
@@ -130,29 +115,16 @@ public class ModEntities {
         });
     }
 
-    public static void registerEntities(final IForgeRegistry<EntityType<?>> event) {
 
-        SpawnPlacements.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_));
+    @SubscribeEvent
+    public static void registerSP(SpawnPlacementRegisterEvent event) {
 
-        SpawnPlacements.register(FIRE_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
-        SpawnPlacements.register(AIR_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
-        SpawnPlacements.register(WATER_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
-        SpawnPlacements.register(EARTH_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
+        event.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_), SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(FIRE_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(AIR_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(WATER_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(EARTH_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
 
-    }
-
-    public static void registerTiles(IForgeRegistry<BlockEntityType<?>> registry) {
-        MERMAID_TILE = addTileEntity(registry, "mermaid_tile", MermaidTile::new, MERMAID_ROCK.get());
-        UPSTREAM_TILE = addTileEntity(registry, "upstream_tile", UpstreamTile::new, UPSTREAM_BLOCK.get());
-        ELEMENTAL_TURRET = addTileEntity(registry, "elemental_turret_tile", ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get());
-        URN_TILE = addTileEntity(registry, "everfull_urn", EverfullUrnTile::new, ModItems.WATER_URN.get());
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    static <T extends BlockEntity> BlockEntityType<T> addTileEntity(IForgeRegistry<BlockEntityType<?>> registry, String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
-        BlockEntityType<T> type = BlockEntityType.Builder.of(factory, blocks).build(null);
-        registry.register(name, type);
-        return type;
     }
 
 }

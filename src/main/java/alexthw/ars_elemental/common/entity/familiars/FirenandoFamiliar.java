@@ -4,7 +4,7 @@ import alexthw.ars_elemental.common.entity.FirenandoEntity.Variants;
 import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
-import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
+import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
@@ -16,7 +16,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,10 +31,11 @@ import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener, IVariantTextureProvider<FirenandoFamiliar> {
+public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener, IVariantColorProvider<FirenandoFamiliar> {
     public FirenandoFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
+
     public FirenandoFamiliar(Level world) {
         super(ModEntities.FIRENANDO_FAMILIAR.get(), world);
     }
@@ -101,7 +101,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
         return PlayState.CONTINUE;
     }
 
-    public String getColor(){
+    public String getColor(FirenandoFamiliar firenandoFamiliar) {
         return this.entityData.get(COLOR);
     }
 

@@ -11,6 +11,7 @@ import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHarm;
@@ -125,7 +126,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
         Spell spell = this.pSpells.get(random.nextInt(pSpells.size()));
         ParticleColor color = schoolToColor(this.school.getId());
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level, spell, this).withColors(color).withType(SpellContext.CasterType.ENTITY));
+        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level, spell, this, new LivingCaster(this)).withColors(color));
         resolver.onCast(ItemStack.EMPTY, level);
         this.castCooldown = 40;
     }

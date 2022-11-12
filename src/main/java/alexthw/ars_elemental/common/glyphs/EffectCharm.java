@@ -26,7 +26,7 @@ import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModPotions.ENTHRALLED;
 
-public class EffectCharm extends ElementalAbstractEffect {
+public class EffectCharm extends ElementalAbstractEffect implements IPotionEffect {
 
     public static EffectCharm INSTANCE = new EffectCharm();
 
@@ -50,8 +50,8 @@ public class EffectCharm extends ElementalAbstractEffect {
                     }
 
                     if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
-                        applyConfigPotion(mob, player, ENTHRALLED.get(), spellStats);
-                        playHeartParticles(mob,level);
+                        applyPotion(mob, player, ENTHRALLED.get(), spellStats);
+                        playHeartParticles(mob, level);
                     }
                 }
 
@@ -102,24 +102,30 @@ public class EffectCharm extends ElementalAbstractEffect {
         return getPotionAugments();
     }
 
-    public void applyConfigPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats spellStats){
-        applyPotion(entity, owner,  potionEffect, spellStats, POTION_TIME == null ? 30 : POTION_TIME.get(), EXTEND_TIME == null ? 8 : EXTEND_TIME.get(), true);
-    }
-
-    public void applyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles){
+    public void applyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats) {
         if (entity == null || owner == null) return;
-        int ticks = baseDurationSeconds * 20 + durationBuffSeconds * stats.getDurationInTicks();
+        int ticks = getBaseDuration() * 20 + getExtendTimeDuration() * stats.getDurationInTicks();
         int amp = (int) stats.getAmpMultiplier();
-        entity.addEffect(new EntityCarryMEI(potionEffect, ticks, amp, false, showParticles, owner, null));
+        entity.addEffect(new EntityCarryMEI(potionEffect, ticks, amp, false, true, owner, null));
     }
 
-    private void playHeartParticles(LivingEntity entity, ServerLevel world){
-        for(int i = 0; i < 5; ++i) {
+    private void playHeartParticles(LivingEntity entity, ServerLevel world) {
+        for (int i = 0; i < 5; ++i) {
             double d0 = entity.getRandom().nextGaussian() * 0.02D;
             double d1 = entity.getRandom().nextGaussian() * 0.02D;
             double d2 = entity.getRandom().nextGaussian() * 0.02D;
-            world.sendParticles(ParticleTypes.HEART, entity.getX() + (world.random.nextFloat() - 0.5)/2, entity.getY() + (world.random.nextFloat() + 0.5), entity.getZ() + (world.random.nextFloat() - 0.5)/2,2 , d0, d1, d2, 0.1f);
+            world.sendParticles(ParticleTypes.HEART, entity.getX() + (world.random.nextFloat() - 0.5) / 2, entity.getY() + (world.random.nextFloat() + 0.5), entity.getZ() + (world.random.nextFloat() - 0.5) / 2, 2, d0, d1, d2, 0.1f);
         }
+    }
+
+    @Override
+    public int getBaseDuration() {
+        return POTION_TIME == null ? 30 : POTION_TIME.get();
+    }
+
+    @Override
+    public int getExtendTimeDuration() {
+        return EXTEND_TIME == null ? 8 : EXTEND_TIME.get();
     }
 
 }

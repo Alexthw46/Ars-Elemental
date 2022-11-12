@@ -30,7 +30,7 @@ import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 
-public class EffectDischarge extends ElementalAbstractEffect implements IDamageEffect {
+public class EffectDischarge extends ElementalAbstractEffect implements IDamageEffect, IPotionEffect {
 
     public static EffectDischarge INSTANCE = new EffectDischarge();
 
@@ -63,8 +63,8 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
                 }
             }
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
-                dealDamage(world, shooter, damage, spellStats, entity, source);
-                applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
+                ((IPotionEffect) this).applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);
                 RayEffectPacket.send(world, new ParticleColor(225, 200, 50), livingEntity.position(), entity.position());
             }
         }
@@ -117,4 +117,13 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         return Set.of(SpellSchools.ELEMENTAL_AIR);
     }
 
+    @Override
+    public int getBaseDuration() {
+        return POTION_TIME == null ? 30 : POTION_TIME.get();
+    }
+
+    @Override
+    public int getExtendTimeDuration() {
+        return EXTEND_TIME == null ? 8 : EXTEND_TIME.get();
+    }
 }

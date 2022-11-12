@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Set;
 
-public class EffectWaterGrave extends ElementalAbstractEffect implements IDamageEffect {
+public class EffectWaterGrave extends ElementalAbstractEffect implements IDamageEffect, IPotionEffect {
 
     public static EffectWaterGrave INSTANCE = new EffectWaterGrave();
 
@@ -33,7 +33,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
             if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
-                applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
+                ((IPotionEffect) this).applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
             } else {
                 Vec3 delta = living.getDeltaMovement();
                 double dy = Math.min(-1.0D, delta.y - 0.05D);
@@ -46,7 +46,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
             int airSupply = living.getAirSupply();
             if (airSupply <= 0 || living.getMobType() == MobType.WATER) {
                 double damage = DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier();
-                dealDamage(world, shooter, (float) damage, spellStats, living, new EntityDamageSource(DamageSource.DROWN.getMsgId(), shooter));
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, living, new EntityDamageSource(DamageSource.DROWN.getMsgId(), shooter), (float) damage);
             } else {
                 double newSupply = Math.max(-19, airSupply - 50 * (3 + spellStats.getAmpMultiplier()));
                 living.setAirSupply((int) newSupply);
@@ -93,6 +93,16 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     @Override
     public String getBookDescription() {
         return "Causes entities to drown. When augmented with Extend Time, they will be dragged down and unable to swim up.";
+    }
+
+    @Override
+    public int getBaseDuration() {
+        return POTION_TIME == null ? 30 : POTION_TIME.get();
+    }
+
+    @Override
+    public int getExtendTimeDuration() {
+        return EXTEND_TIME == null ? 8 : EXTEND_TIME.get();
     }
 
 }

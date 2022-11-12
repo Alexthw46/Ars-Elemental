@@ -1,11 +1,12 @@
 package alexthw.ars_elemental.common.blocks;
 
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
-import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModTiles;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
+import com.hollingsworth.arsnouveau.api.source.SourceManager;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
@@ -46,7 +47,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     boolean needsSource;
 
     public EverfullUrnTile(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(ModEntities.URN_TILE, pWorldPosition, pBlockState);
+        super(ModTiles.URN_TILE.get(), pWorldPosition, pBlockState);
     }
 
     @Override
@@ -65,8 +66,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
                 stale.add(toPos);
                 continue;
             }
-            //noinspection removal
-            if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, 100) && tryRefill(level, toPos)) {
+            if (SourceManager.INSTANCE.hasSourceNearby(this.worldPosition, level, 6, 100) != null && tryRefill(level, toPos)) {
                 SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, 100);
                 createParticles(this.worldPosition, toPos);
             }

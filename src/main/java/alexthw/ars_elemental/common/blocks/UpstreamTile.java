@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.blocks;
 
-import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.ITickable;
 import net.minecraft.core.BlockPos;
@@ -17,7 +17,7 @@ import java.util.List;
 public class UpstreamTile extends BlockEntity implements ITickable {
 
     public UpstreamTile(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(ModEntities.UPSTREAM_TILE, pWorldPosition, pBlockState);
+        super(ModTiles.UPSTREAM_TILE.get(), pWorldPosition, pBlockState);
     }
 
     @Override
