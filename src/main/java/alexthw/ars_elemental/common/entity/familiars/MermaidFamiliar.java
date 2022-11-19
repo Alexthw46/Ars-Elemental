@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
 import software.bernie.ars_nouveau.geckolib3.core.PlayState;
@@ -42,8 +43,8 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
     }
 
     public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand hand) {
