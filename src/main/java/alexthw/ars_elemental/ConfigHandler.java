@@ -56,7 +56,7 @@ public class ConfigHandler {
 
             builder.pop();
 
-            builder.comment("Adjust these values to balance how much an elemental spell gets dampened by a not-matching spell focus")
+            builder.comment("Adjust these values to balance how much an elemental spell gets dampened by a not-matching lesser spell focus")
                     .push("Elemental Spell Foci - Dampening");
             FireMasteryDebuff = builder.define("Fire Focus debuff", -1.0D);
             WaterMasteryDebuff = builder.define("Water Focus debuff", -1.0D);
@@ -67,7 +67,7 @@ public class ConfigHandler {
 
             builder.comment("Enable or disable the passive bonus of the foci").push("Elemental Spell Foci - Abilities");
 
-            EnableGlyphEmpowering = builder.define("Enable glyph empowering (ignite & freeze)", true);
+            EnableGlyphEmpowering = builder.define("Enable glyph empowering", true);
             EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
 
             builder.pop();
