@@ -37,6 +37,7 @@ import static alexthw.ars_elemental.common.enchantments.SoulboundEnchantment.*;
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class Events {
 
+    @SubscribeEvent
     public static void focusDiscount(SpellCastEvent event) {
         if (!event.getWorld().isClientSide) {
             double finalDiscount = 0;

@@ -160,7 +160,7 @@ dependencies {
 
     implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.19-2.0.0.120")
 
-    //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:3820924")
+    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4086496")
     //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
