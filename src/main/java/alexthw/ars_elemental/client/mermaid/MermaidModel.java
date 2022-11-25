@@ -39,10 +39,11 @@ public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
         return ANIM;
     }
 
+
     @SuppressWarnings("unchecked")
     @Override
-    public void setLivingAnimations(T entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-        super.setLivingAnimations(entity, uniqueID, customPredicate);
+    public void setCustomAnimations(T entity, int uniqueID, @Nullable AnimationEvent customPredicate) {
+        super.setCustomAnimations(entity, uniqueID, customPredicate);
         if (customPredicate == null) return;
         IBone head = this.getAnimationProcessor().getBone("head");
         EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);

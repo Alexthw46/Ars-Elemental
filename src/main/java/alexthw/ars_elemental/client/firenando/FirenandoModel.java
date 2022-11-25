@@ -41,8 +41,8 @@ public class FirenandoModel<M extends LivingEntity & IAnimatable> extends Animat
     }
 
     @Override
-    public void setLivingAnimations(M entity, Integer uniqueID, AnimationEvent customPredicate) {
-        super.setLivingAnimations(entity, uniqueID, customPredicate);
+    public void setCustomAnimations(M entity, int uniqueID, AnimationEvent customPredicate) {
+        super.setCustomAnimations(entity, uniqueID, customPredicate);
         if (customPredicate == null || entity instanceof FirenandoEntity fe && !fe.isActive()) return;
         IBone head = this.getAnimationProcessor().getBone("head");
         EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);

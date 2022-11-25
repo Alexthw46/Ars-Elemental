@@ -38,6 +38,7 @@ import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController
 import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
+import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
         super(properties);
     }
 
-    public AnimationFactory factory = new AnimationFactory(this);
+    public AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     @Override
     public AnimationFactory getFactory() {
@@ -64,7 +65,7 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
     }
 
     private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("wand_gem_spin", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("wand_gem_spin"));
         return PlayState.CONTINUE;
     }
 

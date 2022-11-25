@@ -58,6 +58,7 @@ public class ShieldEvents {
         if (s.getItem() instanceof EnchantersShield) {
             if (s.getEnchantmentLevel(EnchantmentRegistry.REACTIVE_ENCHANTMENT.get()) * .25 >= Math.random() && new ReactiveCaster(s).getSpell().isValid()) {
                 ReactiveCaster reactiveCaster = new ReactiveCaster(s);
+                //noinspection removal TODO
                 reactiveCaster.castSpell(player.getCommandSenderWorld(), player, InteractionHand.OFF_HAND, null);
             }
         }

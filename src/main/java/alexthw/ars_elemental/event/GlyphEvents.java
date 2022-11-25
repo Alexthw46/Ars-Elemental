@@ -16,11 +16,9 @@ import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
-import com.hollingsworth.arsnouveau.common.crafting.recipes.CrushRecipe;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
-import com.hollingsworth.arsnouveau.setup.RecipeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,23 +28,18 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
@@ -55,22 +48,6 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.*;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class GlyphEvents {
-
-    @SubscribeEvent
-    @Deprecated(forRemoval = true)
-    public static void sensitiveCrush(EffectResolveEvent.Pre event) {
-        if (ModList.get().getModFileById("ars_nouveau").versionString().equals("3.4.7")) return;
-        if (event.resolveEffect == EffectCrush.INSTANCE && event.spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
-            event.setCanceled(true);
-            double aoeBuff = event.spellStats.getAoeMultiplier();
-            int pierceBuff = event.spellStats.getBuffCount(AugmentPierce.INSTANCE);
-            int maxItemCrush = (int) (4 + (4 * aoeBuff) + (4 * pierceBuff));
-            List<ItemEntity> itemEntities = event.world.getEntitiesOfClass(ItemEntity.class, new AABB(new BlockPos(event.rayTraceResult.getLocation())).inflate(aoeBuff + 1.0));
-            if (!itemEntities.isEmpty()) {
-                crushItems(event.world, itemEntities, maxItemCrush);
-            }
-        }
-    }
 
     @SubscribeEvent
     public static void empowerGlyphs(EffectResolveEvent.Pre event) {
@@ -89,7 +66,6 @@ public class GlyphEvents {
         else if (event.rayTraceResult instanceof EntityHitResult entityHitResult)
             empowerResolveOnEntities(event, entityHitResult, school);
     }
-
 
     public static void empowerResolveOnEntities(EffectResolveEvent.Pre event, EntityHitResult entityHitResult, SpellSchool school) {
 
@@ -196,36 +172,6 @@ public class GlyphEvents {
 
         }
 
-    }
-
-    public static void crushItems(Level world, List<ItemEntity> itemEntities, int maxItemCrush) {
-        List<CrushRecipe> recipes = world.getRecipeManager().getAllRecipesFor(RecipeRegistry.CRUSH_TYPE.get());
-        CrushRecipe lastHit = null; // Cache this for AOE hits
-        int itemsCrushed = 0;
-        for (ItemEntity IE : itemEntities) {
-            if (itemsCrushed > maxItemCrush) {
-                break;
-            }
-
-            ItemStack stack = IE.getItem();
-            Item item = stack.getItem();
-
-            if (lastHit == null || !lastHit.matches(item.getDefaultInstance(), world)) {
-                lastHit = recipes.stream().filter(recipe -> recipe.matches(item.getDefaultInstance(), world)).findFirst().orElse(null);
-            }
-
-            if (lastHit == null) continue;
-
-            while (!stack.isEmpty() && itemsCrushed <= maxItemCrush) {
-                List<ItemStack> outputs = lastHit.getRolledOutputs(world.random);
-                stack.shrink(1);
-                itemsCrushed++;
-                for (ItemStack result : outputs) {
-                    world.addFreshEntity(new ItemEntity(world, IE.getX(), IE.getY(), IE.getZ(), result.copy()));
-                }
-            }
-
-        }
     }
 
 }

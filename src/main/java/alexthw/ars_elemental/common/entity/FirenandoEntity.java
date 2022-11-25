@@ -61,6 +61,7 @@ import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController
 import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
+import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -246,7 +247,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         this.owner = tag.hasUUID("owner") ? tag.getUUID("owner") : null;
     }
 
-    final AnimationFactory factory = new AnimationFactory(this);
+    final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     AnimationController<FirenandoEntity> attackController;
 
@@ -260,7 +261,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
         if (!isActive()) return PlayState.STOP;
         if (attackController.getCurrentAnimation() == null) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
         }
         return PlayState.CONTINUE;
     }
@@ -286,7 +287,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
                 return;
             }
             attackController.markNeedsReload();
-            attackController.setAnimation(new AnimationBuilder().addAnimation("shoot", false).addAnimation("idle", false));
+            attackController.setAnimation(new AnimationBuilder().addAnimation("shoot").addAnimation("idle"));
         }
     }
 
@@ -320,11 +321,6 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
 
     public String getColor(FirenandoEntity firenando) {
         return this.entityData.get(COLOR);
-    }
-
-    @Override
-    public void setColor(String color) {
-        setColor(color, null);
     }
 
     public void setColor(String color, FirenandoEntity firenando) {

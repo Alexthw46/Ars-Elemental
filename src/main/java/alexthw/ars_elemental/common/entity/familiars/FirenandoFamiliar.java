@@ -92,13 +92,18 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
 
     @Override
     public PlayState walkPredicate(AnimationEvent event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
         return PlayState.CONTINUE;
     }
 
     <T extends IAnimatable> PlayState idlePredicate(AnimationEvent<T> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle.body"));
         return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void setColor(String color, FirenandoFamiliar object) {
+        super.setColor(color);
     }
 
     public String getColor(FirenandoFamiliar firenandoFamiliar) {

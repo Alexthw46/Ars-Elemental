@@ -119,6 +119,11 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         this.entityData.set(COLOR, Variants.KELP.toString());
     }
 
+    @Override
+    public void setColor(String color, MermaidFamiliar object) {
+        super.setColor(color);
+    }
+
     public String getColor(MermaidFamiliar mermaidFamiliar) {
         return this.entityData.get(COLOR);
     }

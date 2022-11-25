@@ -139,7 +139,6 @@ public class ArsNouveauRegistry {
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
         EffectGravity.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
         EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
-        EffectCrush.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
 
         ArsNouveauRegistry.addLights();
         ArsNouveauRegistry.addPerkSlots();

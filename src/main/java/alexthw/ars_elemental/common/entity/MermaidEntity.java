@@ -58,6 +58,7 @@ import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController
 import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
+import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,7 +72,7 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 @SuppressWarnings("unchecked")
 public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantColorProvider<MermaidEntity>, IDispellable {
 
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public static final EntityDataAccessor<Boolean> TAMED = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> JUMPING = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
@@ -419,11 +420,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     public void setColor(String color, MermaidEntity mermaidEntity) {
         this.entityData.set(COLOR, color);
-    }
-
-    @Override
-    public void setColor(String color) {
-        setColor(color, null);
     }
 
     @Override
