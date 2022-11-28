@@ -6,7 +6,6 @@ import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
-import com.hollingsworth.arsnouveau.api.source.SourceManager;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
@@ -66,7 +65,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
                 stale.add(toPos);
                 continue;
             }
-            if (SourceManager.INSTANCE.hasSourceNearby(this.worldPosition, level, 6, 100) != null && tryRefill(level, toPos)) {
+            if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, 100) && tryRefill(level, toPos)) {
                 SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, 100);
                 createParticles(this.worldPosition, toPos);
             }

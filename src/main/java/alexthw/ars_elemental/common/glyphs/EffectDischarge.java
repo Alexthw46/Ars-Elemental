@@ -10,6 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -68,6 +70,14 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
                 RayEffectPacket.send(world, new ParticleColor(225, 200, 50), livingEntity.position(), entity.position());
             }
         }
+    }
+
+    @Override
+    public void applyPotion(LivingEntity entity, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles) {
+        if (entity == null) return;
+        int ticks = baseDurationSeconds * 20 + durationBuffSeconds * stats.getDurationInTicks();
+        int amp = (int) Math.min(stats.getAmpMultiplier(), 5);
+        entity.addEffect(new MobEffectInstance(potionEffect, ticks, amp, false, showParticles, true));
     }
 
     @Override
