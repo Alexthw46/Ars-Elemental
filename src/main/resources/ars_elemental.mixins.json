@@ -6,9 +6,13 @@
   "mixins": [
     "FlareMixin",
     "FoxInvoker",
+    "ItemEntityMixin",
     "LightningMixin",
     "RitualAwakeningMixin",
     "ZombieInvoker"
   ],
-  "minVersion": "0.8"
+  "minVersion": "0.8",
+  "client": [
+    "SpellBookMixin"
+  ]
 }

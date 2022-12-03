@@ -3,16 +3,20 @@ package alexthw.ars_elemental.common.items.armor;
 import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.client.TooltipUtils;
 import alexthw.ars_elemental.registry.ModItems;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
-import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
+import com.hollingsworth.arsnouveau.api.perk.*;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmor {
@@ -43,22 +48,10 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        super.inventoryTick(stack, pLevel, pEntity, pSlotId, pIsSelected);
-        IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
-        if (perkProvider != null) {
-            //TODO Remove after transition is complete - serverside
-            if (perkProvider.getPerkHolder(stack).getTier() != 2) perkProvider.getPerkHolder(stack).setTier(2);
-        }
-    }
-
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flags) {
         IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
         if (perkProvider != null) {
-            //TODO Remove after transition is complete - clientside
-            if (perkProvider.getPerkHolder(stack).getTier() != 2) perkProvider.getPerkHolder(stack).setTier(2);
             perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
         }
         TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, world, tooltip, flags), "armor_set");
@@ -111,6 +104,26 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     public void addArmorSetDescription(ArmorSet set, List<Component> list) {
         list.add(Component.translatable("ars_elemental.armor_set." + set.getName() + ".desc").withStyle(ChatFormatting.GRAY));
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot pEquipmentSlot, ItemStack stack) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> attributes = new ImmutableMultimap.Builder<>();
+        attributes.putAll(super.getDefaultAttributeModifiers(pEquipmentSlot));
+        if (this.slot == pEquipmentSlot) {
+            UUID uuid = getModifierForSlot(this.slot);
+            IPerkHolder<ItemStack> perkHolder = PerkUtil.getPerkHolder(stack);
+            if (perkHolder != null) {
+                attributes.put(PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_armor", 30 * 3, AttributeModifier.Operation.ADDITION));
+                attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_armor", 3, AttributeModifier.Operation.ADDITION));
+                for (PerkInstance perkInstance : perkHolder.getPerkInstances()) {
+                    IPerk perk = perkInstance.getPerk();
+                    attributes.putAll(perk.getModifiers(this.slot, stack, perkInstance.getSlot().value));
+                }
+
+            }
+        }
+        return attributes.build();
     }
 
 }

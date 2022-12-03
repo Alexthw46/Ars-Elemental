@@ -69,7 +69,6 @@ import java.util.stream.Collectors;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-@SuppressWarnings("unchecked")
 public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantColorProvider<MermaidEntity>, IDispellable {
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

@@ -53,6 +53,6 @@ side = "BOTH"
 [[dependencies.ars_elemental]]
 modId = "ars_nouveau"
 mandatory = true
-versionRange = "[1.19.2-3.4.5,)"
+versionRange = "[1.19.2-3.4.7,)"
 ordering = "AFTER"
 side = "BOTH"

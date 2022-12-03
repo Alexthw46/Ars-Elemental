@@ -1,8 +1,9 @@
-// 1.19.2	2022-09-17T22:20:39.3456131	Ars Elemental Item Tags
+// 1.19.2	2022-12-03T11:20:23.6871584	Ars Elemental Item Tags
 73b54dfa748bfcd5db95f07b6bda18d8f2dd94a3 data/ars_elemental/tags/items/curio_bag_item.json
 55ebe60e91db1b8c82d4c050e5058b125796e4f9 data/ars_elemental/tags/items/soulbound_extra.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/items/magic_food.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/items/magic_shards.json
+5d3afe627f5d96d91739a03c47c182723c0a5f5c data/ars_nouveau/tags/items/spellbook.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/items/an_focus.json
 e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bangle.json
 d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/forge/tags/items/logs/archwood.json

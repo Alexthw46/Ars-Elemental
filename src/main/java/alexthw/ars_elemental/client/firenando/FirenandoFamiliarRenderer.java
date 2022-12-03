@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-public class FirenandoFamiliarRenderer <M extends FirenandoFamiliar & IVariantTextureProvider<FirenandoFamiliar>> extends FirenandoRenderer<M>{
+public class FirenandoFamiliarRenderer <M extends FirenandoFamiliar> extends FirenandoRenderer<M>{
 
     public FirenandoFamiliarRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager);

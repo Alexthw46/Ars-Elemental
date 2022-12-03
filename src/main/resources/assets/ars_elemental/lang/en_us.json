@@ -214,6 +214,7 @@
   "ars_elemental.page.armor_set.earth": "Attuned to the School of Earth, each piece of this armor will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve.",
   "ars_elemental.thread_of": "Thread of %s",
   "ars_elemental.tablet_of": "Tablet of %s",
+  "tooltip.ars_nouveau.blessed": "Blessing of the 4 elements",
   "item.minecraft.splash_potion.effect.enderference_potion_strong": "Splash Potion of Enderference",
   "item.minecraft.splash_potion.effect.enderference_potion": "Splash Potion of Enderference",
   "item.minecraft.splash_potion.effect.enderference_potion_long": "Splash Potion of Enderference",

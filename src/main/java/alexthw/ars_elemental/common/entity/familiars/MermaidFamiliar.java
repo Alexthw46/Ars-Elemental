@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
+import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +33,7 @@ import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantColorProvider<MermaidFamiliar> {
+public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantColorProvider<FamiliarEntity> {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -120,16 +121,17 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     @Override
-    public void setColor(String color, MermaidFamiliar object) {
+    public void setColor(String color, FamiliarEntity object) {
         super.setColor(color);
     }
 
-    public String getColor(MermaidFamiliar mermaidFamiliar) {
+    @Override
+    public String getColor(FamiliarEntity mermaidFamiliar) {
         return this.entityData.get(COLOR);
     }
 
     @Override
-    public ResourceLocation getTexture(MermaidFamiliar entity) {
+    public ResourceLocation getTexture(FamiliarEntity entity) {
         return prefix("textures/entity/mermaid_" + (getColor().isEmpty() ? Variants.KELP.toString() : getColor()) + ".png");
     }
 
