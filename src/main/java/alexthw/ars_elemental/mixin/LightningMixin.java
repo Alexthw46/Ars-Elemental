@@ -7,15 +7,14 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import shadowed.llamalad7.mixinextras.injector.WrapWithCondition;
 
 @Mixin(LightningEntity.class)
 public class LightningMixin {
 
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;thunderHit(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"))
-    public void thunderHit(Entity instance, ServerLevel pLevel, LightningBolt pLightning){
-        if (instance instanceof ItemEntity) return;
-        instance.thunderHit(pLevel,pLightning);
+    @WrapWithCondition(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;thunderHit(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"))
+    public boolean thunderHit(Entity instance, ServerLevel pLevel, LightningBolt pLightning) {
+        return !(instance instanceof ItemEntity);
     }
 
 }
