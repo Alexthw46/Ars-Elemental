@@ -13,6 +13,8 @@
   ],
   "minVersion": "0.8",
   "client": [
-    "SpellBookMixin"
+    "GeoRenderAccessor",
+    "SpellBookMixin",
+    "SpellBookTextureMixin"
   ]
 }

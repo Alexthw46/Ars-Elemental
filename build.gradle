@@ -164,7 +164,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4086496")
     //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
 
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.0.12")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 }

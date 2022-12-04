@@ -101,11 +101,13 @@ public class ConfigHandler {
 
     public static class Client{
         public static ForgeConfigSpec.ConfigValue<Boolean> EnableSFRendering;
+        public static ForgeConfigSpec.ConfigValue<Boolean> NetheriteTexture;
 
         public Client(ForgeConfigSpec.Builder builder){
             builder.push("Visual Configs");
 
             EnableSFRendering = builder.comment("Enables the rendering of the spell focus while equipped").define("Enable SpellFocusRender", true);
+            EnableSFRendering = builder.comment("Enables the black texture of the spellbook while upgraded").define("Enable BlackBookTexture", true);
 
             builder.pop();
         }
