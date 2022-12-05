@@ -107,7 +107,7 @@ public class ConfigHandler {
             builder.push("Visual Configs");
 
             EnableSFRendering = builder.comment("Enables the rendering of the spell focus while equipped").define("Enable SpellFocusRender", true);
-            EnableSFRendering = builder.comment("Enables the black texture of the spellbook while upgraded").define("Enable BlackBookTexture", true);
+            NetheriteTexture = builder.comment("Enables the black texture of the spell book while upgraded").define("Enable BlackBookTexture", true);
 
             builder.pop();
         }
