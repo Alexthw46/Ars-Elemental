@@ -1,8 +1,9 @@
-// 1.19.2	2022-10-27T11:53:46.7268926	Ars Elemental Patchouli Datagen
+// 1.19.2	2022-12-08T16:36:51.3112587	Ars Elemental Patchouli Datagen
 80ad4cb54157dadf6704cf7789afe4ed3b19989c data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/thread_shock.json.json
 8be02afa786bd67676d822fb2288a4729495df5b data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/thread_spore.json.json
 8d83e73962205e06b4ead38a734e588da07a6a15 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/fire_golem.json
 6c3b3c025a56278426717da87ba6a148bf8012e3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/mermaid.json
+2e3820b11833f6d1b36f336ea577632a31915067 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/invincible_book.json
 f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
 89af7877744e34a5eda82da1c14dd76af7d83166 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/soulbound.json
 7e1fc9d52f52adc5943c0204cc24c7f276cc18e5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/air_bangle.json

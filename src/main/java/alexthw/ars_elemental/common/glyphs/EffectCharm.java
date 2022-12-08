@@ -9,13 +9,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -38,39 +36,41 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
-            if (rayTraceResult.getEntity() instanceof Monster mob) {
+            if (rayTraceResult.getEntity() instanceof Mob mob) {
+                if (mob instanceof Enemy || (mob instanceof NeutralMob && (!(mob instanceof Animal a && a.canFallInLove())))) {
 
-                if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
+                    if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
 
-                    float resistance = 10 +  100 * (mob.getHealth() / mob.getMaxHealth());
-                    double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
+                        float resistance = 10 + 100 * (mob.getHealth() / mob.getMaxHealth());
+                        double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
 
-                    if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
-                        chanceBoost += 50;
+                        if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
+                            chanceBoost += 50;
+                        }
+
+                        if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
+                            applyPotion(mob, player, ENTHRALLED.get(), spellStats);
+                            playHeartParticles(mob, level);
+                        }
                     }
 
-                    if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
-                        applyPotion(mob, player, ENTHRALLED.get(), spellStats);
-                        playHeartParticles(mob, level);
+                } else if (rayTraceResult.getEntity() instanceof Animal animal) {
+
+                    if (animal instanceof TamableAnimal tamable && !tamable.isTame()) {
+                        if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
+                            tamable.tame(player);
+                    } else if (animal instanceof AbstractHorse horse && !horse.isTamed()) {
+                        if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
+                            horse.setTamed(true);
+                    } else if (animal instanceof Fox fox && !((FoxInvoker) fox).callTrusts(player.getUUID())) {
+                        if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
+                            ((FoxInvoker) fox).callAddTrustedUUID(player.getUUID());
+                    } else if (animal.canFallInLove()) {
+                        if (rollToSeduce(90, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
+                            animal.setInLove(player);
                     }
+
                 }
-
-            } else if (rayTraceResult.getEntity() instanceof Animal animal) {
-
-                if (animal instanceof TamableAnimal tamable && !tamable.isTame()) {
-                    if (rollToSeduce(100, 25 * (1+spellStats.getAmpMultiplier()), level.getRandom()))
-                        tamable.tame(player);
-                }else if (animal instanceof AbstractHorse horse && !horse.isTamed()) {
-                    if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
-                        horse.setTamed(true);
-                } else if (animal instanceof Fox fox && !((FoxInvoker) fox).callTrusts(player.getUUID())) {
-                    if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
-                        ((FoxInvoker) fox).callAddTrustedUUID(player.getUUID());
-                } else if (animal.canFallInLove()) {
-                    if (rollToSeduce(90, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
-                        animal.setInLove(player);
-                }
-
             }
         }
     }

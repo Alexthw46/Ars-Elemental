@@ -214,6 +214,7 @@
   "ars_elemental.page.armor_set.earth": "地の属性に同調したこれらの防具は、地属性のグリフを自動で「増加」し、マナ消費を抑え、栄養不足、ベリーの低木、サボテンや押しつぶされたりなど地に関連するダメージを軽減します。$(br)地術師シリーズすべてを装備した場合、軽減されたダメージはマナに変換され、餓死が近い際に深い地底から食べ物を与えてくれます。",
   "ars_elemental.thread_of": "%sのスレッド",
   "ars_elemental.tablet_of": "%sのタブレット",
+  "tooltip.ars_nouveau.blessed": "Protection of the 4 elements",
   "item.minecraft.splash_potion.effect.enderference_potion_strong": "転移干渉のスプラッシュポーション",
   "item.minecraft.splash_potion.effect.enderference_potion": "転移干渉のスプラッシュポーション",
   "item.minecraft.splash_potion.effect.enderference_potion_long": "転移干渉のスプラッシュポーション",

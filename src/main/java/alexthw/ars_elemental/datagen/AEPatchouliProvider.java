@@ -20,6 +20,7 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.common.items.PerkItem;
+import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -183,6 +184,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
         addEnchantmentPage(ModRegistry.MIRROR.get());
         addEnchantmentPage(ModRegistry.SOULBOUND.get());
+        addPage(new PatchouliBuilder(ENCHANTMENTS, ItemsRegistry.NOVICE_SPELLBOOK.get()).withTextPage("ars_elemental.page.book_protection").withName("tooltip.ars_nouveau.blessed").withPage(new ApparatusPage(prefix("invincible_book").toString())), getPath(ENCHANTMENTS, "invincible_book"));
 
         for (PatchouliPage patchouliPage : pages) {
             DataProvider.saveStable(cache, patchouliPage.build(), patchouliPage.path());

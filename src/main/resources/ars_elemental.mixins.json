@@ -15,6 +15,7 @@
   "client": [
     "GeoRenderAccessor",
     "SpellBookMixin",
-    "SpellBookTextureMixin"
+    "SpellBookTextureMixin",
+    "StarbyDancerMixin"
   ]
 }
