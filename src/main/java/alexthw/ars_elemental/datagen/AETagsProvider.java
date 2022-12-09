@@ -93,6 +93,7 @@ public class AETagsProvider {
             );
             tag(BlockTags.LEAVES).add(ModItems.FLASHING_LEAVES.get());
             tag(ARCHWOOD_LEAVES).add(ModItems.FLASHING_LEAVES.get());
+            tag(BlockTags.MINEABLE_WITH_HOE).add(ModItems.FLASHING_LEAVES.get());
             tag(BlockTags.SAPLINGS).add(ModItems.FLASHING_SAPLING.get());
             tag(BlockTagProvider.MAGIC_SAPLINGS).add(ModItems.FLASHING_SAPLING.get());
 

@@ -121,7 +121,7 @@
   "ars_elemental.page1.fire_bangle": "This bangle will boost the damage of your Fire spells. Your arms are engulfed in the element, setting on fire enemies hit and granting a passive boost to speed while in hot biomes.",
   "ars_elemental.page1.earth_bangle": "This bangle will boost the damage of your Earth spells. Plants blossom on your arms, inflicting snare to enemies hit and granting the wearer immunity to cactus and berry bushes and knockback resistance.",
   "ars_elemental.page1.water_bangle": "This bangle will boost the damage of your Water spells. Your arms chills the air around, freezing enemies on every hit. It will also grant the wearer a passive boost to speed in water and rain.",
-  "ars_elemental.page.book_protection": "This book upgrade will protect your spellbook from all kinds of damage, may it be a cactus or a pool of lava. Can't guarantee on the void.",
+  "ars_elemental.page.book_protection": "This book upgrade will protect your spellbook from all kinds of damage, may it be a cactus or a pool of lava. Can't guarantee on the void. The gold inlays will become netherite-black but you can toggle it off in the client configs.",
   "ars_elemental.perk_desc.thread_shock": "Damaging effects cause the target to be shocked for a short duration before the effect resolves. Inflicts Static Charged at tier 3.",
   "ars_elemental.perk_desc.thread_spore": "Damaging effects cause the target to be poisoned or hungry for a short duration before the effect resolves.",
   "item.ars_elemental.ritual_squirrels": "Fast Squirrels",
