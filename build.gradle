@@ -154,7 +154,7 @@ dependencies {
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    compileOnly fg.deobf("vazkii.botania:Botania:1.18.2-430")
+    implementation /*compileOnly*/ fg.deobf("vazkii.botania:Botania:1.19.2-437-FORGE-SNAPSHOT")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-77")
 
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")

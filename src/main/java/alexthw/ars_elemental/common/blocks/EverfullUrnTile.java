@@ -67,7 +67,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
             }
             if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, 100) && tryRefill(level, toPos)) {
                 SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, 100);
-                createParticles(this.worldPosition, toPos);
+                createParticles(this.worldPosition.above(), toPos);
             }
         }
         for (BlockPos s : stale) {
