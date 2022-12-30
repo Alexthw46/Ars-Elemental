@@ -22,6 +22,7 @@ import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -29,6 +30,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.setup.APIRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -206,7 +208,12 @@ public class ArsNouveauRegistry {
             spell.setOwner(fakePlayer);
             spell.setPos(position.x(), position.y(), position.z());
             spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
-            spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
+            if (tile instanceof RotatingTurretTile rotatingTurretTile) {
+                Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.25f, 0);
+            } else {
+                spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
+            }
             world.addFreshEntity(spell);
         });
 
@@ -214,7 +221,12 @@ public class ArsNouveauRegistry {
             EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
             spell.setOwner(fakePlayer);
             spell.setPos(position.x(), position.y(), position.z());
-            spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
+            if (tile instanceof RotatingTurretTile rotatingTurretTile) {
+                Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.6f, 0);
+            } else {
+                spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
+            }
             world.addFreshEntity(spell);
         });
 
