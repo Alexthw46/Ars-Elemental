@@ -5,7 +5,6 @@ import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -16,7 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
+import static alexthw.ars_elemental.common.glyphs.MethodHomingProjectile.getProjectileSpeed;
 
 public class PropagatorHoming extends ElementalAbstractEffect implements IPropagator {
 
@@ -27,20 +29,24 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
     }
 
     public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
-        ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        EntityHomingProjectile first = new EntityHomingProjectile(world, resolver);
-        first.setPos(pos.add(0, 1, 0));
-        projectiles.add(first);
+        int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        MethodHomingProjectile.splits(world, shooter, new BlockPos(pos), resolver, projectiles, stats.getBuffCount(AugmentSplit.INSTANCE));
-
-        float velocity = MethodHomingProjectile.getProjectileSpeed(stats);
+        List<EntityHomingProjectile> projectiles = new ArrayList<>();
+        for (int i = 0; i < numSplits; i++) {
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+            projectiles.add(spell);
+        }
+        float velocity = getProjectileSpeed(stats);
+        int opposite = -1;
+        int counter = 0;
 
         Vec3 direction = pos.subtract(shooter.position());
         for (EntityHomingProjectile proj : projectiles) {
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
             if (direction.distanceTo(Vec3.ZERO) < 0.25) {
-                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
+                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
+                opposite = opposite * -1;
+                counter++;
             } else {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);
             }

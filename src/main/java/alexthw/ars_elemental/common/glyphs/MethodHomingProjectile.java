@@ -36,17 +36,21 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver, List<Predicate<LivingEntity>> ignore) {
 
-        ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
-        projectiles.add(new EntityHomingProjectile(world, resolver));
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        splits(world, shooter, shooter.blockPosition(), resolver, projectiles, numSplits);
-
+        List<EntityHomingProjectile> projectiles = new ArrayList<>();
+        for (int i = 0; i < numSplits; i++) {
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+            projectiles.add(spell);
+        }
         float velocity = getProjectileSpeed(stats);
-
+        int opposite = -1;
+        int counter = 0;
         for (EntityHomingProjectile proj : projectiles) {
             proj.setIgnored(ignore);
-            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
+            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
+            opposite = opposite * -1;
+            counter++;
             world.addFreshEntity(proj);
         }
     }
