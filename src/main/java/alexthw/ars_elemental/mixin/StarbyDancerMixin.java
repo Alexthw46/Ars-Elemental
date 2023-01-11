@@ -21,9 +21,11 @@ public abstract class StarbyDancerMixin {
     @Shadow
     public abstract ItemStack getHeldStack();
 
+    @Shadow public abstract ItemStack getCosmeticItem();
+
     @Inject(method = "dancePredicate", at = @At("TAIL"), cancellable = true)
     void dancePredicate(AnimationEvent<?> event, CallbackInfoReturnable<PlayState> cir) {
-        if (cir.getReturnValue() == PlayState.STOP && !isTamed() && this.getHeldStack().getItem() == BlockRegistry.LIGHT_BLOCK.asItem()) {
+        if (cir.getReturnValue() == PlayState.STOP && !isTamed() && (this.getHeldStack().getItem() == BlockRegistry.LIGHT_BLOCK.asItem() || this.getCosmeticItem().getItem() == BlockRegistry.LIGHT_BLOCK.asItem())) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("dance_master"));
             cir.setReturnValue(PlayState.CONTINUE);
         }

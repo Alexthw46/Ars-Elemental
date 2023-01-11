@@ -37,6 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
+import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.setup.Config.ITEM_LIGHTMAP;
 
 public class ArsNouveauRegistry {
@@ -203,7 +204,8 @@ public class ArsNouveauRegistry {
     }
 
     static {
-        TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
+
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
             EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
             spell.setOwner(fakePlayer);
             spell.setPos(position.x(), position.y(), position.z());
@@ -211,9 +213,27 @@ public class ArsNouveauRegistry {
             if (tile instanceof RotatingTurretTile rotatingTurretTile) {
                 Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
                 spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.25f, 0);
-            } else {
-                spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
             }
+            world.addFreshEntity(spell);
+        });
+
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
+            EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
+            spell.setOwner(fakePlayer);
+            spell.setPos(position.x(), position.y(), position.z());
+            if (tile instanceof RotatingTurretTile rotatingTurretTile) {
+                Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.6f, 0);
+            }
+            world.addFreshEntity(spell);
+        });
+
+        TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
+            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+            spell.setOwner(fakePlayer);
+            spell.setPos(position.x(), position.y(), position.z());
+            spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+            spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
             world.addFreshEntity(spell);
         });
 
@@ -221,12 +241,7 @@ public class ArsNouveauRegistry {
             EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
             spell.setOwner(fakePlayer);
             spell.setPos(position.x(), position.y(), position.z());
-            if (tile instanceof RotatingTurretTile rotatingTurretTile) {
-                Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
-                spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.6f, 0);
-            } else {
-                spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
-            }
+            spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
             world.addFreshEntity(spell);
         });
 
