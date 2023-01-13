@@ -8,6 +8,7 @@
     "FoxInvoker",
     "ItemEntityMixin",
     "LightningMixin",
+    "PotionBrewingMixin",
     "RitualAwakeningMixin",
     "ZombieInvoker"
   ],

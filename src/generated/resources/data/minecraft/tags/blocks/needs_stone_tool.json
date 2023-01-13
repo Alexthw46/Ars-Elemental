@@ -1,5 +1,7 @@
 {
   "values": [
-    "ars_elemental:water_upstream"
+    "ars_elemental:water_upstream",
+    "ars_elemental:air_upstream",
+    "ars_elemental:magma_upstream"
   ]
 }

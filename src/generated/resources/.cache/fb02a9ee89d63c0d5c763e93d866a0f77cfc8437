@@ -1,4 +1,4 @@
-// 1.19.2	2022-10-09T23:28:02.6277575	Ars Elemental Item Models
+// 1.19.2	2023-01-13T00:19:10.9162904	Ars Elemental Item Models
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
 9b7a442f93c41c299a0eda4f3da50307817803b5 assets/ars_elemental/models/item/air_caster_tome.json
@@ -7,6 +7,7 @@
 79fca4292ed9902253a4f570b90f57e87e2a6ad3 assets/ars_elemental/models/item/air_leggings.json
 f76249799ea44b24f5a7d1d72fa8f0e7d3d7315b assets/ars_elemental/models/item/air_robes.json
 2669502bb6936a273700592c0608aba0beb89194 assets/ars_elemental/models/item/air_turret.json
+5bf4803f9d27ac7f3b38a81ba33e8206ac33acbc assets/ars_elemental/models/item/air_upstream.json
 c4ba07c5c7130e9734c1ea3691ac71eaed4c97f9 assets/ars_elemental/models/item/anima_caster_tome.json
 c23ded919ec2e7048013124b58167bcaff925569 assets/ars_elemental/models/item/anima_essence.json
 4a6fa79090a4ec5637e757aa4d1f0a8b219016f2 assets/ars_elemental/models/item/aqua_boots.json
@@ -40,6 +41,7 @@ eeed7a1e3d0108489f86af935b841830da3b88d1 assets/ars_elemental/models/item/flashp
 e326e14fa8470667a133916991e22ce84ebcc6d8 assets/ars_elemental/models/item/lesser_earth_focus.json
 3c095e71ede593ddf9b6f0f58860c89088cd4300 assets/ars_elemental/models/item/lesser_fire_focus.json
 3bfebea068e4b6e7807981deb4f88fa473c4af56 assets/ars_elemental/models/item/lesser_water_focus.json
+7597c3bb234a009b508f61a87be206ac51cd2f01 assets/ars_elemental/models/item/magma_upstream.json
 ed40950dfbebf15fbb9395bc4a141fdc692d3404 assets/ars_elemental/models/item/mark_of_mastery.json
 12e40d6e25ac2983ae7ba220b5317a5d24f5447b assets/ars_elemental/models/item/mermaid_rock.json
 97d103aedc6c499fa3eb1447fae55ceb83c0c877 assets/ars_elemental/models/item/necrotic_focus.json

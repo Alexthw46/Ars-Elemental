@@ -26,6 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -84,7 +85,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags() {
-            addPickMineable(1, ModItems.UPSTREAM_BLOCK.get());
+            addPickMineable(1, ModItems.WATER_UPSTREAM_BLOCK.get(), ModItems.AIR_UPSTREAM_BLOCK.get(), ModItems.LAVA_UPSTREAM_BLOCK.get());
             addPickMineable(0, ModItems.AIR_TURRET.get(), ModItems.FIRE_TURRET.get(), ModItems.EARTH_TURRET.get(), ModItems.WATER_TURRET.get());
             logsTag(ModItems.FLASHING_ARCHWOOD_LOG.get(),
                     ModItems.FLASHING_ARCHWOOD.get(),
@@ -109,9 +110,10 @@ public class AETagsProvider {
             for (Block block : blocks) {
                 tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
                 switch (level) {
-                    case (1) -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
-                    case (2) -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
-                    case (3) -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
+                    case 1 -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
+                    case 2 -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
+                    case 3 -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
+                    case 4 -> tag(Tags.Blocks.NEEDS_NETHERITE_TOOL).add(block);
                 }
             }
 

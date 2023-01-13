@@ -60,7 +60,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         );
 
         recipes.add(builder()
-                .withResult(ModItems.UPSTREAM_BLOCK.get())
+                .withResult(ModItems.WATER_UPSTREAM_BLOCK.get())
                 .withReagent(Items.SOUL_SAND)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)

@@ -15,6 +15,6 @@ public class UpstreamBlock extends TickableModBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new UpstreamTile(pPos,pState);
+        return new WaterUpstreamTile(pPos, pState);
     }
 }

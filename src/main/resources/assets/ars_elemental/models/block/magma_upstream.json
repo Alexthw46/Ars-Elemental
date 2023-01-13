@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "ars_elemental:block/magma_upstream",
+    "end": "ars_elemental:block/magma_upstream_top"
+  }
+}

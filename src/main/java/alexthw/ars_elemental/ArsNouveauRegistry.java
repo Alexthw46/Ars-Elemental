@@ -9,9 +9,7 @@ import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;
-import alexthw.ars_elemental.common.rituals.DetectionRitual;
-import alexthw.ars_elemental.common.rituals.SquirrelRitual;
-import alexthw.ars_elemental.common.rituals.TeslaRitual;
+import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
@@ -118,6 +116,8 @@ public class ArsNouveauRegistry {
         registerRitual(new SquirrelRitual());
         registerRitual(new TeslaRitual());
         registerRitual(new DetectionRitual());
+        registerRitual(new RepulsionRitual());
+        registerRitual(new AttractionRitual());
 
     }
 

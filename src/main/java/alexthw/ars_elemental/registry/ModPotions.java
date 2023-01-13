@@ -1,18 +1,16 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.mob_effects.*;
-import com.hollingsworth.arsnouveau.api.recipe.PotionIngredient;
+import alexthw.ars_elemental.mixin.PotionBrewingMixin;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.brewing.BrewingRecipe;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -33,6 +31,7 @@ public class ModPotions {
     public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
     public static final RegistryObject<EnderferenceEffect> ENDERFERENCE;
     public static final RegistryObject<LightningLureEffect> LIGHTNING_LURE;
+    public static final RegistryObject<RepelEffect> REPEL;
 
 
     public static final RegistryObject<Potion> ENDERFERENCE_POTION;
@@ -51,11 +50,14 @@ public class ModPotions {
         ItemStack shockPot = PotionUtils.setPotion(new ItemStack(Items.POTION), SHOCK_POTION.get());
         ItemStack shockPotLong = PotionUtils.setPotion(new ItemStack(Items.POTION), LONG_SHOCK_POTION.get());
 
-        BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(AWKWARD), Ingredient.of(ItemsRegistry.END_FIBER), enderPot));
-        BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(enderPot), Ingredient.of(Items.GLOWSTONE_DUST), enderPotLong));
+        PotionBrewingMixin invoker = (PotionBrewingMixin) new PotionBrewing();
 
-        BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(AWKWARD), Ingredient.of(ModItems.FLASHING_POD.get().asItem()), shockPot));
-        BrewingRecipeRegistry.addRecipe(new BrewingRecipe(new PotionIngredient(shockPot), Ingredient.of(Items.GLOWSTONE_DUST), shockPotLong));
+        invoker.callAddMix(Potions.AWKWARD, ItemsRegistry.END_FIBER.asItem(), ENDERFERENCE_POTION.get());
+        invoker.callAddMix(ENDERFERENCE_POTION.get(), Items.GLOWSTONE_DUST, LONG_ENDERFERENCE_POTION.get());
+
+
+        invoker.callAddMix(Potions.AWKWARD, ModItems.FLASHING_POD.get().asItem(), SHOCK_POTION.get());
+        invoker.callAddMix(SHOCK_POTION.get(), Items.GLOWSTONE_DUST, LONG_SHOCK_POTION.get());
 
     }
 
@@ -67,6 +69,7 @@ public class ModPotions {
         HYMN_OF_ORDER = EFFECTS.register("hymn_of_order", OrderEffect::new);
         ENDERFERENCE = EFFECTS.register("enderference", EnderferenceEffect::new);
         LIGHTNING_LURE = EFFECTS.register("static_charged", LightningLureEffect::new);
+        REPEL = EFFECTS.register("repel", RepelEffect::new);
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 1200)));

@@ -3,7 +3,10 @@ package alexthw.ars_elemental.registry;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.client.ElementalTurretRenderer;
-import alexthw.ars_elemental.common.blocks.*;
+import alexthw.ars_elemental.common.blocks.ElementalTurret;
+import alexthw.ars_elemental.common.blocks.EverfullUrnBlock;
+import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
+import alexthw.ars_elemental.common.blocks.UpstreamBlock;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
@@ -73,7 +76,9 @@ public class ModItems {
 
     public static final RegistryObject<Block> GROUND_BLOSSOM;
 
-    public static final RegistryObject<Block> UPSTREAM_BLOCK;
+    public static final RegistryObject<Block> WATER_UPSTREAM_BLOCK;
+    public static final RegistryObject<Block> LAVA_UPSTREAM_BLOCK;
+    public static final RegistryObject<Block> AIR_UPSTREAM_BLOCK;
     public static final RegistryObject<Block> FIRE_TURRET;
     public static final RegistryObject<Block> WATER_TURRET;
     public static final RegistryObject<Block> AIR_TURRET;
@@ -186,8 +191,10 @@ public class ModItems {
         //blocks
         WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Material.CLAY, MaterialColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
-        UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
         GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Material.PLANT, MaterialColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
+        WATER_UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
+        LAVA_UPSTREAM_BLOCK = addBlock("magma_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f)));
+        AIR_UPSTREAM_BLOCK = addBlock("air_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f)));
 
         /*
         HOMING_PRISM = addBlock("homing_prism", () -> new HomingPrism(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));

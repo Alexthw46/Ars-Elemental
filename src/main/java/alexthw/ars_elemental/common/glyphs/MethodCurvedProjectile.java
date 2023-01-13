@@ -4,8 +4,6 @@ import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,26 +31,22 @@ public class MethodCurvedProjectile extends ElementalAbstractForm {
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
-        EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
-        projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
         float sizeRatio = shooter.getEyeHeight() / Player.DEFAULT_EYE_HEIGHT;
 
-        for(int i =1; i < numSplits + 1; i++){
-            Direction offset =shooter.getDirection().getClockWise();
-            if(i%2==0) offset = offset.getOpposite();
-            // Alternate sides
-            BlockPos projPos = shooter.blockPosition().relative(offset, i).offset(0, 1.5 * sizeRatio, 0);
+        for (int i = 1; i < 1 + numSplits + 1; i++) {
             EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
-            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
 
         float velocity = getProjectileSpeed(stats);
-
-        for(EntityProjectileSpell proj : projectiles) {
+        int opposite = -1;
+        int counter = 0;
+        for (EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0, 0.25 * sizeRatio, 0));
-            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
+            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.5f);
+            opposite = opposite * -1;
+            counter++;
             world.addFreshEntity(proj);
         }
     }

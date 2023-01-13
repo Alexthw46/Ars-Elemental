@@ -42,6 +42,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
 
         Vec3 direction = pos.subtract(shooter.position());
         for (EntityHomingProjectile proj : projectiles) {
+            proj.setPos(pos.add(0, 1, 0));
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
             if (direction.distanceTo(Vec3.ZERO) < 0.25) {
                 proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
