@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ars_elemental:block/spell_mirror",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ars_elemental:block/spell_mirror"
+    },
+    "facing=south": {
+      "model": "ars_elemental:block/spell_mirror",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ars_elemental:block/spell_mirror",
+      "y": 270
+    },
+    "facing=down": {
+      "model": "ars_elemental:block/spell_mirror",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "ars_elemental:block/spell_mirror",
+      "x": -90
+    }
+  }
+}

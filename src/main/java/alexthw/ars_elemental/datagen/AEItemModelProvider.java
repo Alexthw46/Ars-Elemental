@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.api.item.SpellPrismLent;
 import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
@@ -45,14 +46,13 @@ public class AEItemModelProvider extends ItemModelProvider {
 
         takeAll(items, i -> i.get() instanceof AnimBlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof SpellHorn);
+        takeAll(items, i -> i.get() instanceof SpellPrismLent);
         takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof ArchfruitPod).forEach(this::generatedItem);
         takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
         takeAll(items, i -> i.get() instanceof BlockItem bi && bi.getBlock() instanceof SaplingBlock).forEach(this::blockGeneratedItem);
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
-        //takeAll(items, i -> i.get() instanceof ElementalFocus).forEach(this::focusModel);
-        //takeAll(items, i -> i.get() instanceof NecroticFocus).forEach(this::focusModel);
         items.forEach(this::generatedItem);
 
     }
