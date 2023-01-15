@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.blocks.upstream;
 
 import alexthw.ars_elemental.registry.ModTiles;
+import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.common.block.ITickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -24,6 +25,11 @@ public class AirUpstreamTile extends BlockEntity implements ITickable {
     public void tick() {
         if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 20 == 0) {
             List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46)).inflate(1.1), e -> !e.isInWater() && !e.isInLava());
+
+            if (!entityList.isEmpty()) {
+                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, 10);
+                if (source == null || !source.isValid()) return;
+            }
             for (LivingEntity e : entityList) {
                 Vec3 vec3 = e.getDeltaMovement();
                 e.resetFallDistance();

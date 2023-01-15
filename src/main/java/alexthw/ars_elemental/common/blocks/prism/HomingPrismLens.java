@@ -1,19 +1,18 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.api.item.SpellPrismLens;
+import alexthw.ars_elemental.api.item.AbstractPrismLens;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-public class HomingPrismLens extends Item implements SpellPrismLens {
+public class HomingPrismLens extends AbstractPrismLens {
 
     public HomingPrismLens(Properties properties) {
         super(properties);
@@ -27,7 +26,7 @@ public class HomingPrismLens extends Item implements SpellPrismLens {
         newProjectile.pierceLeft = spell.pierceLeft;
         newProjectile.age = spell.age;
         newProjectile.setPos(spell.getX(), spell.getY(), spell.getZ());
-        SpellPrismLens.super.shoot(world, pos, newProjectile, angle);
+        super.shoot(world, pos, newProjectile, angle);
         world.addFreshEntity(newProjectile);
         spell.discard();
     }
@@ -36,4 +35,10 @@ public class HomingPrismLens extends Item implements SpellPrismLens {
     public boolean canConvert(EntityProjectileSpell spell) {
         return !(spell instanceof EntityHomingProjectile);
     }
+
+    @Override
+    protected String getDescriptionKey() {
+        return super.getDescriptionKey() + "homing";
+    }
+
 }

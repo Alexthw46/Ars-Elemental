@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ars_elemental:block/water_upstream"
+      "model": "ars_elemental:block/air_upstream"
     }
   }
 }

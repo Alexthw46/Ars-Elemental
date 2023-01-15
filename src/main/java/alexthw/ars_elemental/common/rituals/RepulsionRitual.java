@@ -32,7 +32,11 @@ public class RepulsionRitual extends AbstractRitual {
                     if (flag) setNeedsSource(true);
                 }
             }
-            if (entities.isEmpty() && !flag) setBackoff(60);
+            if (entities.isEmpty() && !flag) {
+                setBackoff(60);
+            } else {
+                setBackoff(0);
+            }
         }
     }
 
