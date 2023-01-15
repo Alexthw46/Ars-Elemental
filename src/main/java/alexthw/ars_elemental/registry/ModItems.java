@@ -8,10 +8,7 @@ import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.EverfullUrnBlock;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
-import alexthw.ars_elemental.common.blocks.prism.AdvancedPrism;
-import alexthw.ars_elemental.common.blocks.prism.ArcPrismLens;
-import alexthw.ars_elemental.common.blocks.prism.HomingPrismLens;
-import alexthw.ars_elemental.common.blocks.prism.SpellMirror;
+import alexthw.ars_elemental.common.blocks.prism.*;
 import alexthw.ars_elemental.common.blocks.upstream.AirUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.MagmaUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.UpstreamBlock;
@@ -132,6 +129,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> HOMING_LENS;
     public static final RegistryObject<Item> ARC_LENS;
+    public static final RegistryObject<Item> RGB_LENS;
+
     public static final RegistryObject<Item> ANIMA_ESSENCE;
 
     public static final RegistryObject<Item> SIREN_SHARDS;
@@ -173,8 +172,9 @@ public class ModItems {
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(addTabProp()));
 
-        HOMING_LENS = ITEMS.register("homing_prism_lent", () -> new HomingPrismLens(addTabProp()));
-        ARC_LENS = ITEMS.register("arc_prism_lent", () -> new ArcPrismLens(addTabProp()));
+        HOMING_LENS = ITEMS.register("homing_prism_lens", () -> new HomingPrismLens(addTabProp()));
+        ARC_LENS = ITEMS.register("arc_prism_lens", () -> new ArcPrismLens(addTabProp()));
+        RGB_LENS = ITEMS.register("rainbow_prism_lens", () -> new RainbowPrismLens(addTabProp()));
 
         //curio
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(addTabProp().fireResistant().stacksTo(1)));

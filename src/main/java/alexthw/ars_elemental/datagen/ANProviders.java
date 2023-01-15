@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -162,6 +163,25 @@ public class ANProviders {
                     .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                     .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
             );
+
+            recipes.add(new ImbuementRecipe("arc_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.ARC_LENS.get().getDefaultInstance(), 2000)
+                    .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                    .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodCurvedProjectile.INSTANCE))
+            );
+            recipes.add(new ImbuementRecipe("homing_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.HOMING_LENS.get().getDefaultInstance(), 2000)
+                    .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                    .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodHomingProjectile.INSTANCE))
+            );
+            recipes.add(new ImbuementRecipe("rainbow_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.RGB_LENS.get().getDefaultInstance(), 2000)
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+                    .withPedestalItem(Ingredient.of(Tags.Items.DYES))
+            );
+
 
             Path output = generator.getOutputFolder();
             for (ImbuementRecipe g : recipes) {

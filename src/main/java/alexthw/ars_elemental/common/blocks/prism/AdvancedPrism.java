@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.api.item.SpellPrismLent;
+import alexthw.ars_elemental.api.item.SpellPrismLens;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
@@ -38,7 +38,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pPlayer.getItemInHand(pHand).getItem() instanceof SpellPrismLent && pLevel.getBlockEntity(pPos) instanceof AdvancedPrismTile tile) {
+        if (pPlayer.getItemInHand(pHand).getItem() instanceof SpellPrismLens && pLevel.getBlockEntity(pPos) instanceof AdvancedPrismTile tile) {
             tile.setLent(pPlayer.getItemInHand(pHand).split(1), pPlayer);
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
@@ -58,8 +58,8 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
             return;
         }
         Vec3 vec3d = tile.getShootAngle().normalize();
-        if (tile.getLens().getItem() instanceof SpellPrismLent lent && lent.canConvert(spell)) {
-            lent.shoot(world, pos, spell, vec3d);
+        if (tile.getLens().getItem() instanceof SpellPrismLens lens && lens.canConvert(spell)) {
+            lens.shoot(world, pos, spell, vec3d);
         } else {
             float acceleration = spell.spellResolver.spell.getBuffsAtIndex(0, null, AugmentAccelerate.INSTANCE) - spell.spellResolver.spell.getBuffsAtIndex(0, null, AugmentDecelerate.INSTANCE) * 0.5F;
             float velocity = Math.max(0.1f, 0.5f + 0.1f * Math.min(2, acceleration));

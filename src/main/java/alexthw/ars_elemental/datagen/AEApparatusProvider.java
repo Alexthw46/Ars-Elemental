@@ -14,6 +14,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -185,9 +186,19 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .build()
         );
 
+        //mirror
+        recipes.add(builder()
+                .withResult(new ItemStack(ModItems.SPELL_MIRROR.get(), 2))
+                .withReagent(RecipeDatagen.SOURCE_GEM_BLOCK)
+                .withPedestalItem(2, RecipeDatagen.ARCHWOOD_LOG)
+                .withPedestalItem(2, Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .withPedestalItem(2, Items.GOLD_INGOT)
+                .build()
+        );
+
         //mirror shield enchant
         recipes.add(builder()
-                .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)
+                .withPedestalItem(BlockRegistry.SPELL_PRISM)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
                 .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 1, 2000));
@@ -197,11 +208,11 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                .withPedestalItem(Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS))
+                .withPedestalItem(ModItems.SPELL_MIRROR)
                 .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 2, 5000));
 
         recipes.add(builder()
-                .withPedestalItem(BlockRegistry.SPELL_PRISM)
+                .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)
                 .withPedestalItem(Items.TOTEM_OF_UNDYING)
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 8000));

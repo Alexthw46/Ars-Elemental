@@ -78,6 +78,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
             playerEntity.getLevel().addFreshEntity(new ItemEntity(playerEntity.level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLent));
             prismLent = ItemStack.EMPTY;
         }
+        updateBlock();
     }
 
     @Override

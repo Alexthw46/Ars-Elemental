@@ -1,5 +1,5 @@
 {
-  "category": "ars_nouveau:machines",
+  "category": "ars_nouveau:automation",
   "icon": "ars_elemental:fire_turret",
   "name": "ars_nouveau.page.elemental_turrets",
   "pages": [

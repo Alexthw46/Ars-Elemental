@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-15T11:52:50.5477203	Ars Elemental Apparatus
+// 1.19.2	2023-01-15T01:35:59.5329165	Ars Elemental Apparatus
 4e9c695d05865f9fee4642237064b8994e59d91d data/ars_elemental/recipes/air_bangle.json
 e312fa11f4ff7ddcb6420166ea4ee1c2cedf24bb data/ars_elemental/recipes/air_boots.json
 04cf7c471d6a5e79d1df7746168ef1d199894aaa data/ars_elemental/recipes/air_focus.json
@@ -24,13 +24,14 @@ c1e401a2213b2a6a573347adfebd63a6e959a5e3 data/ars_elemental/recipes/fire_boots.j
 c6765b1b2f0a3d811c16a10ebccf67932778aa03 data/ars_elemental/recipes/fire_hat.json
 256c4f19719734babaec5331bb91d967abe5e14a data/ars_elemental/recipes/fire_leggings.json
 02646b4b10602c6daf4cac54c6dd893017c22395 data/ars_elemental/recipes/fire_robes.json
-7a53f881c03a79dcc5e2b167ad98c4757653c9c2 data/ars_elemental/recipes/mirror_shield_1.json
-09feb83152acfab2431c51a3cf78cef23ce9824e data/ars_elemental/recipes/mirror_shield_2.json
-dedad203f79d37ac49095babde110ba6d06bf372 data/ars_elemental/recipes/mirror_shield_3.json
+10e3339d2d64fc51aa37ee9583838514c105c324 data/ars_elemental/recipes/mirror_shield_1.json
+468652d59771214d5ec48504fd2a0bcb2b26d1db data/ars_elemental/recipes/mirror_shield_2.json
+0faf11f92c771614c6608c12a7adcab32e69264b data/ars_elemental/recipes/mirror_shield_3.json
 26c5f9548a59a1c3f4812f7561a1dae7206e0514 data/ars_elemental/recipes/necrotic_focus.json
 a53cec3094c3e7fca6f11a3e92808e6c462b9e8d data/ars_elemental/recipes/siren_charm.json
 219cf2ae80a41c25dd0ba06c96e0736036eca13d data/ars_elemental/recipes/soulbound_1.json
 6e72fb5e90c22c37eabd7bce523b52afa0eaa2d4 data/ars_elemental/recipes/spell_horn.json
+0579741b2d54154dd5c067af9e305abc1c8927b0 data/ars_elemental/recipes/spell_mirror.json
 d2051ff11ca2ea468c99906779b7498069b0e44a data/ars_elemental/recipes/thread_shock.json
 752affe5b76b65e070decd9ec196004bdfbc48cc data/ars_elemental/recipes/thread_spore.json
 8398faafa495cc75adf7106ac47e86254c883f98 data/ars_elemental/recipes/water_bangle.json

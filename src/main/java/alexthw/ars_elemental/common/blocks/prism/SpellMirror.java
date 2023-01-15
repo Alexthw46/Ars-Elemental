@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
+import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
@@ -48,6 +49,7 @@ public class SpellMirror extends SpellPrismBlock {
                 spell.setDeltaMovement(vel.x(), vel.y(), factor * vel.z());
             }
         }
+        BlockUtil.updateObservers(world, pos);
     }
 
     @SuppressWarnings("deprecation")

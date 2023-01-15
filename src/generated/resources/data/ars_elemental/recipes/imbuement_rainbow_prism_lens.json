@@ -1,0 +1,46 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "count": 1,
+  "input": {
+    "tag": "forge:gems/quartz"
+  },
+  "output": "ars_elemental:rainbow_prism_lens",
+  "pedestalItems": [
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    },
+    {
+      "item": {
+        "tag": "forge:dyes"
+      }
+    }
+  ],
+  "source": 2000
+}

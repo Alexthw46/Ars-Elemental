@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "ars_nouveau:spell_prism"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "S": {
+      "tag": "forge:gems/source"
+    }
+  },
+  "pattern": [
+    "QSQ",
+    "SPS",
+    "QSQ"
+  ],
+  "result": {
+    "item": "ars_elemental:advanced_prism"
+  }
+}
