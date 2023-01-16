@@ -63,8 +63,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
         addBasicItem(ModItems.WATER_URN.get(), MACHINES, new ApparatusPage(ModItems.WATER_URN.get()));
         addBasicItem(ModItems.WATER_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.WATER_UPSTREAM_BLOCK.get()));
-        //addBasicItem(ModItems.LAVA_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.LAVA_UPSTREAM_BLOCK.get()));
-        //addBasicItem(ModItems.AIR_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.AIR_UPSTREAM_BLOCK.get()));
+        addBasicItem(ModItems.LAVA_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.LAVA_UPSTREAM_BLOCK.get()));
+        addBasicItem(ModItems.AIR_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.AIR_UPSTREAM_BLOCK.get()));
         addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
         addBasicItem(ModItems.CASTER_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CASTER_BAG.get()));
         addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
@@ -78,6 +78,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withTextPage("ars_elemental.page2.advanced_prism")
                         .withPage(ImbuementPage(ModItems.ARC_LENS.get()))
                         .withPage(ImbuementPage(ModItems.HOMING_LENS.get()))
+                        .withPage(ImbuementPage(ModItems.ACC_LENS.get()))
+                        .withPage(ImbuementPage(ModItems.DEC_LENS.get()))
                         .withPage(ImbuementPage(ModItems.RGB_LENS.get()))
                 , getPath(AUTOMATION, "advanced_prism"));
 

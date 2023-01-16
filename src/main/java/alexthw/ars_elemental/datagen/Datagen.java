@@ -56,8 +56,8 @@ public class Datagen {
         gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
         gen.addProvider(event.includeServer(), new ModLootTables(gen));
 
-        gen.addProvider(event.includeServer(), new ANProviders.ImbuementProvider(gen));
-        gen.addProvider(event.includeServer(), new ANProviders.GlyphProvider(gen));
+        gen.addProvider(event.includeServer(), new AEImbuementProvider(gen));
+        gen.addProvider(event.includeServer(), new AEGlyphProvider.GlyphProvider(gen));
         gen.addProvider(event.includeServer(), new AEApparatusProvider(gen));
 
         gen.addProvider(event.includeServer(), new AEPatchouliProvider(gen));

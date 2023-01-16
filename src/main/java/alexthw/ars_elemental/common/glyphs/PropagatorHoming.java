@@ -29,12 +29,11 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
     }
 
     public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
-        int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
+        int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
         List<EntityHomingProjectile> projectiles = new ArrayList<>();
         for (int i = 0; i < numSplits; i++) {
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
-            projectiles.add(spell);
+            projectiles.add(new EntityHomingProjectile(world, resolver));
         }
         float velocity = getProjectileSpeed(stats);
         int opposite = -1;

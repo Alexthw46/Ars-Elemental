@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.api.item.AbstractPrismLens;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;

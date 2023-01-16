@@ -5,8 +5,6 @@ import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
 import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -16,8 +14,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -30,16 +30,23 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         super(blockProps.noOcclusion());
     }
 
+    static final SpellPrismLens defaultLent = spell -> true;
+
     @SuppressWarnings("deprecation")
     @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (pPlayer.level.isClientSide) {
+            super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        }
         if (pPlayer.getItemInHand(pHand).getItem() instanceof SpellPrismLens && pLevel.getBlockEntity(pPos) instanceof AdvancedPrismTile tile) {
             tile.setLent(pPlayer.getItemInHand(pHand).split(1), pPlayer);
+            return InteractionResult.SUCCESS;
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
@@ -61,9 +68,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         if (tile.getLens().getItem() instanceof SpellPrismLens lens && lens.canConvert(spell)) {
             lens.shoot(world, pos, spell, vec3d);
         } else {
-            float acceleration = spell.spellResolver.spell.getBuffsAtIndex(0, null, AugmentAccelerate.INSTANCE) - spell.spellResolver.spell.getBuffsAtIndex(0, null, AugmentDecelerate.INSTANCE) * 0.5F;
-            float velocity = Math.max(0.1f, 0.5f + 0.1f * Math.min(2, acceleration));
-            spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), velocity, 0);
+            defaultLent.shoot(world, pos, spell, vec3d);
         }
         BlockUtil.updateObservers(world, pos);
     }
@@ -101,6 +106,25 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         }
     }
 
+    @Override
+    public BlockState rotate(BlockState state, LevelAccessor level, BlockPos pos, Rotation rot) {
+        if (level.getBlockEntity(pos) instanceof AdvancedPrismTile prismTile) {
+            prismTile.setRotationX(prismTile.getRotationX() + switch (rot) {
+                        case NONE -> 0;
+                        case CLOCKWISE_90 -> 90;
+                        case CLOCKWISE_180 -> 180;
+                        case COUNTERCLOCKWISE_90 -> -90;
+                    }
+            );
+            prismTile.updateBlock();
+        }
+        return super.rotate(state, level, pos, rot);
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rot) {
+        return super.rotate(state, rot);
+    }
 
     @Nullable
     @Override

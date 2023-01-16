@@ -36,10 +36,10 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver, List<Predicate<LivingEntity>> ignore) {
 
-        int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
+        int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
         List<EntityHomingProjectile> projectiles = new ArrayList<>();
-        for (int i = 0; i < 1 + numSplits; i++) {
+        for (int i = 0; i < numSplits; i++) {
             EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
             projectiles.add(spell);
         }

@@ -1,7 +1,9 @@
-// 1.19.2	2023-01-15T01:56:30.9718987	Ars Elemental Imbuement
+// 1.19.2	2023-01-16T12:16:02.0840697	Ars Elemental Imbuement
+bc926f4c7d3d5caceb92dbc713d93805aad9e752 data/ars_elemental/recipes/imbuement_acceleration_prism_lens.json
 7638c551327bb9dfc1a1a089f6a8084693b93ea6 data/ars_elemental/recipes/imbuement_air_turret.json
 e0ad023fbc707d6d8ebbcf097bf39d4345e1a77a data/ars_elemental/recipes/imbuement_anima_essence.json
 57d0f1a2510cd74a42257a385342124051a6b353 data/ars_elemental/recipes/imbuement_arc_prism_lens.json
+e137547d3d2f892a72ad2bcc661b129585b7969f data/ars_elemental/recipes/imbuement_deceleration_prism_lens.json
 90fe54e0343abb96669fa428cdbf296f80516e01 data/ars_elemental/recipes/imbuement_earth_turret.json
 5f0be60c8671b0574a3bf1e1242cf23b71f39076 data/ars_elemental/recipes/imbuement_fire_turret.json
 56486bf470041d9cf2349c295c4dfa4f82f163c8 data/ars_elemental/recipes/imbuement_homing_prism_lens.json
