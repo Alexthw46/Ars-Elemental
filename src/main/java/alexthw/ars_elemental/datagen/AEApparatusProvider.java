@@ -70,6 +70,24 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         );
 
         recipes.add(builder()
+                .withResult(ModItems.LAVA_UPSTREAM_BLOCK.get())
+                .withReagent(Items.SOUL_SAND)
+                .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                .withPedestalItem(4, Items.MAGMA_BLOCK)
+                .build()
+        );
+
+        recipes.add(builder()
+                .withResult(ModItems.AIR_UPSTREAM_BLOCK.get())
+                .withReagent(Items.GOLD_BLOCK)
+                .withPedestalItem(4, ItemsRegistry.AIR_ESSENCE)
+                .withPedestalItem(ItemsRegistry.WILDEN_WING)
+                .withPedestalItem(2, Items.SHULKER_SHELL)
+                .build()
+        );
+
+        recipes.add(builder()
                 .withResult(ModItems.WATER_URN.get())
                 .withReagent(Blocks.FLOWER_POT)
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM)

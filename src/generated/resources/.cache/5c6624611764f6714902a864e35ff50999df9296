@@ -1,10 +1,11 @@
-// 1.19.2	2023-01-15T01:35:59.5329165	Ars Elemental Apparatus
+// 1.19.2	2023-01-16T15:55:39.5028763	Ars Elemental Apparatus
 4e9c695d05865f9fee4642237064b8994e59d91d data/ars_elemental/recipes/air_bangle.json
 e312fa11f4ff7ddcb6420166ea4ee1c2cedf24bb data/ars_elemental/recipes/air_boots.json
 04cf7c471d6a5e79d1df7746168ef1d199894aaa data/ars_elemental/recipes/air_focus.json
 96e95dc4963b9b6daf79497fe4ddbbba11bedf7b data/ars_elemental/recipes/air_hat.json
 be8410ea9575e06f91f8dea08c69313a42be5005 data/ars_elemental/recipes/air_leggings.json
 786f44d14481ce2eb7e9de85754536a1fce0689c data/ars_elemental/recipes/air_robes.json
+6af7f3b5843e046cdcaf492b3e8b99f7bdbcc566 data/ars_elemental/recipes/air_upstream.json
 7dc045d99fc3a34938d73b5aa29fb8026f2805c7 data/ars_elemental/recipes/aqua_boots.json
 4255dd9130b3e5bf18710fc862c5442330930d03 data/ars_elemental/recipes/aqua_hat.json
 b9e38f832b4f02a81dacb72973a17cd288b0306f data/ars_elemental/recipes/aqua_leggings.json
@@ -24,6 +25,7 @@ c1e401a2213b2a6a573347adfebd63a6e959a5e3 data/ars_elemental/recipes/fire_boots.j
 c6765b1b2f0a3d811c16a10ebccf67932778aa03 data/ars_elemental/recipes/fire_hat.json
 256c4f19719734babaec5331bb91d967abe5e14a data/ars_elemental/recipes/fire_leggings.json
 02646b4b10602c6daf4cac54c6dd893017c22395 data/ars_elemental/recipes/fire_robes.json
+6e58c18be0017f4f65e87ce8cc99a0453bf5f362 data/ars_elemental/recipes/magma_upstream.json
 10e3339d2d64fc51aa37ee9583838514c105c324 data/ars_elemental/recipes/mirror_shield_1.json
 468652d59771214d5ec48504fd2a0bcb2b26d1db data/ars_elemental/recipes/mirror_shield_2.json
 0faf11f92c771614c6608c12a7adcab32e69264b data/ars_elemental/recipes/mirror_shield_3.json

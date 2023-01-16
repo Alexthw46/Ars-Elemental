@@ -9,7 +9,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -22,6 +25,19 @@ public class SpellMirror extends SpellPrismBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        Direction direction = pState.getValue(FACING);
+        BlockState blockstate = pLevel.getBlockState(pPos.relative(direction.getOpposite()));
+        return blockstate.isFaceSturdy(pLevel, pPos, direction);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+        return pDirection == pState.getValue(FACING).getOpposite() && !this.canSurvive(pState, pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+    }
 
     @Override
     public void onHit(ServerLevel world, BlockPos pos, EntityProjectileSpell spell) {
