@@ -12,6 +12,7 @@ import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Strider;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,6 +36,7 @@ public class EntityAttributes {
         event.put(ModEntities.VHEX_SUMMON.get(), AllyVhexEntity.createAttributes().build());
         event.put(ModEntities.DOLPHIN_SUMMON.get(), Dolphin.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 1.5).build());
         event.put(ModEntities.STRIDER_SUMMON.get(), Strider.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.2).build());
+        event.put(ModEntities.SLIME_SUMMON.get(), Monster.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.2).build());
 
         event.put(ModEntities.FIRE_MAGE.get(), EntityMageBase.createAttributes().build());
         event.put(ModEntities.WATER_MAGE.get(), EntityMageBase.createAttributes().build());

@@ -4,15 +4,20 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
+import alexthw.ars_elemental.common.glyphs.EffectSummonMk;
 import alexthw.ars_elemental.common.items.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
+import com.hollingsworth.arsnouveau.api.event.SpellResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.util.CasterUtil;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
+import com.hollingsworth.arsnouveau.api.util.StackUtil;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.CrushRecipe;
+import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
@@ -52,6 +57,22 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.*;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class GlyphEvents {
+
+    @SubscribeEvent
+    public static void easterEgg(SpellResolveEvent.Pre event) {
+        if (event.spell.recipe.contains(EffectSummonWolves.INSTANCE) && event.context.getCaster() instanceof Player caster) {
+            ItemStack stack = StackUtil.getHeldSpellbook(caster);
+            if (stack != ItemStack.EMPTY && stack.getItem() instanceof SpellBook && stack.getTag() != null) {
+                String name = CasterUtil.getCaster(stack).getSpellName();
+
+                if (name.contains("emmek")) {
+                    int index = event.spell.recipe.indexOf(EffectSummonWolves.INSTANCE);
+                    event.spell.recipe.add(index, EffectSummonMk.INSTANCE);
+                    event.spell.recipe.remove(index + 1);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void sensitiveCrush(EffectResolveEvent.Pre event) {

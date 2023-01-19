@@ -2,6 +2,8 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
+import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.core.BlockPos;
@@ -10,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,17 +31,19 @@ public class PropagatorHoming extends AbstractEffect implements IPropagator {
     public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         ArrayList<EntityHomingProjectile> projectiles = new ArrayList<>();
         EntityHomingProjectile first = new EntityHomingProjectile(world, resolver);
-        first.setPos(pos.add(0, 1, 0));
         projectiles.add(first);
-
-        MethodHomingProjectile.splits(world, shooter, new BlockPos(pos), resolver, projectiles, stats.getBuffCount(AugmentSplit.INSTANCE));
 
         float velocity = MethodHomingProjectile.getProjectileSpeed(stats);
 
         Vec3 direction = pos.subtract(shooter.position());
+        if (resolver.spellContext.castingTile instanceof BasicSpellTurretTile turretTile) {
+            direction = new Vec3(turretTile.getBlockState().getValue(BasicSpellTurret.FACING).step());
+        }
+        first.setPos(pos);
+        MethodHomingProjectile.splits(world, shooter, new BlockPos(pos), resolver, projectiles, stats.getBuffCount(AugmentSplit.INSTANCE));
         for (EntityHomingProjectile proj : projectiles) {
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
-            if (direction.distanceTo(Vec3.ZERO) < 0.25) {
+            if (!(shooter instanceof FakePlayer)) {
                 proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.8f);
             } else {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);

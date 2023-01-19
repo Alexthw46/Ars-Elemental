@@ -67,6 +67,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<SummonUndead>> WSKELETON_SUMMON;
     public static final RegistryObject<EntityType<SummonDolphin>> DOLPHIN_SUMMON;
     public static final RegistryObject<EntityType<SummonStrider>> STRIDER_SUMMON;
+    public static final RegistryObject<EntityType<SummonMk>> SLIME_SUMMON;
 
 
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
@@ -104,6 +105,7 @@ public class ModEntities {
         WSKELETON_SUMMON = registerEntity("summon_wskeleton", 1.0F, 1.8F, SummonUndead::new, MobCategory.CREATURE);
         DOLPHIN_SUMMON = addEntity("summon_dolphin", 0.9F, 0.6F, false, true, SummonDolphin::new, MobCategory.WATER_CREATURE);
         STRIDER_SUMMON = addEntity("summon_strider", 0.9F, 1.7F, true, true, SummonStrider::new, MobCategory.CREATURE);
+        SLIME_SUMMON = addEntity("summon_mk", 0.9F, 1.7F, true, true, SummonMk::new, MobCategory.CREATURE);
 
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         HOMING_PROJECTILE = addEntity("homing_projectile", 0.5F, 0.5F, true, true, EntityHomingProjectile::new, MobCategory.MISC);

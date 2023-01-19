@@ -61,6 +61,8 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.DOLPHIN_SUMMON.get(), DolphinRenderer::new);
         event.registerEntityRenderer(ModEntities.STRIDER_SUMMON.get(), StriderRenderer::new);
+        event.registerEntityRenderer(ModEntities.SLIME_SUMMON.get(), SlimeRenderer::new);
+
         event.registerEntityRenderer(ModEntities.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull AbstractHorse pEntity) {
