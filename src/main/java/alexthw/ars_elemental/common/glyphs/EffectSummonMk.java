@@ -47,7 +47,7 @@ public class EffectSummonMk extends AbstractEffect {
     }
 
     //Sarebbero stati di più se Michela rispondeva in tempo <.<
-    static final List<String> names = List.of("Gnappolo", "Odoacre", "Patafrollo", "IvoAvido", "Ubaldo", "Ambrogio", "Mascarpone", "Luppolo");
+    static final List<String> names = List.of("Emmekiappolo", "Gnappolo", "Gnappetta", "Odoacre", "Warden of the Sacred Melon", "Patafrollo", "IvoAvido", "Ubaldo", "Ambrogio", "Mascarpone", "Luppolo");
 
     @Override
     public int getDefaultManaCost() {
@@ -63,7 +63,7 @@ public class EffectSummonMk extends AbstractEffect {
 
     @Override
     public String getBookDescription() {
-        return "Summons two wolves that will fight with you. Extend Time will increase the amount of time on the summons. Applies Summoning Sickness to the caster, preventing other summoning magic.";
+        return "Summons three slimes that will fight with you. Extend Time will increase the amount of time on the summons. Applies Summoning Sickness to the caster, preventing other summoning magic.";
     }
 
     @Override

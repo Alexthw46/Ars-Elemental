@@ -86,7 +86,7 @@ public class SummonMk extends Slime implements IFollowingSummon, ISummon {
     @Override
     public void push(Entity pEntity) {
         super.push(pEntity);
-        if (pEntity instanceof LivingEntity entity && !pEntity.getUUID().equals(getOwnerID()))
+        if (pEntity instanceof LivingEntity entity && !pEntity.isAlliedTo(owner) && !pEntity.getUUID().equals(getOwnerID()) && !(pEntity instanceof ISummon sum && sum.getOwnerID() != null && sum.getOwnerID().equals(this.getOwnerID())))
             this.dealDamage(entity);
     }
 

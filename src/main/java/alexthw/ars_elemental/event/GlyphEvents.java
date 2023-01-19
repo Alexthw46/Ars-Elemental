@@ -65,7 +65,7 @@ public class GlyphEvents {
             if (stack != ItemStack.EMPTY && stack.getItem() instanceof SpellBook && stack.getTag() != null) {
                 String name = CasterUtil.getCaster(stack).getSpellName();
 
-                if (name.contains("emmek")) {
+                if (name.contains("emmek") || name.contains("Emmek")) {
                     int index = event.spell.recipe.indexOf(EffectSummonWolves.INSTANCE);
                     event.spell.recipe.add(index, EffectSummonMk.INSTANCE);
                     event.spell.recipe.remove(index + 1);
