@@ -80,6 +80,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withPage(ImbuementPage(ModItems.HOMING_LENS.get()))
                         .withPage(ImbuementPage(ModItems.ACC_LENS.get()))
                         .withPage(ImbuementPage(ModItems.DEC_LENS.get()))
+                        .withPage(ImbuementPage(ModItems.PIERCE_LENS.get()))
                         .withPage(ImbuementPage(ModItems.RGB_LENS.get()))
                 , getPath(AUTOMATION, "advanced_prism"));
 

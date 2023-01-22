@@ -33,6 +33,10 @@
     },
     {
       "type": "ars_nouveau:imbuement_recipe",
+      "recipe": "ars_elemental:imbuement_piercing_prism_lens"
+    },
+    {
+      "type": "ars_nouveau:imbuement_recipe",
       "recipe": "ars_elemental:imbuement_rainbow_prism_lens"
     }
   ]

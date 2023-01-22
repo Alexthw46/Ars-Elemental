@@ -22,6 +22,6 @@ public class PiercingPrismLens extends AbstractPrismLens {
 
     @Override
     public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
-        return spell.pierceLeft < 5 && SourceUtil.hasSourceNearby(pos, level, 6, AugmentPierce.INSTANCE.getCastingCost());
+        return spell.pierceLeft < 10 && SourceUtil.hasSourceNearby(pos, level, 6, AugmentPierce.INSTANCE.getCastingCost());
     }
 }

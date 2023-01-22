@@ -132,8 +132,6 @@ public class ModItems {
     public static final RegistryObject<Item> ACC_LENS;
     public static final RegistryObject<Item> DEC_LENS;
     public static final RegistryObject<Item> PIERCE_LENS;
-    public static final RegistryObject<Item> SPLIT_LENS;
-
     public static final RegistryObject<Item> RGB_LENS;
 
     public static final RegistryObject<Item> ANIMA_ESSENCE;
@@ -182,7 +180,6 @@ public class ModItems {
         RGB_LENS = ITEMS.register("rainbow_prism_lens", () -> new RainbowPrismLens(addTabProp()));
         ACC_LENS = ITEMS.register("acceleration_prism_lens", () -> new AccelerationPrismLens(addTabProp()));
         DEC_LENS = ITEMS.register("deceleration_prism_lens", () -> new DecelerationPrismLens(addTabProp()));
-        SPLIT_LENS = ITEMS.register("splitting_prism_lens", () -> new SplittingPrismLens(addTabProp()));
         PIERCE_LENS = ITEMS.register("piercing_prism_lens", () -> new PiercingPrismLens(addTabProp()));
         //curio
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(addTabProp().fireResistant().stacksTo(1)));

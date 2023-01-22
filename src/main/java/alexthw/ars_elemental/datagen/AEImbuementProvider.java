@@ -9,6 +9,7 @@ import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
@@ -116,6 +117,10 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
         recipes.add(new ImbuementRecipe("deceleration_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.DEC_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(AugmentDecelerate.INSTANCE))
+        );
+        recipes.add(new ImbuementRecipe("piercing_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.PIERCE_LENS.get().getDefaultInstance(), 2000)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(AugmentPierce.INSTANCE))
         );
         recipes.add(new ImbuementRecipe("rainbow_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.RGB_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(Ingredient.of(Tags.Items.DYES))
