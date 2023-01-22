@@ -13,8 +13,11 @@ import java.util.List;
 
 public abstract class AbstractPrismLens extends Item implements SpellPrismLens {
 
-    public AbstractPrismLens(Properties properties) {
+    final String key;
+
+    public AbstractPrismLens(Properties properties, String key) {
         super(properties);
+        this.key = key;
     }
 
 
@@ -27,6 +30,6 @@ public abstract class AbstractPrismLens extends Item implements SpellPrismLens {
     }
 
     protected String getDescriptionKey() {
-        return "ars_elemental.lens.";
+        return "ars_elemental.lens." + key;
     }
 }

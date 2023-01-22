@@ -5,6 +5,7 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class RainbowPrismLens extends AbstractPrismLens {
@@ -12,7 +13,7 @@ public class RainbowPrismLens extends AbstractPrismLens {
     static final RandomSource randomSource = RandomSource.createNewThreadLocalInstance();
 
     public RainbowPrismLens(Properties pProperties) {
-        super(pProperties);
+        super(pProperties, "rgb");
     }
 
     @Override
@@ -22,13 +23,8 @@ public class RainbowPrismLens extends AbstractPrismLens {
     }
 
     @Override
-    public boolean canConvert(EntityProjectileSpell spell) {
+    public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
         return true;
-    }
-
-    @Override
-    protected String getDescriptionKey() {
-        return super.getDescriptionKey() + "rgb";
     }
 
 }

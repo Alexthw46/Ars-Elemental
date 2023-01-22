@@ -18,10 +18,10 @@ public interface IPropagator {
         if (newSpell.isEmpty()) return;
         SpellContext newContext = spellContext.clone().withSpell(newSpell);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
-        propagate(world, rayTraceResult.getLocation(), shooter, stats, newResolver);
+        propagate(world, rayTraceResult.getLocation(), shooter, stats, newResolver, spellContext);
 
     }
 
-    void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver);
+    void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext);
 
 }

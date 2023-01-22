@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.function.Predicate;
 public class HomingPrismLens extends AbstractPrismLens {
 
     public HomingPrismLens(Properties properties) {
-        super(properties);
+        super(properties, "homing");
     }
 
     public void shoot(ServerLevel world, BlockPos pos, EntityProjectileSpell spell, Vec3 angle) {
@@ -23,6 +24,7 @@ public class HomingPrismLens extends AbstractPrismLens {
         newProjectile.setIgnored(ignore);
         newProjectile.setColor(spell.getParticleColor());
         newProjectile.pierceLeft = spell.pierceLeft;
+        newProjectile.prismRedirect = spell.prismRedirect;
         newProjectile.age = spell.age;
         newProjectile.setPos(spell.getX(), spell.getY(), spell.getZ());
         super.shoot(world, pos, newProjectile, angle);
@@ -31,13 +33,8 @@ public class HomingPrismLens extends AbstractPrismLens {
     }
 
     @Override
-    public boolean canConvert(EntityProjectileSpell spell) {
+    public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
         return !(spell instanceof EntityHomingProjectile);
-    }
-
-    @Override
-    protected String getDescriptionKey() {
-        return super.getDescriptionKey() + "homing";
     }
 
 }

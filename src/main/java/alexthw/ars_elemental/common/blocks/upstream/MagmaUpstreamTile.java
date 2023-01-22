@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.blocks.upstream;
 
 import alexthw.ars_elemental.registry.ModTiles;
+import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.ITickable;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
+import static alexthw.ars_elemental.ConfigHandler.Common.LAVA_ELEVATOR_COST;
+
 public class MagmaUpstreamTile extends BlockEntity implements ITickable {
     public MagmaUpstreamTile(BlockPos pPos, BlockState pBlockState) {
         super(ModTiles.LAVA_UPSTREAM_TILE.get(), pPos, pBlockState);
@@ -26,6 +29,10 @@ public class MagmaUpstreamTile extends BlockEntity implements ITickable {
     public void tick() {
         if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 2 == 0) {
             List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46)).inflate(1.5), e -> e.isInLava() && !e.isCrouching());
+            if (!entityList.isEmpty() && requiresSource()) {
+                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, LAVA_ELEVATOR_COST.get());
+                if (source == null || !source.isValid()) return;
+            }
             for (LivingEntity e : entityList) {
                 e.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100));
                 Vec3 vec3 = e.getDeltaMovement();
@@ -37,6 +44,10 @@ public class MagmaUpstreamTile extends BlockEntity implements ITickable {
                 e.hurtMarked = true;
             }
         }
+    }
+
+    private boolean requiresSource() {
+        return LAVA_ELEVATOR_COST.get() > 0;
     }
 
     public void spawnBubbles(Entity e, ServerLevel level) {

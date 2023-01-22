@@ -32,12 +32,14 @@ public class ConfigHandler {
         public static ForgeConfigSpec.DoubleValue SIREN_TREASURE_BONUS;
         public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
+        public static ForgeConfigSpec.IntValue WATER_URN_COST;
+        public static ForgeConfigSpec.IntValue AIR_ELEVATOR_COST;
+        public static ForgeConfigSpec.IntValue LAVA_ELEVATOR_COST;
+        public static ForgeConfigSpec.IntValue WATER_ELEVATOR_COST;
+
+
         public static ForgeConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
-
-        public static final Integer SIREN_WEIGHT = 2;
-        public static ForgeConfigSpec.IntValue MAGES_WEIGHT;
         public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
-
         public static final Integer TREE_SPAWN_RATE = 200;
 
 
@@ -81,17 +83,26 @@ public class ConfigHandler {
             SIREN_QUANTITY_CAP = builder.comment("Max number of items a siren shrine can produce per cycle.").defineInRange("mermaidQuantityCap", 5, 0, 300);
             builder.pop();
 
-            builder.push("Spawn and Worldgen");
+            builder.push("Source cost");
 
-            MAGES_WEIGHT = builder.comment("How often mages spawn").defineInRange("magesSpawnWeight", 0, 0, 200);
-            MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
+            WATER_URN_COST = builder.comment("How much source does the water urn consume.").defineInRange("waterUrnCost", 100, 0, 10000);
+            AIR_ELEVATOR_COST = builder.comment("How much source does the slipstream elevator consume.").defineInRange("airElevatorCost", 10, 0, 1000);
+            WATER_ELEVATOR_COST = builder.comment("How much source does the bubble elevator consume.").defineInRange("waterElevatorCost", 0, 0, 1000);
+            LAVA_ELEVATOR_COST = builder.comment("How much source does the magmatic elevator consume.").defineInRange("lavaElevatorCost", 0, 0, 1000);
 
             builder.pop();
+
 
             builder.push("Misc");
             FIRENANDO_KILL = builder.comment("If enabled, flarecannons will simply die and drop the charm, instead of deactivating, if killed by their owner").define("flarecannon_owner_kill", false);
             HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
             SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Mobs-Disabled");
+
+            MAGES_AGGRO = builder.comment("If true, the wandering mages will target players too, unless they wear the focus of the same school.").define("magesAggro", true);
+
             builder.pop();
         }
     }
@@ -99,11 +110,11 @@ public class ConfigHandler {
     public static final Common COMMON;
     public static final ForgeConfigSpec COMMON_SPEC;
 
-    public static class Client{
+    public static class Client {
         public static ForgeConfigSpec.ConfigValue<Boolean> EnableSFRendering;
         public static ForgeConfigSpec.ConfigValue<Boolean> NetheriteTexture;
 
-        public Client(ForgeConfigSpec.Builder builder){
+        public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Visual Configs");
 
             EnableSFRendering = builder.comment("Enables the rendering of the spell focus while equipped").define("Enable SpellFocusRender", true);
@@ -122,7 +133,7 @@ public class ConfigHandler {
         COMMON_SPEC = specPair.getRight();
         COMMON = specPair.getLeft();
 
-        final Pair<Client,ForgeConfigSpec> specClientPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        final Pair<Client, ForgeConfigSpec> specClientPair = new ForgeConfigSpec.Builder().configure(Client::new);
         CLIENT_SPEC = specClientPair.getRight();
         CLIENT = specClientPair.getLeft();
 

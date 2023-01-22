@@ -3,6 +3,9 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.api.IPropagator;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
+import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
+import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +32,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         super("propagator_homing", "Propagate Homing");
     }
 
-    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
+    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
         List<EntityHomingProjectile> projectiles = new ArrayList<>();
@@ -40,16 +44,23 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         int counter = 0;
 
         Vec3 direction = pos.subtract(shooter.position());
+        if (spellContext.castingTile instanceof BasicSpellTurretTile turretTile) {
+            if (turretTile instanceof RotatingTurretTile rotatingTurretTile) {
+                direction = rotatingTurretTile.getShootAngle();
+            } else {
+                direction = new Vec3(turretTile.getBlockState().getValue(BasicSpellTurret.FACING).step());
+            }
+        }
         for (EntityHomingProjectile proj : projectiles) {
             proj.setPos(pos.add(0, 1, 0));
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
-            if (direction.distanceTo(Vec3.ZERO) < 0.25) {
+            if (!(shooter instanceof FakePlayer)) {
                 proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
-                opposite = opposite * -1;
-                counter++;
             } else {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);
             }
+            opposite = opposite * -1;
+            counter++;
             world.addFreshEntity(proj);
         }
 

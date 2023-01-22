@@ -15,6 +15,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
+import static alexthw.ars_elemental.ConfigHandler.Common.AIR_ELEVATOR_COST;
+
 public class AirUpstreamTile extends BlockEntity implements ITickable {
 
     public AirUpstreamTile(BlockPos pPos, BlockState pBlockState) {
@@ -26,8 +28,8 @@ public class AirUpstreamTile extends BlockEntity implements ITickable {
         if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 20 == 0) {
             List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46)).inflate(1.1), e -> !e.isInWater() && !e.isInLava());
 
-            if (!entityList.isEmpty()) {
-                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, 10);
+            if (!entityList.isEmpty() && requiresSource()) {
+                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, AIR_ELEVATOR_COST.get());
                 if (source == null || !source.isValid()) return;
             }
             for (LivingEntity e : entityList) {
@@ -37,6 +39,10 @@ public class AirUpstreamTile extends BlockEntity implements ITickable {
                 e.hurtMarked = true;
             }
         }
+    }
+
+    private boolean requiresSource() {
+        return AIR_ELEVATOR_COST.get() > 0;
     }
 
 }

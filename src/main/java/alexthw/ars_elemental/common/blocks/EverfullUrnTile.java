@@ -37,13 +37,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static alexthw.ars_elemental.ConfigHandler.Common.WATER_URN_COST;
 import static net.minecraft.world.level.material.Fluids.WATER;
 
 public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable, ITooltipProvider {
 
     Set<BlockPos> toList = new HashSet<>();
-
-    boolean needsSource;
 
     public EverfullUrnTile(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModTiles.URN_TILE.get(), pWorldPosition, pBlockState);
@@ -57,18 +56,17 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         ArrayList<BlockPos> stale = new ArrayList<>();
 
         for (BlockPos toPos : toList) {
-            if (this.needsSource)
-                break;
             if (!level.isLoaded(toPos))
                 continue;
             if (!isRefillable(toPos, level)) {
                 stale.add(toPos);
                 continue;
             }
-            if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, 100) && tryRefill(level, toPos)) {
-                SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, 100);
-                createParticles(this.worldPosition.above(), toPos);
-            }
+            if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, WATER_URN_COST.get()))
+                if (tryRefill(level, toPos)) {
+                    SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, WATER_URN_COST.get());
+                    createParticles(this.worldPosition.above(), toPos);
+                }
         }
         for (BlockPos s : stale) {
             toList.remove(s);

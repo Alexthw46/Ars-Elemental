@@ -4,11 +4,12 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class AccelerationPrismLens extends AbstractPrismLens {
     public AccelerationPrismLens(Properties properties) {
-        super(properties);
+        super(properties, "acceleration");
     }
 
     @Override
@@ -18,13 +19,8 @@ public class AccelerationPrismLens extends AbstractPrismLens {
     }
 
     @Override
-    public boolean canConvert(EntityProjectileSpell spell) {
+    public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
         return true;
-    }
-
-    @Override
-    protected String getDescriptionKey() {
-        return super.getDescriptionKey() + "acceleration";
     }
 
 }

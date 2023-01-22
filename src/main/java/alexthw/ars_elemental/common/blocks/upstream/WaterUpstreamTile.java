@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.blocks.upstream;
 
 import alexthw.ars_elemental.registry.ModTiles;
+import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.ITickable;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
+import static alexthw.ars_elemental.ConfigHandler.Common.WATER_ELEVATOR_COST;
+
 public class WaterUpstreamTile extends BlockEntity implements ITickable {
 
     public WaterUpstreamTile(BlockPos pWorldPosition, BlockState pBlockState) {
@@ -27,6 +30,10 @@ public class WaterUpstreamTile extends BlockEntity implements ITickable {
     public void tick() {
         if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 2 == 0) {
             List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46)).inflate(1.5), e -> e.isInWater() && !e.isCrouching());
+            if (!entityList.isEmpty() && requiresSource()) {
+                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, WATER_ELEVATOR_COST.get());
+                if (source == null || !source.isValid()) return;
+            }
             for (LivingEntity e : entityList) {
                 Vec3 vec3 = e.getDeltaMovement();
                 e.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 100));
@@ -41,13 +48,17 @@ public class WaterUpstreamTile extends BlockEntity implements ITickable {
         }
     }
 
+    private boolean requiresSource() {
+        return WATER_ELEVATOR_COST.get() > 0;
+    }
+
     public void spawnBubbles(Entity e, ServerLevel level) {
 
         double d0 = e.getX();
         double d1 = e.getY();
         double d2 = e.getZ();
 
-        level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, d0 + ParticleUtil.inRange(-0.5D, 0.5), d1+1, d2 + ParticleUtil.inRange(-0.5D, 0.5), 2,0.0D, 0.0D, 0.0D,0.5f);
+        level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, d0 + ParticleUtil.inRange(-0.5D, 0.5), d1 + 1, d2 + ParticleUtil.inRange(-0.5D, 0.5), 2, 0.0D, 0.0D, 0.0D, 0.5f);
 
     }
 

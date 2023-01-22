@@ -3,6 +3,9 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.api.IPropagator;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
+import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
+import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.core.BlockPos;
@@ -13,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,7 +33,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     }
 
     @Override
-    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
+    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
         EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
         projectileSpell.setPos(pos.add(0, 1, 0));
@@ -49,10 +53,21 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
         }
 
         float velocity = MethodCurvedProjectile.getProjectileSpeed(stats);
-
+        Vec3 direction = pos.subtract(shooter.position());
+        if (spellContext.castingTile instanceof BasicSpellTurretTile turretTile) {
+            if (turretTile instanceof RotatingTurretTile rotatingTurretTile) {
+                direction = rotatingTurretTile.getShootAngle();
+            } else {
+                direction = new Vec3(turretTile.getBlockState().getValue(BasicSpellTurret.FACING).step());
+            }
+        }
         for (EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0, 0.25 * sizeRatio, 0));
-            proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
+            if (!(shooter instanceof FakePlayer)) {
+                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
+            } else {
+                proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);
+            }
             world.addFreshEntity(proj);
         }
     }

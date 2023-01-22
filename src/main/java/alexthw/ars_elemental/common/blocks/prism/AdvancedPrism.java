@@ -30,7 +30,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         super(blockProps.noOcclusion());
     }
 
-    static final SpellPrismLens defaultLent = spell -> true;
+    static final SpellPrismLens defaultLent = (spell, level, pos) -> true;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -65,7 +65,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
             return;
         }
         Vec3 vec3d = tile.getShootAngle().normalize();
-        if (tile.getLens().getItem() instanceof SpellPrismLens lens && lens.canConvert(spell)) {
+        if (tile.getLens().getItem() instanceof SpellPrismLens lens && lens.canConvert(spell, world, pos)) {
             lens.shoot(world, pos, spell, vec3d);
         } else {
             defaultLent.shoot(world, pos, spell, vec3d);

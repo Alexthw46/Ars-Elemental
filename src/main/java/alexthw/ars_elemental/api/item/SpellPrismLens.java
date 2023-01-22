@@ -5,6 +5,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public interface SpellPrismLens {
@@ -16,5 +17,5 @@ public interface SpellPrismLens {
         spell.shoot(angle.x(), angle.y(), angle.z(), velocity, 0);
     }
 
-    boolean canConvert(EntityProjectileSpell spell);
+    boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos);
 }
