@@ -57,7 +57,10 @@ public class ArsNouveauRegistry {
                 DamageSource.LAVA,
                 DamageSource.IN_FIRE,
                 DamageSource.HOT_FLOOR,
-                DamageSource.DRAGON_BREATH)
+                DamageSource.DRAGON_BREATH,
+                new DamageSource("explosion"),
+                new DamageSource("explosion.player"),
+                new DamageSource("fireworks"))
         );
         IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
                 DamageSource.DROWN,
