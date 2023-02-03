@@ -3,7 +3,9 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.common.datagen.BiomeTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.entity.ModEntities;
@@ -11,11 +13,9 @@ import com.hollingsworth.arsnouveau.common.lib.EntityTags;
 import com.hollingsworth.arsnouveau.common.world.biome.ModBiomes;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
@@ -26,6 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -133,12 +134,30 @@ public class AETagsProvider {
         }
 
         public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registry.BIOME_REGISTRY, prefix("siren_spawn"));
+        public static final TagKey<Biome> FLASHING_BIOME = TagKey.create(Registry.BIOME_REGISTRY, prefix("flashing_biome"));
+        public static final TagKey<Biome> FLASHING_TREE_COMMON_BIOME = TagKey.create(Registry.BIOME_REGISTRY, prefix("flashing_tree_biome"));
+        @Override
+        protected void addTags() {
+            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
+            this.tag(FLASHING_BIOME).add(ModWorldgen.FLASHING_FOREST_KEY);
+            this.tag(FLASHING_TREE_COMMON_BIOME).add(ModBiomes.ARCHWOOD_FOREST).addTag(FLASHING_BIOME);
+            this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
+            this.tag(BiomeTagProvider.BERRY_SPAWN).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
+        }
+    }
+
+    public static class AEFeatureTagsProvider extends TagsProvider<PlacedFeature> {
+        public AEFeatureTagsProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
+            super(generator, BuiltinRegistries.PLACED_FEATURE, ArsElemental.MODID, existingFileHelper);
+        }
+
+        public static TagKey<PlacedFeature> RARE_ARCHWOOD_TREES = TagKey.create(Registry.PLACED_FEATURE_REGISTRY, prefix(ModWorldgen.FINAL_RARE_FLASHING));
+        public static TagKey<PlacedFeature> COMMON_ARCHWOOD_TREES = TagKey.create(Registry.PLACED_FEATURE_REGISTRY, prefix(ModWorldgen.FINAL_COMMON_FLASHING));
 
         @Override
         protected void addTags() {
-
-            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).add(ModBiomes.ARCHWOOD_FOREST);
-
+            tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED.get());
+            tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED.get());
         }
     }
 

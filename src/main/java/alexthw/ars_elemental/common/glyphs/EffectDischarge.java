@@ -99,7 +99,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

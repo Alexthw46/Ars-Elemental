@@ -90,6 +90,8 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
+        event.registerEntityRenderer(ModEntities.FLASH_LIGHTNING.get(), LightningBoltRenderer::new);
+
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override
             public ResourceLocation getTextureLocation(EntityLerpedProjectile pEntity) {

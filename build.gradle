@@ -31,7 +31,7 @@ minecraft {
 
     mappings channel: 'parchment', version: '2022.09.18-1.19.2'
 
-    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -155,6 +155,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
 
     implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.19-2.0.0.120")
+    implementation fg.deobf("curse.maven:cyanide-541676:3832812") // Cyanide
 
     runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4086496")
     //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")

@@ -120,7 +120,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.THREE;
     }
 

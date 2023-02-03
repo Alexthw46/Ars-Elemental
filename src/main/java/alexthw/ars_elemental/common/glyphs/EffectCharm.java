@@ -76,7 +76,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

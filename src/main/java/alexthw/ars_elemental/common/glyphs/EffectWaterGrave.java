@@ -61,7 +61,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

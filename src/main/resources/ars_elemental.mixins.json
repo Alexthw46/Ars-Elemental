@@ -10,6 +10,7 @@
     "LightningMixin",
     "PotionBrewingMixin",
     "RitualAwakeningMixin",
+    "ServerLevelMixin",
     "ZombieInvoker"
   ],
   "minVersion": "0.8",

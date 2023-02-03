@@ -12,7 +12,7 @@ import shadowed.llamalad7.mixinextras.injector.WrapWithCondition;
 @Mixin(LightningEntity.class)
 public class LightningMixin {
 
-    @WrapWithCondition(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;thunderHit(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"))
+    @WrapWithCondition(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;thunderHit(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"), remap = false)
     public boolean thunderHit(Entity instance, ServerLevel pLevel, LightningBolt pLightning) {
         return !(instance instanceof ItemEntity);
     }

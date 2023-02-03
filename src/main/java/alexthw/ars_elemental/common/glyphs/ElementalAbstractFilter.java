@@ -19,6 +19,11 @@ public abstract class ElementalAbstractFilter extends AbstractFilter {
         super(prefix("glyph_" + name + "_filter"), "Filter:" + description);
     }
 
+    @Override
+    public Integer getTypeIndex() {
+        return 15;
+    }
+
     public ElementalAbstractFilter inverted() {
         this.inverted = !inverted;
         return this;

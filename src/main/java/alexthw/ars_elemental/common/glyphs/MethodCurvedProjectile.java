@@ -88,7 +88,7 @@ public class MethodCurvedProjectile extends ElementalAbstractForm {
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

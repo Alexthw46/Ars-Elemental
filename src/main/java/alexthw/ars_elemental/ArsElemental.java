@@ -4,6 +4,8 @@ import alexthw.ars_elemental.client.ClientEvents;
 import alexthw.ars_elemental.client.SpellFocusRenderer;
 import alexthw.ars_elemental.registry.*;
 import alexthw.ars_elemental.util.CompatUtils;
+import alexthw.ars_elemental.world.TerrablenderAE;
+import com.hollingsworth.arsnouveau.setup.Config;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +36,6 @@ import java.util.UUID;
 public class ArsElemental {
     /*
      *public static ForgeConfigSpec SERVER_CONFIG;
-     *private static final Logger LOGGER = LogManager.getLogger();
      */
 
     public static final ResourceLocation FOCUS_SLOT = new ResourceLocation("curios:slot/an_focus_slot");
@@ -49,8 +50,10 @@ public class ArsElemental {
     };
 
     public static final UUID Dev = UUID.fromString("0e918660-22bf-4bed-8426-ece3b4bbd01d");
+    public static boolean terrablenderLoaded = false;
 
     public ArsElemental() {
+        //terrablenderLoaded = ModList.get().isLoaded("terrablender");
 
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
@@ -80,6 +83,9 @@ public class ArsElemental {
             ArsNouveauRegistry.postInit();
             CompatUtils.checkCompats();
         });
+        if (terrablenderLoaded && Config.ARCHWOOD_FOREST_WEIGHT.get() > 0) {
+            event.enqueueWork(TerrablenderAE::registerBiomes);
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

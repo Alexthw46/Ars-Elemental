@@ -20,7 +20,7 @@ import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
-import alexthw.ars_elemental.world.WorldRegistry;
+import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
@@ -244,7 +244,7 @@ public class ModItems {
         SPELL_MIRROR = addBlock("spell_mirror", () -> new SpellMirror(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));
 
         //Trees
-        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> WorldRegistry.FLASHING_TREE), SAP_PROP));
+        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> ModWorldgen.FLASHING_TREE_SAPLING.getHolder().get()), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Material.LEAVES, MaterialColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
                 ModItems::allowsSpawnOnLeaves).isSuffocating(ModItems::isntSolid).isViewBlocking(ModItems::isntSolid)));
         FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6)));

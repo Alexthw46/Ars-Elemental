@@ -33,6 +33,11 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     }
 
     @Override
+    public Integer getTypeIndex() {
+        return 8;
+    }
+
+    @Override
     public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
         EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
@@ -93,7 +98,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
         return MethodCurvedProjectile.INSTANCE.getCompatibleAugments();
     }
 
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

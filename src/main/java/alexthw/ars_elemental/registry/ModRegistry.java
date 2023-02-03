@@ -32,7 +32,7 @@ import static alexthw.ars_elemental.registry.ModItems.ITEMS;
 import static alexthw.ars_elemental.registry.ModPotions.EFFECTS;
 import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
 import static alexthw.ars_elemental.registry.ModTiles.TILES;
-import static alexthw.ars_elemental.world.ModFeatures.FEATURES;
+import static alexthw.ars_elemental.world.ModWorldgen.*;
 
 public class ModRegistry {
 
@@ -66,6 +66,9 @@ public class ModRegistry {
         RECIPES.register(bus);
         SERIALIZERS.register(bus);
         FEATURES.register(bus);
+        PLACED_FEATURES.register(bus);
+        CONFG_FEATURES.register(bus);
+        BIOMES.register(bus);
         BS_PROVIDERS.register(bus);
     }
 

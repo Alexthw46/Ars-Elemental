@@ -87,7 +87,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         return MethodHomingProjectile.INSTANCE.getCompatibleAugments();
     }
 
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.THREE;
     }
 
@@ -96,5 +96,8 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         return this.setOf(SpellSchools.MANIPULATION);
     }
 
-
+    @Override
+    public Integer getTypeIndex() {
+        return 8;
+    }
 }

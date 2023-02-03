@@ -34,7 +34,7 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.THREE;
     }
 

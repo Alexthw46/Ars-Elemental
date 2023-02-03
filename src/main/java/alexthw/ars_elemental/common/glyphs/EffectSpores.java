@@ -121,7 +121,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

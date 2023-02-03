@@ -180,6 +180,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     private PlayState idle(AnimationEvent<?> event) {
+        if (level.isClientSide && PatchouliHandler.isPatchouliWorld()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
+            return PlayState.CONTINUE;
+        }
         if (isJumping()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
             return PlayState.CONTINUE;
@@ -187,7 +191,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         if (getDeltaMovement().y > 0.3) {
             setJump(true);
             event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
-        } else if (isOnGround() && !isInWater() || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
+        } else if (isOnGround() && !isInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));

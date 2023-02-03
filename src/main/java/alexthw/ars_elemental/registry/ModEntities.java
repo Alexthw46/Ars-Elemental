@@ -5,10 +5,7 @@ import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import alexthw.ars_elemental.common.entity.mages.*;
-import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
-import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
-import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
+import alexthw.ars_elemental.common.entity.spells.*;
 import alexthw.ars_elemental.common.entity.summon.*;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -61,6 +58,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<EntityCurvedProjectile>> CURVED_PROJECTILE;
     public static final RegistryObject<EntityType<EntityMagnetSpell>> LINGER_MAGNET;
     public static final RegistryObject<EntityType<EntityLerpedProjectile>> LERP_PROJECTILE;
+    public static final RegistryObject<EntityType<FlashLightning>> FLASH_LIGHTNING;
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -93,6 +91,7 @@ public class ModEntities {
         CURVED_PROJECTILE = addEntity("curved_projectile", 0.5F, 0.5F, true, true, EntityCurvedProjectile::new, MobCategory.MISC);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
         LERP_PROJECTILE = addEntity("lerp", 0.5F, 0.5F, true, true, EntityLerpedProjectile::new, MobCategory.MISC);
+        FLASH_LIGHTNING = addEntity("flash_lightning", 0.5F, 0.5F, true, true, FlashLightning::new, MobCategory.MISC);
 
     }
 
