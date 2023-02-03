@@ -1,17 +1,18 @@
-package alexthw.ars_elemental.common.glyphs;
+package alexthw.ars_elemental.common.glyphs.filters;
 
+import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-public class InsectFilter extends ElementalAbstractFilter {
+public class AquaticFilter extends ElementalAbstractFilter {
 
-    public static ElementalAbstractFilter INSTANCE = new InsectFilter("insect", "Insect");
-    public static ElementalAbstractFilter NOT_INSTANCE = new InsectFilter("not_insect", "Not Insect").inverted();
+    public static ElementalAbstractFilter INSTANCE = new AquaticFilter("aquatic", "Aquatic");
+    public static ElementalAbstractFilter NOT_INSTANCE = new AquaticFilter("not_aquatic", "Not Aquatic").inverted();
 
-    InsectFilter(String name, String description) {
+    AquaticFilter(String name, String description) {
         super(name, description);
     }
 
@@ -32,7 +33,10 @@ public class InsectFilter extends ElementalAbstractFilter {
      */
     @Override
     public boolean shouldResolveOnEntity(EntityHitResult target) {
-        return target.getEntity() instanceof LivingEntity living && (living.getMobType() == MobType.ARTHROPOD || living.getType().is(ModRegistry.INSECT));
+        if (target.getEntity() instanceof LivingEntity living) {
+            return living.getMobType() == MobType.WATER || living.getType().is(ModRegistry.AQUATIC);
+        }
+        return false;
     }
 
 }

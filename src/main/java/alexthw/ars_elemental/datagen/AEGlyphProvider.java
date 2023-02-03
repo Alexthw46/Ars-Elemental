@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;

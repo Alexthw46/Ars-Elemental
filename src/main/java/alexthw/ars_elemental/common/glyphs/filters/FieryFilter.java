@@ -1,17 +1,17 @@
-package alexthw.ars_elemental.common.glyphs;
+package alexthw.ars_elemental.common.glyphs.filters;
 
+import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-public class AquaticFilter extends ElementalAbstractFilter {
+public class FieryFilter extends ElementalAbstractFilter {
 
-    public static ElementalAbstractFilter INSTANCE = new AquaticFilter("aquatic", "Aquatic");
-    public static ElementalAbstractFilter NOT_INSTANCE = new AquaticFilter("not_aquatic", "Not Aquatic").inverted();
+    public static ElementalAbstractFilter INSTANCE = new FieryFilter("fiery", "Fiery");
+    public static ElementalAbstractFilter NOT_INSTANCE = new FieryFilter("not_fiery", "Not Fiery").inverted();
 
-    AquaticFilter(String name, String description) {
+    FieryFilter(String name, String description) {
         super(name, description);
     }
 
@@ -32,10 +32,7 @@ public class AquaticFilter extends ElementalAbstractFilter {
      */
     @Override
     public boolean shouldResolveOnEntity(EntityHitResult target) {
-        if (target.getEntity() instanceof LivingEntity living) {
-            return living.getMobType() == MobType.WATER || living.getType().is(ModRegistry.AQUATIC);
-        }
-        return false;
+        return target.getEntity() instanceof LivingEntity living && (living.getType().is(ModRegistry.FIERY) || living.fireImmune());
     }
 
 }

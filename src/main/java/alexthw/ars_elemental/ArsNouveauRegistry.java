@@ -6,6 +6,7 @@ import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
+import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;

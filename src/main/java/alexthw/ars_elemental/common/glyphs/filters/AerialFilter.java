@@ -1,5 +1,6 @@
-package alexthw.ars_elemental.common.glyphs;
+package alexthw.ars_elemental.common.glyphs.filters;
 
+import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.BlockHitResult;

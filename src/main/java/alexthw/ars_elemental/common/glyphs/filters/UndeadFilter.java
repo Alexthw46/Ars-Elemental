@@ -1,16 +1,18 @@
-package alexthw.ars_elemental.common.glyphs;
+package alexthw.ars_elemental.common.glyphs.filters;
 
+import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-public class FieryFilter extends ElementalAbstractFilter {
+public class UndeadFilter extends ElementalAbstractFilter {
 
-    public static ElementalAbstractFilter INSTANCE = new FieryFilter("fiery", "Fiery");
-    public static ElementalAbstractFilter NOT_INSTANCE = new FieryFilter("not_fiery", "Not Fiery").inverted();
+    public static ElementalAbstractFilter INSTANCE = new UndeadFilter("undead", "Undead");
+    public static ElementalAbstractFilter NOT_INSTANCE = new UndeadFilter("not_undead", "Not Undead").inverted();
 
-    FieryFilter(String name, String description) {
+    UndeadFilter(String name, String description) {
         super(name, description);
     }
 
@@ -31,7 +33,6 @@ public class FieryFilter extends ElementalAbstractFilter {
      */
     @Override
     public boolean shouldResolveOnEntity(EntityHitResult target) {
-        return target.getEntity() instanceof LivingEntity living && (living.getType().is(ModRegistry.FIERY) || living.fireImmune());
+        return target.getEntity() instanceof LivingEntity living && (living.getMobType() == MobType.UNDEAD || living.getType().is(ModRegistry.UNDEAD));
     }
-
 }
