@@ -18,16 +18,19 @@ import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
-import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.setup.APIRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
@@ -90,6 +93,7 @@ public class ArsNouveauRegistry {
         register(EffectWaterGrave.INSTANCE);
         register(EffectConjureTerrain.INSTANCE);
         register(EffectCharm.INSTANCE);
+        register(EffectPhantom.INSTANCE);
         register(EffectLifeLink.INSTANCE);
         register(EffectSpores.INSTANCE);
         register(EffectDischarge.INSTANCE);
@@ -209,44 +213,56 @@ public class ArsNouveauRegistry {
 
     static {
 
-        ROT_TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
-            spell.setOwner(fakePlayer);
-            spell.setPos(position.x(), position.y(), position.z());
-            spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
-            if (tile instanceof RotatingTurretTile rotatingTurretTile) {
-                Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
-                spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.25f, 0);
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, new ITurretBehavior() {
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
+                EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+                spell.setOwner(fakePlayer);
+                spell.setPos(position.x(), position.y(), position.z());
+                spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+                if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
+                    Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.25f, 0);
+                }
+                world.addFreshEntity(spell);
             }
-            world.addFreshEntity(spell);
         });
 
-        ROT_TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
-            EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
-            spell.setOwner(fakePlayer);
-            spell.setPos(position.x(), position.y(), position.z());
-            if (tile instanceof RotatingTurretTile rotatingTurretTile) {
-                Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
-                spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.6f, 0);
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, new ITurretBehavior() {
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
+                EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
+                spell.setOwner(fakePlayer);
+                spell.setPos(position.x(), position.y(), position.z());
+                if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
+                    Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.6f, 0);
+                }
+                world.addFreshEntity(spell);
             }
-            world.addFreshEntity(spell);
         });
 
-        TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
-            spell.setOwner(fakePlayer);
-            spell.setPos(position.x(), position.y(), position.z());
-            spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
-            spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
-            world.addFreshEntity(spell);
+        TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, new ITurretBehavior() {
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
+                EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+                spell.setOwner(fakePlayer);
+                spell.setPos(position.x(), position.y(), position.z());
+                spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+                spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), 0.25f, 0);
+                world.addFreshEntity(spell);
+            }
         });
 
-        TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, (resolver, tile, world, pos, fakePlayer, position, direction) -> {
-            EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
-            spell.setOwner(fakePlayer);
-            spell.setPos(position.x(), position.y(), position.z());
-            spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
-            world.addFreshEntity(spell);
+        TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, new ITurretBehavior() {
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
+                EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
+                spell.setOwner(fakePlayer);
+                spell.setPos(position.x(), position.y(), position.z());
+                spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);
+                world.addFreshEntity(spell);
+            }
         });
 
     }

@@ -233,12 +233,14 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     @Override
-    public void addBasicItem(ItemLike item, ResourceLocation category, IPatchouliPage recipePage) {
+    public PatchouliPage addBasicItem(ItemLike item, ResourceLocation category, IPatchouliPage recipePage) {
         PatchouliBuilder builder = new PatchouliBuilder(category, item.asItem().getDescriptionId())
                 .withIcon(item.asItem())
                 .withPage(new TextPage("ars_elemental.page." + getRegistryName(item.asItem()).getPath()))
                 .withPage(recipePage);
-        this.pages.add(new PatchouliPage(builder, getPath(category, getRegistryName(item.asItem()).getPath())));
+        var page = new PatchouliPage(builder, getPath(category, getRegistryName(item.asItem()).getPath()));
+        this.pages.add(page);
+        return page;
     }
 
     public void addFamiliarPage(AbstractFamiliarHolder familiarHolder) {

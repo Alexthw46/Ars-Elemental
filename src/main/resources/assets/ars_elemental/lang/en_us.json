@@ -163,6 +163,8 @@
   "ars_elemental.glyph_desc.glyph_conjure_terrain": "Places Dirt or other terrain blocks. Can be augmented with AoE and Pierce to place more blocks, Amplify to place cobblestone or one of the following combinations. Followed by ConjureWater, it will place Mud. If augmented with Amplify and followed by Smelt, it will place Stone. If followed by Crush it will place Sand or, if amplified, Sandstone.",
   "ars_elemental.glyph_name.glyph_poison_spores": "Poison Spores",
   "ars_elemental.glyph_desc.glyph_poison_spores": "A fog of poison spores erupts from the target, damaging it and causing poison and hunger to spread to nearby entities. It can only damage mobs poisoned or afflicted by hunger.",
+  "ars_elemental.glyph_name.glyph_phantom_grasp": "Phantom Grasp",
+  "ars_elemental.glyph_desc.glyph_phantom_grasp": "Heals a small amount of health to undead. When used on living beings, the spell will deal an equal amount of magic damage and consume hunger.",
   "ars_elemental.glyph_name.glyph_homing_projectile": "Homing Projectile",
   "ars_elemental.glyph_desc.glyph_homing_projectile": "This projectile seek the nearest entity and follow it, will behave as a classic projectile while there are no valid targets. Players will only be targeted if augmented by Sensitive.",
   "ars_elemental.glyph_name.glyph_propagator_homing": "Propagate Homing",

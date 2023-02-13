@@ -28,7 +28,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
     private static final String TAG_ROTATION_Y = "rotationY";
     public float rotationX, rotationY;
 
-    private ItemStack prismLent;
+    private ItemStack prismLens;
 
     public AdvancedPrismTile(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
@@ -74,9 +74,9 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
 
     @Override
     public void onWanded(Player playerEntity) {
-        if (prismLent != null) {
-            playerEntity.getLevel().addFreshEntity(new ItemEntity(playerEntity.level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLent));
-            prismLent = ItemStack.EMPTY;
+        if (prismLens != null) {
+            playerEntity.getLevel().addFreshEntity(new ItemEntity(playerEntity.level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLens));
+            prismLens = ItemStack.EMPTY;
         }
         updateBlock();
     }
@@ -91,8 +91,8 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
         super.saveAdditional(tag);
         tag.putFloat(TAG_ROTATION_Y, rotationY);
         tag.putFloat(TAG_ROTATION_X, rotationX);
-        if (prismLent != null) {
-            tag.put(TAG_LENTS, prismLent.serializeNBT());
+        if (prismLens != null) {
+            tag.put(TAG_LENTS, prismLens.serializeNBT());
         }
     }
 
@@ -102,7 +102,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
         rotationX = tag.getFloat(TAG_ROTATION_X);
         rotationY = tag.getFloat(TAG_ROTATION_Y);
         if (tag.contains(TAG_LENTS)) {
-            prismLent = ItemStack.of(tag.getCompound(TAG_LENTS));
+            prismLens = ItemStack.of(tag.getCompound(TAG_LENTS));
         }
     }
 
@@ -148,12 +148,12 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
     }
 
     public ItemStack getLens() {
-        return prismLent == null ? ItemStack.EMPTY : prismLent;
+        return prismLens == null ? ItemStack.EMPTY : prismLens;
     }
 
     void setLent(ItemStack lent, Player pPlayer) {
         onWanded(pPlayer);
-        this.prismLent = lent;
+        this.prismLens = lent;
         updateBlock();
     }
 }

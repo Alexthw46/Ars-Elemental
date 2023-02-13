@@ -5,6 +5,8 @@ import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.api.item.ISchoolBangle;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
+import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
+import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
@@ -33,6 +35,15 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EART
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class DamageEvents {
+
+    @SubscribeEvent
+    public static void betterFilters(SpellDamageEvent.Pre event) {
+        if (event.context.getCurrentIndex() > 0 && event.context.getSpell().recipe.get(event.context.getCurrentIndex() - 1) instanceof IFilter filter) {
+            if (!filter.shouldResolveOnEntity(event.target)) {
+                event.setCanceled(true);
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void bypassRes(LivingAttackEvent event) {

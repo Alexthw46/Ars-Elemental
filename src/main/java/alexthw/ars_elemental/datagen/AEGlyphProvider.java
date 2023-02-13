@@ -4,6 +4,7 @@ import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
+import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
@@ -14,6 +15,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
 import java.io.IOException;
@@ -34,33 +36,34 @@ public class AEGlyphProvider {
 
             Path output = this.generator.getOutputFolder();
 
-            recipes.add(get(EffectConjureTerrain.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.DIRT));
-            recipes.add(get(EffectWaterGrave.INSTANCE).withItem(Items.KELP).withItem(Items.PRISMARINE_SHARD).withItem(ItemsRegistry.WATER_ESSENCE));
-            recipes.add(get(EffectSpores.INSTANCE).withItem(Items.SPORE_BLOSSOM).withItem(Items.RED_MUSHROOM).withItem(ItemsRegistry.EARTH_ESSENCE));
-            recipes.add(get(EffectDischarge.INSTANCE).withItem(Items.LIGHTNING_ROD).withItem(ModItems.FLASHING_POD.get().asItem()).withItem(ItemsRegistry.AIR_ESSENCE));
-            recipes.add(get(EffectCharm.INSTANCE).withItem(ModItems.ANIMA_ESSENCE.get()).withItem(Items.GOLDEN_CARROT).withItem(ItemsRegistry.SOURCE_BERRY_PIE).withItem(Blocks.CAKE));
-            recipes.add(get(EffectLifeLink.INSTANCE).withItem(Items.LEAD).withItem(ModItems.ANIMA_ESSENCE.get()).withItem(Items.SCULK_SENSOR));
+            addRecipe(EffectConjureTerrain.INSTANCE, ItemsRegistry.EARTH_ESSENCE, Items.DIRT);
+            addRecipe(EffectWaterGrave.INSTANCE, Items.KELP, Items.PRISMARINE_SHARD, ItemsRegistry.WATER_ESSENCE);
+            addRecipe(EffectSpores.INSTANCE, Items.SPORE_BLOSSOM, Items.RED_MUSHROOM, ItemsRegistry.EARTH_ESSENCE);
+            addRecipe(EffectDischarge.INSTANCE, Items.LIGHTNING_ROD, ModItems.FLASHING_POD.get().asItem(), ItemsRegistry.AIR_ESSENCE);
+            addRecipe(EffectCharm.INSTANCE, ModItems.ANIMA_ESSENCE.get(), Items.GOLDEN_CARROT, ItemsRegistry.SOURCE_BERRY_PIE, Blocks.CAKE);
+            addRecipe(EffectLifeLink.INSTANCE, Items.LEAD, ModItems.ANIMA_ESSENCE.get(), Items.SCULK_SENSOR);
+            addRecipe(EffectPhantom.INSTANCE, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, ModItems.ANIMA_ESSENCE.get());
 
-            recipes.add(get(MethodCurvedProjectile.INSTANCE).withItem(Items.ARROW).withItem(Items.SNOWBALL).withItem(Items.SLIME_BALL).withItem(Items.ENDER_PEARL));
-            recipes.add(get(MethodHomingProjectile.INSTANCE).withItem(Items.NETHER_STAR).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ItemsRegistry.DOWSING_ROD).withItem(Items.ENDER_EYE));
+            addRecipe(MethodCurvedProjectile.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
+            addRecipe(MethodHomingProjectile.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
 
-            recipes.add(get(PropagatorArc.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodCurvedProjectile.INSTANCE)));
-            recipes.add(get(PropagatorHoming.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodHomingProjectile.INSTANCE)));
+            addRecipe(PropagatorArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, ArsNouveauAPI.getInstance().getGlyphItem(MethodCurvedProjectile.INSTANCE));
+            addRecipe(PropagatorHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, ArsNouveauAPI.getInstance().getGlyphItem(MethodHomingProjectile.INSTANCE));
 
             recipes.add(get(AquaticFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));
             recipes.add(get(AquaticFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));
 
-            recipes.add(get(AerialFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.PHANTOM_MEMBRANE));
-            recipes.add(get(AerialFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.PHANTOM_MEMBRANE));
+            addRecipe(AerialFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.PHANTOM_MEMBRANE);
+            addRecipe(AerialFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.PHANTOM_MEMBRANE);
 
-            recipes.add(get(FieryFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.BLAZE_POWDER));
-            recipes.add(get(FieryFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.BLAZE_POWDER));
+            addRecipe(FieryFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.BLAZE_POWDER);
+            addRecipe(FieryFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.BLAZE_POWDER);
 
-            recipes.add(get(UndeadFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.ROTTEN_FLESH));
-            recipes.add(get(UndeadFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.ROTTEN_FLESH));
+            addRecipe(UndeadFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.ROTTEN_FLESH);
+            addRecipe(UndeadFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.ROTTEN_FLESH);
 
-            recipes.add(get(InsectFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withItem(Items.SPIDER_EYE));
-            recipes.add(get(InsectFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withItem(Items.SPIDER_EYE));
+            addRecipe(InsectFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.SPIDER_EYE);
+            addRecipe(InsectFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.SPIDER_EYE);
 
 
             for (GlyphRecipe recipe : recipes) {
@@ -68,6 +71,14 @@ public class AEGlyphProvider {
                 DataProvider.saveStable(cache, recipe.asRecipe(), path);
             }
 
+        }
+
+        public void addRecipe(AbstractSpellPart part, ItemLike... items) {
+            var builder = get(part);
+            for (ItemLike item : items) {
+                builder.withItem(item);
+            }
+            recipes.add(builder);
         }
 
         protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {

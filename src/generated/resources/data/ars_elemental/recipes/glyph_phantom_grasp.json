@@ -1,0 +1,23 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 55,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:phantom_membrane"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:phantom_membrane"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_elemental:anima_essence"
+      }
+    }
+  ],
+  "output": "ars_elemental:glyph_phantom_grasp"
+}

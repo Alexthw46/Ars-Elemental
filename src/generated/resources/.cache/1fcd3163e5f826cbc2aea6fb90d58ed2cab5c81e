@@ -1,4 +1,4 @@
-// 1.19.2	2023-01-30T01:16:49.5909489	Ars Elemental Patchouli Datagen
+// 1.19.2	2023-02-13T14:45:43.8688294	Ars Elemental Patchouli Datagen
 80ad4cb54157dadf6704cf7789afe4ed3b19989c data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/thread_shock.json.json
 8be02afa786bd67676d822fb2288a4729495df5b data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/thread_spore.json.json
 da233585feada8cc6ccad6ce2285b23c776b09c5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/advanced_prism.json
@@ -43,6 +43,7 @@ c46fc2beeaf592e6606f5e9f4bdc34ea7ca177cb data/ars_elemental/patchouli_books/elem
 50d796671924d7ca6d053f38e74df8297e4650bf data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_charm.json
 95e019adafd5e863ea5f36981651125e8354da18 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_curved_projectile.json
 ef7605dae83799aa6519c8cadcce68d1dec881d9 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_discharge.json
+57f87f6dcafa764675183aeed85fa5e6812c462e data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_phantom_grasp.json
 f631dea1bfb2e8119a1129a5f76b390d87bd8dd0 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_poison_spores.json
 f289806ea755e0627cd0f7cda97e11e627ce4173 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_propagator_arc.json
 2ca958f4874d316ca26c315384a124e321b0d503 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_watery_grave.json

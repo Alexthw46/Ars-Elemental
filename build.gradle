@@ -152,7 +152,7 @@ dependencies {
     /*implementation*/ compileOnly fg.deobf("vazkii.botania:Botania:1.19.2-437-FORGE-SNAPSHOT")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-77")
 
-    compileOnly fg.deobf("curse.maven:tmg-560595:3706717")
+    compileOnly fg.deobf("curse.maven:tmg-560595:4001247")
 
     implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.19-2.0.0.120")
     implementation fg.deobf("curse.maven:cyanide-541676:3832812") // Cyanide

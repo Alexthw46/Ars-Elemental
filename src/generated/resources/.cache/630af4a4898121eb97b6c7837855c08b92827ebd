@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-06T19:11:37.7932236	Ars Elemental Glyph Recipes
+// 1.19.2	2023-02-13T14:45:43.8628267	Ars Elemental Glyph Recipes
 4c34e0612f78688ee20cd4f89eae01fa0a70588b data/ars_elemental/recipes/glyph_aerial_filter.json
 aa7e56df60b1f789d890b959eb3901f5c5eb4c93 data/ars_elemental/recipes/glyph_aquatic_filter.json
 137fb0b6d400ab5d213fafa3f825fffc5a9a0f60 data/ars_elemental/recipes/glyph_charm.json
@@ -14,6 +14,7 @@ b5d5684e542c547da40de0cdf72e790096b968e9 data/ars_elemental/recipes/glyph_not_aq
 8c9a57d2e2e9ba56c3dda70ee5dc9f3e37afe3c8 data/ars_elemental/recipes/glyph_not_fiery_filter.json
 0c723611b2a108862073150fd9460c790f0a212b data/ars_elemental/recipes/glyph_not_insect_filter.json
 0f77889bd869a0ecf7f9be0513c0a29f6da04631 data/ars_elemental/recipes/glyph_not_undead_filter.json
+b54d18e913c55a59686231509408d05502bc9e3d data/ars_elemental/recipes/glyph_phantom_grasp.json
 da61ddaf337e776ae5cb9bc12f7b3fff659eb8b3 data/ars_elemental/recipes/glyph_poison_spores.json
 16d03cfdbec586ae3329db494f70ebc8fc9cd57f data/ars_elemental/recipes/glyph_propagator_arc.json
 765c5fab7534d669be9f95f6acface391590fe3d data/ars_elemental/recipes/glyph_propagator_homing.json
