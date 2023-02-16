@@ -108,6 +108,7 @@ public class ArsElemental {
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.putIfAbsent(ModItems.FLASHING_SAPLING.get().asItem(), 0.3F);
             ComposterBlock.COMPOSTABLES.putIfAbsent(ModItems.FLASHING_POD.get().asItem(), 0.3F);
+            ComposterBlock.COMPOSTABLES.putIfAbsent(ModItems.FLASHING_LEAVES.get().asItem(), 0.3f);
         });
     }
 }
