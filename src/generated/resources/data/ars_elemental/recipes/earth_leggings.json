@@ -1,6 +1,5 @@
 {
-  "type": "ars_nouveau:enchanting_apparatus",
-  "keepNbtOfReagent": true,
+  "type": "ars_elemental:armor_upgrade",
   "output": {
     "item": "ars_elemental:earth_leggings"
   },
@@ -28,8 +27,9 @@
   ],
   "reagent": [
     {
-      "item": "ars_nouveau:apprentice_leggings"
+      "tag": "ars_nouveau:legs"
     }
   ],
-  "sourceCost": 2000
+  "sourceCost": 2000,
+  "tier": 3
 }

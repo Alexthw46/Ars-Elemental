@@ -214,12 +214,23 @@ public class AEPatchouliProvider extends PatchouliProvider {
                 .withIcon(armorSet.getHat())
                 .withPage(new TextPage("ars_elemental.page.armor_set.wip"))
                 .withPage(new TextPage("ars_elemental.page.armor_set." + armorSet.getName()))
-                .withPage(new ApparatusPage(armorSet.getHat()))
-                .withPage(new ApparatusPage(armorSet.getChest()))
-                .withPage(new ApparatusPage(armorSet.getLegs()))
-                .withPage(new ApparatusPage(armorSet.getBoots()));
+                .withPage(new AEPage(armorSet.getHat()))
+                .withPage(new AEPage(armorSet.getChest()))
+                .withPage(new AEPage(armorSet.getLegs()))
+                .withPage(new AEPage(armorSet.getBoots()));
 
-        this.pages.add(new PatchouliPage(builder, getPath(EQUIPMENT, "armor_" + armorSet.getName())));
+        this.pages.add(new PatchouliPage(builder, getPath(ARMOR, "armor_" + armorSet.getName())));
+    }
+
+    static class AEPage extends ApparatusPage {
+        public AEPage(Item itemLike) {
+            super(itemLike);
+        }
+
+        @Override
+        public ResourceLocation getType() {
+            return prefix("elemental_armor_recipe");
+        }
     }
 
     @Override

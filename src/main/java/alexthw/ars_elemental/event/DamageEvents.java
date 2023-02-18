@@ -38,7 +38,7 @@ public class DamageEvents {
 
     @SubscribeEvent
     public static void betterFilters(SpellDamageEvent.Pre event) {
-        if (event.context.getCurrentIndex() > 0 && event.context.getSpell().recipe.get(event.context.getCurrentIndex() - 1) instanceof IFilter filter) {
+        if (event.context != null && event.context.getCurrentIndex() > 0 && event.context.getSpell().recipe.get(event.context.getCurrentIndex() - 1) instanceof IFilter filter) {
             if (!filter.shouldResolveOnEntity(event.target)) {
                 event.setCanceled(true);
             }

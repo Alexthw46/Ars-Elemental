@@ -4,6 +4,7 @@ import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
 import alexthw.ars_elemental.common.enchantments.SoulboundEnchantment;
+import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import net.minecraft.core.Registry;
@@ -45,6 +46,8 @@ public class ModRegistry {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
     public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
+    public static final TagKey<Item> CASTER_BAGGABLE = ItemTags.create(prefix("caster_bag_item"));
+
     public static final TagKey<Item> SOULBOUND_ABLE = ItemTags.create(prefix("soulbound_extra"));
 
     public static final TagKey<EntityType<?>> AQUATIC = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("aquatic"));
@@ -83,6 +86,8 @@ public class ModRegistry {
 
     public static final RegistryObject<RecipeType<NetheriteUpgradeRecipe>> NETHERITE_UP;
     public static final RegistryObject<RecipeSerializer<NetheriteUpgradeRecipe>> NETHERITE_UP_SERIALIZER;
+    public static final RegistryObject<RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP;
+    public static final RegistryObject<RecipeSerializer<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP_SERIALIZER;
 
 
     static {
@@ -97,7 +102,8 @@ public class ModRegistry {
 
         NETHERITE_UP = RECIPES.register("netherite_upgrade", () -> RecipeType.simple(prefix("netherite_upgrade")));
         NETHERITE_UP_SERIALIZER = SERIALIZERS.register("netherite_upgrade", NetheriteUpgradeRecipe.Serializer::new);
-
+        ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("netherite_upgrade")));
+        ELEMENTAL_ARMOR_UP_SERIALIZER = SERIALIZERS.register("armor_upgrade", ElementalArmorRecipe.Serializer::new);
     }
 
 }

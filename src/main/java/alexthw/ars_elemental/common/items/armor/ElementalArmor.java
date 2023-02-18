@@ -52,6 +52,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flags) {
         IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
         if (perkProvider != null) {
+            tooltip.add(Component.translatable("ars_nouveau.tier", 4).withStyle(ChatFormatting.GOLD));
             perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
         }
         TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, world, tooltip, flags), "armor_set");
@@ -65,6 +66,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         if (player != null) {
             ArmorSet set = getArmorSetFromElement(this.element);
             List<Component> equippedList = new ArrayList<>();
+
             int equippedCounter = 0;
             for (EquipmentSlot slot : OrderedSlots) {
                 Item armor = set.getArmorFromSlot(slot);
@@ -114,8 +116,8 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
             UUID uuid = getModifierForSlot(this.slot);
             IPerkHolder<ItemStack> perkHolder = PerkUtil.getPerkHolder(stack);
             if (perkHolder != null) {
-                attributes.put(PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_armor", 30 * 3, AttributeModifier.Operation.ADDITION));
-                attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_armor", 3, AttributeModifier.Operation.ADDITION));
+                attributes.put(PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_armor", 100, AttributeModifier.Operation.ADDITION));
+                attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_armor", 5, AttributeModifier.Operation.ADDITION));
                 for (PerkInstance perkInstance : perkHolder.getPerkInstances()) {
                     IPerk perk = perkInstance.getPerk();
                     attributes.putAll(perk.getModifiers(this.slot, stack, perkInstance.getSlot().value));

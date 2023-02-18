@@ -1,9 +1,14 @@
-// 1.19.2	2023-02-13T14:45:43.8748259	Ars Elemental Item Tags
+// 1.19.2	2023-02-18T15:12:39.7021576	Ars Elemental Item Tags
+877c63c507be1e55a9f5eeed6e73dfabea015dab data/ars_elemental/tags/items/caster_bag_item.json
 1cfd115256c85334343c525876906563f1eb71e5 data/ars_elemental/tags/items/curio_bag_item.json
 55ebe60e91db1b8c82d4c050e5058b125796e4f9 data/ars_elemental/tags/items/soulbound_extra.json
+84a872a357e81ede8f2a71de37ec6ba812bea638 data/ars_nouveau/tags/items/boot.json
+7b0d9a1274a5b5995a38553ba7be74119d4eb4d3 data/ars_nouveau/tags/items/hood.json
+67c8b3c331b1b77c9ba990815228bb120f8ff191 data/ars_nouveau/tags/items/legs.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/items/magic_food.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/items/magic_shards.json
-23ba17db85634f2b93706370e3d7be612e4ac573 data/ars_nouveau/tags/items/spellbook.json
+af3aa9eb735846f731da5e98c596488293d61eb6 data/ars_nouveau/tags/items/robe.json
+fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/items/spellbook.json
 5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/items/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/items/an_focus.json
 e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bangle.json

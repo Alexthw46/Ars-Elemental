@@ -1,6 +1,5 @@
 {
-  "type": "ars_nouveau:enchanting_apparatus",
-  "keepNbtOfReagent": true,
+  "type": "ars_elemental:armor_upgrade",
   "output": {
     "item": "ars_elemental:aqua_robes"
   },
@@ -28,8 +27,9 @@
   ],
   "reagent": [
     {
-      "item": "ars_nouveau:apprentice_robes"
+      "tag": "ars_nouveau:robe"
     }
   ],
-  "sourceCost": 2000
+  "sourceCost": 2000,
+  "tier": 3
 }

@@ -37,7 +37,7 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
             } else {
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter).setMagic(), healVal);
                 if (entity instanceof Player player) {
-                    player.causeFoodExhaustion((float) (2.5 + spellStats.getAmpMultiplier()));
+                    player.causeFoodExhaustion((float) (2.5 * (1 + spellStats.getAmpMultiplier())));
                 }
             }
 

@@ -12,19 +12,19 @@
       "text": "ars_elemental.page.armor_set.fire"
     },
     {
-      "type": "ars_nouveau:apparatus_recipe",
+      "type": "ars_elemental:elemental_armor_recipe",
       "recipe": "ars_elemental:fire_hat"
     },
     {
-      "type": "ars_nouveau:apparatus_recipe",
+      "type": "ars_elemental:elemental_armor_recipe",
       "recipe": "ars_elemental:fire_robes"
     },
     {
-      "type": "ars_nouveau:apparatus_recipe",
+      "type": "ars_elemental:elemental_armor_recipe",
       "recipe": "ars_elemental:fire_leggings"
     },
     {
-      "type": "ars_nouveau:apparatus_recipe",
+      "type": "ars_elemental:elemental_armor_recipe",
       "recipe": "ars_elemental:fire_boots"
     }
   ]

@@ -155,6 +155,7 @@ public class ArsNouveauRegistry {
         ArsNouveauRegistry.addLights();
         ArsNouveauRegistry.addPerkSlots();
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
+        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
     }
 

@@ -47,19 +47,26 @@ public class AETagsProvider {
         public static final TagKey<Item> SPELLBOOK = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spellbook"));
         public static final TagKey<Item> PRISM_LENS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spell_prism_lens"));
 
+
+        public static final TagKey<Item> MAGIC_HOOD = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "hood"));
+        public static final TagKey<Item> MAGIC_ROBE = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "robe"));
+        public static final TagKey<Item> MAGIC_LEG = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "legs"));
+        public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "boot"));
+
         public AEItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen, blockTagsProvider, ArsElemental.MODID, existingFileHelper);
         }
 
         @Override
         protected void addTags() {
-            tag(SPELLBOOK).add(ItemsRegistry.NOVICE_SPELLBOOK.get(), ItemsRegistry.APPRENTICE_SPELLBOOK.get(), ItemsRegistry.ARCHMAGE_SPELLBOOK.get(), ItemsRegistry.CREATIVE_SPELLBOOK.get());
+            tag(SPELLBOOK).add(ItemsRegistry.NOVICE_SPELLBOOK.get(), ItemsRegistry.APPRENTICE_SPELLBOOK.get(), ItemsRegistry.ARCHMAGE_SPELLBOOK.get(), ItemsRegistry.CREATIVE_SPELLBOOK.get()).addOptional(new ResourceLocation("ars_omega", "arcane_book"));
             tag(ModRegistry.SOULBOUND_ABLE).add(Items.WRITABLE_BOOK, Items.WRITTEN_BOOK);
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get());
             tag(SUMMON_SHARDS).add(ModItems.SIREN_SHARDS.get(), ItemsRegistry.DRYGMY_SHARD.get(), ItemsRegistry.STARBUNCLE_SHARD.get(), ItemsRegistry.WIXIE_SHARD.get(), ItemsRegistry.WHIRLISPRIG_SHARDS.get());
             tag(PRISM_LENS).add(ModItems.ARC_LENS.get(), ModItems.HOMING_LENS.get(), ModItems.RGB_LENS.get(), ModItems.PIERCE_LENS.get(), ModItems.ACC_LENS.get(), ModItems.DEC_LENS.get());
             tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.ALCHEMISTS_CROWN.get(), ItemsRegistry.WORN_NOTEBOOK.get(), ItemsRegistry.DOMINION_ROD.get(), ItemsRegistry.DOWSING_ROD.get(), ItemsRegistry.JAR_OF_LIGHT.get(), ItemsRegistry.VOID_JAR.get(), ItemsRegistry.RUNIC_CHALK.get(), ItemsRegistry.WARP_SCROLL.get(), ItemsRegistry.STABLE_WARP_SCROLL.get(), ItemsRegistry.SPELL_PARCHMENT.get()).addTag(SUMMON_SHARDS).addTag(PRISM_LENS);
+            tag(ModRegistry.CASTER_BAGGABLE).add(ItemsRegistry.ENCHANTERS_SHIELD.get());
             this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
             this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
             this.copy(BlockTags.LOGS, ItemTags.LOGS);
@@ -71,6 +78,11 @@ public class AETagsProvider {
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem()
             );
             tag(ItemTagProvider.MAGIC_FOOD).add(ModItems.FLASHING_POD.get().asItem());
+            tag(MAGIC_HOOD).add(ItemsRegistry.ARCHMAGE_HOOD.get(), ItemsRegistry.APPRENTICE_HOOD.get(), ItemsRegistry.NOVICE_HOOD.get());
+            tag(MAGIC_ROBE).add(ItemsRegistry.ARCHMAGE_ROBES.get(), ItemsRegistry.APPRENTICE_ROBES.get(), ItemsRegistry.NOVICE_ROBES.get());
+            tag(MAGIC_LEG).add(ItemsRegistry.ARCHMAGE_LEGGINGS.get(), ItemsRegistry.APPRENTICE_LEGGINGS.get(), ItemsRegistry.NOVICE_LEGGINGS.get());
+            tag(MAGIC_BOOT).add(ItemsRegistry.ARCHMAGE_BOOTS.get(), ItemsRegistry.APPRENTICE_BOOTS.get(), ItemsRegistry.NOVICE_BOOTS.get());
+
         }
 
         @Override
