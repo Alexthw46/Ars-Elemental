@@ -19,7 +19,8 @@ public class ElementalArmorProcessor implements IComponentProcessor {
     public void setup(IVariableProvider variables) {
         RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
         String recipeID = variables.get("recipe").asString();
-        recipe = (ElementalArmorRecipe) manager.byKey(new ResourceLocation(recipeID)).orElse(null);
+        if (manager.byKey(new ResourceLocation(recipeID)).orElse(null) instanceof ElementalArmorRecipe ear)
+            recipe = ear;
     }
 
     @Override

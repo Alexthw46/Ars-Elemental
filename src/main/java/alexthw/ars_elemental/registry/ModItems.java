@@ -25,11 +25,13 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
+import com.hollingsworth.arsnouveau.common.items.ModItem;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -165,7 +167,7 @@ public class ModItems {
 
     static {
 
-        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new Item(addTabProp()));
+        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(addTabProp()).withTooltip(Component.translatable("tooltip.siren_shard")));
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp().fireResistant()));
 
