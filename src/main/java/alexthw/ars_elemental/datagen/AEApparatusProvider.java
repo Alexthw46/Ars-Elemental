@@ -261,10 +261,10 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
 
     protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
 
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getHat()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_HOOD)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build()));
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getChest()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_ROBE)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build()));
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getLegs()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_LEG)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build()));
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getBoots()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_BOOT)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(2000).keepNbtOfReagent(true).build()));
+        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getHat()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_HOOD)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
+        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getChest()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_ROBE)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
+        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getLegs()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_LEG)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
+        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getBoots()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_BOOT)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
 
     }
 

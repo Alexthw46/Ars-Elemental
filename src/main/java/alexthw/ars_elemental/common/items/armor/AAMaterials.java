@@ -15,7 +15,7 @@ public class AAMaterials {
     public final static ModdedArmorMaterial water = new ModdedArmorMaterial("ars_elemental:water", 33, new int[]{3, 6, 8, 3}
             , 40, SoundEvents.BREWING_STAND_BREW, 2.0f, 0);
     public final static ModdedArmorMaterial earth = new ModdedArmorMaterial("ars_elemental:earth", 33, new int[]{3, 6, 8, 3}
-            , 40, SoundEvents.ANVIL_PLACE, 2.0f, 0.05F);
+            , 40, SoundEvents.ANVIL_PLACE, 2.0f, 0.02F);
     public final static ModdedArmorMaterial air = new ModdedArmorMaterial("ars_elemental:air", 33, new int[]{3, 6, 8, 3}
             , 40, SoundEvents.ARMOR_EQUIP_ELYTRA, 2.0f, 0);
 

@@ -29,6 +29,11 @@ public class NetheriteUpgradeRecipe extends EnchantingApparatusRecipe {
     }
 
     @Override
+    public boolean excludeJei() {
+        return true;
+    }
+
+    @Override
     public boolean doesReagentMatch(ItemStack reag) {
         return super.doesReagentMatch(reag) && !reag.copy().getOrCreateTag().contains("ae_netherite");
     }

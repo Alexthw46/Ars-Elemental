@@ -101,6 +101,10 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
         return Component.translatable("ars_nouveau.armor_upgrade.book_desc", tier);
     }
 
+    @Override
+    public boolean excludeJei() {
+        return true;
+    }
 
     public static class Serializer implements RecipeSerializer<ElementalArmorRecipe> {
 
