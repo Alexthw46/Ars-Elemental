@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -59,7 +60,7 @@ public class GlyphEffectUtil {
         boolean flag = true;
         if (filters == null) return true;
         for (IFilter spellPart : filters) {
-            flag &= spellPart.shouldResolveOnEntity(e);
+            flag &= spellPart.shouldAffect(new EntityHitResult(e));
         }
         return !flag;
     }
