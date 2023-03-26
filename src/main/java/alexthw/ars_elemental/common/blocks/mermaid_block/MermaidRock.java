@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -83,4 +84,12 @@ public class MermaidRock extends SummonBlock implements SimpleWaterloggedBlock {
         return shape;
     }
 
+    @Override
+    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pFromPos, boolean pIsMoving) {
+        super.neighborChanged(pState, pLevel, pPos, pBlock, pFromPos, pIsMoving);
+        if (!pLevel.isClientSide() && pLevel.getBlockEntity(pPos) instanceof MermaidTile shrine) {
+            shrine.isOff = pLevel.hasNeighborSignal(pPos);
+            shrine.updateBlock();
+        }
+    }
 }
