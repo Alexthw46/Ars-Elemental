@@ -1,0 +1,21 @@
+{
+  "type": "ars_nouveau:caster_tome",
+  "color": 16718260,
+  "flavour_text": "The hellfire flames burn even the heal magic.",
+  "name": "Phoenix Fire",
+  "sound": {
+    "family": "default",
+    "pitch": 1.0,
+    "volume": 1.0
+  },
+  "spell": [
+    "ars_nouveau:glyph_touch",
+    "ars_nouveau:glyph_ignite",
+    "ars_nouveau:glyph_flare",
+    "ars_nouveau:glyph_heal",
+    "ars_nouveau:glyph_flare",
+    "ars_nouveau:glyph_heal",
+    "ars_nouveau:glyph_flare"
+  ],
+  "tome_type": "ars_elemental:fire_caster_tome"
+}
