@@ -62,6 +62,9 @@ public class AEGlyphProvider {
             addRecipe(UndeadFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.ROTTEN_FLESH);
             addRecipe(UndeadFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.ROTTEN_FLESH);
 
+            addRecipe(SummonFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.BONE);
+            addRecipe(SummonFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.BONE);
+
             addRecipe(InsectFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.SPIDER_EYE);
             addRecipe(InsectFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.SPIDER_EYE);
 

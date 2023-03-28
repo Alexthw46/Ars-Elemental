@@ -26,6 +26,7 @@ public class ModPotions {
 
     public static final RegistryObject<MobEffect> HELLFIRE;
     public static final RegistryObject<MobEffect> WATER_GRAVE;
+    public static final RegistryObject<MobEffect> MANA_BUBBLE;
     public static final RegistryObject<MobEffect> ENTHRALLED;
     public static final RegistryObject<MobEffect> HYMN_OF_ORDER;
     public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
@@ -64,6 +65,7 @@ public class ModPotions {
     static {
         HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
         WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
+        MANA_BUBBLE = EFFECTS.register("mana_shield", BubbleShieldEffect::new);
         ENTHRALLED = EFFECTS.register("enthralled", EnthrallEffect::new);
         LIFE_LINK = EFFECTS.register("life_link", LifeLinkEffect::new);
         HYMN_OF_ORDER = EFFECTS.register("hymn_of_order", OrderEffect::new);

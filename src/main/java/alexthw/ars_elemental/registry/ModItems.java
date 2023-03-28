@@ -60,6 +60,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
+import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 import static com.hollingsworth.arsnouveau.setup.BlockRegistry.LOG_PROP;
 import static com.hollingsworth.arsnouveau.setup.BlockRegistry.SAP_PROP;
 
@@ -161,8 +162,9 @@ public class ModItems {
     }
 
     public static FoodProperties FLASHPINE_FOOD = new FoodProperties.Builder().nutrition(4).saturationMod(0.6F)
-            .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 30 * 20), 1.0f)
-            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 30 * 20, 2), 1.0f)
+            .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 30 * 20), .4f)
+            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 30 * 20, 2), .8f)
+            .effect(() -> new MobEffectInstance(LIGHTNING_LURE.get(), 30 * 20, 0), .2f)
             .alwaysEat().build();
 
     static {

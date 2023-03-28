@@ -29,4 +29,5 @@ public class WaterGraveEffect extends MobEffect {
             livingEntity.setAirSupply(livingEntity.getAirSupply() - 5);
         }
     }
+
 }

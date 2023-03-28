@@ -176,7 +176,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         updateBlock();
     }
 
-    public static final ParticleColor shrineParticle = new ParticleColor(20, 50, 255);
+    public static final ParticleColor shrineParticle = new ParticleColor(20, 100, 200);
 
     @Override
     public void tick() {

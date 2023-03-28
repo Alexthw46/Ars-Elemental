@@ -1,11 +1,9 @@
 package alexthw.ars_elemental.common.items.armor;
 
-import alexthw.ars_elemental.ArsElemental;
 import com.hollingsworth.arsnouveau.api.perk.IEffectResolvePerk;
 import com.hollingsworth.arsnouveau.api.perk.Perk;
 import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,12 +12,14 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
 public class SporePerk extends Perk implements IEffectResolvePerk {
 
     public static SporePerk INSTANCE = new SporePerk();
 
     public SporePerk() {
-        super(new ResourceLocation(ArsElemental.MODID, "thread_spore"));
+        super(prefix("thread_spore"));
     }
 
     @Override
