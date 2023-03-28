@@ -1,0 +1,18 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 27,
+  "inputItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:allow_scroll"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:bone"
+      }
+    }
+  ],
+  "output": "ars_elemental:glyph_summon_filter"
+}

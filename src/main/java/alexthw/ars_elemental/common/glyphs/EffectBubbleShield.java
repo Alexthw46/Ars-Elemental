@@ -24,7 +24,7 @@ public class EffectBubbleShield extends ElementalAbstractEffect implements IPoti
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity) {
-            CapabilityRegistry.getMana(livingEntity).ifPresent(mana -> ((IPotionEffect) this).applyConfigPotion(livingEntity, ModPotions.WATER_GRAVE.get(), spellStats));
+            CapabilityRegistry.getMana(livingEntity).ifPresent(mana -> ((IPotionEffect) this).applyConfigPotion(livingEntity, ModPotions.MANA_BUBBLE.get(), spellStats));
             if (ISchoolFocus.hasFocus(world, shooter) == SpellSchools.ELEMENTAL_WATER) {
                 if (livingEntity.hasEffect(ModPotions.HELLFIRE.get())) {
                     livingEntity.removeEffect(ModPotions.HELLFIRE.get());
