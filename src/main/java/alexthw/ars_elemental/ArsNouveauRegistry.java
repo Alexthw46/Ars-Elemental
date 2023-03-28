@@ -10,6 +10,7 @@ import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;
+import alexthw.ars_elemental.common.items.armor.SummonSickPerk;
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
@@ -91,6 +92,7 @@ public class ArsNouveauRegistry {
 
         //effects
         register(EffectWaterGrave.INSTANCE);
+        register(EffectBubbleShield.INSTANCE);
         register(EffectConjureTerrain.INSTANCE);
         register(EffectCharm.INSTANCE);
         register(EffectPhantom.INSTANCE);
@@ -117,6 +119,8 @@ public class ArsNouveauRegistry {
         register(InsectFilter.NOT_INSTANCE);
         register(UndeadFilter.INSTANCE);
         register(UndeadFilter.NOT_INSTANCE);
+        register(SummonFilter.INSTANCE);
+        register(SummonFilter.NOT_INSTANCE);
     }
 
     public static void registerRituals() {
@@ -135,8 +139,6 @@ public class ArsNouveauRegistry {
 
     public static void postInit() {
         //Schools
-        addSchool(EffectWaterGrave.INSTANCE, SpellSchools.ELEMENTAL_WATER);
-
         addSchool(EffectHeal.INSTANCE, NECROMANCY);
         addSchool(EffectSummonVex.INSTANCE, NECROMANCY);
         addSchool(EffectWither.INSTANCE, NECROMANCY);
@@ -177,6 +179,8 @@ public class ArsNouveauRegistry {
     public static void registerPerks() {
         APIRegistry.registerPerk(SporePerk.INSTANCE);
         APIRegistry.registerPerk(ShockPerk.INSTANCE);
+        APIRegistry.registerPerk(SummonSickPerk.INSTANCE);
+
     }
 
     private static void addPerkSlots() {

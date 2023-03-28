@@ -76,7 +76,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
     }
 
-    public int getMaxProgress(){
+    public int getMaxProgress() {
         return Common.SIREN_MAX_PROGRESS.get();
     }
 
@@ -117,7 +117,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         bonus = score;
     }
 
-    public int getScore(BlockState state){
+    public int getScore(BlockState state) {
 
         if (state.getMaterial() == Material.AIR)
             return 0;
@@ -134,7 +134,9 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         return 0;
     }
 
-    ItemStack getRod(){ return Items.FISHING_ROD.getDefaultInstance();}
+    ItemStack getRod() {
+        return Items.FISHING_ROD.getDefaultInstance();
+    }
 
     public void generateItems() {
         if (!(this.level instanceof ServerLevel server)) return;
@@ -155,10 +157,10 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         int bonus_rolls = Math.min(bonus / 25, Common.SIREN_UNIQUE_BONUS.get());
         int counter = 0;
         for (int i = 0; i < Common.SIREN_BASE_ITEM.get() + bonus_rolls; i++) {
-            if (flag && bonus > 20 && this.level.random.nextDouble() < 0.1 + bonus * Common.SIREN_TREASURE_BONUS.get()) {
+            if (flag && bonus > 30 && this.level.random.nextDouble() < 0.1 + bonus * Common.SIREN_TREASURE_BONUS.get()) {
                 list = lootTableTreasure.getRandomItems(lootContext);
                 flag = false;
-            } else if (flag && bonus < 20 && this.level.random.nextDouble() < 0.2F) {
+            } else if (flag && bonus <= 25 && this.level.random.nextDouble() < 0.2F) {
                 list = lootTableJunk.getRandomItems(lootContext);
             } else list = lootTable.getRandomItems(lootContext);
 
@@ -174,21 +176,23 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         updateBlock();
     }
 
+    public static final ParticleColor shrineParticle = new ParticleColor(20, 100, 200);
+
     @Override
     public void tick() {
         super.tick();
 
-        if (level == null) return;
-        if (level.isClientSide() && !needsMana){
-            for(int i = 0; i < progress/2; i++){
+        if (level == null || isOff) return;
+        if (level.isClientSide() && !needsMana) {
+            for (int i = 0; i < progress / 2; i++) {
                 level.addParticle(
-                        GlowParticleData.createData(new ParticleColor(20, 50, 255), i / 2F * 0.2f, i / 2F * 0.75f, 20),
+                        GlowParticleData.createData(shrineParticle, i / 2F * 0.2f, i / 2F * 0.75f, 20),
                         getBlockPos().getX() + 0.5 + ParticleUtil.inRange(-0.1, 0.1),
                         getBlockPos().getY() + 1.0 + ParticleUtil.inRange(-0.1, 0.1),
                         getBlockPos().getZ() + 0.5 + ParticleUtil.inRange(-0.1, 0.1),
                         0, 0, 0);
             }
-        }else {
+        } else {
 
             long gameTime = level.getGameTime();
             if (gameTime % 2400 == 0) {
@@ -200,7 +204,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 updateBlock();
             }
 
-            if (gameTime % 200 == 0 && !needsMana) {
+            if (gameTime % 2000 == 0 && !needsMana) {
                 if (progress >= getMaxProgress()) {
                     generateItems();
                 } else {
@@ -222,9 +226,9 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
      */
     @Override
     public void getTooltip(List<Component> tooltip) {
-        if(this.needsMana){
+        if (this.needsMana) {
             tooltip.add(Component.translatable("ars_nouveau.wixie.need_mana"));
-        }else {
+        } else {
             //tooltip.add(Component.translatable("Progress: " + progress + "/" + Common.SIREN_MAX_PROGRESS));
             tooltip.add(Component.translatable("Aquarium Bonus: " + bonus));
         }
@@ -254,6 +258,6 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
     private List<LivingEntity> getNearbyEntities() {
         if (level == null) return ImmutableList.of();
-        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(8).west(8).below(8), getBlockPos().south(8).east(8).above(8)), e -> e.getMobType() == MobType.WATER);
+        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(10).west(10).below(10), getBlockPos().south(8).east(8).above(8)), e -> (e.getMobType() == MobType.WATER && !(e instanceof MermaidEntity)));
     }
 }

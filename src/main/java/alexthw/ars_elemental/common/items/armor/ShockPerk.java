@@ -1,12 +1,10 @@
 package alexthw.ars_elemental.common.items.armor;
 
-import alexthw.ars_elemental.ArsElemental;
 import com.hollingsworth.arsnouveau.api.perk.IEffectResolvePerk;
 import com.hollingsworth.arsnouveau.api.perk.Perk;
 import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -14,6 +12,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 
 public class ShockPerk extends Perk implements IEffectResolvePerk {
@@ -21,7 +20,7 @@ public class ShockPerk extends Perk implements IEffectResolvePerk {
     public static ShockPerk INSTANCE = new ShockPerk();
 
     public ShockPerk() {
-        super(new ResourceLocation(ArsElemental.MODID, "thread_shock"));
+        super(prefix("thread_shock"));
     }
 
     @Override

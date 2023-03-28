@@ -1,14 +1,14 @@
 package alexthw.ars_elemental.common.entity;
 
-import alexthw.ars_elemental.common.entity.ai.DolphinJumpGoal;
-import alexthw.ars_elemental.common.entity.ai.FollowBoatGoalM;
-import alexthw.ars_elemental.common.entity.ai.HybridStrollGoal;
-import alexthw.ars_elemental.common.entity.ai.MermaidAi;
+import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
+import alexthw.ars_elemental.common.entity.ai.*;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
+import com.hollingsworth.arsnouveau.client.ClientInfo;
+import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
@@ -73,10 +73,13 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
+    public static final EntityDataAccessor<Boolean> CHANNELING = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> CHANNELING_ENTITY = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> TAMED = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> JUMPING = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<String> COLOR = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<Optional<BlockPos>> HOME = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
+    public int channelCooldown;
 
     public MermaidEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
@@ -109,6 +112,26 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         goalSelector.addGoal(4, new DolphinJumpGoal(this, 10));
         goalSelector.addGoal(5, new GoBackHomeGoal(this, this::getHome, 20, () -> this.getHome() != null));
         goalSelector.addGoal(8, new FollowBoatGoalM(this, () -> this.getHome() == null));
+        goalSelector.addGoal(5, new MermaidChannelGoal(this));
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!level.isClientSide && channelCooldown > 0)
+            channelCooldown--;
+
+        if (level.isClientSide && isChanneling() && getChannelEntity() != -1) {
+            Entity entity = level.getEntity(getChannelEntity());
+            if (entity == null || entity.isRemoved())
+                return;
+            Vec3 vec = entity.position();
+            level.addParticle(GlowParticleData.createData(MermaidTile.shrineParticle),
+                    (float) (vec.x) - Math.sin((ClientInfo.ticksInGame) / 8D),
+                    (float) (vec.y) + Math.sin(ClientInfo.ticksInGame / 5d) / 8D + 0.5,
+                    (float) (vec.z) - Math.cos((ClientInfo.ticksInGame) / 8D),
+                    0, 0, 0);
+        }
     }
 
     @Override
@@ -232,6 +255,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         this.entityData.define(TAMED, false);
         this.entityData.define(JUMPING, false);
         this.entityData.define(COLOR, Variants.random(this.random).toString());
+        this.entityData.define(CHANNELING, false);
+        this.entityData.define(CHANNELING_ENTITY, -1);
     }
 
     public boolean isJumping() {
@@ -259,12 +284,22 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         return this.entityData.get(HOME).orElse(null);
     }
 
+    public @Nullable MermaidTile getShrine() {
+        BlockPos homePos = getHome();
+        if (homePos == null || !(level.getBlockEntity(homePos) instanceof MermaidTile shrine))
+            return null;
+        return shrine;
+    }
+
+
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         NBTUtil.storeBlockPos(tag, "home", getHome());
         tag.putBoolean("tamed", this.entityData.get(TAMED));
         tag.putString("color", this.entityData.get(COLOR));
+        tag.putBoolean("channeling", this.entityData.get(CHANNELING));
+        tag.putInt("cooldown", channelCooldown);
     }
 
     @Override
@@ -274,6 +309,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             this.entityData.set(HOME, Optional.of(NBTUtil.getBlockPos(tag, "home")));
         setTamed(tag.getBoolean("tamed"));
         this.entityData.set(COLOR, tag.getString("color"));
+        channelCooldown = tag.getInt("cooldown");
     }
 
     public int getMaxSpawnClusterSize() {
@@ -297,6 +333,23 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     public void startAnimation(int arg) {
 
     }
+
+    public boolean isChanneling() {
+        return this.entityData.get(CHANNELING);
+    }
+
+    public void setChanneling(boolean channeling) {
+        this.entityData.set(CHANNELING, channeling);
+    }
+
+    public int getChannelEntity() {
+        return this.entityData.get(CHANNELING_ENTITY);
+    }
+
+    public void setChannelingEntity(int entityID) {
+        this.entityData.set(CHANNELING_ENTITY, entityID);
+    }
+
 
     public static class MermaidPathNavigation<E extends PathfinderMob> extends WaterBoundPathNavigation {
         public MermaidPathNavigation(E p_149218_, Level p_149219_) {

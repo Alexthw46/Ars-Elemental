@@ -4,32 +4,47 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.api.item.ISchoolBangle;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
+import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
+import alexthw.ars_elemental.common.items.armor.SummonSickPerk;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
+import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.registry.ModPotions.HELLFIRE;
+import static alexthw.ars_elemental.registry.ModPotions.MANA_BUBBLE;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
@@ -170,6 +185,79 @@ public class DamageEvents {
             }
 
         }
+        int ManaBubbleCost = 250;
+
+        if (event.getEntity() != null && event.getEntity().hasEffect(MANA_BUBBLE.get())) {
+            LivingEntity living = event.getEntity();
+            CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
+                double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
+                double amp = Math.min(1 + living.getEffect(MANA_BUBBLE.get()).getAmplifier() / 2D, maxReduction);
+                float newDamage = (float) Math.max(0.1, event.getAmount() - amp);
+                float actualReduction = event.getAmount() - newDamage;
+                if (actualReduction > 0 && mana.getCurrentMana() >= actualReduction * ManaBubbleCost) {
+                    event.setAmount(newDamage);
+                    mana.removeMana(actualReduction * ManaBubbleCost);
+                }
+                if (mana.getCurrentMana() < ManaBubbleCost) {
+                    living.removeEffect(MANA_BUBBLE.get());
+                }
+            });
+        }
+    }
+
+    @SubscribeEvent
+    public static void statusProtect(MobEffectEvent.Applicable event) {
+        if (event.getEntity().hasEffect(MANA_BUBBLE.get()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+
+            if (event.getEntity().getRandom().nextInt(10) == 0) {
+                CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
+                    if (mana.getCurrentMana() >= 500) {
+                        mana.removeMana(500);
+                        event.setCanceled(true);
+                    }
+                });
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void summonSickReduction(MobEffectEvent.Added event) {
+        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonSickPerk.INSTANCE, player) > 0) {
+            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (10 - PerkUtil.countForPerk(SummonSickPerk.INSTANCE, player) / 10);
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void vorpalCut(SpellDamageEvent.Post event) {
+        if (!(event.target instanceof LivingEntity living) || living.getHealth() > 0) return;
+        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.caster.level, event.caster);
+        Spell subspell = new Spell(event.context.getSpell().recipe.subList(event.context.getCurrentIndex() - 1, event.context.getSpell().recipe.size()));
+        if (subspell.recipe.get(0) == EffectCut.INSTANCE && school == ELEMENTAL_AIR && SkullMap.containsKey(living.getType())) {
+
+            ItemStack skull = SkullMap.get(living.getType()).get();
+            if (living instanceof Player player) {
+                GameProfile gameprofile = player.getGameProfile();
+                skull.getOrCreateTag().put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), gameprofile));
+            }
+            int looting = subspell.getBuffsAtIndex(0, event.caster, AugmentFortune.INSTANCE);
+            for (int i = -1; i < looting; i++)
+                if (living.level.random.nextInt(40) == 0) {
+                    living.spawnAtLocation(skull);
+                    break;
+                }
+        }
+    }
+
+    public static HashMap<EntityType<?>, Supplier<ItemStack>> SkullMap = new HashMap<>();
+
+    static {
+        SkullMap.put(EntityType.ZOMBIE, () -> new ItemStack(Items.ZOMBIE_HEAD));
+        SkullMap.put(EntityType.CREEPER, () -> new ItemStack(Items.CREEPER_HEAD));
+        SkullMap.put(EntityType.SKELETON, () -> new ItemStack(Items.SKELETON_SKULL));
+        SkullMap.put(EntityType.WITHER_SKELETON, () -> new ItemStack(Items.WITHER_SKELETON_SKULL));
+        SkullMap.put(EntityType.ENDER_DRAGON, () -> new ItemStack(Items.DRAGON_HEAD));
+        SkullMap.put(EntityType.PLAYER, () -> new ItemStack(Items.PLAYER_HEAD));
     }
 
 }

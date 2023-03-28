@@ -68,10 +68,9 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addPotionConfig(builder, 30);
+        addDefaultPotionConfig(builder);
         addDamageConfig(builder, 5.0);
         addAmpConfig(builder, 2.0);
-        addExtendTimeConfig(builder, 5);
     }
 
     @Override
@@ -88,6 +87,11 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
         return getPotionAugments();
+    }
+
+    @Override
+    protected @NotNull Set<SpellSchool> getSchools() {
+        return Set.of(SpellSchools.ELEMENTAL_WATER);
     }
 
     @Override

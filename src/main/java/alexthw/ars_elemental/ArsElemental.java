@@ -2,7 +2,10 @@ package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.client.ClientEvents;
 import alexthw.ars_elemental.client.SpellFocusRenderer;
-import alexthw.ars_elemental.registry.*;
+import alexthw.ars_elemental.registry.ModAdvTriggers;
+import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModPotions;
+import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
 import com.hollingsworth.arsnouveau.setup.Config;
@@ -59,7 +62,6 @@ public class ArsElemental {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
         ModRegistry.registerRegistries(modbus);
-        ModLoot.init();
         ArsNouveauRegistry.init();
         modbus.addListener(this::setup);
         modbus.addListener(this::sendImc);
