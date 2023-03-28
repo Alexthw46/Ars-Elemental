@@ -1,6 +1,7 @@
-// 1.19.2	2023-03-28T16:54:40.5608502	Ars Elemental Glyph Recipes
+// 1.19.2	2023-03-28T20:36:01.9573391	Ars Elemental Glyph Recipes
 4c34e0612f78688ee20cd4f89eae01fa0a70588b data/ars_elemental/recipes/glyph_aerial_filter.json
 aa7e56df60b1f789d890b959eb3901f5c5eb4c93 data/ars_elemental/recipes/glyph_aquatic_filter.json
+92daa789b1837f4c1ce3ef50b100fb6d8861908c data/ars_elemental/recipes/glyph_bubble_shield.json
 137fb0b6d400ab5d213fafa3f825fffc5a9a0f60 data/ars_elemental/recipes/glyph_charm.json
 bfe325c8b34e888365ca61a9c8b71463e342607a data/ars_elemental/recipes/glyph_conjure_terrain.json
 1307b22ca34b64015bd959f14e6e8bf3f46adf7f data/ars_elemental/recipes/glyph_curved_projectile.json

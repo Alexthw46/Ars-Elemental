@@ -10,7 +10,7 @@ import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;
-import alexthw.ars_elemental.common.items.armor.SummonSickPerk;
+import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
@@ -179,7 +179,7 @@ public class ArsNouveauRegistry {
     public static void registerPerks() {
         APIRegistry.registerPerk(SporePerk.INSTANCE);
         APIRegistry.registerPerk(ShockPerk.INSTANCE);
-        APIRegistry.registerPerk(SummonSickPerk.INSTANCE);
+        APIRegistry.registerPerk(SummonPerk.INSTANCE);
 
     }
 

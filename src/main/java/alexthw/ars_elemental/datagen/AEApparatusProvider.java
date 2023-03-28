@@ -3,11 +3,13 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;
+import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
+import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
@@ -49,6 +51,15 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(2, ItemsRegistry.EARTH_ESSENCE)
                 .withPedestalItem(1, Items.SPORE_BLOSSOM)
                 .withPedestalItem(1, Items.SPIDER_EYE)
+                .build()
+        );
+
+        recipes.add(builder()
+                .withResult(getPerkItem(SummonPerk.INSTANCE.getRegistryName()))
+                .withReagent(ItemsRegistry.BLANK_THREAD)
+                .withPedestalItem(2, ItemsRegistry.CONJURATION_ESSENCE)
+                .withPedestalItem(1, Items.ECHO_SHARD)
+                .withPedestalItem(2, Ingredient.of(ItemTagProvider.WILDEN_DROP_TAG))
                 .build()
         );
 

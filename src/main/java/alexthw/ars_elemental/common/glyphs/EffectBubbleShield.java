@@ -35,19 +35,25 @@ public class EffectBubbleShield extends ElementalAbstractEffect implements IPoti
     }
 
     @Override
+    protected @NotNull Set<SpellSchool> getSchools() {
+        return setOf(SpellSchools.ELEMENTAL_WATER);
+    }
+
+    @Override
     public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 
     @Override
     public int getDefaultManaCost() {
-        return 300;
+        return 400;
     }
 
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
+        addGenericInt(builder,350, "Set how much mana is depleted every time a damage is mitigated by the Mana Bubble.","absorption_cost");
     }
 
     @NotNull

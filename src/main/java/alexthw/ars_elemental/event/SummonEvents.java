@@ -5,13 +5,17 @@ import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.api.IUndeadSummon;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.summon.*;
+import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
+import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
 import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
 import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
+import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +24,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -96,6 +102,26 @@ public class SummonEvents {
                         event.world.addFreshEntity(toRaise);
                         NecroticFocus.spawnDeathPoof(world, toRaise.blockPosition());
                     }
+                }
+            }
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void summonSickReduction(MobEffectEvent.Added event) {
+        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonPerk.INSTANCE, player) > 0) {
+            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (10 - PerkUtil.countForPerk(SummonPerk.INSTANCE, player) / 10);
+        }
+    }
+
+    @SubscribeEvent
+    public static void summonPowerup(LivingDamageEvent event){
+        if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().getLevel() instanceof ServerLevel level){
+            if (summon.getOwner(level) instanceof Player player) {
+                int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, player) - 1;
+                if (threadLevel > 0){
+                    event.setAmount(event.getAmount() + threadLevel);
                 }
             }
         }

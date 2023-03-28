@@ -6,7 +6,7 @@ import alexthw.ars_elemental.api.item.ISchoolBangle;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import alexthw.ars_elemental.common.items.armor.SummonSickPerk;
+import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
@@ -220,12 +220,7 @@ public class DamageEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void summonSickReduction(MobEffectEvent.Added event) {
-        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonSickPerk.INSTANCE, player) > 0) {
-            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (10 - PerkUtil.countForPerk(SummonSickPerk.INSTANCE, player) / 10);
-        }
-    }
+
 
 
     @SubscribeEvent
