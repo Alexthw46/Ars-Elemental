@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
 import alexthw.ars_elemental.common.enchantments.SoulboundEnchantment;
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
+import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import net.minecraft.core.Registry;
@@ -88,6 +89,8 @@ public class ModRegistry {
     public static final RegistryObject<RecipeSerializer<NetheriteUpgradeRecipe>> NETHERITE_UP_SERIALIZER;
     public static final RegistryObject<RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP;
     public static final RegistryObject<RecipeSerializer<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP_SERIALIZER;
+    public static final RegistryObject<RecipeType<HeadCutRecipe>> HEAD_CUT;
+    public static final RegistryObject<RecipeSerializer<HeadCutRecipe>> HEAD_CUT_SERIALIZER;
 
 
     static {
@@ -100,6 +103,8 @@ public class ModRegistry {
         MIRROR = ENCHANTMENTS.register("mirror_shield", MirrorShieldEnchantment::new);
         SOULBOUND = ENCHANTMENTS.register("soulbound", SoulboundEnchantment::new);
 
+        HEAD_CUT = RECIPES.register("head_cut", () -> RecipeType.simple(prefix("head_cut")));
+        HEAD_CUT_SERIALIZER = SERIALIZERS.register("head_cut", HeadCutRecipe.Serializer::new);
         NETHERITE_UP = RECIPES.register("netherite_upgrade", () -> RecipeType.simple(prefix("netherite_upgrade")));
         NETHERITE_UP_SERIALIZER = SERIALIZERS.register("netherite_upgrade", NetheriteUpgradeRecipe.Serializer::new);
         ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("netherite_upgrade")));

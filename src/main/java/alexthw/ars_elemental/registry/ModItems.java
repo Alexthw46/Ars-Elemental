@@ -163,7 +163,8 @@ public class ModItems {
 
     public static FoodProperties FLASHPINE_FOOD = new FoodProperties.Builder().nutrition(4).saturationMod(0.6F)
             .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 30 * 20), .4f)
-            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 30 * 20, 2), .8f)
+            .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 30 * 20), .4f)
+            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 30 * 20, 0), .8f)
             .effect(() -> new MobEffectInstance(LIGHTNING_LURE.get(), 30 * 20, 0), .2f)
             .alwaysEat().build();
 
