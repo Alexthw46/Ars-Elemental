@@ -11,14 +11,15 @@ import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.datagen.Datagen.takeAll;
 
 public class AEBlockStateProvider extends BlockStateProvider {
@@ -30,6 +31,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
+        takeAll(blocks, b -> b.get() instanceof FlowerPotBlock).forEach(this::registerOnlyState);
         takeAll(blocks, b -> b.get() instanceof TickableModBlock || b.get() instanceof ElementalTurret || b.get() instanceof SpellPrismBlock);
         takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock || b.get() instanceof StrippableLog).forEach(this::logBlock);
         takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
@@ -41,10 +43,14 @@ public class AEBlockStateProvider extends BlockStateProvider {
         blocks.forEach(this::basicBlock);
     }
 
+    public void registerOnlyState(RegistryObject<Block> obj) {
+        simpleBlock(obj.get(), new ModelFile.UncheckedModelFile(prefix("block/"+ obj.getId().getPath())));
+    }
+
     public void slabBlock(RegistryObject<Block> blockRegistryObject) {
-        String name = ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath();
+        String name = blockRegistryObject.getId().getPath();
         String baseName = name.substring(0, name.length() - 5);
-        slabBlock((SlabBlock) blockRegistryObject.get(), ArsElemental.prefix(baseName), ArsElemental.prefix("block/" + baseName));
+        slabBlock((SlabBlock) blockRegistryObject.get(), prefix(baseName), prefix("block/" + baseName));
     }
 
     public void logBlock(RegistryObject<Block> blockRegistryObject) {
@@ -52,9 +58,9 @@ public class AEBlockStateProvider extends BlockStateProvider {
     }
 
     public void stairsBlock(RegistryObject<Block> blockRegistryObject) {
-        String name = ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath();
+        String name = blockRegistryObject.getId().getPath();
         String baseName = name.substring(0, name.length() - 7);
-        stairsBlock((StairBlock) blockRegistryObject.get(), ArsElemental.prefix("block/" + baseName));
+        stairsBlock((StairBlock) blockRegistryObject.get(), prefix("block/" + baseName));
     }
 
     public void basicBlock(RegistryObject<Block> blockRegistryObject) {

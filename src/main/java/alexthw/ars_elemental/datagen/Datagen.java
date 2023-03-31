@@ -110,6 +110,10 @@ public class Datagen {
 
                 list.add(ModItems.MERMAID_ROCK.get());
                 dropOther(ModItems.MERMAID_ROCK.get(), Blocks.PRISMARINE);
+
+                list.add(ModItems.POT_FLASHING_SAPLING.get());
+                dropPottedContents(ModItems.POT_FLASHING_SAPLING.get());
+
                 this.add(ModItems.FLASHING_POD.get(), (block) -> LootTable.lootTable().withPool(POD_BUILDER(block.asItem(), block)));
             }
 
