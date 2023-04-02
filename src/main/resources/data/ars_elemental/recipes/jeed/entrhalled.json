@@ -15,7 +15,7 @@
         },
         "providers": [
           {
-            "item": "ars_nouveau:glyph_charm"
+            "item": "ars_elemental:glyph_charm"
           }
         ]
       }
