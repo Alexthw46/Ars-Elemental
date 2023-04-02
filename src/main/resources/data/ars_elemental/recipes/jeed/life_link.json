@@ -15,7 +15,7 @@
         },
         "providers": [
           {
-            "item": "ars_nouveau:glyph_life_link"
+            "item": "ars_elemental:glyph_life_link"
           }
         ]
       }
