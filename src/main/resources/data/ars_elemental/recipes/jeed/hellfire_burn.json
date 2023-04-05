@@ -15,7 +15,7 @@
         },
         "providers": [
           {
-            "item": "ars_nouveau:glyph_ignite"
+            "item": "ars_elemental:glyph_ignite"
           },
 	{
             "item": "ars_elemental:fire_focus"
