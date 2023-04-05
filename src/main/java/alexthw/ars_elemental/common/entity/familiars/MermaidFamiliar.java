@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.entity.familiars;
 
+import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.MermaidEntity.Variants;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
@@ -30,6 +31,8 @@ import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
 import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
+
+import java.util.Locale;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -75,6 +78,9 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
                 this.getOwner().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600, 1, false, false, true));
                 this.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600, 1, false, false, true));
             }
+        }
+        if (!level.isClientSide && level.getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
+            this.entityData.set(COLOR, MermaidEntity.Variants.random().toString());
         }
     }
 

@@ -46,12 +46,12 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
             return;
         Vec3 vec = safelyGetHitPos(rayTraceResult);
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
-        double range = 5 + spellStats.getAoeMultiplier();
+        double range = 3 + spellStats.getAoeMultiplier();
         DamageSource source = buildDamageSource(world, shooter);
 
         if (livingEntity.hasEffect(ModPotions.SHOCKED_EFFECT.get()) || livingEntity.hasEffect(LIGHTNING_LURE.get())) {
             if (livingEntity.hasEffect(LIGHTNING_LURE.get())) {
-                damage *= 1.5;
+                damage *= 1.3;
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
             }
             for (ItemStack i : livingEntity.getArmorSlots()) {

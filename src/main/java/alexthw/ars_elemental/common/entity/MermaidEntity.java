@@ -7,6 +7,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
+import com.hollingsworth.arsnouveau.api.util.SummonUtil;
 import com.hollingsworth.arsnouveau.client.ClientInfo;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -63,6 +64,7 @@ import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -120,6 +122,11 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         super.tick();
         if (!level.isClientSide && channelCooldown > 0)
             channelCooldown--;
+        SummonUtil.healOverTime(this);
+
+        if (!level.isClientSide && level.getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
+            this.entityData.set(COLOR, MermaidEntity.Variants.random().toString());
+        }
 
         if (level.isClientSide && isChanneling() && getChannelEntity() != -1) {
             Entity entity = level.getEntity(getChannelEntity());
@@ -144,9 +151,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float p_70097_2_) {
-        if (source == DamageSource.DROWN || source == DamageSource.IN_WALL || source == DamageSource.SWEET_BERRY_BUSH || source == DamageSource.CACTUS)
-            return false;
-        return super.hurt(source, p_70097_2_);
+        return SummonUtil.canSummonTakeDamage(source);
     }
 
     //Dolphin inheritance
@@ -254,7 +259,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         this.entityData.define(HOME, Optional.empty());
         this.entityData.define(TAMED, false);
         this.entityData.define(JUMPING, false);
-        this.entityData.define(COLOR, Variants.random(this.random).toString());
+        this.entityData.define(COLOR, Variants.random().toString());
         this.entityData.define(CHANNELING, false);
         this.entityData.define(CHANNELING_ENTITY, -1);
     }
@@ -437,6 +442,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         }
         return super.interactAt(pPlayer, pVec, hand);
     }
+    static final RandomSource mermaidRandom = RandomSource.createNewThreadLocalInstance();
 
     public enum Variants {
         KELP,
@@ -458,10 +464,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             return null;
         }
 
-        public static Variants random(RandomSource random) {
+        public static Variants random() {
             Map<Integer, Variants> ordinalMap = Arrays.stream(Variants.values()).collect(Collectors.toMap(Enum::ordinal, var -> var, (a, b) -> b));
 
-            return ordinalMap.get(random.nextInt(ordinalMap.size()));
+            return ordinalMap.get(mermaidRandom.nextInt(ordinalMap.size()));
         }
 
         @Override

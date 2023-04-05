@@ -248,9 +248,9 @@ public class DamageEvents {
             }
             if (skull == null) return;
 
-            int looting = Math.max(4, subspell.getBuffsAtIndex(0, event.caster, AugmentFortune.INSTANCE));
+            int looting = Math.min(3, subspell.getBuffsAtIndex(0, event.caster, AugmentFortune.INSTANCE));
             for (int i = -1; i < looting; i++)
-                if (living.level.random.nextInt(100) <= chance) {
+                if (living.getRandom().nextInt(100) <= chance) {
                     living.spawnAtLocation(skull);
                     break;
                 }
