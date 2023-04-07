@@ -1,19 +1,24 @@
 {
-  "conditions": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "type": "forge:mod_loaded",
-      "modid": "jeed"
-    }
-  ],
-  "recipe": {
-    "type": "jeed:effect_provider",
-    "effect": {
-      "id": "ars_elemental:mana_shield"
-    },
-    "providers": [
-      {
-        "item": "ars_elemental:glyph_bubble_shield"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "jeed"
+        }
+      ],
+      "recipe": {
+        "type": "jeed:effect_provider",
+        "effect": {
+          "id": "ars_elemental:mana_shield"
+        },
+        "providers": [
+          {
+            "item": "ars_elemental:glyph_bubble_shield"
+          }
+        ]
       }
-    ]
-  }
+    }
+  ]
 }
