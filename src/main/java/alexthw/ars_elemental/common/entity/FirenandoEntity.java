@@ -162,7 +162,7 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null));
+        this.goalSelector.addGoal(3, new GoBackHomeGoal(this, this::getHome, 12, () -> this.getTarget() == null));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, false, (entity) -> entity instanceof Enemy));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));

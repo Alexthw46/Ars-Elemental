@@ -147,6 +147,8 @@ public class ArsNouveauRegistry {
         addSchool(EffectCharm.INSTANCE, NECROMANCY);
         addSchool(EffectSummonUndead.INSTANCE, NECROMANCY);
 
+        addSchool(EffectCut.INSTANCE, SpellSchools.ELEMENTAL_AIR);
+
         //Tweaks
         EffectFirework.INSTANCE.compatibleAugments.add(AugmentDampen.INSTANCE);
         EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
@@ -156,6 +158,7 @@ public class ArsNouveauRegistry {
 
         ArsNouveauRegistry.addLights();
         ArsNouveauRegistry.addPerkSlots();
+
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
@@ -180,7 +183,6 @@ public class ArsNouveauRegistry {
         APIRegistry.registerPerk(SporePerk.INSTANCE);
         APIRegistry.registerPerk(ShockPerk.INSTANCE);
         APIRegistry.registerPerk(SummonPerk.INSTANCE);
-
     }
 
     private static void addPerkSlots() {

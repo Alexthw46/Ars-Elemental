@@ -1,5 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.ArsNouveauRegistry;
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.world.effect.MobEffect;
@@ -26,8 +28,9 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity && shooter instanceof Player player && player != livingEntity) {
-
-            applyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
+            if (ISchoolFocus.hasFocus(world, shooter) == ArsNouveauRegistry.NECROMANCY)
+                forceApplyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
+            else applyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
 
         }
 
@@ -60,6 +63,13 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
         int ticks = getBaseDuration() * 20 + getExtendTimeDuration() * stats.getDurationInTicks();
         entity.addEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity));
         owner.addEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity));
+    }
+
+    public void forceApplyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats) {
+        if (entity == null || owner == null) return;
+        int ticks = getBaseDuration() * 20 + getExtendTimeDuration() * stats.getDurationInTicks();
+        entity.forceAddEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity), entity);
+        owner.forceAddEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity), owner);
     }
 
     @Override

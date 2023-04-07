@@ -1,6 +1,6 @@
 {
   "type": "ars_elemental:head_cut",
-  "drop_chance": 20,
+  "drop_chance": 10,
   "mob": "minecraft:creeper",
   "output": {
     "item": "minecraft:creeper_head"

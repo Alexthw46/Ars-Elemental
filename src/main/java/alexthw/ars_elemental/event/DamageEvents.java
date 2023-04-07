@@ -235,7 +235,7 @@ public class DamageEvents {
             if (living instanceof Player player) {
                 GameProfile gameprofile = player.getGameProfile();
                 skull = new ItemStack(Items.PLAYER_HEAD);
-                chance = 30;
+                chance = 20;
                 skull.getOrCreateTag().put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), gameprofile));
             } else {
                 for (HeadCutRecipe recipe : living.getLevel().getRecipeManager().getAllRecipesFor(ModRegistry.HEAD_CUT.get())) {
@@ -248,9 +248,9 @@ public class DamageEvents {
             }
             if (skull == null) return;
 
-            int looting = subspell.getBuffsAtIndex(0, event.caster, AugmentFortune.INSTANCE);
+            int looting = Math.min(3, subspell.getBuffsAtIndex(0, event.caster, AugmentFortune.INSTANCE));
             for (int i = -1; i < looting; i++)
-                if (living.level.random.nextInt(100) <= chance) {
+                if (living.getRandom().nextInt(100) <= chance) {
                     living.spawnAtLocation(skull);
                     break;
                 }
