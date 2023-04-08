@@ -168,7 +168,7 @@ public class ModItems {
 
     static {
 
-        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(addTabProp()).withTooltip(Component.translatable("tooltip.siren_shard")));
+        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(addTabProp()).withTooltip(Component.translatable("tooltip.siren_shards")));
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp().fireResistant()));
 
