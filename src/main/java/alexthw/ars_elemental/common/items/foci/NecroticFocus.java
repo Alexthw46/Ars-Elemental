@@ -6,10 +6,12 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.glyphs.EffectPhantom;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.common.items.ElementalCurio;
+import alexthw.ars_elemental.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
+import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSummonUndead;
 import net.minecraft.core.BlockPos;
@@ -82,10 +84,11 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     @SubscribeEvent
     public static void lifeSteal(LivingDeathEvent event){
-        if (event.getSource().getEntity() instanceof IUndeadSummon risen && risen.getOwnerID() != null){
+        if (event.getSource().getEntity() instanceof IUndeadSummon risen && risen.getOwnerID() != null && event.getEntity().getLevel() instanceof ServerLevel level) {
             Player player = event.getEntity().level.getPlayerByUUID(risen.getOwnerID());
             if (player != null) {
                 player.heal(2.0F);
+                level.addFreshEntity(new EntityFollowProjectile(level, risen.getLivingEntity().blockPosition(), player.blockPosition(), ParticleUtil.soulColor.toWrapper()));
             }
         }
     }
@@ -101,7 +104,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
                 } else {
                     i.getLookControl().setLookAt(player.getViewVector(1));
                 }
-                EntitySpellResolver spellResolver = new EntitySpellResolver(new SpellContext(event.getWorld(), event.spell, i, new LivingCaster(i)));
+                EntitySpellResolver spellResolver = new EntitySpellResolver(event.context.clone().withWrappedCaster(new LivingCaster(i)));
                 spellResolver.onCast(ItemStack.EMPTY, world);
             }
         }
