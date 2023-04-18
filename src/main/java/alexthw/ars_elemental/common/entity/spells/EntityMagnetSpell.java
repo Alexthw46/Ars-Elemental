@@ -65,6 +65,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         if (level.isClientSide() && this.age > getParticleDelay()) {
             playParticles();
         }
+        // Magnetize entities
         if (!level.isClientSide() && this.age % 5 == 0) {
             for (Entity entity : level.getEntities(this, new AABB(this.blockPosition()).inflate(getAoe()))) {
                 if (testFilters(entity)) continue;
@@ -83,7 +84,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
 
     public static List<Predicate<Entity>> makeIgnores(LivingEntity shooter, Spell spell, int index) {
         List<Predicate<Entity>> ignore = new ArrayList<>();
-
+        // prevent magnet from pulling itself and other lingering spells and familiars and entities that are ignored by filters
         ignore.add((entity -> entity instanceof EntityLingeringSpell));
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity);

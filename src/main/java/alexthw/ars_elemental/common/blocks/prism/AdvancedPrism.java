@@ -45,7 +45,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
             super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         }
         if (pPlayer.getItemInHand(pHand).getItem() instanceof SpellPrismLens && pLevel.getBlockEntity(pPos) instanceof AdvancedPrismTile tile) {
-            tile.setLent(pPlayer.getItemInHand(pHand).split(1), pPlayer);
+            tile.setLens(pPlayer.getItemInHand(pHand).split(1), pPlayer);
             return InteractionResult.SUCCESS;
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
@@ -65,6 +65,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
             return;
         }
         Vec3 vec3d = tile.getShootAngle().normalize();
+        // get the lens from the tile and check if it can convert the spell, if it can, shoot it, if not use the default lens
         if (tile.getLens().getItem() instanceof SpellPrismLens lens && lens.canConvert(spell, world, pos)) {
             lens.shoot(world, pos, spell, vec3d);
         } else {

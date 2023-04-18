@@ -49,11 +49,14 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         double range = 3 + spellStats.getAoeMultiplier();
         DamageSource source = buildDamageSource(world, shooter);
 
+        // If the target is shocked, damage all nearby entities and apply the shock effect to them
         if (livingEntity.hasEffect(ModPotions.SHOCKED_EFFECT.get()) || livingEntity.hasEffect(LIGHTNING_LURE.get())) {
+            // If the target is static charged, damage is increased by 30% and the effect is removed
             if (livingEntity.hasEffect(LIGHTNING_LURE.get())) {
                 damage *= 1.3;
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
             }
+            // If the target wear energy armors, damage is increased by 10% for each armor piece and energy is drained
             for (ItemStack i : livingEntity.getArmorSlots()) {
                 LazyOptional<IEnergyStorage> lazyEnergyStorage = i.getCapability(ForgeCapabilities.ENERGY);
                 if (lazyEnergyStorage.isPresent()) {
@@ -64,6 +67,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
                     }
                 }
             }
+            // Damage all nearby entities and apply the shock effect to them
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
                 ((IPotionEffect) this).applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);

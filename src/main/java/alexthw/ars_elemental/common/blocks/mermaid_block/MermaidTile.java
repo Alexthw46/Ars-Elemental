@@ -53,6 +53,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     public void convertedEffect() {
         super.convertedEffect();
         if (level instanceof ServerLevel world) {
+            // when the block is converted, spawn a mermaid
             if (tickCounter >= 120) {
                 converted = true;
                 level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(SummoningTile.CONVERTED, true));
@@ -90,6 +91,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
     public void evaluateAquarium() {
         if (!(getLevel() instanceof ServerLevel world)) return;
+        // create a map to track the blocks of the aquarium to get a score
         Set<BlockState> blocks = new HashSet<>();
         int score = 0;
         int water = 0;
@@ -97,6 +99,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             if (world.isOutsideBuildHeight(b))
                 continue;
             BlockState block = world.getBlockState(b);
+            // get the score of the block, and add it to the score if it is not already in the map and is not 0
             int points = getScore(block);
             switch (points) {
                 case 0: //continue
@@ -109,6 +112,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             }
         }
 
+        // if the aquarium has more than 50 water blocks, add 5 points for each unique entity type
         if (water > 50) {
             Set<EntityType<?>> entities = new HashSet<>();
             score += getNearbyEntities().stream().filter(b -> entities.add(b.getType())).mapToInt(b -> 5).sum();
@@ -119,18 +123,22 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
     public int getScore(BlockState state) {
 
+        // if the block is air, return 0
         if (state.getMaterial() == Material.AIR)
             return 0;
 
+        // if the block is water, return 1
         if (state == Blocks.WATER.defaultBlockState())
             return 1;
 
+        // if the block is a plant or coral, return 2
         if (state.getMaterial() == Material.WATER_PLANT || state.getBlock() instanceof CoralBlock)
             return 2;
 
         if (state.getMaterial() == Material.EGG)
             return 3;
 
+        // otherwise, return 0
         return 0;
     }
 
@@ -141,6 +149,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     public void generateItems() {
         if (!(this.level instanceof ServerLevel server)) return;
 
+        // get the loot tables for fishing and create a fake player to get the loot context
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer(server);
         LootTable lootTable = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_FISH);
         LootTable lootTableTreasure = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_TREASURE);
@@ -154,8 +163,11 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         boolean flag = true;
         List<ItemStack> list;
 
+        // get the number of bonus rolls and the number of items to drop
         int bonus_rolls = Math.min(bonus / 25, Common.SIREN_UNIQUE_BONUS.get());
         int counter = 0;
+        // roll the loot table for each bonus roll and drop the items, if the counter is greater than the cap, stop
+        // if the bonus is greater than 30, there is at least 10% chance to get a treasure item, otherwise there is a 20% chance to get a junk item
         for (int i = 0; i < Common.SIREN_BASE_ITEM.get() + bonus_rolls; i++) {
             if (flag && bonus > 30 && this.level.random.nextDouble() < 0.1 + bonus * Common.SIREN_TREASURE_BONUS.get()) {
                 list = lootTableTreasure.getRandomItems(lootContext);
@@ -164,6 +176,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
                 list = lootTableJunk.getRandomItems(lootContext);
             } else list = lootTable.getRandomItems(lootContext);
 
+            // deposit the items into the inventory
             for (ItemStack item : list) {
                 BlockUtil.insertItemAdjacent(level, worldPosition, item);
                 counter++;
@@ -171,6 +184,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             if (counter >= Common.SIREN_QUANTITY_CAP.get()) break;
         }
 
+        //reset the progress and mana
         this.progress = 0;
         this.needsMana = true;
         updateBlock();
@@ -194,20 +208,24 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             }
         } else {
 
+            // every 2 minutes, evaluate the aquarium
             long gameTime = level.getGameTime();
             if (gameTime % 2400 == 0) {
                 evaluateAquarium();
             }
 
+            // every 4 seconds, if the shrine needs mana, take mana from the source
             if (gameTime % 80 == 0 && needsMana && SourceUtil.takeSourceWithParticles(worldPosition, level, 7, Common.SIREN_MANA_COST.get()) != null) {
                 this.needsMana = false;
                 updateBlock();
             }
 
+            // every 10 seconds, if the shrine has enough progress, generate items
             if (gameTime % 2000 == 0 && !needsMana) {
                 if (progress >= getMaxProgress()) {
                     generateItems();
                 } else {
+                    // if the shrine doesn't have enough progress, generate a particle projectile and give progress
                     LivingEntity rnd = getRandomEntity();
                     if (rnd != null) {
                         EntityLerpedProjectile orb = new EntityLerpedProjectile(level,
@@ -251,13 +269,15 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     }
 
     public LivingEntity getRandomEntity() {
+        // if there are no entities nearby, return null, otherwise return a random entity from the list
         if (getNearbyEntities().isEmpty() || level == null)
             return null;
         return getNearbyEntities().get(level.random.nextInt(getNearbyEntities().size()));
     }
 
     private List<LivingEntity> getNearbyEntities() {
+        // get a list of entities within 10 blocks of the shrine
         if (level == null) return ImmutableList.of();
-        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(10).west(10).below(10), getBlockPos().south(8).east(8).above(8)), e -> (e.getMobType() == MobType.WATER && !(e instanceof MermaidEntity)));
+        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(10).west(10).below(10), getBlockPos().south(10).east(10).above(10)), e -> (e.getMobType() == MobType.WATER && !(e instanceof MermaidEntity)));
     }
 }

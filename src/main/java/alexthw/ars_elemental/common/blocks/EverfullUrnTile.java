@@ -55,13 +55,16 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
         ArrayList<BlockPos> stale = new ArrayList<>();
 
+        // Iterate over all the positions in the list and try to refill them if they are still valid
         for (BlockPos toPos : toList) {
             if (!level.isLoaded(toPos))
                 continue;
             if (!isRefillable(toPos, level)) {
+                // If the position is no longer valid, add it to the stale list, so it can be removed later
                 stale.add(toPos);
                 continue;
             }
+            // If there is a source nearby, try to refill the position and remove the source
             if (SourceUtil.hasSourceNearby(this.worldPosition, level, 6, WATER_URN_COST.get()))
                 if (tryRefill(level, toPos)) {
                     SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, WATER_URN_COST.get());
@@ -78,11 +81,13 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
     private boolean tryRefill(Level world, BlockPos toPos) {
 
+        // If the position is a cauldron, try to fill it with water and return true if successful
         if (world.getBlockState(toPos) == Blocks.CAULDRON.defaultBlockState()) {
             world.setBlockAndUpdate(toPos, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
             return true;
         }
 
+        // Otherwise, try to fill the position with water if it is a fluid handler
         BlockEntity be = world.getBlockEntity(toPos);
         if (be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent() && be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).resolve().isPresent()) {
             IFluidHandler tank = be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).resolve().get();
@@ -92,6 +97,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
             }
         }
 
+        // If the position is a botania apothecary, try to fill it with water and return true if successful
         return CompatUtils.isBotaniaLoaded() && BotaniaCompat.tryFillApothecary(toPos, world);
     }
 

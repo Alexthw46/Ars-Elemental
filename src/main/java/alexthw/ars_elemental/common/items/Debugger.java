@@ -38,10 +38,12 @@ public class Debugger extends ElementalFocus {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        var tag = pPlayer.getItemInHand(pUsedHand).getOrCreateTag();
         if (pPlayer.isCrouching() && !pLevel.isClientSide()) {
             index = ++index % 4;
-            this.element = elements.get(index);
+            tag.putInt("element", index);
         }
+        this.element = elements.get(tag.getInt("element"));
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 

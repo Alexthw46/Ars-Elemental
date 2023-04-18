@@ -14,6 +14,7 @@ public class ArcPrismLens extends AbstractPrismLens {
     }
 
     public void shoot(ServerLevel world, BlockPos pos, EntityProjectileSpell spell, Vec3 angle) {
+        // create a new EntityCurvedProjectile and copy the properties of the spell
         EntityCurvedProjectile newProjectile = new EntityCurvedProjectile(world, spell.spellResolver);
         newProjectile.setColor(spell.getParticleColor());
         newProjectile.pierceLeft = spell.pierceLeft;

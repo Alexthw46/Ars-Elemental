@@ -22,6 +22,10 @@
     {
       "type": "ars_nouveau:imbuement_recipe",
       "recipe": "ars_elemental:imbuement_earth_turret"
+    },
+    {
+      "type": "ars_nouveau:imbuement_recipe",
+      "recipe": "ars_elemental:imbuement_manipulation_turret"
     }
   ]
 }

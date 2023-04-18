@@ -39,6 +39,11 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         this.element = element;
     }
 
+    @Override
+    public int getMinTier() {
+        return 2;
+    }
+
     public SpellSchool getSchool() {
         return element;
     }
@@ -66,7 +71,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         if (player != null) {
             ArmorSet set = getArmorSetFromElement(this.element);
             List<Component> equippedList = new ArrayList<>();
-
+            //check if the player have all the armor pieces of the set. Color the text green if they do, gray if they don't
             int equippedCounter = 0;
             for (EquipmentSlot slot : OrderedSlots) {
                 Item armor = set.getArmorFromSlot(slot);
@@ -78,6 +83,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
                 equippedList.add(cmp);
             }
+            //add the tooltip for the armor set and the list of equipped armor pieces, then add the description
             list.add(getArmorSetTitle(set, equippedCounter));
             list.addAll(equippedList);
             addArmorSetDescription(set, list);

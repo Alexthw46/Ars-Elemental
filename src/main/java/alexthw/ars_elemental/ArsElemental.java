@@ -39,9 +39,6 @@ import java.util.UUID;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsElemental.MODID)
 public class ArsElemental {
-    /*
-     *public static ForgeConfigSpec SERVER_CONFIG;
-     */
 
     public static final ResourceLocation FOCUS_SLOT = new ResourceLocation("curios:slot/an_focus_slot");
     public static final ResourceLocation BANGLE_SLOT = new ResourceLocation("curios:slot/bangle_slot");

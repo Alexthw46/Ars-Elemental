@@ -24,6 +24,7 @@ public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extend
     public static AnimatedGeoModel modelWater = new TurretModel<>("water");
     public static AnimatedGeoModel modelAir = new TurretModel<>("air");
     public static AnimatedGeoModel modelEarth = new TurretModel<>("earth");
+    public static AnimatedGeoModel modelShaper = new TurretModel<>("manipulation");
 
     @SuppressWarnings("unchecked")
     public ElementalTurretRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
@@ -49,7 +50,8 @@ public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extend
             case "fire" -> modelFire;
             case "water" -> modelWater;
             case "air" -> modelAir;
-            default -> modelEarth;
+            case "earth" -> modelEarth;
+            default -> modelShaper;
         };
         return new GenericItemBlockRenderer(model);
     }

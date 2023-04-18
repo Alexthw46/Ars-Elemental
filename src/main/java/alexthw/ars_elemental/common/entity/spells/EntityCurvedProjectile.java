@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.network.PacketANEffect;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtract;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -21,6 +22,8 @@ import net.minecraft.world.phys.Vec3;
 public class EntityCurvedProjectile extends EntityProjectileSpell {
 
 
+    private boolean isCareful = false;
+
     public EntityCurvedProjectile(EntityType<? extends EntityProjectileSpell> entityType, Level world) {
         super(entityType, world);
         isNoGravity = false;
@@ -28,6 +31,7 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
 
     public EntityCurvedProjectile(Level world, SpellResolver resolver) {
         super(ModEntities.CURVED_PROJECTILE.get(), world, resolver);
+        this.isCareful = resolver.spell.getBuffsAtIndex(0, resolver.spellContext.getUnwrappedCaster(), AugmentExtract.INSTANCE) > 0;
         isNoGravity = false;
     }
 
@@ -42,6 +46,14 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
         setDeltaMovement(motion.x * 0.96, (motion.y > 0 ? motion.y * 0.96 : motion.y) - 0.03f, motion.z * 0.96);
         Vec3 pos = position();
         setPos(pos.x + motion.x, pos.y + motion.y, pos.z + motion.z);
+    }
+
+    @Override
+    public void tick() {
+        if (!level.isClientSide && this.age > getExpirationTime()) {
+            this.onHit(new BlockHitResult(getNextHitPosition(), Direction.UP, blockPosition(), true));
+        }
+        super.tick();
     }
 
     @Override
@@ -64,6 +76,7 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
         } else {
             Direction direction = blockraytraceresult.getDirection();
             float factor = -0.9F;
+            // bounce off the block according to the face hit and reduce momentum
             switch (direction) {
                 case UP, DOWN -> {
                     Vec3 vel = getDeltaMovement();
@@ -94,27 +107,27 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
             }
         }
 
-        if (!level.isClientSide && result instanceof BlockHitResult blockraytraceresult && !this.isRemoved() && !hitList.contains(blockraytraceresult.getBlockPos())) {
+        if (!level.isClientSide && result instanceof BlockHitResult blockRaytraceResult && !this.isRemoved() && !hitList.contains(blockRaytraceResult.getBlockPos())) {
 
-            BlockState state = level.getBlockState(((BlockHitResult) result).getBlockPos());
+            BlockState state = level.getBlockState(blockRaytraceResult.getBlockPos());
 
             if (state.getBlock() instanceof IPrismaticBlock prismaticBlock) {
-                prismaticBlock.onHit((ServerLevel) level, ((BlockHitResult) result).getBlockPos(), this);
+                prismaticBlock.onHit((ServerLevel) level, blockRaytraceResult.getBlockPos(), this);
                 return;
             }
 
             if (state.getMaterial() == Material.PORTAL) {
-                state.getBlock().entityInside(state, level, ((BlockHitResult) result).getBlockPos(), this);
+                state.getBlock().entityInside(state, level, blockRaytraceResult.getBlockPos(), this);
                 return;
             }
 
             if (this.spellResolver != null) {
-                this.hitList.add(blockraytraceresult.getBlockPos());
-                this.spellResolver.onResolveEffect(this.level, blockraytraceresult);
+                this.hitList.add(blockRaytraceResult.getBlockPos());
+                if (!isCareful || pierceLeft == 0) this.spellResolver.onResolveEffect(this.level, blockRaytraceResult);
             }
             Networking.sendToNearby(level, ((BlockHitResult) result).getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
                     new BlockPos(result.getLocation()).below(), getParticleColorWrapper()));
-            attemptRemoval(blockraytraceresult);
+            attemptRemoval(blockRaytraceResult);
         }
     }
 

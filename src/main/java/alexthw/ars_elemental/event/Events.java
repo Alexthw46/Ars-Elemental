@@ -39,13 +39,18 @@ public class Events {
 
     @SubscribeEvent
     public static void focusDiscount(SpellCastEvent event) {
+
         if (!event.getWorld().isClientSide) {
+
+            //if the player is holding a focus, and the spell match the focus's school, apply the focus discount.
             double finalDiscount = 0;
             SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntity());
             if (focus != null) {
                 if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
                     finalDiscount += COMMON.FocusDiscount.get();
             }
+
+            //if the player is wearing an armor piece of the same school, apply the armor discount.
             for (ItemStack stack : event.getEntity().getArmorSlots()) {
                 if (stack.getItem() instanceof IElementalArmor armor)
                     finalDiscount += armor.getDiscount(event.spell.recipe);
@@ -57,6 +62,8 @@ public class Events {
 
     @SubscribeEvent
     public static void DeathEvent(LivingDeathEvent event) {
+
+        //when the player dies, if they have the hymn of order effect, save the effect duration to the player's persistent data.
         if (event.getEntity() instanceof Player player && player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) {
             MobEffectInstance effect = player.getEffect(ModPotions.HYMN_OF_ORDER.get());
             if (effect == null) return;
@@ -77,6 +84,7 @@ public class Events {
             if ((player instanceof FakePlayer) || player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
                 return;
             }
+            //if the player has soulbound enchantment, save the item to the player's persistent data.
             Collection<ItemEntity> drops = event.getDrops();
             if (drops == null) return;
             List<ItemEntity> keeps = new ArrayList<>();
@@ -118,6 +126,7 @@ public class Events {
     public static void onPlayerRespawnHW(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
         CompoundTag data = event.getEntity().getPersistentData();
+        //when the player respawns, if they have the hymn of order effect, apply the effect to the player.
         if (data.contains(Player.PERSISTED_NBT_TAG)) {
             CompoundTag persist = data.getCompound(Player.PERSISTED_NBT_TAG);
             if (persist.contains("magic_locked") && persist.contains("magic_lock_duration")) {
@@ -126,6 +135,8 @@ public class Events {
                 persist.remove("magic_lock_duration");
             }
 
+
+            //when the player respawns, if they have soulbound items, give them back to the player.
             CompoundTag soulTag = persist.getCompound(TAG_SOULBOUND);
 
             int count = soulTag.getInt(TAG_SOULBOUND_DROP_COUNT);
@@ -138,6 +149,7 @@ public class Events {
                 }
             }
 
+            //try to put the items in the same slots they were in before.
             for (ItemStack stack : recovered) {
                 if (stack.getItem() instanceof ArmorItem armor && event.getEntity().getItemBySlot(armor.getSlot()).isEmpty()) {
                     event.getEntity().setItemSlot(armor.getSlot(), stack);

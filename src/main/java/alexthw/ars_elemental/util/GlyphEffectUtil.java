@@ -16,7 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.common.util.FakePlayerFactory;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,16 +24,16 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class GlyphEffectUtil {
-    public static Player getPlayer(LivingEntity entity, ServerLevel world) {
-        return entity instanceof Player ? (Player) entity : FakePlayerFactory.getMinecraft(world);
-    }
 
-    public static void placeBlocks(BlockHitResult rayTraceResult, Level world, @org.jetbrains.annotations.Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockState toPlace) {
+    /**
+     * Places a block at the given position, respecting claims.
+     */
+    public static void placeBlocks(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockState toPlace) {
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer((ServerLevel) world);
         if (shooter == null) return;
         for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
             pos = rayTraceResult.isInside() ? pos : pos.relative(rayTraceResult.getDirection());
-            if (!BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, pos))
+            if (!BlockUtil.destroyRespectsClaim(shooter instanceof Player player ? player : fakePlayer, world, pos))
                 continue;
             BlockState state = world.getBlockState(pos);
             if (state.getMaterial().isReplaceable() && world.isUnobstructed(toPlace, pos, CollisionContext.of(fakePlayer))) {
@@ -44,6 +44,9 @@ public class GlyphEffectUtil {
         }
     }
 
+    /**
+     * Returns true if the given spell has the given effect after the current index.
+     */
     public static boolean hasFollowingEffect(SpellContext spellContext, AbstractEffect toFind) {
         for (AbstractSpellPart part : spellContext.getSpell().recipe.subList(spellContext.getCurrentIndex(), spellContext.getSpell().getSpellSize())) {
             if (part instanceof AbstractEffect) {
@@ -56,6 +59,9 @@ public class GlyphEffectUtil {
         return false;
     }
 
+    /**
+     * Returns true if the given entity is affected by the given filters.
+     */
     public static boolean checkIgnoreFilters(Entity e, Set<IFilter> filters) {
         boolean flag = true;
         if (filters == null) return true;
@@ -65,6 +71,9 @@ public class GlyphEffectUtil {
         return !flag;
     }
 
+    /**
+     * Returns a set of all filters in the spell, starting at the given index.
+     */
     public static Set<IFilter> getFilters(List<AbstractSpellPart> recipe, int index) {
         Set<IFilter> list = new HashSet<>();
         for (AbstractSpellPart glyph : recipe.subList(index, recipe.size())) {
@@ -76,6 +85,9 @@ public class GlyphEffectUtil {
         return list;
     }
 
+    /**
+     * Returns a predicate that checks if an entity is affected by the given spell.
+     */
     public static Predicate<Entity> getFilterPredicate(Spell spell, Predicate<Entity> defaultFilter) {
         Set<IFilter> set = getFilters(spell.recipe, 0);
         if (set.isEmpty()) return defaultFilter;

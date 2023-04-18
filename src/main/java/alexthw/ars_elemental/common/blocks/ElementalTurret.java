@@ -2,15 +2,13 @@ package alexthw.ars_elemental.common.blocks;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
-import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.ISpellCaster;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.network.PacketOneShotAnimation;
+import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSourceImpl;
 import net.minecraft.core.Direction;
@@ -49,6 +47,8 @@ public class ElementalTurret extends BasicSpellTurret {
             public boolean hasFocus(ItemStack stack) {
                 if (stack.getItem() instanceof ISchoolFocus focus) {
                     return tile.getSchool() == focus.getSchool();
+                } else if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get()) {
+                    return tile.getSchool() == SpellSchools.MANIPULATION;
                 }
                 return super.hasFocus(stack);
             }

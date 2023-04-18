@@ -40,6 +40,7 @@ public class SummonEvents {
 
         if (!event.world.isClientSide && focus != null) {
 
+            // boost summoned entities if necromancy focus is equipped
             if (focus == ArsNouveauRegistry.NECROMANCY) {
                 if (event.summon.getLivingEntity() != null) {
                     event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 1));
@@ -47,6 +48,8 @@ public class SummonEvents {
                 }
             }
 
+
+            // change summoned entities if water/fire/necromancy focus is equipped
             if (event.summon instanceof SummonHorse oldHorse && event.shooter instanceof ServerPlayer summoner) {
                 switch (focus.getId()) {
                     case "water" -> {
@@ -88,6 +91,7 @@ public class SummonEvents {
         if (!event.world.isClientSide) {
             ServerLevel world = (ServerLevel) event.world;
             if (event.summon.getOwner(world) instanceof Player player && !(event.summon instanceof IUndeadSummon)) {
+                // re-raise summoned entities if necrotic focus is equipped
                 if (NecroticFocus.hasFocus(event.world, player)) {
                     LivingEntity toRaise = null;
                     if (event.summon instanceof SummonWolf wolf) {

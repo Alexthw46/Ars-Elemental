@@ -23,17 +23,21 @@ public class EnthrallEffect extends MobEffect {
     }
 
     public void onTarget(LivingChangeTargetEvent event) {
+        // If the entity is a thrall and the new target is a player, and the player is the owner of the thrall, then set the target to the last mob that hurt the player.
         if (!(event.getNewTarget() instanceof Player player)) return;
         if (event.getEntity() instanceof Mob thrall && isEnthralledBy(thrall, player)) {
             if (player.getLastHurtMob() != null && player.getLastHurtMob() != thrall) {
                 event.setNewTarget(player.getLastHurtMob());
+                // If the thrall is a neutral mob, set the persistent anger target to the last mob that the player hit.
                 if (thrall instanceof NeutralMob angry)
                     angry.setPersistentAngerTarget(player.getLastHurtMob().getUUID());
             } else if (player.getLastHurtByMob() != null && player.getLastHurtByMob() != thrall) {
                 event.setNewTarget(player.getLastHurtByMob());
+                // If the thrall is a neutral mob, set the persistent anger target to the last mob that hurt the player.
                 if (thrall instanceof NeutralMob angry)
                     angry.setPersistentAngerTarget(player.getLastHurtByMob().getUUID());
             } else {
+                // If the player has no last hurt mob, set the target to null.
                 event.setNewTarget(null);
                 if (thrall instanceof NeutralMob angry) angry.setRemainingPersistentAngerTime(0);
             }

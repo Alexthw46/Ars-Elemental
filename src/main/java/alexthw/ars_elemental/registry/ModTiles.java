@@ -32,7 +32,7 @@ public class ModTiles {
         WATER_UPSTREAM_TILE = TILES.register("upstream_tile", () -> BlockEntityType.Builder.of(WaterUpstreamTile::new, ModItems.WATER_UPSTREAM_BLOCK.get()).build(null));
         LAVA_UPSTREAM_TILE = TILES.register("magma_upstream_tile", () -> BlockEntityType.Builder.of(MagmaUpstreamTile::new, ModItems.LAVA_UPSTREAM_BLOCK.get()).build(null));
         AIR_UPSTREAM_TILE = TILES.register("air_upstream_tile", () -> BlockEntityType.Builder.of(AirUpstreamTile::new, ModItems.AIR_UPSTREAM_BLOCK.get()).build(null));
-        ELEMENTAL_TURRET = TILES.register("elemental_turret_tile", () -> BlockEntityType.Builder.of(ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get()).build(null));
+        ELEMENTAL_TURRET = TILES.register("elemental_turret_tile", () -> BlockEntityType.Builder.of(ElementalSpellTurretTile::new, ModItems.FIRE_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.AIR_TURRET.get(), ModItems.EARTH_TURRET.get(), ModItems.SHAPING_TURRET.get()).build(null));
         URN_TILE = TILES.register("everfull_urn", () -> BlockEntityType.Builder.of(EverfullUrnTile::new, ModItems.WATER_URN.get()).build(null));
         ADVANCED_PRISM = TILES.register("advanced_prism", () -> BlockEntityType.Builder.of(AdvancedPrismTile::new, ModItems.ADVANCED_PRISM.get()).build(null));
     }

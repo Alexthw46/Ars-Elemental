@@ -32,10 +32,13 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
                 return;
 
             float healVal = (float) (GENERIC_DOUBLE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
+            // If the entity is undead, heal it
             if (entity.isInvertedHealAndHarm()) {
                 entity.heal(healVal);
             } else {
+                // Otherwise, deal damage
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter).setMagic(), healVal);
+                // And consume saturation
                 if (entity instanceof Player player) {
                     player.causeFoodExhaustion((float) (2.5 * (1 + spellStats.getAmpMultiplier())));
                 }

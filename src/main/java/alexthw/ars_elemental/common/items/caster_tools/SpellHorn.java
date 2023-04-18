@@ -78,8 +78,10 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
     @Override
     public void releaseUsing(ItemStack stack, Level pLevel, LivingEntity pLivingEntity, int remainingTicks) {
 
+        //get how long the item has been used
         float j = getUseDuration(stack) - remainingTicks;
 
+        //if the item has been used for at least the minimum duration, then cast the spell on every entity in the area of effect that matches the filter
         if (j >= getMinUseDuration() && pLivingEntity instanceof Player player) {
             float aoeMult = 0.5F + j / getMinUseDuration();
             if (pLevel instanceof ServerLevel) {
@@ -94,6 +96,7 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
             if (j + 50 >= getMaxUseDuration()) {
                 player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), getMaxUseDuration() * 4));
             }
+            //play the sound effect and cooldown the item
             play(pLevel, player, aoeMult * 16);
             player.getCooldowns().addCooldown(this, 200);
         }

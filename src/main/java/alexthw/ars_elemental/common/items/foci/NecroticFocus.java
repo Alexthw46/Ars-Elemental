@@ -73,8 +73,10 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
     @Override
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         builder.addDamageModifier(1.0f);
+        // if the spell is a necromancy spell, increase the duration of the spell.
         if (NECROMANCY.isPartOfSchool(spellPart)) {
             builder.addDurationModifier(2.0f);
+            // if the spell is an: heal, phantom, or summon undead spell, increase the amplification of the spell.
             if (spellPart == EffectHeal.INSTANCE || spellPart == EffectPhantom.INSTANCE || spellPart == EffectSummonUndead.INSTANCE) {
                 builder.addAmplification(2.0f);
             }
@@ -84,6 +86,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     @SubscribeEvent
     public static void lifeSteal(LivingDeathEvent event){
+        // if the source of the damage is a summoned undead entity, heal the player who summoned it.
         if (event.getSource().getEntity() instanceof IUndeadSummon risen && risen.getOwnerID() != null && event.getEntity().getLevel() instanceof ServerLevel level) {
             Player player = event.getEntity().level.getPlayerByUUID(risen.getOwnerID());
             if (player != null) {
@@ -95,6 +98,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     @SubscribeEvent
     public static void castSpell(SpellCastEvent event) {
+        // if the player has a necrotic focus, and the spell is a homing projectile, make the summoned undead mobs look at the player's last target and recast the spell.
         if (event.getWorld() instanceof ServerLevel world && event.getEntity() instanceof Player player && hasFocus(world, player) && event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE) {
             for (Mob i : world.getEntitiesOfClass(Mob.class, new AABB(event.getEntity().blockPosition()).inflate(30.0D), (l) -> l instanceof IUndeadSummon summon && player.getUUID().equals(summon.getOwnerID()))) {
                 LivingEntity target = i.getTarget();

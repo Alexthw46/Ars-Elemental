@@ -41,6 +41,8 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
     public void aim(@Nullable BlockPos blockPos, Player playerEntity) {
         if (blockPos == null) return;
 
+        // This is the code that makes the prism aim at the block
+
         Vec3 thisVec = Vec3.atCenterOf(getBlockPos());
         Vec3 blockVec = Vec3.atCenterOf(blockPos);
 
@@ -74,6 +76,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
 
     @Override
     public void onWanded(Player playerEntity) {
+        // remove prism lens and drop it
         if (prismLens != null) {
             playerEntity.getLevel().addFreshEntity(new ItemEntity(playerEntity.level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLens));
             prismLens = ItemStack.EMPTY;
@@ -127,6 +130,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
      * @return Vector for projectile shooting. Don't ask me why it works, it was pure luck.
      */
     public Vec3 getShootAngle() {
+        // This is the code that makes the prism shoot in the direction it is aiming at
         float f = getRotationY() * ((float) Math.PI / 180F);
         float f1 = (90 + getRotationX()) * ((float) Math.PI / 180F);
         float f2 = Mth.cos(f1);
@@ -151,7 +155,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
         return prismLens == null ? ItemStack.EMPTY : prismLens;
     }
 
-    void setLent(ItemStack lent, Player pPlayer) {
+    void setLens(ItemStack lent, Player pPlayer) {
         onWanded(pPlayer);
         this.prismLens = lent;
         updateBlock();

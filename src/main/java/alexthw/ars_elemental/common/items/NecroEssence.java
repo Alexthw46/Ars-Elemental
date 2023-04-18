@@ -32,6 +32,7 @@ public class NecroEssence extends Item {
 
             AbstractHorse newHorse = null;
 
+            // convert horse to skeleton horse, skeleton horse to zombie horse, zombie horse to horse
             if (horse instanceof Horse) {
                 newHorse = EntityType.SKELETON_HORSE.create(pPlayer.getLevel());
             } else if (horse instanceof SkeletonHorse) {
@@ -41,10 +42,12 @@ public class NecroEssence extends Item {
             }
             if (newHorse == null) return InteractionResult.FAIL;
 
+            // copy attributes
             if (horse.isTamed()) newHorse.tameWithName(pPlayer);
             if (horse.isSaddled()) newHorse.equipSaddle(SoundSource.PLAYERS);
             if (horse.isWearingArmor()) pPlayer.spawnAtLocation(horse.getItemBySlot(EquipmentSlot.CHEST));
 
+            // copy position
             newHorse.absMoveTo(horse.getX(), horse.getY(), horse.getZ(), horse.getYRot(), horse.getXRot());
 
             AttributeInstance movementSpeed = newHorse.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -55,6 +58,7 @@ public class NecroEssence extends Item {
             health.setBaseValue(horse.getAttribute(Attributes.MAX_HEALTH).getValue());
             jumpHeight.setBaseValue(horse.getAttribute(Attributes.JUMP_STRENGTH).getValue());
 
+            // spawn new horse
             newHorse.finalizeSpawn((ServerLevelAccessor) pPlayer.level, pPlayer.level.getCurrentDifficultyAt(newHorse.blockPosition()), MobSpawnType.CONVERSION, null, null);
             newHorse.setAge(horse.getAge());
             horse.discard();

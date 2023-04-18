@@ -40,7 +40,7 @@ public class GreaterElementalFocus extends ElementalFocus {
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         if (slotContext.entity().getLevel().isClientSide() || !(slotContext.entity() instanceof Player player) || !COMMON.EnableRegenBonus.get())
             return;
-
+        // every 20 ticks, check if the player is in the right environment for the school, and apply the appropriate effect
         if (player.tickCount % 20 == 0) {
             switch (getSchool().getId()) {
                 case "fire" -> {

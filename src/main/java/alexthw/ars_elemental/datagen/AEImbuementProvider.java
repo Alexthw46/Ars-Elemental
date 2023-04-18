@@ -91,6 +91,12 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .withPedestalItem(ModItems.EARTH_FOCUS.get())
         );
+        recipes.add(new ImbuementRecipe("manipulation_turret", Ingredient.of(BlockRegistry.ENCHANTED_SPELL_TURRET), new ItemStack(ModItems.SHAPING_TURRET.get(), 1), 5000)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.SHAPERS_FOCUS.get())
+        );
 
         recipes.add(new ImbuementRecipe("mark_of_mastery", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5), 10000)
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)

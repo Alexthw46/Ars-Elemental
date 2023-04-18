@@ -36,6 +36,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
         List<EntityHomingProjectile> projectiles = new ArrayList<>();
+        // Create the projectiles
         for (int i = 0; i < numSplits; i++) {
             projectiles.add(new EntityHomingProjectile(world, resolver));
         }
@@ -43,6 +44,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         int opposite = -1;
         int counter = 0;
 
+        // Adjust the direction of the projectiles
         Vec3 direction = pos.subtract(shooter.position());
         if (spellContext.castingTile instanceof BasicSpellTurretTile turretTile) {
             if (turretTile instanceof RotatingTurretTile rotatingTurretTile) {
@@ -51,6 +53,8 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
                 direction = new Vec3(turretTile.getBlockState().getValue(BasicSpellTurret.FACING).step());
             }
         }
+
+        // Set the position and shoot the projectiles in the correct direction
         for (EntityHomingProjectile proj : projectiles) {
             proj.setPos(pos.add(0, 1, 0));
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));

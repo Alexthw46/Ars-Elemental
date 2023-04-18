@@ -37,13 +37,16 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
 
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
             if (rayTraceResult.getEntity() instanceof Mob mob) {
+                // check if mob is hostile or neutral and not an animal that can fall in love
                 if (mob instanceof Enemy || (mob instanceof NeutralMob && (!(mob instanceof Animal a && a.canFallInLove())))) {
 
                     if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
 
+                        // calculate resistance and chance boost based on mob health and amplification
                         float resistance = 10 + 100 * (mob.getHealth() / mob.getMaxHealth());
                         double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
 
+                        // if the mob is undead and the shooter has the necrotic focus, increase the chance by 50%
                         if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
                             chanceBoost += 50;
                         }
@@ -56,6 +59,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
 
                 } else if (rayTraceResult.getEntity() instanceof Animal animal) {
 
+                    // check if the animal is tameable, then tame it
                     if (animal instanceof TamableAnimal tamable && !tamable.isTame()) {
                         if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                             tamable.tame(player);
@@ -65,7 +69,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
                     } else if (animal instanceof Fox fox && !((FoxInvoker) fox).callTrusts(player.getUUID())) {
                         if (rollToSeduce(100, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                             ((FoxInvoker) fox).callAddTrustedUUID(player.getUUID());
-                    } else if (animal.canFallInLove()) {
+                    } else if (animal.canFallInLove()) { // if the animal can fall in love, then make it fall in love
                         if (rollToSeduce(90, 25 * (1 + spellStats.getAmpMultiplier()), level.getRandom()))
                             animal.setInLove(player);
                     }
@@ -80,6 +84,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
         return SpellTier.TWO;
     }
 
+    // returns true if the roll is greater than the resistance
     private boolean rollToSeduce(int resistance, double chanceBoost, RandomSource rand) {
         return (rand.nextInt(0, resistance) + chanceBoost) >= resistance;
     }

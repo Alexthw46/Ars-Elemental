@@ -23,6 +23,7 @@ public class AttractionRitual extends AbstractRitual {
     @Override
     protected void tick() {
         if (getWorld() instanceof ServerLevel level && level.getGameTime() % 10 == 0 && this.tile != null) {
+            // Get all entities in 8 block radius, excluding players and bosses
             List<Entity> entities = level.getEntitiesOfClass(Entity.class, new AABB(tile.getBlockPos()).inflate(8), entity -> !(entity instanceof Player || entity.getType().is(Tags.EntityTypes.BOSSES)));
             for (Entity entity : entities) {
                 if (entity != null && getPos() != null) {

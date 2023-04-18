@@ -89,6 +89,7 @@ public class ModItems {
     public static final RegistryObject<Block> WATER_TURRET;
     public static final RegistryObject<Block> AIR_TURRET;
     public static final RegistryObject<Block> EARTH_TURRET;
+    public static final RegistryObject<Block> SHAPING_TURRET;
 
     public static final RegistryObject<Block> ADVANCED_PRISM;
     public static final RegistryObject<Block> SPELL_MIRROR;
@@ -235,6 +236,8 @@ public class ModItems {
         WATER_TURRET = addGeckoBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
         AIR_TURRET = addGeckoBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
         EARTH_TURRET = addGeckoBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
+        SHAPING_TURRET = addGeckoBlock("manipulation_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
+
 
         ADVANCED_PRISM = BLOCKS.register("advanced_prism", () -> new AdvancedPrism(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));
         ITEMS.register("advanced_prism", () -> new RendererBlockItem(ADVANCED_PRISM.get(), addTabProp()) {
@@ -256,7 +259,7 @@ public class ModItems {
         FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED));
         FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(FLASHING_ARCHWOOD_LOG));
         ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), addTabProp().food(FLASHPINE_FOOD)));
-        POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock)Blocks.FLOWER_POT, FLASHING_SAPLING, BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
+        POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FLASHING_SAPLING, BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
     }
 
     static RegistryObject<Block> addBlock(String name, Supplier<Block> blockSupp) {

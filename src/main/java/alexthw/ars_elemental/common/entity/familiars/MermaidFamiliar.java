@@ -55,6 +55,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         if (hand != InteractionHand.MAIN_HAND || pPlayer.getCommandSenderWorld().isClientSide)
             return InteractionResult.PASS;
 
+        // if interacting with a dye, change the color of the mermaid
         ItemStack stack = pPlayer.getItemInHand(hand);
         String color = Variants.getColorFromStack(stack);
         if (color != null && !getColor().equals(color)) {
@@ -66,6 +67,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     public void onModifier(SpellModifierEvent event) {
+        // if the mermaid is alive and the owner is the player who cast the spell, and the spell is a water spell, increase the damage of the spell by 2
         if (this.isAlive() && this.getOwner() != null && this.getOwner().equals(event.caster) && SpellSchools.ELEMENTAL_WATER.isPartOfSchool(event.spellPart)) {
             event.builder.addDamageModifier(2.0D);
         }
@@ -73,12 +75,14 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
 
     public void tick() {
         super.tick();
+        // if the mermaid is in water, give the player and the mermaid the dolphin's grace effect
         if (!this.level.isClientSide && this.isInWater()) {
             if (this.level.getGameTime() % 60L == 0L && this.getOwner() != null) {
                 this.getOwner().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600, 1, false, false, true));
                 this.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600, 1, false, false, true));
             }
         }
+        // if the mermaid's name is Jeb_, change its color to a random color every 10 ticks
         if (!level.isClientSide && level.getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
             this.entityData.set(COLOR, MermaidEntity.Variants.random().toString());
         }

@@ -21,6 +21,7 @@ public class EntityCarryMEI extends MobEffectInstance {
         this.target = afflicted;
     }
 
+    //Override to update the owner and target if they have changed
     @Override
     public boolean update(MobEffectInstance pOther) {
 

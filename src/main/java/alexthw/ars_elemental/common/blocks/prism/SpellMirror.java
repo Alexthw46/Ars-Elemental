@@ -51,6 +51,7 @@ public class SpellMirror extends SpellPrismBlock {
             spell.remove(Entity.RemovalReason.DISCARDED);
             return;
         }
+        // make the spell bounce off the mirror and go in the opposite direction
         switch (direction) {
             case UP, DOWN -> {
                 Vec3 vel = spell.getDeltaMovement();

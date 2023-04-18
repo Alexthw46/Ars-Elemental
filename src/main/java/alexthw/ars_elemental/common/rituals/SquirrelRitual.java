@@ -21,10 +21,13 @@ public class SquirrelRitual extends AbstractRitual {
     @Override
     protected void tick() {
         int modifier = didConsumeItem(Items.GOLD_BLOCK) ? 2 : 1;
+        // Check if the ritual is on a server and if the ritual is ready to refresh
         if (getWorld() instanceof ServerLevel level && level.getGameTime() % Common.SQUIRREL_REFRESH_RATE.get() == 0 && this.tile != null) {
+            // Get all entities of type Starbuncle within a 15 or 30 block radius of the ritual
             List<Starbuncle> entities = level.getEntitiesOfClass(Starbuncle.class, new AABB(tile.getBlockPos()).inflate(15 * modifier));
             for (Starbuncle entity : entities) {
                 if (entity != null) {
+                    // Give the Starbuncle a speed and jump boost for 120 seconds
                     entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2400, 1, false, false));
                     entity.addEffect(new MobEffectInstance(MobEffects.JUMP, 2400, 0, false, false));
                 }

@@ -28,7 +28,7 @@ public class AirMage extends EntityMageBase {
      * SelfSpells
      * 0: Leap towards the enemy
      * 1: To use after leap, launch and shear enemies
-     *
+     * <p>
      * ProjSpells
      * 1: Bouncing Lightning
      */

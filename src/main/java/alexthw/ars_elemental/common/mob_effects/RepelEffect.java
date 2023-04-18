@@ -15,9 +15,9 @@ public class RepelEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int pAmplifier) {
         if (entity.getEffect(this) instanceof PosCarryMEI mei) {
-            Vec3 vec3d = new Vec3(entity.getX() - mei.getOrigin().getX(), entity.getY() - mei.getOrigin().getY(), entity.getZ() - mei.getOrigin().getZ());
-            if (vec3d.length() > 15) return;
-            entity.setDeltaMovement(entity.getDeltaMovement().add(vec3d.normalize()).scale(0.5F));
+            Vec3 dist = new Vec3(entity.getX() - mei.getOrigin().getX(), entity.getY() - mei.getOrigin().getY(), entity.getZ() - mei.getOrigin().getZ());
+            if (dist.length() > 15) return;
+            entity.setDeltaMovement(entity.getDeltaMovement().add(dist.normalize()).scale(0.5F));
             entity.hurtMarked = true;
         }
     }

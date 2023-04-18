@@ -43,6 +43,7 @@ public interface IElementalArmor extends ISpellModifierItem {
     }
 
     default double getDiscount(List<AbstractSpellPart> recipe) {
+        // check if the recipe contains a glyph from the same school as this armor
         for (AbstractSpellPart part : recipe) {
             if (getSchool().isPartOfSchool(part))
                 return 0.1;
@@ -55,6 +56,7 @@ public interface IElementalArmor extends ISpellModifierItem {
     String getTier();
 
     default boolean doAbsorb(DamageSource damageSource) {
+        // check if the damage source is in the list of damage sources that this armor can absorb
         return damageResistances.getOrDefault(getSchool(), List.of()).
                 stream().map(d -> d.msgId)
                 .anyMatch(msg -> msg.equals(damageSource.msgId));

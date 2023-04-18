@@ -16,6 +16,7 @@ public class LightningLureEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+        // Spawn a lightning bolt at the entity's position when the effect triggers.
         LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(pLivingEntity.level);
         if (lightningbolt == null) return;
         lightningbolt.moveTo(Vec3.atBottomCenterOf(pLivingEntity.blockPosition()));
@@ -25,6 +26,7 @@ public class LightningLureEffect extends MobEffect {
 
     @Override
     public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+        // Trigger the effect only once, when the time left reaches 1.
         return pDuration == 1;
     }
 

@@ -23,6 +23,7 @@ public class ElementalSpellTurretTile extends BasicSpellTurretTile {
 
     @Override
     public int getManaCost() {
+        // 65% discount for spells in the same school, 40% for spells in other schools
         Spell spell = this.spellCaster.getSpell();
         if (spell.recipe.stream().anyMatch(p -> this.school.isPartOfSchool(p))) {
             return (int) (spell.getNoDiscountCost() * 0.35);
@@ -50,7 +51,7 @@ public class ElementalSpellTurretTile extends BasicSpellTurretTile {
             case "water" -> SpellSchools.ELEMENTAL_WATER;
             case "air" -> SpellSchools.ELEMENTAL_AIR;
             case "earth" -> SpellSchools.ELEMENTAL_EARTH;
-            default -> SpellSchools.ELEMENTAL;
+            default -> SpellSchools.MANIPULATION;
         };
     }
 }

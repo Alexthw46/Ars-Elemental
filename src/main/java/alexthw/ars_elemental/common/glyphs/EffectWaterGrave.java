@@ -32,22 +32,28 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
+
+            // If augmented by Extend Time, apply the Water Grave potion effect.
             if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
                 ((IPotionEffect) this).applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
             } else {
+                //Otherwise, make the entity sink.
                 Vec3 delta = living.getDeltaMovement();
                 double dy = Math.min(-1.0D, delta.y - 0.05D);
                 living.setDeltaMovement(delta.x, dy, delta.z);
             }
+            // If the entity is a zombie, convert it to a drowned.
             if (living instanceof Zombie zombie && !(living instanceof Drowned)) {
                 ((ZombieInvoker) zombie).callStartUnderWaterConversion(20);
                 return;
             }
+            // If the entity's air supply is depleted, deal damage.
             int airSupply = living.getAirSupply();
             if (airSupply <= 0 || living.getMobType() == MobType.WATER) {
                 double damage = DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier();
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, living, new EntityDamageSource(DamageSource.DROWN.getMsgId(), shooter), (float) damage);
             } else {
+                // Otherwise, drain the entity's air supply.
                 double newSupply = Math.max(-19, airSupply - 50 * (3 + spellStats.getAmpMultiplier()));
                 living.setAirSupply((int) newSupply);
             }

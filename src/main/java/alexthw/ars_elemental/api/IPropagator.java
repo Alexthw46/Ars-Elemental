@@ -13,11 +13,14 @@ import org.jetbrains.annotations.Nullable;
 public interface IPropagator {
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
+        // Cancel the current spell and get the remaining glyphs
         spellContext.setCanceled(true);
         Spell newSpell = spellContext.getRemainingSpell();
         if (newSpell.isEmpty()) return;
+        // Create a new context and resolver with the remaining glyphs
         SpellContext newContext = spellContext.clone().withSpell(newSpell);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
+        // Propagate the new spell
         propagate(world, rayTraceResult.getLocation(), shooter, stats, newResolver, spellContext);
 
     }

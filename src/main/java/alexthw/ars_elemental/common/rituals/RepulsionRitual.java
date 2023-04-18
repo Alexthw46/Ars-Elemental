@@ -24,17 +24,21 @@ public class RepulsionRitual extends AbstractRitual {
     protected void tick() {
         boolean modifier = didConsumeItem(Items.BONE);
         if (getWorld() instanceof ServerLevel level && level.getGameTime() % getBackoff() == 0 && this.tile != null) {
+            // Get all entities in a 15 block radius, excluding players and bosses.
             List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, new AABB(tile.getBlockPos()).inflate(15), modifier ? living -> living.getMobType() == MobType.UNDEAD : living -> !(living instanceof Player || living.getType().is(Tags.EntityTypes.BOSSES)));
             boolean flag = false;
             for (LivingEntity entity : entities) {
+                // Apply the repulsion effect to the entity.
                 if (entity != null) {
                     flag = entity.addEffect(new PosCarryMEI(ModPotions.REPEL.get(), 200, 0, true, true, getPos()));
                     if (flag) setNeedsSource(true);
                 }
             }
+            // If no entities were found, increase the backoff timer.
             if (entities.isEmpty() && !flag) {
                 setBackoff(60);
             } else {
+                // Otherwise, reset the backoff timer.
                 setBackoff(0);
             }
         }

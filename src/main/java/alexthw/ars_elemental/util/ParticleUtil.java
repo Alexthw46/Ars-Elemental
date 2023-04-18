@@ -8,6 +8,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
 
+import static com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColorWrapper;
+
 public class ParticleUtil {
 
     public static ParticleColor fireColor = new ParticleColor(250, 15, 15);
@@ -30,8 +32,7 @@ public class ParticleUtil {
 
             case "necromancy" -> soulColor;
 
-            default ->
-                    com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColorWrapper().toParticleColor();
+            default -> defaultParticleColorWrapper().toParticleColor();
         };
     }
 
@@ -44,8 +45,7 @@ public class ParticleUtil {
 
             case "air", "necromancy" -> fireColor;
 
-            default ->
-                    com.hollingsworth.arsnouveau.client.particle.ParticleUtil.defaultParticleColorWrapper().toParticleColor();
+            default -> defaultParticleColorWrapper().toParticleColor();
         };
     }
 

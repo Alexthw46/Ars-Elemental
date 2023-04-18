@@ -51,6 +51,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     public void onModifier(SpellModifierEvent event) {
+        // as long as the familiar is alive and the owner is the caster, the familiar will increase the damage of fire spells by 2 and reduce the mana cost of projectiles by 20%
         if (this.isAlive() && this.getOwner() != null && this.getOwner().equals(event.caster)) {
             if (SpellSchools.ELEMENTAL_FIRE.isPartOfSchool(event.spellPart)) {
                 event.builder.addDamageModifier(2.0D);

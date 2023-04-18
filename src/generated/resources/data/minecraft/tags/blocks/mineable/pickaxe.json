@@ -7,6 +7,7 @@
     "ars_elemental:air_turret",
     "ars_elemental:fire_turret",
     "ars_elemental:earth_turret",
-    "ars_elemental:water_turret"
+    "ars_elemental:water_turret",
+    "ars_elemental:manipulation_turret"
   ]
 }

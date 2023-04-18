@@ -1,4 +1,4 @@
-// 1.19.2	2023-03-31T02:51:42.0602991	Ars Elemental Loot Tables
+// 1.19.2	2023-04-16T12:04:54.9217916	Ars Elemental Loot Tables
 a78282ce9ce6eff50de40c5f3539b2ff352b6e83 data/ars_elemental/loot_tables/blocks/advanced_prism.json
 ae960c5c327360d4d1d303f735fc9143bb39a7cd data/ars_elemental/loot_tables/blocks/air_turret.json
 94b56a05bfb36ccbe6a326e675a31d726c6947ae data/ars_elemental/loot_tables/blocks/air_upstream.json
@@ -7,6 +7,7 @@ bd02eed858c3c5646631f4d9466b0de65a64cc07 data/ars_elemental/loot_tables/blocks/e
 6d5a4f452cc68938103a7ce8be72f7683ec4ccd9 data/ars_elemental/loot_tables/blocks/fire_turret.json
 d919b2d99c79eebb9da5c1ee71fb0654686033ae data/ars_elemental/loot_tables/blocks/flashpine_pod.json
 9174f75366542c4397c604fdaf46d6ea0f903f1b data/ars_elemental/loot_tables/blocks/magma_upstream.json
+2a26055648eb76a50a82344288dd34b4de45b0d2 data/ars_elemental/loot_tables/blocks/manipulation_turret.json
 d9f53b01cf9b51749741ee1b803f4d97536abf47 data/ars_elemental/loot_tables/blocks/mermaid_rock.json
 de94d508ecfc8c9b26ee2d0229486d0e9d1b5a01 data/ars_elemental/loot_tables/blocks/potted_yellow_archwood_sapling.json
 49af587bd1581261db081074018732d3ee6a9b9e data/ars_elemental/loot_tables/blocks/spell_mirror.json

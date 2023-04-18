@@ -91,6 +91,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withPage(ImbuementPage(ModItems.WATER_TURRET.get()))
                         .withPage(ImbuementPage(ModItems.AIR_TURRET.get()))
                         .withPage(ImbuementPage(ModItems.EARTH_TURRET.get()))
+                        .withPage(ImbuementPage(ModItems.SHAPING_TURRET.get()))
                 , getPath(AUTOMATION, "elemental_turrets"));
 
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.SPELL_HORN.get())

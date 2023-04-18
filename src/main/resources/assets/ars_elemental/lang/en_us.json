@@ -57,6 +57,7 @@
   "block.ars_elemental.water_turret": "Water Infused Turret",
   "block.ars_elemental.air_turret": "Air Infused Turret",
   "block.ars_elemental.earth_turret": "Earth Infused Turret",
+  "block.ars_elemental.manipulation_turret": "Manipulation Infused Turret",
   "entity.ars_elemental.homing_projectile": "Homing Projectile",
   "entity.ars_elemental.curved_projectile": "Arc Projectile",
   "entity.ars_elemental.lerp": "Interpolated Projectile",

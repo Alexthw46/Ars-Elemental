@@ -18,6 +18,7 @@ public class RainbowPrismLens extends AbstractPrismLens {
 
     @Override
     public void shoot(ServerLevel world, BlockPos pos, EntityProjectileSpell spell, Vec3 angle) {
+      // change the color of the spell to a random color
         spell.setColor(ParticleColor.makeRandomColor(255, 255, 255, randomSource));
         super.shoot(world, pos, spell, angle);
     }

@@ -120,14 +120,17 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     @Override
     public void tick() {
         super.tick();
+        // reduce cooldown by 1 every tick if it's greater than 0 (and not on client)
         if (!level.isClientSide && channelCooldown > 0)
             channelCooldown--;
         SummonUtil.healOverTime(this);
 
+        // if the entity is named Jeb_ , set the color to a random variant every 10 ticks
         if (!level.isClientSide && level.getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
             this.entityData.set(COLOR, MermaidEntity.Variants.random().toString());
         }
 
+        // if the entity is channeling, spawn particles around the entity
         if (level.isClientSide && isChanneling() && getChannelEntity() != -1) {
             Entity entity = level.getEntity(getChannelEntity());
             if (entity == null || entity.isRemoved())
@@ -143,6 +146,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     @Override
     public void die(DamageSource source) {
+        // drop charm on death if tamed
         if (!level.isClientSide && isTamed()) {
             level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), ModItems.SIREN_CHARM.get().getDefaultInstance()));
         }
@@ -403,9 +407,11 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         if (isJumping() && animTicks <= 30) {
             animTicks++;
         }
+        // check if the animation is done
         if (animTicks > 30) {
             setJump(false);
             animTicks = 0;
+            // if it's being tamed, spawn shards and award achievement
             if (!isTamed() && taming) {
                 taming = false;
                 ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level.random.nextInt(2));
@@ -425,6 +431,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
         ItemStack stack = pPlayer.getItemInHand(hand);
 
+        // if the player is holding a dye, change the mermaid's color
         if (isTamed()) {
             String color = Variants.getColorFromStack(stack);
             if (color != null && !getColor(this).equals(color)) {
@@ -465,6 +472,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         }
 
         public static Variants random() {
+            // create a map of the enum values and their ordinal values to get a random one
             Map<Integer, Variants> ordinalMap = Arrays.stream(Variants.values()).collect(Collectors.toMap(Enum::ordinal, var -> var, (a, b) -> b));
 
             return ordinalMap.get(mermaidRandom.nextInt(ordinalMap.size()));

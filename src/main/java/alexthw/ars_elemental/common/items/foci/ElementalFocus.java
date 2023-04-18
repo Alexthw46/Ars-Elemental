@@ -43,10 +43,12 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
     }
 
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
+        // If the spell is an elemental spell, and the element of the focus is the same as the spell, then amplify the spell.
         if (SpellSchools.ELEMENTAL.isPartOfSchool(spellPart)) {
             if (element.isPartOfSchool(spellPart)) {
                 builder.addAmplification(getBoostMultiplier());
             } else {
+                // If the spell is an elemental spell, and the element of the focus is not the same as the spell, then dampen the spell.
                 builder.addAmplification(getMalusMultiplier());
             }
         }

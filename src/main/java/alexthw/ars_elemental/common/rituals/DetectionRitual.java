@@ -25,7 +25,7 @@ public class DetectionRitual extends AbstractRitual {
         if (getWorld().getGameTime() % 20 == 0 && !getWorld().isClientSide())
             incrementProgress();
 
-
+        // If the ritual is finished, apply the effect to all monsters in a 128 block radius.
         if (getWorld() instanceof ServerLevel level && getProgress() >= 15) {
             List<Monster> entities = level.getEntitiesOfClass(Monster.class, new AABB(tile.getBlockPos()).inflate(128));
             for (LivingEntity entity : entities) {

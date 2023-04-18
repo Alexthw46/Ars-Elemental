@@ -9,14 +9,6 @@
         }
       ],
       "recipe": {
-        "bookshelf:load_conditions": [
-          {
-            "type": "bookshelf:item_exists",
-            "values": [
-              "ars_elemental:yellow_archwood_sapling"
-            ]
-          }
-        ],
         "type": "botanypots:crop",
         "seed": {
           "item": "ars_elemental:yellow_archwood_sapling"

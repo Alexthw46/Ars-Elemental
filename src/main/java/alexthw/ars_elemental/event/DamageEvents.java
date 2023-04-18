@@ -52,8 +52,10 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EART
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class DamageEvents {
 
+
     @SubscribeEvent
     public static void betterFilters(SpellDamageEvent.Pre event) {
+        //if the spell has a filter, and the target of the attack is not valid, cancel the event
         if (event.context != null && event.context.getCurrentIndex() > 0 && event.context.getSpell().recipe.get(event.context.getCurrentIndex() - 1) instanceof IFilter filter) {
             if (!filter.shouldResolveOnEntity(event.target)) {
                 event.setCanceled(true);
@@ -69,6 +71,7 @@ public class DamageEvents {
             if (focus != null) {
                 switch (focus.getId()) {
                     case "fire" -> {
+                        //if the target is fire immune, cancel the event and deal damage
                         if (event.getSource().isFire() && living.fireImmune()) {
                             event.setCanceled(true);
                             DamageSource newDamage = new EntityDamageSource("hellflare", player).setMagic();
@@ -78,6 +81,7 @@ public class DamageEvents {
                         }
                     }
                     case "water" -> {
+                        //if the target is immune to drowning, cancel the event and deal damage
                         if (event.getSource().getMsgId().equals("drown") && living.getMobType() == MobType.WATER) {
                             event.setCanceled(true);
                             DamageSource newDamage = DamageSource.playerAttack(player).setMagic();
@@ -94,10 +98,12 @@ public class DamageEvents {
                 }
             }
         } else if (event.getSource().getEntity() instanceof FirenandoEntity FE) {
+            //if the firenando is attacking a non-monster, cancel the event
             if (!(living instanceof Monster mob)) {
                 event.setCanceled(true);
                 living.clearFire();
             } else {
+                //if the firenando is attacking a monster, and the monster is fire immune, cancel the event and deal damage
                 if (mob.fireImmune() && event.getSource().isFire()) {
                     event.setCanceled(true);
                     mob.hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
@@ -111,6 +117,7 @@ public class DamageEvents {
 
         LivingEntity living = event.getEntity();
 
+        //if the player is wearing a bangle, apply special effects on hit
         if (event.getSource().getEntity() instanceof Player player && living != null && living != player) {
             SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level, player);
             if (bangle != null) {
@@ -131,9 +138,11 @@ public class DamageEvents {
 
     @SubscribeEvent
     public static void handleHealing(LivingHealEvent event) {
+        //boost healing if you have earth focus
         if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolFocus.hasFocus(player.getLevel(), player) == ELEMENTAL_EARTH) {
             event.setAmount(event.getAmount() * 1.5F);
         }
+        //reduce healing if you have hellfire and reset the invulnerability time
         if (event.getEntity().hasEffect(HELLFIRE.get())) {
             MobEffectInstance inst = event.getEntity().getEffect(HELLFIRE.get());
             if (inst == null) return;
@@ -146,9 +155,12 @@ public class DamageEvents {
     @SubscribeEvent
     public static void damageReduction(LivingHurtEvent event) {
         if (event.getEntity() instanceof Player player) {
+            //reduce damage from elytra if you have air focus
             if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
                 event.setAmount(event.getAmount() * 0.1f);
             }
+
+            //fetch the damage reduction from the armor according to the damage source
             HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
             int bonusReduction = 0;
             for (ItemStack stack : player.getArmorSlots()) {
@@ -162,22 +174,28 @@ public class DamageEvents {
                     }
                 }
             }
+
+            //if you have 4 pieces of the fire school, fire is removed
             if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().isFire() || event.getSource().msgId.equals("hellflare")) {
                 player.clearFire();
             }
+            //if you have 4 pieces of the water school, you get extra air when drowning
             if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource() == DamageSource.DROWN) {
                 player.setAirSupply(player.getMaxAirSupply());
                 bonusReduction += 5;
             }
+            //if you have 4 pieces of the earth school, you get extra food when you are low
             if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && player.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 2) {
                 player.getFoodData().setFoodLevel(20);
             }
+            //if you have 4 pieces of the air school, you get extra fall damage reduction
             if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().isFall()) {
                 bonusReduction += 5;
             }
 
             if (bonusReduction > 0) {
                 int finalBonusReduction = bonusReduction;
+                //convert the damage reduction into mana and add the mana regen effect
                 CapabilityRegistry.getMana(player).ifPresent(mana -> {
                     if (finalBonusReduction > 3) mana.addMana(event.getAmount() * 5);
                     event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
@@ -189,6 +207,8 @@ public class DamageEvents {
 
         int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get();
 
+
+        //check if the entity has the mana bubble effect and if so, reduce the damage
         if (event.getEntity() != null && event.getEntity().hasEffect(MANA_BUBBLE.get())) {
             LivingEntity living = event.getEntity();
             CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
@@ -207,6 +227,8 @@ public class DamageEvents {
         }
     }
 
+
+    //When the entity have the mana bubble and is hit by a harmful effect, it will consume mana to try to protect against it
     @SubscribeEvent
     public static void statusProtect(MobEffectEvent.Applicable event) {
         if (event.getEntity().hasEffect(MANA_BUBBLE.get()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {

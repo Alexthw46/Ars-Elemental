@@ -19,6 +19,8 @@ public interface ISchoolFocus extends ISpellModifierItem, ISchoolItem {
     static @Nullable SpellSchool hasFocus(Level world, Entity entity) {
         if (entity instanceof FirenandoEntity) return SpellSchools.ELEMENTAL_FIRE;
         if (entity instanceof EntityMageBase mage) return mage.school;
+
+        //check the player's hands and curios for a focus and return the school if found
         if (!world.isClientSide && entity instanceof Player player) {
             for (InteractionHand curHand : InteractionHand.values()) {
                 Item hand = player.getItemInHand(curHand).getItem();

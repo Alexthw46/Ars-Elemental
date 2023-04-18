@@ -45,6 +45,8 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         if (!(rayTraceResult.getEntity() instanceof LivingEntity livingEntity && level instanceof ServerLevel world))
             return;
         Vec3 vec = safelyGetHitPos(rayTraceResult);
+
+        //calculate damage and potion effect duration
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
         double range = 3 + spellStats.getAoeMultiplier();
         int effectSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
@@ -53,9 +55,11 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
 
         damage(vec, world, shooter, spellStats, damage, effectSec, livingEntity, spellContext, resolver);
 
+        //Damage all nearby entities
         for (LivingEntity e : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.position().add(range, range, range), livingEntity.position().subtract(range, range, range)))) {
             if (e.equals(livingEntity) || e.equals(shooter))
                 continue;
+            //if the entity is not dead and is affected by poison or hunger, damage it, otherwise apply poison
             if (canDamage(e, spellStats, spellContext, resolver, e)) {
                 vec = e.position();
                 damage(vec, world, shooter, spellStats, damage, effectSec, e, spellContext, resolver);
@@ -76,15 +80,18 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         attemptDamage(world, shooter, stats, spellContext, resolver, livingEntity, damageSource, damage);
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
+        //if the entity is dead, spawn a ground blossom on the ground below it
         if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter)) == ELEMENTAL_EARTH) {
             BlockPos feet = livingEntity.getOnPos();
             Material underfoot = world.getBlockState(feet).getMaterial();
             Block blossom = ModItems.GROUND_BLOSSOM.get();
             if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS || underfoot == Material.LEAVES) && world.getBlockState(feet.above()).isAir()) {
                 world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
-                if (shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer)) ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
+                if (shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
+                    ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
             }
-        } else livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime));
+        } else
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime)); //otherwise apply hunger
 
     }
 
