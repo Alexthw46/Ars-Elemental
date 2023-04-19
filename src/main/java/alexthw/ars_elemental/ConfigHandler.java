@@ -38,6 +38,7 @@ public class ConfigHandler {
         public static ForgeConfigSpec.IntValue WATER_ELEVATOR_COST;
 
         public static ForgeConfigSpec.BooleanValue LIGHTNINGS_BIOME;
+        public static ForgeConfigSpec.BooleanValue SOULBOUND_LOOT;
 
         public static ForgeConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
         public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
@@ -99,6 +100,7 @@ public class ConfigHandler {
             LIGHTNINGS_BIOME = builder.comment("Set to false to disable the lightning crashing often on flashing archwood biome(s).").define("always_thunder", true);
             HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
             SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);
+            SOULBOUND_LOOT = builder.comment("If enabled, soulbound enchantment can appear in randomly enchanted loot chests.").define("soulbound_loot", true);
             builder.pop();
 
             builder.push("Mobs-Disabled");

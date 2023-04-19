@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.enchantments;
 
+import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -56,6 +57,11 @@ public class SoulboundEnchantment extends Enchantment {
     @Override
     public boolean isTreasureOnly() {
         return true;
+    }
+
+    @Override
+    public boolean isDiscoverable() {
+        return ConfigHandler.Common.SOULBOUND_LOOT.get();
     }
 
 }

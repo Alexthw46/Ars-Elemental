@@ -14,7 +14,9 @@ public interface IPropagator {
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
         // Cancel the current spell and get the remaining glyphs
+        if (spellContext.getCurrentIndex() == 1) return;
         spellContext.setCanceled(true);
+        spellContext.setCurrentIndex(spellContext.getCurrentIndex() - 1);
         Spell newSpell = spellContext.getRemainingSpell();
         if (newSpell.isEmpty()) return;
         // Create a new context and resolver with the remaining glyphs
