@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,8 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     }
 
     @Override
-    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
+    public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
+        Vec3 pos = hitResult.getLocation();
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
         EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
         projectileSpell.setPos(pos.add(0, 1, 0));

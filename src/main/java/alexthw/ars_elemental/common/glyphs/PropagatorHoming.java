@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +33,9 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         super("propagator_homing", "Propagate Homing");
     }
 
-    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
+    @Override
+    public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
+        Vec3 pos = hitResult.getLocation();
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
         List<EntityHomingProjectile> projectiles = new ArrayList<>();
