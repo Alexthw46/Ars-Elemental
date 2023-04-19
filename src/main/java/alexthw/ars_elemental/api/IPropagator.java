@@ -22,10 +22,10 @@ public interface IPropagator {
         SpellContext newContext = spellContext.clone().withSpell(newSpell);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
         // Propagate the new spell
-        propagate(world, rayTraceResult, shooter, stats, newResolver, spellContext);
+        propagate(world, rayTraceResult, shooter, stats, newResolver);
 
     }
 
-    void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext);
+    void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver);
 
 }

@@ -3,8 +3,8 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.api.IPropagator;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
-import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
@@ -34,7 +34,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
     }
 
     @Override
-    public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
+    public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         Vec3 pos = hitResult.getLocation();
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
@@ -49,11 +49,11 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
 
         // Adjust the direction of the projectiles
         Vec3 direction = pos.subtract(shooter.position());
-        if (spellContext.castingTile instanceof BasicSpellTurretTile turretTile) {
-            if (turretTile instanceof RotatingTurretTile rotatingTurretTile) {
+        if (resolver.spellContext.getCaster() instanceof TileCaster tc) {
+            if (tc.getTile() instanceof RotatingTurretTile rotatingTurretTile) {
                 direction = rotatingTurretTile.getShootAngle();
             } else {
-                direction = new Vec3(turretTile.getBlockState().getValue(BasicSpellTurret.FACING).step());
+                direction = new Vec3(tc.getTile().getBlockState().getValue(BasicSpellTurret.FACING).step());
             }
         }
 
