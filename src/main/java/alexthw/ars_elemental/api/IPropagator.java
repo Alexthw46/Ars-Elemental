@@ -22,7 +22,8 @@ public interface IPropagator {
             //remove the leftover propagator before resolving
             @Override
             protected void resolveAllEffects(Level world) {
-                this.spellContext.getSpell().recipe.remove(0);
+                if (!this.spellContext.getSpell().recipe.isEmpty())
+                    this.spellContext.getSpell().recipe.remove(0);
                 super.resolveAllEffects(world);
             }
         };
