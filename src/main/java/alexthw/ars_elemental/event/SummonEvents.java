@@ -115,7 +115,7 @@ public class SummonEvents {
     @SubscribeEvent
     public static void summonSickReduction(MobEffectEvent.Added event) {
         if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonPerk.INSTANCE, player) > 0) {
-            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (10 - PerkUtil.countForPerk(SummonPerk.INSTANCE, player) / 10);
+            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (1 - PerkUtil.countForPerk(SummonPerk.INSTANCE, player) / 10);
         }
     }
 

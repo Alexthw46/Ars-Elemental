@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.entity.spells;
 
+import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.block.IPrismaticBlock;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
@@ -21,8 +22,12 @@ import net.minecraft.world.phys.Vec3;
 
 public class EntityCurvedProjectile extends EntityProjectileSpell {
 
-
     private boolean isCareful = false;
+
+    @Override
+    public int getExpirationTime() {
+        return MethodCurvedProjectile.INSTANCE.getProjectileLifespan() * 20;
+    }
 
     public EntityCurvedProjectile(EntityType<? extends EntityProjectileSpell> entityType, Level world) {
         super(entityType, world);

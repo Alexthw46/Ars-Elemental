@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity.spells;
 
 import alexthw.ars_elemental.ConfigHandler;
+import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
@@ -35,7 +36,7 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
 
     @Override
     public int getExpirationTime() {
-        return 20 * 30;
+        return MethodHomingProjectile.INSTANCE.getProjectileLifespan() * 20;
     }
 
     public EntityHomingProjectile(Level world, SpellResolver resolver) {
