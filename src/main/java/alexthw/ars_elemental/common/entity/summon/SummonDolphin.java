@@ -127,7 +127,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
                 if (this.isControlledByLocalInstance()) {
                     if (getMoistnessLevel() > 2350) {
-                        this.flyingSpeed = 0.2F;
+                        this.flyingSpeed = 0.15F;
                     } else {
                         this.flyingSpeed = 0.02F;
                         this.setSpeed((float) Math.min(this.getSpeed(), this.getAttributeValue(Attributes.MOVEMENT_SPEED) + 0.5F));
@@ -152,7 +152,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
     @Override
     protected float getWaterSlowDown() {
-        return 0.97F;
+        return 0.975F;
     }
 
     @Override

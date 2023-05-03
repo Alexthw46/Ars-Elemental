@@ -154,7 +154,7 @@ public class DamageEvents {
 
     @SubscribeEvent
     public static void damageReduction(LivingHurtEvent event) {
-        if (event.getEntity() instanceof Player player) {
+        if (event.getEntity() instanceof Player player && !event.getSource().isBypassMagic()) {
             //reduce damage from elytra if you have air focus
             if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
                 event.setAmount(event.getAmount() * 0.1f);

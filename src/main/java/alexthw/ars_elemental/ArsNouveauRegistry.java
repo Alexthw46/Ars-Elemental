@@ -71,13 +71,16 @@ public class ArsNouveauRegistry {
                 DamageSource.DROWN,
                 DamageSource.FREEZE,
                 DamageSource.MAGIC,
-                DamageSource.LIGHTNING_BOLT)
+                DamageSource.LIGHTNING_BOLT,
+                new DamageSource("thorns"))
         );
         IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
-                DamageSource.FALL,
-                DamageSource.FLY_INTO_WALL,
-                DamageSource.IN_WALL,
-                DamageSource.LIGHTNING_BOLT)
+                        DamageSource.FALL,
+                        DamageSource.FLY_INTO_WALL,
+                        DamageSource.IN_WALL,
+                        DamageSource.LIGHTNING_BOLT,
+                        new DamageSource("sonic_boom")
+                )
         );
         IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageSource.CACTUS,
                 DamageSource.STARVE,

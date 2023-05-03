@@ -76,6 +76,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         }
     }
 
+    @SuppressWarnings("removal")
     @Override
     public void applyPotion(LivingEntity entity, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles) {
         if (entity == null) return;

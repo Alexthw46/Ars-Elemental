@@ -120,12 +120,23 @@ public class SummonEvents {
     }
 
     @SubscribeEvent
-    public static void summonPowerup(LivingDamageEvent event){
-        if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().getLevel() instanceof ServerLevel level){
+    public static void summonPowerup(LivingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().getLevel() instanceof ServerLevel level) {
             if (summon.getOwner(level) instanceof Player player) {
                 int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, player) - 1;
-                if (threadLevel > 0){
+                if (threadLevel > 0) {
                     event.setAmount(event.getAmount() + threadLevel);
+                }
+                if (summon instanceof SummonWolf) {
+                    SpellSchool school = ISchoolFocus.hasFocus(level, player);
+                    if (school != null) switch (school.getId()) {
+                        case "fire" -> event.getEntity().setSecondsOnFire(5);
+                        case "water" ->
+                                event.getEntity().addEffect(new MobEffectInstance(ModPotions.FREEZING_EFFECT.get(), 100, 1));
+                        case "air" ->
+                                event.getEntity().addEffect(new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 100, 1));
+                        case "earth" -> event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 100));
+                    }
                 }
             }
         }
