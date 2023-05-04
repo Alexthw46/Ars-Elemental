@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static alexthw.ars_elemental.ConfigHandler.Common.ARMOR_MANA_REGEN;
+import static alexthw.ars_elemental.ConfigHandler.Common.ARMOR_MAX_MANA;
+
 
 public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmor {
 
@@ -122,8 +125,8 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
             UUID uuid = getModifierForSlot(this.slot);
             IPerkHolder<ItemStack> perkHolder = PerkUtil.getPerkHolder(stack);
             if (perkHolder != null) {
-                attributes.put(PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_armor", 100, AttributeModifier.Operation.ADDITION));
-                attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_armor", 5, AttributeModifier.Operation.ADDITION));
+                attributes.put(PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_armor", ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADDITION));
+                attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_armor", ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADDITION));
                 for (PerkInstance perkInstance : perkHolder.getPerkInstances()) {
                     IPerk perk = perkInstance.getPerk();
                     attributes.putAll(perk.getModifiers(this.slot, stack, perkInstance.getSlot().value));

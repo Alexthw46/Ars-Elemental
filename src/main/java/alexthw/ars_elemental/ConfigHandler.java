@@ -22,6 +22,8 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
 
+        public static ForgeConfigSpec.IntValue ARMOR_MAX_MANA;
+        public static ForgeConfigSpec.IntValue ARMOR_MANA_REGEN;
         public static ForgeConfigSpec.BooleanValue HOMING_GLOWING;
         public static ForgeConfigSpec.BooleanValue FIRENANDO_KILL;
 
@@ -73,6 +75,13 @@ public class ConfigHandler {
 
             EnableGlyphEmpowering = builder.define("Enable glyph empowering", true);
             EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
+
+            builder.pop();
+
+            builder.comment("Adjust Elemental Armor Mana Buffs").push("Elemental Armors");
+
+            ARMOR_MAX_MANA = builder.comment("Max mana bonus for each elemental armor piece").defineInRange("armorMaxMana", 100, 0, 10000);
+            ARMOR_MANA_REGEN = builder.comment("Mana regen bonus for each elemental armor piece").defineInRange("armorManaRegen", 4, 0, 100);
 
             builder.pop();
 
