@@ -2,6 +2,8 @@ package alexthw.ars_elemental.recipe.jei;
 
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import com.hollingsworth.arsnouveau.client.jei.EnchantingApparatusRecipeCategory;
+import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
+import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -30,15 +32,26 @@ public class SpellBookUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
         List<Ingredient> inputs = recipe.pedestalItems;
         double angleBetweenEach = 360.0 / inputs.size();
         List<ItemStack> outputs = new ArrayList<>();
-
-        if (recipe.reagent != null) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 48, 45).addIngredients(recipe.reagent);
-            for (ItemStack input : recipe.reagent.getItems()) {
-                var temp = input.copy();
-                temp.getOrCreateTag().putBoolean("ae_netherite", true);
-                outputs.add(temp);
+        List<ItemStack> stacks = recipe.reagent == null ? new ArrayList<>() : List.of(recipe.reagent.getItems());
+        if (!focuses.isEmpty()) {
+            //takes a copy of the magic armor hovered
+            List<ItemStack> list = focuses.getItemStackFocuses(RecipeIngredientRole.CATALYST).map(i -> i.getTypedValue().getIngredient().copy()).filter(i -> i.getItem() instanceof SpellBook).toList();
+            List<ItemStack> list2 = focuses.getItemStackFocuses(RecipeIngredientRole.OUTPUT).map(i -> i.getTypedValue().getIngredient().copy()).filter(i -> i.getItem() instanceof SpellBook).toList();
+            if (!list.isEmpty()) {
+                stacks = list;
+            } else if (!list2.isEmpty()) {
+                stacks = list2;
             }
         }
+
+        builder.addSlot(RecipeIngredientRole.INPUT, 48, 45).addItemStacks(stacks);
+
+        for (ItemStack input : stacks) {
+            var temp = input.copy();
+            temp.getOrCreateTag().putBoolean("ae_netherite", true);
+            outputs.add(temp);
+        }
+
         for (Ingredient input : inputs) {
             builder.addSlot(RecipeIngredientRole.INPUT, (int) point.x, (int) point.y)
                     .addIngredients(input);
