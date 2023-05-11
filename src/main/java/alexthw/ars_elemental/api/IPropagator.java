@@ -5,6 +5,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +26,11 @@ public interface IPropagator {
                 if (!this.spellContext.getSpell().recipe.isEmpty())
                     this.spellContext.getSpell().recipe.remove(0);
                 super.resolveAllEffects(world);
+            }
+
+            @Override
+            public boolean hasFocus(ItemStack stack) {
+                return resolver.hasFocus(stack);
             }
         };
         propagate(world, rayTraceResult, shooter, stats, newResolver);

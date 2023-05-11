@@ -7,6 +7,7 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
+import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.RegistryHelper;
@@ -154,55 +155,60 @@ public class DamageEvents {
 
     @SubscribeEvent
     public static void damageReduction(LivingHurtEvent event) {
-        if (event.getEntity() instanceof Player player && !event.getSource().isBypassMagic()) {
-            //reduce damage from elytra if you have air focus
-            if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
-                event.setAmount(event.getAmount() * 0.1f);
-            }
 
-            //fetch the damage reduction from the armor according to the damage source
-            HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
-            int bonusReduction = 0;
-            for (ItemStack stack : player.getArmorSlots()) {
-                Item item = stack.getItem();
-                if (item instanceof IElementalArmor armor && armor.doAbsorb(event.getSource())) {
-                    bonusReduction++;
-                    if (bonusMap.containsKey(armor.getSchool())) {
-                        bonusMap.put(armor.getSchool(), bonusMap.get(armor.getSchool()) + 1);
-                    } else {
-                        bonusMap.put(armor.getSchool(), 1);
+        if (event.getEntity() instanceof Player player) {
+            if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))
+                event.setAmount(event.getAmount() * 0.5f);
+            if (!event.getSource().isBypassMagic()) {
+                //reduce damage from elytra if you have air focus
+                if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
+                    event.setAmount(event.getAmount() * 0.1f);
+                }
+
+                //fetch the damage reduction from the armor according to the damage source
+                HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
+                int bonusReduction = 0;
+                for (ItemStack stack : player.getArmorSlots()) {
+                    Item item = stack.getItem();
+                    if (item instanceof IElementalArmor armor && armor.doAbsorb(event.getSource())) {
+                        bonusReduction++;
+                        if (bonusMap.containsKey(armor.getSchool())) {
+                            bonusMap.put(armor.getSchool(), bonusMap.get(armor.getSchool()) + 1);
+                        } else {
+                            bonusMap.put(armor.getSchool(), 1);
+                        }
                     }
                 }
-            }
 
-            //if you have 4 pieces of the fire school, fire is removed
-            if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().isFire() || event.getSource().msgId.equals("hellflare")) {
-                player.clearFire();
-            }
-            //if you have 4 pieces of the water school, you get extra air when drowning
-            if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource() == DamageSource.DROWN) {
-                player.setAirSupply(player.getMaxAirSupply());
-                bonusReduction += 5;
-            }
-            //if you have 4 pieces of the earth school, you get extra food when you are low
-            if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && player.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 2) {
-                player.getFoodData().setFoodLevel(20);
-            }
-            //if you have 4 pieces of the air school, you get extra fall damage reduction
-            if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().isFall()) {
-                bonusReduction += 5;
-            }
+                //if you have 4 pieces of the fire school, fire is removed
+                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().isFire() || event.getSource().msgId.equals("hellflare")) {
+                    player.clearFire();
+                }
+                //if you have 4 pieces of the water school, you get extra air when drowning
+                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource() == DamageSource.DROWN) {
+                    player.setAirSupply(player.getMaxAirSupply());
+                    bonusReduction += 5;
+                }
+                //if you have 4 pieces of the earth school, you get extra food when you are low
+                if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && player.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 2) {
+                    player.getFoodData().setFoodLevel(20);
+                }
+                //if you have 4 pieces of the air school, you get extra fall damage reduction
+                if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().isFall()) {
+                    bonusReduction += 5;
+                }
 
-            if (bonusReduction > 0) {
-                int finalBonusReduction = bonusReduction;
-                //convert the damage reduction into mana and add the mana regen effect
-                CapabilityRegistry.getMana(player).ifPresent(mana -> {
-                    if (finalBonusReduction > 3) mana.addMana(event.getAmount() * 5);
-                    event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
-                });
-                event.setAmount(event.getAmount() * (1 - (bonusReduction / 10F)));
-            }
+                if (bonusReduction > 0) {
+                    int finalBonusReduction = bonusReduction;
+                    //convert the damage reduction into mana and add the mana regen effect
+                    CapabilityRegistry.getMana(player).ifPresent(mana -> {
+                        if (finalBonusReduction > 3) mana.addMana(event.getAmount() * 5);
+                        event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
+                    });
+                    event.setAmount(event.getAmount() * (1 - (bonusReduction / 10F)));
+                }
 
+            }
         }
 
         int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get();
