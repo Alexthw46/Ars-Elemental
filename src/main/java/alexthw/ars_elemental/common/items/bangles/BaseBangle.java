@@ -19,7 +19,7 @@ public class BaseBangle extends ElementalCurio implements ISpellModifierItem {
     @Override
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         if (world.getRandom().nextBoolean())
-            builder.addDamageModifier(2);
+            builder.addDamageModifier(2.0D);
         return builder;
     }
 }

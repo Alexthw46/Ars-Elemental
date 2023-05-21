@@ -46,7 +46,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
             return;
         Vec3 vec = safelyGetHitPos(rayTraceResult);
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
-        double range = 3 + spellStats.getAoeMultiplier();
+        double range = 4 + spellStats.getAoeMultiplier();
         DamageSource source = buildDamageSource(world, shooter);
 
         // If the target is shocked, damage all nearby entities and apply the shock effect to them
@@ -96,6 +96,8 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         super.buildConfig(builder);
         addDamageConfig(builder, 7.0);
         addAmpConfig(builder, 3.0);
+        addPotionConfig(builder, 15);
+        addExtendTimeConfig(builder, 5);
     }
 
     @Override
@@ -134,11 +136,11 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
 
     @Override
     public int getBaseDuration() {
-        return POTION_TIME == null ? 30 : POTION_TIME.get();
+        return POTION_TIME == null ? 15 : POTION_TIME.get();
     }
 
     @Override
     public int getExtendTimeDuration() {
-        return EXTEND_TIME == null ? 8 : EXTEND_TIME.get();
+        return EXTEND_TIME == null ? 5 : EXTEND_TIME.get();
     }
 }

@@ -34,10 +34,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -85,6 +82,11 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
     private final ParticleColor colorAlt = new ParticleColor(15, 100, 200);
     public final Spell spell = new Spell(MethodHomingProjectile.INSTANCE, EffectIgnite.INSTANCE, AugmentSensitive.INSTANCE, EffectFlare.INSTANCE);
     public UUID owner;
+
+    @Override
+    public boolean isAlliedTo(Entity pEntity) {
+        return !(pEntity instanceof Enemy) || super.isAlliedTo(pEntity);
+    }
 
     @Override
     public void tick() {

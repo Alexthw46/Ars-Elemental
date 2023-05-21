@@ -28,6 +28,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Monster;
@@ -73,7 +74,7 @@ public class DamageEvents {
                 switch (focus.getId()) {
                     case "fire" -> {
                         //if the target is fire immune, cancel the event and deal damage
-                        if (event.getSource().isFire() && living.fireImmune()) {
+                        if (event.getSource().isFire() && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
                             event.setCanceled(true);
                             DamageSource newDamage = new EntityDamageSource("hellflare", player).setMagic();
                             if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
@@ -89,11 +90,6 @@ public class DamageEvents {
                             if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
                             if (event.getSource().isBypassMagic()) newDamage.bypassMagic();
                             living.hurt(newDamage, event.getAmount());
-                        }
-                    }
-                    case "air" -> {
-                        if (living.invulnerableTime > 0 && event.getSource().isFall()) {
-                            living.invulnerableTime = 0;
                         }
                     }
                 }
@@ -134,6 +130,7 @@ public class DamageEvents {
                 event.setCanceled(true);
             }
         }
+
     }
 
 
@@ -154,9 +151,32 @@ public class DamageEvents {
     }
 
     @SubscribeEvent
-    public static void damageReduction(LivingHurtEvent event) {
+    public static void damageTweaking(LivingHurtEvent event) {
 
-        if (event.getEntity() instanceof Player player) {
+        if (event.getSource().getEntity() == null || event.getEntity() == null) return;
+        var dealer = event.getSource().getEntity();
+        var target = event.getEntity();
+
+        SpellSchool focus = ISchoolFocus.hasFocus(event.getEntity().level, dealer);
+        if (event.getSource().getEntity() instanceof Player player && focus != null) {
+            switch (focus.getId()) {
+                case "water" -> {
+                    //change the freezing buff from useless to the whole damage
+                    if (target.getPercentFrozen() > 0.75F && event.getSource().getMsgId().equals("freeze")) {
+                        event.setAmount(event.getAmount() * 1.25F);
+                    }
+                }
+                case "air" -> {
+                    //let's try to compensate the loss of iframe skip with a buff to WS
+                    if (target.hasEffect(MobEffects.LEVITATION) && event.getSource().isFall()) {
+                        event.setAmount(event.getAmount() * 1.25F);
+                    }
+                }
+            }
+        }
+
+
+        if (target instanceof Player player) {
             if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))
                 event.setAmount(event.getAmount() * 0.5f);
             if (!event.getSource().isBypassMagic()) {

@@ -105,11 +105,6 @@ public class GlyphEvents {
                 living.removeEffect(ModPotions.HELLFIRE.get());
             }
         }
-        if (event.resolveEffect == EffectColdSnap.INSTANCE) {
-            if (living.getPercentFrozen() > 0.75) {
-                event.spellStats.setDamageModifier(1 + event.spellStats.getDamageModifier() * 2);
-            }
-        }
         if (event.resolveEffect == EffectGrow.INSTANCE) {
             if (living.getMobType() == MobType.UNDEAD && school == ELEMENTAL_EARTH) {
                 living.hurt(DamageSource.MAGIC, (float) (3 + 2 * event.spellStats.getAmpMultiplier() + event.spellStats.getDamageModifier()));
