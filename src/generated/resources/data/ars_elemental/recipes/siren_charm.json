@@ -6,39 +6,25 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "minecraft:prismarine_shard"
-      }
+      "item": "minecraft:prismarine_shard"
     },
     {
-      "item": {
-        "tag": "minecraft:fishes"
-      }
+      "tag": "minecraft:fishes"
     },
     {
-      "item": {
-        "tag": "minecraft:fishes"
-      }
+      "tag": "minecraft:fishes"
     },
     {
-      "item": {
-        "tag": "minecraft:fishes"
-      }
+      "tag": "minecraft:fishes"
     },
     {
-      "item": {
-        "tag": "forge:gems/source"
-      }
+      "tag": "forge:gems/source"
     },
     {
-      "item": {
-        "tag": "forge:gems/source"
-      }
+      "tag": "forge:gems/source"
     },
     {
-      "item": {
-        "tag": "forge:gems/source"
-      }
+      "tag": "forge:gems/source"
     }
   ],
   "reagent": [

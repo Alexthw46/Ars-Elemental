@@ -7,34 +7,22 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "tag": "forge:logs/archwood"
-      }
+      "tag": "forge:logs/archwood"
     },
     {
-      "item": {
-        "tag": "forge:logs/archwood"
-      }
+      "tag": "forge:logs/archwood"
     },
     {
-      "item": {
-        "tag": "forge:gems/quartz"
-      }
+      "tag": "forge:gems/quartz"
     },
     {
-      "item": {
-        "tag": "forge:gems/quartz"
-      }
+      "tag": "forge:gems/quartz"
     },
     {
-      "item": {
-        "item": "minecraft:gold_ingot"
-      }
+      "item": "minecraft:gold_ingot"
     },
     {
-      "item": {
-        "item": "minecraft:gold_ingot"
-      }
+      "item": "minecraft:gold_ingot"
     }
   ],
   "reagent": [

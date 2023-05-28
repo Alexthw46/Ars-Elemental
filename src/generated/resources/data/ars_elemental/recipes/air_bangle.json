@@ -6,24 +6,16 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": {
-        "item": "minecraft:piston"
-      }
+      "item": "minecraft:piston"
     },
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     }
   ],
   "reagent": [

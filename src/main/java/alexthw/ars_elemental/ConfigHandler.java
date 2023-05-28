@@ -7,7 +7,8 @@ public class ConfigHandler {
 
     public static class Common {
 
-        public final ForgeConfigSpec.ConfigValue<Double> FocusDiscount;
+        public final ForgeConfigSpec.ConfigValue<Double> MajorFocusDiscount;
+        public final ForgeConfigSpec.ConfigValue<Double> LesserFocusDiscount;
 
         public final ForgeConfigSpec.ConfigValue<Double> FireMasteryBuff;
         public final ForgeConfigSpec.ConfigValue<Double> WaterMasteryBuff;
@@ -49,8 +50,10 @@ public class ConfigHandler {
 
         public Common(ForgeConfigSpec.Builder builder) {
 
-            FocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the focus")
+            LesserFocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the lesser focus")
                     .defineInRange("Elemental Focus discount", 0.15D, 0.0D, 0.99D);
+            MajorFocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the greater focus")
+                    .defineInRange("Elemental Focus discount", 0.25D, 0.0D, 0.99D);
 
             builder.comment("Adjust these values to balance how much a spell gets amplified by the matching spell focus, doubled for major foci.")
                     .push("Elemental Spell Foci - Amplify");

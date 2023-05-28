@@ -6,34 +6,22 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "ars_nouveau:fire_essence"
     },
     {
-      "item": {
-        "item": "minecraft:magma_block"
-      }
+      "item": "minecraft:magma_block"
     },
     {
-      "item": {
-        "item": "minecraft:magma_block"
-      }
+      "item": "minecraft:magma_block"
     },
     {
-      "item": {
-        "item": "minecraft:magma_block"
-      }
+      "item": "minecraft:magma_block"
     },
     {
-      "item": {
-        "item": "minecraft:magma_block"
-      }
+      "item": "minecraft:magma_block"
     }
   ],
   "reagent": [

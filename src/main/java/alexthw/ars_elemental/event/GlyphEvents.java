@@ -8,11 +8,10 @@ import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
-import alexthw.ars_elemental.util.BotaniaCompat;
-import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
+import com.hollingsworth.arsnouveau.api.spell.IDamageEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
@@ -31,7 +30,6 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,16 +49,8 @@ public class GlyphEvents {
 
     @SubscribeEvent
     public static void empowerGlyphs(EffectResolveEvent.Pre event) {
-
-        if (event.resolveEffect == EffectConjureWater.INSTANCE && CompatUtils.isBotaniaLoaded() && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
-            if (BotaniaCompat.tryFillApothecary(blockHitResult.getBlockPos(), event.world)) {
-                event.setCanceled(true);
-                return;
-            }
-        }
-
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.world, event.shooter);
+        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.shooter);
         if (event.rayTraceResult instanceof BlockHitResult blockHitResult)
             empowerResolveOnBlocks(event, blockHitResult, school);
         else if (event.rayTraceResult instanceof EntityHitResult entityHitResult)
@@ -99,19 +89,21 @@ public class GlyphEvents {
                 living.setIsInPowderSnow(true);
                 int newFrozenTicks = living.getTicksFrozen() + (int) (60 * event.spellStats.getAmpMultiplier());
                 living.setTicksFrozen(newFrozenTicks);
-                if (living.isFullyFrozen()) living.invulnerableTime = 0;
+                if (living.isFullyFrozen() && living.canFreeze() && !living.hasEffect(ModPotions.FROZEN.get())) {
+                    living.invulnerableTime = 0;
+                    living.addEffect(new MobEffectInstance(ModPotions.FROZEN.get(), 10,0, false, false, false));
+                }
             }
             if (living.hasEffect(ModPotions.HELLFIRE.get())) {
                 living.removeEffect(ModPotions.HELLFIRE.get());
             }
         }
         if (event.resolveEffect == EffectGrow.INSTANCE) {
-            if (living.getMobType() == MobType.UNDEAD && school == ELEMENTAL_EARTH) {
-                living.hurt(DamageSource.MAGIC, (float) (3 + 2 * event.spellStats.getAmpMultiplier() + event.spellStats.getDamageModifier()));
+            if (living.getMobType() == MobType.UNDEAD && school == ELEMENTAL_EARTH && event.shooter instanceof Player) {
+                ((IDamageEffect) event.resolveEffect).attemptDamage(event.world, event.shooter, event.spellStats, event.context, event.resolver, living, DamageSource.MAGIC, (float) (3 + 2 * event.spellStats.getAmpMultiplier()));
                 if (living.isDeadOrDying() && event.world.getRandom().nextInt(100) < 20) {
                     BlockPos feet = living.getOnPos();
                     Material underfoot = event.world.getBlockState(feet).getMaterial();
-                    Block blossom = ModItems.GROUND_BLOSSOM.get();
                     if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS || underfoot == Material.LEAVES) && event.world.getBlockState(feet.above()).isAir()) {
                         event.world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
                         if (event.shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer)) ModAdvTriggers.BLOSSOM.trigger(serverPlayer);

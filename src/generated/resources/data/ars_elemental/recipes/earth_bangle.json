@@ -6,24 +6,16 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
+      "item": "ars_nouveau:earth_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
+      "item": "ars_nouveau:earth_essence"
     },
     {
-      "item": {
-        "item": "minecraft:cobweb"
-      }
+      "item": "minecraft:cobweb"
     },
     {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
+      "item": "ars_nouveau:earth_essence"
     }
   ],
   "reagent": [

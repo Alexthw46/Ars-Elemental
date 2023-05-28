@@ -25,7 +25,7 @@ credits = "Thanks to Bailey for Ars Nouveau API, Sammy; and elucent for code hel
 authors = "Alexthw" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description = '''
-This Ars Nouveau add-on is about the Elemental Schools. More spell foci, each power up one of the elemental schools, amplifying their glyphs but dampening the other schools ones. Also enables few tweaks and combo.
+This Ars Nouveau add-on is about the Elemental Schools. More spell foci and equips, powering up one of the elemental schools, as well as new glyphs and hidden combos.
 '''
 [[dependencies.ars_elemental]] #optional
 # the modid of the dependency
@@ -33,7 +33,7 @@ modId = "forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
 mandatory = true #mandatory
 # The version range of the dependency
-versionRange = "[43.1.52,44]" #mandatory
+versionRange = "[43.2,44]" #mandatory
 # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
 ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -53,6 +53,6 @@ side = "BOTH"
 [[dependencies.ars_elemental]]
 modId = "ars_nouveau"
 mandatory = true
-versionRange = "[1.19.2-3.12.3,)"
+versionRange = "[1.19.2-3.15,)"
 ordering = "AFTER"
 side = "BOTH"

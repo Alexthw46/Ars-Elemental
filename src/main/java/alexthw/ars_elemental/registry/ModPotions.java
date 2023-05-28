@@ -5,11 +5,9 @@ import alexthw.ars_elemental.mixin.PotionBrewingMixin;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,6 +23,8 @@ public class ModPotions {
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MODID);
 
     public static final RegistryObject<MobEffect> HELLFIRE;
+    public static final RegistryObject<MobEffect> FROZEN;
+
     public static final RegistryObject<MobEffect> WATER_GRAVE;
     public static final RegistryObject<MobEffect> MANA_BUBBLE;
     public static final RegistryObject<MobEffect> ENTHRALLED;
@@ -43,19 +43,11 @@ public class ModPotions {
 
 
     public static void addPotionRecipes() {
-        ItemStack AWKWARD = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
 
-        ItemStack enderPot = PotionUtils.setPotion(new ItemStack(Items.POTION), ENDERFERENCE_POTION.get());
-        ItemStack enderPotLong = PotionUtils.setPotion(new ItemStack(Items.POTION), LONG_ENDERFERENCE_POTION.get());
-
-        ItemStack shockPot = PotionUtils.setPotion(new ItemStack(Items.POTION), SHOCK_POTION.get());
-        ItemStack shockPotLong = PotionUtils.setPotion(new ItemStack(Items.POTION), LONG_SHOCK_POTION.get());
-
-        PotionBrewingMixin invoker = (PotionBrewingMixin) new PotionBrewing();
+        var invoker = (PotionBrewingMixin) new PotionBrewing();
 
         invoker.callAddMix(Potions.AWKWARD, ItemsRegistry.END_FIBER.asItem(), ENDERFERENCE_POTION.get());
         invoker.callAddMix(ENDERFERENCE_POTION.get(), Items.GLOWSTONE_DUST, LONG_ENDERFERENCE_POTION.get());
-
 
         invoker.callAddMix(Potions.AWKWARD, ModItems.FLASHING_POD.get().asItem(), SHOCK_POTION.get());
         invoker.callAddMix(SHOCK_POTION.get(), Items.GLOWSTONE_DUST, LONG_SHOCK_POTION.get());
@@ -64,6 +56,7 @@ public class ModPotions {
 
     static {
         HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
+        FROZEN = EFFECTS.register("frozen", FrozenEffect::new);
         WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
         MANA_BUBBLE = EFFECTS.register("mana_shield", BubbleShieldEffect::new);
         ENTHRALLED = EFFECTS.register("enthralled", EnthrallEffect::new);

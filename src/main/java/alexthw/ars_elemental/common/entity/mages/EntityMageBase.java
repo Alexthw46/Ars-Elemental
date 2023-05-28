@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.entity.mages;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
+import alexthw.ars_elemental.api.item.ISchoolProvider;
 import alexthw.ars_elemental.common.entity.ai.ProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
@@ -48,7 +49,7 @@ import java.util.List;
 
 import static alexthw.ars_elemental.util.ParticleUtil.schoolToColor;
 
-public class EntityMageBase extends Monster implements RangedAttackMob {
+public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolProvider {
 
     public final List<Spell> pSpells = new ArrayList<>();
     public final List<Spell> sSpells = new ArrayList<>();
@@ -77,7 +78,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     protected void registerGoals() {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, EntityMageBase.class, true, (e) -> e instanceof EntityMageBase mage && school != mage.school));
         if (ConfigHandler.Common.MAGES_AGGRO.get()) {
-            this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolFocus.hasFocus(player.level, player) != school)));
+            this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, (e) -> (e instanceof Player player && ISchoolFocus.hasFocus(player) != school)));
         }
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
@@ -100,7 +101,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+    protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         if (school != null) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -149,8 +150,8 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     @Override
-    public boolean isAlliedTo(Entity pEntity) {
-        return super.isAlliedTo(pEntity) || school.equals(ISchoolFocus.hasFocus(pEntity.level, pEntity));
+    public boolean isAlliedTo(@NotNull Entity pEntity) {
+        return super.isAlliedTo(pEntity) || school.equals(ISchoolFocus.hasFocus(pEntity));
     }
 
     public int getMaxSpawnClusterSize() {
@@ -163,7 +164,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
     }
 
     @Override
-    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+    protected void dropCustomDeathLoot(@NotNull DamageSource pSource, int pLooting, boolean pRecentlyHit) {
     }
 
     public static ItemStack getArmorForSlot(EquipmentSlot slot, SpellSchool school) {
@@ -188,5 +189,10 @@ public class EntityMageBase extends Monster implements RangedAttackMob {
             case "air" -> ModItems.AIR_ARMOR;
             default -> new ArmorSet("necro", ArsNouveauRegistry.NECROMANCY);
         };
+    }
+
+    @Override
+    public SpellSchool getSchool() {
+        return school;
     }
 }

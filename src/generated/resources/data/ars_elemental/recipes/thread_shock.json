@@ -6,24 +6,16 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": {
-        "item": "minecraft:lightning_rod"
-      }
+      "item": "minecraft:lightning_rod"
     },
     {
-      "item": {
-        "item": "ars_elemental:flashpine_pod"
-      }
+      "item": "ars_elemental:flashpine_pod"
     }
   ],
   "reagent": [

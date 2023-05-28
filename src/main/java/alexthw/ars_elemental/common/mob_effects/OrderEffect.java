@@ -24,19 +24,16 @@ public class OrderEffect extends MobEffect {
         super(MobEffectCategory.HARMFUL, 0);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, this::punish);
         MinecraftForge.EVENT_BUS.addListener(this::block);
-
     }
 
     public void block(SpellCastEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) event.setCanceled(true);
-        }
+        if (event.getEntity() instanceof Player player && player.hasEffect(ModPotions.HYMN_OF_ORDER.get()))
+            event.setCanceled(true);
     }
 
     public void punish(MaxManaCalcEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) event.setMax(1);
-        }
+        if (event.getEntity() instanceof Player player && player.hasEffect(ModPotions.HYMN_OF_ORDER.get()))
+            event.setReserve(1.0F);
     }
 
 }

@@ -42,17 +42,7 @@ public class ElementalTurret extends BasicSpellTurret {
         Direction direction = world.getBlockState(pos).getValue(FACING);
         FakePlayer fakePlayer = ANFakePlayer.getPlayer(world);
         fakePlayer.setPos(pos.getX(), pos.getY(), pos.getZ());
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(world, caster.getSpell(), fakePlayer, new TileCaster(tile, SpellContext.CasterType.TURRET))) {
-            @Override
-            public boolean hasFocus(ItemStack stack) {
-                if (stack.getItem() instanceof ISchoolFocus focus) {
-                    return tile.getSchool() == focus.getSchool();
-                } else if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get()) {
-                    return tile.getSchool() == SpellSchools.MANIPULATION;
-                }
-                return super.hasFocus(stack);
-            }
-        };
+        var resolver = new TurretSpellResolver(new SpellContext(world, caster.getSpell(), fakePlayer, new TileCaster(tile, SpellContext.CasterType.TURRET)), tile);
         if (resolver.castType != null && TURRET_BEHAVIOR_MAP.containsKey(resolver.castType)) {
             TURRET_BEHAVIOR_MAP.get(resolver.castType).onCast(resolver, world, pos, fakePlayer, iposition, direction);
             caster.playSound(pos, world, null, caster.getCurrentSound(), SoundSource.BLOCKS);
@@ -62,6 +52,30 @@ public class ElementalTurret extends BasicSpellTurret {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ElementalSpellTurretTile(pos, state).setSchool(school);
+    }
+
+    static class TurretSpellResolver extends EntitySpellResolver{
+
+        ElementalSpellTurretTile tile;
+        public TurretSpellResolver(SpellContext context, ElementalSpellTurretTile tile) {
+            super(context);
+            this.tile = tile;
+        }
+
+        @Override
+        public boolean hasFocus(ItemStack stack) {
+            if (stack.getItem() instanceof ISchoolFocus focus) {
+                return tile.getSchool() == focus.getSchool();
+            } else if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get()) {
+                return tile.getSchool() == SpellSchools.MANIPULATION;
+            }
+            return super.hasFocus(stack);
+        }
+
+        @Override
+        public SpellResolver getNewResolver(SpellContext context) {
+            return new TurretSpellResolver(context, tile);
+        }
     }
 
 }

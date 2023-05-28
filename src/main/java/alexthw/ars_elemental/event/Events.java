@@ -1,12 +1,10 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.common.enchantments.SoulboundEnchantment.*;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
@@ -40,23 +37,11 @@ public class Events {
     @SubscribeEvent
     public static void focusDiscount(SpellCastEvent event) {
 
-        if (!event.getWorld().isClientSide) {
-
+        if (!event.getWorld().isClientSide &&  event.getEntity() instanceof Player player) {
             //if the player is holding a focus, and the spell match the focus's school, apply the focus discount.
-            double finalDiscount = 0;
-            SpellSchool focus = ISchoolFocus.hasFocus(event.getWorld(), event.getEntity());
-            if (focus != null) {
-                if (event.spell.recipe.stream().anyMatch(focus::isPartOfSchool))
-                    finalDiscount += COMMON.FocusDiscount.get();
-            }
-
-            //if the player is wearing an armor piece of the same school, apply the armor discount.
-            for (ItemStack stack : event.getEntity().getArmorSlots()) {
-                if (stack.getItem() instanceof IElementalArmor armor)
-                    finalDiscount += armor.getDiscount(event.spell.recipe);
-            }
-            event.spell.addDiscount((int) (event.spell.getDiscountedCost() * finalDiscount));
-
+            var focus = ISchoolFocus.getFocus(player);
+            if (focus != null && event.spell.recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
+                event.spell.addDiscount((int) (event.spell.getNoDiscountCost() * focus.getDiscount()));
         }
     }
 

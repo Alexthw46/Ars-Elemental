@@ -4,7 +4,7 @@
   "flavour_text": "Creates a gravity center that also attract nearby blocks.",
   "name": "Gravity Well",
   "sound": {
-    "family": "default",
+    "family": "ars_nouveau:fire_family",
     "pitch": 1.0,
     "volume": 1.0
   },

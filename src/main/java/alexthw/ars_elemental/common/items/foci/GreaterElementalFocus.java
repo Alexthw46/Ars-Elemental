@@ -29,6 +29,11 @@ public class GreaterElementalFocus extends ElementalFocus {
         super(properties, element);
     }
 
+    @Override
+    public double getDiscount() {
+        return COMMON.MajorFocusDiscount.get();
+    }
+
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
         if (element.isPartOfSchool(spellPart)) {
             builder.addAmplification(getBoostMultiplier() * 2);

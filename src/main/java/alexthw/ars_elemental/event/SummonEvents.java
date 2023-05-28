@@ -36,7 +36,7 @@ public class SummonEvents {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void summonedEvent(SummonEvent event) {
 
-        SpellSchool focus = ISchoolFocus.hasFocus(event.world, event.shooter);
+        SpellSchool focus = ISchoolFocus.hasFocus(event.shooter);
 
         if (!event.world.isClientSide && focus != null) {
 
@@ -128,7 +128,7 @@ public class SummonEvents {
                     event.setAmount(event.getAmount() + threadLevel);
                 }
                 if (summon instanceof SummonWolf) {
-                    SpellSchool school = ISchoolFocus.hasFocus(level, player);
+                    SpellSchool school = ISchoolFocus.hasFocus(player);
                     if (school != null) switch (school.getId()) {
                         case "fire" -> event.getEntity().setSecondsOnFire(5);
                         case "water" ->

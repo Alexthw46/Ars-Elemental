@@ -36,6 +36,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
+import static alexthw.ars_elemental.ConfigHandler.COMMON;
 
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
@@ -43,6 +44,11 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     public NecroticFocus(Item.Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public double getDiscount() {
+        return COMMON.MajorFocusDiscount.get();
     }
 
     @Override

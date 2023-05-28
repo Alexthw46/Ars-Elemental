@@ -6,24 +6,16 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "tag": "forge:storage_blocks/source"
-      }
+      "tag": "forge:storage_blocks/source"
     },
     {
-      "item": {
-        "item": "minecraft:gold_block"
-      }
+      "item": "minecraft:gold_block"
     },
     {
-      "item": {
-        "item": "minecraft:gold_block"
-      }
+      "item": "minecraft:gold_block"
     },
     {
-      "item": {
-        "item": "minecraft:end_crystal"
-      }
+      "item": "minecraft:end_crystal"
     }
   ],
   "reagent": [

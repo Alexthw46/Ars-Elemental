@@ -6,8 +6,6 @@ import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -60,18 +58,6 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         return Math.max(0.2F, 0.5F + stats.getAccMultiplier() / 5.0F);
     }
 
-    public static void splits(Level world, LivingEntity shooter, BlockPos position, SpellResolver resolver, ArrayList<EntityHomingProjectile> projectiles, int numSplits) {
-        float sizeRatio = shooter.getEyeHeight() / Player.DEFAULT_EYE_HEIGHT;
-        for (int i = 1; i < numSplits + 1; i++) {
-            Direction offset = shooter.getDirection().getClockWise();
-            if (i % 2 == 0) offset = offset.getOpposite();
-            BlockPos projPos = position.relative(offset, i / 2).offset(0, 1.5 * sizeRatio, 0);
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
-            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
-            projectiles.add(spell);
-        }
-    }
-
     @Override
     public CastResolveType onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
 
@@ -117,7 +103,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     @Override
     public int getDefaultManaCost() {
-        return 40;
+        return 75;
     }
 
     @Override

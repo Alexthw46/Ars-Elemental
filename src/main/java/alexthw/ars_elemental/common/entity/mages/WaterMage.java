@@ -32,7 +32,7 @@ public class WaterMage extends EntityMageBase {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+    protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
         book.getOrCreateTag().putInt("color", 9);

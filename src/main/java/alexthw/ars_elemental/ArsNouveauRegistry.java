@@ -1,6 +1,7 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.api.item.IElementalArmor;
+import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
@@ -25,6 +26,7 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.setup.APIRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -165,6 +167,7 @@ public class ArsNouveauRegistry {
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
+        FirenandoFamiliar.projectileGlyphs.addAll(List.of(MethodCurvedProjectile.INSTANCE, MethodHomingProjectile.INSTANCE, MethodProjectile.INSTANCE, PropagatorHoming.INSTANCE, PropagatorArc.INSTANCE));
     }
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {

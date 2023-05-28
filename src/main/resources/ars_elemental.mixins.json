@@ -6,6 +6,7 @@
   "mixins": [
     "FlareMixin",
     "FoxInvoker",
+    "GrowMixin",
     "ItemEntityMixin",
     "LightningMixin",
     "PotionBrewingMixin",

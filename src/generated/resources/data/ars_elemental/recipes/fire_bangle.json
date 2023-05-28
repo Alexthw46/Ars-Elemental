@@ -6,24 +6,16 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "ars_nouveau:fire_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "ars_nouveau:fire_essence"
     },
     {
-      "item": {
-        "item": "minecraft:fire_charge"
-      }
+      "item": "minecraft:fire_charge"
     },
     {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "ars_nouveau:fire_essence"
     }
   ],
   "reagent": [

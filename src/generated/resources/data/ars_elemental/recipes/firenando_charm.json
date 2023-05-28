@@ -6,29 +6,19 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "ars_nouveau:fire_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:fire_essence"
-      }
+      "item": "ars_nouveau:fire_essence"
     },
     {
-      "item": {
-        "item": "minecraft:netherite_scrap"
-      }
+      "item": "minecraft:netherite_scrap"
     },
     {
-      "item": {
-        "item": "minecraft:nether_brick"
-      }
+      "item": "minecraft:nether_brick"
     },
     {
-      "item": {
-        "item": "minecraft:nether_brick"
-      }
+      "item": "minecraft:nether_brick"
     }
   ],
   "reagent": [

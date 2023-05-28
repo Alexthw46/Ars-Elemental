@@ -8,12 +8,14 @@ import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.perk.*;
+import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -53,6 +55,11 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     public String getTier() {
         return "medium";
+    }
+
+    @Override
+    public int getManaDiscount(ItemStack i, Spell spell) {
+        return Mth.ceil(getDiscount(spell.recipe));
     }
 
     @Override

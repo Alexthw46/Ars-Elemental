@@ -104,6 +104,7 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
         );

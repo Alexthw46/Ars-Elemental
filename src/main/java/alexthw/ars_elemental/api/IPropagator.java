@@ -21,7 +21,7 @@ public interface IPropagator {
         if (newSpell.isEmpty()) return;
         newSpell.recipe.add(0, DUMMY);
         SpellContext newContext = spellContext.clone().withSpell(newSpell);
-        SpellResolver newResolver = new SpellResolver(newContext);
+        SpellResolver newResolver = resolver.getNewResolver(newContext);
         propagate(world, rayTraceResult, shooter, stats, newResolver);
     }
 

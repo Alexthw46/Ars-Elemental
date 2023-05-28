@@ -33,6 +33,11 @@
     },
     {
       "item": {
+        "item": "ars_nouveau:conjuration_essence"
+      }
+    },
+    {
+      "item": {
         "item": "ars_nouveau:manipulation_essence"
       }
     },

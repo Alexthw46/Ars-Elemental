@@ -40,14 +40,14 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
-import static alexthw.ars_elemental.registry.ModPotions.HELLFIRE;
-import static alexthw.ars_elemental.registry.ModPotions.MANA_BUBBLE;
+import static alexthw.ars_elemental.registry.ModPotions.*;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
@@ -69,7 +69,7 @@ public class DamageEvents {
     public static void bypassRes(LivingAttackEvent event) {
         LivingEntity living = event.getEntity();
         if (event.getSource().getEntity() instanceof Player player && living != null) {
-            SpellSchool focus = ISchoolFocus.hasFocus(event.getEntity().level, player);
+            SpellSchool focus = ISchoolFocus.hasFocus(player);
             if (focus != null) {
                 switch (focus.getId()) {
                     case "fire" -> {
@@ -133,12 +133,15 @@ public class DamageEvents {
 
     }
 
-
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public static void handleHealing(LivingHealEvent event) {
         //boost healing if you have earth focus
-        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolFocus.hasFocus(player.getLevel(), player) == ELEMENTAL_EARTH) {
+        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolFocus.hasFocus(player) == ELEMENTAL_EARTH) {
             event.setAmount(event.getAmount() * 1.5F);
+        }
+        //cancel healing if under frozen effect
+        if (event.getEntity().hasEffect(FROZEN.get())) {
+            event.setCanceled(true);
         }
         //reduce healing if you have hellfire and reset the invulnerability time
         if (event.getEntity().hasEffect(HELLFIRE.get())) {
@@ -157,8 +160,8 @@ public class DamageEvents {
         var dealer = event.getSource().getEntity();
         var target = event.getEntity();
 
-        SpellSchool focus = ISchoolFocus.hasFocus(event.getEntity().level, dealer);
-        if (event.getSource().getEntity() instanceof Player player && focus != null) {
+        SpellSchool focus = ISchoolFocus.hasFocus(dealer);
+        if (event.getSource().getEntity() instanceof Player && focus != null) {
             switch (focus.getId()) {
                 case "water" -> {
                     //change the freezing buff from useless to the whole damage
@@ -181,7 +184,7 @@ public class DamageEvents {
                 event.setAmount(event.getAmount() * 0.5f);
             if (!event.getSource().isBypassMagic()) {
                 //reduce damage from elytra if you have air focus
-                if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(event.getEntity().level, player) == ELEMENTAL_AIR) {
+                if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(player) == ELEMENTAL_AIR) {
                     event.setAmount(event.getAmount() * 0.1f);
                 }
 
@@ -274,7 +277,7 @@ public class DamageEvents {
     @SubscribeEvent
     public static void vorpalCut(SpellDamageEvent.Post event) {
         if (!(event.target instanceof LivingEntity living) || living.getHealth() > 0) return;
-        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.caster.level, event.caster);
+        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.caster);
         Spell subspell = new Spell(event.context.getSpell().recipe.subList(event.context.getCurrentIndex() - 1, event.context.getSpell().recipe.size()));
         if (subspell.recipe.get(0) == EffectCut.INSTANCE && school == ELEMENTAL_AIR) {
             ItemStack skull = null;

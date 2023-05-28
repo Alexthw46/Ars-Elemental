@@ -29,13 +29,18 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
 
     protected SpellSchool element;
 
+    @Override
+    public double getDiscount() {
+        return COMMON.LesserFocusDiscount.get();
+    }
+
     public ElementalFocus(Properties properties, SpellSchool element) {
         super(properties);
         this.element = element;
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext pContext) {
+    public @NotNull InteractionResult useOn(UseOnContext pContext) {
         if (pContext.getPlayer() instanceof ServerPlayer player && player.getUUID().equals(ArsElemental.Dev) && player.isCrouching()) {
             pContext.getLevel().addFreshEntity(new ItemEntity(pContext.getLevel(), player.getX(), player.getY(), player.getZ(), ModItems.DEBUG_ICON.get().getDefaultInstance()));
         }

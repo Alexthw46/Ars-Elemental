@@ -6,29 +6,19 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:conjuration_essence"
-      }
+      "item": "ars_nouveau:conjuration_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:conjuration_essence"
-      }
+      "item": "ars_nouveau:conjuration_essence"
     },
     {
-      "item": {
-        "item": "minecraft:echo_shard"
-      }
+      "item": "minecraft:echo_shard"
     },
     {
-      "item": {
-        "tag": "ars_nouveau:wilden_drop"
-      }
+      "tag": "ars_nouveau:wilden_drop"
     },
     {
-      "item": {
-        "tag": "ars_nouveau:wilden_drop"
-      }
+      "tag": "ars_nouveau:wilden_drop"
     }
   ],
   "reagent": [

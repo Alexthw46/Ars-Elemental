@@ -81,7 +81,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
         //if the entity is dead, spawn a ground blossom on the ground below it
-        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(world, shooter)) == ELEMENTAL_EARTH) {
+        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(shooter)) == ELEMENTAL_EARTH) {
             BlockPos feet = livingEntity.getOnPos();
             Material underfoot = world.getBlockState(feet).getMaterial();
             Block blossom = ModItems.GROUND_BLOSSOM.get();

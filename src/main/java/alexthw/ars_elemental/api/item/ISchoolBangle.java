@@ -16,7 +16,7 @@ import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
 
-public interface ISchoolBangle extends ISpellModifierItem, ISchoolItem {
+public interface ISchoolBangle extends ISpellModifierItem, ISchoolProvider {
 
     static @Nullable SpellSchool hasBangle(Level world, Entity entity) {
         if (!world.isClientSide && entity instanceof Player player) {

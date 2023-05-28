@@ -4,7 +4,7 @@
   "flavour_text": "Summon two rideable Dolphins for a short time.",
   "name": "Poseidon's Steed",
   "sound": {
-    "family": "default",
+    "family": "ars_nouveau:fire_family",
     "pitch": 1.0,
     "volume": 1.0
   },

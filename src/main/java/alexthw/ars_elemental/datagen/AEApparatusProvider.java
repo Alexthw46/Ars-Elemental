@@ -259,6 +259,20 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         addArmorRecipes(ModItems.AIR_ARMOR, ItemsRegistry.AIR_ESSENCE);
         addArmorRecipes(ModItems.EARTH_ARMOR, ItemsRegistry.EARTH_ESSENCE);
 
+        recipes.add(builder()
+                .withResult(new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5))
+                .withSourceCost(10000)
+                .withReagent(ItemsRegistry.WILDEN_TRIBUTE)
+                .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
+                .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
+                .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
+                .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .build()
+        );
 
         Path output = this.generator.getOutputFolder();
         for (EnchantingApparatusRecipe g : recipes) {

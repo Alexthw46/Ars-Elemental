@@ -6,24 +6,16 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
+      "item": "ars_nouveau:earth_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:earth_essence"
-      }
+      "item": "ars_nouveau:earth_essence"
     },
     {
-      "item": {
-        "item": "minecraft:spore_blossom"
-      }
+      "item": "minecraft:spore_blossom"
     },
     {
-      "item": {
-        "item": "minecraft:spider_eye"
-      }
+      "item": "minecraft:spider_eye"
     }
   ],
   "reagent": [

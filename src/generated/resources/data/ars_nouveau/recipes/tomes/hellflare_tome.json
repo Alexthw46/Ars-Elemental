@@ -4,7 +4,7 @@
   "flavour_text": "The hellfire flames burn even the heal magic.",
   "name": "Phoenix Fire",
   "sound": {
-    "family": "default",
+    "family": "ars_nouveau:fire_family",
     "pitch": 1.0,
     "volume": 1.0
   },

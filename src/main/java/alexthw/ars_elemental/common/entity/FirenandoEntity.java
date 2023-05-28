@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ConfigHandler.Common;
+import alexthw.ars_elemental.api.item.ISchoolProvider;
 import alexthw.ars_elemental.common.entity.ai.FireCannonGoal;
 import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
@@ -10,9 +11,7 @@ import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
-import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.Spell;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -68,7 +67,7 @@ import java.util.function.Predicate;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, IAnimatable, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantColorProvider<FirenandoEntity> {
+public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, RangedAttackMob, IAnimatable, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantColorProvider<FirenandoEntity> {
     public FirenandoEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
@@ -305,6 +304,11 @@ public class FirenandoEntity extends PathfinderMob implements RangedAttackMob, I
         } else {
             tooltip.add(Component.translatable("ars_nouveau.weald_walker.home", Component.translatable("ars_nouveau.nothing").getString()));
         }
+    }
+
+    @Override
+    public SpellSchool getSchool() {
+        return SpellSchools.ELEMENTAL_FIRE;
     }
 
     public enum Animations {

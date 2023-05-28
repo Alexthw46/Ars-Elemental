@@ -1,15 +1,13 @@
 package alexthw.ars_elemental.common.entity.familiars;
 
 import alexthw.ars_elemental.common.entity.FirenandoEntity.Variants;
-import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
-import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
+import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,12 +20,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
 import software.bernie.ars_nouveau.geckolib3.core.PlayState;
 import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
 import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -50,20 +52,21 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
         data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));
     }
 
+    public static List<AbstractSpellPart> projectileGlyphs = new ArrayList<>();
     public void onModifier(SpellModifierEvent event) {
         // as long as the familiar is alive and the owner is the caster, the familiar will increase the damage of fire spells by 2 and reduce the mana cost of projectiles by 20%
         if (this.isAlive() && this.getOwner() != null && this.getOwner().equals(event.caster)) {
             if (SpellSchools.ELEMENTAL_FIRE.isPartOfSchool(event.spellPart)) {
                 event.builder.addDamageModifier(2.0D);
             }
-            if (event.spellPart instanceof MethodProjectile || event.spellPart instanceof MethodHomingProjectile || event.spellPart instanceof MethodCurvedProjectile) {
-                event.spellContext.getSpell().addDiscount((int) (event.spellContext.getSpell().getDiscountedCost() * 0.2));
+            if (projectileGlyphs.contains(event.spellPart)){
+                event.spellContext.getSpell().addDiscount((int) (event.spellContext.getSpell().getDiscountedCost() * 0.5));
             }
         }
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         if (!player.level.isClientSide && player.equals(getOwner())) {
             ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() == Items.MAGMA_CREAM) {

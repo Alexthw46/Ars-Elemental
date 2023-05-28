@@ -8,6 +8,7 @@ import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
+import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.setup.Config;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -29,6 +30,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.javafmlmod.FMLModContainer;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -72,6 +75,7 @@ public class ArsElemental {
             return new Object();
         });
         ModAdvTriggers.init();
+        ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = !FMLEnvironment.production;
     }
 
     public static ResourceLocation prefix(String path) {

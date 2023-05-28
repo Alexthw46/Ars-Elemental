@@ -6,34 +6,22 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": {
-        "item": "ars_nouveau:water_essence"
-      }
+      "item": "ars_nouveau:water_essence"
     },
     {
-      "item": {
-        "item": "minecraft:prismarine_shard"
-      }
+      "item": "minecraft:prismarine_shard"
     },
     {
-      "item": {
-        "item": "minecraft:prismarine_shard"
-      }
+      "item": "minecraft:prismarine_shard"
     },
     {
-      "item": {
-        "item": "minecraft:prismarine_shard"
-      }
+      "item": "minecraft:prismarine_shard"
     },
     {
-      "item": {
-        "item": "minecraft:prismarine_shard"
-      }
+      "item": "minecraft:prismarine_shard"
     }
   ],
   "reagent": [
