@@ -152,9 +152,13 @@ public class AETagsProvider {
         protected void addTags() {
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
             this.tag(FLASHING_BIOME).add(ModWorldgen.FLASHING_FOREST_KEY);
-            this.tag(FLASHING_TREE_COMMON_BIOME).add(ModBiomes.ARCHWOOD_FOREST).addTag(FLASHING_BIOME);
+            this.tag(FLASHING_TREE_COMMON_BIOME).add(ModBiomes.ARCHWOOD_FOREST);
             this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
-            this.tag(BiomeTagProvider.BERRY_SPAWN).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
+            this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
+        }
+        @Override
+        public @NotNull String getName() {
+            return "Ars Elemental Biome Tags";
         }
     }
 
@@ -170,6 +174,10 @@ public class AETagsProvider {
         protected void addTags() {
             tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED.get());
             tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED.get());
+        }
+        @Override
+        public @NotNull String getName() {
+            return "Ars Elemental Feature Tags";
         }
     }
 
@@ -187,6 +195,10 @@ public class AETagsProvider {
             this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);
             this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
+        }
+        @Override
+        public @NotNull String getName() {
+            return "Ars Elemental Entity Tags";
         }
     }
 }

@@ -1,5 +1,8 @@
 {
   "values": [
-    "#ars_nouveau:archwood_biome"
+    "ars_elemental:flashing_forest",
+    "ars_elemental:blazing_forest",
+    "ars_elemental:cascading_forest",
+    "ars_elemental:flourishing_forest"
   ]
 }

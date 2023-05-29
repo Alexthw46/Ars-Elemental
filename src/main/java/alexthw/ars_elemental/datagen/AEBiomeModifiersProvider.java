@@ -35,7 +35,7 @@ public class AEBiomeModifiersProvider {
         Map<ResourceLocation, BiomeModifier> modifierMap = new HashMap<>();
 
         HolderSet.Named<Biome> OVERWORLD_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), BiomeTags.IS_OVERWORLD);
-        HolderSet.Named<Biome> COMMON_ARCHWOOD_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), AETagsProvider.AEBiomeTagsProvider.FLASHING_TREE_COMMON_BIOME);
+        HolderSet.Named<Biome> COMMON_FLASH_ARCHWOOD_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), AETagsProvider.AEBiomeTagsProvider.FLASHING_TREE_COMMON_BIOME);
         HolderSet.Named<Biome> SIREN_SPAWN_TAG = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).orElseThrow(), AETagsProvider.AEBiomeTagsProvider.SIREN_SPAWN_TAG);
 
         modifierMap.put(prefix("siren_spawns"), ForgeBiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(SIREN_SPAWN_TAG, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(),
@@ -43,7 +43,7 @@ public class AEBiomeModifiersProvider {
 
         HolderSet<PlacedFeature> TREESET_CMN = new HolderSet.Named<>(ops.registry(Registry.PLACED_FEATURE_REGISTRY).orElseThrow(), TagKey.create(Registry.PLACED_FEATURE_REGISTRY, ModWorldgen.COMMON_FLASHING_CONFIGURED.getId()));
 
-        modifierMap.put(ModWorldgen.COMMON_FLASHING_CONFIGURED.getId(), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(COMMON_ARCHWOOD_TAG, TREESET_CMN, GenerationStep.Decoration.VEGETAL_DECORATION));
+        modifierMap.put(ModWorldgen.COMMON_FLASHING_CONFIGURED.getId(), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(COMMON_FLASH_ARCHWOOD_TAG, TREESET_CMN, GenerationStep.Decoration.VEGETAL_DECORATION));
 
         event.getGenerator().addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(event.getGenerator(), event.getExistingFileHelper(), MODID,
                 ops, ForgeRegistries.Keys.BIOME_MODIFIERS, modifierMap));
