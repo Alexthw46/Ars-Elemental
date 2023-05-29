@@ -91,6 +91,7 @@ public class ModWorldgen {
     public static final RegistryObject<PlacedFeature> CLUSTER_BLAZING_CONFIGURED;
     public static final RegistryObject<PlacedFeature> CLUSTER_CASCADING_CONFIGURED;
     public static final RegistryObject<PlacedFeature> CLUSTER_FLOURISHING_CONFIGURED;
+    public static final RegistryObject<PlacedFeature> CLUSTER_VEXING_CONFIGURED;
 
     public static final String SIMPLE_FLASHING_ID = "simple_flashing";
     public static final String COMMON_FLASHING_ID = "common_flashing";
@@ -104,6 +105,8 @@ public class ModWorldgen {
     public static final String FINAL_CLUSTER_CASCADING = "cluster_cascading_archwood";
     public static final String FINAL_CLUSTER_BLAZING = "cluster_blazing_archwood";
     public static final String FINAL_CLUSTER_FLOURISHING = "cluster_flourishing_archwood";
+    public static final String FINAL_CLUSTER_VEXING = "cluster_vexing_archwood";
+
 
     static {
         FLASHING_TREE_SAPLING = CONFG_FEATURES.register("flashing_feature", () -> new ConfiguredFeature<>(Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -132,6 +135,8 @@ public class ModWorldgen {
         CLUSTER_CASCADING_CONFIGURED = PLACED_FEATURES.register(FINAL_CLUSTER_CASCADING, () -> new PlacedFeature(Holder.direct(WorldEvent.NATURAL_CASCADE_TREE.get()), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.CASCADING_SAPLING)));
         CLUSTER_BLAZING_CONFIGURED = PLACED_FEATURES.register(FINAL_CLUSTER_BLAZING, () -> new PlacedFeature(Holder.direct(WorldEvent.NATURAL_BLAZING_TREE.get()), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.BLAZING_SAPLING)));
         CLUSTER_FLOURISHING_CONFIGURED = PLACED_FEATURES.register(FINAL_CLUSTER_FLOURISHING, () -> new PlacedFeature(Holder.direct(WorldEvent.NATURAL_FLOURISHING_TREE.get()), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.FLOURISHING_SAPLING)));
+        CLUSTER_VEXING_CONFIGURED = PLACED_FEATURES.register(FINAL_CLUSTER_VEXING, () -> new PlacedFeature(Holder.direct(WorldEvent.NATURAL_VEXING_TREE.get()), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.VEXING_SAPLING)));
+
 
     }
 
