@@ -9,7 +9,6 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
-import com.hollingsworth.arsnouveau.setup.Config;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -88,7 +87,7 @@ public class ArsElemental {
             ArsNouveauRegistry.postInit();
             CompatUtils.checkCompats();
         });
-        if (terrablenderLoaded && Config.ARCHWOOD_FOREST_WEIGHT.get() > 0) {
+        if (terrablenderLoaded && ConfigHandler.Common.EXTRA_BIOMES.get() > 0) {
             event.enqueueWork(TerrablenderAE::registerBiomes);
         }
     }
