@@ -89,7 +89,7 @@ public class GlyphEvents {
                 living.setIsInPowderSnow(true);
                 int newFrozenTicks = living.getTicksFrozen() + (int) (60 * event.spellStats.getAmpMultiplier());
                 living.setTicksFrozen(newFrozenTicks);
-                if (living.isFullyFrozen() && living.canFreeze() && !living.hasEffect(ModPotions.FROZEN.get())) {
+                if (living.isFullyFrozen() && living.canFreeze() && !living.hasEffect(ModPotions.FROZEN.get()) && living.invulnerableTime > 10) {
                     living.invulnerableTime = 0;
                     living.addEffect(new MobEffectInstance(ModPotions.FROZEN.get(), 10,0, false, false, false));
                 }

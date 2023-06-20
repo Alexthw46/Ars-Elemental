@@ -156,12 +156,11 @@ public class DamageEvents {
     @SubscribeEvent
     public static void damageTweaking(LivingHurtEvent event) {
 
-        if (event.getSource().getEntity() == null || event.getEntity() == null) return;
         var dealer = event.getSource().getEntity();
         var target = event.getEntity();
 
         SpellSchool focus = ISchoolFocus.hasFocus(dealer);
-        if (event.getSource().getEntity() instanceof Player && focus != null) {
+        if (dealer instanceof Player && focus != null) {
             switch (focus.getId()) {
                 case "water" -> {
                     //change the freezing buff from useless to the whole damage
