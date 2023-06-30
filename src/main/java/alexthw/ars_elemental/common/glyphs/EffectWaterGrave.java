@@ -7,7 +7,6 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Drowned;
@@ -51,7 +50,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
             int airSupply = living.getAirSupply();
             if (airSupply <= 0 || living.getMobType() == MobType.WATER) {
                 double damage = DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier();
-                attemptDamage(world, shooter, spellStats, spellContext, resolver, living, new EntityDamageSource(DamageSource.DROWN.getMsgId(), shooter), (float) damage);
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, living, buildDamageSource(world, shooter), (float) damage);
             } else {
                 // Otherwise, drain the entity's air supply.
                 double newSupply = Math.max(-19, airSupply - 50 * (3 + spellStats.getAmpMultiplier()));
@@ -59,6 +58,11 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
             }
             living.hurtMarked = true;
         }
+    }
+
+    @Override
+    public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
+        return shooter.damageSources().drown();
     }
 
     @Override

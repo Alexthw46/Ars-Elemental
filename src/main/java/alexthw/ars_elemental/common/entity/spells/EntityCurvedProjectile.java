@@ -11,10 +11,11 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtract;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.TargetBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -55,7 +56,7 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
 
     @Override
     public void tick() {
-        if (!level.isClientSide && this.age > getExpirationTime()) {
+        if (!level().isClientSide && this.age > getExpirationTime()) {
             this.onHit(new BlockHitResult(getNextHitPosition(), Direction.UP, blockPosition(), true));
         }
         super.tick();
@@ -65,7 +66,7 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
     protected void attemptRemoval() {
         this.pierceLeft--;
         if (this.pierceLeft < 0) {
-            this.level.broadcastEntityEvent(this, (byte) 3);
+            this.level().broadcastEntityEvent(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         } else {
             Vec3 vel = getDeltaMovement();
@@ -76,7 +77,7 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
     private void attemptRemoval(BlockHitResult blockraytraceresult) {
         this.pierceLeft--;
         if (this.pierceLeft < 0) {
-            this.level.broadcastEntityEvent(this, (byte) 3);
+            this.level().broadcastEntityEvent(this, (byte) 3);
             this.remove(RemovalReason.DISCARDED);
         } else {
             Direction direction = blockraytraceresult.getDirection();
@@ -102,36 +103,40 @@ public class EntityCurvedProjectile extends EntityProjectileSpell {
     @Override
     protected void onHit(HitResult result) {
         result = transformHitResult(result);
-        if (!level.isClientSide && result instanceof EntityHitResult entityHitResult) {
+        if (!level().isClientSide && result instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity().equals(this.getOwner())) return;
             if (this.spellResolver != null) {
-                this.spellResolver.onResolveEffect(level, result);
-                Networking.sendToNearby(level, new BlockPos(result.getLocation()), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                        new BlockPos(result.getLocation()), getParticleColorWrapper()));
+                this.spellResolver.onResolveEffect(level(), result);
+                Networking.sendToNearby(level(), BlockPos.containing(result.getLocation()), new PacketANEffect(PacketANEffect.EffectType.BURST,
+                        BlockPos.containing(result.getLocation()), getParticleColorWrapper()));
                 attemptRemoval();
             }
         }
 
-        if (!level.isClientSide && result instanceof BlockHitResult blockRaytraceResult && !this.isRemoved() && !hitList.contains(blockRaytraceResult.getBlockPos())) {
+        if (!level().isClientSide && result instanceof BlockHitResult blockRaytraceResult && !this.isRemoved() && !hitList.contains(blockRaytraceResult.getBlockPos())) {
 
-            BlockState state = level.getBlockState(blockRaytraceResult.getBlockPos());
+            BlockState state = level().getBlockState(blockRaytraceResult.getBlockPos());
 
             if (state.getBlock() instanceof IPrismaticBlock prismaticBlock) {
-                prismaticBlock.onHit((ServerLevel) level, blockRaytraceResult.getBlockPos(), this);
+                prismaticBlock.onHit((ServerLevel) level(), blockRaytraceResult.getBlockPos(), this);
                 return;
             }
 
-            if (state.getMaterial() == Material.PORTAL) {
-                state.getBlock().entityInside(state, level, blockRaytraceResult.getBlockPos(), this);
+            if (state.is(BlockTags.PORTALS)) {
+                state.getBlock().entityInside(state, level(), blockRaytraceResult.getBlockPos(), this);
                 return;
+            }
+
+            if (state.getBlock() instanceof TargetBlock) {
+                this.onHitBlock(blockRaytraceResult);
             }
 
             if (this.spellResolver != null) {
                 this.hitList.add(blockRaytraceResult.getBlockPos());
-                if (!isCareful || pierceLeft == 0) this.spellResolver.onResolveEffect(this.level, blockRaytraceResult);
+                if (!isCareful || pierceLeft == 0) this.spellResolver.onResolveEffect(this.level(), blockRaytraceResult);
             }
-            Networking.sendToNearby(level, ((BlockHitResult) result).getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                    new BlockPos(result.getLocation()).below(), getParticleColorWrapper()));
+            Networking.sendToNearby(level(), (blockRaytraceResult).getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
+                    BlockPos.containing(blockRaytraceResult.getLocation()).below(), getParticleColorWrapper()));
             attemptRemoval(blockRaytraceResult);
         }
     }

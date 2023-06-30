@@ -12,6 +12,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -73,13 +74,12 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
     }
 
     public void damage(Vec3 vec, ServerLevel world, @Nonnull LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity, SpellContext spellContext, SpellResolver resolver) {
-        EntityDamageSource damageSource = new EntityDamageSource("poison", shooter);
-        damageSource.setMagic();
-        attemptDamage(world, shooter, stats, spellContext, resolver, livingEntity, damageSource, damage);
+        attemptDamage(world, shooter, stats, spellContext, resolver, livingEntity, buildDamageSource(world, shooter), damage);
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
         //if the entity is dead, spawn a ground blossom on the ground below it
         if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(shooter)) == ELEMENTAL_EARTH) {
+            /* TODO Restore
             BlockPos feet = livingEntity.getOnPos();
             Material underfoot = world.getBlockState(feet).getMaterial();
             Block blossom = ModItems.GROUND_BLOSSOM.get();
@@ -88,9 +88,16 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
                 if (shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
                     ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
             }
+
+             */
         } else
             livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime)); //otherwise apply hunger
 
+    }
+
+    @Override
+    public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
+        return shooter.damageSources().sting(shooter); //TODO: Change to a custom damage source
     }
 
     @Override

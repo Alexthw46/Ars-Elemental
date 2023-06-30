@@ -43,7 +43,7 @@ public class DolphinJumpGoal extends JumpGoal {
 
     private boolean waterIsClear(BlockPos pPos, int pDx, int pDz, int pScale) {
         BlockPos blockpos = pPos.offset(pDx * pScale, 0, pDz * pScale);
-        return this.dolphin.level.getFluidState(blockpos).is(FluidTags.WATER) && !this.dolphin.level.getBlockState(blockpos).getMaterial().blocksMotion();
+        return this.dolphin.level.getFluidState(blockpos).is(FluidTags.WATER) && !this.dolphin.level.getBlockState(blockpos).blocksMotion();
     }
 
     private boolean surfaceIsClear(BlockPos pPos, int pDx, int pDz, int pScale) {
@@ -55,7 +55,7 @@ public class DolphinJumpGoal extends JumpGoal {
      */
     public boolean canContinueToUse() {
         double d0 = this.dolphin.getDeltaMovement().y;
-        return (!(d0 * d0 < (double) 0.03F) || this.dolphin.getXRot() == 0.0F || !(Math.abs(this.dolphin.getXRot()) < 10.0F) || !this.dolphin.isInWater()) && !this.dolphin.isOnGround();
+        return (!(d0 * d0 < (double) 0.03F) || this.dolphin.getXRot() == 0.0F || !(Math.abs(this.dolphin.getXRot()) < 10.0F) || !this.dolphin.isInWater()) && !this.dolphin.onGround();
     }
 
     public boolean isInterruptable() {

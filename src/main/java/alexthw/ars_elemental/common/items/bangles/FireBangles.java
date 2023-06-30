@@ -33,7 +33,7 @@ public class FireBangles extends ElementalCurio implements ISchoolBangle {
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         LivingEntity entity = slotContext.entity();
         if (entity != null) {
-            Holder<Biome> biome = entity.getLevel().getBiome(slotContext.entity().getOnPos());
+            Holder<Biome> biome = entity.level().getBiome(slotContext.entity().getOnPos());
             if (biome.value().getBaseTemperature() > 1.8f) {
                 Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
                 map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ArsElemental.MODID + ":fire_bangle", 0.035f, AttributeModifier.Operation.ADDITION));

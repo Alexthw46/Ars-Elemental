@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -62,12 +63,12 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     }
 
     @Override
-    public void draw(ElementalArmorRecipe recipe, @NotNull IRecipeSlotsView slotsView, PoseStack matrixStack, double mouseX, double mouseY) {
+    public void draw(ElementalArmorRecipe recipe, @NotNull IRecipeSlotsView slotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Font renderer = Minecraft.getInstance().font;
-        renderer.draw(matrixStack, Component.translatable("ars_nouveau.tier", 1 + recipe.tier), 0.0f, 0.0f, 10);
+        guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.tier", 1 + recipe.tier), 0, 0, 10);
 
         if (recipe.consumesSource())
-            renderer.draw(matrixStack, Component.translatable("ars_nouveau.source", recipe.sourceCost), 0.0f, 100f, 10);
+            guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.source", recipe.sourceCost), 0, 100, 10);
     }
 
 }

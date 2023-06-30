@@ -34,11 +34,11 @@ public class NecroEssence extends Item {
 
             // convert horse to skeleton horse, skeleton horse to zombie horse, zombie horse to horse
             if (horse instanceof Horse) {
-                newHorse = EntityType.SKELETON_HORSE.create(pPlayer.getLevel());
+                newHorse = EntityType.SKELETON_HORSE.create(pPlayer.level());
             } else if (horse instanceof SkeletonHorse) {
-                newHorse = EntityType.ZOMBIE_HORSE.create(pPlayer.getLevel());
+                newHorse = EntityType.ZOMBIE_HORSE.create(pPlayer.level());
             } else if (horse instanceof ZombieHorse) {
-                newHorse = EntityType.HORSE.create(pPlayer.getLevel());
+                newHorse = EntityType.HORSE.create(pPlayer.level());
             }
             if (newHorse == null) return InteractionResult.FAIL;
 

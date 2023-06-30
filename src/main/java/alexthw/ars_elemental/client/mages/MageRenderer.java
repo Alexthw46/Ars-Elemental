@@ -19,7 +19,7 @@ public class MageRenderer<M extends EntityMageBase> extends HumanoidMobRenderer<
 
     public MageRenderer(EntityRendererProvider.Context context) {
         super(context, new MageModel<>(context.getModelSet().bakeLayer(ModelLayers.PLAYER)), 0.5F);
-        this.addLayer(new HumanoidArmorLayer<>(this, new MageModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new MageModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
+        this.addLayer(new HumanoidArmorLayer<>(this, new MageModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new MageModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
     }
 
     @Override

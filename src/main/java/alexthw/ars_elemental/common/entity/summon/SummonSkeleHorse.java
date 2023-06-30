@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 
 public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
@@ -48,13 +49,13 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
         return SoundEvents.SKELETON_HORSE_DEATH;
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_30916_) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource p_30916_) {
         super.getHurtSound(p_30916_);
         return SoundEvents.SKELETON_HORSE_HURT;
     }
 
-    protected SoundEvent getSwimSound() {
-        if (this.onGround) {
+    protected @NotNull SoundEvent getSwimSound() {
+        if (this.onGround()) {
             if (!this.isVehicle()) {
                 return SoundEvents.SKELETON_HORSE_STEP_WATER;
             }
@@ -73,7 +74,7 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
     }
 
     protected void playSwimSound(float p_30911_) {
-        if (this.onGround) {
+        if (this.onGround()) {
             super.playSwimSound(0.3F);
         } else {
             super.playSwimSound(Math.min(0.1F, p_30911_ * 25.0F));
@@ -90,7 +91,7 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
 
     }
 
-    public MobType getMobType() {
+    public @NotNull MobType getMobType() {
         return MobType.UNDEAD;
     }
 
@@ -98,8 +99,9 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
         return super.getPassengersRidingOffset() - 0.1875D;
     }
 
-    public boolean rideableUnderWater() {
-        return true;
+    @Override
+    public boolean dismountsUnderwater() {
+        return false;
     }
 
     protected float getWaterSlowDown() {

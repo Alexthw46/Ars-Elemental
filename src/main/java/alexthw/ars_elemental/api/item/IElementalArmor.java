@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.armor.Materials;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public interface IElementalArmor extends ISpellModifierItem {
 
-    Map<SpellSchool, List<DamageSource>> damageResistances = new ConcurrentHashMap<>();
+    Map<SpellSchool, List<DamageType>> damageResistances = new ConcurrentHashMap<>();
 
     static ArmorMaterial schoolToMaterial(SpellSchool element) {
         return switch (element.getId()) {
@@ -59,8 +60,8 @@ public interface IElementalArmor extends ISpellModifierItem {
     default boolean doAbsorb(DamageSource damageSource) {
         // check if the damage source is in the list of damage sources that this armor can absorb
         return damageResistances.getOrDefault(getSchool(), List.of()).
-                stream().map(d -> d.msgId)
-                .anyMatch(msg -> msg.equals(damageSource.msgId));
+                stream().map(DamageType::msgId)
+                .anyMatch(msg -> msg.equals(damageSource.getMsgId()));
     }
 
 }

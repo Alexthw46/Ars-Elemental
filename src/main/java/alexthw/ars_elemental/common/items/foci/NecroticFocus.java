@@ -93,7 +93,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
     @SubscribeEvent
     public static void lifeSteal(LivingDeathEvent event){
         // if the source of the damage is a summoned undead entity, heal the player who summoned it.
-        if (event.getSource().getEntity() instanceof IUndeadSummon risen && risen.getOwnerID() != null && event.getEntity().getLevel() instanceof ServerLevel level) {
+        if (event.getSource().getEntity() instanceof IUndeadSummon risen && risen.getOwnerID() != null && event.getEntity().level() instanceof ServerLevel level) {
             Player player = event.getEntity().level.getPlayerByUUID(risen.getOwnerID());
             if (player != null) {
                 player.heal(2.0F);

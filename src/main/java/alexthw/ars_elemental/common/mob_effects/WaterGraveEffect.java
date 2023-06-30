@@ -19,7 +19,7 @@ public class WaterGraveEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amp) {
         // bring the entity down if it is in water or rain
-        if (!livingEntity.isOnGround() && livingEntity.isInWaterRainOrBubble()) {
+        if (!livingEntity.onGround() && livingEntity.isInWaterRainOrBubble()) {
             Vec3 vec3 = livingEntity.getDeltaMovement();
             double d0;
             d0 = Math.min(-0.5D, vec3.y - 0.03D);

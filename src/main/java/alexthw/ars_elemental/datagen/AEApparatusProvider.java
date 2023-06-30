@@ -34,7 +34,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void collectJsons(CachedOutput cache) {
 
         recipes.add(builder()
                 .withResult(getPerkItem(ShockPerk.INSTANCE.getRegistryName()))
@@ -274,7 +274,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .build()
         );
 
-        Path output = this.generator.getOutputFolder();
+        Path output = this.generator.getPackOutput().getOutputFolder();
         for (EnchantingApparatusRecipe g : recipes) {
             if (g != null) {
                 Path path = getRecipePath(output, g.getId().getPath());

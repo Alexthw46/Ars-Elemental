@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.mixin;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +19,7 @@ public abstract class ItemEntityMixin {
     @Redirect(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/ItemEntity;isInvulnerableTo(Lnet/minecraft/world/damagesource/DamageSource;)Z"))
     public boolean protectSpellbook(ItemEntity instance, DamageSource damageSource) {
         CompoundTag tag = getItem().getTag();
-        if (tag != null && !damageSource.isBypassInvul() && tag.contains("ae_netherite"))
+        if (tag != null && !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && tag.contains("ae_netherite"))
             return instance.isInvulnerableTo(damageSource) || tag.getBoolean("ae_netherite");
         return instance.isInvulnerableTo(damageSource);
     }

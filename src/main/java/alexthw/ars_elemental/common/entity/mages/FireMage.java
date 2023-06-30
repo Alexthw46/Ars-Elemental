@@ -11,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectFirework;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -49,7 +50,7 @@ public class FireMage extends EntityMageBase {
 
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
-        if (pSource.isFire()) return false;
+        if (pSource.is(DamageTypeTags.IS_FIRE)) return false;
         return super.hurt(pSource, pAmount);
     }
 

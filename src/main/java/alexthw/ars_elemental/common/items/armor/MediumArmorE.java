@@ -2,10 +2,11 @@ package alexthw.ars_elemental.common.items.armor;
 
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 
 public class MediumArmorE extends ElementalArmor {
 
-    public MediumArmorE(EquipmentSlot slot, SpellSchool element, Properties builder) {
+    public MediumArmorE(ArmorItem.Type slot, SpellSchool element, Properties builder) {
         super(slot, element, builder);
     }
 

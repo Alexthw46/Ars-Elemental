@@ -10,9 +10,10 @@ import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.entity.ModEntities;
 import com.hollingsworth.arsnouveau.common.lib.EntityTags;
+import com.hollingsworth.arsnouveau.common.world.biome.BiomeRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
@@ -97,12 +98,12 @@ public class AETagsProvider {
     public static class AEBlockTagsProvider extends BlockTagsProvider {
         final TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(new ResourceLocation("minecraft", "leaves/archwood_leaves"));
 
-        public AEBlockTagsProvider(DataGenerator gen, @Nullable ExistingFileHelper existingFileHelper) {
-            super(gen, ArsElemental.MODID, existingFileHelper);
+        public AEBlockTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(gen.getPackOutput(), provider ,ArsElemental.MODID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
             addPickMineable(1, ModItems.WATER_UPSTREAM_BLOCK.get(), ModItems.AIR_UPSTREAM_BLOCK.get(), ModItems.LAVA_UPSTREAM_BLOCK.get());
             addPickMineable(0, ModItems.SPELL_MIRROR.get(), ModItems.AIR_TURRET.get(), ModItems.FIRE_TURRET.get(), ModItems.EARTH_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.SHAPING_TURRET.get());
             logsTag(ModItems.FLASHING_ARCHWOOD_LOG.get(),
@@ -144,20 +145,20 @@ public class AETagsProvider {
     }
 
     public static class AEBiomeTagsProvider extends BiomeTagsProvider {
-        public AEBiomeTagsProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator, ArsElemental.MODID, existingFileHelper);
+        public AEBiomeTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(generator.getPackOutput(), provider ,ArsElemental.MODID, existingFileHelper);
         }
 
-        public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registry.BIOME_REGISTRY, prefix("siren_spawn"));
-        public static final TagKey<Biome> FLASHING_BIOME = TagKey.create(Registry.BIOME_REGISTRY, prefix("flashing_biome"));
-        public static final TagKey<Biome> FLASHING_TREE_COMMON_BIOME = TagKey.create(Registry.BIOME_REGISTRY, prefix("flashing_tree_biome"));
+        public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registries.BIOME, prefix("siren_spawn"));
+        public static final TagKey<Biome> FLASHING_BIOME = TagKey.create(Registries.BIOME, prefix("flashing_biome"));
+        public static final TagKey<Biome> FLASHING_TREE_COMMON_BIOME = TagKey.create(Registries.BIOME, prefix("flashing_tree_biome"));
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
-            this.tag(FLASHING_BIOME).add(ModWorldgen.FLASHING_FOREST_KEY);
-            this.tag(FLASHING_TREE_COMMON_BIOME).add(ModBiomes.ARCHWOOD_FOREST);
-            this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
-            this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
+            this.tag(FLASHING_BIOME).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY);
+            this.tag(FLASHING_TREE_COMMON_BIOME).add(BiomeRegistry.ARCHWOOD_FOREST);
+            this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
+            this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
         }
         @Override
         public @NotNull String getName() {
@@ -166,17 +167,17 @@ public class AETagsProvider {
     }
 
     public static class AEFeatureTagsProvider extends TagsProvider<PlacedFeature> {
-        public AEFeatureTagsProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator, BuiltinRegistries.PLACED_FEATURE, ArsElemental.MODID, existingFileHelper);
+        public AEFeatureTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(generator.getPackOutput(), Registries.PLACED_FEATURE, provider ,ArsElemental.MODID, existingFileHelper);
         }
 
-        public static TagKey<PlacedFeature> RARE_ARCHWOOD_TREES = TagKey.create(Registry.PLACED_FEATURE_REGISTRY, prefix(ModWorldgen.FINAL_RARE_FLASHING));
-        public static TagKey<PlacedFeature> COMMON_ARCHWOOD_TREES = TagKey.create(Registry.PLACED_FEATURE_REGISTRY, prefix(ModWorldgen.FINAL_COMMON_FLASHING));
+        public static TagKey<PlacedFeature> RARE_ARCHWOOD_TREES = TagKey.create(Registries.PLACED_FEATURE, prefix(ModWorldgen.FINAL_RARE_FLASHING));
+        public static TagKey<PlacedFeature> COMMON_ARCHWOOD_TREES = TagKey.create(Registries.PLACED_FEATURE, prefix(ModWorldgen.FINAL_COMMON_FLASHING));
 
         @Override
-        protected void addTags() {
-            tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED.get());
-            tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED.get());
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
+            tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED);
+            tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED);
         }
         @Override
         public @NotNull String getName() {
@@ -186,12 +187,12 @@ public class AETagsProvider {
 
     public static class AEEntityTagProvider extends EntityTypeTagsProvider {
 
-        public AEEntityTagProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
-            super(pGenerator, MODID, existingFileHelper);
+        public AEEntityTagProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(pGenerator.getPackOutput(), provider ,MODID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
             this.tag(EntityTags.FAMILIAR).add(FIRENANDO_FAMILIAR.get(), SIREN_FAMILIAR.get());
             this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
             this.tag(ModRegistry.FIERY).add(EntityType.ENDER_DRAGON);

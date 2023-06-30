@@ -1,9 +1,10 @@
 package alexthw.ars_elemental.client.patchouli;
 
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
@@ -16,17 +17,16 @@ public class ElementalArmorProcessor implements IComponentProcessor {
     private ElementalArmorRecipe recipe;
 
     @Override
-    public void setup(IVariableProvider variables) {
-        RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
+    public void setup(Level level, IVariableProvider variables) {
+        RecipeManager manager = level.getRecipeManager();
         String recipeID = variables.get("recipe").asString();
         if (manager.byKey(new ResourceLocation(recipeID)).orElse(null) instanceof ElementalArmorRecipe ear)
             recipe = ear;
     }
 
     @Override
-    public IVariable process(String key) {
-        if (recipe == null)
-            return null;
+    public @NotNull IVariable process(Level level, String key) {
+        if (recipe == null) return IVariable.empty();
         if (key.equals("reagent"))
             return IVariable.wrapList(Arrays.stream(recipe.reagent.getItems()).map(IVariable::from).collect(Collectors.toList()));
 
@@ -43,6 +43,6 @@ public class ElementalArmorProcessor implements IComponentProcessor {
             return IVariable.wrap(recipe.result.getItem().getDescriptionId());
         }
 
-        return null;
+        return IVariable.empty();
     }
 }

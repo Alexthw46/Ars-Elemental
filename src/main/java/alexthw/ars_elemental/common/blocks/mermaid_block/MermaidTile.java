@@ -18,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,9 +27,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CoralBlock;
+import net.minecraft.world.level.block.KelpPlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootDataManager;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -123,7 +126,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     public int getScore(BlockState state) {
 
         // if the block is air, return 0
-        if (state.getMaterial() == Material.AIR)
+        if (state.isAir())
             return 0;
 
         // if the block is water, return 1
@@ -131,11 +134,8 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             return 1;
 
         // if the block is a plant or coral, return 2
-        if (state.getMaterial() == Material.WATER_PLANT || state.getBlock() instanceof CoralBlock)
+        if (state.is(BlockTags.CORALS) || state.getBlock() instanceof KelpPlantBlock || state.getBlock() instanceof CoralBlock)
             return 2;
-
-        if (state.getMaterial() == Material.EGG)
-            return 3;
 
         // otherwise, return 0
         return 0;
@@ -150,11 +150,12 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
         // get the loot tables for fishing and create a fake player to get the loot context
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer(server);
-        LootTable lootTable = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_FISH);
-        LootTable lootTableTreasure = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_TREASURE);
-        LootTable lootTableJunk = server.getServer().getLootTables().get(BuiltInLootTables.FISHING_JUNK);
+        LootDataManager lootData = server.getServer().getLootData();
+        LootTable lootTable = lootData.getLootTable(BuiltInLootTables.FISHING_FISH);
+        LootTable lootTableTreasure = lootData.getLootTable(BuiltInLootTables.FISHING_TREASURE);
+        LootTable lootTableJunk = lootData.getLootTable(BuiltInLootTables.FISHING_JUNK);
 
-        LootContext lootContext = (new LootContext.Builder(server)).withRandom(level.getRandom())
+        LootParams lootContext = (new LootParams.Builder(server))
                 .withParameter(LootContextParams.ORIGIN, fakePlayer.position())
                 .withParameter(LootContextParams.TOOL, getRod())
                 .create(LootContextParamSets.FISHING);

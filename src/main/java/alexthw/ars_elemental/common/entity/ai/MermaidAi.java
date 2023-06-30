@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
+import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
@@ -44,21 +45,21 @@ public class MermaidAi {
     private static void initIdleActivity(Brain<MermaidEntity> p_149309_) {
         p_149309_.addActivity(Activity.IDLE,
                 ImmutableList.of(
-                        Pair.of(0, new RunSometimes<>(new SetEntityLookTarget(EntityType.PLAYER, 6.0F), UniformInt.of(30, 60))),
+                        Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
                         //Pair.of(2, new FollowTemptation(MermaidAi::getSpeedModifier)),
-                        Pair.of(3, new StartAttacking<>(MermaidAi::findNearestValidAttackTarget)),
-                        Pair.of(3, new TryFindWater(6, SPEED_MULTIPLIER_ON_LAND)),
+                        Pair.of(3, StartAttacking.create(MermaidAi::findNearestValidAttackTarget)),
+                        Pair.of(3, TryFindWater.create(6, SPEED_MULTIPLIER_ON_LAND)),
                         Pair.of(4, new GateBehavior<>(
                                         ImmutableMap.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
                                         ImmutableSet.of(),
                                         GateBehavior.OrderPolicy.ORDERED,
                                         GateBehavior.RunningPolicy.TRY_ALL,
                                         ImmutableList.of(
-                                                Pair.of(new RandomSwim(SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER), 2),
-                                                Pair.of(new RandomStroll(0.15F, false), 2),
-                                                Pair.of(new SetWalkTargetFromLookTarget(MermaidAi::canSetWalkTargetFromLookTarget, MermaidAi::getSpeedModifier, 3), 3),
-                                                Pair.of(new RunIf<>(Entity::isInWaterOrBubble, new DoNothing(30, 60)), 5),
-                                                Pair.of(new RunIf<>(Entity::isOnGround, new DoNothing(200, 400)), 5)
+                                                Pair.of(RandomStroll.swim(SPEED_MULTIPLIER_WHEN_IDLING_IN_WATER), 2),
+                                                Pair.of(RandomStroll.stroll(0.15F, false), 2),
+                                                Pair.of(SetWalkTargetFromLookTarget.create(MermaidAi::canSetWalkTargetFromLookTarget, MermaidAi::getSpeedModifier, 3), 3),
+                                                Pair.of(BehaviorBuilder.triggerIf(Entity::isInWaterOrBubble), 5),
+                                                Pair.of(BehaviorBuilder.triggerIf(Entity::onGround), 5)
                                         )
                                 )
                         )

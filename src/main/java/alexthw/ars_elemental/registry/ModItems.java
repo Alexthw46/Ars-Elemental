@@ -22,6 +22,7 @@ import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
+import com.hollingsworth.arsnouveau.common.block.BlockProps;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.ModItem;
@@ -248,7 +249,7 @@ public class ModItems {
         SPELL_MIRROR = addBlock("spell_mirror", () -> new SpellMirror(blockProps(Blocks.STONE, MapColor.TERRACOTTA_WHITE)));
 
         //Trees
-        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> ModWorldgen.FLASHING_TREE_SAPLING.getHolder().get()), SAP_PROP));
+        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(ModWorldgen.FLASHING_TREE_SAPLING), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Blocks.OAK_LEAVES, MapColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
                 ModItems::allowsSpawnOnLeaves).isSuffocating(ModItems::isntSolid).isViewBlocking(ModItems::isntSolid)));
         FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 6)));
@@ -257,7 +258,7 @@ public class ModItems {
         FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED));
         FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(FLASHING_ARCHWOOD_LOG));
         ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), itemProps().food(FLASHPINE_FOOD)));
-        POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FLASHING_SAPLING, BlockBehaviour.Properties.of(Blocks.DECORATION).instabreak().noOcclusion()));
+        POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FLASHING_SAPLING, blockProps(Blocks.FLOWER_POT, MapColor.COLOR_YELLOW).instabreak().noOcclusion()));
     }
 
     static RegistryObject<Block> addBlock(String name, Supplier<Block> blockSupp) {

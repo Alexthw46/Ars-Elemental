@@ -28,7 +28,7 @@ public class OpenCurioBagPacket {
 
             if (bag.getItem() instanceof CurioHolder bagItem && player != null)
             {
-                bagItem.openContainer(player.getLevel(), player, bag);
+                bagItem.openContainer(player.level(), player, bag);
             }
 
 

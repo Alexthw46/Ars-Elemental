@@ -2,11 +2,12 @@ package alexthw.ars_elemental.common.items.armor;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public class AAMaterials {
 
@@ -42,13 +43,13 @@ public class AAMaterials {
         private final float knockback;
 
         @Override
-        public int getDurabilityForSlot(EquipmentSlot slotIn) {
-            return Max_Damage_Array[slotIn.getIndex()] * maxDamageFactor;
+        public int getDurabilityForType(ArmorItem.Type slotIn) {
+            return Max_Damage_Array[slotIn.getSlot().getIndex()] * maxDamageFactor;
         }
 
         @Override
-        public int getDefenseForSlot(EquipmentSlot slotIn) {
-            return damageReductionAmountArray[slotIn.getIndex()];
+        public int getDefenseForType(ArmorItem.Type slotIn) {
+            return damageReductionAmountArray[slotIn.getSlot().getIndex()];
         }
 
         @Override
@@ -57,18 +58,18 @@ public class AAMaterials {
         }
 
         @Override
-        public SoundEvent getEquipSound() {
+        public @NotNull SoundEvent getEquipSound() {
             return soundEvent;
         }
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.EMPTY;
         }
 
         @OnlyIn(Dist.CLIENT)
         @Override
-        public String getName() {
+        public @NotNull String getName() {
             return name;
         }
 

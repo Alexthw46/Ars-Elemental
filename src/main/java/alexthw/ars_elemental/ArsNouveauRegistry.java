@@ -1,6 +1,5 @@
 package alexthw.ars_elemental;
 
-import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
@@ -32,7 +31,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
@@ -55,43 +53,49 @@ public class ArsNouveauRegistry {
         registerRituals();
         registerFamiliars(ArsNouveauAPI.getInstance());
         registerPerks();
-        addDamageReductions();
+        //addDamageReductions(); TODO restore
     }
 
+    /*
     private static void addDamageReductions() {
         IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_FIRE, Arrays.asList(
-                DamageSource.ON_FIRE,
-                DamageSource.LAVA,
-                DamageSource.IN_FIRE,
-                DamageSource.HOT_FLOOR,
-                DamageSource.DRAGON_BREATH,
-                new DamageSource("explosion"),
-                new DamageSource("explosion.player"),
-                new DamageSource("fireworks"))
-        );
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
-                DamageSource.DROWN,
-                DamageSource.FREEZE,
-                DamageSource.MAGIC,
-                DamageSource.LIGHTNING_BOLT,
-                new DamageSource("thorns"))
-        );
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
-                        DamageSource.FALL,
-                        DamageSource.FLY_INTO_WALL,
-                        DamageSource.IN_WALL,
-                        DamageSource.LIGHTNING_BOLT,
-                        new DamageSource("sonic_boom")
+                DamageTypes.ON_FIRE,
+                DamageTypes.LAVA,
+                DamageTypes.IN_FIRE,
+                DamageTypes.HOT_FLOOR,
+                DamageTypes.DRAGON_BREATH,
+                new DamageTypes("explosion"),
+                new DamageTypes("explosion.player"),
+                new DamageTypes("fireworks")
                 )
         );
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageSource.CACTUS,
-                DamageSource.STARVE,
-                DamageSource.SWEET_BERRY_BUSH,
-                DamageSource.CACTUS,
-                DamageSource.IN_WALL,
-                new DamageSource("poison"))
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
+                DamageTypes.DROWN,
+                DamageTypes.FREEZE,
+                DamageTypes.MAGIC,
+                DamageTypes.LIGHTNING_BOLT
+                , new DamageTypes("thorns")
+                )
+        );
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
+                        DamageTypes.FALL,
+                        DamageTypes.FLY_INTO_WALL,
+                        DamageTypes.IN_WALL,
+                        DamageTypes.LIGHTNING_BOLT,
+                             new DamageTypes("sonic_boom")
+                )
+        );
+        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageTypes.CACTUS,
+                DamageTypes.STARVE,
+                DamageTypes.SWEET_BERRY_BUSH,
+                DamageTypes.CACTUS,
+                DamageTypes.IN_WALL
+                //, new DamageTypes("poison")
+                )
         );
     }
+
+    */
 
     public static void registerGlyphs() {
 

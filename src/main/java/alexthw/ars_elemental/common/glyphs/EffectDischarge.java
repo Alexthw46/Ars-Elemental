@@ -9,7 +9,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,7 +88,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
         shooter = !(shooter instanceof Player) ? ANFakePlayer.getPlayer((ServerLevel) world) : shooter;
-        return new EntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), shooter);
+        return shooter.damageSources().lightningBolt();
     }
 
     @Override

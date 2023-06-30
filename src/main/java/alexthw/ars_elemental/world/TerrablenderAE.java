@@ -20,10 +20,10 @@ public class TerrablenderAE {
             @Override
             public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
                 this.addModifiedVanillaOverworldBiomes(mapper, (builder -> {
-                    builder.replaceBiome(Biomes.STONY_PEAKS, ModWorldgen.FLASHING_FOREST.getKey());
-                    builder.replaceBiome(Biomes.SAVANNA, ModWorldgen.BLAZING_FOREST.getKey());
-                    builder.replaceBiome(Biomes.SWAMP, ModWorldgen.CASCADING_FOREST.getKey());
-                    builder.replaceBiome(Biomes.FLOWER_FOREST, ModWorldgen.FLOURISHING_FOREST.getKey());
+                    builder.replaceBiome(Biomes.STONY_PEAKS, ModWorldgen.Biomes.FLASHING_FOREST_KEY);
+                    builder.replaceBiome(Biomes.SAVANNA, ModWorldgen.Biomes.BLAZING_FOREST_KEY);
+                    builder.replaceBiome(Biomes.SWAMP, ModWorldgen.Biomes.CASCADING_FOREST_KEY);
+                    builder.replaceBiome(Biomes.FLOWER_FOREST, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
                 }));
             }
         });

@@ -121,7 +121,7 @@ public class SummonEvents {
 
     @SubscribeEvent
     public static void summonPowerup(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().getLevel() instanceof ServerLevel level) {
+        if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().level() instanceof ServerLevel level) {
             if (summon.getOwner(level) instanceof Player player) {
                 int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, player) - 1;
                 if (threadLevel > 0) {

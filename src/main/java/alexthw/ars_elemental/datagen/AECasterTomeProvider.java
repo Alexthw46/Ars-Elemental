@@ -32,7 +32,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void collectJsons(CachedOutput cache) {
 
         tomes.add(buildTome(WATER_CTOME, "dolphin", "Poseidon's Steed", new Spell()
                         .add(MethodSelf.INSTANCE)
@@ -84,7 +84,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                 , "Summon a Skeletal Horse for a short time.",
                 ParticleUtil.soulColor));
 
-        Path output = this.generator.getOutputFolder();
+        Path output = this.generator.getPackOutput().getOutputFolder();
         for (CasterTomeData g : tomes) {
             Path path = getRecipePath(output, g.getId().getPath());
             DataProvider.saveStable(cache, g.toJson(), path);

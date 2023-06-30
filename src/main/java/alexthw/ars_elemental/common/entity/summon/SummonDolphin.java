@@ -22,6 +22,7 @@ import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     }
 
     @Override
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.DOLPHIN_SUMMON.get();
     }
 
@@ -60,12 +61,13 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
         this.goalSelector.addGoal(5, new DolphinJumpGoal(this, 10));
         this.goalSelector.addGoal(8, new FollowBoatGoal(this));
     }
-
-    @Override
-    public void positionRider(Entity passenger) {
-        super.positionRider(passenger);
-        if (passenger instanceof Mob mob && this.getControllingPassenger() == passenger) {
-            this.yBodyRot = mob.yBodyRot;
+    protected void positionRider(@NotNull Entity pPassenger, Entity.@NotNull MoveFunction pCallback) {
+        if (this.hasPassenger(pPassenger)) {
+            double d0 = this.getY() + this.getPassengersRidingOffset() + pPassenger.getMyRidingOffset();
+            pCallback.accept(pPassenger, this.getX(), d0, this.getZ());
+            if (pPassenger instanceof Mob mob && this.getControllingPassenger() == pPassenger) {
+                this.yBodyRot = mob.yBodyRot;
+            }
         }
     }
 
@@ -74,9 +76,10 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
         return 0.45D;
     }
 
+
     @Override
-    public boolean rideableUnderWater() {
-        return true;
+    public boolean dismountsUnderwater() {
+        return false;
     }
 
     public LivingEntity getControllingPassenger() {
@@ -90,13 +93,13 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     }
 
     @Override
-    protected boolean canRide(Entity pEntity) {
+    protected boolean canRide(@NotNull Entity pEntity) {
         return pEntity instanceof Player;
     }
 
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
 
         if (player.level.isClientSide()) return InteractionResult.PASS;
 
@@ -109,7 +112,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     }
 
     @Override
-    public void travel(Vec3 pTravelVector) {
+    public void travel(@NotNull Vec3 pTravelVector) {
         if (this.isAlive()) {
             LivingEntity livingentity = this.getControllingPassenger();
             if (this.isVehicle() && livingentity != null) {
@@ -127,9 +130,9 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
                 if (this.isControlledByLocalInstance()) {
                     if (getMoistnessLevel() > 2350) {
-                        this.flyingSpeed = 0.15F;
+                        //this.flyingSpeed = 0.15F;
                     } else {
-                        this.flyingSpeed = 0.02F;
+                        //this.flyingSpeed = 0.02F;
                         this.setSpeed((float) Math.min(this.getSpeed(), this.getAttributeValue(Attributes.MOVEMENT_SPEED) + 0.5F));
                     }
                     if (this.isInWater()) {
@@ -144,7 +147,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
                 }
 
             } else {
-                this.flyingSpeed = 0.02F;
+                //this.flyingSpeed = 0.02F;
                 super.travel(pTravelVector);
             }
         }
@@ -192,13 +195,13 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     }
 
     @Override
-    public void die(DamageSource cause) {
+    public void die(@NotNull DamageSource cause) {
         super.die(cause);
         onSummonDeath(level, cause, false);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.ticksLeft = compound.getInt("left");
         UUID uuid = null;
@@ -211,7 +214,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("left", ticksLeft);
         writeOwner(compound);

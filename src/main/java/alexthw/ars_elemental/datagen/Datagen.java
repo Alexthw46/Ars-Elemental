@@ -41,17 +41,17 @@ import java.util.function.Predicate;
 public class Datagen {
 
     @SubscribeEvent
-        public static void gatherData(GatherDataEvent event) {
+    public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
         PackOutput output = gen.getPackOutput();
         gen.addProvider(event.includeClient(), new AEBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(event.includeClient(), new AEItemModelProvider(gen, existingFileHelper));
-        BlockTagsProvider BTP = new AETagsProvider.AEBlockTagsProvider(gen, existingFileHelper);
+        BlockTagsProvider BTP = new AETagsProvider.AEBlockTagsProvider(gen, provider, existingFileHelper);
         gen.addProvider(event.includeServer(), BTP);
         gen.addProvider(event.includeServer(), new AETagsProvider.AEItemTagsProvider(gen, provider, BTP, existingFileHelper));
-        gen.addProvider(event.includeServer(), new AETagsProvider.AEEntityTagProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEEntityTagProvider(gen, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
         gen.addProvider(event.includeServer(), new ModLootTables(gen));
 
@@ -60,11 +60,11 @@ public class Datagen {
         gen.addProvider(event.includeServer(), new AEApparatusProvider(gen));
 
         gen.addProvider(event.includeServer(), new AEPatchouliProvider(gen));
-        gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider ,existingFileHelper));
+        gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AECasterTomeProvider(gen));
 
-        gen.addProvider(event.includeServer(), new AETagsProvider.AEFeatureTagsProvider(gen, existingFileHelper));
-        gen.addProvider(event.includeServer(), new AETagsProvider.AEBiomeTagsProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEFeatureTagsProvider(gen, provider, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEBiomeTagsProvider(gen, provider, existingFileHelper));
 
         gen.addProvider(event.includeServer(), new AEWorldgenProvider(output, provider));
     }
@@ -73,11 +73,9 @@ public class Datagen {
         List<T> ret = new ArrayList<>();
 
         Iterator<T> iter = src.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             T item = iter.next();
-            if (predicate.test(item))
-            {
+            if (predicate.test(item)) {
                 iter.remove();
                 ret.add(item);
             }

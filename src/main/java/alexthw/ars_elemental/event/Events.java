@@ -136,8 +136,8 @@ public class Events {
 
             //try to put the items in the same slots they were in before.
             for (ItemStack stack : recovered) {
-                if (stack.getItem() instanceof ArmorItem armor && event.getEntity().getItemBySlot(armor.getSlot()).isEmpty()) {
-                    event.getEntity().setItemSlot(armor.getSlot(), stack);
+                if (stack.getItem() instanceof ArmorItem armor && event.getEntity().getItemBySlot(armor.getType().getSlot()).isEmpty()) {
+                    event.getEntity().setItemSlot(armor.getType().getSlot(), stack);
                 } else if (stack.getItem() instanceof ShieldItem && event.getEntity().getOffhandItem().isEmpty()) {
                     event.getEntity().setItemInHand(InteractionHand.OFF_HAND, stack);
                 } else {

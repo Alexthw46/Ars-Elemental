@@ -36,7 +36,7 @@ public class GlyphEffectUtil {
             if (!BlockUtil.destroyRespectsClaim(shooter instanceof Player player ? player : fakePlayer, world, pos))
                 continue;
             BlockState state = world.getBlockState(pos);
-            if (state.getMaterial().isReplaceable() && world.isUnobstructed(toPlace, pos, CollisionContext.of(fakePlayer))) {
+            if (state.canBeReplaced() && world.isUnobstructed(toPlace, pos, CollisionContext.of(fakePlayer))) {
                 world.setBlockAndUpdate(pos, toPlace);
                 ShapersFocus.tryPropagateBlockSpell(new BlockHitResult(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5),
                         rayTraceResult.getDirection(), pos, false), world, shooter, spellContext, resolver);

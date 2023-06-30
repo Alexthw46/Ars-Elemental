@@ -24,13 +24,12 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -70,11 +69,12 @@ public class DamageEvents {
         LivingEntity living = event.getEntity();
         if (event.getSource().getEntity() instanceof Player player && living != null) {
             SpellSchool focus = ISchoolFocus.hasFocus(player);
+            /*TODO Restore Damage tweaks
             if (focus != null) {
                 switch (focus.getId()) {
                     case "fire" -> {
                         //if the target is fire immune, cancel the event and deal damage
-                        if (event.getSource().isFire() && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
+                        if (event.getSource().is(DamageTypeTags.IS_FIRE) && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
                             event.setCanceled(true);
                             DamageSource newDamage = new EntityDamageSource("hellflare", player).setMagic();
                             if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
@@ -94,6 +94,8 @@ public class DamageEvents {
                     }
                 }
             }
+
+             */
         } else if (event.getSource().getEntity() instanceof FirenandoEntity FE) {
             //if the firenando is attacking a non-monster, cancel the event
             if (!(living instanceof Monster mob)) {
@@ -101,9 +103,9 @@ public class DamageEvents {
                 living.clearFire();
             } else {
                 //if the firenando is attacking a monster, and the monster is fire immune, cancel the event and deal damage
-                if (mob.fireImmune() && event.getSource().isFire()) {
+                if (mob.fireImmune() && event.getSource().is(DamageTypeTags.IS_FIRE)) {
                     event.setCanceled(true);
-                    mob.hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
+                    //mob.hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
                 }
             }
         }
@@ -116,7 +118,7 @@ public class DamageEvents {
 
         //if the player is wearing a bangle, apply special effects on hit
         if (event.getSource().getEntity() instanceof Player player && living != null && living != player) {
-            SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level, player);
+            SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level(), player);
             if (bangle != null) {
                 switch (bangle.getId()) {
                     case "fire" -> living.setSecondsOnFire(5);
@@ -125,8 +127,8 @@ public class DamageEvents {
                 }
             }
         }
-        if (living instanceof Player player && (event.getSource() == DamageSource.CACTUS || event.getSource() == DamageSource.SWEET_BERRY_BUSH)) {
-            if (ISchoolBangle.hasBangle(event.getEntity().level, player) == ELEMENTAL_EARTH) {
+        if (living instanceof Player player && (event.getSource().is(DamageTypes.CACTUS) || event.getSource().is(DamageTypes.SWEET_BERRY_BUSH))) {
+            if (ISchoolBangle.hasBangle(event.getEntity().level(), player) == ELEMENTAL_EARTH) {
                 event.setCanceled(true);
             }
         }
@@ -170,7 +172,7 @@ public class DamageEvents {
                 }
                 case "air" -> {
                     //let's try to compensate the loss of iframe skip with a buff to WS
-                    if (target.hasEffect(MobEffects.LEVITATION) && event.getSource().isFall()) {
+                    if (target.hasEffect(MobEffects.LEVITATION) && event.getSource().is(DamageTypeTags.IS_FALL)) {
                         event.setAmount(event.getAmount() * 1.25F);
                     }
                 }
@@ -181,9 +183,9 @@ public class DamageEvents {
         if (target instanceof Player player) {
             if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))
                 event.setAmount(event.getAmount() * 0.5f);
-            if (!event.getSource().isBypassMagic()) {
+            if (!event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS)) {
                 //reduce damage from elytra if you have air focus
-                if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(player) == ELEMENTAL_AIR) {
+                if (event.getSource().is(DamageTypes.FLY_INTO_WALL) && ISchoolFocus.hasFocus(player) == ELEMENTAL_AIR) {
                     event.setAmount(event.getAmount() * 0.1f);
                 }
 
@@ -203,11 +205,11 @@ public class DamageEvents {
                 }
 
                 //if you have 4 pieces of the fire school, fire is removed
-                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().isFire() || event.getSource().msgId.equals("hellflare")) {
+                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().is(DamageTypeTags.IS_FIRE) || event.getSource().getMsgId().equals("hellflare")) {
                     player.clearFire();
                 }
                 //if you have 4 pieces of the water school, you get extra air when drowning
-                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource() == DamageSource.DROWN) {
+                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource().is(DamageTypes.DROWN)) {
                     player.setAirSupply(player.getMaxAirSupply());
                     bonusReduction += 5;
                 }
@@ -216,7 +218,7 @@ public class DamageEvents {
                     player.getFoodData().setFoodLevel(20);
                 }
                 //if you have 4 pieces of the air school, you get extra fall damage reduction
-                if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().isFall()) {
+                if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().is(DamageTypeTags.IS_FALL)) {
                     bonusReduction += 5;
                 }
 
@@ -288,7 +290,7 @@ public class DamageEvents {
                 chance = 20;
                 skull.getOrCreateTag().put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), gameprofile));
             } else {
-                for (HeadCutRecipe recipe : living.getLevel().getRecipeManager().getAllRecipesFor(ModRegistry.HEAD_CUT.get())) {
+                for (HeadCutRecipe recipe : living.level().getRecipeManager().getAllRecipesFor(ModRegistry.HEAD_CUT.get())) {
                     if (recipe.mob.equals(mob)) {
                         skull = recipe.result.copy();
                         chance = recipe.chance;

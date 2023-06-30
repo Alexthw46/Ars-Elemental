@@ -84,8 +84,8 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
                 }
 
                 if (this.isControlledByLocalInstance()) {
-                    this.setSpeed(getMoveSpeed());
-                    super.travelWithInput(new Vec3(strafe, pTravelVector.y, steer));
+                    this.setSpeed(getSpeed());
+                    super.travel(new Vec3(strafe, pTravelVector.y, steer));
                 } else if (livingentity instanceof Player) {
                     this.setDeltaMovement(Vec3.ZERO);
                 }

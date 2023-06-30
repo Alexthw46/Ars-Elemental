@@ -9,10 +9,7 @@ import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -20,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -29,13 +27,13 @@ import static alexthw.ars_elemental.registry.ModItems.*;
 
 public class ModRecipeProvider extends RecipeProvider {
     public ModRecipeProvider(DataGenerator pGenerator) {
-        super(pGenerator);
+        super(pGenerator.getPackOutput());
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shaped(ADVANCED_PRISM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ADVANCED_PRISM.get())
                 .define('P', BlockRegistry.SPELL_PRISM.asItem())
                 .define('Q', Items.QUARTZ)
                 .define('S', RecipeDatagen.SOURCE_GEM)
@@ -101,11 +99,11 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     public ShapelessRecipeBuilder shapelessBuilder(ItemLike result, int resultCount) {
-        return ShapelessRecipeBuilder.shapeless(result, resultCount).unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK));
+        return ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,result, resultCount).unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK));
     }
 
     private static void strippedLogToWood(Consumer<FinishedRecipe> recipeConsumer, ItemLike stripped, ItemLike output) {
-        ShapedRecipeBuilder.shaped(output, 3).define('#', stripped).pattern("##").pattern("##").group("bark")
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,output, 3).define('#', stripped).pattern("##").pattern("##").group("bark")
                 .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
                 .save(recipeConsumer);
     }

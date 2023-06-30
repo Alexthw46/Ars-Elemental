@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +38,7 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
                 entity.heal(healVal);
             } else {
                 // Otherwise, deal damage
-                attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter).setMagic(), healVal);
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), healVal);
                 // And consume saturation
                 if (entity instanceof Player player) {
                     player.causeFoodExhaustion((float) (2.5 * (1 + spellStats.getAmpMultiplier())));
@@ -45,6 +46,11 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
             }
 
         }
+    }
+
+    @Override //TODO mark magic
+    public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
+        return IDamageEffect.super.buildDamageSource(world, shooter);
     }
 
     @Override

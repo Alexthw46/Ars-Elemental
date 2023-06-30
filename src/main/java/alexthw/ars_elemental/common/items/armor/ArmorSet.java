@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.items.armor;
 
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -18,10 +19,10 @@ public class ArmorSet {
 
     public ArmorSet(String name, SpellSchool element) {
         this.name = name;
-        this.head = ITEMS.register(name + "_hat", () -> new ElementalArmor(EquipmentSlot.HEAD, element, ArmorProp()));
-        this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(EquipmentSlot.CHEST, element, ArmorProp()));
-        this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(EquipmentSlot.LEGS, element, ArmorProp()));
-        this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(EquipmentSlot.FEET, element, ArmorProp()));
+        this.head = ITEMS.register(name + "_hat", () -> new ElementalArmor(ArmorItem.Type.HELMET, element, ArmorProp()));
+        this.chest = ITEMS.register(name + "_robes", () -> new ElementalArmor(ArmorItem.Type.CHESTPLATE, element, ArmorProp()));
+        this.legs = ITEMS.register(name + "_leggings", () -> new ElementalArmor(ArmorItem.Type.LEGGINGS, element, ArmorProp()));
+        this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(ArmorItem.Type.BOOTS, element, ArmorProp()));
     }
 
     RegistryObject<Item> head;

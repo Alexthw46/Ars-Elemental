@@ -53,7 +53,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
             Direction offset = shooter.getDirection().getClockWise();
             if (i % 2 == 0) offset = offset.getOpposite();
             // Alternate sides
-            BlockPos projPos = new BlockPos(pos).relative(offset, i).offset(0, 1.5 * sizeRatio, 0);
+            BlockPos projPos = BlockPos.containing(pos).relative(offset, i).offset(0, (int) (1.5 * sizeRatio), 0);
             EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);

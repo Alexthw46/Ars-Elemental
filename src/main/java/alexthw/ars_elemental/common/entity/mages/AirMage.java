@@ -16,6 +16,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -54,7 +55,7 @@ public class AirMage extends EntityMageBase {
 
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
-        if (pSource.isFall() || pSource == DamageSource.LIGHTNING_BOLT) return false;
+        if (pSource.is(DamageTypes.LIGHTNING_BOLT)) return false;
         return super.hurt(pSource, pAmount);
     }
 }

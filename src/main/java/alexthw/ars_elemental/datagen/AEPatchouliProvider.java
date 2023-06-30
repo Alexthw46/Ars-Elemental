@@ -42,7 +42,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void collectJsons(CachedOutput cache) {
 
         for (AbstractSpellPart spell : registeredSpells) {
             addGlyphPage(spell);
@@ -309,7 +309,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
     @Override
     public Path getPath(ResourceLocation category, String fileName) {
-        return this.generator.getOutputFolder().resolve("data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
+        return this.generator.getPackOutput().getOutputFolder().resolve("data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
     }
 
     ImbuementPage ImbuementPage(ItemLike item) {

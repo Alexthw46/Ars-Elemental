@@ -30,7 +30,7 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void collectJsons(CachedOutput cache) {
 
         recipes.add(new ImbuementRecipe("anima_essence", RecipeDatagen.SOURCE_GEM, ModItems.ANIMA_ESSENCE.get().getDefaultInstance(), 3000)
                 .withPedestalItem(Items.WITHER_SKELETON_SKULL)
@@ -140,7 +140,7 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
         );
 
 
-        Path output = generator.getOutputFolder();
+        Path output = generator.getPackOutput().getOutputFolder();
         for (ImbuementRecipe g : recipes) {
             Path path = getRecipePath(output, g.getId().getPath());
             DataProvider.saveStable(cache, g.asRecipe(), path);

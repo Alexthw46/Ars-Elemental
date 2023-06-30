@@ -8,7 +8,7 @@ import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -34,7 +34,7 @@ import static alexthw.ars_elemental.registry.ModItems.ITEMS;
 import static alexthw.ars_elemental.registry.ModPotions.EFFECTS;
 import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
 import static alexthw.ars_elemental.registry.ModTiles.TILES;
-import static alexthw.ars_elemental.world.ModWorldgen.*;
+import static alexthw.ars_elemental.world.ModWorldgen.FEATURES;
 
 public class ModRegistry {
 
@@ -51,11 +51,11 @@ public class ModRegistry {
 
     public static final TagKey<Item> SOULBOUND_ABLE = ItemTags.create(prefix("soulbound_extra"));
 
-    public static final TagKey<EntityType<?>> AQUATIC = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("aquatic"));
-    public static final TagKey<EntityType<?>> FIERY = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("fiery"));
-    public static final TagKey<EntityType<?>> AERIAL = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("aerial"));
-    public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("insect"));
-    public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("undead"));
+    public static final TagKey<EntityType<?>> AQUATIC = TagKey.create(Registries.ENTITY_TYPE, prefix("aquatic"));
+    public static final TagKey<EntityType<?>> FIERY = TagKey.create(Registries.ENTITY_TYPE, prefix("fiery"));
+    public static final TagKey<EntityType<?>> AERIAL = TagKey.create(Registries.ENTITY_TYPE, prefix("aerial"));
+    public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registries.ENTITY_TYPE, prefix("insect"));
+    public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registries.ENTITY_TYPE, prefix("undead"));
 
 
     public static void registerRegistries(IEventBus bus) {
@@ -70,9 +70,6 @@ public class ModRegistry {
         RECIPES.register(bus);
         SERIALIZERS.register(bus);
         FEATURES.register(bus);
-        PLACED_FEATURES.register(bus);
-        CONFG_FEATURES.register(bus);
-        BIOMES.register(bus);
         BS_PROVIDERS.register(bus);
     }
 
