@@ -15,7 +15,10 @@ import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.*;
+import net.minecraft.data.tags.BiomeTagsProvider;
+import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
@@ -56,7 +59,7 @@ public class AETagsProvider {
         public static final TagKey<Item> MAGIC_LEG = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "legs"));
         public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "boot"));
 
-        public AEItemTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider , BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
+        public AEItemTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen.getPackOutput(), provider, blockTagsProvider.contentsGetter(), ArsElemental.MODID, existingFileHelper);
         }
 
@@ -99,7 +102,7 @@ public class AETagsProvider {
         final TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(new ResourceLocation("minecraft", "leaves/archwood_leaves"));
 
         public AEBlockTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(gen.getPackOutput(), provider ,ArsElemental.MODID, existingFileHelper);
+            super(gen.getPackOutput(), provider, ArsElemental.MODID, existingFileHelper);
         }
 
         @Override
@@ -146,20 +149,25 @@ public class AETagsProvider {
 
     public static class AEBiomeTagsProvider extends BiomeTagsProvider {
         public AEBiomeTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator.getPackOutput(), provider ,ArsElemental.MODID, existingFileHelper);
+            super(generator.getPackOutput(), provider, ArsElemental.MODID, existingFileHelper);
         }
 
         public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registries.BIOME, prefix("siren_spawn"));
         public static final TagKey<Biome> FLASHING_BIOME = TagKey.create(Registries.BIOME, prefix("flashing_biome"));
         public static final TagKey<Biome> FLASHING_TREE_COMMON_BIOME = TagKey.create(Registries.BIOME, prefix("flashing_tree_biome"));
+
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
-            //this.tag(FLASHING_BIOME).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY);
-            this.tag(FLASHING_TREE_COMMON_BIOME).add(BiomeRegistry.ARCHWOOD_FOREST);
-            //this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
-            //this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
+            this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addOptionalTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG.location());
+            this.tag(FLASHING_BIOME).addOptional(ModWorldgen.Biomes.FLASHING_FOREST_KEY.location());
+            this.tag(FLASHING_TREE_COMMON_BIOME).addOptional(BiomeRegistry.ARCHWOOD_FOREST.location());
+
+            for (var forest : ModWorldgen.Biomes.ArchwoodBiomes) {
+                this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).addOptional(forest);
+                this.tag(BiomeTagProvider.BERRY_SPAWN).addOptional(forest);
+            }
         }
+
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Biome Tags";
@@ -168,7 +176,7 @@ public class AETagsProvider {
 
     public static class AEFeatureTagsProvider extends TagsProvider<PlacedFeature> {
         public AEFeatureTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(generator.getPackOutput(), Registries.PLACED_FEATURE, provider ,ArsElemental.MODID, existingFileHelper);
+            super(generator.getPackOutput(), Registries.PLACED_FEATURE, provider, ArsElemental.MODID, existingFileHelper);
         }
 
         public static TagKey<PlacedFeature> RARE_ARCHWOOD_TREES = TagKey.create(Registries.PLACED_FEATURE, prefix(ModWorldgen.FINAL_RARE_FLASHING));
@@ -179,6 +187,7 @@ public class AETagsProvider {
             tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED);
             tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED);
         }
+
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Feature Tags";
@@ -188,7 +197,7 @@ public class AETagsProvider {
     public static class AEEntityTagProvider extends EntityTypeTagsProvider {
 
         public AEEntityTagProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(pGenerator.getPackOutput(), provider ,MODID, existingFileHelper);
+            super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
         }
 
         @Override
@@ -200,6 +209,7 @@ public class AETagsProvider {
             this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
         }
+
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Entity Tags";

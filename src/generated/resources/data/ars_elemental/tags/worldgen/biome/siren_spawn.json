@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:produces_corals_from_bonemeal",
+    {
+      "id": "#ars_nouveau:archwood_biome",
+      "required": false
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import com.hollingsworth.arsnouveau.common.entity.ModEntities;
 import com.hollingsworth.arsnouveau.common.world.WorldgenRegistry;
+import com.hollingsworth.arsnouveau.common.world.biome.BiomeRegistry;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTrunkPlacer;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.SoundRegistry;
@@ -72,17 +73,26 @@ public class ModWorldgen {
         public static final ResourceKey<Biome> CASCADING_FOREST_KEY = register(CASCADING_FOREST_ID);
         public static final ResourceKey<Biome> FLOURISHING_FOREST_KEY = register(FLOURISHING_FOREST_ID);
 
+        public static final ResourceLocation[] ArchwoodBiomes = new ResourceLocation[]{
+                FLASHING_FOREST_KEY.location(),
+                BLAZING_FOREST_KEY.location(),
+                CASCADING_FOREST_KEY.location(),
+                FLOURISHING_FOREST_KEY.location()
+        };
+
         public static ResourceKey<Biome> register(String name) {
             return ResourceKey.create(Registries.BIOME, prefix(name));
         }
 
         public static void registerBiomes(BootstapContext<Biome> context) {
-             if (false){
-                context.register(FLASHING_FOREST_KEY, flashingArchwoodForest(context));
-                context.register(BLAZING_FOREST_KEY, blazingArchwoodForest(context));
-                context.register(CASCADING_FOREST_KEY, cascadingArchwoodForest(context));
-                context.register(FLOURISHING_FOREST_KEY, flourishArchwoodForest(context));
-            }
+
+            BiomeRegistry.bootstrap(context);
+
+            context.register(FLASHING_FOREST_KEY, flashingArchwoodForest(context));
+            context.register(BLAZING_FOREST_KEY, blazingArchwoodForest(context));
+            context.register(CASCADING_FOREST_KEY, cascadingArchwoodForest(context));
+            context.register(FLOURISHING_FOREST_KEY, flourishArchwoodForest(context));
+
         }
 
         public static Biome flashingArchwoodForest(BootstapContext<Biome> context) {
@@ -212,6 +222,7 @@ public class ModWorldgen {
     public static void bootstrapConfiguredFeatures(BootstapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
 
+        WorldgenRegistry.bootstrapConfiguredFeatures(context);
 
         context.register(FLASHING_TREE_SAPLING, new ConfiguredFeature<>(Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 new SupplierBlockStateProviderAE("yellow_archwood_log"),
@@ -235,6 +246,8 @@ public class ModWorldgen {
     public static void bootstrapPlacedFeatures(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configured = context.lookup(Registries.CONFIGURED_FEATURE);
 
+        WorldgenRegistry.bootstrapPlacedFeatures(context);
+
         context.register(SIMPLE_FLASHING_PLACED, new PlacedFeature(configured.get(NATURAL_FLASHING_TREE).get(), List.of(PlacementUtils.filteredByBlockSurvival(ModItems.FLASHING_SAPLING.get()))));
         context.register(COMMON_FLASHING_PLACED, new PlacedFeature(configured.get(NATURAL_FLASHING_TREE).get(), List.of(PlacementUtils.countExtra(5, 0.01F, 1), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, PlacementUtils.filteredByBlockSurvival(ModItems.FLASHING_SAPLING.get()))));
 
@@ -243,7 +256,6 @@ public class ModWorldgen {
 
         context.register(CLUSTER_FLASHING_CONFIGURED, new PlacedFeature(configured.get(COMMON_FLASHING_TREES).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), ModItems.FLASHING_SAPLING.get())));
 
-        if (true) return;
         context.register(CLUSTER_CASCADING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_CASCADING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.CASCADING_SAPLING)));
         context.register(CLUSTER_BLAZING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_BLAZING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.BLAZING_SAPLING)));
         context.register(CLUSTER_FLOURISHING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_FLOURISHING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.FLOURISHING_SAPLING)));

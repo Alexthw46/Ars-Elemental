@@ -8,13 +8,16 @@ import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
+import com.hollingsworth.arsnouveau.setup.CreativeTabRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -39,6 +42,7 @@ import static alexthw.ars_elemental.world.ModWorldgen.FEATURES;
 public class ModRegistry {
 
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MODID);
     public static final DeferredRegister<BlockStateProviderType<?>> BS_PROVIDERS = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, MODID);
@@ -71,7 +75,10 @@ public class ModRegistry {
         SERIALIZERS.register(bus);
         FEATURES.register(bus);
         BS_PROVIDERS.register(bus);
+        TABS.register(bus);
     }
+
+    public static final RegistryObject<CreativeModeTab> ELEMENTAL_TAB;
 
     public static final RegistryObject<MenuType<CurioHolderContainer>> CURIO_HOLDER;
     public static final RegistryObject<MenuType<CasterHolderContainer>> CASTER_HOLDER;
@@ -106,6 +113,16 @@ public class ModRegistry {
         NETHERITE_UP_SERIALIZER = SERIALIZERS.register("netherite_upgrade", NetheriteUpgradeRecipe.Serializer::new);
         ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("armor_upgrade")));
         ELEMENTAL_ARMOR_UP_SERIALIZER = SERIALIZERS.register("armor_upgrade", ElementalArmorRecipe.Serializer::new);
+
+        ELEMENTAL_TAB = TABS.register("general", () -> CreativeModeTab.builder()
+                .title(Component.translatable("itemGroup.ars_elemental"))
+                .icon(ModItems.DEBUG_ICON.get()::getDefaultInstance)
+                .displayItems((params, output) -> {
+                    for (var entry : ITEMS.getEntries()) {
+                        output.accept(entry.get().getDefaultInstance());
+                    }
+                }).withTabsBefore(CreativeTabRegistry.BLOCKS.getKey().location())
+                .build());
     }
 
 }

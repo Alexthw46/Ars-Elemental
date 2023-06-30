@@ -9,15 +9,16 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
+import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
+import com.hollingsworth.arsnouveau.setup.CreativeTabRegistry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
@@ -31,7 +32,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
@@ -46,14 +46,7 @@ public class ArsElemental {
     public static final ResourceLocation BANGLE_SLOT = new ResourceLocation("curios:slot/bangle_slot");
 
     public static final String MODID = "ars_elemental";
-   /*
-    public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
-        @Override
-        public @NotNull ItemStack makeIcon() {
-            return ModItems.DEBUG_ICON.get().getDefaultInstance();
-        }
-    };
-*/
+
     public static final UUID Dev = UUID.fromString("0e918660-22bf-4bed-8426-ece3b4bbd01d");
     public static boolean terrablenderLoaded = false;
 
@@ -76,6 +69,13 @@ public class ArsElemental {
         });
         ModAdvTriggers.init();
         ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = !FMLEnvironment.production;
+        modbus.addListener((BuildCreativeModeTabContentsEvent event) -> {
+            if (event.getTab() == CreativeTabRegistry.GLYPHS.get()) {
+                for (AbstractSpellPart part: ArsNouveauRegistry.registeredSpells){
+                    event.accept(ArsNouveauAPI.getInstance().getGlyphItem(part));
+                }
+            }
+        });
     }
 
     public static ResourceLocation prefix(String path) {
