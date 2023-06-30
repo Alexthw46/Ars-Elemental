@@ -4,10 +4,10 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
+import software.bernie.ars_nouveau.geckolib.animatable.GeoItem;
+import software.bernie.ars_nouveau.geckolib.model.GeoModel;
 
-public class ElementalArmorModel<T extends IElementalArmor & IAnimatable> extends AnimatedGeoModel<T> {
+public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends GeoModel<T> {
 
     public ResourceLocation modelLocation;
     public ResourceLocation textLoc;
@@ -28,7 +28,7 @@ public class ElementalArmorModel<T extends IElementalArmor & IAnimatable> extend
         return textLoc;
     }
 
-    public AnimatedGeoModel withEmptyAnim() {
+    public GeoModel<T> withEmptyAnim() {
         this.animationLoc = new ResourceLocation(ArsNouveau.MODID, "animations/empty.json");
         return this;
     }

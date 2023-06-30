@@ -19,7 +19,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
@@ -31,10 +30,10 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         super(generatorIn);
     }
 
-    @Override
-    public void run(CachedOutput cache) throws IOException {
 
-        Path output = this.generator.getOutputFolder();
+
+    @Override
+    public void collectJsons(CachedOutput cache) {
 
         addRecipe(EffectConjureTerrain.INSTANCE, ItemsRegistry.EARTH_ESSENCE, Items.DIRT);
         addRecipe(EffectWaterGrave.INSTANCE, Items.KELP, Items.PRISMARINE_SHARD, ItemsRegistry.WATER_ESSENCE);

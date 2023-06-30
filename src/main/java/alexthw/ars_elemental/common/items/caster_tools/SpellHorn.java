@@ -31,14 +31,12 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.PlayState;
-import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
-import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
+import software.bernie.ars_nouveau.geckolib.animatable.GeoItem;
+import software.bernie.ars_nouveau.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
+import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
+import software.bernie.ars_nouveau.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -46,37 +44,34 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, ICasterTool {
+public class SpellHorn extends Item implements GeoItem, ISpellModifierItem, ICasterTool {
 
     public SpellHorn(Properties properties) {
         super(properties);
     }
 
-    public AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    public AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.factory;
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 20, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+        data.add(new AnimationController<>(this, "controller", 20, animationState -> animationState.setAndContinue(spin)));
     }
 
-    private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("wand_gem_spin"));
-        return PlayState.CONTINUE;
-    }
+    RawAnimation spin = RawAnimation.begin().thenLoop("wand_gem_spin");
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         pPlayer.startUsingItem(pUsedHand);
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, Level pLevel, LivingEntity pLivingEntity, int remainingTicks) {
+    public void releaseUsing(@NotNull ItemStack stack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int remainingTicks) {
 
         //get how long the item has been used
         float j = getUseDuration(stack) - remainingTicks;
@@ -104,18 +99,18 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+    public void onUseTick(@NotNull Level level, @NotNull LivingEntity player, @NotNull ItemStack stack, int count) {
         if ((getUseDuration(stack) - count) > getMaxUseDuration()) player.releaseUsingItem();
     }
 
     private static void play(Level level, Player player, float volume) {
-        SoundEvent soundevent = SoundEvents.RAID_HORN;
+        SoundEvent soundevent = SoundEvents.RAID_HORN.get();
         level.playSound(player, player, soundevent, SoundSource.RECORDS, volume, 1.0F);
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, player.position(), GameEvent.Context.of(player));
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(@NotNull ItemStack pStack) {
         return 72000;
     }
 
@@ -127,7 +122,7 @@ public class SpellHorn extends Item implements IAnimatable, ISpellModifierItem, 
         return 10;
     }
 
-    public UseAnim getUseAnimation(ItemStack pStack) {
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
         return UseAnim.TOOT_HORN;
     }
 

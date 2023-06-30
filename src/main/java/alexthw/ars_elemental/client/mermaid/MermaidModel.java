@@ -1,17 +1,18 @@
 package alexthw.ars_elemental.client.mermaid;
 
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.processor.IBone;
-import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
-import software.bernie.ars_nouveau.geckolib3.model.provider.data.EntityModelData;
+import software.bernie.ars_nouveau.geckolib.animatable.GeoEntity;
+import software.bernie.ars_nouveau.geckolib.constant.DataTickets;
+import software.bernie.ars_nouveau.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.model.GeoModel;
+import software.bernie.ars_nouveau.geckolib.model.data.EntityModelData;
 
 import javax.annotation.Nullable;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
+public class MermaidModel<T extends GeoEntity> extends GeoModel<T> {
 
     ResourceLocation MODEL = prefix("geo/mermaid.geo.json");
     ResourceLocation TEXTURE = prefix("textures/entity/mermaid.png");
@@ -40,15 +41,14 @@ public class MermaidModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
     }
 
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void setCustomAnimations(T entity, int uniqueID, @Nullable AnimationEvent customPredicate) {
+    public void setCustomAnimations(T entity, long uniqueID, @Nullable AnimationState<T> customPredicate) {
         super.setCustomAnimations(entity, uniqueID, customPredicate);
         if (customPredicate == null) return;
-        IBone head = this.getAnimationProcessor().getBone("head");
-        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-        head.setRotationX(extraData.headPitch * 0.002f);
-        head.setRotationY(extraData.netHeadYaw * 0.005f);
+        CoreGeoBone head = this.getAnimationProcessor().getBone("head");
+        EntityModelData extraData = (EntityModelData)customPredicate.getExtraData().get(DataTickets.ENTITY_MODEL_DATA);
+        head.setRotX(extraData.headPitch() * 0.002f);
+        head.setRotY(extraData.netHeadYaw() * 0.005f);
     }
 
 }

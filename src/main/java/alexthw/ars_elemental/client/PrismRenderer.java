@@ -14,10 +14,15 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.processor.IBone;
-import software.bernie.ars_nouveau.geckolib3.geo.render.built.GeoBone;
-import software.bernie.ars_nouveau.geckolib3.renderers.geo.GeoBlockRenderer;
+import software.bernie.ars_nouveau.geckolib.cache.object.BakedGeoModel;
+import software.bernie.ars_nouveau.geckolib.cache.object.GeoBone;
+import software.bernie.ars_nouveau.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.renderer.GeoBlockRenderer;
+
+import static net.minecraft.world.item.ItemDisplayContext.HEAD;
+import static software.bernie.ars_nouveau.geckolib.util.ClientUtils.getLevel;
+
 
 public class PrismRenderer extends GeoBlockRenderer<AdvancedPrismTile> {
 
@@ -27,12 +32,13 @@ public class PrismRenderer extends GeoBlockRenderer<AdvancedPrismTile> {
     }
 
     public PrismRenderer(BlockEntityRendererProvider.Context rendererProvider) {
-        super(rendererProvider, new GenericModel<>("advanced_prism") {
+        super(new GenericModel<>("advanced_prism") {
+
             @Override
-            public void setCustomAnimations(AdvancedPrismTile tile, int instanceId, AnimationEvent event) {
-                IBone master = this.getAnimationProcessor().getBone("master");
-                master.setRotationY((tile.getRotationX() + 90) * Mth.DEG_TO_RAD);
-                master.setRotationX(tile.getRotationY() * Mth.DEG_TO_RAD);
+            public void setCustomAnimations(AdvancedPrismTile animatable, long instanceId, AnimationState<AdvancedPrismTile> animationState) {
+                CoreGeoBone master = this.getAnimationProcessor().getBone("master");
+                master.setRotY((animatable.getRotationX() + 90) * Mth.DEG_TO_RAD);
+                master.setRotX(animatable.getRotationY() * Mth.DEG_TO_RAD);
             }
         });
     }
@@ -44,27 +50,27 @@ public class PrismRenderer extends GeoBlockRenderer<AdvancedPrismTile> {
     MultiBufferSource buffer;
     ResourceLocation text;
 
+
     @Override
-    public void renderEarly(AdvancedPrismTile animatable, PoseStack poseStack, float partialTick, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void preRender(PoseStack poseStack, AdvancedPrismTile animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.buffer = bufferSource;
         this.text = this.getTextureLocation(animatable);
-        super.renderEarly(animatable, poseStack, partialTick, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     @Override
-    public void renderRecursively(GeoBone bone, PoseStack poseStack, VertexConsumer bufferIn, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        AdvancedPrismTile tile = animatable;
-        if (bone.getName().equals("core") && tile != null && tile.getLens() != null) {
+    public void renderRecursively(PoseStack poseStack, AdvancedPrismTile animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        if (bone.getName().equals("core") && animatable != null && animatable.getLens() != null) {
             poseStack.pushPose();
             poseStack.translate(0, 0.5, -0.15);
             poseStack.scale(0.85F, 0.85F, 0.65F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(tile.getLens(), ItemTransforms.TransformType.HEAD, packedLight, OverlayTexture.NO_OVERLAY, poseStack,
-                    this.buffer, packedLight);
+            Minecraft.getInstance().getItemRenderer().renderStatic(animatable.getLens(), HEAD, packedLight, OverlayTexture.NO_OVERLAY, poseStack,
+                                this.buffer, getLevel(), packedLight);
             poseStack.popPose();
-            bufferIn = buffer.getBuffer(RenderType.entityCutoutNoCull(text));
+            buffer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(text));
 
         }
-        super.renderRecursively(bone, poseStack, bufferIn, packedLight, packedOverlay, red, green, blue, alpha);
+        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 
     }
 }

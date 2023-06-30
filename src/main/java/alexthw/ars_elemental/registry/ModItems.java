@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.registry;
 
-import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.client.ElementalTurretRenderer;
 import alexthw.ars_elemental.client.PrismRenderer;
@@ -45,8 +44,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod;
@@ -144,20 +142,20 @@ public class ModItems {
 
     public static final RegistryObject<Item> SPELL_HORN;
 
-    static Item.Properties addTabProp() {
-        return new Item.Properties().tab(ArsElemental.TAB);
+    static Item.Properties itemProps() {
+        return new Item.Properties();
     }
 
     static Item.Properties FocusProp() {
-        return addTabProp().stacksTo(1).fireResistant().rarity(Rarity.EPIC);
+        return itemProps().stacksTo(1).fireResistant().rarity(Rarity.EPIC);
     }
 
     static Item.Properties UncommonProp() {
-        return addTabProp().stacksTo(1).rarity(Rarity.UNCOMMON);
+        return itemProps().stacksTo(1).rarity(Rarity.UNCOMMON);
     }
 
     public static Item.Properties ArmorProp() {
-        return addTabProp().rarity(Rarity.EPIC);
+        return itemProps().rarity(Rarity.EPIC);
     }
 
     public static FoodProperties FLASHPINE_FOOD = new FoodProperties.Builder().nutrition(4).saturationMod(0.6F)
@@ -169,24 +167,24 @@ public class ModItems {
 
     static {
 
-        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(addTabProp()).withTooltip(Component.translatable("tooltip.siren_shards")));
-        SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(addTabProp()));
-        FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(addTabProp().fireResistant()));
+        SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.siren_shards")));
+        SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(itemProps()));
+        FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(itemProps().fireResistant()));
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
-        MARK_OF_MASTERY = ITEMS.register("mark_of_mastery", () -> new Item(addTabProp()));
-        ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence(addTabProp()));
+        MARK_OF_MASTERY = ITEMS.register("mark_of_mastery", () -> new Item(itemProps()));
+        ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence(itemProps()));
 
-        SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(addTabProp()));
+        SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(itemProps()));
 
-        HOMING_LENS = ITEMS.register("homing_prism_lens", () -> new HomingPrismLens(addTabProp()));
-        ARC_LENS = ITEMS.register("arc_prism_lens", () -> new ArcPrismLens(addTabProp()));
-        RGB_LENS = ITEMS.register("rainbow_prism_lens", () -> new RainbowPrismLens(addTabProp()));
-        ACC_LENS = ITEMS.register("acceleration_prism_lens", () -> new AccelerationPrismLens(addTabProp()));
-        DEC_LENS = ITEMS.register("deceleration_prism_lens", () -> new DecelerationPrismLens(addTabProp()));
-        PIERCE_LENS = ITEMS.register("piercing_prism_lens", () -> new PiercingPrismLens(addTabProp()));
+        HOMING_LENS = ITEMS.register("homing_prism_lens", () -> new HomingPrismLens(itemProps()));
+        ARC_LENS = ITEMS.register("arc_prism_lens", () -> new ArcPrismLens(itemProps()));
+        RGB_LENS = ITEMS.register("rainbow_prism_lens", () -> new RainbowPrismLens(itemProps()));
+        ACC_LENS = ITEMS.register("acceleration_prism_lens", () -> new AccelerationPrismLens(itemProps()));
+        DEC_LENS = ITEMS.register("deceleration_prism_lens", () -> new DecelerationPrismLens(itemProps()));
+        PIERCE_LENS = ITEMS.register("piercing_prism_lens", () -> new PiercingPrismLens(itemProps()));
         //curio
-        CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(addTabProp().fireResistant().stacksTo(1)));
+        CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(itemProps().fireResistant().stacksTo(1)));
         FIRE_FOCUS = ITEMS.register("fire_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
         WATER_FOCUS = ITEMS.register("water_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
         AIR_FOCUS = ITEMS.register("air_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
@@ -199,32 +197,32 @@ public class ModItems {
         LESSER_EARTH_FOCUS = ITEMS.register("lesser_earth_focus", () -> new ElementalFocus(UncommonProp(), SpellSchools.ELEMENTAL_EARTH));
 
         //bangles
-        ENCHANTER_BANGLE = ITEMS.register("base_bangle", () -> new BaseBangle(addTabProp().stacksTo(1)));
+        ENCHANTER_BANGLE = ITEMS.register("base_bangle", () -> new BaseBangle(itemProps().stacksTo(1)));
         FIRE_BANGLE = ITEMS.register("fire_bangle", () -> new FireBangles(UncommonProp()));
         WATER_BANGLE = ITEMS.register("water_bangle", () -> new WaterBangles(UncommonProp()));
         AIR_BANGLE = ITEMS.register("air_bangle", () -> new AirBangles(UncommonProp()));
         EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(UncommonProp()));
 
         //caster tomes
-        CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(addTabProp().fireResistant().stacksTo(1)));
-        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
-        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_WATER));
-        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_AIR));
-        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_EARTH));
-        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), ArsNouveauRegistry.NECROMANCY));
+        CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(itemProps().fireResistant().stacksTo(1)));
+        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(itemProps().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
+        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(itemProps().stacksTo(1), SpellSchools.ELEMENTAL_WATER));
+        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(itemProps().stacksTo(1), SpellSchools.ELEMENTAL_AIR));
+        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(itemProps().stacksTo(1), SpellSchools.ELEMENTAL_EARTH));
+        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(itemProps().stacksTo(1), ArsNouveauRegistry.NECROMANCY));
 
         //blocks
-        WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Material.CLAY, MaterialColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
-        MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
-        GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Material.PLANT, MaterialColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
-        WATER_UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
-        LAVA_UPSTREAM_BLOCK = addBlock("magma_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
+        WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Blocks.CLAY, MapColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
+        MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Blocks.STONE, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
+        GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Blocks.SPORE_BLOSSOM, MapColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
+        WATER_UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
+        LAVA_UPSTREAM_BLOCK = addBlock("magma_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
             @Override
             public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
                 return new MagmaUpstreamTile(pPos, pState);
             }
         });
-        AIR_UPSTREAM_BLOCK = addBlock("air_upstream", () -> new UpstreamBlock(blockProps(Material.STONE, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
+        AIR_UPSTREAM_BLOCK = addBlock("air_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
             @Override
             public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
                 return new AirUpstreamTile(pPos, pState);
@@ -232,45 +230,45 @@ public class ModItems {
         });
 
         //turrets
-        FIRE_TURRET = addGeckoBlock("fire_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
-        WATER_TURRET = addGeckoBlock("water_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
-        AIR_TURRET = addGeckoBlock("air_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
-        EARTH_TURRET = addGeckoBlock("earth_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
-        SHAPING_TURRET = addGeckoBlock("manipulation_turret", () -> new ElementalTurret(blockProps(Material.METAL, MaterialColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
+        FIRE_TURRET = addGeckoBlock("fire_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
+        WATER_TURRET = addGeckoBlock("water_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
+        AIR_TURRET = addGeckoBlock("air_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
+        EARTH_TURRET = addGeckoBlock("earth_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
+        SHAPING_TURRET = addGeckoBlock("manipulation_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
 
 
-        ADVANCED_PRISM = BLOCKS.register("advanced_prism", () -> new AdvancedPrism(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));
-        ITEMS.register("advanced_prism", () -> new RendererBlockItem(ADVANCED_PRISM.get(), addTabProp()) {
+        ADVANCED_PRISM = BLOCKS.register("advanced_prism", () -> new AdvancedPrism(blockProps(Blocks.STONE, MapColor.TERRACOTTA_WHITE)));
+        ITEMS.register("advanced_prism", () -> new RendererBlockItem(ADVANCED_PRISM.get(), itemProps()) {
             @Override
             @OnlyIn(Dist.CLIENT)
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
                 return PrismRenderer::getISTER;
             }
         });
-        SPELL_MIRROR = addBlock("spell_mirror", () -> new SpellMirror(blockProps(Material.STONE, MaterialColor.TERRACOTTA_WHITE)));
+        SPELL_MIRROR = addBlock("spell_mirror", () -> new SpellMirror(blockProps(Blocks.STONE, MapColor.TERRACOTTA_WHITE)));
 
         //Trees
         FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(() -> ModWorldgen.FLASHING_TREE_SAPLING.getHolder().get()), SAP_PROP));
-        FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Material.LEAVES, MaterialColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
+        FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Blocks.OAK_LEAVES, MapColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
                 ModItems::allowsSpawnOnLeaves).isSuffocating(ModItems::isntSolid).isViewBlocking(ModItems::isntSolid)));
-        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6)));
-        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 6)));
-        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_LOG_STRIPPED));
-        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.color(MaterialColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED));
+        FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 6)));
+        FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 6)));
+        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_LOG_STRIPPED));
+        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED));
         FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(FLASHING_ARCHWOOD_LOG));
-        ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), addTabProp().food(FLASHPINE_FOOD)));
-        POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FLASHING_SAPLING, BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
+        ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), itemProps().food(FLASHPINE_FOOD)));
+        POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FLASHING_SAPLING, BlockBehaviour.Properties.of(Blocks.DECORATION).instabreak().noOcclusion()));
     }
 
     static RegistryObject<Block> addBlock(String name, Supplier<Block> blockSupp) {
         RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
-        ITEMS.register(name, () -> new BlockItem(block.get(), addTabProp()));
+        ITEMS.register(name, () -> new BlockItem(block.get(), itemProps()));
         return block;
     }
 
     static RegistryObject<Block> addGeckoBlock(String name, Supplier<Block> blockSupp, String model) {
         RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
-        ITEMS.register(name, () -> new RendererBlockItem(block.get(), addTabProp()) {
+        ITEMS.register(name, () -> new RendererBlockItem(block.get(), itemProps()) {
             @Override
             @OnlyIn(Dist.CLIENT)
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
@@ -280,8 +278,8 @@ public class ModItems {
         return block;
     }
 
-    static BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {
-        return BlockBehaviour.Properties.of(mat, color);
+    static BlockBehaviour.Properties blockProps(Block copyFrom, MapColor color) {
+        return BlockBehaviour.Properties.copy(copyFrom).mapColor(color);
     }
 
     private static Boolean allowsSpawnOnLeaves(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {

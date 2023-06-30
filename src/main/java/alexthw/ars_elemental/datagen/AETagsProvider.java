@@ -10,10 +10,9 @@ import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.entity.ModEntities;
 import com.hollingsworth.arsnouveau.common.lib.EntityTags;
-import com.hollingsworth.arsnouveau.common.world.biome.ModBiomes;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
@@ -28,10 +27,13 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -53,12 +55,13 @@ public class AETagsProvider {
         public static final TagKey<Item> MAGIC_LEG = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "legs"));
         public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "boot"));
 
-        public AEItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(gen, blockTagsProvider, ArsElemental.MODID, existingFileHelper);
+        public AEItemTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider , BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(gen.getPackOutput(), provider, blockTagsProvider.contentsGetter(), ArsElemental.MODID, existingFileHelper);
         }
 
+
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
             tag(SPELLBOOK).add(ItemsRegistry.NOVICE_SPELLBOOK.get(), ItemsRegistry.APPRENTICE_SPELLBOOK.get(), ItemsRegistry.ARCHMAGE_SPELLBOOK.get(), ItemsRegistry.CREATIVE_SPELLBOOK.get()).addOptional(new ResourceLocation("ars_omega", "arcane_book"));
             tag(ModRegistry.SOULBOUND_ABLE).add(Items.WRITABLE_BOOK, Items.WRITTEN_BOOK);
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());

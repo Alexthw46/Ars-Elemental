@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +25,7 @@ public class SpellBookTextureMixin {
     ItemStack currentStack = ItemStack.EMPTY;
 
     @Inject(at = @At("HEAD"), method = "render", remap = false)
-    public void setCurrentItemStack(Item animatable, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn, ItemStack itemStack, ItemTransforms.TransformType transformType, CallbackInfo ci) {
+    public void setCurrentItemStack(Item animatable, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn, ItemStack itemStack, ItemDisplayContext transformType, CallbackInfo ci) {
         currentStack = itemStack;
     }
 

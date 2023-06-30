@@ -17,12 +17,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
-import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
 
-public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimatable {
+import software.bernie.ars_nouveau.geckolib.animatable.GeoBlockEntity;
+import software.bernie.ars_nouveau.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
+import software.bernie.ars_nouveau.geckolib.util.GeckoLibUtil;
+
+public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity {
     private static final String TAG_LENTS = "prismLent";
     private static final String TAG_ROTATION_X = "rotationX";
     private static final String TAG_ROTATION_Y = "rotationY";
@@ -55,14 +56,14 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
             angle = -angle;
         }
 
-        setRotationX((float) angle + 90);
+        setRotX((float) angle + 90);
 
         rotVec = new Vec3(diffVec.x, 0, diffVec.z);
         angle = angleBetween(diffVec, rotVec) * 180F / Math.PI;
         if (blockVec.y < thisVec.y) {
             angle = -angle;
         }
-        setRotationY((float) angle);
+        setRotY((float) angle);
 
         updateBlock();
         ParticleUtil.beam(blockPos, getBlockPos(), level);
@@ -78,7 +79,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
     public void onWanded(Player playerEntity) {
         // remove prism lens and drop it
         if (prismLens != null) {
-            playerEntity.getLevel().addFreshEntity(new ItemEntity(playerEntity.level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLens));
+            playerEntity.level().addFreshEntity(new ItemEntity(playerEntity.level(), getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLens));
             prismLens = ItemStack.EMPTY;
         }
         updateBlock();
@@ -117,11 +118,11 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
         return rotationY;
     }
 
-    public void setRotationX(float rot) {
+    public void setRotX(float rot) {
         rotationX = rot;
     }
 
-    public void setRotationY(float rot) {
+    public void setRotY(float rot) {
         rotationY = rot;
     }
 
@@ -140,14 +141,16 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, IAnimata
         return new Vec3(f3 * f4, -f5, f2 * f4).reverse();
     }
 
-    final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+
 
     @Override
-    public void registerControllers(AnimationData animationData) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
 

@@ -33,7 +33,7 @@ public class CasterHolder extends CurioHolder {
         if (!level.isClientSide) {
             MenuProvider container = new SimpleMenuProvider((w, p, pl) -> new CasterHolderContainer(w, p, bag), bag.getHoverName());
             NetworkHooks.openScreen((ServerPlayer) player, container, b -> b.writeItem(bag));
-            player.level.playSound(null, player.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 1, 1);
+            player.level().playSound(null, player.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 1, 1);
         }
     }
 

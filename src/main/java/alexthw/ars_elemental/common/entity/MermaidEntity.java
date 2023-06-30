@@ -52,14 +52,15 @@ import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.PlayState;
-import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
-import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.ars_nouveau.geckolib.animatable.GeoEntity;
+import software.bernie.ars_nouveau.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
+import software.bernie.ars_nouveau.geckolib.core.object.PlayState;
+import software.bernie.ars_nouveau.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,9 +72,9 @@ import java.util.stream.Collectors;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimationListener, IVariantColorProvider<MermaidEntity>, IDispellable {
+public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimationListener, IVariantColorProvider<MermaidEntity>, IDispellable {
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public static final EntityDataAccessor<Boolean> CHANNELING = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> CHANNELING_ENTITY = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.INT);
@@ -81,6 +82,8 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     public static final EntityDataAccessor<Boolean> JUMPING = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<String> COLOR = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<Optional<BlockPos>> HOME = SynchedEntityData.defineId(MermaidEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
+    private final RawAnimation swim = RawAnimation.begin().thenLoop("swim");
+    private final RawAnimation idle = RawAnimation.begin().thenLoop("idle");
     public int channelCooldown;
 
     public MermaidEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -97,12 +100,12 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    protected Brain<?> makeBrain(Dynamic<?> p_149138_) {
+    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> p_149138_) {
         return MermaidAi.makeBrain((Brain<MermaidEntity>) this.brainProvider().makeBrain(p_149138_));
     }
 
     @Override
-    public Brain<MermaidEntity> getBrain() {
+    public @NotNull Brain<MermaidEntity> getBrain() {
         return (Brain<MermaidEntity>) super.getBrain();
     }
 
@@ -121,22 +124,22 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     public void tick() {
         super.tick();
         // reduce cooldown by 1 every tick if it's greater than 0 (and not on client)
-        if (!level.isClientSide && channelCooldown > 0)
+        if (!level().isClientSide && channelCooldown > 0)
             channelCooldown--;
         SummonUtil.healOverTime(this);
 
         // if the entity is named Jeb_ , set the color to a random variant every 10 ticks
-        if (!level.isClientSide && level.getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
+        if (!level().isClientSide && level().getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
             this.entityData.set(COLOR, MermaidEntity.Variants.random().toString());
         }
 
         // if the entity is channeling, spawn particles around the entity
-        if (level.isClientSide && isChanneling() && getChannelEntity() != -1) {
-            Entity entity = level.getEntity(getChannelEntity());
+        if (level().isClientSide && isChanneling() && getChannelEntity() != -1) {
+            Entity entity = level().getEntity(getChannelEntity());
             if (entity == null || entity.isRemoved())
                 return;
             Vec3 vec = entity.position();
-            level.addParticle(GlowParticleData.createData(MermaidTile.shrineParticle),
+            level().addParticle(GlowParticleData.createData(MermaidTile.shrineParticle),
                     (float) (vec.x) - Math.sin((ClientInfo.ticksInGame) / 8D),
                     (float) (vec.y) + Math.sin(ClientInfo.ticksInGame / 5d) / 8D + 0.5,
                     (float) (vec.z) - Math.cos((ClientInfo.ticksInGame) / 8D),
@@ -145,10 +148,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    public void die(DamageSource source) {
+    public void die(@NotNull DamageSource source) {
         // drop charm on death if tamed
-        if (!level.isClientSide && isTamed()) {
-            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), ModItems.SIREN_CHARM.get().getDefaultInstance()));
+        if (!level().isClientSide && isTamed()) {
+            level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), ModItems.SIREN_CHARM.get().getDefaultInstance()));
         }
         super.die(source);
     }
@@ -172,12 +175,12 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
+    public boolean causeFallDamage(float pFallDistance, float pMultiplier, @NotNull DamageSource pSource) {
         return false;
     }
 
     @Override
-    public MobType getMobType() {
+    public @NotNull MobType getMobType() {
         return MobType.WATER;
     }
 
@@ -192,10 +195,10 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         if (this.isRemoved())
             return false;
 
-        if (!level.isClientSide && isTamed()) {
+        if (!level().isClientSide && isTamed()) {
             ItemStack stack = new ItemStack(ModItems.SIREN_CHARM.get());
-            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), stack));
-            ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
+            level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), stack));
+            ParticleUtil.spawnPoof((ServerLevel) level(), blockPosition());
             this.remove(RemovalReason.DISCARDED);
         }
         return this.isTamed();
@@ -205,47 +208,34 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     AnimationController<MermaidEntity> actions;
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "idle", 0, this::idle));
-        actions = new AnimationController<>(this, "actions", 10, this::actions);
-        data.addAnimationController(actions);
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+        data.add(new AnimationController<>(this, "idle", 0, this::idle));
+        actions = new AnimationController<>(this, "actions", 10, e -> e.setAndContinue(getDeltaMovement().length() > 0 || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? swim : idle));
+        data.add(actions);
     }
 
-    private PlayState idle(AnimationEvent<?> event) {
-        if (level.isClientSide && PatchouliHandler.isPatchouliWorld()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
-            return PlayState.CONTINUE;
-        }
-        if (isJumping()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
-            return PlayState.CONTINUE;
-        }
-        if (getDeltaMovement().y > 0.3) {
+    private PlayState idle(AnimationState<MermaidEntity> event) {
+        PlayState result = PlayState.CONTINUE;
+        if (level().isClientSide && PatchouliHandler.isPatchouliWorld()) {
+            event.setAndContinue(RawAnimation.begin().thenLoop("ground"));
+        } else if (isJumping()) {
+            event.setAndContinue(RawAnimation.begin().thenLoop("jump"));
+        } else if (getDeltaMovement().y > 0.3) {
             setJump(true);
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("jump"));
-        } else if (isOnGround() && !isInWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
+            event.setAndContinue(RawAnimation.begin().thenLoop("jump"));
+        } else if (onGround() && !isInWater()) {
+            event.setAndContinue(RawAnimation.begin().thenLoop("ground"));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));
+            event.setAndContinue(RawAnimation.begin().thenLoop("floating"));
         }
-        return PlayState.CONTINUE;
-    }
-
-    private PlayState actions(AnimationEvent<?> event) {
-
-        if (getDeltaMovement().length() > 0 || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim"));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
-        }
-
-        return PlayState.CONTINUE;
+        return result;
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.factory;
     }
+
 
     //data stuff
 
@@ -295,14 +285,14 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     public @Nullable MermaidTile getShrine() {
         BlockPos homePos = getHome();
-        if (homePos == null || !(level.getBlockEntity(homePos) instanceof MermaidTile shrine))
+        if (homePos == null || !(level().getBlockEntity(homePos) instanceof MermaidTile shrine))
             return null;
         return shrine;
     }
 
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         NBTUtil.storeBlockPos(tag, "home", getHome());
         tag.putBoolean("tamed", this.entityData.get(TAMED));
@@ -312,7 +302,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (NBTUtil.hasBlockPos(tag, "home"))
             this.entityData.set(HOME, Optional.of(NBTUtil.getBlockPos(tag, "home")));
@@ -334,7 +324,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     //Pathfinder
     @Override
-    protected PathNavigation createNavigation(Level pLevel) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level pLevel) {
         return new MermaidPathNavigation<>(this, pLevel);
     }
 
@@ -372,7 +362,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             return true;
         }
 
-        protected PathFinder createPathFinder(int p_149222_) {
+        protected @NotNull PathFinder createPathFinder(int p_149222_) {
             this.nodeEvaluator = new AmphibiousNodeEvaluator(false);
             return new PathFinder(this.nodeEvaluator, p_149222_);
         }
@@ -382,7 +372,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         }
     }
 
-    public void travel(Vec3 pTravelVector) {
+    public void travel(@NotNull Vec3 pTravelVector) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), pTravelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -397,7 +387,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
 
     @Override
     protected void customServerAiStep() {
-        this.getBrain().tick((ServerLevel) this.level, this);
+        this.getBrain().tick((ServerLevel) this.level(), this);
         MermaidAi.updateActivity(this);
     }
 
@@ -414,18 +404,18 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
             // if it's being tamed, spawn shards and award achievement
             if (!isTamed() && taming) {
                 taming = false;
-                ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level.random.nextInt(2));
-                level.addFreshEntity(new ItemEntity(level, getX(), getY() + 0.5, getZ(), stack));
-                ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.POOF_MOB, (ServerLevel) this.level, this.getOnPos(), 10);
+                ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level().random.nextInt(2));
+                level().addFreshEntity(new ItemEntity(level(), getX(), getY() + 0.5, getZ(), stack));
+                ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.POOF_MOB, (ServerLevel) this.level(), this.getOnPos(), 10);
                 this.remove(RemovalReason.DISCARDED);
-                level.playSound(null, getX(), getY(), getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 1f);
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 1f);
             }
         }
     }
 
     //Variants
 
-    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand hand) {
+    public @NotNull InteractionResult interactAt(@NotNull Player pPlayer, @NotNull Vec3 pVec, @NotNull InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND || pPlayer.getCommandSenderWorld().isClientSide)
             return InteractionResult.PASS;
 
@@ -449,6 +439,7 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
         }
         return super.interactAt(pPlayer, pVec, hand);
     }
+
     static final RandomSource mermaidRandom = RandomSource.createNewThreadLocalInstance();
 
     public enum Variants {

@@ -1,15 +1,12 @@
 package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -23,30 +20,29 @@ public class CurioHolderScreen extends AbstractContainerScreen<CurioHolderContai
     }
 
     @Override
-    protected void renderLabels(@Nonnull PoseStack poseStack, int mouseX, int mouseY) {
-
+    protected void renderBg(@NotNull GuiGraphics gui, float partialTicks, int x, int y) {
+        gui.blit(BACKGROUND, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+    protected void renderLabels(@NotNull GuiGraphics gui, int mouseX, int mouseY) {
+
     }
 
+
     @Override
-    protected void renderTooltip(@Nonnull PoseStack poseStack, int mouseX, int mouseY) {
+    public void render(@NotNull GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
+        super.render(gui, mouseX, mouseY, partialTicks);
+    }
+
+
+    @Override
+    protected void renderTooltip(@NotNull GuiGraphics gui, int mouseX, int mouseY) {
         if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-            this.renderTooltip(poseStack, this.hoveredSlot.getItem(), mouseX, mouseY);
+            gui.renderTooltip(this.font, this.hoveredSlot.getItem(), mouseX, mouseY);
         }
     }
 
-    @Override
-    protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, BACKGROUND);
-        blit(poseStack, leftPos, topPos, 0, 0, imageWidth, imageHeight);
-    }
+
 
 }

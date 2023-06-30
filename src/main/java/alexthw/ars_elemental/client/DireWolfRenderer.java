@@ -20,7 +20,7 @@ public class DireWolfRenderer extends MobRenderer<Wolf, WolfModel<Wolf>> {
     }
 
     /**
-     * Defines what float the third param in setRotationAngles of ModelBase is
+     * Defines what float the third param in setRotAngles of ModelBase is
      */
     protected float getBob(Wolf pLivingBase, float pPartialTicks) {
         return pLivingBase.getTailAngle();

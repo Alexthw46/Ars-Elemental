@@ -4,10 +4,8 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.common.datagen.Advancements;
 import com.hollingsworth.arsnouveau.common.datagen.advancement.ANAdvancementBuilder;
 import com.hollingsworth.arsnouveau.common.datagen.advancement.ANAdvancements;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
@@ -17,41 +15,42 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.advancements.critereon.SummonedEntityTrigger;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class AEAdvancementsProvider extends Advancements {
-    public AEAdvancementsProvider(DataGenerator generatorIn, ExistingFileHelper fileHelperIn) {
-        super(generatorIn, fileHelperIn);
+public class AEAdvancementsProvider extends ForgeAdvancementProvider {
+
+    public AEAdvancementsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
+        super(output, registries, existingFileHelper, List.of(new AEAdvancements()));
     }
 
-    @Override
-    public String getName() {
+
+    public String getOldName() {
         return "Ars Elemental Advancement Datagen";
     }
 
-    @Override
-    protected void registerAdvancements(Consumer<Advancement> consumer, ExistingFileHelper fileHelper) {
-        for (Consumer<Consumer<Advancement>> consumer1 : ImmutableList.of(new AEAdvancements())) {
-            consumer1.accept(consumer);
-        }
-    }
+
+
 
     public static class AEAdvancements extends ANAdvancements {
 
         static Consumer<Advancement> advancementConsumer;
 
         static Advancement dummy(String name) {
-            return new Advancement(new ResourceLocation(ArsNouveau.MODID, name), null, null, AdvancementRewards.EMPTY, ImmutableMap.of(), null);
+            return new Advancement(new ResourceLocation(ArsNouveau.MODID, name), null, null, AdvancementRewards.EMPTY, ImmutableMap.of(), null, false);
         }
 
         @Override
-        public void accept(Consumer<Advancement> con) {
+        public void generate(HolderLookup.Provider registries, Consumer<Advancement> con, ExistingFileHelper existingFileHelper) {
             advancementConsumer = con;
 
             saveBasicItem(ModItems.SIREN_CHARM.get(), dummy("poof_mob"));
@@ -59,7 +58,7 @@ public class AEAdvancementsProvider extends Advancements {
             saveBasicItem(ModItems.MARK_OF_MASTERY.get(), dummy("wilden_tribute"));
             saveBasicItem(ModItems.WATER_URN.get(), dummy("enchanting_apparatus"));
 
-            builder("mirror_shield").display(ItemsRegistry.ENCHANTERS_SHIELD, FrameType.CHALLENGE, true).addCriterion(new PlayerTrigger.TriggerInstance(ModAdvTriggers.MIRROR.getId(), EntityPredicate.Composite.ANY)).parent(dummy("enchanting_apparatus")).save(con);
+            builder("mirror_shield").display(ItemsRegistry.ENCHANTERS_SHIELD, FrameType.CHALLENGE, true).addCriterion(new PlayerTrigger.TriggerInstance(ModAdvTriggers.MIRROR.getId(), EntityPredicate.wrap(EntityPredicate.ANY))).parent(dummy("enchanting_apparatus")).save(con);
 
             Advancement curioBag = saveBasicItem(ModItems.CURIO_BAG.get(), dummy("magebloom_crop"));
             saveBasicItem(ModItems.CASTER_BAG.get(), curioBag);
@@ -87,10 +86,10 @@ public class AEAdvancementsProvider extends Advancements {
                     .addCriterion(SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(ModEntities.DOLPHIN_SUMMON.get()))).parent(water).save(con);
 
             //path of Air
-            builder("levitation").display(ModItems.AIR_CTOME.get(), FrameType.GOAL).addCriterion(new PlayerTrigger.TriggerInstance(ModAdvTriggers.LEVITATE.getId(), EntityPredicate.Composite.ANY)).parent(air).save(con);
+            builder("levitation").display(ModItems.AIR_CTOME.get(), FrameType.GOAL).addCriterion(new PlayerTrigger.TriggerInstance(ModAdvTriggers.LEVITATE.getId(), EntityPredicate.wrap(EntityPredicate.ANY))).parent(air).save(con);
 
             //path of Earth
-            builder("spore_blossom").display(ModItems.GROUND_BLOSSOM.get(), FrameType.GOAL).addCriterion(new PlayerTrigger.TriggerInstance(ModAdvTriggers.BLOSSOM.getId(), EntityPredicate.Composite.ANY)).parent(earth).save(con);
+            builder("spore_blossom").display(ModItems.GROUND_BLOSSOM.get(), FrameType.GOAL).addCriterion(new PlayerTrigger.TriggerInstance(ModAdvTriggers.BLOSSOM.getId(), EntityPredicate.wrap(EntityPredicate.ANY))).parent(earth).save(con);
 
         }
 

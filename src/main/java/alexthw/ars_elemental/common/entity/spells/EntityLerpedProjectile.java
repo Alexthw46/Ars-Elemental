@@ -6,18 +6,23 @@ import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.ColoredProjectile;
 import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
+import com.hollingsworth.arsnouveau.common.util.EasingManager;
+import com.hollingsworth.arsnouveau.common.util.EasingType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.ars_nouveau.geckolib3.core.easing.EasingManager;
-import software.bernie.ars_nouveau.geckolib3.core.easing.EasingType;
+import org.jetbrains.annotations.NotNull;
+
 
 public class EntityLerpedProjectile extends ColoredProjectile {
 
@@ -30,23 +35,23 @@ public class EntityLerpedProjectile extends ColoredProjectile {
     int maxAge;
 
     public EntityLerpedProjectile(Level worldIn, BlockPos from, BlockPos to) {
-        this(worldIn, new Vec3(from.getX(), from.getY(), from.getZ()), new Vec3(to.getX(), to.getY(), to.getZ()), 255, 25, 180);
+        this(worldIn, new Vec3i(from.getX(), from.getY(), from.getZ()), new Vec3i(to.getX(), to.getY(), to.getZ()), 255, 25, 180);
     }
 
     public EntityLerpedProjectile(Level worldIn, BlockPos from, BlockPos to, int r, int g, int b) {
-        this(worldIn, new Vec3(from.getX(), from.getY(), from.getZ()), new Vec3(to.getX(), to.getY(), to.getZ()), r, g, b);
+        this(worldIn, new Vec3i(from.getX(), from.getY(), from.getZ()), new Vec3i(to.getX(), to.getY(), to.getZ()), r, g, b);
     }
 
     public EntityLerpedProjectile(EntityType<EntityLerpedProjectile> entityAOEProjectileEntityType, Level world) {
         super(entityAOEProjectileEntityType, world);
     }
 
-    public EntityLerpedProjectile(Level worldIn, Vec3 from, Vec3 to, int r, int g, int b) {
+    public EntityLerpedProjectile(Level worldIn, Vec3i from, Vec3i to, int r, int g, int b) {
         super(ModEntities.LERP_PROJECTILE.get(), worldIn);
         this.entityData.set(EntityFollowProjectile.to, new BlockPos(to));
         this.entityData.set(EntityFollowProjectile.from, new BlockPos(from));
-        this.maxAge = (int) Math.floor(from.subtract(to).length() * 5);
-        setPos(from.x + 0.5, from.y, from.z + 0.5);
+        this.maxAge = (from.distManhattan(to) * 5);
+        setPos(from.getX() + 0.5, from.getY(), from.getZ() + 0.5);
         this.entityData.set(RED, r);
         this.entityData.set(GREEN, g);
         this.entityData.set(BLUE, b);
@@ -108,7 +113,7 @@ public class EntityLerpedProjectile extends ColoredProjectile {
         double lerpY = lerp(time, lerp(time, startY, endY, type), lerp(time, endY, startY, type), type);
         double lerpZ = lerp(time, (double) start.getZ() + 0.5, (double) end.getZ() + 0.5, type);
 
-        BlockPos adjustedPos = new BlockPos(posX, end.getY(), posZ);
+        BlockPos adjustedPos = new BlockPos(Mth.floor(posX), end.getY(), Mth.floor(posZ));
         if (BlockUtil.distanceFrom(adjustedPos, end) <= 0.5) {
             posY = getY() - 0.05;
             this.setPos(lerpX, posY, lerpZ);
@@ -116,7 +121,7 @@ public class EntityLerpedProjectile extends ColoredProjectile {
             this.setPos(lerpX, lerpY, lerpZ);
         }
 
-        if (level.isClientSide && this.age > 1) {
+        if (level().isClientSide && this.age > 1) {
             double deltaX = getX() - xOld;
             double deltaY = getY() - yOld;
             double deltaZ = getZ() - zOld;
@@ -125,9 +130,9 @@ public class EntityLerpedProjectile extends ColoredProjectile {
 
             for (double i = 0; i < dist; i++) {
                 double coeff = i / dist;
-                counter += level.random.nextInt(3);
+                counter += level().random.nextInt(3);
                 if (counter % (Minecraft.getInstance().options.particles().get().getId() == 0 ? 1 : 2 * Minecraft.getInstance().options.particles().get().getId()) == 0) {
-                    level.addParticle(GlowParticleData.createData(
+                    level().addParticle(GlowParticleData.createData(
                                     new ParticleColor(this.entityData.get(RED), this.entityData.get(GREEN), this.entityData.get(BLUE))),
                             (float) (xo + deltaX * coeff), (float) (yo + deltaY * coeff), (float) (zo + deltaZ * coeff), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f));
                 }
@@ -162,12 +167,12 @@ public class EntityLerpedProjectile extends ColoredProjectile {
 
 
     @Override
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.LERP_PROJECTILE.get();
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

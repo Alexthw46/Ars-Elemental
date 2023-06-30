@@ -1,15 +1,12 @@
 package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.client.armor.ElementalArmorModel;
-import alexthw.ars_elemental.client.armor.ElementalArmorRenderer;
 import alexthw.ars_elemental.client.firenando.FirenandoFamiliarRenderer;
 import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
-import alexthw.ars_elemental.common.items.armor.ElementalArmor;
 import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -40,7 +37,6 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-import software.bernie.ars_nouveau.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -94,17 +90,10 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override
-            public ResourceLocation getTextureLocation(EntityLerpedProjectile pEntity) {
+            public @NotNull ResourceLocation getTextureLocation(@NotNull EntityLerpedProjectile pEntity) {
                 return new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png");
             }
         });
-
-    }
-
-    @SuppressWarnings("unchecked")
-    @SubscribeEvent
-    public static void registerRenderers(final EntityRenderersEvent.AddLayers event) {
-        GeoArmorRenderer.registerArmorRenderer(ElementalArmor.class, () -> new ElementalArmorRenderer<>(new ElementalArmorModel("medium_armor_e").withEmptyAnim()));
 
     }
 

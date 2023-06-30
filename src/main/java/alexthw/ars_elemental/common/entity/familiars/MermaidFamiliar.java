@@ -25,12 +25,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.PlayState;
-import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
+import software.bernie.ars_nouveau.geckolib.core.object.PlayState;
 
 import java.util.Locale;
 
@@ -51,7 +50,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         return false;
     }
 
-    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand hand) {
+    public @NotNull InteractionResult interactAt(@NotNull Player pPlayer, @NotNull Vec3 pVec, @NotNull InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND || pPlayer.getCommandSenderWorld().isClientSide)
             return InteractionResult.PASS;
 
@@ -76,42 +75,36 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     public void tick() {
         super.tick();
         // if the mermaid is in water, give the player and the mermaid the dolphin's grace effect
-        if (!this.level.isClientSide && this.isInWater()) {
-            if (this.level.getGameTime() % 60L == 0L && this.getOwner() != null) {
+        if (!this.level().isClientSide && this.isInWater()) {
+            if (this.level().getGameTime() % 60L == 0L && this.getOwner() != null) {
                 this.getOwner().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600, 1, false, false, true));
                 this.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600, 1, false, false, true));
             }
         }
         // if the mermaid's name is Jeb_, change its color to a random color every 10 ticks
-        if (!level.isClientSide && level.getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
+        if (!level().isClientSide && level().getGameTime() % 10 == 0 && this.getName().getString().toLowerCase(Locale.ROOT).equals("jeb_")) {
             this.entityData.set(COLOR, MermaidEntity.Variants.random().toString());
         }
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         super.registerControllers(data);
-        data.addAnimationController(new AnimationController<>(this, "actionController", 10, this::actionPredicate));
+        data.add(new AnimationController<>(this, "actionController", 10, event -> event.setAndContinue(getDeltaMovement().length() > 0 || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? swim : idle)))
+        ;
     }
 
-    public PlayState walkPredicate(AnimationEvent event) {
-        if (isOnGround() && !isInWater() || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("ground"));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("floating"));
-        }
-        return PlayState.CONTINUE;
-    }
+    RawAnimation swim = RawAnimation.begin().thenLoop("swim");
+    RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+    RawAnimation ground = RawAnimation.begin().thenLoop("ground");
+    RawAnimation floating = RawAnimation.begin().thenLoop("floating");
 
-    private <T extends IAnimatable>  PlayState actionPredicate(AnimationEvent<T> event) {
-        if (getDeltaMovement().length() > 0 || (level.isClientSide && PatchouliHandler.isPatchouliWorld())) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim"));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
-        }
-        return PlayState.CONTINUE;
-    }
+    @Override
+    public PlayState walkPredicate(AnimationState event) {
 
+        return event.setAndContinue(onGround() && !isInWater() || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? ground : floating);
+
+    }
 
     public @NotNull EntityType<?> getType() {
         return ModEntities.SIREN_FAMILIAR.get();

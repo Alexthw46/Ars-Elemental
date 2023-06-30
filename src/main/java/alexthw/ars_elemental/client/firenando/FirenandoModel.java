@@ -3,16 +3,16 @@ package alexthw.ars_elemental.client.firenando;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.processor.IBone;
-import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
-import software.bernie.ars_nouveau.geckolib3.model.provider.data.EntityModelData;
+import software.bernie.ars_nouveau.geckolib.animatable.GeoEntity;
+import software.bernie.ars_nouveau.geckolib.constant.DataTickets;
+import software.bernie.ars_nouveau.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.model.GeoModel;
+import software.bernie.ars_nouveau.geckolib.model.data.EntityModelData;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-@SuppressWarnings("unchecked")
-public class FirenandoModel<M extends LivingEntity & IAnimatable> extends AnimatedGeoModel<M> {
+public class FirenandoModel<M extends LivingEntity & GeoEntity> extends GeoModel<M> {
 
     ResourceLocation MODEL = prefix("geo/fire_golem.geo.json");
     ResourceLocation DEF_TEXTURE = prefix("textures/entity/fire_golem.png");
@@ -40,14 +40,15 @@ public class FirenandoModel<M extends LivingEntity & IAnimatable> extends Animat
         return ANIMATIONS;
     }
 
+
     @Override
-    public void setCustomAnimations(M entity, int uniqueID, AnimationEvent customPredicate) {
+    public void setCustomAnimations(M entity, long uniqueID, AnimationState<M> customPredicate) {
         super.setCustomAnimations(entity, uniqueID, customPredicate);
         if (customPredicate == null || entity instanceof FirenandoEntity fe && !fe.isActive()) return;
-        IBone head = this.getAnimationProcessor().getBone("head");
-        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-        head.setRotationX(extraData.headPitch * ((float) Math.PI / 330F));
-        head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 330F));
+        CoreGeoBone head = this.getAnimationProcessor().getBone("head");
+        EntityModelData extraData = (EntityModelData) customPredicate.getExtraData().get(DataTickets.ENTITY_MODEL_DATA);
+        head.setRotX(extraData.headPitch() * ((float) Math.PI / 330F));
+        head.setRotY(extraData.netHeadYaw() * ((float) Math.PI / 330F));
     }
 
 }

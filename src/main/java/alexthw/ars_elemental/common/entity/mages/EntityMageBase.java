@@ -127,8 +127,8 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
         Spell spell = this.pSpells.get(random.nextInt(pSpells.size()));
         ParticleColor color = schoolToColor(this.school.getId());
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level, spell, this, new LivingCaster(this)).withColors(color));
-        resolver.onCast(ItemStack.EMPTY, level);
+        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level(), spell, this, new LivingCaster(this)).withColors(color));
+        resolver.onCast(ItemStack.EMPTY, level());
         this.castCooldown = 40;
     }
 

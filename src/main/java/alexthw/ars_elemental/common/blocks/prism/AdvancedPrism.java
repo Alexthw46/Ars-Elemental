@@ -110,7 +110,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
     @Override
     public BlockState rotate(BlockState state, LevelAccessor level, BlockPos pos, Rotation rot) {
         if (level.getBlockEntity(pos) instanceof AdvancedPrismTile prismTile) {
-            prismTile.setRotationX(prismTile.getRotationX() + switch (rot) {
+            prismTile.setRotX(prismTile.getRotationX() + switch (rot) {
                         case NONE -> 0;
                         case CLOCKWISE_90 -> 90;
                         case CLOCKWISE_180 -> 180;

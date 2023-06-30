@@ -30,9 +30,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -50,14 +52,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.PlayState;
-import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
-import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
+import software.bernie.ars_nouveau.geckolib.animatable.GeoEntity;
+import software.bernie.ars_nouveau.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
+import software.bernie.ars_nouveau.geckolib.core.object.PlayState;
+import software.bernie.ars_nouveau.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -67,7 +69,12 @@ import java.util.function.Predicate;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, RangedAttackMob, IAnimatable, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantColorProvider<FirenandoEntity> {
+public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, RangedAttackMob, GeoEntity, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantColorProvider<FirenandoEntity> {
+
+    private final RawAnimation idle = RawAnimation.begin().thenLoop("idle.body");
+    private final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("inactive");
+    private final RawAnimation mainIdle = RawAnimation.begin().thenLoop("idle");
+
     public FirenandoEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
@@ -83,7 +90,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     public UUID owner;
 
     @Override
-    public boolean isAlliedTo(Entity pEntity) {
+    public boolean isAlliedTo(@NotNull Entity pEntity) {
         return !(pEntity instanceof Enemy) || super.isAlliedTo(pEntity);
     }
 
@@ -93,7 +100,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         if (castCooldown > 0) {
             this.castCooldown--;
         }
-        if (!level.isClientSide() && level.getGameTime() % 20 == 0 && this.isActive() && this.getHealth() < this.getMaxHealth()) {
+        if (!level().isClientSide() && level().getGameTime() % 20 == 0 && this.isActive() && this.getHealth() < this.getMaxHealth()) {
             this.heal(1.0f);
         }
     }
@@ -101,7 +108,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
-        if (source == DamageSource.CACTUS || source == DamageSource.SWEET_BERRY_BUSH || source.isFire())
+        if (source.is(DamageTypes.CACTUS) || source.is(DamageTypes.SWEET_BERRY_BUSH) || source.is(DamageTypeTags.IS_FIRE))
             return false;
         if (!isActive()) return false;
         return super.hurt(source, amount);
@@ -114,11 +121,11 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
 
     @Override
     public void die(@NotNull DamageSource source) {
-        if (!level.isClientSide && !source.isBypassInvul()) {
+        if (!level().isClientSide && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             this.entityData.set(ACTIVE, false);
             if (source.getEntity() != null) {
                 if (Common.FIRENANDO_KILL.get() && source.getEntity().getUUID().equals(getOwner())) {
-                    level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
+                    level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
                     super.die(source);
                     return;
                 }
@@ -135,27 +142,28 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
 
     @Override
     public boolean onDispel(@Nullable LivingEntity caster) {
-        if (this.isRemoved() || level.isClientSide) return false;
+        if (this.isRemoved() || level().isClientSide) return false;
 
-        level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
-        ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
+        level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), new ItemStack(ModItems.FIRENANDO_CHARM.get())));
+        ParticleUtil.spawnPoof((ServerLevel) level(), blockPosition());
         this.remove(RemovalReason.DISCARDED);
 
         return true;
     }
 
+
     @Override
-    public void performRangedAttack(LivingEntity target, float p_82196_2_) {
+    public void performRangedAttack(@NotNull LivingEntity target, float pVelocity) {
         ParticleColor spellColor = getColor(this).equals(Variants.MAGMA.toString()) ? color : colorAlt;
-        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level, spell, this, new LivingCaster(this)).withColors(spellColor));
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level, resolver);
+        EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level(), spell, this, new LivingCaster(this)).withColors(spellColor));
+        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level(), resolver);
         List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver.spell);
         ignore.add(entity -> !(entity instanceof Enemy));
         ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
         projectileSpell.setColor(spellColor);
         projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);
         projectileSpell.setIgnored(ignore);
-        level.addFreshEntity(projectileSpell);
+        level().addFreshEntity(projectileSpell);
         this.castCooldown = 20;
     }
 
@@ -213,7 +221,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         return this.entityData.get(HOME).orElse(null);
     }
 
-    public UUID getOwner(){
+    public UUID getOwner() {
         return owner;
     }
 
@@ -248,47 +256,38 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         this.owner = tag.hasUUID("owner") ? tag.getUUID("owner") : null;
     }
 
-    final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     AnimationController<FirenandoEntity> attackController;
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "idle_controller", 5f, this::idlePredicate));
-        attackController = new AnimationController<>(this, "attack_controller", 1f, this::attackPredicate);
-        data.addAnimationController(attackController);
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+        data.add(new AnimationController<>(this, "idle_controller", 5, event -> isActive() ? event.setAndContinue(idle) : event.setAndContinue(inactive)));
+        attackController = new AnimationController<>(this, "attack_controller", 1, this::attackPredicate);
+        data.add(attackController);
     }
 
-    <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
+    PlayState attackPredicate(AnimationState<FirenandoEntity> event) {
         if (!isActive()) return PlayState.STOP;
         if (attackController.getCurrentAnimation() == null) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
-        }
-        return PlayState.CONTINUE;
-    }
-
-    <T extends IAnimatable> PlayState idlePredicate(AnimationEvent<T> event) {
-        if (isActive()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle.body"));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("inactive"));
+           return event.setAndContinue(mainIdle);
         }
         return PlayState.CONTINUE;
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
 
     @Override
     public void startAnimation(int arg) {
         if (arg == Animations.SHOOT.ordinal()) {
-            if (attackController.getCurrentAnimation() != null && (attackController.getCurrentAnimation().animationName.equals("shoot"))) {
+            if (attackController.getCurrentAnimation() != null && (attackController.getCurrentAnimation().animation().name().equals("shoot"))) {
                 return;
             }
-            attackController.markNeedsReload();
-            attackController.setAnimation(new AnimationBuilder().addAnimation("shoot").addAnimation("idle"));
+            attackController.forceAnimationReset();
+            attackController.setAnimation(RawAnimation.begin().thenPlay("shoot").thenLoop("idle"));
         }
     }
 
@@ -334,8 +333,8 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!player.level.isClientSide && player.getUUID().equals(owner)) {
+    protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
+        if (!player.level().isClientSide && player.getUUID().equals(owner)) {
             ItemStack stack = player.getItemInHand(hand);
 
             if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor(this).equals(Variants.MAGMA.toString())) {
@@ -349,7 +348,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
                 return InteractionResult.SUCCESS;
             }
         }
-        if (!player.level.isClientSide() && !isActive()) {
+        if (!player.level().isClientSide() && !isActive()) {
             ItemStack stack = player.getItemInHand(hand);
 
             if (stack.getItem() == Items.MAGMA_CREAM || stack.getItem() == Items.BLAZE_POWDER) {

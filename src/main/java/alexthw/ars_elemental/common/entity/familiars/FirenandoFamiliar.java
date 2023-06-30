@@ -21,12 +21,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.PlayState;
-import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
+
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
+import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
+import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
+
+import software.bernie.ars_nouveau.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +48,9 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
         super.registerGoals();
     }
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         super.registerControllers(data);
-        data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));
+        data.add(new AnimationController<>(this, "idle_controller", 0, this::idlePredicate));
     }
 
     public static List<AbstractSpellPart> projectileGlyphs = new ArrayList<>();
@@ -67,7 +68,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
 
     @Override
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
-        if (!player.level.isClientSide && player.equals(getOwner())) {
+        if (!player.level().isClientSide && player.equals(getOwner())) {
             ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() == Items.MAGMA_CREAM) {
                 stack.shrink(1);
@@ -95,14 +96,12 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     @Override
-    public PlayState walkPredicate(AnimationEvent event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
-        return PlayState.CONTINUE;
+    public PlayState walkPredicate(AnimationState event) {
+        return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
     }
 
-    <T extends IAnimatable> PlayState idlePredicate(AnimationEvent<T> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle.body"));
-        return PlayState.CONTINUE;
+    public PlayState idlePredicate(AnimationState<FirenandoFamiliar> event) {
+        return event.setAndContinue(RawAnimation.begin().thenLoop("idle.body"));
     }
 
     @Override

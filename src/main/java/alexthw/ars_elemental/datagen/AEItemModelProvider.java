@@ -32,7 +32,7 @@ import static alexthw.ars_elemental.datagen.Datagen.takeAll;
 @SuppressWarnings("ALL")
 public class AEItemModelProvider extends ItemModelProvider {
     public AEItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, ArsElemental.MODID, existingFileHelper);
+        super(generator.getPackOutput(), ArsElemental.MODID, existingFileHelper);
     }
 
     private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");

@@ -8,45 +8,40 @@ import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.ars_nouveau.geckolib3.geo.render.built.GeoModel;
-import software.bernie.ars_nouveau.geckolib3.model.AnimatedGeoModel;
-import software.bernie.ars_nouveau.geckolib3.renderers.geo.GeoBlockRenderer;
+import software.bernie.ars_nouveau.geckolib.cache.object.BakedGeoModel;
+import software.bernie.ars_nouveau.geckolib.model.GeoModel;
+import software.bernie.ars_nouveau.geckolib.renderer.GeoBlockRenderer;
 
-import javax.annotation.Nullable;
+public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurretTile> {
 
-public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extends GeoBlockRenderer<TL> {
+    public static GeoModel<ElementalSpellTurretTile> modelFire = new TurretModel<>("fire");
+    public static GeoModel<ElementalSpellTurretTile> modelWater = new TurretModel<>("water");
+    public static GeoModel<ElementalSpellTurretTile> modelAir = new TurretModel<>("air");
+    public static GeoModel<ElementalSpellTurretTile> modelEarth = new TurretModel<>("earth");
+    public static GeoModel<ElementalSpellTurretTile> modelShaper = new TurretModel<>("manipulation");
 
-    public static AnimatedGeoModel modelFire = new TurretModel<>("fire");
-    public static AnimatedGeoModel modelWater = new TurretModel<>("water");
-    public static AnimatedGeoModel modelAir = new TurretModel<>("air");
-    public static AnimatedGeoModel modelEarth = new TurretModel<>("earth");
-    public static AnimatedGeoModel modelShaper = new TurretModel<>("manipulation");
-
-    @SuppressWarnings("unchecked")
     public ElementalTurretRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
-        super(rendererDispatcherIn, modelFire);
+        super(modelFire);
     }
 
     @Override
-    public void render(GeoModel model, TL animatable, float partialTicks, RenderType type, PoseStack matrixStackIn, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        matrixStackIn.pushPose();
+    public void preRender(PoseStack poseStack, ElementalSpellTurretTile animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        poseStack.pushPose();
         Direction direction = animatable.getBlockState().getValue(BasicSpellTurret.FACING);
         if (direction == Direction.UP) {
-            matrixStackIn.translate(0, -0.5, -0.5);
+            poseStack.translate(0, -0.5, -0.5);
         } else if (direction == Direction.DOWN) {
-            matrixStackIn.translate(0, -0.5, 0.5);
+            poseStack.translate(0, -0.5, 0.5);
         }
-        super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-
-        matrixStackIn.popPose();
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        poseStack.popPose();
     }
 
     public static GenericItemBlockRenderer getISTER(String element) {
-        AnimatedGeoModel<?> model = switch (element) {
+        GeoModel<?> model = switch (element) {
             case "fire" -> modelFire;
             case "water" -> modelWater;
             case "air" -> modelAir;
@@ -57,11 +52,11 @@ public class ElementalTurretRenderer<TL extends ElementalSpellTurretTile> extend
     }
 
     @Override
-    public ResourceLocation getTextureLocation(TL instance) {
+    public ResourceLocation getTextureLocation(ElementalSpellTurretTile instance) {
         return new ResourceLocation(ArsElemental.MODID, "textures/block/" + instance.getSchool().getId() + "_turret.png");
     }
 
-    public static class TurretModel<T extends ElementalSpellTurretTile> extends AnimatedGeoModel<T> {
+    public static class TurretModel<T extends ElementalSpellTurretTile> extends GeoModel<T> {
 
         final String element;
 

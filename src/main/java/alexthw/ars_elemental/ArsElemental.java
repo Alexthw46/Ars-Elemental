@@ -46,13 +46,14 @@ public class ArsElemental {
     public static final ResourceLocation BANGLE_SLOT = new ResourceLocation("curios:slot/bangle_slot");
 
     public static final String MODID = "ars_elemental";
+   /*
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override
         public @NotNull ItemStack makeIcon() {
             return ModItems.DEBUG_ICON.get().getDefaultInstance();
         }
     };
-
+*/
     public static final UUID Dev = UUID.fromString("0e918660-22bf-4bed-8426-ece3b4bbd01d");
     public static boolean terrablenderLoaded = false;
 

@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.datagen.Datagen.takeAll;
@@ -25,7 +27,7 @@ import static alexthw.ars_elemental.datagen.Datagen.takeAll;
 public class AEBlockStateProvider extends BlockStateProvider {
 
     public AEBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, ArsElemental.MODID, exFileHelper);
+        super(gen.getPackOutput(), ArsElemental.MODID, exFileHelper);
     }
 
     @Override
