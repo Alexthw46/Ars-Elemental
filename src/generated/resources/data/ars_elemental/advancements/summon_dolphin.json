@@ -35,5 +35,6 @@
     [
       "summon_dolphin"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

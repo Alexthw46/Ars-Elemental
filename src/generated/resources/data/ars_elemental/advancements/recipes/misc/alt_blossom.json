@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ars_elemental:flight_alt"
+        "recipe": "ars_elemental:alt_blossom"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "ars_elemental:flight_alt"
+      "ars_elemental:alt_blossom"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

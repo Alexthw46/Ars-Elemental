@@ -21,7 +21,6 @@ import com.hollingsworth.arsnouveau.common.items.PerkItem;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -29,7 +28,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -205,7 +203,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addPage(new PatchouliBuilder(ENCHANTMENTS, ItemsRegistry.NOVICE_SPELLBOOK.get()).withTextPage("ars_elemental.page.book_protection").withName("tooltip.ars_nouveau.blessed").withPage(new ApparatusPage(prefix("invincible_book").toString())), getPath(ENCHANTMENTS, "invincible_book"));
 
         for (PatchouliPage patchouliPage : pages) {
-            DataProvider.saveStable(cache, patchouliPage.build(), patchouliPage.path());
+            saveStable(cache, patchouliPage.build(), patchouliPage.path());
         }
 
     }

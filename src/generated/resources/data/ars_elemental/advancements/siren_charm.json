@@ -33,5 +33,6 @@
     [
       "has_siren_charm"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -33,5 +33,6 @@
     [
       "has_caster_bag"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

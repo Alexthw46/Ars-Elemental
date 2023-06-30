@@ -33,5 +33,6 @@
     [
       "has_lesser_fire_focus"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

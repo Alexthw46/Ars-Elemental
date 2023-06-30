@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ars_nouveau:items/poison_spores"
+    "layer0": "ars_nouveau:item/poison_spores"
   }
 }

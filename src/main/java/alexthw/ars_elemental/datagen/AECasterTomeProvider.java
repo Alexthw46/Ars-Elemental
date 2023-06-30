@@ -16,11 +16,9 @@ import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
 import com.hollingsworth.arsnouveau.common.tomes.CasterTomeData;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -87,7 +85,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
         Path output = this.generator.getPackOutput().getOutputFolder();
         for (CasterTomeData g : tomes) {
             Path path = getRecipePath(output, g.getId().getPath());
-            DataProvider.saveStable(cache, g.toJson(), path);
+            saveStable(cache, g.toJson(), path);
         }
     }
 

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ars_elemental:spore_blossom_up"
+        "recipe": "ars_elemental:advanced_prism"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "ars_elemental:spore_blossom_up"
+      "ars_elemental:advanced_prism"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

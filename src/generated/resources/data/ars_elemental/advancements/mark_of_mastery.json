@@ -33,5 +33,6 @@
     [
       "has_mark_of_mastery"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

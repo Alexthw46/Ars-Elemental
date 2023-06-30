@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ars_nouveau:items/bubble_shield"
+    "layer0": "ars_nouveau:item/bubble_shield"
   }
 }

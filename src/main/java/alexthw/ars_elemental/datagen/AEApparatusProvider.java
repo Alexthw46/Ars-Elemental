@@ -15,7 +15,6 @@ import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -24,7 +23,6 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class AEApparatusProvider extends ApparatusRecipeProvider {
@@ -278,7 +276,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         for (EnchantingApparatusRecipe g : recipes) {
             if (g != null) {
                 Path path = getRecipePath(output, g.getId().getPath());
-                DataProvider.saveStable(cache, g.asRecipe(), path);
+                saveStable(cache, g.asRecipe(), path);
             }
         }
 

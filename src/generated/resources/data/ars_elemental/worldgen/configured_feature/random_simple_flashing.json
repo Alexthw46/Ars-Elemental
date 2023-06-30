@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:simple_random_selector",
+  "config": {
+    "features": "ars_elemental:simple_flashing"
+  }
+}

@@ -33,5 +33,6 @@
     [
       "has_curio_bag"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

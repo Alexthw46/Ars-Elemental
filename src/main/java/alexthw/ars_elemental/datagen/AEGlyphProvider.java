@@ -11,7 +11,6 @@ import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -71,7 +70,7 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
 
         for (GlyphRecipe recipe : recipes) {
             Path path = getScribeGlyphPath(output, recipe.output.getItem());
-            DataProvider.saveStable(cache, recipe.asRecipe(), path);
+            saveStable(cache, recipe.asRecipe(), path);
         }
 
     }

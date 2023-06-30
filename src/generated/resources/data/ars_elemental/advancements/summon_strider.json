@@ -35,5 +35,6 @@
     [
       "summon_strider"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

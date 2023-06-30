@@ -76,7 +76,6 @@ public class ModWorldgen {
             return ResourceKey.create(Registries.BIOME, prefix(name));
         }
 
-
         public static void registerBiomes(BootstapContext<Biome> context) {
             context.register(FLASHING_FOREST_KEY, flashingArchwoodForest(context));
             context.register(BLAZING_FOREST_KEY, blazingArchwoodForest(context));

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
   "key": {
     "P": {
       "item": "ars_nouveau:spell_prism"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "ars_elemental:advanced_prism"
-  }
+  },
+  "show_notification": true
 }

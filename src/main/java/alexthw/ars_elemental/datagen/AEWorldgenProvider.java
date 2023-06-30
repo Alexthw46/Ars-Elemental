@@ -3,8 +3,10 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.world.ModWorldgen;
-import com.hollingsworth.arsnouveau.common.world.biome.BiomeRegistry;
-import net.minecraft.core.*;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -29,7 +31,7 @@ public class AEWorldgenProvider extends DatapackBuiltinEntriesProvider {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, ModWorldgen::bootstrapConfiguredFeatures)
             .add(Registries.PLACED_FEATURE, ModWorldgen::bootstrapPlacedFeatures)
-            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, AEWorldgenProvider::generateBiomeModifiers)
+            //.add(ForgeRegistries.Keys.BIOME_MODIFIERS, AEWorldgenProvider::generateBiomeModifiers)
             .add(ForgeRegistries.Keys.BIOMES, ModWorldgen.Biomes::registerBiomes);
 
     public AEWorldgenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

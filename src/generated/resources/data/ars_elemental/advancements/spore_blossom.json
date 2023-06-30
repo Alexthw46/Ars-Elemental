@@ -25,5 +25,6 @@
     [
       "spore_blossom"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }
