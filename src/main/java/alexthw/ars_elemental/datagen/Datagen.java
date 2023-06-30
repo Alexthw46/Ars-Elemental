@@ -66,7 +66,7 @@ public class Datagen {
 
         gen.addProvider(event.includeServer(), new AEWorldgenProvider(output, provider));
         //gen.addProvider(event.includeServer(), new AETagsProvider.AEFeatureTagsProvider(gen, provider, existingFileHelper));
-        //gen.addProvider(event.includeServer(), new AETagsProvider.AEBiomeTagsProvider(gen, provider, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEBiomeTagsProvider(gen, provider, existingFileHelper));
 
     }
 

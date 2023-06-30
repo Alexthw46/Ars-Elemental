@@ -155,10 +155,10 @@ public class AETagsProvider {
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
-            this.tag(FLASHING_BIOME).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY);
+            //this.tag(FLASHING_BIOME).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY);
             this.tag(FLASHING_TREE_COMMON_BIOME).add(BiomeRegistry.ARCHWOOD_FOREST);
-            this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
-            this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
+            //this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
+            //this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.Biomes.FLASHING_FOREST_KEY, ModWorldgen.Biomes.BLAZING_FOREST_KEY, ModWorldgen.Biomes.CASCADING_FOREST_KEY, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY);
         }
         @Override
         public @NotNull String getName() {

@@ -77,10 +77,12 @@ public class ModWorldgen {
         }
 
         public static void registerBiomes(BootstapContext<Biome> context) {
-            context.register(FLASHING_FOREST_KEY, flashingArchwoodForest(context));
-            context.register(BLAZING_FOREST_KEY, blazingArchwoodForest(context));
-            context.register(CASCADING_FOREST_KEY,  cascadingArchwoodForest(context));
-            context.register(FLOURISHING_FOREST_KEY, flourishArchwoodForest(context));
+             if (false){
+                context.register(FLASHING_FOREST_KEY, flashingArchwoodForest(context));
+                context.register(BLAZING_FOREST_KEY, blazingArchwoodForest(context));
+                context.register(CASCADING_FOREST_KEY, cascadingArchwoodForest(context));
+                context.register(FLOURISHING_FOREST_KEY, flourishArchwoodForest(context));
+            }
         }
 
         public static Biome flashingArchwoodForest(BootstapContext<Biome> context) {
@@ -240,6 +242,8 @@ public class ModWorldgen {
         context.register(COMMON_FLASHING_CONFIGURED, new PlacedFeature(configured.get(COMMON_FLASHING_TREES).get(), VegetationPlacements.treePlacement(CountPlacement.of(2), ModItems.FLASHING_SAPLING.get())));
 
         context.register(CLUSTER_FLASHING_CONFIGURED, new PlacedFeature(configured.get(COMMON_FLASHING_TREES).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), ModItems.FLASHING_SAPLING.get())));
+
+        if (true) return;
         context.register(CLUSTER_CASCADING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_CASCADING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.CASCADING_SAPLING)));
         context.register(CLUSTER_BLAZING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_BLAZING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.BLAZING_SAPLING)));
         context.register(CLUSTER_FLOURISHING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_FLOURISHING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.FLOURISHING_SAPLING)));
