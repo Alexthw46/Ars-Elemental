@@ -37,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
@@ -47,8 +48,15 @@ import static alexthw.ars_elemental.registry.ModEntities.SIREN_FAMILIAR;
 public class AETagsProvider {
 
     public static class AEItemTagsProvider extends ItemTagsProvider {
-        public static final TagKey<Item> CURIO_SPELL_FOCUS = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "an_focus"));
-        public static final TagKey<Item> CURIO_BANGLE = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "bangle"));
+
+        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "head", "hands", "necklace", "ring"};
+
+        static TagKey<Item> curiosTag(String key) {
+            return ItemTags.create(new ResourceLocation(CuriosApi.MODID, key));
+        }
+
+        public static final TagKey<Item> CURIO_SPELL_FOCUS = curiosTag("an_focus");
+        public static final TagKey<Item> CURIO_BANGLE = curiosTag("bracelet");
         public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "magic_shards"));
         public static final TagKey<Item> SPELLBOOK = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spellbook"));
         public static final TagKey<Item> PRISM_LENS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spell_prism_lens"));
@@ -85,10 +93,14 @@ public class AETagsProvider {
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem()
             );
             tag(ItemTagProvider.MAGIC_FOOD).add(ModItems.FLASHING_POD.get().asItem());
-            tag(MAGIC_HOOD).add(ItemsRegistry.ARCHMAGE_HOOD.get(), ItemsRegistry.APPRENTICE_HOOD.get(), ItemsRegistry.NOVICE_HOOD.get());
-            tag(MAGIC_ROBE).add(ItemsRegistry.ARCHMAGE_ROBES.get(), ItemsRegistry.APPRENTICE_ROBES.get(), ItemsRegistry.NOVICE_ROBES.get());
-            tag(MAGIC_LEG).add(ItemsRegistry.ARCHMAGE_LEGGINGS.get(), ItemsRegistry.APPRENTICE_LEGGINGS.get(), ItemsRegistry.NOVICE_LEGGINGS.get());
-            tag(MAGIC_BOOT).add(ItemsRegistry.ARCHMAGE_BOOTS.get(), ItemsRegistry.APPRENTICE_BOOTS.get(), ItemsRegistry.NOVICE_BOOTS.get());
+            tag(MAGIC_HOOD).add(ItemsRegistry.BATTLEMAGE_HOOD.get(), ItemsRegistry.ARCANIST_HOOD.get(), ItemsRegistry.SORCERER_HOOD.get());
+            tag(MAGIC_ROBE).add(ItemsRegistry.BATTLEMAGE_ROBES.get(), ItemsRegistry.ARCANIST_ROBES.get(), ItemsRegistry.SORCERER_ROBES.get());
+            tag(MAGIC_LEG).add(ItemsRegistry.BATTLEMAGE_LEGGINGS.get(), ItemsRegistry.ARCANIST_LEGGINGS.get(), ItemsRegistry.SORCERER_LEGGINGS.get());
+            tag(MAGIC_BOOT).add(ItemsRegistry.BATTLEMAGE_BOOTS.get(), ItemsRegistry.ARCANIST_BOOTS.get(), ItemsRegistry.SORCERER_BOOTS.get());
+
+            Arrays.stream(curioSlots).map(AEItemTagsProvider::curiosTag).forEach(t ->
+                    tag(ModRegistry.CURIO_BAGGABLE).addOptionalTag(t.location())
+            );
 
         }
 
@@ -184,8 +196,8 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED);
-            tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED);
+            tag(RARE_ARCHWOOD_TREES).addOptional(ModWorldgen.RARE_FLASHING_CONFIGURED.location());
+            tag(COMMON_ARCHWOOD_TREES).addOptional(ModWorldgen.COMMON_FLASHING_CONFIGURED.location());
         }
 
         @Override

@@ -1,17 +1,17 @@
-// 1.20.1	2023-06-30T14:49:51.7814547	Ars Elemental Item Tags
+// 1.20.1	2023-07-02T01:03:35.1616378	Ars Elemental Item Tags
 877c63c507be1e55a9f5eeed6e73dfabea015dab data/ars_elemental/tags/items/caster_bag_item.json
-1cfd115256c85334343c525876906563f1eb71e5 data/ars_elemental/tags/items/curio_bag_item.json
+bed63c744a2c3897525b7988d925c77ccd98e3be data/ars_elemental/tags/items/curio_bag_item.json
 55ebe60e91db1b8c82d4c050e5058b125796e4f9 data/ars_elemental/tags/items/soulbound_extra.json
-84a872a357e81ede8f2a71de37ec6ba812bea638 data/ars_nouveau/tags/items/boot.json
-7b0d9a1274a5b5995a38553ba7be74119d4eb4d3 data/ars_nouveau/tags/items/hood.json
-67c8b3c331b1b77c9ba990815228bb120f8ff191 data/ars_nouveau/tags/items/legs.json
+f4df44c664b9190c5385bc3d96382af26add802b data/ars_nouveau/tags/items/boot.json
+a6f57b5698003165658cebac60702657955e2733 data/ars_nouveau/tags/items/hood.json
+0c442262894975c5a4a45bf93b6d70503c166856 data/ars_nouveau/tags/items/legs.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/items/magic_food.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/items/magic_shards.json
-af3aa9eb735846f731da5e98c596488293d61eb6 data/ars_nouveau/tags/items/robe.json
+ac42f29459995dfce1ddd28eb24c261e8cc6a67a data/ars_nouveau/tags/items/robe.json
 fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/items/spellbook.json
 5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/items/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/items/an_focus.json
-e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bangle.json
+e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bracelet.json
 d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/forge/tags/items/logs/archwood.json
 525c1a35787919fd6060975646b2c0a2a41ca910 data/minecraft/tags/items/leaves.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/items/logs.json

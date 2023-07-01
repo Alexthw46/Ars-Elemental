@@ -108,10 +108,10 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
                 setItemSlot(slot, getArmorForSlot(slot, this.school));
             }
         } else {
-            setItemSlot(EquipmentSlot.HEAD, ItemsRegistry.ARCHMAGE_HOOD.get().getDefaultInstance());
-            setItemSlot(EquipmentSlot.CHEST, ItemsRegistry.ARCHMAGE_ROBES.get().getDefaultInstance());
-            setItemSlot(EquipmentSlot.LEGS, ItemsRegistry.ARCHMAGE_LEGGINGS.get().getDefaultInstance());
-            setItemSlot(EquipmentSlot.FEET, ItemsRegistry.ARCHMAGE_BOOTS.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.HEAD, ItemsRegistry.BATTLEMAGE_HOOD.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.CHEST, ItemsRegistry.BATTLEMAGE_ROBES.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.LEGS, ItemsRegistry.BATTLEMAGE_LEGGINGS.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.FEET, ItemsRegistry.BATTLEMAGE_BOOTS.get().getDefaultInstance());
         }
         setItemInHand(InteractionHand.MAIN_HAND, ItemsRegistry.APPRENTICE_SPELLBOOK.get().getDefaultInstance());
     }

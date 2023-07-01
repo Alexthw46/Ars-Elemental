@@ -9,8 +9,6 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
-import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import com.hollingsworth.arsnouveau.setup.CreativeTabRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
@@ -18,10 +16,8 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -29,11 +25,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import top.theillusivec4.curios.Curios;
-import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import java.util.UUID;
@@ -41,9 +34,6 @@ import java.util.UUID;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsElemental.MODID)
 public class ArsElemental {
-
-    public static final ResourceLocation FOCUS_SLOT = new ResourceLocation("curios:slot/an_focus_slot");
-    public static final ResourceLocation BANGLE_SLOT = new ResourceLocation("curios:slot/bangle_slot");
 
     public static final String MODID = "ars_elemental";
 
@@ -59,7 +49,7 @@ public class ArsElemental {
         ModRegistry.registerRegistries(modbus);
         ArsNouveauRegistry.init();
         modbus.addListener(this::setup);
-        modbus.addListener(this::sendImc);
+        //modbus.addListener(this::sendImc);
         modbus.addListener(this::loadComplete);
         MinecraftForge.EVENT_BUS.register(this);
         DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
@@ -69,13 +59,7 @@ public class ArsElemental {
         });
         ModAdvTriggers.init();
         ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = !FMLEnvironment.production;
-        modbus.addListener((BuildCreativeModeTabContentsEvent event) -> {
-            if (event.getTab() == CreativeTabRegistry.GLYPHS.get()) {
-                for (AbstractSpellPart part: ArsNouveauRegistry.registeredSpells){
-                    event.accept(ArsNouveauAPI.getInstance().getGlyphItem(part));
-                }
-            }
-        });
+
     }
 
     public static ResourceLocation prefix(String path) {
@@ -101,12 +85,6 @@ public class ArsElemental {
         CuriosRendererRegistry.register(ModItems.AIR_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.EARTH_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.NECRO_FOCUS.get(), SpellFocusRenderer::new);
-    }
-
-    public void sendImc(InterModEnqueueEvent evt) {
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bundle").size(1).icon(new ResourceLocation(Curios.MODID, "slot/empty_curio_slot")).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bangle").size(1).icon(BANGLE_SLOT).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.MODIFY_TYPE, () -> new SlotTypeMessage.Builder("an_focus").size(1).icon(FOCUS_SLOT).build());
     }
 
     public void loadComplete(FMLLoadCompleteEvent event) {

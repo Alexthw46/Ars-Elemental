@@ -48,8 +48,9 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     final SpellSchool element;
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public ElementalArmor(ArmorItem.Type slot, SpellSchool element, Properties builder) {
-        super(IElementalArmor.schoolToMaterial(element), slot, builder);
+        super(IElementalArmor.schoolToMaterial(element), slot, new ElementalArmorModel("medium_armor_e").withEmptyAnim());
         this.element = element;
     }
 
@@ -155,14 +156,12 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
 
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        super.initializeClient(consumer);
         consumer.accept(new IClientItemExtensions() {
             private GeoArmorRenderer<?> renderer;
 
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
                 if (this.renderer == null) {
-                    //noinspection rawtypes,unchecked
-                    this.renderer = new ElementalArmorRenderer(new ElementalArmorModel("medium_armor_e").withEmptyAnim());
+                    this.renderer = new ElementalArmorRenderer(getArmorModel());
                 }
 
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
