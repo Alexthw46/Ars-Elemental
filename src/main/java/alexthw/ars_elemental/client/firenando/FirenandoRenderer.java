@@ -11,8 +11,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib.animatable.GeoEntity;
-import software.bernie.ars_nouveau.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class FirenandoRenderer<M extends LivingEntity & GeoEntity> extends GeoEntityRenderer<M> {
 

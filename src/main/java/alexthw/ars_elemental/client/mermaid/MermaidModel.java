@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.client.mermaid;
 
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.ars_nouveau.geckolib.animatable.GeoEntity;
-import software.bernie.ars_nouveau.geckolib.constant.DataTickets;
-import software.bernie.ars_nouveau.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
-import software.bernie.ars_nouveau.geckolib.model.GeoModel;
-import software.bernie.ars_nouveau.geckolib.model.data.EntityModelData;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DataTickets;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.model.data.EntityModelData;
 
 import javax.annotation.Nullable;
 

@@ -18,10 +18,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import software.bernie.ars_nouveau.geckolib.animatable.GeoBlockEntity;
-import software.bernie.ars_nouveau.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
-import software.bernie.ars_nouveau.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity {
     private static final String TAG_LENTS = "prismLent";

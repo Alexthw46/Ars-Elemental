@@ -31,12 +31,12 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib.animatable.GeoItem;
-import software.bernie.ars_nouveau.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
-import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
-import software.bernie.ars_nouveau.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

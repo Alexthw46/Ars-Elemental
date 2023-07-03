@@ -256,10 +256,10 @@ public class ModWorldgen {
 
         context.register(CLUSTER_FLASHING_CONFIGURED, new PlacedFeature(configured.get(COMMON_FLASHING_TREES).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), ModItems.FLASHING_SAPLING.get())));
 
-        context.register(CLUSTER_CASCADING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_CASCADING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.CASCADING_SAPLING)));
-        context.register(CLUSTER_BLAZING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_BLAZING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.BLAZING_SAPLING)));
-        context.register(CLUSTER_FLOURISHING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_FLOURISHING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.FLOURISHING_SAPLING)));
-        context.register(CLUSTER_VEXING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_VEXING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.VEXING_SAPLING)));
+        context.register(CLUSTER_CASCADING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_CASCADING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.CASCADING_SAPLING.get())));
+        context.register(CLUSTER_BLAZING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_BLAZING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.BLAZING_SAPLING.get())));
+        context.register(CLUSTER_FLOURISHING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_FLOURISHING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.FLOURISHING_SAPLING.get())));
+        context.register(CLUSTER_VEXING_CONFIGURED, new PlacedFeature(configured.get(WorldgenRegistry.NATURAL_CONFIGURED_VEXING_TREE).get(), VegetationPlacements.treePlacement(CountPlacement.of(6), BlockRegistry.VEXING_SAPLING.get())));
 
     }
 

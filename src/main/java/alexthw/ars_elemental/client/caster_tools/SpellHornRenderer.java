@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.ars_nouveau.geckolib.cache.object.GeoBone;
-import software.bernie.ars_nouveau.geckolib.core.object.Color;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.core.object.Color;
 
 
 public class SpellHornRenderer extends FixedGeoItemRenderer<SpellHorn> {

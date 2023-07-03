@@ -8,20 +8,19 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import software.bernie.ars_nouveau.geckolib.cache.object.BakedGeoModel;
-import software.bernie.ars_nouveau.geckolib.cache.object.GeoBone;
-import software.bernie.ars_nouveau.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
-import software.bernie.ars_nouveau.geckolib.renderer.GeoBlockRenderer;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 import static net.minecraft.world.item.ItemDisplayContext.HEAD;
-import static software.bernie.ars_nouveau.geckolib.util.ClientUtils.getLevel;
+import static software.bernie.geckolib.util.ClientUtils.getLevel;
 
 
 public class PrismRenderer extends GeoBlockRenderer<AdvancedPrismTile> {

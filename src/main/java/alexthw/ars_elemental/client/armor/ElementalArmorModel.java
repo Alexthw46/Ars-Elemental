@@ -4,8 +4,8 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.ars_nouveau.geckolib.animatable.GeoItem;
-import software.bernie.ars_nouveau.geckolib.model.GeoModel;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.model.GeoModel;
 
 public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends GeoModel<T> {
 

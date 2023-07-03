@@ -22,12 +22,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimatableManager;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimationController;
-import software.bernie.ars_nouveau.geckolib.core.animation.AnimationState;
-import software.bernie.ars_nouveau.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
 
-import software.bernie.ars_nouveau.geckolib.core.object.PlayState;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.List;

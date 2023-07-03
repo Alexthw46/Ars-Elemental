@@ -11,9 +11,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.ars_nouveau.geckolib.cache.object.BakedGeoModel;
-import software.bernie.ars_nouveau.geckolib.model.GeoModel;
-import software.bernie.ars_nouveau.geckolib.renderer.GeoBlockRenderer;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurretTile> {
 
