@@ -1,6 +1,6 @@
-// 1.19.2	2023-02-18T15:12:39.7021576	Ars Elemental Item Tags
+// 1.19.2	2023-07-02T16:48:53.9372969	Ars Elemental Item Tags
 877c63c507be1e55a9f5eeed6e73dfabea015dab data/ars_elemental/tags/items/caster_bag_item.json
-1cfd115256c85334343c525876906563f1eb71e5 data/ars_elemental/tags/items/curio_bag_item.json
+bed63c744a2c3897525b7988d925c77ccd98e3be data/ars_elemental/tags/items/curio_bag_item.json
 55ebe60e91db1b8c82d4c050e5058b125796e4f9 data/ars_elemental/tags/items/soulbound_extra.json
 84a872a357e81ede8f2a71de37ec6ba812bea638 data/ars_nouveau/tags/items/boot.json
 7b0d9a1274a5b5995a38553ba7be74119d4eb4d3 data/ars_nouveau/tags/items/hood.json

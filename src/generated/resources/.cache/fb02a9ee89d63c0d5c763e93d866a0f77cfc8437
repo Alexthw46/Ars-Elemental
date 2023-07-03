@@ -1,4 +1,4 @@
-// 1.19.2	2023-05-29T19:00:56.0944192	Ars Elemental Item Models
+// 1.19.2	2023-07-02T16:48:53.9303056	Ars Elemental Item Models
 a5b2cd6b765fcd98484c5cad23aa0a2775ae7d1a assets/ars_elemental/models/item/advanced_prism.json
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
@@ -58,7 +58,6 @@ a8b3d73e61921978062232ab2aed908fb1c65e39 assets/ars_elemental/models/item/stripp
 6a31b089a16e82510e68672fe0d8f255b634d84b assets/ars_elemental/models/item/water_focus.json
 50326a50569eebd915c48dd39615e3e3fbfa4ec4 assets/ars_elemental/models/item/water_turret.json
 2abed2811f13759f60ed87c2e8035a7f753550aa assets/ars_elemental/models/item/water_upstream.json
-6fe0578b06ddebace854b34b9dab6f52fd99e379 assets/ars_elemental/models/item/wraith_brazier.json
 706b06cf1edcf4b6fb88b815a28a02ccdd2879f3 assets/ars_elemental/models/item/yellow_archwood.json
 1df85f188cdb0273849b7eee797093edb6b1b2df assets/ars_elemental/models/item/yellow_archwood_leaves.json
 bb2bd1a9c22cf42dbe23107b0003111080be436b assets/ars_elemental/models/item/yellow_archwood_log.json

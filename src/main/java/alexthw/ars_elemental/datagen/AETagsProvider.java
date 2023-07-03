@@ -33,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import java.util.Arrays;
+
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.FIRENANDO_FAMILIAR;
@@ -41,12 +43,17 @@ import static alexthw.ars_elemental.registry.ModEntities.SIREN_FAMILIAR;
 public class AETagsProvider {
 
     public static class AEItemTagsProvider extends ItemTagsProvider {
-        public static final TagKey<Item> CURIO_SPELL_FOCUS = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "an_focus"));
-        public static final TagKey<Item> CURIO_BANGLE = ItemTags.create(new ResourceLocation(CuriosApi.MODID, "bangle"));
+        public static final TagKey<Item> CURIO_SPELL_FOCUS = curiosTag("an_focus");
+        public static final TagKey<Item> CURIO_BANGLE = curiosTag("bangle");
         public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "magic_shards"));
         public static final TagKey<Item> SPELLBOOK = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spellbook"));
         public static final TagKey<Item> PRISM_LENS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spell_prism_lens"));
 
+        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "head", "hands", "necklace", "ring"};
+
+        static TagKey<Item> curiosTag(String key) {
+            return ItemTags.create(new ResourceLocation(CuriosApi.MODID, key));
+        }
 
         public static final TagKey<Item> MAGIC_HOOD = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "hood"));
         public static final TagKey<Item> MAGIC_ROBE = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "robe"));
@@ -82,6 +89,10 @@ public class AETagsProvider {
             tag(MAGIC_ROBE).add(ItemsRegistry.ARCHMAGE_ROBES.get(), ItemsRegistry.APPRENTICE_ROBES.get(), ItemsRegistry.NOVICE_ROBES.get());
             tag(MAGIC_LEG).add(ItemsRegistry.ARCHMAGE_LEGGINGS.get(), ItemsRegistry.APPRENTICE_LEGGINGS.get(), ItemsRegistry.NOVICE_LEGGINGS.get());
             tag(MAGIC_BOOT).add(ItemsRegistry.ARCHMAGE_BOOTS.get(), ItemsRegistry.APPRENTICE_BOOTS.get(), ItemsRegistry.NOVICE_BOOTS.get());
+
+            Arrays.stream(curioSlots).map(AEItemTagsProvider::curiosTag).forEach(t ->
+                    tag(ModRegistry.CURIO_BAGGABLE).addOptionalTag(t.location())
+            );
 
         }
 
