@@ -33,28 +33,25 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
-            if (rayTraceResult.getEntity() instanceof Mob mob) {
+            if (rayTraceResult.getEntity() instanceof Mob mob && (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev))) {
                 // check if mob is hostile or neutral and not an animal that can fall in love
                 if (mob instanceof Enemy || (mob instanceof NeutralMob && (!(mob instanceof Animal a && a.canFallInLove())))) {
 
-                    if (mob.getMaxHealth() < GENERIC_INT.get() || player.getUUID().equals(ArsElemental.Dev)) {
+                    // calculate resistance and chance boost based on mob health and amplification
+                    float resistance = 10 + 100 * (mob.getHealth() / mob.getMaxHealth());
+                    double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
 
-                        // calculate resistance and chance boost based on mob health and amplification
-                        float resistance = 10 + 100 * (mob.getHealth() / mob.getMaxHealth());
-                        double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
+                    // if the mob is undead and the shooter has the necrotic focus, increase the chance by 50%
+                    if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
+                        chanceBoost += 50;
+                    }
 
-                        // if the mob is undead and the shooter has the necrotic focus, increase the chance by 50%
-                        if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
-                            chanceBoost += 50;
-                        }
-
-                        if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
-                            applyPotion(mob, player, ENTHRALLED.get(), spellStats);
-                            playHeartParticles(mob, level);
-                        }
+                    if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
+                        applyPotion(mob, player, ENTHRALLED.get(), spellStats);
+                        playHeartParticles(mob, level);
                     }
 
                 } else if (rayTraceResult.getEntity() instanceof Animal animal) {
