@@ -3,15 +3,14 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModItems;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.ItemStack;
@@ -109,23 +108,23 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
 
         recipes.add(new ImbuementRecipe("arc_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.ARC_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodCurvedProjectile.INSTANCE))
+                .withPedestalItem(MethodCurvedProjectile.INSTANCE.getGlyph())
         );
         recipes.add(new ImbuementRecipe("homing_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.HOMING_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodHomingProjectile.INSTANCE))
+                .withPedestalItem(MethodHomingProjectile.INSTANCE.getGlyph())
         );
         recipes.add(new ImbuementRecipe("acceleration_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.ACC_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(AugmentAccelerate.INSTANCE))
+                .withPedestalItem(AugmentAccelerate.INSTANCE.getGlyph())
         );
         recipes.add(new ImbuementRecipe("deceleration_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.DEC_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(AugmentDecelerate.INSTANCE))
+                .withPedestalItem(AugmentDecelerate.INSTANCE.getGlyph())
         );
         recipes.add(new ImbuementRecipe("piercing_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.PIERCE_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(ArsNouveauAPI.getInstance().getGlyphItem(AugmentPierce.INSTANCE))
+                .withPedestalItem(AugmentPierce.INSTANCE.getGlyph())
         );
         recipes.add(new ImbuementRecipe("rainbow_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.RGB_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(Ingredient.of(Tags.Items.DYES))

@@ -112,9 +112,8 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
     }
 
     @Override
-    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> map) {
-        map.put(AugmentPierce.INSTANCE.getRegistryName(), 1);
-        return map;
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentPierce.INSTANCE.getRegistryName(), 1);
     }
 
     @Nonnull

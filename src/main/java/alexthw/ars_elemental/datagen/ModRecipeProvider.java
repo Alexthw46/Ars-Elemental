@@ -2,11 +2,11 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.rituals.*;
 import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
+import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
 import com.hollingsworth.arsnouveau.common.lib.RitualLib;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
@@ -91,7 +91,7 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     public Item getRitualItem(ResourceLocation id) {
-        return ArsNouveauAPI.getInstance().getRitualItemMap().get(id);
+        return RitualRegistry.getRitualItemMap().get(id);
     }
 
     public ShapelessRecipeBuilder shapelessBuilder(ItemLike result) {

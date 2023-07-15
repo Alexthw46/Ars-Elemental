@@ -2,12 +2,8 @@ package alexthw.ars_elemental.world;
 
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
-import com.hollingsworth.arsnouveau.common.entity.ModEntities;
-import com.hollingsworth.arsnouveau.common.world.WorldgenRegistry;
-import com.hollingsworth.arsnouveau.common.world.biome.BiomeRegistry;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTrunkPlacer;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
-import com.hollingsworth.arsnouveau.setup.SoundRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -39,8 +35,9 @@ import java.util.List;
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.FLASHING_WEALD_WALKER;
-import static com.hollingsworth.arsnouveau.common.world.biome.BiomeRegistry.globalOverworldGeneration;
-import static com.hollingsworth.arsnouveau.common.world.biome.BiomeRegistry.softDisks;
+import static com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry.globalOverworldGeneration;
+import static com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry.softDisks;
+
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class ModWorldgen {

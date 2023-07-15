@@ -2,8 +2,8 @@ package alexthw.ars_elemental.network;
 
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.particle.ColoredDynamicTypeData;
-import com.hollingsworth.arsnouveau.client.particle.ModParticles;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import com.hollingsworth.arsnouveau.client.registry.ModParticles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;

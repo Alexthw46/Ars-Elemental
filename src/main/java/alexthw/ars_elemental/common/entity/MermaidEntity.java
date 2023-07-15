@@ -91,7 +91,7 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.1F, 0.7F, false);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.maxUpStep = 1.5F;
+        this.setMaxUpStep(1.5F);
     }
 
     public MermaidEntity(Level level, boolean tamed) {

@@ -3,12 +3,11 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.registry.ModItems;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.ItemTags;
@@ -20,7 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.nio.file.Path;
 
-import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
+import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 
 
 public class AEGlyphProvider extends GlyphRecipeProvider {
@@ -46,8 +45,8 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(MethodCurvedProjectile.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
         addRecipe(MethodHomingProjectile.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
 
-        addRecipe(PropagatorArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, ArsNouveauAPI.getInstance().getGlyphItem(MethodCurvedProjectile.INSTANCE));
-        addRecipe(PropagatorHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, ArsNouveauAPI.getInstance().getGlyphItem(MethodHomingProjectile.INSTANCE));
+        addRecipe(PropagatorArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodCurvedProjectile.INSTANCE.getGlyph());
+        addRecipe(PropagatorHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodHomingProjectile.INSTANCE.getGlyph());
 
         recipes.add(get(AquaticFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));
         recipes.add(get(AquaticFilter.NOT_INSTANCE).withItem(ItemsRegistry.DENY_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));

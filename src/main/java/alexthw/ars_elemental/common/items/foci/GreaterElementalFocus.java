@@ -4,7 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.potions.ModPotions;
+import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +21,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
-import static com.hollingsworth.arsnouveau.common.potions.ModPotions.MANA_REGEN_EFFECT;
-import static com.hollingsworth.arsnouveau.common.potions.ModPotions.SPELL_DAMAGE_EFFECT;
+
 
 public class GreaterElementalFocus extends ElementalFocus {
     public GreaterElementalFocus(Properties properties, SpellSchool element) {
@@ -50,28 +49,28 @@ public class GreaterElementalFocus extends ElementalFocus {
             switch (getSchool().getId()) {
                 case "fire" -> {
                     if (player.isOnFire() || player.isInLava())
-                        player.addEffect(new MobEffectInstance(SPELL_DAMAGE_EFFECT.get(), 200, 2));
+                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), 200, 2));
                 }
                 case "water" -> {
                     if (player.isInWaterRainOrBubble()) {
                         if (player.isSwimming()) {
                             player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 200, 1));
-                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 1));
+                            player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 1));
                         } else {
-                            player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
+                            player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 0));
                         }
                     }
                 }
                 case "air" -> {
                     if (player.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 60, 1));
-                        player.addEffect(new MobEffectInstance(SPELL_DAMAGE_EFFECT.get(), 60, 1));
+                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 60, 1));
+                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), 60, 1));
                     } else if (player.getY() > 200)
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
+                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 0));
                 }
                 case "earth" -> {
                     if (player.getY() < 0)
-                        player.addEffect(new MobEffectInstance(MANA_REGEN_EFFECT.get(), 120, 0));
+                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 0));
                 }
             }
         }

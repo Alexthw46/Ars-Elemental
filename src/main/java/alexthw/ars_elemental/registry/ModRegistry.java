@@ -8,7 +8,7 @@ import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
-import com.hollingsworth.arsnouveau.setup.CreativeTabRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;

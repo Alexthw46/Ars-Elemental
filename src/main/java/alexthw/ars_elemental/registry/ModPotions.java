@@ -2,7 +2,6 @@ package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.mob_effects.*;
 import alexthw.ars_elemental.mixin.PotionBrewingMixin;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Items;
@@ -46,7 +45,7 @@ public class ModPotions {
 
         var invoker = (PotionBrewingMixin) new PotionBrewing();
 
-        invoker.callAddMix(Potions.AWKWARD, ItemsRegistry.END_FIBER.asItem(), ENDERFERENCE_POTION.get());
+        invoker.callAddMix(Potions.AWKWARD, Items.TWISTING_VINES.asItem(), ENDERFERENCE_POTION.get());
         invoker.callAddMix(ENDERFERENCE_POTION.get(), Items.GLOWSTONE_DUST, LONG_ENDERFERENCE_POTION.get());
 
         invoker.callAddMix(Potions.AWKWARD, ModItems.FLASHING_POD.get().asItem(), SHOCK_POTION.get());

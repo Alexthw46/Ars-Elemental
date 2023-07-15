@@ -1,11 +1,10 @@
 package alexthw.ars_elemental.recipe.jei;
 
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
+import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.client.jei.EnchantingApparatusRecipeCategory;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -36,7 +35,7 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
         if (provider.optionalCenter() != null) {
             var stacks = provider.optionalCenter().getItems();
             for (ItemStack stack : stacks) {
-                IPerkProvider<ItemStack> perkProvider = ArsNouveauAPI.getInstance().getPerkProvider(stack.getItem());
+                IPerkProvider<ItemStack> perkProvider = PerkRegistry.getPerkProvider(stack.getItem());
                 if (perkProvider != null) {
                     if (perkProvider.getPerkHolder(stack) instanceof ArmorPerkHolder armorPerkHolder) {
                         armorPerkHolder.setTier(2);

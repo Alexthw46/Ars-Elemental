@@ -24,11 +24,11 @@ public class ElementalSpellTurretTile extends BasicSpellTurretTile {
     @Override
     public int getManaCost() {
         // 65% discount for spells in the same school, 40% for spells in other schools
-        Spell spell = this.spellCaster.getSpell();
+        Spell spell = this.getSpellCaster().getSpell();
         if (spell.recipe.stream().anyMatch(p -> this.school.isPartOfSchool(p))) {
-            return (int) (spell.getNoDiscountCost() * 0.35);
+            return (int) (spell.getCost() * 0.35);
         } else {
-            return (int) (spell.getNoDiscountCost() * 0.6);
+            return (int) (spell.getCost() * 0.6);
         }
     }
 

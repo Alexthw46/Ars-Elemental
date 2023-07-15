@@ -29,12 +29,12 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living) {
 
             // If augmented by Extend Time, apply the Water Grave potion effect.
             if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
-                ((IPotionEffect) this).applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
+                this.applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
             } else {
                 //Otherwise, make the entity sink.
                 Vec3 delta = living.getDeltaMovement();
@@ -83,11 +83,10 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
         addAmpConfig(builder, 2.0);
     }
 
+
     @Override
-    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
-        super.getDefaultAugmentLimits(defaults);
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
-        return defaults;
     }
 
     /**

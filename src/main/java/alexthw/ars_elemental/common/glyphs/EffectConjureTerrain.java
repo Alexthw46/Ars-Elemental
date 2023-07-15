@@ -29,7 +29,7 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
     }
 
     @Override
-    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         // Get the number of Amplify Augments in the spell and use that to determine the block to place
         int amps = spellStats.getBuffCount(AugmentAmplify.INSTANCE);
         BlockState toPlace = switch (amps){
@@ -72,9 +72,8 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
     }
 
     @Override
-    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> map) {
-        map.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
-        return map;
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
     }
 
     @NotNull

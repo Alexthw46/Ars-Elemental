@@ -3,7 +3,7 @@ package alexthw.ars_elemental.recipe.jei;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.recipe.RecipeType;
@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class JeiArsExtraPlugin implements IModPlugin {
     public static final RecipeType<NetheriteUpgradeRecipe> SPELLBOOK_NETHERITE_TYPE = RecipeType.create(ArsElemental.MODID, "netherite_upgrade", NetheriteUpgradeRecipe.class);
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public @NotNull ResourceLocation getPluginUid() {
         return new ResourceLocation(ArsElemental.MODID, "main");
     }
 
@@ -39,7 +40,7 @@ public class JeiArsExtraPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registry) {
+    public void registerRecipes(@NotNull IRecipeRegistration registry) {
         assert Minecraft.getInstance().level != null;
         RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
         List<ElementalArmorRecipe> armorRecipes = new ArrayList<>();

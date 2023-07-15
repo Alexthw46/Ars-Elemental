@@ -4,7 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
+import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,13 +35,14 @@ import static alexthw.ars_elemental.common.enchantments.SoulboundEnchantment.*;
 public class Events {
 
     @SubscribeEvent
-    public static void focusDiscount(SpellCastEvent event) {
+    public static void focusDiscount(SpellCostCalcEvent event) {
 
-        if (!event.getWorld().isClientSide &&  event.getEntity() instanceof Player player) {
+        var caster = event.context.getUnwrappedCaster();
+        if (!caster.level().isClientSide() && caster instanceof Player player) {
             //if the player is holding a focus, and the spell match the focus's school, apply the focus discount.
             var focus = ISchoolFocus.getFocus(player);
-            if (focus != null && event.spell.recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
-                event.spell.addDiscount((int) (event.spell.getNoDiscountCost() * focus.getDiscount()));
+            if (focus != null && event.context.getSpell().recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
+                event.currentCost -= event.context.getSpell().getCost() * focus.getDiscount();
         }
     }
 

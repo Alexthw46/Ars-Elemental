@@ -18,6 +18,10 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
+import com.hollingsworth.arsnouveau.api.registry.FamiliarRegistry;
+import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
+import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
+import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
@@ -26,7 +30,6 @@ import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
-import com.hollingsworth.arsnouveau.setup.APIRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -41,7 +44,7 @@ import java.util.List;
 
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
-import static com.hollingsworth.arsnouveau.setup.Config.ITEM_LIGHTMAP;
+import static com.hollingsworth.arsnouveau.setup.config.Config.ITEM_LIGHTMAP;
 
 public class ArsNouveauRegistry {
     public static final List<AbstractSpellPart> registeredSpells = new ArrayList<>();
@@ -51,7 +54,7 @@ public class ArsNouveauRegistry {
     public static void init() {
         registerGlyphs();
         registerRituals();
-        registerFamiliars(ArsNouveauAPI.getInstance());
+        registerFamiliars();
         registerPerks();
         //addDamageReductions(); TODO restore
     }
@@ -143,7 +146,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void registerRitual(AbstractRitual ritual) {
-        ArsNouveauAPI.getInstance().registerRitual(ritual);
+        RitualRegistry.registerRitual(ritual);
     }
 
     public static void postInit() {
@@ -180,31 +183,30 @@ public class ArsNouveauRegistry {
     }
 
     public static void register(AbstractSpellPart spellPart) {
-        ArsNouveauAPI.getInstance().registerSpell(spellPart);
+        GlyphRegistry.registerSpell(spellPart);
         registeredSpells.add(spellPart);
     }
 
-    public static void registerFamiliars(ArsNouveauAPI api) {
-        api.registerFamiliar(new MermaidHolder());
-        api.registerFamiliar(new FirenandoHolder());
+    public static void registerFamiliars() {
+        FamiliarRegistry.registerFamiliar(new MermaidHolder());
+        FamiliarRegistry.registerFamiliar(new FirenandoHolder());
     }
 
     public static void registerPerks() {
-        APIRegistry.registerPerk(SporePerk.INSTANCE);
-        APIRegistry.registerPerk(ShockPerk.INSTANCE);
-        APIRegistry.registerPerk(SummonPerk.INSTANCE);
+        PerkRegistry.registerPerk(SporePerk.INSTANCE);
+        PerkRegistry.registerPerk(ShockPerk.INSTANCE);
+        PerkRegistry.registerPerk(SummonPerk.INSTANCE);
     }
 
     private static void addPerkSlots() {
 
-        ArsNouveauAPI api = ArsNouveauAPI.getInstance();
         ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
         List<PerkSlot> perkSlots = Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE);
         for (ArmorSet set : medium_armors) {
-            api.registerPerkProvider(set.getHat(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
-            api.registerPerkProvider(set.getChest(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
-            api.registerPerkProvider(set.getLegs(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
-            api.registerPerkProvider(set.getBoots(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            PerkRegistry.registerPerkProvider(set.getHat(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            PerkRegistry.registerPerkProvider(set.getChest(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            PerkRegistry.registerPerkProvider(set.getLegs(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            PerkRegistry.registerPerkProvider(set.getBoots(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
         }
 
     }

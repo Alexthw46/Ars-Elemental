@@ -22,13 +22,12 @@ import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
-import com.hollingsworth.arsnouveau.common.block.BlockProps;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.ModItem;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
-import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
+import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -57,8 +56,8 @@ import java.util.function.Supplier;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
-import static com.hollingsworth.arsnouveau.setup.BlockRegistry.LOG_PROP;
-import static com.hollingsworth.arsnouveau.setup.BlockRegistry.SAP_PROP;
+import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.LOG_PROP;
+import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.SAP_PROP;
 
 @SuppressWarnings("SameParameterValue")
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

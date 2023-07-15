@@ -19,7 +19,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectHarm;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -92,6 +92,8 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
 
         super.registerGoals();
     }
+
+
 
     @Nullable
     @Override

@@ -20,12 +20,14 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
+import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
+
 
 public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements ITextOutput {
 
@@ -109,7 +111,7 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
     public static class Serializer implements RecipeSerializer<ElementalArmorRecipe> {
 
         @Override
-        public ElementalArmorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        public @NotNull ElementalArmorRecipe fromJson(@NotNull ResourceLocation recipeId, JsonObject json) {
             int tier = json.has("tier") ? GsonHelper.getAsInt(json, "tier") : 0;
             Ingredient reagent = Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "reagent"));
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
@@ -132,7 +134,7 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
 
         @Nullable
         @Override
-        public ElementalArmorRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public ElementalArmorRecipe fromNetwork(@NotNull ResourceLocation recipeId, FriendlyByteBuf buffer) {
 
             int length = buffer.readInt();
             Ingredient reagent = Ingredient.fromNetwork(buffer);

@@ -4,12 +4,11 @@ import alexthw.ars_elemental.network.RayEffectPacket;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
-import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -70,13 +69,12 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
             // Damage all nearby entities and apply the shock effect to them
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
-                ((IPotionEffect) this).applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);
+                this.applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);
                 RayEffectPacket.send(world, new ParticleColor(225, 200, 50), livingEntity.position(), entity.position());
             }
         }
     }
 
-    @SuppressWarnings("removal")
     @Override
     public void applyPotion(LivingEntity entity, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles) {
         if (entity == null) return;
@@ -111,10 +109,8 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
     }
 
     @Override
-    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
-        super.getDefaultAugmentLimits(defaults);
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
-        return defaults;
     }
 
     @Nonnull

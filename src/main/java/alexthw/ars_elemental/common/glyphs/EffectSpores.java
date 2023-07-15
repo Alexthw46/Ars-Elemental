@@ -2,28 +2,23 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
-import alexthw.ars_elemental.registry.ModAdvTriggers;
-import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.util.FakePlayer;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -69,7 +64,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
     }
 
     @Override
-    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, Entity entity) {
+    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
         return entity instanceof LivingEntity living && !(living.getHealth() <= 0) && (living.hasEffect(MobEffects.POISON) || living.hasEffect(MobEffects.HUNGER));
     }
 
@@ -110,11 +105,10 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
 
     }
 
+
     @Override
-    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
-        super.getDefaultAugmentLimits(defaults);
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
-        return defaults;
     }
 
     @Override

@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.entity.familiars;
 import alexthw.ars_elemental.common.entity.FirenandoEntity.Variants;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
+import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
@@ -21,12 +22,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
-
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
-
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     protected void registerGoals() {
         super.registerGoals();
     }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         super.registerControllers(data);
@@ -54,16 +54,24 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     public static List<AbstractSpellPart> projectileGlyphs = new ArrayList<>();
+
     public void onModifier(SpellModifierEvent event) {
         // as long as the familiar is alive and the owner is the caster, the familiar will increase the damage of fire spells by 2 and reduce the mana cost of projectiles by 20%
         if (this.isAlive() && this.getOwner() != null && this.getOwner().equals(event.caster)) {
             if (SpellSchools.ELEMENTAL_FIRE.isPartOfSchool(event.spellPart)) {
                 event.builder.addDamageModifier(2.0D);
             }
-            if (projectileGlyphs.contains(event.spellPart)){
-                event.spellContext.getSpell().addDiscount((int) (event.spellContext.getSpell().getDiscountedCost() * 0.5));
-            }
         }
+    }
+
+    @Override
+    public void onCostCalc(SpellCostCalcEvent event) {
+        if (this.isAlive())
+            if (this.getOwner() != null && this.getOwner().equals(event.context.getUnwrappedCaster())) {
+                if (projectileGlyphs.contains(event.context.getSpell().recipe.get(0))) {
+                    event.currentCost -= (event.context.getSpell().getCost() * 0.5);
+                }
+            }
     }
 
     @Override
@@ -92,7 +100,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.set(COLOR,Variants.MAGMA.toString());
+        this.entityData.set(COLOR, Variants.MAGMA.toString());
     }
 
     @Override

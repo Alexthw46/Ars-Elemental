@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableMap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.datagen.advancement.ANAdvancementBuilder;
 import com.hollingsworth.arsnouveau.common.datagen.advancement.ANAdvancements;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;

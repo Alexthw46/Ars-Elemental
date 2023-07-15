@@ -8,9 +8,9 @@ import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.perk.IPerk;
+import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
 import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
@@ -18,7 +18,7 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.common.items.PerkItem;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -234,7 +234,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
     @Override
     public void addPerkPage(IPerk perk) {
-        PerkItem perkItem = ArsNouveauAPI.getInstance().getPerkItemMap().get(perk.getRegistryName());
+        PerkItem perkItem = PerkRegistry.getPerkItemMap().get(perk.getRegistryName());
         PatchouliBuilder builder = new PatchouliBuilder(ARMOR, perkItem)
                 .withIcon(perkItem)
                 .withTextPage(perk.getDescriptionKey())
