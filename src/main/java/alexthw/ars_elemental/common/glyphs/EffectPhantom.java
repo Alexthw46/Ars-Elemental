@@ -4,8 +4,11 @@ import alexthw.ars_elemental.ArsNouveauRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +33,10 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
         if (rayTraceResult.getEntity() instanceof LivingEntity entity) {
             if (entity.isRemoved() || entity.getHealth() <= 0)
                 return;
+
+            if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)){
+                entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (100 * (1 + spellStats.getDurationMultiplier())), (int) Math.max(0, spellStats.getAmpMultiplier()), false, false));
+            }
 
             float healVal = (float) (GENERIC_DOUBLE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
             // If the entity is undead, heal it
@@ -70,7 +77,7 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
     }
 
     @Override
-    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, Entity entity) {
+    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
         return IDamageEffect.super.canDamage(shooter, stats, spellContext, resolver, entity) && !(entity instanceof LivingEntity living && living.isInvertedHealAndHarm());
     }
 
@@ -81,11 +88,11 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
 
     @Override
     public String getBookDescription() {
-        return "Heals a small amount of health to undead. When used on living beings, the spell will deal an equal amount of magic damage and consume hunger.";
+        return "Heals a small amount of health to undead. When used on living beings, the spell will deal an equal amount of magic damage and consume hunger. Applies Hunger instead if augmented with Extend Time.";
     }
 
     @Override
     protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentFortune.INSTANCE);
+        return augmentSetOf(AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentFortune.INSTANCE, AugmentExtendTime.INSTANCE);
     }
 }

@@ -25,6 +25,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.util.FakePlayer;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -70,7 +71,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
     }
 
     @Override
-    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, Entity entity) {
+    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
         return entity instanceof LivingEntity living && !(living.getHealth() <= 0) && (living.hasEffect(MobEffects.POISON) || living.hasEffect(MobEffects.HUNGER));
     }
 
