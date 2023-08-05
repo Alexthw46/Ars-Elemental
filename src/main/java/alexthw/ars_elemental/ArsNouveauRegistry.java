@@ -56,49 +56,7 @@ public class ArsNouveauRegistry {
         registerRituals();
         registerFamiliars();
         registerPerks();
-        //addDamageReductions(); TODO restore
     }
-
-    /*
-    private static void addDamageReductions() {
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_FIRE, Arrays.asList(
-                DamageTypes.ON_FIRE,
-                DamageTypes.LAVA,
-                DamageTypes.IN_FIRE,
-                DamageTypes.HOT_FLOOR,
-                DamageTypes.DRAGON_BREATH,
-                new DamageTypes("explosion"),
-                new DamageTypes("explosion.player"),
-                new DamageTypes("fireworks")
-                )
-        );
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_WATER, Arrays.asList(
-                DamageTypes.DROWN,
-                DamageTypes.FREEZE,
-                DamageTypes.MAGIC,
-                DamageTypes.LIGHTNING_BOLT
-                , new DamageTypes("thorns")
-                )
-        );
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_AIR, Arrays.asList(
-                        DamageTypes.FALL,
-                        DamageTypes.FLY_INTO_WALL,
-                        DamageTypes.IN_WALL,
-                        DamageTypes.LIGHTNING_BOLT,
-                             new DamageTypes("sonic_boom")
-                )
-        );
-        IElementalArmor.damageResistances.put(SpellSchools.ELEMENTAL_EARTH, Arrays.asList(DamageTypes.CACTUS,
-                DamageTypes.STARVE,
-                DamageTypes.SWEET_BERRY_BUSH,
-                DamageTypes.CACTUS,
-                DamageTypes.IN_WALL
-                //, new DamageTypes("poison")
-                )
-        );
-    }
-
-    */
 
     public static void registerGlyphs() {
 

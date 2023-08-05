@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#minecraft:is_lightning",
+    "minecraft:fall",
+    "minecraft:fly_into_wall",
+    "minecraft:sonic_boom"
+  ]
+}

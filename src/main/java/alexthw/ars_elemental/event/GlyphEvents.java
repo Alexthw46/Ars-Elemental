@@ -6,6 +6,7 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
+import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
@@ -20,6 +21,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -100,14 +102,12 @@ public class GlyphEvents {
                 ((IDamageEffect) event.resolveEffect).attemptDamage(event.world, event.shooter, event.spellStats, event.context, event.resolver, living, event.world.damageSources().magic(), (float) (3 + 2 * event.spellStats.getAmpMultiplier()));
                 if (living.isDeadOrDying() && event.world.getRandom().nextInt(100) < 20) {
                     BlockPos feet = living.getOnPos();
-                    /* TODO restore
-                    Material underfoot = event.world.getBlockState(feet).getMaterial();
-                    if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS || underfoot == Material.LEAVES) && event.world.getBlockState(feet.above()).isAir()) {
-                        event.world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
-                        if (event.shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer)) ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
+                    BlockState underfoot = living.level().getBlockState(feet);
+                    if ((underfoot.getBlock() == Blocks.MOSS_BLOCK || underfoot.is(BlockTags.DIRT) || underfoot.is(BlockTags.LEAVES)) && event.world.getBlockState(feet.above()).isAir()) {
+                        living.level().setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
+                        if (event.shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
+                            ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
                     }
-
-                     */
                 }
             }
         }

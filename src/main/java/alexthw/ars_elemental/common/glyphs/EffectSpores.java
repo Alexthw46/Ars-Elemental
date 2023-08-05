@@ -2,22 +2,32 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
+import alexthw.ars_elemental.registry.ModAdvTriggers;
+import alexthw.ars_elemental.registry.ModDamageSources;
+import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -74,17 +84,14 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
         //if the entity is dead, spawn a ground blossom on the ground below it
         if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(shooter)) == ELEMENTAL_EARTH) {
-            /* TODO Restore
             BlockPos feet = livingEntity.getOnPos();
-            Material underfoot = world.getBlockState(feet).getMaterial();
-            Block blossom = ModItems.GROUND_BLOSSOM.get();
-            if ((underfoot == Material.DIRT || underfoot == Material.GRASS || underfoot == Material.MOSS || underfoot == Material.LEAVES) && world.getBlockState(feet.above()).isAir()) {
+            BlockState underfoot = world.getBlockState(feet);
+            if ((underfoot.getBlock() == Blocks.MOSS_BLOCK || underfoot.is(BlockTags.DIRT) || underfoot.is(BlockTags.LEAVES)) && world.getBlockState(feet.above()).isAir()) {
                 world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
                 if (shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
                     ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
             }
 
-             */
         } else
             livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * snareTime)); //otherwise apply hunger
 
@@ -92,7 +99,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
 
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
-        return shooter.damageSources().sting(shooter); //TODO: Change to a custom damage source
+        return ModDamageSources.source(world, ModRegistry.POISON, shooter);
     }
 
     @Override

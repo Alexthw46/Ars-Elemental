@@ -12,8 +12,10 @@ import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
@@ -60,6 +62,8 @@ public class ModRegistry {
     public static final TagKey<EntityType<?>> AERIAL = TagKey.create(Registries.ENTITY_TYPE, prefix("aerial"));
     public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registries.ENTITY_TYPE, prefix("insect"));
     public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registries.ENTITY_TYPE, prefix("undead"));
+    public static final ResourceKey<DamageType> POISON = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("poison"));
+    public static final ResourceKey<DamageType> HELLFIRE = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("hellfire"));
 
 
     public static void registerRegistries(IEventBus bus) {

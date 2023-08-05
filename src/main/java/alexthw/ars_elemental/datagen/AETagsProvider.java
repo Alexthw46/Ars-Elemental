@@ -15,15 +15,11 @@ import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.*;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -225,6 +221,47 @@ public class AETagsProvider {
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Entity Tags";
+        }
+    }
+
+    public static class AEDamageTypeProvider extends DamageTypeTagsProvider {
+
+        public AEDamageTypeProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
+        }
+
+        public static TagKey<DamageType> FIRE_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("fire_damage"));
+        public static TagKey<DamageType> WATER_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("water_damage"));
+        public static TagKey<DamageType> EARTH_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("earth_damage"));
+        public static TagKey<DamageType> AIR_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("air_damage"));
+
+        @Override
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
+
+            tag(DamageTypeTags.IS_FIRE).addOptional(ModRegistry.HELLFIRE.location());
+
+            tag(FIRE_DAMAGE).addTag(DamageTypeTags.IS_FIRE).add(
+                    DamageTypes.DRAGON_BREATH,
+                    DamageTypes.EXPLOSION,
+                    DamageTypes.PLAYER_EXPLOSION,
+                    DamageTypes.FIREWORKS);
+
+            tag(WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
+                    DamageTypes.TRIDENT,
+                    DamageTypes.MAGIC);
+
+            tag(EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
+                            DamageTypes.FALLING_STALACTITE,
+                            DamageTypes.CACTUS,
+                            DamageTypes.FALLING_ANVIL,
+                            DamageTypes.STING,
+                            DamageTypes.SWEET_BERRY_BUSH)
+                    .addOptional(ModRegistry.POISON.location());
+
+            tag(AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
+                    DamageTypes.FLY_INTO_WALL,
+                    DamageTypes.SONIC_BOOM);
+
         }
     }
 }

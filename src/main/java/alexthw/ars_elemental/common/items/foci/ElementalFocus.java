@@ -23,6 +23,7 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import javax.annotation.Nullable;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 
 @Mod.EventBusSubscriber(modid = ArsNouveau.MODID)
 public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
@@ -64,7 +65,12 @@ public class ElementalFocus extends ElementalCurio implements ISchoolFocus {
         return element;
     }
 
-    double getBoostMultiplier(){
+    @Override
+    public boolean canWalkOnPowderedSnow(SlotContext slotContext, ItemStack stack) {
+        return stack.getItem() instanceof ElementalFocus && ((ElementalFocus) stack.getItem()).element == ELEMENTAL_AIR;
+    }
+
+    double getBoostMultiplier() {
         return switch (element.getId()) {
             case "fire" -> COMMON.FireMasteryBuff.get();
             case "water" -> COMMON.WaterMasteryBuff.get();

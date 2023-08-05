@@ -1,12 +1,14 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.ArsNouveauRegistry;
+import alexthw.ars_elemental.registry.ModDamageSources;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -48,9 +50,9 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
         }
     }
 
-    @Override //TODO mark magic
+    @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
-        return IDamageEffect.super.buildDamageSource(world, shooter);
+        return ModDamageSources.source(world, DamageTypes.MAGIC, shooter);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
     }
 
     @Override
-    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, Entity entity) {
+    public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
         return IDamageEffect.super.canDamage(shooter, stats, spellContext, resolver, entity) && !(entity instanceof LivingEntity living && living.isInvertedHealAndHarm());
     }
 

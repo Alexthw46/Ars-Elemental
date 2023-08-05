@@ -9,6 +9,7 @@ import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
 import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
+import alexthw.ars_elemental.registry.ModDamageSources;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
@@ -25,11 +26,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -69,33 +72,27 @@ public class DamageEvents {
         LivingEntity living = event.getEntity();
         if (event.getSource().getEntity() instanceof Player player && living != null) {
             SpellSchool focus = ISchoolFocus.hasFocus(player);
-            /*TODO Restore Damage tweaks
             if (focus != null) {
                 switch (focus.getId()) {
                     case "fire" -> {
                         //if the target is fire immune, cancel the event and deal damage
                         if (event.getSource().is(DamageTypeTags.IS_FIRE) && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
                             event.setCanceled(true);
-                            DamageSource newDamage = new EntityDamageSource("hellflare", player).setMagic();
-                            if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
-                            if (event.getSource().isBypassMagic()) newDamage.bypassMagic();
+                            DamageSource newDamage = ModDamageSources.source(player.level, ModRegistry.HELLFIRE, player);
                             living.hurt(newDamage, event.getAmount());
                         }
                     }
                     case "water" -> {
                         //if the target is immune to drowning, cancel the event and deal damage
-                        if (event.getSource().getMsgId().equals("drown") && living.getMobType() == MobType.WATER) {
+                        if (event.getSource().is(DamageTypeTags.IS_DROWNING) && living.getMobType() == MobType.WATER) {
                             event.setCanceled(true);
-                            DamageSource newDamage = DamageSource.playerAttack(player).setMagic();
-                            if (event.getSource().isBypassArmor()) newDamage.bypassArmor();
-                            if (event.getSource().isBypassMagic()) newDamage.bypassMagic();
+                            DamageSource newDamage = ModDamageSources.source(player.level, DamageTypes.MAGIC, player);
                             living.hurt(newDamage, event.getAmount());
                         }
                     }
                 }
             }
 
-             */
         } else if (event.getSource().getEntity() instanceof FirenandoEntity FE) {
             //if the firenando is attacking a non-monster, cancel the event
             if (!(living instanceof Monster mob)) {
@@ -103,9 +100,9 @@ public class DamageEvents {
                 living.clearFire();
             } else {
                 //if the firenando is attacking a monster, and the monster is fire immune, cancel the event and deal damage
-                if (mob.fireImmune() && event.getSource().is(DamageTypeTags.IS_FIRE)) {
+                if ((mob.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE)) && event.getSource().is(DamageTypeTags.IS_FIRE)) {
                     event.setCanceled(true);
-                    //mob.hurt(DamageSource.mobAttack(FE).setMagic().bypassArmor(), event.getAmount());
+                    mob.hurt(ModDamageSources.source(FE.level, ModRegistry.HELLFIRE, FE), event.getAmount());
                 }
             }
         }
@@ -166,7 +163,7 @@ public class DamageEvents {
             switch (focus.getId()) {
                 case "water" -> {
                     //change the freezing buff from useless to the whole damage
-                    if (target.getPercentFrozen() > 0.75F && event.getSource().getMsgId().equals("freeze")) {
+                    if (target.getPercentFrozen() > 0.75F && event.getSource().is(DamageTypeTags.IS_FREEZING)) {
                         event.setAmount(event.getAmount() * 1.25F);
                     }
                 }

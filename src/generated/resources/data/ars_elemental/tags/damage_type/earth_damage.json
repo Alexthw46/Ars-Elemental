@@ -1,0 +1,14 @@
+{
+  "values": [
+    "minecraft:falling_block",
+    "minecraft:falling_stalactite",
+    "minecraft:cactus",
+    "minecraft:falling_anvil",
+    "minecraft:sting",
+    "minecraft:sweet_berry_bush",
+    {
+      "id": "ars_elemental:poison",
+      "required": false
+    }
+  ]
+}
