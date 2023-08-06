@@ -2,7 +2,6 @@ package alexthw.ars_elemental.recipe.jei;
 
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import com.hollingsworth.arsnouveau.client.jei.EnchantingApparatusRecipeCategory;
-import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
