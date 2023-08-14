@@ -8,6 +8,7 @@ import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.perk.IPerk;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
@@ -27,8 +28,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.nio.file.Path;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
@@ -228,7 +227,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
         @Override
         public ResourceLocation getType() {
-            return prefix("elemental_armor_recipe");
+            return new ResourceLocation(ArsNouveau.MODID, "elemental_armor_recipe");
         }
     }
 
@@ -303,11 +302,6 @@ public class AEPatchouliProvider extends PatchouliProvider {
     @Override
     public String getName() {
         return "Ars Elemental Patchouli Datagen";
-    }
-
-    @Override
-    public Path getPath(ResourceLocation category, String fileName) {
-        return this.generator.getPackOutput().getOutputFolder().resolve("data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
     }
 
     ImbuementPage ImbuementPage(ItemLike item) {

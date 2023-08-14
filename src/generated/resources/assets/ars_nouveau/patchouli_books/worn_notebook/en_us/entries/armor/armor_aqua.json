@@ -12,19 +12,19 @@
       "text": "ars_elemental.page.armor_set.aqua"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:aqua_hat"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:aqua_robes"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:aqua_leggings"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:aqua_boots"
     }
   ]

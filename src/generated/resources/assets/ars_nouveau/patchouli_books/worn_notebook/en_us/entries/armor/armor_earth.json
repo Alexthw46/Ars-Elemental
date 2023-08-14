@@ -12,19 +12,19 @@
       "text": "ars_elemental.page.armor_set.earth"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:earth_hat"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:earth_robes"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:earth_leggings"
     },
     {
-      "type": "ars_elemental:elemental_armor_recipe",
+      "type": "ars_nouveau:elemental_armor_recipe",
       "recipe": "ars_elemental:earth_boots"
     }
   ]
