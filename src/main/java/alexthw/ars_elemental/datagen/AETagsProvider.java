@@ -98,6 +98,8 @@ public class AETagsProvider {
                     tag(ModRegistry.CURIO_BAGGABLE).addOptionalTag(t.location())
             );
 
+            tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
+
         }
 
         @Override

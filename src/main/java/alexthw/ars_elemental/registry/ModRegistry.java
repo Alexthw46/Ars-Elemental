@@ -54,6 +54,7 @@ public class ModRegistry {
 
     public static final TagKey<Item> CURIO_BAGGABLE = ItemTags.create(prefix("curio_bag_item"));
     public static final TagKey<Item> CASTER_BAGGABLE = ItemTags.create(prefix("caster_bag_item"));
+    public static final TagKey<Item> BLACKLIST_BAGGABLE = ItemTags.create(prefix("blacklist_bag_item"));
 
     public static final TagKey<Item> SOULBOUND_ABLE = ItemTags.create(prefix("soulbound_extra"));
 
