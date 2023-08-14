@@ -35,6 +35,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+import static alexthw.ars_elemental.registry.ModRegistry.BLACKLIST_BAGGABLE;
 import static alexthw.ars_elemental.registry.ModRegistry.CURIO_BAGGABLE;
 
 public class CurioHolder extends Item {
@@ -67,7 +68,7 @@ public class CurioHolder extends Item {
 
     public static boolean canStore(ItemStack stack) {
         Item item = stack.getItem();
-        if (item instanceof CurioHolder) return false;
+        if (stack.is(BLACKLIST_BAGGABLE)) return false;
         return item instanceof ItemScroll || item instanceof AbstractSummonCharm || stack.is(CURIO_BAGGABLE) || item instanceof ICurioItem || item instanceof PotionFlask;
     }
 

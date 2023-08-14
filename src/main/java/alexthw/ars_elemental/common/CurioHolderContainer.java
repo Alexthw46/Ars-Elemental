@@ -48,7 +48,7 @@ public class CurioHolderContainer extends AbstractContainerMenu {
     protected Slot makeSlot(Container inventory, int i, int j, int index) {
         return new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
             @Override
-            public boolean mayPlace(ItemStack stack) {
+            public boolean mayPlace(@NotNull ItemStack stack) {
                 return CurioHolder.canStore(stack);
             }
 
@@ -67,13 +67,13 @@ public class CurioHolderContainer extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player playerIn) {
+    public boolean stillValid(@NotNull Player playerIn) {
         return this.inventory.stillValid(playerIn);
     }
 
     @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
         ItemStack copy = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot.hasItem()) {
