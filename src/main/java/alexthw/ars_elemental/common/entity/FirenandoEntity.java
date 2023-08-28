@@ -18,9 +18,11 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectKnockback;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -86,7 +88,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     private int castCooldown = 0;
     private final ParticleColor color = new ParticleColor(250, 50, 15);
     private final ParticleColor colorAlt = new ParticleColor(15, 100, 200);
-    public final Spell spell = new Spell(MethodHomingProjectile.INSTANCE, EffectIgnite.INSTANCE, AugmentSensitive.INSTANCE, EffectFlare.INSTANCE);
+    public final Spell spell = new Spell(MethodHomingProjectile.INSTANCE, EffectIgnite.INSTANCE, AugmentSensitive.INSTANCE, EffectFlare.INSTANCE, AugmentAmplify.INSTANCE, EffectKnockback.INSTANCE);
     public UUID owner;
 
     @Override
@@ -190,7 +192,8 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D)
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 40.0D)
+                .add(Attributes.ARMOR, 20)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 16D);
     }
