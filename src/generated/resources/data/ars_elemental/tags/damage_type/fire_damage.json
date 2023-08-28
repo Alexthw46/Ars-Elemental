@@ -4,6 +4,10 @@
     "minecraft:dragon_breath",
     "minecraft:explosion",
     "minecraft:player_explosion",
-    "minecraft:fireworks"
+    "minecraft:fireworks",
+    {
+      "id": "ars_nouveau:flare",
+      "required": false
+    }
   ]
 }

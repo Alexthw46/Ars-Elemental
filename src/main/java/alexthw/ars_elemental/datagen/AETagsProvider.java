@@ -10,6 +10,7 @@ import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.lib.EntityTags;
 import com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.minecraft.core.HolderLookup;
@@ -246,11 +247,11 @@ public class AETagsProvider {
                     DamageTypes.DRAGON_BREATH,
                     DamageTypes.EXPLOSION,
                     DamageTypes.PLAYER_EXPLOSION,
-                    DamageTypes.FIREWORKS);
+                    DamageTypes.FIREWORKS).addOptional(DamageTypesRegistry.FLARE.location());
 
             tag(WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
                     DamageTypes.TRIDENT,
-                    DamageTypes.MAGIC);
+                    DamageTypes.MAGIC).addOptional(DamageTypesRegistry.COLD_SNAP.location());
 
             tag(EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
                             DamageTypes.FALLING_STALACTITE,
@@ -258,11 +259,11 @@ public class AETagsProvider {
                             DamageTypes.FALLING_ANVIL,
                             DamageTypes.STING,
                             DamageTypes.SWEET_BERRY_BUSH)
-                    .addOptional(ModRegistry.POISON.location());
+                    .addOptional(DamageTypesRegistry.CRUSH.location()).addOptional(ModRegistry.POISON.location());
 
             tag(AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
                     DamageTypes.FLY_INTO_WALL,
-                    DamageTypes.SONIC_BOOM);
+                    DamageTypes.SONIC_BOOM).addOptional(DamageTypesRegistry.WINDSHEAR.location());
 
         }
     }

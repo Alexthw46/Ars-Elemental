@@ -7,6 +7,10 @@
     "minecraft:sting",
     "minecraft:sweet_berry_bush",
     {
+      "id": "ars_nouveau:crush",
+      "required": false
+    },
+    {
       "id": "ars_elemental:poison",
       "required": false
     }

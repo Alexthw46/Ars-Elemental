@@ -3,6 +3,10 @@
     "#minecraft:is_lightning",
     "minecraft:fall",
     "minecraft:fly_into_wall",
-    "minecraft:sonic_boom"
+    "minecraft:sonic_boom",
+    {
+      "id": "ars_nouveau:windshear",
+      "required": false
+    }
   ]
 }

@@ -1,6 +1,6 @@
-// 1.20.1	2023-08-05T16:30:30.5075181	Tags for minecraft:damage_type mod id ars_elemental
-06cf7471d2b34f8f4e71a9221b97b356b33ca298 data/ars_elemental/tags/damage_type/air_damage.json
-ee6d327d7942daeff3180d272c17adbcdbbff484 data/ars_elemental/tags/damage_type/earth_damage.json
-5f02acbda2500df496f5763de2937e982622c494 data/ars_elemental/tags/damage_type/fire_damage.json
-0d3a7ecf8efe540eac512b2dbf9761cd51a9633e data/ars_elemental/tags/damage_type/water_damage.json
+// 1.20.1	2023-08-15T17:24:19.010433	Tags for minecraft:damage_type mod id ars_elemental
+f3544808965daa298eaa3648a34b071db4ac548d data/ars_elemental/tags/damage_type/air_damage.json
+1efc5c3832978fb73f0ed8388b4047759e3e103d data/ars_elemental/tags/damage_type/earth_damage.json
+9ee74d44c30f2cad0cdbe26eaeb798ca380ae47f data/ars_elemental/tags/damage_type/fire_damage.json
+f987de4869fb23c34f97210432191073383526e5 data/ars_elemental/tags/damage_type/water_damage.json
 b588536d638c8176ec77e9cd2c841cc804b65aa6 data/minecraft/tags/damage_type/is_fire.json

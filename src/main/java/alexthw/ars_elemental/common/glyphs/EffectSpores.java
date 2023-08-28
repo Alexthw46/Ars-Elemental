@@ -3,10 +3,10 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
-import alexthw.ars_elemental.registry.ModDamageSources;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.core.BlockPos;
@@ -99,7 +99,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
 
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
-        return ModDamageSources.source(world, ModRegistry.POISON, shooter);
+        return DamageUtil.source(world, ModRegistry.POISON, shooter);
     }
 
     @Override

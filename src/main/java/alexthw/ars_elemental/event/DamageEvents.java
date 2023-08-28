@@ -9,13 +9,13 @@ import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
 import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
-import alexthw.ars_elemental.registry.ModDamageSources;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
@@ -78,7 +78,7 @@ public class DamageEvents {
                         //if the target is fire immune, cancel the event and deal damage
                         if (event.getSource().is(DamageTypeTags.IS_FIRE) && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
                             event.setCanceled(true);
-                            DamageSource newDamage = ModDamageSources.source(player.level, ModRegistry.HELLFIRE, player);
+                            DamageSource newDamage = DamageUtil.source(player.level, ModRegistry.HELLFIRE, player);
                             living.hurt(newDamage, event.getAmount());
                         }
                     }
@@ -86,7 +86,7 @@ public class DamageEvents {
                         //if the target is immune to drowning, cancel the event and deal damage
                         if (event.getSource().is(DamageTypeTags.IS_DROWNING) && living.getMobType() == MobType.WATER) {
                             event.setCanceled(true);
-                            DamageSource newDamage = ModDamageSources.source(player.level, DamageTypes.MAGIC, player);
+                            DamageSource newDamage = DamageUtil.source(player.level, DamageTypes.MAGIC, player);
                             living.hurt(newDamage, event.getAmount());
                         }
                     }
@@ -102,7 +102,7 @@ public class DamageEvents {
                 //if the firenando is attacking a monster, and the monster is fire immune, cancel the event and deal damage
                 if ((mob.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE)) && event.getSource().is(DamageTypeTags.IS_FIRE)) {
                     event.setCanceled(true);
-                    mob.hurt(ModDamageSources.source(FE.level, ModRegistry.HELLFIRE, FE), event.getAmount());
+                    mob.hurt(DamageUtil.source(FE.level, ModRegistry.HELLFIRE, FE), event.getAmount());
                 }
             }
         }

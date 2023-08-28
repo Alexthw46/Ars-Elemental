@@ -1,8 +1,8 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.ArsNouveauRegistry;
-import alexthw.ars_elemental.registry.ModDamageSources;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
@@ -39,12 +39,10 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
             if (entity.isInvertedHealAndHarm()) {
                 entity.heal(healVal);
             } else {
-                // Otherwise, deal damage
-                attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), healVal);
-                // And consume saturation
-                if (entity instanceof Player player) {
-                    player.causeFoodExhaustion((float) (2.5 * (1 + spellStats.getAmpMultiplier())));
-                }
+                if (attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), healVal))// And consume saturation
+                    if (entity instanceof Player player) {
+                        player.causeFoodExhaustion((float) (2.5 * (1 + spellStats.getAmpMultiplier())));
+                    }
             }
 
         }
@@ -52,7 +50,7 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
 
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
-        return ModDamageSources.source(world, DamageTypes.MAGIC, shooter);
+        return DamageUtil.source(world, DamageTypes.MAGIC, shooter);
     }
 
     @Override
