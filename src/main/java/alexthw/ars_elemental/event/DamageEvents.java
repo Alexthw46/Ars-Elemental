@@ -7,6 +7,7 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
+import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
@@ -16,7 +17,9 @@ import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
+import com.hollingsworth.arsnouveau.common.entity.EntityEvokerFangs;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
@@ -177,6 +180,14 @@ public class DamageEvents {
             }
         }
 
+        if (event.getSource().getEntity() instanceof EntityEvokerFangs fangs){
+            if (fangs.getOwner() instanceof Player player){
+                int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, player) - 1;
+                if (threadLevel > 0) {
+                    event.setAmount(event.getAmount() + threadLevel);
+                }
+            }
+        }
 
         if (target instanceof Player player) {
             if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))
