@@ -77,24 +77,24 @@ public class EntityHomingProjectile extends EntityProjectileSpell {
     public void tickNextPosition() {
         if (!this.isRemoved()) {
 
-            if ((target != null) && (!target.isAlive() || (target.distanceToSqr(this) > 50))) target = null;
+            if ((target != null) && (!target.isAlive() || (target.distanceToSqr(this) > 100))) target = null;
 
-            if (target == null && tickCount % 5 == 0) {
+            if (target == null && tickCount % 3 == 0) {
 
 
                 List<LivingEntity> entities;
                 if (getOwner() instanceof Player) {
                     entities = level.getEntitiesOfClass(LivingEntity.class,
-                            this.getBoundingBox().inflate(4), (LivingEntity e) -> shouldTarget(e) && glowCheck(e));
+                            this.getBoundingBox().inflate(8), (LivingEntity e) -> shouldTarget(e) && glowCheck(e));
                 } else {
                     entities = level.getEntitiesOfClass(LivingEntity.class,
-                            this.getBoundingBox().inflate(4), this::shouldTarget);
+                            this.getBoundingBox().inflate(8), this::shouldTarget);
                 }
                 //update target or keep going
                 if (entities.isEmpty() && target == null) {
                     super.tickNextPosition();
                 } else if (!entities.isEmpty()) {
-                    target = entities.stream().filter(e -> e.distanceToSqr(this) < 50).min(Comparator.comparingDouble(e -> e.distanceToSqr(this))).orElse(target);
+                    target = entities.stream().filter(e -> e.distanceToSqr(this) < 100).min(Comparator.comparingDouble(e -> e.distanceToSqr(this))).orElse(target);
                 }
             }
 
