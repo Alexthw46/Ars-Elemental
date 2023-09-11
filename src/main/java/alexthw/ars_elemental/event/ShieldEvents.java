@@ -7,11 +7,15 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
 import com.hollingsworth.arsnouveau.common.spell.casters.ReactiveCaster;
+import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.EnchantmentRegistry;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -77,7 +81,7 @@ public class ShieldEvents {
         ItemStack s = player.getOffhandItem();
         //if the shield is an enchanters shield then check if the shield has the reactive enchantment and if the roll is successful then cast the spell
         if (s.getItem() instanceof EnchantersShield && player.isBlocking() && s.getEnchantmentLevel(ModRegistry.MIRROR.get()) * .25 >= Math.random()) {
-            if (event.getSource().getSourcePosition() != null && event.getSource().getMsgId().equals(DamageSource.sonicBoom(event.getEntity()).getMsgId())) {
+            if (event.getSource().getSourcePosition() != null && event.getSource().is(DamageTypes.SONIC_BOOM)) {
 
                 Vec3 vec3 = player.getViewVector(1.0F);
                 Vec3 vec31 = event.getSource().getSourcePosition().vectorTo(player.position()).normalize();
@@ -104,7 +108,7 @@ public class ShieldEvents {
         }
 
         player.playSound(SoundEvents.WARDEN_SONIC_BOOM, 3.0F, 1.0F);
-        reflectTo.hurt(DamageSource.sonicBoom(player), 10.0F);
+        reflectTo.hurt(player.damageSources().sonicBoom(player), 10.0F);
         double d1 = 0.5D * (1.0D - reflectTo.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
         double d0 = 2.5D * (1.0D - reflectTo.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
         reflectTo.push(vec32.x() * d0, vec32.y() * d1, vec32.z() * d0);
