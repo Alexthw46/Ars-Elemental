@@ -8,6 +8,7 @@ import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
 import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
+import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
@@ -22,12 +23,15 @@ import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import com.hollingsworth.arsnouveau.setup.registry.RegistryHelper;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -42,11 +46,13 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.registry.ModPotions.*;
@@ -259,13 +265,16 @@ public class DamageEvents {
     @SubscribeEvent
     public static void statusProtect(MobEffectEvent.Applicable event) {
         if (event.getEntity().hasEffect(MANA_BUBBLE.get()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+            Optional<HolderSet.Named<MobEffect>> effects = event.getEntity().level.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(AETagsProvider.AEMobEffectTagProvider.BUBBLE_BLACKLIST);
+            if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect == event.getEffectInstance().getEffect()))
+                return;
 
             int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() * 2;
             if (event.getEntity().getRandom().nextInt(10) == 0) {
                 CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
                     if (mana.getCurrentMana() >= ManaBubbleCost) {
                         mana.removeMana(ManaBubbleCost);
-                        event.setCanceled(true);
+                        event.setResult(Event.Result.DENY);
                     }
                 });
             }

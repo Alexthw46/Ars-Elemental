@@ -2,6 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -21,6 +22,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.*;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -30,6 +33,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -225,6 +229,21 @@ public class AETagsProvider {
         public @NotNull String getName() {
             return "Ars Elemental Entity Tags";
         }
+    }
+
+    public static class AEMobEffectTagProvider extends IntrinsicHolderTagsProvider<MobEffect> {
+
+        public AEMobEffectTagProvider(DataGenerator pOutput, CompletableFuture<HolderLookup.Provider> pProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(pOutput.getPackOutput(), Registries.MOB_EFFECT, pProvider, ef -> ForgeRegistries.MOB_EFFECTS.getResourceKey(ef).get(), ArsElemental.MODID, existingFileHelper);
+        }
+
+        public static TagKey<MobEffect> BUBBLE_BLACKLIST = TagKey.create(Registries.MOB_EFFECT, prefix("manabubble_blacklist"));
+
+        @Override
+        protected void addTags(HolderLookup.@NotNull Provider pProvider) {
+            tag(BUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.HYMN_OF_ORDER.get());
+        }
+
     }
 
     public static class AEDamageTypeProvider extends DamageTypeTagsProvider {

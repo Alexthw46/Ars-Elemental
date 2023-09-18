@@ -29,6 +29,7 @@ public class Datagen {
         BlockTagsProvider BTP = new AETagsProvider.AEBlockTagsProvider(gen, provider, existingFileHelper);
         gen.addProvider(event.includeServer(), new AEDamageTypesProvider(output, provider));
         gen.addProvider(event.includeServer(), BTP);
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEMobEffectTagProvider(gen, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEItemTagsProvider(gen, provider, BTP, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEEntityTagProvider(gen, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEDamageTypeProvider(gen, provider, existingFileHelper));
