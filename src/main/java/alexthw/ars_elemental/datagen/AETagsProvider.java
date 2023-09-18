@@ -208,7 +208,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags() {
-            this.tag(ModRegistry.MANABUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.MANA_BUBBLE.get());
+            this.tag(ModRegistry.MANABUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.HYMN_OF_ORDER.get());
         }
     }
 
