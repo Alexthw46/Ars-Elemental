@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.registry;
 
+import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
@@ -10,8 +11,10 @@ import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
@@ -57,6 +60,8 @@ public class ModRegistry {
     public static final TagKey<EntityType<?>> AERIAL = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("aerial"));
     public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("insect"));
     public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("undead"));
+
+    public static final TagKey<MobEffect> MANABUBBLE_BLACKLIST = TagKey.create(Registry.MOB_EFFECT_REGISTRY, new ResourceLocation(ArsElemental.MODID, "manashield_blacklist"));
 
 
     public static void registerRegistries(IEventBus bus) {

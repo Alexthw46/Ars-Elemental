@@ -18,6 +18,10 @@
     {
       "type": "ars_nouveau:enchanting_recipe",
       "recipe": "ars_nouveau:mirror_shield_3"
+    },
+    {
+      "type": "ars_nouveau:enchanting_recipe",
+      "recipe": "ars_nouveau:mirror_shield_4"
     }
   ]
 }

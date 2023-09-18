@@ -1,4 +1,4 @@
-// 1.19.2	2023-04-16T12:04:54.9097923	Ars Elemental Patchouli Datagen
+// 1.19.2	2023-09-18T22:34:27.2101344	Ars Elemental Patchouli Datagen
 cb6bef086c580bc2863acd3bcccf06f6c760ca39 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/armor_air.json
 416aa23d676e85bbcc6fc0ae3c6ed5b65ce604a5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/armor_aqua.json
 29610175dfb3d7fb25fe0e85fa69cff3b5f13ef5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/armor_earth.json
@@ -11,7 +11,7 @@ da233585feada8cc6ccad6ce2285b23c776b09c5 data/ars_elemental/patchouli_books/elem
 6c3b3c025a56278426717da87ba6a148bf8012e3 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/mermaid.json
 1ffa49bcd1416447daa566506ba72874f0a4ec5a data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/automation/spell_mirror.json
 2e3820b11833f6d1b36f336ea577632a31915067 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/invincible_book.json
-f40c60faeda720fe25a683ced7ba6bf38ab69d02 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
+e0a01f8199558a639013f21a4f9294b49a8d7120 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/mirror_shield.json
 89af7877744e34a5eda82da1c14dd76af7d83166 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/enchantments/soulbound.json
 7e1fc9d52f52adc5943c0204cc24c7f276cc18e5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/air_bangle.json
 1a87fa43078be6950fa6c67876364a8e49bafa86 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/equipment/air_focus.json

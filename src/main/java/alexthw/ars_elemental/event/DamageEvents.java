@@ -24,11 +24,14 @@ import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -43,11 +46,13 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.registry.ModPotions.*;
@@ -271,13 +276,16 @@ public class DamageEvents {
     @SubscribeEvent
     public static void statusProtect(MobEffectEvent.Applicable event) {
         if (event.getEntity().hasEffect(MANA_BUBBLE.get()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+            Optional<HolderSet.Named<MobEffect>> effects = Registry.MOB_EFFECT.getTag(ModRegistry.MANABUBBLE_BLACKLIST);
+            if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect == event.getEffectInstance().getEffect()))
+                return;
 
             int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() * 2;
             if (event.getEntity().getRandom().nextInt(10) == 0) {
                 CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
                     if (mana.getCurrentMana() >= ManaBubbleCost) {
                         mana.removeMana(ManaBubbleCost);
-                        event.setCanceled(true);
+                        event.setResult(Event.Result.DENY);
                     }
                 });
             }

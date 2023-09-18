@@ -2,6 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -21,6 +22,8 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -161,6 +164,7 @@ public class AETagsProvider {
         public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registry.BIOME_REGISTRY, prefix("siren_spawn"));
         public static final TagKey<Biome> FLASHING_BIOME = TagKey.create(Registry.BIOME_REGISTRY, prefix("flashing_biome"));
         public static final TagKey<Biome> FLASHING_TREE_COMMON_BIOME = TagKey.create(Registry.BIOME_REGISTRY, prefix("flashing_tree_biome"));
+
         @Override
         protected void addTags() {
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
@@ -169,6 +173,7 @@ public class AETagsProvider {
             this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
             this.tag(BiomeTagProvider.BERRY_SPAWN).add(ModWorldgen.FLASHING_FOREST_KEY, ModWorldgen.BLAZING_FOREST_KEY, ModWorldgen.CASCADING_FOREST_KEY, ModWorldgen.FLOURISHING_FOREST_KEY);
         }
+
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Biome Tags";
@@ -188,11 +193,25 @@ public class AETagsProvider {
             tag(RARE_ARCHWOOD_TREES).add(ModWorldgen.RARE_FLASHING_CONFIGURED.get());
             tag(COMMON_ARCHWOOD_TREES).add(ModWorldgen.COMMON_FLASHING_CONFIGURED.get());
         }
+
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Feature Tags";
         }
     }
+
+
+    public static class AEPotionEffectTagsProvider extends TagsProvider<MobEffect> {
+        public AEPotionEffectTagsProvider(DataGenerator generatorIn, @Nullable ExistingFileHelper existingFileHelper) {
+            super(generatorIn, Registry.MOB_EFFECT, ArsElemental.MODID, existingFileHelper);
+        }
+
+        @Override
+        protected void addTags() {
+            this.tag(ModRegistry.MANABUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.MANA_BUBBLE.get());
+        }
+    }
+
 
     public static class AEEntityTagProvider extends EntityTypeTagsProvider {
 
@@ -209,6 +228,7 @@ public class AETagsProvider {
             this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
         }
+
         @Override
         public @NotNull String getName() {
             return "Ars Elemental Entity Tags";

@@ -53,6 +53,7 @@ public class Datagen {
         gen.addProvider(event.includeServer(), BTP);
         gen.addProvider(event.includeServer(), new AETagsProvider.AEItemTagsProvider(gen, BTP, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEEntityTagProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEPotionEffectTagsProvider(gen, existingFileHelper));
         gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
         gen.addProvider(event.includeServer(), new ModLootTables(gen));
 
