@@ -1,9 +1,9 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.resources.ResourceLocation;
@@ -37,15 +37,15 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        List<EntityHomingProjectile> projectiles = new ArrayList<>();
+        List<EntityHomingProjectileSpell> projectiles = new ArrayList<>();
         for (int i = 0; i < numSplits; i++) {
-            EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+            EntityHomingProjectileSpell spell = new EntityHomingProjectileSpell(world, resolver);
             projectiles.add(spell);
         }
         float velocity = getProjectileSpeed(stats);
         int opposite = -1;
         int counter = 0;
-        for (EntityHomingProjectile proj : projectiles) {
+        for (EntityHomingProjectileSpell proj : projectiles) {
             proj.setIgnored(ignore);
             proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
             opposite = opposite * -1;
@@ -145,10 +145,6 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
         PROJECTILE_TTL = builder.comment("Max lifespan of the projectile, in seconds.").defineInRange("max_lifespan", 30, 0, Integer.MAX_VALUE);
-    }
-
-    public int getProjectileLifespan() {
-        return PROJECTILE_TTL != null ? PROJECTILE_TTL.get() : 30;
     }
 
 }

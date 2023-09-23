@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
-import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.sound.ConfiguredSpellSound;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
@@ -51,7 +51,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
 
 
         tomes.add(buildTome(EARTH_CTOME, "magnet", "Gravity Well", new Spell()
-                        .add(MethodCurvedProjectile.INSTANCE)
+                        .add(MethodArcProjectile.INSTANCE)
                         .add(EffectGravity.INSTANCE)
                         .add(AugmentSensitive.INSTANCE)
                         .add(AugmentAOE.INSTANCE)
@@ -95,7 +95,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                 spell.serializeRecipe(),
                 item.getId(),
                 flavorText,
-                ParticleColor.defaultParticleColor().getColor(), ConfiguredSpellSound.DEFAULT);
+                ParticleColor.defaultParticleColor().serialize(), ConfiguredSpellSound.DEFAULT);
     }
 
     @Override

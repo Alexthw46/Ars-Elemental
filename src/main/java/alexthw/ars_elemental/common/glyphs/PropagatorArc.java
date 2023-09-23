@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.IPropagator;
-import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
@@ -42,7 +41,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         Vec3 pos = hitResult.getLocation();
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
-        EntityCurvedProjectile projectileSpell = new EntityCurvedProjectile(world, resolver);
+        EntityProjectileSpell projectileSpell = new EntityProjectileSpell(world, resolver).setGravity(true);
         projectileSpell.setPos(pos.add(0, 1, 0));
         projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
@@ -54,12 +53,12 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
             if (i % 2 == 0) offset = offset.getOpposite();
             // Alternate sides
             BlockPos projPos = BlockPos.containing(pos).relative(offset, i).offset(0, (int) (1.5 * sizeRatio), 0);
-            EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
+            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver).setGravity(true);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
 
-        float velocity = MethodCurvedProjectile.getProjectileSpeed(stats);
+        float velocity = MethodArcProjectile.getProjectileSpeed(stats);
         Vec3 direction = pos.subtract(shooter.position());
         if (resolver.spellContext.getCaster() instanceof TileCaster tc) {
             if (tc.getTile() instanceof RotatingTurretTile rotatingTurretTile) {
@@ -97,7 +96,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return MethodCurvedProjectile.INSTANCE.getCompatibleAugments();
+        return MethodArcProjectile.INSTANCE.getCompatibleAugments();
     }
 
     public SpellTier defaultTier() {

@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.entity.mages;
 
-import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
@@ -32,7 +32,7 @@ public class FireMage extends EntityMageBase {
     public FireMage(EntityType<? extends EntityMageBase> type, Level level) {
         super(type, level);
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectIgnite.INSTANCE, EffectFlare.INSTANCE));
-        pSpells.add(new Spell(MethodCurvedProjectile.INSTANCE, AugmentAccelerate.INSTANCE, AugmentPierce.INSTANCE, EffectFirework.INSTANCE, AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentExtendTime.INSTANCE));
+        pSpells.add(new Spell(MethodArcProjectile.INSTANCE, AugmentAccelerate.INSTANCE, AugmentPierce.INSTANCE, EffectFirework.INSTANCE, AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodHomingProjectile.INSTANCE, AugmentSensitive.INSTANCE, EffectIgnite.INSTANCE, EffectExplosion.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE));
         this.school = SpellSchools.ELEMENTAL_FIRE;
     }

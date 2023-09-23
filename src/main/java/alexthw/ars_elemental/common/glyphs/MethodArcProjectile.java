@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -13,21 +12,22 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class MethodCurvedProjectile extends ElementalAbstractForm {
+public class MethodArcProjectile extends ElementalAbstractForm {
 
-    public static MethodCurvedProjectile INSTANCE = new MethodCurvedProjectile();
+    public static MethodArcProjectile INSTANCE = new MethodArcProjectile();
 
     public static float getProjectileSpeed(SpellStats stats) {
         return Math.max(0.2f, 1.0f + stats.getAccMultiplier() / 2.0f);
     }
 
-    public MethodCurvedProjectile() {
-        super("curved_projectile", "Parable Projectile");
+    public MethodArcProjectile() {
+        super("arc_projectile", "Arc Projectile");
     }
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
@@ -36,7 +36,7 @@ public class MethodCurvedProjectile extends ElementalAbstractForm {
         float sizeRatio = shooter.getEyeHeight() / Player.DEFAULT_EYE_HEIGHT;
 
         for (int i = 1; i < 1 + numSplits + 1; i++) {
-            EntityCurvedProjectile spell = new EntityCurvedProjectile(world, resolver);
+            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver).setGravity(true);
             projectiles.add(spell);
         }
 
@@ -62,7 +62,7 @@ public class MethodCurvedProjectile extends ElementalAbstractForm {
      * Cast by players
      */
     @Override
-    public CastResolveType onCastOnBlock(UseOnContext context, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public CastResolveType onCastOnBlock(@NotNull UseOnContext context, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Level world = context.getLevel();
         Player shooter = context.getPlayer();
         summonProjectiles(world, shooter, spellStats, resolver);
@@ -105,10 +105,6 @@ public class MethodCurvedProjectile extends ElementalAbstractForm {
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
         PROJECTILE_TTL = builder.comment("Max lifespan of the projectile, in seconds.").defineInRange("max_lifespan", 60, 0, Integer.MAX_VALUE);
-    }
-
-    public int getProjectileLifespan() {
-        return PROJECTILE_TTL != null ? PROJECTILE_TTL.get() : 60;
     }
 
 }

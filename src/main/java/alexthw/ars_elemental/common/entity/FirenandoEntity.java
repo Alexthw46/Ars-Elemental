@@ -3,7 +3,6 @@ package alexthw.ars_elemental.common.entity;
 import alexthw.ars_elemental.ConfigHandler.Common;
 import alexthw.ars_elemental.api.item.ISchoolProvider;
 import alexthw.ars_elemental.common.entity.ai.FireCannonGoal;
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
@@ -17,6 +16,7 @@ import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
+import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -158,7 +158,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     public void performRangedAttack(@NotNull LivingEntity target, float pVelocity) {
         ParticleColor spellColor = getColor(this).equals(Variants.MAGMA.toString()) ? color : colorAlt;
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level(), spell, this, new LivingCaster(this)).withColors(spellColor));
-        EntityHomingProjectile projectileSpell = new EntityHomingProjectile(level(), resolver);
+        EntityHomingProjectileSpell projectileSpell = new EntityHomingProjectileSpell(level(), resolver);
         List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver.spell);
         ignore.add(entity -> !(entity instanceof Enemy));
         ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));

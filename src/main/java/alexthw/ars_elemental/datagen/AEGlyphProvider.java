@@ -42,10 +42,10 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(EffectLifeLink.INSTANCE, Items.LEAD, ModItems.ANIMA_ESSENCE.get(), Items.SCULK_SENSOR);
         addRecipe(EffectPhantom.INSTANCE, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, ModItems.ANIMA_ESSENCE.get());
 
-        addRecipe(MethodCurvedProjectile.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
+        addRecipe(MethodArcProjectile.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
         addRecipe(MethodHomingProjectile.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
 
-        addRecipe(PropagatorArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodCurvedProjectile.INSTANCE.getGlyph());
+        addRecipe(PropagatorArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodArcProjectile.INSTANCE.getGlyph());
         addRecipe(PropagatorHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodHomingProjectile.INSTANCE.getGlyph());
 
         recipes.add(get(AquaticFilter.INSTANCE).withItem(ItemsRegistry.ALLOW_ITEM_SCROLL).withIngredient(Ingredient.of(ItemTags.FISHES)));

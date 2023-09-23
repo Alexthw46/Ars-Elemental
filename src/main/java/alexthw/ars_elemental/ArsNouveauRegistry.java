@@ -3,8 +3,6 @@ package alexthw.ars_elemental;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
-import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
@@ -25,6 +23,7 @@ import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
+import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -72,7 +71,7 @@ public class ArsNouveauRegistry {
 
         //methods
         register(MethodHomingProjectile.INSTANCE);
-        register(MethodCurvedProjectile.INSTANCE);
+        register(MethodArcProjectile.INSTANCE);
 
         //propagators
         register(PropagatorHoming.INSTANCE);
@@ -132,7 +131,7 @@ public class ArsNouveauRegistry {
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
-        FirenandoFamiliar.projectileGlyphs.addAll(List.of(MethodCurvedProjectile.INSTANCE, MethodHomingProjectile.INSTANCE, MethodProjectile.INSTANCE, PropagatorHoming.INSTANCE, PropagatorArc.INSTANCE));
+        FirenandoFamiliar.projectileGlyphs.addAll(List.of(MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE, MethodProjectile.INSTANCE, PropagatorHoming.INSTANCE, PropagatorArc.INSTANCE));
     }
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {
@@ -171,8 +170,6 @@ public class ArsNouveauRegistry {
 
     public static void addLights() {
         ITEM_LIGHTMAP.put(ModItems.FLASHING_POD.getId(), 14);
-        LightManager.register(ModEntities.HOMING_PROJECTILE.get(), (p -> 15));
-        LightManager.register(ModEntities.CURVED_PROJECTILE.get(), (p -> 15));
         LightManager.register(ModEntities.FIRENANDO_ENTITY.get(), (p -> {
             if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
@@ -193,7 +190,7 @@ public class ArsNouveauRegistry {
         ROT_TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, new ITurretBehavior() {
             @Override
             public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
-                EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+                EntityHomingProjectileSpell spell = new EntityHomingProjectileSpell(world, resolver);
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
                 spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
@@ -205,10 +202,11 @@ public class ArsNouveauRegistry {
             }
         });
 
-        ROT_TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, new ITurretBehavior() {
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodArcProjectile.INSTANCE, new ITurretBehavior() {
             @Override
             public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
-                EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
+                EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver);
+                spell.setGravity(true);
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
                 if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
@@ -222,7 +220,7 @@ public class ArsNouveauRegistry {
         TURRET_BEHAVIOR_MAP.put(MethodHomingProjectile.INSTANCE, new ITurretBehavior() {
             @Override
             public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
-                EntityHomingProjectile spell = new EntityHomingProjectile(world, resolver);
+                EntityHomingProjectileSpell spell = new EntityHomingProjectileSpell(world, resolver);
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
                 spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
@@ -231,10 +229,11 @@ public class ArsNouveauRegistry {
             }
         });
 
-        TURRET_BEHAVIOR_MAP.put(MethodCurvedProjectile.INSTANCE, new ITurretBehavior() {
+        TURRET_BEHAVIOR_MAP.put(MethodArcProjectile.INSTANCE, new ITurretBehavior() {
             @Override
             public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
-                EntityProjectileSpell spell = new EntityCurvedProjectile(world, resolver);
+                EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver);
+                spell.setGravity(true);
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
                 spell.shoot(direction.getStepX(), direction.getStepY() + 0.25F, direction.getStepZ(), 0.6f, 0);

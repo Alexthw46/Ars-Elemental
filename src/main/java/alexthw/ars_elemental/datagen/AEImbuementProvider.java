@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
-import alexthw.ars_elemental.common.glyphs.MethodCurvedProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
@@ -108,7 +108,7 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
 
         recipes.add(new ImbuementRecipe("arc_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.ARC_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(MethodCurvedProjectile.INSTANCE.getGlyph())
+                .withPedestalItem(MethodArcProjectile.INSTANCE.getGlyph())
         );
         recipes.add(new ImbuementRecipe("homing_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.HOMING_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)

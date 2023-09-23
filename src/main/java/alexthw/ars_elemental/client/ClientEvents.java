@@ -83,8 +83,6 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.AIR_MAGE.get(), MageRenderer::new);
         event.registerEntityRenderer(ModEntities.EARTH_MAGE.get(), MageRenderer::new);
 
-        event.registerEntityRenderer(ModEntities.HOMING_PROJECTILE.get(), ClientEvents::projectileRender);
-        event.registerEntityRenderer(ModEntities.CURVED_PROJECTILE.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.FLASH_LIGHTNING.get(), LightningBoltRenderer::new);
 

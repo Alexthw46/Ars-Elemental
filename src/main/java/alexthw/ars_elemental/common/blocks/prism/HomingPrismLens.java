@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +20,7 @@ public class HomingPrismLens extends AbstractPrismLens {
 
     public void shoot(ServerLevel world, BlockPos pos, EntityProjectileSpell spell, Vec3 angle) {
         // create a new EntityHomingProjectile and copy the properties of the spell
-        EntityHomingProjectile newProjectile = new EntityHomingProjectile(world, spell.spellResolver);
+        EntityHomingProjectileSpell newProjectile = new EntityHomingProjectileSpell(world, spell.spellResolver);
         List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(spell.spellResolver.spellContext.getUnwrappedCaster(), true, spell.spellResolver.spell);
         newProjectile.setIgnored(ignore);
         newProjectile.setColor(spell.getParticleColor());
@@ -35,7 +35,7 @@ public class HomingPrismLens extends AbstractPrismLens {
 
     @Override
     public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
-        return !(spell instanceof EntityHomingProjectile);
+        return !(spell instanceof EntityHomingProjectileSpell);
     }
 
 }

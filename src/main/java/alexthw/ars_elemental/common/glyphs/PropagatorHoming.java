@@ -1,11 +1,11 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.IPropagator;
-import alexthw.ars_elemental.common.entity.spells.EntityHomingProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
+import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,10 +38,10 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         Vec3 pos = hitResult.getLocation();
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        List<EntityHomingProjectile> projectiles = new ArrayList<>();
+        List<EntityHomingProjectileSpell> projectiles = new ArrayList<>();
         // Create the projectiles
         for (int i = 0; i < numSplits; i++) {
-            projectiles.add(new EntityHomingProjectile(world, resolver));
+            projectiles.add(new EntityHomingProjectileSpell(world, resolver));
         }
         float velocity = getProjectileSpeed(stats);
         int opposite = -1;
@@ -58,7 +58,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         }
 
         // Set the position and shoot the projectiles in the correct direction
-        for (EntityHomingProjectile proj : projectiles) {
+        for (EntityHomingProjectileSpell proj : projectiles) {
             proj.setPos(pos.add(0, 1, 0));
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
             if (!(shooter instanceof FakePlayer)) {
