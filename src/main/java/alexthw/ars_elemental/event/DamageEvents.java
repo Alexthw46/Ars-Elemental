@@ -277,7 +277,7 @@ public class DamageEvents {
     public static void statusProtect(MobEffectEvent.Applicable event) {
         if (event.getEntity().hasEffect(MANA_BUBBLE.get()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
             Optional<HolderSet.Named<MobEffect>> effects = Registry.MOB_EFFECT.getTag(ModRegistry.MANABUBBLE_BLACKLIST);
-            if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect == event.getEffectInstance().getEffect()))
+            if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect.get() == event.getEffectInstance().getEffect()))
                 return;
 
             int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() * 2;
