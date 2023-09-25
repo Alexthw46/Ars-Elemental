@@ -5,7 +5,7 @@
     "ars_nouveau:archmage_spell_book",
     "ars_nouveau:creative_spell_book",
     {
-      "id": "ars_omega:arcane_book",
+      "id": "arsomega:arcane_book",
       "required": false
     }
   ]
