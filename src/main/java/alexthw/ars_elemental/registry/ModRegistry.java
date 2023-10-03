@@ -65,6 +65,10 @@ public class ModRegistry {
     public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registries.ENTITY_TYPE, prefix("undead"));
     public static final ResourceKey<DamageType> POISON = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("poison"));
     public static final ResourceKey<DamageType> HELLFIRE = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("hellfire"));
+    public static TagKey<DamageType> FIRE_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("fire_damage"));
+    public static TagKey<DamageType> WATER_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("water_damage"));
+    public static TagKey<DamageType> EARTH_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("earth_damage"));
+    public static TagKey<DamageType> AIR_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("air_damage"));
 
 
     public static void registerRegistries(IEventBus bus) {

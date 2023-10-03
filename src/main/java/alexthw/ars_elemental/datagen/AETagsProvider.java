@@ -20,7 +20,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.*;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -251,28 +250,22 @@ public class AETagsProvider {
         public AEDamageTypeProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
         }
-
-        public static TagKey<DamageType> FIRE_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("fire_damage"));
-        public static TagKey<DamageType> WATER_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("water_damage"));
-        public static TagKey<DamageType> EARTH_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("earth_damage"));
-        public static TagKey<DamageType> AIR_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("air_damage"));
-
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
 
             tag(DamageTypeTags.IS_FIRE).addOptional(ModRegistry.HELLFIRE.location());
 
-            tag(FIRE_DAMAGE).addTag(DamageTypeTags.IS_FIRE).add(
+            tag(ModRegistry.FIRE_DAMAGE).addTag(DamageTypeTags.IS_FIRE).add(
                     DamageTypes.DRAGON_BREATH,
                     DamageTypes.EXPLOSION,
                     DamageTypes.PLAYER_EXPLOSION,
                     DamageTypes.FIREWORKS).addOptional(DamageTypesRegistry.FLARE.location());
 
-            tag(WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
+            tag(ModRegistry.WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
                     DamageTypes.TRIDENT,
                     DamageTypes.MAGIC).addOptional(DamageTypesRegistry.COLD_SNAP.location());
 
-            tag(EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
+            tag(ModRegistry.EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
                             DamageTypes.FALLING_STALACTITE,
                             DamageTypes.CACTUS,
                             DamageTypes.FALLING_ANVIL,
@@ -280,7 +273,7 @@ public class AETagsProvider {
                             DamageTypes.SWEET_BERRY_BUSH)
                     .addOptional(DamageTypesRegistry.CRUSH.location()).addOptional(ModRegistry.POISON.location());
 
-            tag(AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
+            tag(ModRegistry.AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
                     DamageTypes.FLY_INTO_WALL,
                     DamageTypes.SONIC_BOOM).addOptional(DamageTypesRegistry.WINDSHEAR.location());
 

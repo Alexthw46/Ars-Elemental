@@ -2,12 +2,17 @@ package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
+import alexthw.ars_elemental.common.entity.ai.FollowOwnerGoal;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -15,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -33,6 +39,18 @@ import static alexthw.ars_elemental.common.enchantments.SoulboundEnchantment.*;
 
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class Events {
+
+    @SubscribeEvent
+    public static void customAI(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof LivingEntity && !event.getLevel().isClientSide) {
+            if (event.getEntity() instanceof PathfinderMob mob && (mob.getNavigation() instanceof GroundPathNavigation || mob.getNavigation() instanceof FlyingPathNavigation)) {
+                try {
+                    mob.goalSelector.addGoal(2, new FollowOwnerGoal(mob, 1.5F, 3.0F, 1.2F));
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void focusDiscount(SpellCostCalcEvent event) {

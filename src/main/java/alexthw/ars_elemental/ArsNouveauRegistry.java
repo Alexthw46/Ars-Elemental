@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static alexthw.ars_elemental.api.item.IElementalArmor.damageResistances;
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.setup.config.Config.ITEM_LIGHTMAP;
@@ -55,7 +56,16 @@ public class ArsNouveauRegistry {
         registerRituals();
         registerFamiliars();
         registerPerks();
+        linkDamageResistances();
     }
+
+    private static void linkDamageResistances() {
+        damageResistances.put(SpellSchools.ELEMENTAL_FIRE, ModRegistry.FIRE_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_AIR, ModRegistry.AIR_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_EARTH, ModRegistry.EARTH_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_WATER, ModRegistry.WATER_DAMAGE);
+    }
+
 
     public static void registerGlyphs() {
 

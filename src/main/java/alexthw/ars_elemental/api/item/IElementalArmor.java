@@ -60,7 +60,7 @@ public interface IElementalArmor extends ISpellModifierItem {
 
     default boolean doAbsorb(DamageSource damageSource) {
         // check if the damage source is in the list of damage sources that this armor can absorb
-        return damageSource.is(damageResistances.get(getSchool()));
+        return damageResistances.containsKey(getSchool()) && damageSource.is(damageResistances.get(getSchool()));
     }
 
 }
