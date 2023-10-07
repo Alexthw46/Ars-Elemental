@@ -4,6 +4,7 @@ import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -22,7 +23,7 @@ public class UndeadFilter extends ElementalAbstractFilter {
      * @param target BlockHitResult
      */
     @Override
-    public boolean shouldResolveOnBlock(BlockHitResult target) {
+    public boolean shouldResolveOnBlock(BlockHitResult target, Level level) {
         return false;
     }
 
@@ -32,7 +33,7 @@ public class UndeadFilter extends ElementalAbstractFilter {
      * @param target EntityHitResult
      */
     @Override
-    public boolean shouldResolveOnEntity(EntityHitResult target) {
+    public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return target.getEntity() instanceof LivingEntity living && (living.getMobType() == MobType.UNDEAD || living.getType().is(ModRegistry.UNDEAD));
     }
 }

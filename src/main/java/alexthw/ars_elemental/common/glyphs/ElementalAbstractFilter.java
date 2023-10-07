@@ -31,11 +31,11 @@ public abstract class ElementalAbstractFilter extends AbstractFilter {
 
     @Override
     public void onResolve(HitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (!shouldAffect(rayTraceResult)) spellContext.setCanceled(true);
+        if (!shouldAffect(rayTraceResult, world)) spellContext.setCanceled(true);
     }
 
     @Override
-    public boolean shouldAffect(HitResult rayTraceResult) {
-        return inverted != super.shouldAffect(rayTraceResult);
+    public boolean shouldAffect(HitResult rayTraceResult, Level level) {
+        return inverted != super.shouldAffect(rayTraceResult, level);
     }
 }

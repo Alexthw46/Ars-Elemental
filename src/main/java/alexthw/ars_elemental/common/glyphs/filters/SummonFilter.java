@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.glyphs.filters;
 
 import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -15,12 +16,12 @@ public class SummonFilter extends ElementalAbstractFilter {
     }
 
     @Override
-    public boolean shouldResolveOnBlock(BlockHitResult target) {
+    public boolean shouldResolveOnBlock(BlockHitResult target, Level level) {
         return false;
     }
 
     @Override
-    public boolean shouldResolveOnEntity(EntityHitResult target) {
+    public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return target.getEntity() instanceof ISummon summon;
     }
 
