@@ -8,7 +8,7 @@ public interface IUndeadSummon extends ISummon {
         //copy the old summon data to this summon
         int ticksLeft = Math.max(living.getTicksLeft(), 400);
         setTicksLeft(ticksLeft);
-        setOwnerID(living.getOwnerID());
+        setOwnerID(living.getOwnerUUID());
         living.setTicksLeft(0);
     }
 

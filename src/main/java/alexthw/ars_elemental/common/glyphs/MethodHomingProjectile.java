@@ -64,11 +64,11 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         List<Predicate<LivingEntity>> ignore = basicIgnores(shooter, spellStats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell);
 
         if (shooter instanceof Player) {
-            ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerID()));
+            ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerUUID()));
             ignore.add(entity -> entity instanceof OwnableEntity pet && shooter.equals(pet.getOwner()));
-        } else if (shooter instanceof ISummon summon && summon.getOwnerID() != null) {
-            ignore.add(entity -> entity instanceof ISummon summon2 && summon.getOwnerID().equals(summon2.getOwnerID()));
-            ignore.add(entity -> entity instanceof OwnableEntity pet && summon.getOwnerID().equals(pet.getOwnerUUID()));
+        } else if (shooter instanceof ISummon summon && summon.getOwnerUUID() != null) {
+            ignore.add(entity -> entity instanceof ISummon summon2 && summon.getOwnerUUID().equals(summon2.getOwnerUUID()));
+            ignore.add(entity -> entity instanceof OwnableEntity pet && summon.getOwnerUUID().equals(pet.getOwnerUUID()));
         }
 
         summonProjectiles(world, shooter, spellStats, resolver, ignore);

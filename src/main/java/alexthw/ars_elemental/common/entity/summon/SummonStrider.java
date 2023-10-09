@@ -176,7 +176,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
 
     @Nullable
     @Override
-    public UUID getOwnerID() {
+    public UUID getOwnerUUID() {
         return this.getEntityData().get(OWNER_UUID).isEmpty() ? this.getUUID() : this.getEntityData().get(OWNER_UUID).get();
     }
 

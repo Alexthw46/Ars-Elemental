@@ -54,7 +54,7 @@ public class SummonEvents {
                 switch (focus.getId()) {
                     case "water" -> {
                         SummonDolphin newHorse = new SummonDolphin(oldHorse, summoner);
-                        if (newHorse.getOwnerID() != null) {
+                        if (newHorse.getOwnerUUID() != null) {
                             oldHorse.remove(Entity.RemovalReason.DISCARDED);
                             event.summon = newHorse;
                             event.world.addFreshEntity(newHorse);
@@ -63,7 +63,7 @@ public class SummonEvents {
                     }
                     case "fire" -> {
                         SummonStrider newHorse = new SummonStrider(oldHorse, summoner);
-                        if (newHorse.getOwnerID() != null) {
+                        if (newHorse.getOwnerUUID() != null) {
                             oldHorse.remove(Entity.RemovalReason.DISCARDED);
                             event.summon = newHorse;
                             event.world.addFreshEntity(newHorse);
@@ -72,7 +72,7 @@ public class SummonEvents {
                     }
                     case "necromancy" -> {
                         SummonSkeleHorse newHorse = new SummonSkeleHorse(oldHorse, summoner);
-                        if (newHorse.getOwnerID() != null) {
+                        if (newHorse.getOwnerUUID() != null) {
                             oldHorse.remove(Entity.RemovalReason.DISCARDED);
                             event.summon = newHorse;
                             event.world.addFreshEntity(newHorse);
@@ -90,7 +90,7 @@ public class SummonEvents {
     public static void reRaiseSummon(SummonEvent.Death event) {
         if (!event.world.isClientSide) {
             ServerLevel world = (ServerLevel) event.world;
-            if (event.summon.getOwner(world) instanceof Player player && !(event.summon instanceof IUndeadSummon)) {
+            if (event.summon.getOwner() instanceof Player player && !(event.summon instanceof IUndeadSummon)) {
                 // re-raise summoned entities if necrotic focus is equipped
                 if (NecroticFocus.hasFocus(event.world, player)) {
                     LivingEntity toRaise = null;
@@ -122,7 +122,7 @@ public class SummonEvents {
     @SubscribeEvent
     public static void summonPowerup(LivingDamageEvent event) {
         if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().level() instanceof ServerLevel level) {
-            if (summon.getOwner(level) instanceof Player player) {
+            if (summon.getOwner() instanceof Player player) {
                 int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, player) - 1;
                 if (threadLevel > 0) {
                     event.setAmount(event.getAmount() + threadLevel);

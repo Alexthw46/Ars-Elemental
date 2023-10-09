@@ -233,7 +233,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
 
     @Nullable
     @Override
-    public UUID getOwnerID() {
+    public UUID getOwnerUUID() {
         return this.getEntityData().get(OWNER_UUID).isEmpty() ? this.getUUID() : this.getEntityData().get(OWNER_UUID).get();
     }
 

@@ -44,15 +44,10 @@ mandatory = true
 versionRange = "[1.20,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.ars_elemental]]
-modId = "curios"
-mandatory = true
-versionRange = "[1.19-5.1,)"
-ordering = "NONE"
-side = "BOTH"
+
 [[dependencies.ars_elemental]]
 modId = "ars_nouveau"
 mandatory = true
-versionRange = "[1.20.1-4.1,)"
+versionRange = "[1.20.1-4.7.0,)"
 ordering = "AFTER"
 side = "BOTH"
