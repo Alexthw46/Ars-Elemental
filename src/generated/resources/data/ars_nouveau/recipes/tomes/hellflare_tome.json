@@ -6,7 +6,7 @@
     "green": 25,
     "red": 255
   },
-  "flavour_text": "The hellfire flames burn even the heal magic.",
+  "flavour_text": "The hellfire flames are fueled by the healing magic.",
   "name": "Phoenix Fire",
   "sound": {
     "family": "ars_nouveau:fire_family",

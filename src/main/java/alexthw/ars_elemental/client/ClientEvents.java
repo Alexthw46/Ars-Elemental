@@ -64,6 +64,9 @@ public class ClientEvents {
                 return SkeletalHorseTexture;
             }
         });
+
+        event.registerEntityRenderer(ModEntities.CAMEL_SUMMON.get(), manager -> new CamelRenderer(manager, ModelLayers.CAMEL));
+
         event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
         event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), WitherSkeletonRenderer::new);
         event.registerEntityRenderer(ModEntities.DOLPHIN_SUMMON.get(), DolphinRenderer::new);

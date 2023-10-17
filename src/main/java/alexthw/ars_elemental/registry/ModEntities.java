@@ -54,6 +54,8 @@ public class ModEntities {
     public static final RegistryObject<EntityType<SummonUndead>> WSKELETON_SUMMON;
     public static final RegistryObject<EntityType<SummonDolphin>> DOLPHIN_SUMMON;
     public static final RegistryObject<EntityType<SummonStrider>> STRIDER_SUMMON;
+    public static final RegistryObject<EntityType<SummonCamel>> CAMEL_SUMMON;
+
 
     public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
     public static final RegistryObject<EntityType<EntityMagnetSpell>> LINGER_MAGNET;
@@ -81,6 +83,8 @@ public class ModEntities {
                 }, MobCategory.CREATURE);
 
         SKELEHORSE_SUMMON = addEntity("summon_skelehorse", 1.4F, 1.6F, true, true, SummonSkeleHorse::new, MobCategory.CREATURE);
+        CAMEL_SUMMON = addEntity("summon_camel", 1.7F, 2.375F, true, true, SummonCamel::new, MobCategory.CREATURE);
+
         DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 1.0F, SummonDirewolf::new, MobCategory.CREATURE);
         WSKELETON_SUMMON = registerEntity("summon_wskeleton", 1.0F, 1.8F, SummonUndead::new, MobCategory.CREATURE);
         DOLPHIN_SUMMON = addEntity("summon_dolphin", 0.9F, 0.6F, false, true, SummonDolphin::new, MobCategory.WATER_CREATURE);

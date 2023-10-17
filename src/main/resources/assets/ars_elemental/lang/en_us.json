@@ -62,6 +62,7 @@
   "entity.ars_elemental.curved_projectile": "Arc Projectile",
   "entity.ars_elemental.lerp": "Interpolated Projectile",
   "entity.ars_elemental.summon_skelehorse": "Summoned Skeletal Steed",
+  "entity.ars_elemental.summon_camel": "Summoned Camel",
   "entity.ars_elemental.summon_direwolf": "Summoned Direwolf",
   "entity.ars_elemental.summon_vhex": "Summoned Vhex",
   "entity.ars_elemental.summon_wskeleton": "Summoned Revenant",

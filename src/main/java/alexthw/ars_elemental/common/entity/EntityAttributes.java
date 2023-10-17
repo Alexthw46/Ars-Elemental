@@ -30,6 +30,7 @@ public class EntityAttributes {
 
         event.put(ModEntities.FLASHING_WEALD_WALKER.get(), WealdWalker.attributes().build());
         event.put(ModEntities.SKELEHORSE_SUMMON.get(), AbstractHorse.createBaseHorseAttributes().build());
+        event.put(ModEntities.CAMEL_SUMMON.get(), AbstractHorse.createBaseHorseAttributes().build());
         event.put(ModEntities.DIREWOLF_SUMMON.get(), SummonDirewolf.createAttributes().build());
         event.put(ModEntities.WSKELETON_SUMMON.get(), SummonSkeleton.createAttributes().build());
         event.put(ModEntities.VHEX_SUMMON.get(), AllyVhexEntity.createAttributes().build());

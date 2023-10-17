@@ -158,7 +158,7 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float p_70097_2_) {
-        return SummonUtil.canSummonTakeDamage(source);
+        return SummonUtil.canSummonTakeDamage(source) && super.hurt(source, p_70097_2_);
     }
 
     //Dolphin inheritance

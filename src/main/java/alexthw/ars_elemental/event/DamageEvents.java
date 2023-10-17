@@ -232,7 +232,7 @@ public class DamageEvents {
                         if (finalBonusReduction > 3) mana.addMana(event.getAmount() * 5);
                         event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
                     });
-                    event.setAmount(event.getAmount() * (1 - (bonusReduction / 10F)));
+                    event.setAmount(event.getAmount() * (1 - bonusReduction / 10F));
                 }
 
             }

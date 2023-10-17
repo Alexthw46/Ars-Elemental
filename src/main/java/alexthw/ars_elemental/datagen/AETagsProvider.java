@@ -253,13 +253,11 @@ public class AETagsProvider {
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
 
-            tag(DamageTypeTags.IS_FIRE).addOptional(ModRegistry.HELLFIRE.location());
-
             tag(ModRegistry.FIRE_DAMAGE).addTag(DamageTypeTags.IS_FIRE).add(
                     DamageTypes.DRAGON_BREATH,
                     DamageTypes.EXPLOSION,
                     DamageTypes.PLAYER_EXPLOSION,
-                    DamageTypes.FIREWORKS).addOptional(DamageTypesRegistry.FLARE.location());
+                    DamageTypes.FIREWORKS).addOptional(DamageTypesRegistry.FLARE.location()).addOptional(ModRegistry.HELLFIRE.location());
 
             tag(ModRegistry.WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
                     DamageTypes.TRIDENT,

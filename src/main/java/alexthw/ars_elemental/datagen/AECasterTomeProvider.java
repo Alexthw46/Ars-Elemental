@@ -49,6 +49,13 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                 , "Summon a rideable Strider for a short time.",
                 ParticleUtil.fireColor));
 
+        tomes.add(buildTome(EARTH_CTOME, "camel", "Humpday", new Spell()
+                        .add(MethodSelf.INSTANCE)
+                        .add(EffectSummonSteed.INSTANCE)
+                        .add(AugmentExtendTime.INSTANCE)
+                        .add(AugmentExtendTime.INSTANCE)
+                , "Summon a Camel for a short time.",
+                ParticleUtil.earthColor));
 
         tomes.add(buildTome(EARTH_CTOME, "magnet", "Gravity Well", new Spell()
                         .add(MethodArcProjectile.INSTANCE)
@@ -71,7 +78,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                         .add(EffectFlare.INSTANCE)
                         .add(EffectHeal.INSTANCE)
                         .add(EffectFlare.INSTANCE)
-                , "The hellfire flames burn even the heal magic.",
+                , "The hellfire flames are fueled by the healing magic.",
                 ParticleUtil.fireColor));
 
         tomes.add(buildTome(NECRO_CTOME, "skelehorse", "Undead Steed", new Spell()
