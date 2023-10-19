@@ -63,7 +63,7 @@ public class Events {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerDrop(LivingDropsEvent event) {
         if (event.getEntity() instanceof Player player) {
             if ((player instanceof FakePlayer) || player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
@@ -80,7 +80,7 @@ public class Events {
                 }
             }
 
-            if (keeps.size() > 0) {
+            if (!keeps.isEmpty()) {
                 drops.removeAll(keeps);
 
                 CompoundTag cmp = new CompoundTag();
