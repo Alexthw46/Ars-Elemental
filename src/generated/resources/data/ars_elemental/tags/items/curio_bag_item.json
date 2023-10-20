@@ -37,6 +37,10 @@
       "required": false
     },
     {
+      "id": "#curios:feet",
+      "required": false
+    },
+    {
       "id": "#curios:head",
       "required": false
     },
