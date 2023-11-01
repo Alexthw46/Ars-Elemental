@@ -119,7 +119,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0D)
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 50.0D)
                 .add(Attributes.ATTACK_DAMAGE, 1)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.FOLLOW_RANGE, 16D);

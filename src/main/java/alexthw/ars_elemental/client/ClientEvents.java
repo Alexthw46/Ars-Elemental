@@ -78,8 +78,7 @@ public class ClientEvents {
             }
         });
 
-        //noinspection unchecked
-        event.registerEntityRenderer(ModEntities.FLASHING_WEALD_WALKER.get(), (manager) -> new WealdWalkerRenderer(manager, "flashing_weald"));
+        event.registerEntityRenderer(ModEntities.FLASHING_WEALD_WALKER.get(), (manager) -> new WealdWalkerRenderer<>(manager, "flashing_weald"));
 
         event.registerEntityRenderer(ModEntities.FIRE_MAGE.get(), MageRenderer::new);
         event.registerEntityRenderer(ModEntities.WATER_MAGE.get(), MageRenderer::new);
@@ -88,7 +87,7 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.FLASH_LIGHTNING.get(), LightningBoltRenderer::new);
-
+        event.registerEntityRenderer(ModEntities.DRIPSTONE_SPIKE.get(), SpikeRenderer::new);
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull EntityLerpedProjectile pEntity) {

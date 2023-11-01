@@ -1,0 +1,23 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 27,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:pointed_dripstone"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:pointed_dripstone"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:earth_essence"
+      }
+    }
+  ],
+  "output": "ars_elemental:glyph_spike"
+}

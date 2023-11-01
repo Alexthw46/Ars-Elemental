@@ -32,6 +32,7 @@ public class ModPotions {
     public static final RegistryObject<EnderferenceEffect> ENDERFERENCE;
     public static final RegistryObject<LightningLureEffect> LIGHTNING_LURE;
     public static final RegistryObject<RepelEffect> REPEL;
+    public static final RegistryObject<VenomEffect> VENOM;
 
 
     public static final RegistryObject<Potion> ENDERFERENCE_POTION;
@@ -64,6 +65,7 @@ public class ModPotions {
         ENDERFERENCE = EFFECTS.register("enderference", EnderferenceEffect::new);
         LIGHTNING_LURE = EFFECTS.register("static_charged", LightningLureEffect::new);
         REPEL = EFFECTS.register("repel", RepelEffect::new);
+        VENOM = EFFECTS.register("venom", VenomEffect::new);
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 1200)));
