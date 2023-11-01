@@ -14,9 +14,9 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 @SuppressWarnings("unchecked")
 public class FirenandoModel<M extends LivingEntity & IAnimatable> extends AnimatedGeoModel<M> {
 
-    ResourceLocation MODEL = prefix("geo/fire_golem.geo.json");
-    ResourceLocation DEF_TEXTURE = prefix("textures/entity/fire_golem.png");
-    ResourceLocation ANIMATIONS = prefix("animations/fire_golem.animation.json");
+    static final ResourceLocation MODEL = prefix("geo/fire_golem.geo.json");
+    static final ResourceLocation DEF_TEXTURE = prefix("textures/entity/fire_golem.png");
+    static final ResourceLocation ANIMATIONS = prefix("animations/fire_golem.animation.json");
 
     @Override
     public ResourceLocation getModelResource(M object) {

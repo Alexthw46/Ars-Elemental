@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
@@ -31,12 +32,12 @@ public class HeadCutRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
+    public boolean matches(@NotNull CraftingContainer pContainer, @NotNull Level pLevel) {
         return false;
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer) {
+    public @NotNull ItemStack assemble(@NotNull CraftingContainer pContainer) {
         return ItemStack.EMPTY;
     }
 
@@ -46,12 +47,12 @@ public class HeadCutRecipe extends CustomRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
         return ModRegistry.HEAD_CUT_SERIALIZER.get();
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public @NotNull RecipeType<?> getType() {
         return ModRegistry.HEAD_CUT.get();
     }
 
@@ -70,7 +71,7 @@ public class HeadCutRecipe extends CustomRecipe {
     public static class Serializer implements RecipeSerializer<HeadCutRecipe> {
 
         @Override
-        public HeadCutRecipe fromJson(ResourceLocation pRecipeId, JsonObject json) {
+        public @NotNull HeadCutRecipe fromJson(@NotNull ResourceLocation pRecipeId, @NotNull JsonObject json) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
             ResourceLocation mob = ResourceLocation.tryParse(GsonHelper.getAsString(json, "mob"));
             int chance = GsonHelper.getAsInt(json, "drop_chance");
@@ -78,7 +79,7 @@ public class HeadCutRecipe extends CustomRecipe {
         }
 
         @Override
-        public @Nullable HeadCutRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+        public @Nullable HeadCutRecipe fromNetwork(@NotNull ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             ItemStack output = pBuffer.readItem();
             ResourceLocation mob = pBuffer.readResourceLocation();
             int chance = pBuffer.readInt();
