@@ -45,6 +45,9 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(EffectLifeLink.INSTANCE, Items.LEAD, ModItems.ANIMA_ESSENCE.get(), Items.SCULK_SENSOR);
         addRecipe(EffectPhantom.INSTANCE, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, ModItems.ANIMA_ESSENCE.get());
 
+        addRecipe(EffectSpike.INSTANCE, Items.POINTED_DRIPSTONE, Items.NETHERITE_INGOT, ItemsRegistry.EARTH_ESSENCE);
+        addRecipe(EffectEnvenom.INSTANCE, Items.POISONOUS_POTATO, Items.FERMENTED_SPIDER_EYE, Items.SUSPICIOUS_STEW);
+
         addRecipe(MethodCurvedProjectile.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
         addRecipe(MethodHomingProjectile.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
 

@@ -4,6 +4,7 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -52,6 +53,11 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         double range = 3 + spellStats.getAoeMultiplier();
         int effectSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
 
+        MobEffectInstance venom = livingEntity.getEffect(ModPotions.VENOM.get());
+        if (venom != null){
+            damage += 2 + 3 * venom.getAmplifier();
+        }
+
         if (!canDamage(shooter, spellStats, spellContext, resolver, livingEntity)) return;
 
         damage(vec, world, shooter, spellStats, damage, effectSec, livingEntity, spellContext, resolver);
@@ -72,7 +78,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
 
     @Override
     public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
-        return entity instanceof LivingEntity living && !(living.getHealth() <= 0) && (living.hasEffect(MobEffects.POISON) || living.hasEffect(MobEffects.HUNGER));
+        return entity instanceof LivingEntity living && !(living.getHealth() <= 0) && (living.hasEffect(MobEffects.POISON) || living.hasEffect(MobEffects.HUNGER) || living.hasEffect(ModPotions.VENOM.get()));
     }
 
     public void damage(Vec3 vec, ServerLevel world, @Nonnull LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity, SpellContext spellContext, SpellResolver resolver) {
