@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -54,10 +55,10 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         super(pEntityType, pLevel);
     }
 
-    public DripstoneSpikeEntity(Level worldIn, double x, double y, double z, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
+    public DripstoneSpikeEntity(Level worldIn, BlockPos pos, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
         this(ModEntities.DRIPSTONE_SPIKE.get(), worldIn);
         this.setOwner(casterIn);
-        this.setPos(x, y, z);
+        this.setPos(pos.getCenter().add(0, 0.5, 0));
         this.damage = damage;
         this.stats = spellStats;
         this.context = context;
@@ -73,7 +74,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
     }
 
     public void damage(LivingEntity entity) {
-        EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage); //TODO: Damage source
+        EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage);
     }
 
 
@@ -113,6 +114,13 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         return this.caster;
     }
 
+    @Override
+    public boolean isAlliedTo(@NotNull Entity pEntity) {
+        if (this.getOwner() != null) {
+            return pEntity == this.getOwner() || this.getOwner().isAlliedTo(pEntity);
+        }
+        return super.isAlliedTo(pEntity);
+    }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {

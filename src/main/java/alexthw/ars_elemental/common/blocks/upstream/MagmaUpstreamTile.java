@@ -28,7 +28,12 @@ public class MagmaUpstreamTile extends BlockEntity implements ITickable {
     @Override
     public void tick() {
         if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 2 == 0) {
-            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46)).inflate(1.5), e -> e.isInLava() && !e.isCrouching());
+
+            if (serverLevel.getBlockState(getBlockPos().above()) == this.getBlockState()) return;
+
+            int power = 1;
+            while (serverLevel.getBlockState(getBlockPos().below(power)) == this.getBlockState()) power++;
+            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46 * power)).inflate(1.5), e -> e.isInLava() && !e.isCrouching());
             if (!entityList.isEmpty() && requiresSource()) {
                 var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, LAVA_ELEVATOR_COST.get());
                 if (source == null || !source.isValid()) return;
