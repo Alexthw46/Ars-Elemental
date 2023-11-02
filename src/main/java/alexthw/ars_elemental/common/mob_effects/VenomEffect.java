@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.mob_effects;
 
-import net.minecraft.world.damagesource.DamageSource;
+import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
@@ -15,7 +16,7 @@ public class VenomEffect extends MobEffect {
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
 
-        pLivingEntity.hurt(new DamageSource("poison"), 2);
+        pLivingEntity.hurt(DamageUtil.source(pLivingEntity.level(), ModRegistry.POISON), 2);
 
     }
 

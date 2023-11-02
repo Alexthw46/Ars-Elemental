@@ -43,6 +43,10 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
         return getPotionAugments();
     }
 
+    @Override
+    public SpellTier defaultTier() {
+        return SpellTier.TWO;
+    }
 
     @NotNull
     @Override

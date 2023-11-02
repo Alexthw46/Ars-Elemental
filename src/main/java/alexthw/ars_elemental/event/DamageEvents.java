@@ -182,6 +182,21 @@ public class DamageEvents {
             }
         }
 
+        //fetch the damage reduction from the armor according to the damage source
+        HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
+        int bonusReduction = 0;
+
+        for (ItemStack stack : event.getEntity().getArmorSlots()) {
+            Item item = stack.getItem();
+            if (item instanceof IElementalArmor armor && armor.doAbsorb(event.getSource())) {
+                bonusReduction++;
+                if (bonusMap.containsKey(armor.getSchool())) {
+                    bonusMap.put(armor.getSchool(), bonusMap.get(armor.getSchool()) + 1);
+                } else {
+                    bonusMap.put(armor.getSchool(), 1);
+                }
+            }
+        }
 
         if (target instanceof Player player) {
             if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))
@@ -190,21 +205,6 @@ public class DamageEvents {
                 //reduce damage from elytra if you have air focus
                 if (event.getSource().is(DamageTypes.FLY_INTO_WALL) && ISchoolFocus.hasFocus(player) == ELEMENTAL_AIR) {
                     event.setAmount(event.getAmount() * 0.1f);
-                }
-
-                //fetch the damage reduction from the armor according to the damage source
-                HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
-                int bonusReduction = 0;
-                for (ItemStack stack : player.getArmorSlots()) {
-                    Item item = stack.getItem();
-                    if (item instanceof IElementalArmor armor && armor.doAbsorb(event.getSource())) {
-                        bonusReduction++;
-                        if (bonusMap.containsKey(armor.getSchool())) {
-                            bonusMap.put(armor.getSchool(), bonusMap.get(armor.getSchool()) + 1);
-                        } else {
-                            bonusMap.put(armor.getSchool(), 1);
-                        }
-                    }
                 }
 
                 //if you have 4 pieces of the fire school, fire is removed
@@ -232,11 +232,13 @@ public class DamageEvents {
                         if (finalBonusReduction > 3) mana.addMana(event.getAmount() * 5);
                         event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
                     });
-                    event.setAmount(event.getAmount() * (1 - bonusReduction / 10F));
                 }
 
             }
         }
+
+        if (bonusReduction > 0 && !event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS))
+            event.setAmount(event.getAmount() * (1 - bonusReduction / 10F));
 
         int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get();
 

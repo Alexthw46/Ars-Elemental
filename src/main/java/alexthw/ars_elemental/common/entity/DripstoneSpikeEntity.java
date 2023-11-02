@@ -5,32 +5,30 @@ import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.ars_nouveau.geckolib3.core.IAnimatable;
-import software.bernie.ars_nouveau.geckolib3.core.PlayState;
-import software.bernie.ars_nouveau.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.ars_nouveau.geckolib3.core.controller.AnimationController;
-import software.bernie.ars_nouveau.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationData;
-import software.bernie.ars_nouveau.geckolib3.core.manager.AnimationFactory;
-import software.bernie.ars_nouveau.geckolib3.resource.GeckoLibCache;
-import software.bernie.ars_nouveau.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class DripstoneSpikeEntity extends Entity implements IAnimatable, IEntityAdditionalSpawnData {
+public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpawnData, GeoEntity {
 
     private LivingEntity caster;
     private UUID casterUUID;
@@ -75,7 +73,7 @@ public class DripstoneSpikeEntity extends Entity implements IAnimatable, IEntity
     }
 
     public void damage(LivingEntity entity) {
-        EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, new EntityDamageSource(DamageSource.STALAGMITE.getMsgId(), caster), damage);
+        EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage); //TODO: Damage source
     }
 
 
@@ -91,7 +89,7 @@ public class DripstoneSpikeEntity extends Entity implements IAnimatable, IEntity
 
     @Override
     public void tick() {
-        if (!this.level.isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * 5) && lifeTicks % 5 == 0 ) {
+        if (!this.level.isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * 5) && lifeTicks % 5 == 0) {
             for (Entity entity : this.level.getEntities(this, this.getBoundingBox(), (e) -> e instanceof LivingEntity)) {
                 if (entity instanceof LivingEntity target) {
                     damage(target);
@@ -137,32 +135,22 @@ public class DripstoneSpikeEntity extends Entity implements IAnimatable, IEntity
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController<>(this, "controller", 0, this::sprout));
-        animationData.addAnimationController(new AnimationController<>(this, "size", 0, this::size));
-    }
-
-    private PlayState size(AnimationEvent<DripstoneSpikeEntity> dripstoneSpikeEntityAnimationEvent) {
-        GeckoLibCache.getInstance().parser.setValue("aoe", this::getAoe);
-        GeckoLibCache.getInstance().parser.setValue("pierce", this::getPierce);
-        dripstoneSpikeEntityAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("adjust_size"));
-        return PlayState.CONTINUE;
-    }
-
-    private PlayState sprout(AnimationEvent<DripstoneSpikeEntity> dripstoneSpikeEntityAnimationEvent) {
-        dripstoneSpikeEntityAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("sprout"));
-        return PlayState.CONTINUE;
-    }
-
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private static final RawAnimation SPROUT_ANIM = RawAnimation.begin().thenPlay("sprout");
 
     @Override
-    public AnimationFactory getFactory() {
+    public void registerControllers(AnimatableManager.ControllerRegistrar animationData) {
+        animationData.add(new AnimationController<>(this, "controller", 0, (a) -> a.setAndContinue(SPROUT_ANIM)));
+        // animationData.add(new AnimationController<>(this, "size", 0, (a) -> a.setAndContinue()));
+    }
+
+    public final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
 

@@ -60,6 +60,11 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
     }
 
     @Override
+    public SpellTier defaultTier() {
+        return SpellTier.TWO;
+    }
+
+    @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDamageConfig(builder, 8.0);
