@@ -29,26 +29,24 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         //check if the blockstate below the entity is air up to 5 blocks, if not spawn a dripstone spike entity,
 
         for (int i = 0; i < 5; i++) {
-            if (!world.getBlockState(pos.below(i)).isAir()) {
-                Vec3 location = rayTraceResult.getLocation();
-                float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
+            if (world.getBlockState(pos.below(i)).isAir()) continue;
+            Vec3 location = rayTraceResult.getLocation();
+            float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
 
-                DripstoneSpikeEntity spike = new DripstoneSpikeEntity(world, location.x, location.y, location.z, baseDamage, shooter, spellStats, spellContext, resolver);
-                world.addFreshEntity(spike);
-                break;
-            }
+            DripstoneSpikeEntity spike = new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
+            world.addFreshEntity(spike);
+            break;
         }
     }
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-
+        BlockPos pos = rayTraceResult.getBlockPos();
         //check if the blockstate hit is air, if not spawn a dripstone spike entity
-        if (!world.getBlockState(rayTraceResult.getBlockPos()).isAir()) {
-            Vec3 location = rayTraceResult.getLocation();
+        if (!world.getBlockState(pos).isAir()) {
             float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
 
-            DripstoneSpikeEntity spike = new DripstoneSpikeEntity(world, location.x, location.y, location.z, baseDamage, shooter, spellStats, spellContext, resolver);
+            DripstoneSpikeEntity spike = new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
             world.addFreshEntity(spike);
         }
 

@@ -26,10 +26,14 @@ public class AirUpstreamTile extends BlockEntity implements ITickable {
     @Override
     public void tick() {
         if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 20 == 0) {
-            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46)).inflate(1.1), e -> !e.isInWater() && !e.isInLava());
+            if (serverLevel.getBlockState(getBlockPos().above()) == this.getBlockState()) return;
+
+            int power = 1;
+            while (serverLevel.getBlockState(getBlockPos().below(power)) == this.getBlockState()) power++;
+            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46 * power)).inflate(1.1), e -> !e.isInWater() && !e.isInLava());
 
             if (!entityList.isEmpty() && requiresSource()) {
-                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, AIR_ELEVATOR_COST.get());
+                var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, power * AIR_ELEVATOR_COST.get());
                 if (source == null || !source.isValid()) return;
             }
             for (LivingEntity e : entityList) {
