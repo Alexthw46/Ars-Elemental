@@ -57,9 +57,13 @@ public class DripstoneSpikeEntity extends Entity implements IAnimatable, IEntity
     }
 
     public DripstoneSpikeEntity(Level worldIn, double x, double y, double z, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
-        this(ModEntities.DRIPSTONE_SPIKE.get(), worldIn);
+        this(worldIn, x, y, z, damage, casterIn, spellStats, context, resolver, ModEntities.DRIPSTONE_SPIKE.get());
+    }
+
+    public DripstoneSpikeEntity(Level worldIn, double x, double y, double z, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver, EntityType<?> type) {
+        this(type, worldIn);
         this.setOwner(casterIn);
-        this.setPos(x, y, z);
+        this.setPos(x, y + 0.5, z);
         this.damage = damage;
         this.stats = spellStats;
         this.context = context;
@@ -78,6 +82,14 @@ public class DripstoneSpikeEntity extends Entity implements IAnimatable, IEntity
         EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, new EntityDamageSource(DamageSource.STALAGMITE.getMsgId(), caster), damage);
     }
 
+
+    @Override
+    public boolean isAlliedTo(@NotNull Entity pEntity) {
+        if (this.getOwner() != null) {
+            return pEntity == this.getOwner() || this.getOwner().isAlliedTo(pEntity);
+        }
+        return super.isAlliedTo(pEntity);
+    }
 
     @Override
     protected void defineSynchedData() {

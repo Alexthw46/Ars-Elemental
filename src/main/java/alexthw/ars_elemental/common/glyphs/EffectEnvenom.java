@@ -34,6 +34,11 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
     }
 
     @Override
+    public SpellTier defaultTier() {
+        return SpellTier.TWO;
+    }
+
+    @Override
     public int getDefaultManaCost() {
         return 20;
     }
