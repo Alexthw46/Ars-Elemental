@@ -40,6 +40,10 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
     SpellContext context;
     SpellResolver resolver;
 
+    public DripstoneSpikeEntity(Level worldIn, BlockPos pos, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
+        this(ModEntities.DRIPSTONE_SPIKE.get(), worldIn, pos, damage, casterIn, spellStats, context, resolver);
+    }
+
     public double getPierce() {
         return pierce;
     }
@@ -55,8 +59,8 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         super(pEntityType, pLevel);
     }
 
-    public DripstoneSpikeEntity(Level worldIn, BlockPos pos, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
-        this(ModEntities.DRIPSTONE_SPIKE.get(), worldIn);
+    public DripstoneSpikeEntity(EntityType<?> pEntityType, Level worldIn, BlockPos pos, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
+        this(pEntityType, worldIn);
         this.setOwner(casterIn);
         this.setPos(pos.getCenter().add(0, 0.5, 0));
         this.damage = damage;

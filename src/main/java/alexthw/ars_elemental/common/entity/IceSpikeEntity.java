@@ -4,6 +4,7 @@ import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -14,8 +15,8 @@ public class IceSpikeEntity extends DripstoneSpikeEntity {
         super(pEntityType, pLevel);
     }
 
-    public IceSpikeEntity(Level world, double x, double y, double z, float baseDamage, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        super(world, x, y, z, baseDamage, shooter, spellStats, spellContext, resolver, ModEntities.ICE_SPIKE.get());
+    public IceSpikeEntity(Level world, BlockPos pos, float baseDamage, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        super(ModEntities.ICE_SPIKE.get(), world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
     }
 
     @Override

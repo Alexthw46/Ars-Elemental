@@ -1,6 +1,8 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.DripstoneSpikeEntity;
+import alexthw.ars_elemental.common.entity.IceSpikeEntity;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.core.BlockPos;
@@ -8,7 +10,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,29 +31,27 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
         for (int i = 0; i < 5; i++) {
             if (world.getBlockState(pos.below(i)).isAir()) continue;
-            Vec3 location = rayTraceResult.getLocation();
-            float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
-
-            DripstoneSpikeEntity spike = new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
-            world.addFreshEntity(spike);
+            summonSpike(world, shooter, spellStats, spellContext, resolver, pos);
             break;
         }
+    }
+
+    private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos) {
+        float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
+        DripstoneSpikeEntity spike = ISchoolFocus.hasFocus(shooter) == SpellSchools.ELEMENTAL_WATER ?
+                new IceSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver) :
+                new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
+        world.addFreshEntity(spike);
     }
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         BlockPos pos = rayTraceResult.getBlockPos();
         //check if the blockstate hit is air, if not spawn a dripstone spike entity
-        if (!world.getBlockState(pos).isAir()) {
-            float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
-
-            DripstoneSpikeEntity spike = new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
-
-            DripstoneSpikeEntity spike = ISchoolFocus.hasFocus(shooter) == SpellSchools.ELEMENTAL_WATER ?
-                    new IceSpikeEntity(world, location.x, location.y, location.z, baseDamage, shooter, spellStats, spellContext, resolver) :
-                    new DripstoneSpikeEntity(world, location.x, location.y, location.z, baseDamage, shooter, spellStats, spellContext, resolver);
-
-            world.addFreshEntity(spike);
+        for (int i = 0; i < 5; i++) {
+            if (world.getBlockState(pos.above(i)).isAir()) continue;
+            summonSpike(world, shooter, spellStats, spellContext, resolver, pos);
+            break;
         }
 
     }

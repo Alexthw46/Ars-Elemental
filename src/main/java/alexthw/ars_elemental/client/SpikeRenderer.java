@@ -26,11 +26,6 @@ public class SpikeRenderer extends GeoEntityRenderer<DripstoneSpikeEntity> {
         super.scaleModelForRender(widthScale, heightScale, poseStack, animatable, model, isReRender, partialTick, packedLight, packedOverlay);
     }
 
-    @Override
-    public float getHeightScale(DripstoneSpikeEntity entity) {
-        return (float) (entity.getPierce() + entity.getAoe() - 1);
-    }
-
     private static class DripGeoModel extends GeoModel<DripstoneSpikeEntity> {
 
         public DripGeoModel() {
