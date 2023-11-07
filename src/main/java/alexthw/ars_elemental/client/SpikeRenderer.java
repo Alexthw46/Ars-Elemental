@@ -13,6 +13,10 @@ public class SpikeRenderer extends GeoProjectilesRenderer<DripstoneSpikeEntity> 
         super(renderManager, new DripGeoModel());
     }
 
+    public SpikeRenderer(EntityRendererProvider.Context renderManager, ResourceLocation textureLocation) {
+        super(renderManager, new DripGeoModel(textureLocation));
+    }
+
     @Override
     public float getWidthScale(DripstoneSpikeEntity animatable) {
         return (float) animatable.getAoe();
@@ -24,9 +28,21 @@ public class SpikeRenderer extends GeoProjectilesRenderer<DripstoneSpikeEntity> 
     }
 
     private static class DripGeoModel extends AnimatedGeoModel<DripstoneSpikeEntity> {
+
+        public DripGeoModel() {
+            super();
+        }
+
+        public DripGeoModel(ResourceLocation textureLocation) {
+            super();
+            AltTexture = textureLocation;
+        }
+
+        ResourceLocation AltTexture;
         static final ResourceLocation MODEL = prefix("geo/spike.geo.json");
         static final ResourceLocation TEXTURE = prefix("textures/entity/spike.png");
         static final ResourceLocation ANIMATIONS = prefix("animations/spike.animation.json");
+
         @Override
         public ResourceLocation getModelResource(DripstoneSpikeEntity dripstoneSpikeEntity) {
             return MODEL;
@@ -34,7 +50,7 @@ public class SpikeRenderer extends GeoProjectilesRenderer<DripstoneSpikeEntity> 
 
         @Override
         public ResourceLocation getTextureResource(DripstoneSpikeEntity dripstoneSpikeEntity) {
-            return TEXTURE;
+            return AltTexture != null ? AltTexture : TEXTURE;
         }
 
         @Override

@@ -91,6 +91,8 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.LINGER_MAGNET.get(), ClientEvents::projectileRender);
         event.registerEntityRenderer(ModEntities.FLASH_LIGHTNING.get(), LightningBoltRenderer::new);
         event.registerEntityRenderer(ModEntities.DRIPSTONE_SPIKE.get(), SpikeRenderer::new);
+        event.registerEntityRenderer(ModEntities.ICE_SPIKE.get(), renderManager -> new SpikeRenderer(renderManager, prefix("textures/entity/ice_spike.png")));
+
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull EntityLerpedProjectile pEntity) {
@@ -103,7 +105,7 @@ public class ClientEvents {
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.AddLayers event) {
-        GeoArmorRenderer.registerArmorRenderer(ElementalArmor.class, () -> new ElementalArmorRenderer<>(new ElementalArmorModel<>("medium_armor_e").withEmptyAnim()));
+        GeoArmorRenderer.registerArmorRenderer(ElementalArmor.class, () -> new ElementalArmorRenderer<ElementalArmorModel<?>>(new ElementalArmorModel<>("medium_armor_e").withEmptyAnim()));
 
     }
 
