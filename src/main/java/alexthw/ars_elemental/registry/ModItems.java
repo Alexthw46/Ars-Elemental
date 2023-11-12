@@ -207,11 +207,11 @@ public class ModItems {
 
         //caster tomes
         CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(addTabProp().fireResistant().stacksTo(1)));
-        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_FIRE));
-        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_WATER));
-        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_AIR));
-        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), SpellSchools.ELEMENTAL_EARTH));
-        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(addTabProp().stacksTo(1), ArsNouveauRegistry.NECROMANCY));
+        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(addTabProp(), SpellSchools.ELEMENTAL_FIRE));
+        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(addTabProp(), SpellSchools.ELEMENTAL_WATER));
+        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(addTabProp(), SpellSchools.ELEMENTAL_AIR));
+        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(addTabProp(), SpellSchools.ELEMENTAL_EARTH));
+        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(addTabProp(), ArsNouveauRegistry.NECROMANCY));
 
         //blocks
         WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Material.CLAY, MaterialColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
