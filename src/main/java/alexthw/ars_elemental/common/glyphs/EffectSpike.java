@@ -37,7 +37,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
     }
 
     private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos) {
-        float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
+        float baseDamage = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
         DripstoneSpikeEntity spike = ISchoolFocus.hasFocus(shooter) == SpellSchools.ELEMENTAL_WATER ?
                 new IceSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver) :
                 new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
@@ -78,7 +78,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         return augmentSetOf(
                 AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE,
                 AugmentAOE.INSTANCE, AugmentPierce.INSTANCE,
-                AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE,
+                AugmentExtendTime.INSTANCE, AugmentRandomize.INSTANCE,
                 AugmentFortune.INSTANCE
         );
     }
