@@ -6,6 +6,7 @@ import alexthw.ars_elemental.common.entity.IceSpikeEntity;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -14,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Set;
 
 public class EffectSpike extends ElementalAbstractEffect implements IDamageEffect {
@@ -68,6 +70,11 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
     @Override
     public SpellTier defaultTier() {
         return SpellTier.TWO;
+    }
+
+    @Override
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
     }
 
     @Override
