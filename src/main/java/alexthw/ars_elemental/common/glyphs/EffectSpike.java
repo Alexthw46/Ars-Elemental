@@ -33,7 +33,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         for (int i = 0; i < 5; i++) {
             if (!world.getBlockState(pos.below(i)).isAir()) {
                 Vec3 location = rayTraceResult.getLocation();
-                float baseDamage = (float) (DAMAGE.get() + spellStats.getAccMultiplier() * AMP_VALUE.get());
+                float baseDamage = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
 
                 DripstoneSpikeEntity spike = ISchoolFocus.hasFocus(shooter) == SpellSchools.ELEMENTAL_WATER ?
                         new IceSpikeEntity(world, location.x, location.y, location.z, baseDamage, shooter, spellStats, spellContext, resolver) :
@@ -82,7 +82,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         return augmentSetOf(
                 AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE,
                 AugmentAOE.INSTANCE, AugmentPierce.INSTANCE,
-                AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE,
+                AugmentExtendTime.INSTANCE, AugmentRandomize.INSTANCE,
                 AugmentFortune.INSTANCE
         );
     }
