@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.items;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -22,9 +23,12 @@ public class ElementalCurio extends Item implements ICurioItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
+    /*
+     * Do not equip if in offhand
+     */
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-        return true;
+        return stack != slotContext.entity().getItemInHand(InteractionHand.OFF_HAND);
     }
 
 }
