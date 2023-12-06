@@ -91,7 +91,7 @@ public class CurioHolder extends Item {
         if (!level.isClientSide)
         {
             MenuProvider container = new SimpleMenuProvider((w, p, pl) -> new CurioHolderContainer(w, p, bag), bag.getHoverName());
-            NetworkHooks.openScreen((ServerPlayer) player, container, b -> b.writeItem(bag));
+            NetworkHooks.openScreen((ServerPlayer) player, container, b -> b.writeItemStack(bag, false));
             player.level.playSound(null, player.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 1, 1);
         }
     }
