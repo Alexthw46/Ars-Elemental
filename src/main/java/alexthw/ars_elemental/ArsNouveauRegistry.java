@@ -106,6 +106,7 @@ public class ArsNouveauRegistry {
         register(EffectDischarge.INSTANCE);
         register(EffectEnvenom.INSTANCE);
         register(EffectSpike.INSTANCE);
+        register(EffectSpark.INSTANCE);
 
         //methods
         register(MethodHomingProjectile.INSTANCE);

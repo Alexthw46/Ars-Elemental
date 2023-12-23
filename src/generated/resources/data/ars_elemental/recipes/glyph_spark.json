@@ -1,0 +1,23 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 27,
+  "inputItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:air_essence"
+      }
+    },
+    {
+      "item": {
+        "tag": "minecraft:wool"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:iron_bars"
+      }
+    }
+  ],
+  "output": "ars_elemental:glyph_spark"
+}

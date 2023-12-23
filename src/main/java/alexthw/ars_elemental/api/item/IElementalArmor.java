@@ -44,7 +44,7 @@ public interface IElementalArmor extends ISpellModifierItem {
 
     default double getDiscount(List<AbstractSpellPart> recipe) {
         // check if the recipe contains a glyph from the same school as this armor
-        int sum = 0;
+        double sum = 0;
         for (AbstractSpellPart part : recipe) {
             if (getSchool().isPartOfSchool(part))
                 sum += 0.2 * part.getCastingCost();

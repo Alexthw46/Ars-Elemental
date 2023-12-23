@@ -73,7 +73,7 @@ public class GlyphEvents {
 
         if (event.resolveEffect == EffectIgnite.INSTANCE) {
             if (event.shooter != living && school == ELEMENTAL_FIRE)
-                living.addEffect(new MobEffectInstance(ModPotions.HELLFIRE.get(), 200, (int) event.spellStats.getAmpMultiplier() / 2));
+                living.forceAddEffect(new MobEffectInstance(ModPotions.HELLFIRE.get(), 200, (int) event.spellStats.getAmpMultiplier() / 2), living);
         }
         if (event.resolveEffect == EffectLaunch.INSTANCE) {
             if (event.spellStats.getDurationMultiplier() != 0 && school == ELEMENTAL_AIR) {
@@ -91,11 +91,8 @@ public class GlyphEvents {
                 living.setTicksFrozen(newFrozenTicks);
                 if (living.isFullyFrozen() && living.canFreeze() && !living.hasEffect(ModPotions.FROZEN.get()) && living.invulnerableTime > 10) {
                     living.invulnerableTime = 0;
-                    living.addEffect(new MobEffectInstance(ModPotions.FROZEN.get(), 10,0, false, false, false));
+                    living.forceAddEffect(new MobEffectInstance(ModPotions.FROZEN.get(), 10, 0, false, false, false), living);
                 }
-            }
-            if (living.hasEffect(ModPotions.HELLFIRE.get())) {
-                living.removeEffect(ModPotions.HELLFIRE.get());
             }
         }
         if (event.resolveEffect == EffectGrow.INSTANCE) {

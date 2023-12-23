@@ -212,10 +212,13 @@ public class DamageEvents {
             }
         }
 
+        boolean not_bypassEnchants = !event.getSource().isBypassMagic()
+
         if (target instanceof Player player) {
             if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))
                 event.setAmount(event.getAmount() * 0.5f);
-            if (!event.getSource().isBypassMagic()) {
+
+            if (not_bypassEnchants) {
                 //reduce damage from elytra if you have air focus
                 if (event.getSource() == DamageSource.FLY_INTO_WALL && ISchoolFocus.hasFocus(player) == ELEMENTAL_AIR) {
                     event.setAmount(event.getAmount() * 0.1f);
@@ -223,7 +226,11 @@ public class DamageEvents {
 
                 //if you have 4 pieces of the fire school, fire is removed
                 if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().isFire() || event.getSource().msgId.equals("hellflare")) {
+
                     player.clearFire();
+                    if (ISchoolFocus.hasFocus(player) == SpellSchools.ELEMENTAL_FIRE) {
+                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), 200, 2));
+                    }
                 }
                 //if you have 4 pieces of the water school, you get extra air when drowning
                 if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource() == DamageSource.DROWN) {
@@ -251,22 +258,22 @@ public class DamageEvents {
 
         }
 
-        if (!event.getSource().isBypassMagic() && bonusReduction > 0)
-            event.setAmount(event.getAmount() * (1 - (bonusReduction / 10F)));
+        if (bonusReduction > 0 && not_bypassEnchants)
+            event.setAmount(event.getAmount() * (1 - bonusReduction / 10F));
 
 
         int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get();
 
 
         //check if the entity has the mana bubble effect and if so, reduce the damage
-        if (event.getEntity() != null && event.getEntity().hasEffect(MANA_BUBBLE.get())) {
+        if (not_bypassEnchants && event.getEntity() != null && event.getEntity().hasEffect(MANA_BUBBLE.get())) {
             LivingEntity living = event.getEntity();
             CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
                 double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
                 double amp = Math.min(1 + living.getEffect(MANA_BUBBLE.get()).getAmplifier() / 2D, maxReduction);
                 float newDamage = (float) Math.max(0.1, event.getAmount() - amp);
                 float actualReduction = event.getAmount() - newDamage;
-                if (actualReduction > 0 && mana.getCurrentMana() >= actualReduction * ManaBubbleCost) {
+                if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost) {
                     event.setAmount(newDamage);
                     mana.removeMana(actualReduction * ManaBubbleCost);
                 }
@@ -290,7 +297,7 @@ public class DamageEvents {
             if (event.getEntity().getRandom().nextInt(10) == 0) {
                 CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
                     if (mana.getCurrentMana() >= ManaBubbleCost) {
-                        mana.removeMana(ManaBubbleCost);
+                        mana.removeMana((double) ManaBubbleCost / 2);
                         event.setResult(Event.Result.DENY);
                     }
                 });
