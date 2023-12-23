@@ -4,8 +4,8 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
-import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.registry.ModPotions;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -135,7 +135,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         return augmentSetOf(
                 AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE,
                 AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE,
-                AugmentAOE.INSTANCE, AugmentFortune.INSTANCE
+                AugmentAOE.INSTANCE, AugmentFortune.INSTANCE, AugmentRandomize.INSTANCE
         );
     }
 

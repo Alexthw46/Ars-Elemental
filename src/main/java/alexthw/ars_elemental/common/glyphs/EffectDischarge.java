@@ -119,7 +119,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         return augmentSetOf(
                 AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE,
                 AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE,
-                AugmentAOE.INSTANCE,
+                AugmentAOE.INSTANCE, AugmentRandomize.INSTANCE,
                 AugmentFortune.INSTANCE
         );
     }

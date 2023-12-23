@@ -3,8 +3,7 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.mixin.ZombieInvoker;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -95,7 +94,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return getPotionAugments();
+        return this.augmentSetOf(AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentRandomize.INSTANCE);
     }
 
     @Override

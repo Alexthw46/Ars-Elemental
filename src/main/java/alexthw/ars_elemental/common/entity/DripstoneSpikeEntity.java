@@ -77,8 +77,8 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         return ModEntities.DRIPSTONE_SPIKE.get();
     }
 
-    public void damage(LivingEntity entity) {
-        EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage);
+    public boolean damage(LivingEntity entity) {
+        return EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage);
     }
 
 

@@ -1,0 +1,83 @@
+package alexthw.ars_elemental.common.glyphs;
+
+import com.hollingsworth.arsnouveau.api.ANFakePlayer;
+import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.common.ForgeConfigSpec;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.Set;
+
+public class EffectSpark extends ElementalAbstractEffect implements IPotionEffect, IDamageEffect {
+
+    public static EffectSpark INSTANCE = new EffectSpark();
+
+    public EffectSpark() {
+        super("spark", "Spark");
+    }
+
+    @Override
+    protected int getDefaultManaCost() {
+        return 15;
+    }
+
+    @Override
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        if (rayTraceResult.getEntity() instanceof LivingEntity target && canDamage(shooter, spellStats, spellContext, resolver, target)) {
+            double damage = this.DAMAGE.get() + this.AMP_VALUE.get() * spellStats.getAmpMultiplier() + (target.isInWaterRainOrBubble() ? 3 : 0);
+            attemptDamage(world, shooter, spellStats, spellContext, resolver, target, buildDamageSource(world, shooter), (float) damage);
+            this.applyConfigPotion(target, ModPotions.SHOCKED_EFFECT.get(), spellStats);
+        }
+    }
+
+    @Override
+    public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
+        shooter = !(shooter instanceof Player) ? ANFakePlayer.getPlayer((ServerLevel) world) : shooter;
+        return shooter.damageSources().lightningBolt();
+    }
+
+    @Override
+    public void buildConfig(ForgeConfigSpec.Builder builder) {
+        super.buildConfig(builder);
+        addDamageConfig(builder, 3);
+        addAmpConfig(builder, 2);
+        addPotionConfig(builder, 15);
+        addExtendTimeConfig(builder, 5);
+    }
+
+    @Override
+    protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
+        return this.augmentSetOf(AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentRandomize.INSTANCE);
+    }
+
+    public @NotNull Set<SpellSchool> getSchools() {
+        return this.setOf(SpellSchools.ELEMENTAL_AIR);
+    }
+
+    public int getBaseDuration() {
+        return this.POTION_TIME == null ? 30 : this.POTION_TIME.get();
+    }
+
+    public int getExtendTimeDuration() {
+        return this.EXTEND_TIME == null ? 8 : this.EXTEND_TIME.get();
+    }
+
+    @Override
+    public SpellTier defaultTier() {
+        return SpellTier.ONE;
+    }
+
+    @Override
+    protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 2);
+    }
+}

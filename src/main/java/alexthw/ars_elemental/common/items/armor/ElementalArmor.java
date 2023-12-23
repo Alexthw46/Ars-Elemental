@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.items.armor;
 
+import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.client.TooltipUtils;
 import alexthw.ars_elemental.client.armor.ElementalArmorModel;
@@ -178,7 +179,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
      */
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return new ResourceLocation(ArsNouveau.MODID, "textures/armor/" + getTier() + "_armor_" + this.getSchool().getId() + ".png").toString();
+        return new ResourceLocation(ArsElemental.MODID, "textures/armor/" + getTier() + "_armor_" + this.getSchool().getId() + ".png").toString();
     }
 
 }

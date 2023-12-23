@@ -29,7 +29,6 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
     }
 
 
-
     @Override
     public void collectJsons(CachedOutput cache) {
 
@@ -38,13 +37,14 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(EffectBubbleShield.INSTANCE, Items.HEART_OF_THE_SEA, Items.PRISMARINE_SHARD, BlockRegistry.BASTION_POD.asItem(), ItemsRegistry.WATER_ESSENCE);
         addRecipe(EffectSpores.INSTANCE, Items.SPORE_BLOSSOM, Items.RED_MUSHROOM, ItemsRegistry.EARTH_ESSENCE);
         addRecipe(EffectDischarge.INSTANCE, Items.LIGHTNING_ROD, ModItems.FLASHING_POD.get().asItem(), ItemsRegistry.AIR_ESSENCE);
+        recipes.add(get(EffectSpark.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE).withIngredient(Ingredient.of(ItemTags.WOOL)).withItem(Items.IRON_BARS));
         addRecipe(EffectCharm.INSTANCE, ModItems.ANIMA_ESSENCE.get(), Items.GOLDEN_CARROT, ItemsRegistry.SOURCE_BERRY_PIE, Blocks.CAKE);
         addRecipe(EffectLifeLink.INSTANCE, Items.LEAD, ModItems.ANIMA_ESSENCE.get(), Items.SCULK_SENSOR);
         addRecipe(EffectPhantom.INSTANCE, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, ModItems.ANIMA_ESSENCE.get());
 
         addRecipe(EffectSpike.INSTANCE, Items.POINTED_DRIPSTONE, Items.NETHERITE_INGOT, ItemsRegistry.EARTH_ESSENCE);
         addRecipe(EffectEnvenom.INSTANCE, Items.POISONOUS_POTATO, Items.FERMENTED_SPIDER_EYE, Items.SUSPICIOUS_STEW);
-        
+
         addRecipe(MethodArcProjectile.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
         addRecipe(MethodHomingProjectile.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
 

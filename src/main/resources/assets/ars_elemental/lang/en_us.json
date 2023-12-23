@@ -166,6 +166,8 @@
   "ars_elemental.familiar_desc.firenando_familiar": "A Flarecannon Familiar increases the damage of Fire spells by 2 and reduce projectile-based spells cost by 20%%. You can feed it a Magma Cream to get a short Fire Resistance buff. Obtained by performing the Ritual of Binding near a Flarecannon.",
   "ars_elemental.glyph_name.glyph_discharge": "Discharge",
   "ars_elemental.glyph_desc.glyph_discharge": "Discharge an entity affected by static charge or shocked, damaging it and shocking surrounding enemies. If the damage was triggered by static charge, it will be empowered. If the main target had energy-based armors, some of the energy in it will be absorbed to boost damage.",
+  "ars_elemental.glyph_name.glyph_spark": "Spark",
+  "ars_elemental.glyph_desc.glyph_spark": "Damages the target with a spark of static energy shocks it. Deals more damage to wet entities",
   "ars_elemental.glyph_name.glyph_bubble_shield": "Mana Bubble",
   "ars_elemental.glyph_desc.glyph_bubble_shield": "Creates a protective coating that consumes mana to reduce incoming damage. The shield might also prevent debuff to affect the entity and will dissipate if the mana exhausts while defending. May also cure from Hellfire burn if used with the water focus.",
   "ars_elemental.glyph_name.glyph_watery_grave": "Watery Grave",
