@@ -21,6 +21,7 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -54,13 +55,12 @@ public class Events {
 
     @SubscribeEvent
     public static void focusDiscount(SpellCostCalcEvent event) {
-
         var caster = event.context.getUnwrappedCaster();
         if (!caster.level().isClientSide() && caster instanceof Player player) {
             //if the player is holding a focus, and the spell match the focus's school, apply the focus discount.
             var focus = ISchoolFocus.getFocus(player);
             if (focus != null && event.context.getSpell().recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
-                event.currentCost -= event.context.getSpell().getCost() * focus.getDiscount();
+                event.currentCost = (int) (event.currentCost - focus.getDiscount() * event.context.getSpell().getCost());
         }
     }
 
@@ -85,7 +85,7 @@ public class Events {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerDrop(LivingDropsEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if ((player instanceof FakePlayer) || player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+            if (player instanceof FakePlayer || player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
                 return;
             }
             //if the player has soulbound enchantment, save the item to the player's persistent data.
@@ -171,7 +171,17 @@ public class Events {
 
     @SubscribeEvent
     public static void soulboundCurio(DropRulesEvent event) {
-        event.addOverride((i) -> (i.getEnchantmentLevel(ModRegistry.SOULBOUND.get()) > 0), ICurio.DropRule.ALWAYS_KEEP);
+        event.addOverride(i -> i.getEnchantmentLevel(ModRegistry.SOULBOUND.get()) > 0, ICurio.DropRule.ALWAYS_KEEP);
+    }
+
+
+    @SubscribeEvent
+    public static void despawnProtection(ItemExpireEvent event) {
+        var stackTag = event.getEntity().getItem().getTag();
+        if (stackTag != null && stackTag.contains("ae_netherite")) {
+            event.getEntity().setUnlimitedLifetime();
+            event.setExtraLife(0);
+        }
     }
 
 }
