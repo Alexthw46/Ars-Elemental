@@ -1,0 +1,53 @@
+name: Publish action
+
+on:
+  workflow_dispatch:
+    branches: [ "1.19.1" ]
+    inputs:
+      version:
+        description: 'Mod Version'
+        required: true
+        type: string
+      changelog:
+        description: 'Changes'
+        required: true
+        type: string
+
+env:
+  MINECRAFT_VERSION: 1.19.2
+  JAVA_VERSION: 17
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+      - name: build
+        run: ./gradlew build
+      - name: Publish Minecraft Mods Forge
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          curseforge-id: 561470
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files-primary: build/libs/!(*-@(dev|sources)).jar
+          files-secondary: build/libs/*-@(dev|sources).jar
+          version-type: release
+          loaders: forge
+          name: Ars_Elemental ${{ env.MINECRAFT_VERSION }}-${{ inputs.version }}
+          version:  Ars_Elemental-${{ env.MINECRAFT_VERSION }}-${{ inputs.version }}
+          game-versions: |
+            ${{ env.MINECRAFT_VERSION }}
+          changelog: ${{inputs.changelog}}
+          version-resolver: exact
