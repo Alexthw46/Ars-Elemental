@@ -9,7 +9,6 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import net.minecraft.util.RandomSource;
@@ -37,7 +36,7 @@ public class AirMage extends EntityMageBase {
         super(p_21368_, level);
         this.school = SpellSchools.ELEMENTAL_AIR;
         sSpells.add(new Spell(MethodSelf.INSTANCE, EffectLeap.INSTANCE, AugmentAmplify.INSTANCE, EffectBounce.INSTANCE));
-        sSpells.add(new Spell(MethodOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
+        sSpells.add(new Spell(MethodSelf.INSTANCE, EffectOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectLaunch.INSTANCE, AugmentDurationDown.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE));
         pSpells.add(new Spell(MethodArcProjectile.INSTANCE, AugmentPierce.INSTANCE, AugmentPierce.INSTANCE, EffectLightning.INSTANCE));
     }

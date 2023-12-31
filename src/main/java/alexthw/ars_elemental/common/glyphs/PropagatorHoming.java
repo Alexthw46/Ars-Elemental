@@ -8,15 +8,13 @@ import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -31,6 +29,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
 
     public PropagatorHoming() {
         super("propagator_homing", "Propagate Homing");
+        EffectReset.RESET_LIMITS.add(this);
     }
 
     @Override
@@ -74,13 +73,8 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
     }
 
     @Override
-    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
-    }
-
-    @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
+    public void onResolve(HitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+       copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
 
     @Override

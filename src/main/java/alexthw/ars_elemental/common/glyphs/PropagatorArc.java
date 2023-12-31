@@ -7,13 +7,12 @@ import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
@@ -30,6 +29,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
 
     public PropagatorArc() {
         super("propagator_arc", "Propagate Arc");
+        EffectReset.RESET_LIMITS.add(this);
     }
 
     @Override
@@ -79,12 +79,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
-    }
-
-    @Override
-    public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolve(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
 

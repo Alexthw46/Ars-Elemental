@@ -6,7 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 
-public interface IPropagator {
+public interface IPropagator{
 
     AbstractAugment DUMMY = new AbstractAugment("dummy", "Dummy") {
         @Override
@@ -16,11 +16,10 @@ public interface IPropagator {
     };
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
-        spellContext.setCanceled(true);
         Spell newSpell = spellContext.getRemainingSpell();
         if (newSpell.isEmpty()) return;
-        newSpell.recipe.add(0, DUMMY);
-        SpellContext newContext = spellContext.clone().withSpell(newSpell);
+        SpellContext newContext = spellContext.makeChildContext();
+        newContext.getSpell().recipe.add(0, DUMMY);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
         propagate(world, rayTraceResult, shooter, stats, newResolver);
     }
