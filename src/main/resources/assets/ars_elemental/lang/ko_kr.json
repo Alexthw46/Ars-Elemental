@@ -166,6 +166,8 @@
   "ars_elemental.familiar_desc.firenando_familiar": "플레어캐논 사역마는는 화염 주문의 공격력을 2만큼 증가시키고 투사체를 이용한 주문들의 마나소모를 20%만큼 감소시킵니다. 마그마 크림을 먹이면 짧은 화염 저항 버프를 얻을 수 있습니다. 플레어캐논 근처에서 결속 의식을 수행하여 획득할 수 있습니다.",
   "ars_elemental.glyph_name.glyph_discharge": "Discharge",
   "ars_elemental.glyph_desc.glyph_discharge": "Discharge an entity affected by static charge or shocked, damaging it and shocking surrounding enemies. If the damage was triggered by static charge, it will be empowered. If the main target had energy-based armors, some of the energy in it will be absorbed to boost damage.",
+  "ars_elemental.glyph_name.glyph_spark": "Spark",
+  "ars_elemental.glyph_desc.glyph_spark": "Damages the target with a spark of static energy shocks it. Deals more damage to wet entities",
   "ars_elemental.glyph_name.glyph_bubble_shield": "Mana Bubble",
   "ars_elemental.glyph_desc.glyph_bubble_shield": "마나를 소모하는 보호막을 생성하여 받는 피해를 감소시킵니다. 이 보호막은 해로운 효과를 저항할 수 있으며, 마나가 모두 소진되면 사라집니다. 물의 포커스과 함께 사용하면 지옥불 화상을 치료할 수도 있습니다.",
   "ars_elemental.glyph_name.glyph_watery_grave": "Watery Grave",
