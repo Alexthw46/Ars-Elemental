@@ -212,7 +212,7 @@ public class DamageEvents {
             }
         }
 
-        boolean not_bypassEnchants = !event.getSource().isBypassMagic()
+        boolean not_bypassEnchants = !event.getSource().isBypassMagic();
 
         if (target instanceof Player player) {
             if (event.getSource().getEntity() instanceof LivingEntity living && EnthrallEffect.isEnthralledBy(living, player))

@@ -1,4 +1,4 @@
-// 1.19.2	2023-11-10T09:55:13.6857963	Ars Elemental Patchouli Datagen
+// 1.19.2	2024-01-03T23:14:51.5151576	Ars Elemental Patchouli Datagen
 cb6bef086c580bc2863acd3bcccf06f6c760ca39 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/armor_air.json
 416aa23d676e85bbcc6fc0ae3c6ed5b65ce604a5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/armor_aqua.json
 29610175dfb3d7fb25fe0e85fa69cff3b5f13ef5 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/armor/armor_earth.json
@@ -40,6 +40,7 @@ fae8cb04398f9582dcccd3db437ebed577027f0e data/ars_elemental/patchouli_books/elem
 30c3c6ca54cd55335e46699d3d25eed5dd6fdfff data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_not_insect_filter.json
 6fe079781361c100cae2a91beb8a503089f44d40 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_not_summon_filter.json
 9e530264cb3944ae0d400d78f7b8fdfe08369c7e data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_not_undead_filter.json
+0d41294a6cb02eb65da60fa346727105840a152b data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_spark.json
 aa2b3ce7f7c4f954c5af1a1172d72ad0accf5f97 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_summon_filter.json
 c46fc2beeaf592e6606f5e9f4bdc34ea7ca177cb data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_1/glyph_undead_filter.json
 211b13d035ecd42506e001a2a44fec943f80f8f9 data/ars_elemental/patchouli_books/elemental_notes/en_us/entries/glyphs_2/glyph_bubble_shield.json

@@ -2,11 +2,12 @@ package alexthw.ars_elemental.common.glyphs;
 
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
-import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -26,24 +27,23 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
     }
 
     @Override
-    protected int getDefaultManaCost() {
+    public int getDefaultManaCost() {
         return 15;
     }
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity target && canDamage(shooter, spellStats, spellContext, resolver, target)) {
-            double damage = this.DAMAGE.get() + this.AMP_VALUE.get() * spellStats.getAmpMultiplier() + (target.isInWaterRainOrBubble() ? 3 : 0);
+            double damage = this.DAMAGE.get() + this.AMP_VALUE.get() * spellStats.getAmpMultiplier() + (target.isInWaterRainOrBubble() ? 2 : 0);
             attemptDamage(world, shooter, spellStats, spellContext, resolver, target, buildDamageSource(world, shooter), (float) damage);
-            this.applyConfigPotion(target, ModPotions.SHOCKED_EFFECT.get(), spellStats);
+            ((IPotionEffect)this).applyConfigPotion(target, ModPotions.SHOCKED_EFFECT.get(), spellStats);
         }
     }
 
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
         shooter = !(shooter instanceof Player) ? ANFakePlayer.getPlayer((ServerLevel) world) : shooter;
-        return shooter.damageSources().lightningBolt();
-    }
+        return new EntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), shooter);    }
 
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
@@ -64,11 +64,11 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
     }
 
     public int getBaseDuration() {
-        return this.POTION_TIME == null ? 30 : this.POTION_TIME.get();
+        return this.POTION_TIME == null ? 15 : this.POTION_TIME.get();
     }
 
     public int getExtendTimeDuration() {
-        return this.EXTEND_TIME == null ? 8 : this.EXTEND_TIME.get();
+        return this.EXTEND_TIME == null ? 5 : this.EXTEND_TIME.get();
     }
 
     @Override
