@@ -49,7 +49,7 @@ public class AETagsProvider {
 
     public static class AEItemTagsProvider extends ItemTagsProvider {
 
-        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "feet" ,"head", "hands", "necklace", "ring"};
+        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "feet", "head", "hands", "necklace", "ring"};
 
         static TagKey<Item> curiosTag(String key) {
             return ItemTags.create(new ResourceLocation(CuriosApi.MODID, key));
@@ -250,18 +250,22 @@ public class AETagsProvider {
         public AEDamageTypeProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
         }
+
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
 
             tag(ModRegistry.FIRE_DAMAGE).addTag(DamageTypeTags.IS_FIRE).add(
-                    DamageTypes.DRAGON_BREATH,
-                    DamageTypes.EXPLOSION,
-                    DamageTypes.PLAYER_EXPLOSION,
-                    DamageTypes.FIREWORKS).addOptional(DamageTypesRegistry.FLARE.location()).addOptional(ModRegistry.HELLFIRE.location());
+                            DamageTypes.DRAGON_BREATH,
+                            DamageTypes.EXPLOSION,
+                            DamageTypes.PLAYER_EXPLOSION,
+                            DamageTypes.FIREWORKS)
+                    .addOptional(DamageTypesRegistry.FLARE.location())
+                    .addOptional(ModRegistry.HELLFIRE.location());
 
             tag(ModRegistry.WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
-                    DamageTypes.TRIDENT,
-                    DamageTypes.MAGIC).addOptional(DamageTypesRegistry.COLD_SNAP.location());
+                            DamageTypes.TRIDENT,
+                            DamageTypes.MAGIC)
+                    .addOptional(DamageTypesRegistry.COLD_SNAP.location());
 
             tag(ModRegistry.EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
                             DamageTypes.FALLING_STALACTITE,
@@ -269,11 +273,14 @@ public class AETagsProvider {
                             DamageTypes.FALLING_ANVIL,
                             DamageTypes.STING,
                             DamageTypes.SWEET_BERRY_BUSH)
-                    .addOptional(DamageTypesRegistry.CRUSH.location()).addOptional(ModRegistry.POISON.location());
+                    .addOptional(DamageTypesRegistry.CRUSH.location())
+                    .addOptional(ModRegistry.POISON.location());
 
             tag(ModRegistry.AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
-                    DamageTypes.FLY_INTO_WALL,
-                    DamageTypes.SONIC_BOOM).addOptional(DamageTypesRegistry.WINDSHEAR.location());
+                            DamageTypes.FLY_INTO_WALL,
+                            DamageTypes.SONIC_BOOM)
+                    .addOptional(ModRegistry.SPARK.location())
+                    .addOptional(DamageTypesRegistry.WINDSHEAR.location());
 
         }
     }

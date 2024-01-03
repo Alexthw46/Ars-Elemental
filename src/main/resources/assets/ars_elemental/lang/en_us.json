@@ -223,6 +223,8 @@
   "death.attack.hellflare.item": "%1$s was burned by %2$s with the magic flames of %3$s",
   "death.attack.poison": "%2$s's poison spores blossomed inside %1$s",
   "death.attack.poison.item": "%1$s was poisoned by %2$s using %3$s",
+  "death.attack.spark": "%1$s experienced a short circuit",
+  "death.attack.spark.item": "%1$s was shocked to death by %2$s using %3$s",
   "item.ars_elemental.fire_hat": "Pyromancer's Hat",
   "item.ars_elemental.fire_robes": "Pyromancer's Robes",
   "item.ars_elemental.fire_leggings": "Pyromancer's Leggings",

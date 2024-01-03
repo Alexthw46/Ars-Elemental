@@ -27,6 +27,7 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
             if (poison != null) {
                 spellStats.setAmpMultiplier(poison.getAmplifier() / 2F + spellStats.getAmpMultiplier());
                 this.applyConfigPotion(target, ModPotions.VENOM.get(), spellStats);
+                target.removeEffect(MobEffects.POISON);
             } else {
                 this.applyConfigPotion(target, MobEffects.POISON, spellStats);
             }
