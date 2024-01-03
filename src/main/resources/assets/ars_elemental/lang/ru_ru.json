@@ -166,6 +166,8 @@
   "ars_elemental.familiar_desc.firenando_familiar": "Flarecannon фамильяр увеличивает урон заклинаний огня на 2 и снижает стоимость заклинаний, основанных на снарядах, на 20%%. Вы можете скормить ему сгусток магмы, чтобы получить короткий бафф сопротивления огню. Получается при выполнении ритуала связывания рядом с Flarecannon.",
   "ars_elemental.glyph_name.glyph_discharge": "Разряд",
   "ars_elemental.glyph_desc.glyph_discharge": "Разрядите объект, пораженный статическим зарядом или шоком, нанося ему урон и шокируя окружающих врагов. Если урон был вызван статическим зарядом, он будет усилен. Если основная цель имела энергетическую броню, часть энергии в ней будет поглощена, чтобы увеличить урон.",
+  "ars_elemental.glyph_name.glyph_spark": "Spark",
+  "ars_elemental.glyph_desc.glyph_spark": "Damages the target with a spark of static energy shocks it. Deals more damage to wet entities",
   "ars_elemental.glyph_name.glyph_bubble_shield": "Mana Bubble",
   "ars_elemental.glyph_desc.glyph_bubble_shield": "Creates a protective coating that consumes mana to reduce incoming damage. The shield might also prevent debuff to affect the entity and will dissipate if the mana exhausts while defending. May also cure from Hellfire burn if used with the water focus.",
   "ars_elemental.glyph_name.glyph_watery_grave": "Водяная могила",
