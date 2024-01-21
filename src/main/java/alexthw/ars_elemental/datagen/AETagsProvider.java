@@ -222,6 +222,7 @@ public class AETagsProvider {
             this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);
             this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
+            this.tag(ModRegistry.ATTRACT_BLACKLIST).add(EntityType.PLAYER).addTag(Tags.EntityTypes.BOSSES).add(ModEntities.ENTITY_FOLLOW_PROJ.get()).addTag(EntityTags.FAMILIAR);
         }
 
         @Override
