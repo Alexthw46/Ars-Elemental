@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.STRIDER_SUMMON.get();
     }
 
@@ -62,12 +63,12 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    protected boolean canRide(Entity pEntity) {
+    protected boolean canRide(@NotNull Entity pEntity) {
         return pEntity instanceof Player;
     }
 
     @Override
-    public void travel(Vec3 pTravelVector) {
+    public void travel(@NotNull Vec3 pTravelVector) {
         if (this.isAlive()) {
             LivingEntity livingentity = this.getControllingPassenger();
             if (this.isVehicle() && livingentity != null) {
@@ -99,7 +100,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         if (!player.level.isClientSide() && player.getMainHandItem().isEmpty() && !player.isShiftKeyDown()) {
             player.startRiding(this);
             return InteractionResult.SUCCESS;
@@ -138,13 +139,13 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public void die(DamageSource cause) {
+    public void die(@NotNull DamageSource cause) {
         super.die(cause);
         onSummonDeath(level, cause, false);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.ticksLeft = compound.getInt("left");
         UUID uuid = null;
@@ -157,7 +158,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("left", ticksLeft);
         writeOwner(compound);
@@ -176,7 +177,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
 
     @Nullable
     @Override
-    public UUID getOwnerID() {
+    public UUID getOwnerUUID() {
         return this.getEntityData().get(OWNER_UUID).isEmpty() ? this.getUUID() : this.getEntityData().get(OWNER_UUID).get();
     }
 
@@ -186,11 +187,11 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     //override
-    public Strider getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+    public Strider getBreedOffspring(@NotNull ServerLevel pLevel, @NotNull AgeableMob pOtherParent) {
         return null;
     }
 
-    public boolean isFood(ItemStack pStack) {
+    public boolean isFood(@NotNull ItemStack pStack) {
         return false;
     }
 
@@ -198,7 +199,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public boolean canMate(Animal pOtherAnimal) {
+    public boolean canMate(@NotNull Animal pOtherAnimal) {
         return false;
     }
 
