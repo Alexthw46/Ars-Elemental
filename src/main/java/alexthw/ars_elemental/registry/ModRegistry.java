@@ -61,6 +61,8 @@ public class ModRegistry {
     public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("insect"));
     public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, prefix("undead"));
 
+    public static final TagKey<EntityType<?>> ATTRACT_BLACKLIST = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(ArsElemental.MODID, "attraction_ritual_blacklist"));
+
     public static final TagKey<MobEffect> MANABUBBLE_BLACKLIST = TagKey.create(Registry.MOB_EFFECT_REGISTRY, new ResourceLocation(ArsElemental.MODID, "manashield_blacklist"));
 
 

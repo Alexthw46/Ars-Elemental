@@ -1,6 +1,7 @@
-// 1.19.2	2023-05-29T19:00:56.0884175	Ars Elemental Entity Tags
+// 1.19.2	2024-01-21T02:04:30.748508	Ars Elemental Entity Tags
 5a1b665b20647aaf991e2e9e62362101dfdb2b8b data/ars_elemental/tags/entity_types/aerial.json
 b14f85b439342f538d0435da3f1a031c23d869bc data/ars_elemental/tags/entity_types/aquatic.json
+35caac78f523ae613d725eeefc6a39913809f4ae data/ars_elemental/tags/entity_types/attraction_ritual_blacklist.json
 e00f2931577049b9a4400a87ed9c249373be376c data/ars_elemental/tags/entity_types/fiery.json
 938693c0d925c28b546fc000571541b1f61e42c1 data/ars_elemental/tags/entity_types/insect.json
 bfa5943a99eb5bf10495ae60b03df16794502725 data/ars_elemental/tags/entity_types/undead.json

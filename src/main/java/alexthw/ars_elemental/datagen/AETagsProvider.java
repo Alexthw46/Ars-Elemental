@@ -52,7 +52,7 @@ public class AETagsProvider {
         public static final TagKey<Item> SPELLBOOK = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spellbook"));
         public static final TagKey<Item> PRISM_LENS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spell_prism_lens"));
 
-        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "feet" ,"head", "hands", "necklace", "ring"};
+        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "feet", "head", "hands", "necklace", "ring"};
 
         static TagKey<Item> curiosTag(String key) {
             return ItemTags.create(new ResourceLocation(CuriosApi.MODID, key));
@@ -227,6 +227,7 @@ public class AETagsProvider {
             this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);
             this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
+            this.tag(ModRegistry.ATTRACT_BLACKLIST).add(EntityType.PLAYER).addTag(Tags.EntityTypes.BOSSES).add(ModEntities.ENTITY_FOLLOW_PROJ.get()).addTag(EntityTags.FAMILIAR);
         }
 
         @Override
