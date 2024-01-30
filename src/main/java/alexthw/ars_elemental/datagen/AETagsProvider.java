@@ -67,6 +67,13 @@ public class AETagsProvider {
         public static final TagKey<Item> MAGIC_LEG = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "legs"));
         public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "boot"));
 
+        // create log compat
+
+        public static final TagKey<Item> STRIPPED_LOGS = ItemTags.create(new ResourceLocation("forge", "stripped_logs"));
+        public static final TagKey<Item> STRIPPED_WOODS = ItemTags.create(new ResourceLocation("forge", "stripped_wood"));
+
+
+
         public AEItemTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen.getPackOutput(), provider, blockTagsProvider.contentsGetter(), ArsElemental.MODID, existingFileHelper);
         }
@@ -104,6 +111,8 @@ public class AETagsProvider {
 
             tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
 
+            tag(STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
+            tag(STRIPPED_WOODS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
         }
 
         @Override

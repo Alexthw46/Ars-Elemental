@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-20T00:13:36.4197768	Ars Elemental Item Tags
+// 1.20.1	2024-01-29T18:03:13.8560608	Ars Elemental Item Tags
 a1c191d75ca82bdd457d409695bd4e6e4ba9d471 data/ars_elemental/tags/items/blacklist_bag_item.json
 877c63c507be1e55a9f5eeed6e73dfabea015dab data/ars_elemental/tags/items/caster_bag_item.json
 96d00e66e9fa2dc85baa4cfb78e75a332c941ece data/ars_elemental/tags/items/curio_bag_item.json
@@ -14,6 +14,8 @@ fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/items/spellbook.j
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/items/an_focus.json
 e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/items/bracelet.json
 d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/forge/tags/items/logs/archwood.json
+c63f828ff4bfc7df8bd18cf26ecd39040ac28049 data/forge/tags/items/stripped_logs.json
+c63f828ff4bfc7df8bd18cf26ecd39040ac28049 data/forge/tags/items/stripped_wood.json
 525c1a35787919fd6060975646b2c0a2a41ca910 data/minecraft/tags/items/leaves.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/items/logs.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/items/logs_that_burn.json
