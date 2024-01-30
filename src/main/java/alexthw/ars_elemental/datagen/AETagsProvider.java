@@ -111,7 +111,7 @@ public class AETagsProvider {
 
             tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
 
-            tag(STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
+            tag(STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get().asItem());
             tag(STRIPPED_WOODS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
         }
 
