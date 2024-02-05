@@ -8,6 +8,7 @@ import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -59,7 +60,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         int effectSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
 
         MobEffectInstance venom = livingEntity.getEffect(ModPotions.VENOM.get());
-        if (venom != null){
+        if (venom != null) {
             damage += 2 + 3 * venom.getAmplifier();
         }
 
@@ -91,7 +92,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
         //if the entity is dead, spawn a ground blossom on the ground below it
-        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(shooter)) == ELEMENTAL_EARTH) {
+        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && (spellContext.getCaster() instanceof TileCaster tc && tc.getTile() instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(shooter)) == ELEMENTAL_EARTH) {
             BlockPos feet = livingEntity.getOnPos();
             BlockState underfoot = world.getBlockState(feet);
             if ((underfoot.getBlock() == Blocks.MOSS_BLOCK || underfoot.is(BlockTags.DIRT) || underfoot.is(BlockTags.LEAVES)) && world.getBlockState(feet.above()).isAir()) {

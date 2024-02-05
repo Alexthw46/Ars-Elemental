@@ -25,7 +25,7 @@ public class ElementalTurret extends BasicSpellTurret {
     public final SpellSchool school;
 
     public ElementalTurret(Properties properties, SpellSchool school) {
-        super(properties.noOcclusion());
+        super(properties.noOcclusion().forceSolidOn());
         this.school = school;
     }
 

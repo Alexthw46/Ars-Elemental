@@ -14,6 +14,7 @@ import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.IDamageEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -49,7 +50,7 @@ public class GlyphEvents {
     @SubscribeEvent
     public static void empowerGlyphs(EffectResolveEvent.Pre event) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        SpellSchool school = event.context.castingTile instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.shooter);
+        SpellSchool school = event.context.getCaster() instanceof TileCaster tc && tc.getTile() instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.shooter);
         if (event.rayTraceResult instanceof BlockHitResult blockHitResult)
             empowerResolveOnBlocks(event, blockHitResult, school);
         else if (event.rayTraceResult instanceof EntityHitResult entityHitResult)
