@@ -2,9 +2,6 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.IPropagator;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
-import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
-import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
@@ -47,14 +44,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         int counter = 0;
 
         // Adjust the direction of the projectiles
-        Vec3 direction = pos.subtract(shooter.position());
-        if (resolver.spellContext.getCaster() instanceof TileCaster tc) {
-            if (tc.getTile() instanceof RotatingTurretTile rotatingTurretTile) {
-                direction = rotatingTurretTile.getShootAngle();
-            } else {
-                direction = new Vec3(tc.getTile().getBlockState().getValue(BasicSpellTurret.FACING).step());
-            }
-        }
+        Vec3 direction = IPropagator.getDirection(shooter, resolver, pos);
 
         // Set the position and shoot the projectiles in the correct direction
         for (EntityHomingProjectileSpell proj : projectiles) {
