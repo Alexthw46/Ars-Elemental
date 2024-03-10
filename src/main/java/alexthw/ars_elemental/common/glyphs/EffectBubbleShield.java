@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
@@ -25,11 +24,6 @@ public class EffectBubbleShield extends ElementalAbstractEffect implements IPoti
 
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity) {
             CapabilityRegistry.getMana(livingEntity).ifPresent(mana -> this.applyConfigPotion(livingEntity, ModPotions.MANA_BUBBLE.get(), spellStats));
-            if (ISchoolFocus.hasFocus(shooter) == SpellSchools.ELEMENTAL_WATER) {
-                if (livingEntity.hasEffect(ModPotions.HELLFIRE.get())) {
-                    livingEntity.removeEffect(ModPotions.HELLFIRE.get());
-                }
-            }
         }
 
     }

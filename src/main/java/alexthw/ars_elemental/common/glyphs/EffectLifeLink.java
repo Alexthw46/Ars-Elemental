@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.ArsNouveauRegistry;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
+import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.world.effect.MobEffect;
@@ -28,7 +27,7 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         //if the shooter has the necromancy focus, the effect will be forcefully applied to the target and the shooter
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity && shooter instanceof Player player && player != livingEntity) {
-            if (ISchoolFocus.hasFocus(shooter) == ArsNouveauRegistry.NECROMANCY)
+            if (resolver.hasFocus(ModItems.NECRO_FOCUS.get().getDefaultInstance()))
                 forceApplyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
             else applyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
 

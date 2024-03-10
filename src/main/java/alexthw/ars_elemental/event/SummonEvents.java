@@ -121,8 +121,8 @@ public class SummonEvents {
 
     @SubscribeEvent
     public static void summonSickReduction(MobEffectEvent.Added event) {
-        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonPerk.INSTANCE, player) > 0) {
-            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (1 - PerkUtil.countForPerk(SummonPerk.INSTANCE, player) / 10);
+        if (event.getEntity() != null && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) > 0) {
+            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (1 - PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) / 10);
         }
     }
 
@@ -130,7 +130,7 @@ public class SummonEvents {
     public static void summonPowerup(LivingDamageEvent event) {
         if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().level() instanceof ServerLevel) {
             if (summon.getOwner() instanceof Player player) {
-                int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, player) - 1;
+                int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) - 1;
                 if (threadLevel > 0) {
                     event.setAmount(event.getAmount() + threadLevel);
                 }

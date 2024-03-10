@@ -40,7 +40,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
     private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos) {
         float baseDamage = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
-        DripstoneSpikeEntity spike = ISchoolFocus.hasFocus(shooter) == SpellSchools.ELEMENTAL_WATER ?
+        DripstoneSpikeEntity spike = ISchoolFocus.waterCheck(resolver) ?
                 new IceSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver) :
                 new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
         world.addFreshEntity(spike);

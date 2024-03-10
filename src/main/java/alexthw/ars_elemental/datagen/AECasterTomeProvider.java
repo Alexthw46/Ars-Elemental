@@ -78,7 +78,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                         .add(EffectFlare.INSTANCE)
                         .add(EffectHeal.INSTANCE)
                         .add(EffectFlare.INSTANCE)
-                , "The hellfire flames are fueled by the healing magic.",
+                , "The magic flames are fueled by the healing magic.",
                 ParticleUtil.fireColor));
 
         tomes.add(buildTome(NECRO_CTOME, "skelehorse", "Undead Steed", new Spell()

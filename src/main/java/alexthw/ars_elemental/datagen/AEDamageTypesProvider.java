@@ -21,7 +21,7 @@ public class AEDamageTypesProvider extends DatapackBuiltinEntriesProvider {
 
     public static void bootstrap(BootstapContext<DamageType> ctx) {
         ctx.register(ModRegistry.POISON, new DamageType("poison", 0.1F));
-        ctx.register(ModRegistry.HELLFIRE, new DamageType("hellfire", 0.1F));
+        ctx.register(ModRegistry.MAGIC_FIRE, new DamageType("hellfire", 0.1F));
         ctx.register(ModRegistry.SPARK, new DamageType("spark", 0.1F));
     }
 

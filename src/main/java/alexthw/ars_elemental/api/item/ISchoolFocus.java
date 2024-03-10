@@ -1,13 +1,15 @@
 package alexthw.ars_elemental.api.item;
 
+import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
-import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
@@ -30,7 +32,7 @@ public interface ISchoolFocus extends ISpellModifierItem, ISchoolProvider {
                 return focus;
             }
         }
-        SlotResult curio = CuriosApi.getCuriosHelper().findFirstCurio(player, c -> (c.getItem() instanceof ISchoolFocus)).orElse(null);
+        SlotResult curio = CompatUtils.getCurio(player, c -> (c.getItem() instanceof ISchoolFocus));
         if (curio != null && curio.stack().getItem() instanceof ISchoolFocus focus) {
             return focus;
         }
@@ -38,5 +40,22 @@ public interface ISchoolFocus extends ISpellModifierItem, ISchoolProvider {
     }
 
     double getDiscount();
+
+    static boolean fireCheck(SpellResolver resolver) {
+        return resolver.hasFocus(ModItems.FIRE_FOCUS.get().getDefaultInstance()) || resolver.hasFocus(ModItems.LESSER_FIRE_FOCUS.get().getDefaultInstance());
+    }
+
+    static boolean waterCheck(SpellResolver resolver) {
+        return resolver.hasFocus(ModItems.WATER_FOCUS.get().getDefaultInstance()) || resolver.hasFocus(ModItems.LESSER_WATER_FOCUS.get().getDefaultInstance());
+    }
+
+    static boolean earthCheck(SpellResolver resolver) {
+        return resolver.hasFocus(ModItems.EARTH_FOCUS.get().getDefaultInstance()) || resolver.hasFocus(ModItems.LESSER_EARTH_FOCUS.get().getDefaultInstance());
+    }
+
+    static boolean airCheck(SpellResolver resolver) {
+        return resolver.hasFocus(ModItems.AIR_FOCUS.get().getDefaultInstance()) || resolver.hasFocus(ModItems.LESSER_AIR_FOCUS.get().getDefaultInstance());
+    }
+
 
 }

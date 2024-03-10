@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
+import static alexthw.ars_elemental.registry.ModPotions.MAGIC_FIRE;
 
 
 public class GreaterElementalFocus extends ElementalFocus {
@@ -48,7 +49,7 @@ public class GreaterElementalFocus extends ElementalFocus {
         if (player.tickCount % 20 == 0) {
             switch (getSchool().getId()) {
                 case "fire" -> {
-                    if (player.isOnFire() || player.isInLava())
+                    if (player.isOnFire() || player.isInLava() || player.hasEffect(MAGIC_FIRE.get()))
                         player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), 200, 2));
                 }
                 case "water" -> {

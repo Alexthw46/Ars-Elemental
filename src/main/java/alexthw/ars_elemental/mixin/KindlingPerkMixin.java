@@ -21,8 +21,8 @@ public class KindlingPerkMixin {
     @Inject(method = "onPreResolve", at = @At("HEAD"), remap = false)
     private void onPreResolve(HitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, AbstractEffect effect, PerkInstance perkInstance, CallbackInfo ci) {
         if (effect instanceof IDamageEffect damageEffect && rayTraceResult instanceof EntityHitResult entityHitResult && perkInstance.getSlot() == PerkSlot.THREE) {
-            if (damageEffect.canDamage(shooter, spellStats, spellContext, resolver, entityHitResult.getEntity()) && shooter != entityHitResult.getEntity() && entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-                livingEntity.forceAddEffect(new MobEffectInstance(ModPotions.HELLFIRE.get(), 20), livingEntity);
+            if (damageEffect.canDamage(shooter, spellStats, spellContext, resolver, entityHitResult.getEntity()) && entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(ModPotions.MAGIC_FIRE.get(), 20), livingEntity);
             }
         }
     }

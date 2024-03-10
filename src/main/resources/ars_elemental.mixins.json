@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "ars_elemental.refmap.json",
   "mixins": [
+    "DynamicLightMixin",
     "FlareMixin",
     "FoxInvoker",
     "GrowMixin",
@@ -17,6 +18,7 @@
   ],
   "minVersion": "0.8",
   "client": [
+    "EntityRenderDispatcherMixin",
     "SpellBookMixin",
     "SpellBookTextureMixin"
   ]

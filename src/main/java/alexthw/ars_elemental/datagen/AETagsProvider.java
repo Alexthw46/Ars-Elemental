@@ -10,6 +10,7 @@ import com.hollingsworth.arsnouveau.common.datagen.BiomeTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.lib.EntityTags;
+import com.hollingsworth.arsnouveau.common.lib.PotionEffectTags;
 import com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
@@ -44,6 +45,7 @@ import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.FIRENANDO_FAMILIAR;
 import static alexthw.ars_elemental.registry.ModEntities.SIREN_FAMILIAR;
+import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
 
 public class AETagsProvider {
 
@@ -250,7 +252,8 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider pProvider) {
-            tag(BUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.HYMN_OF_ORDER.get());
+            tag(BUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.HYMN_OF_ORDER.get(), SUMMONING_SICKNESS_EFFECT.get());
+            tag(PotionEffectTags.TO_SYNC).add(ModPotions.MAGIC_FIRE.get(), ModPotions.LIGHTNING_LURE.get());
         }
 
     }
@@ -270,7 +273,7 @@ public class AETagsProvider {
                             DamageTypes.PLAYER_EXPLOSION,
                             DamageTypes.FIREWORKS)
                     .addOptional(DamageTypesRegistry.FLARE.location())
-                    .addOptional(ModRegistry.HELLFIRE.location());
+                    .addOptional(ModRegistry.MAGIC_FIRE.location());
 
             tag(ModRegistry.WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
                             DamageTypes.TRIDENT,

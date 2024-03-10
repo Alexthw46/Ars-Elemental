@@ -21,7 +21,7 @@ public class ModPotions {
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MODID);
 
-    public static final RegistryObject<MobEffect> HELLFIRE;
+    public static final RegistryObject<MobEffect> MAGIC_FIRE;
     public static final RegistryObject<MobEffect> FROZEN;
 
     public static final RegistryObject<MobEffect> WATER_GRAVE;
@@ -55,7 +55,7 @@ public class ModPotions {
     }
 
     static {
-        HELLFIRE = EFFECTS.register("hellfire", HellFireEffect::new);
+        MAGIC_FIRE = EFFECTS.register("hellfire", MagicFireEffect::new);
         FROZEN = EFFECTS.register("frozen", FrozenEffect::new);
         WATER_GRAVE = EFFECTS.register("watery_grave", WaterGraveEffect::new);
         MANA_BUBBLE = EFFECTS.register("mana_shield", BubbleShieldEffect::new);

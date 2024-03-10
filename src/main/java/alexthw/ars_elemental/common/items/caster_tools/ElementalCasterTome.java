@@ -1,12 +1,16 @@
 package alexthw.ars_elemental.common.items.caster_tools;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -34,5 +38,44 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
     @Override
     public double getDiscount() {
         return 0;
+    }
+
+    @Override
+    public @NotNull ISpellCaster getSpellCaster(ItemStack stack) {
+        return new TomeSpellCaster(stack) {
+            @Override
+            public SpellResolver getSpellResolver(SpellContext context, Level worldIn, LivingEntity playerIn, InteractionHand handIn) {
+                return new ETomeResolver(context, getSchool());
+            }
+        };
+    }
+
+    static class ETomeResolver extends SpellResolver {
+
+        public SpellSchool getSchool() {
+            return school;
+        }
+
+        private final SpellSchool school;
+
+        public ETomeResolver(SpellContext context, SpellSchool school) {
+            super(context);
+            this.school = school;
+        }
+
+        @Override
+        public boolean hasFocus(ItemStack stack) {
+            if (stack.getItem() instanceof ISchoolFocus focus) {
+                return getSchool() == focus.getSchool();
+            } else if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get()) {
+                return getSchool() == SpellSchools.MANIPULATION;
+            }
+            return super.hasFocus(stack);
+        }
+
+        @Override
+        public SpellResolver getNewResolver(SpellContext context) {
+            return new ETomeResolver(context, getSchool());
+        }
     }
 }

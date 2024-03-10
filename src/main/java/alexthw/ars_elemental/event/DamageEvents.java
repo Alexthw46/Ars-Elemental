@@ -85,7 +85,7 @@ public class DamageEvents {
                         //if the target is fire immune, cancel the event and deal damage
                         if (event.getSource().is(DamageTypeTags.IS_FIRE) && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
                             event.setCanceled(true);
-                            DamageSource newDamage = DamageUtil.source(player.level, ModRegistry.HELLFIRE, player);
+                            DamageSource newDamage = DamageUtil.source(player.level, ModRegistry.MAGIC_FIRE, player);
                             living.hurt(newDamage, event.getAmount());
                         }
                     }
@@ -109,7 +109,7 @@ public class DamageEvents {
                 //if the firenando is attacking a monster, and the monster is fire immune, cancel the event and deal damage
                 if ((mob.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE)) && event.getSource().is(DamageTypeTags.IS_FIRE)) {
                     event.setCanceled(true);
-                    mob.hurt(DamageUtil.source(FE.level, ModRegistry.HELLFIRE, FE), event.getAmount());
+                    mob.hurt(DamageUtil.source(FE.level, ModRegistry.MAGIC_FIRE, FE), event.getAmount());
                 }
             }
         }
@@ -150,11 +150,8 @@ public class DamageEvents {
             event.setCanceled(true);
         }
         //reduce healing if you have hellfire and reset the invulnerability time
-        if (event.getEntity().hasEffect(HELLFIRE.get())) {
-            MobEffectInstance inst = event.getEntity().getEffect(HELLFIRE.get());
-            if (inst == null) return;
-            int amplifier = Math.min(9, inst.getAmplifier());
-            event.setAmount(event.getAmount() * (10 - amplifier) / 10);
+        if (event.getEntity().hasEffect(MAGIC_FIRE.get())) {
+            event.setAmount((float) (event.getAmount() * 1.25));
             event.getEntity().invulnerableTime = 0;
         }
     }
@@ -271,20 +268,30 @@ public class DamageEvents {
     //When the entity have the mana bubble and is hit by a harmful effect, it will consume mana to try to protect against it
     @SubscribeEvent
     public static void statusProtect(MobEffectEvent.Applicable event) {
-        if (event.getEntity().hasEffect(MANA_BUBBLE.get()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
-            Optional<HolderSet.Named<MobEffect>> effects = event.getEntity().level.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(AETagsProvider.AEMobEffectTagProvider.BUBBLE_BLACKLIST);
-            if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect.get() == event.getEffectInstance().getEffect()))
-                return;
+        if (event.getEntity().hasEffect(MANA_BUBBLE.get()))
+            if (event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                Optional<HolderSet.Named<MobEffect>> effects = event.getEntity().level.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(AETagsProvider.AEMobEffectTagProvider.BUBBLE_BLACKLIST);
+                if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect.get() == event.getEffectInstance().getEffect()))
+                    return;
 
-            int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() * 2;
-            if (event.getEntity().getRandom().nextInt(10) == 0) {
-                CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
-                    if (mana.getCurrentMana() >= ManaBubbleCost) {
-                        mana.removeMana((double) ManaBubbleCost / 2);
-                        event.setResult(Event.Result.DENY);
-                    }
-                });
+                int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() * 2;
+                if (event.getEntity().getRandom().nextInt(10) == 0) {
+                    CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
+                        if (mana.getCurrentMana() >= ManaBubbleCost) {
+                            mana.removeMana((double) ManaBubbleCost / 2);
+                            event.setResult(Event.Result.DENY);
+                        }
+                    });
+                }
+            } else if (event.getEffectInstance().getEffect() == MAGIC_FIRE.get()) {
+                event.setResult(Event.Result.DENY);
             }
+    }
+
+    @SubscribeEvent
+    public static void lightningLure(MobEffectEvent.Expired event) {
+        if (event.getEffectInstance() != null && event.getEffectInstance().getEffect() == LIGHTNING_LURE.get()) {
+            //LightningLureEffect.fallLightning(event.getEntity());
         }
     }
 

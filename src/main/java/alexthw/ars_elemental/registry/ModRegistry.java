@@ -36,6 +36,7 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.ENTITIES;
 import static alexthw.ars_elemental.registry.ModItems.BLOCKS;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
+import static alexthw.ars_elemental.registry.ModParticles.PARTICLES;
 import static alexthw.ars_elemental.registry.ModPotions.EFFECTS;
 import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
 import static alexthw.ars_elemental.registry.ModTiles.TILES;
@@ -66,7 +67,7 @@ public class ModRegistry {
     public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registries.ENTITY_TYPE, prefix("insect"));
     public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registries.ENTITY_TYPE, prefix("undead"));
     public static final ResourceKey<DamageType> POISON = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("poison"));
-    public static final ResourceKey<DamageType> HELLFIRE = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("hellfire"));
+    public static final ResourceKey<DamageType> MAGIC_FIRE = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("hellfire"));
     public static final ResourceKey<DamageType> SPARK = ResourceKey.create(Registries.DAMAGE_TYPE, prefix("spark"));
 
     public static TagKey<DamageType> FIRE_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("fire_damage"));
@@ -89,6 +90,7 @@ public class ModRegistry {
         FEATURES.register(bus);
         BS_PROVIDERS.register(bus);
         TABS.register(bus);
+        PARTICLES.register(bus);
     }
 
     public static final RegistryObject<CreativeModeTab> ELEMENTAL_TAB;

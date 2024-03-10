@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -27,16 +28,18 @@ public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurr
         super(modelFire);
     }
 
+
     @Override
-    public void preRender(PoseStack poseStack, ElementalSpellTurretTile animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void actuallyRender(PoseStack poseStack, ElementalSpellTurretTile animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
         Direction direction = animatable.getBlockState().getValue(BasicSpellTurret.FACING);
         if (direction == Direction.UP) {
-            poseStack.translate(0, -0.5, -0.5);
+            poseStack.translate(0.0, 0.5, -0.5);
         } else if (direction == Direction.DOWN) {
-            poseStack.translate(0, -0.5, 0.5);
+            poseStack.translate(0.0, 0.5, 0.5);
         }
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+
+        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
     }
 

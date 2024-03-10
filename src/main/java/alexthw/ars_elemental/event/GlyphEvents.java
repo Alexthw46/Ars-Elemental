@@ -3,7 +3,6 @@ package alexthw.ars_elemental.event;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
-import alexthw.ars_elemental.common.blocks.ElementalSpellTurretTile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
@@ -13,8 +12,6 @@ import alexthw.ars_elemental.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.IDamageEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -42,25 +39,32 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.*;
-
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class GlyphEvents {
 
     @SubscribeEvent
     public static void empowerGlyphs(EffectResolveEvent.Pre event) {
         if (!ConfigHandler.COMMON.EnableGlyphEmpowering.get()) return;
-        SpellSchool school = event.context.getCaster() instanceof TileCaster tc && tc.getTile() instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.shooter);
         if (event.rayTraceResult instanceof BlockHitResult blockHitResult)
-            empowerResolveOnBlocks(event, blockHitResult, school);
+            empowerResolveOnBlocks(event, blockHitResult, event.resolver);
         else if (event.rayTraceResult instanceof EntityHitResult entityHitResult)
-            empowerResolveOnEntities(event, entityHitResult, school);
+            empowerResolveOnEntities(event, entityHitResult, event.resolver);
     }
 
-    public static void empowerResolveOnEntities(EffectResolveEvent.Pre event, EntityHitResult entityHitResult, SpellSchool school) {
+    public GlyphEvents() {
+    }
+
+    public static void empowerResolveOnEntities(EffectResolveEvent.Pre event, EntityHitResult entityHitResult, SpellResolver resolver) {
 
         if (!(entityHitResult.getEntity() instanceof LivingEntity living && event.world instanceof ServerLevel))
             return;
+
+        boolean hasFire = ISchoolFocus.fireCheck(resolver);
+        boolean hasWater = ISchoolFocus.waterCheck(resolver);
+        boolean hasEarth = ISchoolFocus.earthCheck(resolver);
+        boolean hasAir = ISchoolFocus.airCheck(resolver);
+        //boolean hasAnima = resolver.hasFocus(ModItems.NECRO_FOCUS.get().getDefaultInstance());
+
 
         if (event.resolveEffect == EffectCut.INSTANCE) {
             if (living.hasEffect(ModPotions.LIFE_LINK.get())) {
@@ -71,18 +75,19 @@ public class GlyphEvents {
             }
         }
 
-        if (event.resolveEffect == EffectIgnite.INSTANCE) {
-            if (event.shooter != living && school == ELEMENTAL_FIRE)
-                living.forceAddEffect(new MobEffectInstance(ModPotions.HELLFIRE.get(), 200, (int) event.spellStats.getAmpMultiplier() / 2), living);
-        }
+
+        if (event.resolveEffect == EffectIgnite.INSTANCE && hasFire)
+            living.addEffect(new MobEffectInstance(ModPotions.MAGIC_FIRE.get(), 200), living);
+
         if (event.resolveEffect == EffectLaunch.INSTANCE) {
-            if (event.spellStats.getDurationMultiplier() != 0 && school == ELEMENTAL_AIR) {
+            if (event.spellStats.getDurationMultiplier() != 0 && hasAir) {
                 living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 50 * (1 + (int) event.spellStats.getDurationMultiplier()), (int) event.spellStats.getAmpMultiplier() / 2));
-                if (event.shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer)) ModAdvTriggers.LEVITATE.trigger(serverPlayer);
+                if (event.shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
+                    ModAdvTriggers.LEVITATE.trigger(serverPlayer);
             }
         }
         if (event.resolveEffect == EffectFreeze.INSTANCE) {
-            if (event.shooter != living && school == ELEMENTAL_WATER) {
+            if (event.shooter != living && hasWater) {
                 if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON) {
                     skel.setFreezeConverting(true);
                 }
@@ -96,7 +101,7 @@ public class GlyphEvents {
             }
         }
         if (event.resolveEffect == EffectGrow.INSTANCE) {
-            if (living.getMobType() == MobType.UNDEAD && school == ELEMENTAL_EARTH && event.shooter instanceof Player) {
+            if (living.getMobType() == MobType.UNDEAD && hasEarth && event.shooter instanceof Player) {
                 ((IDamageEffect) event.resolveEffect).attemptDamage(event.world, event.shooter, event.spellStats, event.context, event.resolver, living, event.world.damageSources().magic(), (float) (3 + 2 * event.spellStats.getAmpMultiplier()));
                 if (living.isDeadOrDying() && event.world.getRandom().nextInt(100) < 20) {
                     BlockPos feet = living.getOnPos();
@@ -110,17 +115,22 @@ public class GlyphEvents {
             }
         }
         if (event.resolveEffect == EffectGravity.INSTANCE) {
-            if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && school == ELEMENTAL_EARTH) {
+            if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && hasEarth) {
                 EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.context, event.rayTraceResult.getLocation());
                 event.setCanceled(true);
             }
         }
     }
 
-    public static void empowerResolveOnBlocks(EffectResolveEvent.Pre event, BlockHitResult blockHitResult, SpellSchool school) {
+    public static void empowerResolveOnBlocks(EffectResolveEvent.Pre event, BlockHitResult blockHitResult, SpellResolver resolver) {
+
+        boolean hasFire = ISchoolFocus.fireCheck(resolver);
+        boolean hasWater = ISchoolFocus.waterCheck(resolver);
+        boolean hasEarth = ISchoolFocus.earthCheck(resolver);
+        //boolean hasAir = ISchoolFocus.airCheck(resolver);
 
         if (event.resolveEffect == EffectConjureWater.INSTANCE) {
-            if (school == ELEMENTAL_WATER) {
+            if (hasWater) {
                 if (GlyphEffectUtil.hasFollowingEffect(event.context, EffectFreeze.INSTANCE)) {
                     GlyphEffectUtil.placeBlocks(blockHitResult, event.world, event.shooter, event.spellStats, event.context, new SpellResolver(event.context), Blocks.ICE.defaultBlockState());
                     event.setCanceled(true);
@@ -129,7 +139,7 @@ public class GlyphEvents {
         }
 
         if (event.resolveEffect == EffectGravity.INSTANCE) {
-            if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && school == ELEMENTAL_EARTH) {
+            if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && hasEarth) {
                 EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.context, event.rayTraceResult.getLocation());
                 event.setCanceled(true);
             }
@@ -141,7 +151,7 @@ public class GlyphEvents {
             List<BlockPos> posList = SpellUtil.calcAOEBlocks(event.shooter, blockHitResult.getBlockPos(), blockHitResult, event.spellStats.getAoeMultiplier(), pierceBuff);
             BlockState state;
 
-            boolean flag = school == ELEMENTAL_FIRE && GlyphEffectUtil.hasFollowingEffect(event.context, EffectEvaporate.INSTANCE);
+            boolean flag = hasFire && GlyphEffectUtil.hasFollowingEffect(event.context, EffectEvaporate.INSTANCE);
 
             for (BlockPos pos1 : posList) {
                 state = event.world.getBlockState(pos1);

@@ -1,2 +1,3 @@
-// 1.20.1	2023-09-18T12:59:27.8395629	Tags for minecraft:mob_effect mod id ars_elemental
-61585f8768b84f9cbdc32fceac3e7f2baebab507 data/ars_elemental/tags/mob_effect/manabubble_blacklist.json
+// 1.20.1	2024-03-10T11:57:53.9149035	Tags for minecraft:mob_effect mod id ars_elemental
+bf78cab890974f864aecbb8b86f90cff309bf461 data/ars_elemental/tags/mob_effect/manabubble_blacklist.json
+c3b7e8630b0cb0882260bf5e3ab8c45b4a446bdb data/ars_nouveau/tags/mob_effect/to_sync.json

@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.api.item;
 
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
@@ -11,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ public interface ISchoolBangle extends ISpellModifierItem, ISchoolProvider {
 
     static @Nullable SpellSchool hasBangle(Level world, Entity entity) {
         if (!world.isClientSide && entity instanceof Player player) {
-            SlotResult curio = CuriosApi.getCuriosHelper().findFirstCurio(player, c -> (c.getItem() instanceof ISchoolBangle)).orElse(null);
+            SlotResult curio = CompatUtils.getCurio(player, c -> (c.getItem() instanceof ISchoolBangle));
             if (curio != null && curio.stack().getItem() instanceof ISchoolBangle bangle) {
                 return bangle.getSchool();
             }
