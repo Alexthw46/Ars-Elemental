@@ -3,9 +3,6 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.api.IPropagator;
 import alexthw.ars_elemental.common.entity.spells.EntityCurvedProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
-import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
-import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.core.BlockPos;
@@ -60,14 +57,8 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
         }
 
         float velocity = MethodCurvedProjectile.getProjectileSpeed(stats);
-        Vec3 direction = pos.subtract(shooter.position());
-        if (resolver.spellContext.getCaster() instanceof TileCaster tc) {
-            if (tc.getTile() instanceof RotatingTurretTile rotatingTurretTile) {
-                direction = rotatingTurretTile.getShootAngle();
-            } else {
-                direction = new Vec3(tc.getTile().getBlockState().getValue(BasicSpellTurret.FACING).step());
-            }
-        }
+        Vec3 direction = IPropagator.adjustProjectileDirection(hitResult, shooter, resolver, pos);
+
         for (EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0, 0.25 * sizeRatio, 0));
             if (!(shooter instanceof FakePlayer)) {
