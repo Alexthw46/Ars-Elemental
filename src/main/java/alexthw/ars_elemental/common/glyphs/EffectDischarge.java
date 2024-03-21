@@ -41,7 +41,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (!(rayTraceResult.getEntity() instanceof LivingEntity livingEntity) || !(world instanceof ServerLevel level))
+        if (!(rayTraceResult.getEntity() instanceof LivingEntity livingEntity) || !(world instanceof ServerLevel))
             return;
         Vec3 vec = safelyGetHitPos(rayTraceResult);
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
@@ -52,7 +52,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         if (livingEntity.hasEffect(ModPotions.SHOCKED_EFFECT.get()) || livingEntity.hasEffect(LIGHTNING_LURE.get())) {
             // If the target is static charged, damage is increased by 30% and the effect is removed
             if (livingEntity.hasEffect(LIGHTNING_LURE.get())) {
-                damage *= 1.3;
+                damage *= 1.3F;
                 livingEntity.removeEffect(LIGHTNING_LURE.get());
             }
             // If the target wear energy armors, damage is increased by 10% for each armor piece and energy is drained
@@ -62,7 +62,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
                     Optional<IEnergyStorage> energyStorage = lazyEnergyStorage.resolve();
                     if (energyStorage.isPresent()) {
                         energyStorage.get().extractEnergy((int) (energyStorage.get().getEnergyStored() * 0.25), false);
-                        damage *= 1.1;
+                        damage *= 1.1F;
                     }
                 }
             }

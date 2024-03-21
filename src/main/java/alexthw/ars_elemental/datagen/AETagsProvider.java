@@ -253,7 +253,7 @@ public class AETagsProvider {
         @Override
         protected void addTags(HolderLookup.@NotNull Provider pProvider) {
             tag(BUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.HYMN_OF_ORDER.get(), SUMMONING_SICKNESS_EFFECT.get());
-            tag(PotionEffectTags.TO_SYNC).add(ModPotions.MAGIC_FIRE.get(), ModPotions.LIGHTNING_LURE.get());
+            tag(PotionEffectTags.TO_SYNC).add(ModPotions.MAGIC_FIRE.get());
         }
 
     }

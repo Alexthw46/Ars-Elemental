@@ -160,6 +160,7 @@ dependencies {
 
     //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4086496")
     //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
+    runtimeOnly fg.deobf("curse.maven:cofh-core-69162:4970669")
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:0.2.0-beta.8"))
     implementation("com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.8")
@@ -207,4 +208,12 @@ apply plugin: 'org.spongepowered.mixin'
 
 mixin {
     add sourceSets.main, "ars_elemental.refmap.json"
+}
+
+idea {
+    // Tell IDEA to always download sources/javadoc artifacts from maven.
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }

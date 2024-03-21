@@ -39,6 +39,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
+import static alexthw.ars_elemental.ConfigHandler.COMMON;
+
 @Mod.EventBusSubscriber(modid = ArsElemental.MODID)
 public class GlyphEvents {
 
@@ -95,7 +97,7 @@ public class GlyphEvents {
                 int newFrozenTicks = living.getTicksFrozen() + (int) (60 * event.spellStats.getAmpMultiplier());
                 living.setTicksFrozen(newFrozenTicks);
                 if (living.isFullyFrozen() && living.canFreeze() && !living.hasEffect(ModPotions.FROZEN.get()) && living.invulnerableTime > 10) {
-                    living.invulnerableTime = 0;
+                    if (COMMON.IFRAME_SKIP.get()) living.invulnerableTime = 0;
                     living.forceAddEffect(new MobEffectInstance(ModPotions.FROZEN.get(), 10, 0, false, false, false), living);
                 }
             }

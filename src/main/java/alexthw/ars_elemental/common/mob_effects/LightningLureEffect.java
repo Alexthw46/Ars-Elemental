@@ -1,39 +1,29 @@
 package alexthw.ars_elemental.common.mob_effects;
 
-import alexthw.ars_elemental.registry.ModParticles;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-public class LightningLureEffect extends ParticleMobEffect {
+public class LightningLureEffect extends MobEffect {
     public LightningLureEffect() {
-        super(MobEffectCategory.HARMFUL, new ParticleColor(255, 255, 0).getColor());
+        super(MobEffectCategory.HARMFUL, ParticleColor.YELLOW.getColor());
     }
 
     @Override
-    public void applyEffectTick(LivingEntity living, int amplifier) {
-        super.applyEffectTick(living, amplifier);
-        MobEffectInstance effect = living.getEffect(this);
-        if (effect != null && effect.getDuration() == 1) {
-            fallLightning(living);
-        }
-    }
-
-    @Override
-    public ParticleOptions getParticle() {
-        return ModParticles.SPARK.get();
+    public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+        fallLightning(pLivingEntity);
     }
 
     @Override
     public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
         // Trigger the effect only once, when the time left reaches 1.
-        return true;
+        return pDuration == 1;
     }
 
     public static void fallLightning(LivingEntity pLivingEntity) {

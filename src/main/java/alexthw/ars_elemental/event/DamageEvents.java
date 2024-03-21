@@ -149,8 +149,8 @@ public class DamageEvents {
         if (event.getEntity().hasEffect(FROZEN.get())) {
             event.setCanceled(true);
         }
-        //reduce healing if you have hellfire and reset the invulnerability time
-        if (event.getEntity().hasEffect(MAGIC_FIRE.get())) {
+        //increase healing if you have hellfire and reset the invulnerability time
+        if (event.getEntity().hasEffect(MAGIC_FIRE.get()) && COMMON.IFRAME_SKIP.get()) {
             event.setAmount((float) (event.getAmount() * 1.25));
             event.getEntity().invulnerableTime = 0;
         }
@@ -286,13 +286,6 @@ public class DamageEvents {
             } else if (event.getEffectInstance().getEffect() == MAGIC_FIRE.get()) {
                 event.setResult(Event.Result.DENY);
             }
-    }
-
-    @SubscribeEvent
-    public static void lightningLure(MobEffectEvent.Expired event) {
-        if (event.getEffectInstance() != null && event.getEffectInstance().getEffect() == LIGHTNING_LURE.get()) {
-            //LightningLureEffect.fallLightning(event.getEntity());
-        }
     }
 
     @SubscribeEvent

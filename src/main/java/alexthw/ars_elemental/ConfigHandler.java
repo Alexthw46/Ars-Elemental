@@ -22,6 +22,7 @@ public class ConfigHandler {
 
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
         public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
+        public final ForgeConfigSpec.ConfigValue<Boolean> IFRAME_SKIP;
 
         public static ForgeConfigSpec.IntValue ARMOR_MAX_MANA;
         public static ForgeConfigSpec.IntValue ARMOR_MANA_REGEN;
@@ -79,6 +80,7 @@ public class ConfigHandler {
 
             EnableGlyphEmpowering = builder.define("Enable glyph empowering", true);
             EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
+            IFRAME_SKIP = builder.define("Enable iframe skip combos", true);
 
             builder.pop();
 
