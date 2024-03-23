@@ -120,24 +120,14 @@ public class ModRegistry {
 
         CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> {
             int slot = extraData.readInt();
-            ItemStack stack;
-            if (slot >= 0) {
-                stack = inv.getItem(slot);
-            } else {
-                stack = CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CurioHolder).stack();
-            }
+            ItemStack stack = slot < 0 ? CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CurioHolder).stack() : inv.getItem(slot);
             if (stack.isEmpty() || !(stack.getItem() instanceof CurioHolder))
                 stack = ModItems.CURIO_BAG.get().getDefaultInstance();
             return new CurioHolderContainer(id, inv, stack);
         }));
         CASTER_HOLDER = CONTAINERS.register("caster_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> {
             int slot = extraData.readInt();
-            ItemStack stack;
-            if (slot < 0) {
-                stack = inv.getItem(slot);
-            } else {
-                stack = CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CasterHolder).stack();
-            }
+            ItemStack stack = slot < 0 ? CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CasterHolder).stack() : inv.getItem(slot);
             if (stack.isEmpty() || !(stack.getItem() instanceof CasterHolder))
                 stack = ModItems.CASTER_BAG.get().getDefaultInstance();
             return new CasterHolderContainer(id, inv, stack);
