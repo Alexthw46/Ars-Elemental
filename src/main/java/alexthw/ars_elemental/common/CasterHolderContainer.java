@@ -18,7 +18,7 @@ public class CasterHolderContainer extends CurioHolderContainer {
     protected @NotNull Slot makeSlot(Container inventory, int i, int j, int index) {
         return new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
             @Override
-            public boolean mayPlace(ItemStack stack) {
+            public boolean mayPlace(@NotNull ItemStack stack) {
                 return CasterHolder.canStore(stack);
             }
         };

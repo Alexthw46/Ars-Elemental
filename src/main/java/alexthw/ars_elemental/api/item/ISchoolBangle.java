@@ -21,7 +21,7 @@ public interface ISchoolBangle extends ISpellModifierItem, ISchoolProvider {
     static @Nullable SpellSchool hasBangle(Level world, Entity entity) {
         if (!world.isClientSide && entity instanceof Player player) {
             SlotResult curio = CompatUtils.getCurio(player, c -> (c.getItem() instanceof ISchoolBangle));
-            if (curio != null && curio.stack().getItem() instanceof ISchoolBangle bangle) {
+            if (!curio.stack().isEmpty() && curio.stack().getItem() instanceof ISchoolBangle bangle) {
                 return bangle.getSchool();
             }
         }

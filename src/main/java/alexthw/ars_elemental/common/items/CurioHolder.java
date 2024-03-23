@@ -3,6 +3,7 @@ package alexthw.ars_elemental.common.items;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.util.ItemInventory;
 import com.hollingsworth.arsnouveau.api.item.AbstractSummonCharm;
+import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.items.ItemScroll;
 import com.hollingsworth.arsnouveau.common.items.PotionFlask;
@@ -27,6 +28,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -43,27 +45,27 @@ public class CurioHolder extends Item {
         super(pProperties);
     }
 
-    public static ItemStack isEquipped(Player playerEntity) {
-        if (playerEntity != null){
+    public static SlotReference isEquipped(Player playerEntity) {
+        if (playerEntity != null) {
             Optional<IItemHandlerModifiable> curios = CuriosUtil.getAllWornItems(playerEntity).resolve();
             if (curios.isPresent()) {
                 IItemHandlerModifiable items = curios.get();
-                for(int i = 0; i < items.getSlots(); ++i) {
+                for (int i = 0; i < items.getSlots(); ++i) {
                     ItemStack item = items.getStackInSlot(i);
                     if (item.getItem() instanceof CurioHolder) {
-                        return item;
+                        return new SlotReference(items, i);
                     }
                 }
             }
             Inventory inv = playerEntity.getInventory();
-            for(int i = 0; i < 9; ++i) {
+            for (int i = 0; i < 9; ++i) {
                 ItemStack stack = inv.items.get((inv.selected + i) % 9);
                 if (stack.getItem() instanceof CurioHolder) {
-                    return stack;
+                    return new SlotReference(new PlayerMainInvWrapper(inv), (inv.selected + i) % 9);
                 }
             }
         }
-        return ItemStack.EMPTY;
+        return SlotReference.empty();
     }
 
     public static boolean canStore(ItemStack stack) {
@@ -82,16 +84,15 @@ public class CurioHolder extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         if (!level.isClientSide) {
             ItemStack stack = playerIn.getItemInHand(handIn);
-            openContainer(level,playerIn,stack);
+            openContainer(level, playerIn, stack, handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 1);
         }
         return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
     }
 
-    public void openContainer(Level level, Player player, ItemStack bag) {
-        if (!level.isClientSide)
-        {
+    public void openContainer(Level level, Player player, ItemStack bag, int index) {
+        if (!level.isClientSide) {
             MenuProvider container = new SimpleMenuProvider((w, p, pl) -> new CurioHolderContainer(w, p, bag), bag.getHoverName());
-            NetworkHooks.openScreen((ServerPlayer) player, container, b -> b.writeItemStack(bag, false));
+            NetworkHooks.openScreen((ServerPlayer) player, container, b -> b.writeInt(index));
             player.level.playSound(null, player.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 1, 1);
         }
     }

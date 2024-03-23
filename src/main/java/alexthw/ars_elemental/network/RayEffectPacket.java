@@ -2,6 +2,7 @@ package alexthw.ars_elemental.network;
 
 import alexthw.ars_elemental.registry.ModParticles;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.client.particle.ColoredDynamicTypeData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +16,8 @@ import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
+
+import static com.hollingsworth.arsnouveau.client.registry.ModParticles.SPARKLE_TYPE;
 
 public class RayEffectPacket {
 
@@ -83,14 +86,14 @@ public class RayEffectPacket {
                 for (double d = start; d < distance; d += increment) {
                     double fractionalDistance = d / distance;
                     double speedCoefficient = Mth.lerp(fractionalDistance, 0.2, 0.001);
-//                    level.addParticle(
-//                            new ColoredDynamicTypeData(ModParticles.SPARKLE_TYPE.get(), msg.color, 0.5F, 10),
-//                            Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
-//                            Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
-//                            Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
-//                            (level.random.nextFloat() - 0.5) * speedCoefficient,
-//                            (level.random.nextFloat() - 0.5) * speedCoefficient,
-//                            (level.random.nextFloat() - 0.5) * speedCoefficient);
+                    level.addParticle(
+                            new ColoredDynamicTypeData(SPARKLE_TYPE.get(), msg.color, 0.5F, 10),
+                            Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
+                            Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
+                            Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
+                            (level.random.nextFloat() - 0.25) * speedCoefficient,
+                            (level.random.nextFloat() - 0.25) * speedCoefficient,
+                            (level.random.nextFloat() - 0.25) * speedCoefficient);
                     level.addParticle(ModParticles.SPARK.get(), Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
                             Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
                             Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),

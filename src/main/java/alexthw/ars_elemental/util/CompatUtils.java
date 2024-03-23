@@ -33,7 +33,7 @@ public class CompatUtils {
                 return curioInv.findFirstCurio(predicate).orElse(null);
             }
         }
-        return null;
+        return new SlotResult(null, ItemStack.EMPTY);
     }
 
 

@@ -33,6 +33,7 @@ public class CurioHolderScreen extends AbstractContainerScreen<CurioHolderContai
 
     @Override
     public void render(@NotNull GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(gui);
         super.render(gui, mouseX, mouseY, partialTicks);
         renderTooltip(gui, mouseX, mouseY);
     }
@@ -45,7 +46,5 @@ public class CurioHolderScreen extends AbstractContainerScreen<CurioHolderContai
             gui.renderTooltip(this.font, this.getTooltipFromContainerItem(itemstack), itemstack.getTooltipImage(), itemstack, mouseX, mouseY);
         }
     }
-
-
 
 }

@@ -33,7 +33,7 @@ public interface ISchoolFocus extends ISpellModifierItem, ISchoolProvider {
             }
         }
         SlotResult curio = CompatUtils.getCurio(player, c -> (c.getItem() instanceof ISchoolFocus));
-        if (curio != null && curio.stack().getItem() instanceof ISchoolFocus focus) {
+        if (!curio.stack().isEmpty() && curio.stack().getItem() instanceof ISchoolFocus focus) {
             return focus;
         }
         return null;

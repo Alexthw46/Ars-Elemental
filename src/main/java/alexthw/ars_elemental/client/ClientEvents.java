@@ -15,6 +15,7 @@ import alexthw.ars_elemental.registry.ModParticles;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerRenderer;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
@@ -27,7 +28,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -136,9 +136,9 @@ public class ClientEvents {
             {
                 if (CURIO_BAG_KEYBINDING.isDown())
                 {
-                    ItemStack backpack = CurioHolder.isEquipped(playerEntity);
+                    SlotReference backpack = CurioHolder.isEquipped(playerEntity);
 
-                    if (backpack.getItem() instanceof CurioHolder)
+                    if (!backpack.isEmpty())
                     {
                         NetworkManager.INSTANCE.send(PacketDistributor.SERVER.noArg(), new OpenCurioBagPacket());
                     }

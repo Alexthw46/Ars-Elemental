@@ -4,9 +4,12 @@ import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.enchantments.MirrorShieldEnchantment;
 import alexthw.ars_elemental.common.enchantments.SoulboundEnchantment;
+import alexthw.ars_elemental.common.items.CasterHolder;
+import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
+import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.core.registries.Registries;
@@ -21,6 +24,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -114,8 +118,30 @@ public class ModRegistry {
 
     static {
 
-        CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CurioHolderContainer(id, inv, extraData.readItem())));
-        CASTER_HOLDER = CONTAINERS.register("caster_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new CasterHolderContainer(id, inv, extraData.readItem())));
+        CURIO_HOLDER = CONTAINERS.register("curio_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> {
+            int slot = extraData.readInt();
+            ItemStack stack;
+            if (slot >= 0) {
+                stack = inv.getItem(slot);
+            } else {
+                stack = CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CurioHolder).stack();
+            }
+            if (stack.isEmpty() || !(stack.getItem() instanceof CurioHolder))
+                stack = ModItems.CURIO_BAG.get().getDefaultInstance();
+            return new CurioHolderContainer(id, inv, stack);
+        }));
+        CASTER_HOLDER = CONTAINERS.register("caster_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> {
+            int slot = extraData.readInt();
+            ItemStack stack;
+            if (slot < 0) {
+                stack = inv.getItem(slot);
+            } else {
+                stack = CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CasterHolder).stack();
+            }
+            if (stack.isEmpty() || !(stack.getItem() instanceof CasterHolder))
+                stack = ModItems.CASTER_BAG.get().getDefaultInstance();
+            return new CasterHolderContainer(id, inv, stack);
+        }));
 
         AE_BLOCKSTATE_PROVIDER = BS_PROVIDERS.register("ae_stateprovider", () -> new BlockStateProviderType<>(SupplierBlockStateProviderAE.CODEC));
 
