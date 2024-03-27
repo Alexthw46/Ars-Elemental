@@ -5,6 +5,7 @@
   "refmap": "ars_elemental.refmap.json",
   "mixins": [
     "DynamicLightMixin",
+    "EvaporateMixin",
     "FlareMixin",
     "FoxInvoker",
     "GrowMixin",

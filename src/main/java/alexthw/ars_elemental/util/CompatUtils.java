@@ -26,14 +26,15 @@ public class CompatUtils {
 
     public static SlotResult getCurio(LivingEntity player, Predicate<ItemStack> predicate) {
         var lazy = CuriosApi.getCuriosInventory(player);
+        SlotResult noResult = new SlotResult(null, ItemStack.EMPTY);
         if (lazy.isPresent()) {
             var optional = lazy.resolve();
             if (optional.isPresent()) {
                 var curioInv = optional.get();
-                return curioInv.findFirstCurio(predicate).orElse(null);
+                return curioInv.findFirstCurio(predicate).orElse(noResult);
             }
         }
-        return new SlotResult(null, ItemStack.EMPTY);
+        return noResult;
     }
 
 
