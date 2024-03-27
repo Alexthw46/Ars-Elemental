@@ -109,7 +109,6 @@ public class MermaidEntity extends PathfinderMob implements IAnimatable, IAnimat
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new HybridStrollGoal(this, 1.0f, 40));
-        goalSelector.addGoal(3, new BreathAirGoal(this));
         goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6F));
         goalSelector.addGoal(4, new DolphinJumpGoal(this, 10));
         goalSelector.addGoal(5, new GoBackHomeGoal(this, this::getHome, 20, () -> this.getHome() != null));
