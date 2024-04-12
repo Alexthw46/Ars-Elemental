@@ -6,6 +6,7 @@ import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.client.particle.SparkParticle;
+import alexthw.ars_elemental.client.particle.VenomParticle;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.NetworkManager;
@@ -54,6 +55,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.SPARK.get(), SparkParticle::factory);
+        event.registerSpriteSet(ModParticles.VENOM.get(), VenomParticle::factory);
     }
 
     @SubscribeEvent

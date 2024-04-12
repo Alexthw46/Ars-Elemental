@@ -13,4 +13,5 @@ public class ModParticles {
 
     public static final RegistryObject<SimpleParticleType> SPARK = PARTICLES.register("spark", () -> new SimpleParticleType(false));
 
+    public static final RegistryObject<SimpleParticleType> VENOM = PARTICLES.register("venom", () -> new SimpleParticleType(false));
 }

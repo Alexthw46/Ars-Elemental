@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.network.RayEffectPacket;
+import alexthw.ars_elemental.network.DischargeEffectPacket;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -70,7 +70,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
                 this.applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);
-                RayEffectPacket.send(world, new ParticleColor(225, 200, 50), livingEntity.position(), entity.position());
+                DischargeEffectPacket.send(world, new ParticleColor(225, 200, 50), livingEntity.position(), entity.position());
             }
         }
     }

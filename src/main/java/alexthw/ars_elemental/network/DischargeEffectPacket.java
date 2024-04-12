@@ -10,6 +10,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
@@ -19,19 +20,19 @@ import java.util.function.Supplier;
 
 import static com.hollingsworth.arsnouveau.client.registry.ModParticles.SPARKLE_TYPE;
 
-public class RayEffectPacket {
+public class DischargeEffectPacket {
 
     public Vec3 from;
     public Vec3 to;
     public ParticleColor color;
 
-    public RayEffectPacket(Vec3 from, Vec3 to, ParticleColor colors) {
+    public DischargeEffectPacket(Vec3 from, Vec3 to, ParticleColor colors) {
         this.from = from;
         this.to = to;
         this.color = colors;
     }
 
-    public static void encode(RayEffectPacket msg, FriendlyByteBuf buf) {
+    public static void encode(DischargeEffectPacket msg, FriendlyByteBuf buf) {
         encodePos(buf, msg.from);
         encodePos(buf, msg.to);
         buf.writeInt(msg.color.getColor());
@@ -43,11 +44,11 @@ public class RayEffectPacket {
         buf.writeDouble(item.z);
     }
 
-    public static RayEffectPacket decode(FriendlyByteBuf buf) {
+    public static DischargeEffectPacket decode(FriendlyByteBuf buf) {
         Vec3 from = decodeVector3d(buf);
         Vec3 to = decodeVector3d(buf);
         int colors = buf.readInt();
-        return new RayEffectPacket(from, to, ParticleColor.fromInt(colors));
+        return new DischargeEffectPacket(from, to, ParticleColor.fromInt(colors));
     }
 
     public static Vec3 decodeVector3d(@Nonnull FriendlyByteBuf buf) {
@@ -64,13 +65,13 @@ public class RayEffectPacket {
         double radiusSqr = radius * radius;
 
         if (level instanceof ServerLevel serverLevel) {
-            RayEffectPacket fx = new RayEffectPacket(fromPoint, hitPoint, spellColor);
+            DischargeEffectPacket fx = new DischargeEffectPacket(fromPoint, hitPoint, spellColor);
             serverLevel.getPlayers(p -> p.distanceToSqr(midpoint) <= radiusSqr)
                     .forEach(p -> NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with(() -> p), fx));
         }
     }
 
-    public static void whenThisPacketIsReceived(RayEffectPacket msg, Supplier<NetworkEvent.Context> ctx) {
+    public static void whenThisPacketIsReceived(DischargeEffectPacket msg, Supplier<NetworkEvent.Context> ctx) {
         if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
             ctx.get().enqueueWork(() -> {
 
@@ -86,20 +87,30 @@ public class RayEffectPacket {
                 for (double d = start; d < distance; d += increment) {
                     double fractionalDistance = d / distance;
                     double speedCoefficient = Mth.lerp(fractionalDistance, 0.2, 0.001);
-                    level.addParticle(
-                            new ColoredDynamicTypeData(SPARKLE_TYPE.get(), msg.color, 0.5F, 10),
-                            Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
-                            Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
-                            Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
-                            (level.random.nextFloat() - 0.25) * speedCoefficient,
-                            (level.random.nextFloat() - 0.25) * speedCoefficient,
-                            (level.random.nextFloat() - 0.25) * speedCoefficient);
-                    level.addParticle(ModParticles.SPARK.get(), Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
-                            Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
-                            Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
-                            (level.random.nextFloat() - 0.5) * speedCoefficient,
-                            (level.random.nextFloat() - 0.5) * speedCoefficient,
-                            (level.random.nextFloat() - 0.5) * speedCoefficient);
+                    if (ModList.get().isLoaded("cofh_core")) {
+                        level.addParticle(
+                                new ColoredDynamicTypeData(SPARKLE_TYPE.get(), msg.color, 0.5F, 10),
+                                Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
+                                Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
+                                Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
+                                (level.random.nextFloat() - 0.25) * speedCoefficient,
+                                (level.random.nextFloat() - 0.25) * speedCoefficient,
+                                (level.random.nextFloat() - 0.25) * speedCoefficient);
+                        level.addParticle(ModParticles.SPARK.get(), Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
+                                Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
+                                Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
+                                (level.random.nextFloat() - 0.5) * speedCoefficient,
+                                (level.random.nextFloat() - 0.5) * speedCoefficient,
+                                (level.random.nextFloat() - 0.5) * speedCoefficient);
+                    } else
+                        level.addParticle(
+                                new ColoredDynamicTypeData(SPARKLE_TYPE.get(), msg.color, 0.5F, 10),
+                                Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
+                                Mth.lerp(fractionalDistance, msg.from.y, msg.to.y) + 0.5,
+                                Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
+                                (level.random.nextFloat() - 0.5) * speedCoefficient,
+                                (level.random.nextFloat() - 0.5) * speedCoefficient,
+                                (level.random.nextFloat() - 0.5) * speedCoefficient);
                 }
 
 

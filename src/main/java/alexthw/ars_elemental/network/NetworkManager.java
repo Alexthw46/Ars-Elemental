@@ -19,7 +19,7 @@ public class NetworkManager {
     public static void registerNetworkStuff(FMLCommonSetupEvent event) {
         int index = 0;
         INSTANCE.registerMessage(index++, OpenCurioBagPacket.class, OpenCurioBagPacket::encode, OpenCurioBagPacket::decode, OpenCurioBagPacket::whenThisPacketIsReceived);
-        INSTANCE.registerMessage(index++, RayEffectPacket.class, RayEffectPacket::encode, RayEffectPacket::decode, RayEffectPacket::whenThisPacketIsReceived);
+        INSTANCE.registerMessage(index++, DischargeEffectPacket.class, DischargeEffectPacket::encode, DischargeEffectPacket::decode, DischargeEffectPacket::whenThisPacketIsReceived);
 
     }
 

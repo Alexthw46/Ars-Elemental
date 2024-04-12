@@ -1,10 +1,12 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -29,7 +31,8 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
                 this.applyConfigPotion(target, ModPotions.VENOM.get(), spellStats);
                 target.removeEffect(MobEffects.POISON);
             } else {
-                this.applyConfigPotion(target, MobEffects.POISON, spellStats);
+                boolean earth_switch = target.getMobType() == MobType.UNDEAD && ISchoolFocus.earthCheck(resolver);
+                this.applyConfigPotion(target, earth_switch ? ModPotions.VENOM.get() : MobEffects.POISON, spellStats);
             }
         }
     }
