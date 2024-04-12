@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "ars_elemental.refmap.json",
   "mixins": [
+    "EvaporateMixin",
     "FlareMixin",
     "FoxInvoker",
     "GrowMixin",
