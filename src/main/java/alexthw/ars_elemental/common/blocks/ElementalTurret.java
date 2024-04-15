@@ -15,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -54,9 +55,10 @@ public class ElementalTurret extends BasicSpellTurret {
         return new ElementalSpellTurretTile(pos, state).setSchool(school);
     }
 
-    static class TurretSpellResolver extends EntitySpellResolver{
+    static class TurretSpellResolver extends EntitySpellResolver {
 
         ElementalSpellTurretTile tile;
+
         public TurretSpellResolver(SpellContext context, ElementalSpellTurretTile tile) {
             super(context);
             this.tile = tile;
@@ -71,6 +73,12 @@ public class ElementalTurret extends BasicSpellTurret {
             }
             return super.hasFocus(stack);
         }
+
+        @Override
+        public boolean hasFocus(Item item) {
+            return hasFocus(item.getDefaultInstance());
+        }
+
 
         @Override
         public SpellResolver getNewResolver(SpellContext context) {
