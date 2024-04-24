@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
+import alexthw.ars_elemental.ConfigHandler;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
@@ -22,6 +23,6 @@ public class PiercingPrismLens extends AbstractPrismLens {
 
     @Override
     public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
-        return spell.pierceLeft < 10 && SourceUtil.hasSourceNearby(pos, level, 6, AugmentPierce.INSTANCE.getCastingCost());
+        return spell.pierceLeft < ConfigHandler.Common.PIERCE_LENS_LIMIT.get() && SourceUtil.hasSourceNearby(pos, level, 6, AugmentPierce.INSTANCE.getCastingCost());
     }
 }
