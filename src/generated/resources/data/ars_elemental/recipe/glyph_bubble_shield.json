@@ -1,0 +1,22 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 55,
+  "inputs": [
+    {
+      "item": "minecraft:heart_of_the_sea"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "ars_nouveau:bastion_pod"
+    },
+    {
+      "item": "ars_nouveau:water_essence"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_bubble_shield"
+  }
+}

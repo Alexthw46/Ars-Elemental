@@ -4,16 +4,17 @@ import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.util.PosCarryMEI;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
@@ -25,12 +26,12 @@ public class RepulsionRitual extends AbstractRitual {
         boolean modifier = didConsumeItem(Items.BONE);
         if (getWorld() instanceof ServerLevel level && level.getGameTime() % getBackoff() == 0 && this.tile != null) {
             // Get all entities in a 15 block radius, excluding players and bosses.
-            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, new AABB(tile.getBlockPos()).inflate(15), modifier ? living -> living.getMobType() == MobType.UNDEAD : living -> !(living instanceof Player || living.getType().is(Tags.EntityTypes.BOSSES)));
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, new AABB(tile.getBlockPos()).inflate(15), modifier ? living -> living.getType().is(EntityTypeTags.UNDEAD) : living -> !(living instanceof Player || living.getType().is(Tags.EntityTypes.BOSSES)));
             boolean flag = false;
             for (LivingEntity entity : entities) {
                 // Apply the repulsion effect to the entity.
                 if (entity != null) {
-                    flag = entity.addEffect(new PosCarryMEI(ModPotions.REPEL.get(), 200, 0, true, true, getPos()));
+                    flag = entity.addEffect(new PosCarryMEI(ModPotions.REPEL, 200, 0, true, true, getPos()));
                     if (flag) setNeedsSource(true);
                 }
             }
@@ -60,14 +61,14 @@ public class RepulsionRitual extends AbstractRitual {
     }
 
     @Override
-    public void write(CompoundTag tag) {
-        super.write(tag);
+    public void write(HolderLookup.Provider provider,CompoundTag tag) {
+        super.write(provider,tag);
         tag.putInt("backoff", this.backoff);
     }
 
     @Override
-    public void read(CompoundTag tag) {
-        super.read(tag);
+    public void read(HolderLookup.Provider provider, CompoundTag tag) {
+        super.read(provider,tag);
         backoff = tag.getInt("backoff");
     }
 

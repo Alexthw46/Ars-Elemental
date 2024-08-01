@@ -1,0 +1,17 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": true,
+  "pedestalItems": [
+    {
+      "item": "ars_elemental:mark_of_mastery"
+    }
+  ],
+  "reagent": {
+    "item": "ars_elemental:lesser_water_focus"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:water_focus"
+  },
+  "sourceCost": 5000
+}

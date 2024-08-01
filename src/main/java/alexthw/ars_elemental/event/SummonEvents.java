@@ -21,13 +21,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = ArsElemental.MODID)
 public class SummonEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -127,21 +127,21 @@ public class SummonEvents {
     }
 
     @SubscribeEvent
-    public static void summonPowerup(LivingDamageEvent event) {
+    public static void summonPowerup(LivingDamageEvent.Pre event) {
         if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().level() instanceof ServerLevel) {
             if (summon.getOwner() instanceof Player player) {
                 int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) - 1;
                 if (threadLevel > 0) {
-                    event.setAmount(event.getAmount() + threadLevel);
+                    event.setNewDamage(event.getNewDamage() + threadLevel);
                 }
                 if (summon instanceof SummonWolf) {
                     SpellSchool school = ISchoolFocus.hasFocus(player);
                     if (school != null) switch (school.getId()) {
-                        case "fire" -> event.getEntity().setSecondsOnFire(5);
+                        case "fire" -> event.getEntity().setRemainingFireTicks(5 * 20);
                         case "water" ->
-                                event.getEntity().addEffect(new MobEffectInstance(ModPotions.FREEZING_EFFECT.get(), 100, 1));
+                                event.getEntity().addEffect(new MobEffectInstance(ModPotions.FREEZING_EFFECT, 100, 1));
                         case "air" ->
-                                event.getEntity().addEffect(new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 100, 1));
+                                event.getEntity().addEffect(new MobEffectInstance(ModPotions.SHOCKED_EFFECT, 100, 1));
                         case "earth" -> event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 100));
                     }
                 }

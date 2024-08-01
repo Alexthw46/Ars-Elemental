@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-03T22:44:00.356649	Tags for minecraft:damage_type mod id ars_elemental
+// 1.21	2024-08-01T14:28:20.1276569	Tags for minecraft:damage_type mod id ars_elemental
 e213c76d34003d3eae388c93f275b13f5cebff4b data/ars_elemental/tags/damage_type/air_damage.json
 1efc5c3832978fb73f0ed8388b4047759e3e103d data/ars_elemental/tags/damage_type/earth_damage.json
 d559741906286fd27cae40e93d79ced3bf91f66e data/ars_elemental/tags/damage_type/fire_damage.json

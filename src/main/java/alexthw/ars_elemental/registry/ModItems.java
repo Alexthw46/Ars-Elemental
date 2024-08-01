@@ -19,6 +19,7 @@ import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
+import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
@@ -45,12 +46,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -60,110 +61,94 @@ import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.LOG_PROP
 import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.SAP_PROP;
 
 @SuppressWarnings("SameParameterValue")
-@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.createItems(MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MODID);
 
-    public static final RegistryObject<Block> MERMAID_ROCK;
-    public static final RegistryObject<Block> WATER_URN;
-    public static final RegistryObject<Block> FLASHING_ARCHWOOD_LOG;
-    public static final RegistryObject<Block> FLASHING_ARCHWOOD_LOG_STRIPPED;
-    public static final RegistryObject<Block> FLASHING_ARCHWOOD_STRIPPED;
-    public static final RegistryObject<Block> FLASHING_ARCHWOOD;
-    public static final RegistryObject<Block> FLASHING_SAPLING;
-    public static final RegistryObject<Block> FLASHING_LEAVES;
-    public static final RegistryObject<Block> FLASHING_POD;
-    public static final RegistryObject<Block> POT_FLASHING_SAPLING;
-
-
-    public static final RegistryObject<Block> GROUND_BLOSSOM;
-
-    public static final RegistryObject<Block> WATER_UPSTREAM_BLOCK;
-    public static final RegistryObject<Block> LAVA_UPSTREAM_BLOCK;
-    public static final RegistryObject<Block> AIR_UPSTREAM_BLOCK;
-    public static final RegistryObject<Block> FIRE_TURRET;
-    public static final RegistryObject<Block> WATER_TURRET;
-    public static final RegistryObject<Block> AIR_TURRET;
-    public static final RegistryObject<Block> EARTH_TURRET;
-    public static final RegistryObject<Block> SHAPING_TURRET;
-
-    public static final RegistryObject<Block> ADVANCED_PRISM;
-    public static final RegistryObject<Block> SPELL_MIRROR;
+    public static final DeferredHolder<Block, ? extends Block> MERMAID_ROCK;
+    public static final DeferredHolder<Block, ? extends Block> WATER_URN;
+    public static final DeferredHolder<Block, ? extends Block> FLASHING_ARCHWOOD_LOG;
+    public static final DeferredHolder<Block, ? extends Block> FLASHING_ARCHWOOD_LOG_STRIPPED;
+    public static final DeferredHolder<Block, ? extends Block> FLASHING_ARCHWOOD_STRIPPED;
+    public static final DeferredHolder<Block, ? extends Block> FLASHING_ARCHWOOD;
+    public static final DeferredHolder<Block, ? extends Block> FLASHING_SAPLING;
+    public static final DeferredHolder<Block, ? extends Block> FLASHING_LEAVES;
+    public static final DeferredHolder<Block, ArchfruitPod> FLASHING_POD;
+    public static final DeferredHolder<Block, FlowerPotBlock> POT_FLASHING_SAPLING;
 
 
-    public static final RegistryObject<Item> FIRE_FOCUS;
-    public static final RegistryObject<Item> AIR_FOCUS;
-    public static final RegistryObject<Item> WATER_FOCUS;
-    public static final RegistryObject<Item> EARTH_FOCUS;
-    public static final RegistryObject<Item> NECRO_FOCUS;
+    public static final DeferredHolder<Block, ? extends Block> GROUND_BLOSSOM;
 
-    public static final RegistryObject<Item> LESSER_FIRE_FOCUS;
-    public static final RegistryObject<Item> LESSER_AIR_FOCUS;
-    public static final RegistryObject<Item> LESSER_WATER_FOCUS;
-    public static final RegistryObject<Item> LESSER_EARTH_FOCUS;
+    public static final DeferredHolder<Block, ? extends Block> WATER_UPSTREAM_BLOCK;
+    public static final DeferredHolder<Block, ? extends Block> LAVA_UPSTREAM_BLOCK;
+    public static final DeferredHolder<Block, ? extends Block> AIR_UPSTREAM_BLOCK;
+    public static final DeferredHolder<Block, ? extends Block> FIRE_TURRET;
+    public static final DeferredHolder<Block, ? extends Block> WATER_TURRET;
+    public static final DeferredHolder<Block, ? extends Block> AIR_TURRET;
+    public static final DeferredHolder<Block, ? extends Block> EARTH_TURRET;
+    public static final DeferredHolder<Block, ? extends Block> SHAPING_TURRET;
+
+    public static final DeferredHolder<Block, AdvancedPrism> ADVANCED_PRISM;
+    public static final DeferredHolder<Block, ? extends Block> SPELL_MIRROR;
+
+
+    public static final DeferredHolder<Item, GreaterElementalFocus> FIRE_FOCUS;
+    public static final DeferredHolder<Item, GreaterElementalFocus> AIR_FOCUS;
+    public static final DeferredHolder<Item, GreaterElementalFocus> WATER_FOCUS;
+    public static final DeferredHolder<Item, GreaterElementalFocus> EARTH_FOCUS;
+    public static final DeferredHolder<Item, NecroticFocus> NECRO_FOCUS;
+
+    public static final DeferredHolder<Item, ElementalFocus> LESSER_FIRE_FOCUS;
+    public static final DeferredHolder<Item, ElementalFocus> LESSER_AIR_FOCUS;
+    public static final DeferredHolder<Item, ElementalFocus> LESSER_WATER_FOCUS;
+    public static final DeferredHolder<Item, ElementalFocus> LESSER_EARTH_FOCUS;
 
     public static final ArmorSet FIRE_ARMOR = new ArmorSet("fire", SpellSchools.ELEMENTAL_FIRE);
     public static final ArmorSet AIR_ARMOR = new ArmorSet("air", SpellSchools.ELEMENTAL_AIR);
     public static final ArmorSet EARTH_ARMOR = new ArmorSet("earth", SpellSchools.ELEMENTAL_EARTH);
     public static final ArmorSet WATER_ARMOR = new ArmorSet("aqua", SpellSchools.ELEMENTAL_WATER);
 
-    public static final RegistryObject<Item> FIRE_CTOME;
-    public static final RegistryObject<Item> AIR_CTOME;
-    public static final RegistryObject<Item> WATER_CTOME;
-    public static final RegistryObject<Item> EARTH_CTOME;
-    public static final RegistryObject<Item> NECRO_CTOME;
+    public static final DeferredHolder<Item, ElementalCasterTome> FIRE_CTOME;
+    public static final DeferredHolder<Item, ElementalCasterTome> AIR_CTOME;
+    public static final DeferredHolder<Item, ElementalCasterTome> WATER_CTOME;
+    public static final DeferredHolder<Item, ElementalCasterTome> EARTH_CTOME;
+    public static final DeferredHolder<Item, ElementalCasterTome> NECRO_CTOME;
+    public static final DeferredHolder<Item, ElementalCasterTome> SHAPERS_CTOME;
 
-    public static final RegistryObject<Item> ENCHANTER_BANGLE;
-    public static final RegistryObject<Item> FIRE_BANGLE;
-    public static final RegistryObject<Item> WATER_BANGLE;
-    public static final RegistryObject<Item> AIR_BANGLE;
-    public static final RegistryObject<Item> EARTH_BANGLE;
 
-    public static final RegistryObject<Item> CURIO_BAG;
-    public static final RegistryObject<Item> CASTER_BAG;
+    public static final DeferredHolder<Item, BaseBangle> ENCHANTER_BANGLE;
+    public static final DeferredHolder<Item, FireBangles> FIRE_BANGLE;
+    public static final DeferredHolder<Item, WaterBangles> WATER_BANGLE;
+    public static final DeferredHolder<Item, AirBangles> AIR_BANGLE;
+    public static final DeferredHolder<Item, EarthBangles> EARTH_BANGLE;
 
-    public static final RegistryObject<Item> DEBUG_ICON;
-    public static final RegistryObject<Item> MARK_OF_MASTERY;
+    public static final DeferredHolder<Item, CurioHolder> CURIO_BAG;
+    public static final DeferredHolder<Item, CasterHolder> CASTER_BAG;
 
-    public static final RegistryObject<Item> HOMING_LENS;
-    public static final RegistryObject<Item> ARC_LENS;
-    public static final RegistryObject<Item> ACC_LENS;
-    public static final RegistryObject<Item> DEC_LENS;
-    public static final RegistryObject<Item> PIERCE_LENS;
-    public static final RegistryObject<Item> RGB_LENS;
+    public static final DeferredHolder<Item, Debugger> DEBUG_ICON;
+    public static final DeferredItem<Item> MARK_OF_MASTERY;
 
-    public static final RegistryObject<Item> ANIMA_ESSENCE;
+    public static final DeferredHolder<Item, HomingPrismLens> HOMING_LENS;
+    public static final DeferredHolder<Item, ArcPrismLens> ARC_LENS;
+    public static final DeferredHolder<Item, AccelerationPrismLens> ACC_LENS;
+    public static final DeferredHolder<Item, DecelerationPrismLens> DEC_LENS;
+    public static final DeferredHolder<Item, PiercingPrismLens> PIERCE_LENS;
+    public static final DeferredHolder<Item, RainbowPrismLens> RGB_LENS;
 
-    public static final RegistryObject<Item> SIREN_SHARDS;
-    public static final RegistryObject<Item> SIREN_CHARM;
-    public static final RegistryObject<Item> FIRENANDO_CHARM;
+    public static final DeferredHolder<Item, NecroEssence> ANIMA_ESSENCE;
 
-    public static final RegistryObject<Item> SPELL_HORN;
+    public static final DeferredHolder<Item, ModItem> SIREN_SHARDS;
+    public static final DeferredHolder<Item, SirenCharm> SIREN_CHARM;
+    public static final DeferredHolder<Item, FirenandoCharm> FIRENANDO_CHARM;
 
-    static Item.Properties itemProps() {
-        return new Item.Properties();
-    }
-
-    static Item.Properties FocusProp() {
-        return itemProps().stacksTo(1).fireResistant().rarity(Rarity.EPIC);
-    }
-
-    static Item.Properties UncommonProp() {
-        return itemProps().stacksTo(1).rarity(Rarity.UNCOMMON);
-    }
-
-    public static Item.Properties ArmorProp() {
-        return itemProps().rarity(Rarity.EPIC);
-    }
-
-    public static FoodProperties FLASHPINE_FOOD = new FoodProperties.Builder().nutrition(4).saturationMod(0.6F)
+    public static final DeferredHolder<Item, SpellHorn> SPELL_HORN;
+    public static FoodProperties FLASHPINE_FOOD = new FoodProperties.Builder().nutrition(4).saturationModifier(0.6F)
             .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 30 * 20), .4f)
             .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 30 * 20), .4f)
-            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT.get(), 30 * 20, 0), .8f)
-            .effect(() -> new MobEffectInstance(LIGHTNING_LURE.get(), 30 * 20, 0), .2f)
-            .alwaysEat().build();
+            .effect(() -> new MobEffectInstance(ModPotions.SHOCKED_EFFECT, 30 * 20, 0), .8f)
+            .effect(() -> new MobEffectInstance(LIGHTNING_LURE, 30 * 20, 0), .2f)
+            .alwaysEdible().build();
 
     static {
 
@@ -172,7 +157,7 @@ public class ModItems {
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(itemProps().fireResistant()));
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
-        MARK_OF_MASTERY = ITEMS.register("mark_of_mastery", () -> new Item(itemProps()));
+        MARK_OF_MASTERY = (DeferredItem<Item>) ITEMS.register("mark_of_mastery", () -> new Item(itemProps()));
         ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence(itemProps()));
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(itemProps()));
@@ -210,6 +195,7 @@ public class ModItems {
         AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_AIR));
         EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_EARTH));
         NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(itemProps(), ArsNouveauRegistry.NECROMANCY));
+        SHAPERS_CTOME = ITEMS.register("manipulation_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.MANIPULATION));
 
         //blocks
         WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Blocks.CLAY, MapColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
@@ -218,13 +204,13 @@ public class ModItems {
         WATER_UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
         LAVA_UPSTREAM_BLOCK = addBlock("magma_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
             @Override
-            public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+            public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
                 return new MagmaUpstreamTile(pPos, pState);
             }
         });
         AIR_UPSTREAM_BLOCK = addBlock("air_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
             @Override
-            public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+            public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
                 return new AirUpstreamTile(pPos, pState);
             }
         });
@@ -248,26 +234,42 @@ public class ModItems {
         SPELL_MIRROR = addBlock("spell_mirror", () -> new SpellMirror(blockProps(Blocks.STONE, MapColor.TERRACOTTA_WHITE)));
 
         //Trees
-        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(new MagicTree(ModWorldgen.FLASHING_TREE_SAPLING), SAP_PROP));
+        FLASHING_SAPLING = addBlock("yellow_archwood_sapling", () -> new SaplingBlock(MagicTree.getGrower("flashing_tree", ModWorldgen.FLASHING_TREE_SAPLING), SAP_PROP));
         FLASHING_LEAVES = addBlock("yellow_archwood_leaves", () -> new MagicLeaves(blockProps(Blocks.OAK_LEAVES, MapColor.COLOR_YELLOW).lightLevel(b -> 8).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(
                 ModItems::allowsSpawnOnLeaves).isSuffocating(ModItems::isntSolid).isViewBlocking(ModItems::isntSolid)));
         FLASHING_ARCHWOOD_LOG_STRIPPED = addBlock("stripped_yellow_archwood_log", () -> new RotatedPillarBlock(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 6)));
         FLASHING_ARCHWOOD_STRIPPED = addBlock("stripped_yellow_archwood", () -> new RotatedPillarBlock(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 6)));
-        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_LOG_STRIPPED));
-        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED));
-        FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(FLASHING_ARCHWOOD_LOG));
+        FLASHING_ARCHWOOD_LOG = addBlock("yellow_archwood_log", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_LOG_STRIPPED::get));
+        FLASHING_ARCHWOOD = addBlock("yellow_archwood", () -> new StrippableLog(LOG_PROP.mapColor(MapColor.COLOR_YELLOW).lightLevel(b -> 8), FLASHING_ARCHWOOD_STRIPPED::get));
+        FLASHING_POD = BLOCKS.register("flashpine_pod", () -> new ArchfruitPod(AETagsProvider.AEBlockTagsProvider.FLASHING_LOGS));
         ITEMS.register("flashpine_pod", () -> new ItemNameBlockItem(FLASHING_POD.get(), itemProps().food(FLASHPINE_FOOD)));
         POT_FLASHING_SAPLING = BLOCKS.register("potted_yellow_archwood_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FLASHING_SAPLING, blockProps(Blocks.FLOWER_POT, MapColor.COLOR_YELLOW).instabreak().noOcclusion()));
     }
 
-    static RegistryObject<Block> addBlock(String name, Supplier<Block> blockSupp) {
-        RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
+    static Item.Properties itemProps() {
+        return new Item.Properties();
+    }
+
+    static Item.Properties FocusProp() {
+        return itemProps().stacksTo(1).fireResistant().rarity(Rarity.EPIC);
+    }
+
+    static Item.Properties UncommonProp() {
+        return itemProps().stacksTo(1).rarity(Rarity.UNCOMMON);
+    }
+
+    public static Item.Properties ArmorProp() {
+        return itemProps().rarity(Rarity.EPIC);
+    }
+
+    static DeferredHolder<Block, ? extends Block> addBlock(String name, Supplier<Block> blockSupp) {
+        DeferredHolder<Block, ? extends Block> block = BLOCKS.register(name, blockSupp);
         ITEMS.register(name, () -> new BlockItem(block.get(), itemProps()));
         return block;
     }
 
-    static RegistryObject<Block> addGeckoBlock(String name, Supplier<Block> blockSupp, String model) {
-        RegistryObject<Block> block = BLOCKS.register(name, blockSupp);
+    static DeferredHolder<Block, ? extends Block> addGeckoBlock(String name, Supplier<Block> blockSupp, String model) {
+        DeferredHolder<Block, ? extends Block> block = BLOCKS.register(name, blockSupp);
         ITEMS.register(name, () -> new RendererBlockItem(block.get(), itemProps()) {
             @Override
             @OnlyIn(Dist.CLIENT)
@@ -279,7 +281,7 @@ public class ModItems {
     }
 
     static BlockBehaviour.Properties blockProps(Block copyFrom, MapColor color) {
-        return BlockBehaviour.Properties.copy(copyFrom).mapColor(color);
+        return BlockBehaviour.Properties.ofFullCopy(copyFrom).mapColor(color);
     }
 
     private static Boolean allowsSpawnOnLeaves(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {

@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public class SporeBlossomGround extends Block {
     public SporeBlossomGround(Properties properties) {
@@ -27,7 +28,7 @@ public class SporeBlossomGround extends Block {
     private static final int PARTICLE_XZ_RADIUS = 4;
     private static final int PARTICLE_Y_MAX = 4;
 
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, LevelReader level, BlockPos pos) {
         return !level.getBlockState(pos.below()).isAir() && !level.isWaterAt(pos) && level.getBlockState(pos.below()).isFaceSturdy(level, pos, Direction.UP);
     }
 
@@ -37,14 +38,14 @@ public class SporeBlossomGround extends Block {
      * returns its solidified counterpart.
      * Note that this method should ideally consider only the specific direction passed in.
      */
-    public BlockState updateShape(BlockState p_154713_, Direction p_154714_, BlockState p_154715_, LevelAccessor p_154716_, BlockPos p_154717_, BlockPos p_154718_) {
+    public @NotNull BlockState updateShape(@NotNull BlockState p_154713_, @NotNull Direction p_154714_, @NotNull BlockState p_154715_, @NotNull LevelAccessor p_154716_, @NotNull BlockPos p_154717_, @NotNull BlockPos p_154718_) {
         return p_154714_ == Direction.DOWN && !this.canSurvive(p_154713_, p_154716_, p_154717_) ? Blocks.AIR.defaultBlockState() : super.updateShape(p_154713_, p_154714_, p_154715_, p_154716_, p_154717_, p_154718_);
     }
 
     /**
      * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
      */
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(@NotNull BlockState state, Level level, BlockPos pos, RandomSource random) {
         int i = pos.getX();
         int j = pos.getY();
         int k = pos.getZ();
@@ -64,7 +65,7 @@ public class SporeBlossomGround extends Block {
 
     }
 
-    public VoxelShape getShape(BlockState p_154699_, BlockGetter p_154700_, BlockPos p_154701_, CollisionContext p_154702_) {
+    public @NotNull VoxelShape getShape(@NotNull BlockState p_154699_, @NotNull BlockGetter p_154700_, @NotNull BlockPos p_154701_, @NotNull CollisionContext p_154702_) {
         return SHAPE;
     }
 

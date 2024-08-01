@@ -4,29 +4,34 @@ import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerCopySlot;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
 public class CurioHolderContainer extends AbstractContainerMenu {
-    private final Container inventory;
+    private final IItemHandler inventory;
 
     public CurioHolderContainer(int windowId, Inventory playerInv, ItemStack backpack) {
-        this(ModRegistry.CURIO_HOLDER.get(), windowId, playerInv, CurioHolder.getInventory(backpack));
+        this(ModRegistry.CURIO_HOLDER.get(), windowId, playerInv, backpack.getCapability(Capabilities.ItemHandler.ITEM), backpack);
     }
 
-    public CurioHolderContainer(MenuType<? extends CurioHolderContainer> containerType, int windowId, Inventory playerInv, Container inventory) {
+    public CurioHolderContainer(MenuType<? extends CurioHolderContainer> containerType, int windowId, Inventory playerInv, @Nullable IItemHandler inventory, ItemStack backpack) {
         super(containerType, windowId);
         this.inventory = inventory;
-        inventory.startOpen(playerInv.player);
-        for (int i = 0; i < inventory.getContainerSize() / 9f; ++i) {
+        if (inventory == null) {
+            return;
+        }
+        for (int i = 0; i < inventory.getSlots() / 9f; ++i) {
             for (int j = 0; j < 9; ++j) {
                 int index = i * 9 + j;
                 addSlot(this.makeSlot(inventory, i, j, index));
@@ -45,8 +50,8 @@ public class CurioHolderContainer extends AbstractContainerMenu {
     }
 
     @NotNull
-    protected Slot makeSlot(Container inventory, int i, int j, int index) {
-        return new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
+    protected Slot makeSlot(IItemHandler inventory, int i, int j, int index) {
+        return new ItemHandlerCopySlot(inventory, index, 8 + j * 18, 18 + i * 18) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return CurioHolder.canStore(stack);
@@ -57,9 +62,8 @@ public class CurioHolderContainer extends AbstractContainerMenu {
 
     @Override
     public void removed(Player playerIn) {
-        playerIn.level.playSound(null, playerIn.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.PLAYERS, 1, 1);
+        playerIn.level().playSound(null, playerIn.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.PLAYERS, 1, 1);
         super.removed(playerIn);
-        this.inventory.stopOpen(playerIn);
     }
 
     public int offset() {
@@ -68,7 +72,7 @@ public class CurioHolderContainer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(@NotNull Player playerIn) {
-        return this.inventory.stillValid(playerIn);
+        return true;
     }
 
     @Nonnull
@@ -79,11 +83,11 @@ public class CurioHolderContainer extends AbstractContainerMenu {
         if (slot.hasItem()) {
             ItemStack itemstack = slot.getItem();
             copy = itemstack.copy();
-            if (index < this.inventory.getContainerSize()) {
-                if (!this.moveItemStackTo(itemstack, this.inventory.getContainerSize(), this.slots.size(), true)) {
+            if (index < this.inventory.getSlots()) {
+                if (!this.moveItemStackTo(itemstack, this.inventory.getSlots(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack, 0, this.inventory.getContainerSize(), false)) {
+            } else if (!this.moveItemStackTo(itemstack, 0, this.inventory.getSlots(), false)) {
                 return ItemStack.EMPTY;
             }
 

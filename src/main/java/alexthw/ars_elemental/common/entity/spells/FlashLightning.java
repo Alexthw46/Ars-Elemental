@@ -10,7 +10,8 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class FlashLightning extends LightningBolt {
     }
 
     @Override
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.FLASH_LIGHTNING.get();
     }
 
@@ -58,7 +59,7 @@ public class FlashLightning extends LightningBolt {
                 List<Entity> list1 = this.level.getEntities(this, new AABB(this.getX() - 3.0D, this.getY() - 3.0D, this.getZ() - 3.0D, this.getX() + 3.0D, this.getY() + 6.0D + 3.0D, this.getZ() + 3.0D), Entity::isAlive);
 
                 for(Entity entity : list1) {
-                    if (!ForgeEventFactory.onEntityStruckByLightning(entity, this))
+                    if (!EventHooks.onEntityStruckByLightning(entity, this))
                         entity.thunderHit(serverLevel, this);
                 }
 

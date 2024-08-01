@@ -1,8 +1,10 @@
 package alexthw.ars_elemental.util;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -11,11 +13,11 @@ public class EntityCarryMEI extends MobEffectInstance {
     protected LivingEntity owner;
     protected LivingEntity target;
 
-    public EntityCarryMEI(MobEffect effect, int duration, int amp, LivingEntity owner, LivingEntity afflicted){
+    public EntityCarryMEI(Holder<MobEffect> effect, int duration, int amp, LivingEntity owner, LivingEntity afflicted){
         this(effect, duration, amp, false, true, owner, afflicted);
     }
 
-    public EntityCarryMEI(MobEffect effect, int duration, int amp, boolean ambient, boolean show, LivingEntity owner, @Nullable LivingEntity afflicted) {
+    public EntityCarryMEI(Holder<MobEffect> effect, int duration, int amp, boolean ambient, boolean show, LivingEntity owner, @Nullable LivingEntity afflicted) {
         super(effect, duration, amp, show, ambient, show);
         this.owner = owner;
         this.target = afflicted;
@@ -23,7 +25,7 @@ public class EntityCarryMEI extends MobEffectInstance {
 
     //Override to update the owner and target if they have changed
     @Override
-    public boolean update(MobEffectInstance pOther) {
+    public boolean update(@NotNull MobEffectInstance pOther) {
 
         if (pOther instanceof EntityCarryMEI toUpdate){
 

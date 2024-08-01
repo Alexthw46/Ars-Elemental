@@ -18,53 +18,47 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectDelay;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectWindshear;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+//@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEntities {
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
 
-    public static final RegistryObject<EntityType<MermaidEntity>> SIREN_ENTITY;
-    public static final RegistryObject<EntityType<MermaidFamiliar>> SIREN_FAMILIAR;
-    public static final RegistryObject<EntityType<FirenandoEntity>> FIRENANDO_ENTITY;
-    public static final RegistryObject<EntityType<FirenandoFamiliar>> FIRENANDO_FAMILIAR;
+    public static final DeferredHolder<EntityType<?>,EntityType<MermaidEntity>> SIREN_ENTITY;
+    public static final DeferredHolder<EntityType<?>,EntityType<MermaidFamiliar>> SIREN_FAMILIAR;
+    public static final DeferredHolder<EntityType<?>,EntityType<FirenandoEntity>> FIRENANDO_ENTITY;
+    public static final DeferredHolder<EntityType<?>,EntityType<FirenandoFamiliar>> FIRENANDO_FAMILIAR;
 
-    public static final RegistryObject<EntityType<WealdWalker>> FLASHING_WEALD_WALKER;
+    public static final DeferredHolder<EntityType<?>,EntityType<WealdWalker>> FLASHING_WEALD_WALKER;
 
-    public static final RegistryObject<EntityType<EntityMageBase>> FIRE_MAGE;
-    public static final RegistryObject<EntityType<EntityMageBase>> WATER_MAGE;
-    public static final RegistryObject<EntityType<EntityMageBase>> AIR_MAGE;
-    public static final RegistryObject<EntityType<EntityMageBase>> EARTH_MAGE;
+    public static final DeferredHolder<EntityType<?>,EntityType<EntityMageBase>> FIRE_MAGE;
+    public static final DeferredHolder<EntityType<?>,EntityType<EntityMageBase>> WATER_MAGE;
+    public static final DeferredHolder<EntityType<?>,EntityType<EntityMageBase>> AIR_MAGE;
+    public static final DeferredHolder<EntityType<?>,EntityType<EntityMageBase>> EARTH_MAGE;
 
-    public static final RegistryObject<EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
-    public static final RegistryObject<EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
-    public static final RegistryObject<EntityType<SummonUndead>> WSKELETON_SUMMON;
-    public static final RegistryObject<EntityType<SummonDolphin>> DOLPHIN_SUMMON;
-    public static final RegistryObject<EntityType<SummonStrider>> STRIDER_SUMMON;
-    public static final RegistryObject<EntityType<SummonCamel>> CAMEL_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<SummonSkeleHorse>> SKELEHORSE_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<SummonDirewolf>> DIREWOLF_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<SummonUndead>> WSKELETON_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<SummonDolphin>> DOLPHIN_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<SummonStrider>> STRIDER_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<SummonCamel>> CAMEL_SUMMON;
 
 
-    public static final RegistryObject<EntityType<AllyVhexEntity>> VHEX_SUMMON;
-    public static final RegistryObject<EntityType<EntityMagnetSpell>> LINGER_MAGNET;
-    public static final RegistryObject<EntityType<EntityLerpedProjectile>> LERP_PROJECTILE;
-    public static final RegistryObject<EntityType<FlashLightning>> FLASH_LIGHTNING;
-    public static final RegistryObject<EntityType<DripstoneSpikeEntity>> DRIPSTONE_SPIKE;
-    public static final RegistryObject<EntityType<IceSpikeEntity>> ICE_SPIKE;
+    public static final DeferredHolder<EntityType<?>,EntityType<AllyVhexEntity>> VHEX_SUMMON;
+    public static final DeferredHolder<EntityType<?>,EntityType<EntityMagnetSpell>> LINGER_MAGNET;
+    public static final DeferredHolder<EntityType<?>,EntityType<EntityLerpedProjectile>> LERP_PROJECTILE;
+    public static final DeferredHolder<EntityType<?>,EntityType<FlashLightning>> FLASH_LIGHTNING;
+    public static final DeferredHolder<EntityType<?>,EntityType<DripstoneSpikeEntity>> DRIPSTONE_SPIKE;
+    public static final DeferredHolder<EntityType<?>,EntityType<IceSpikeEntity>> ICE_SPIKE;
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -103,11 +97,11 @@ public class ModEntities {
 
     }
 
-    static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
+    static <T extends Entity> DeferredHolder<EntityType<?>,EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, kind).setTrackingRange(16).sized(width, height).build(MODID + ":" + name));
     }
 
-    static <T extends Entity> RegistryObject<EntityType<T>> addEntity(String name, float width, float height, boolean fire, boolean noSave, EntityType.EntityFactory<T> factory, MobCategory kind) {
+    static <T extends Entity> DeferredHolder<EntityType<?>,EntityType<T>> addEntity(String name, float width, float height, boolean fire, boolean noSave, EntityType.EntityFactory<T> factory, MobCategory kind) {
         return ENTITIES.register(name, () -> {
             EntityType.Builder<T> builder = EntityType.Builder.of(factory, kind)
                     .setTrackingRange(32)
@@ -122,16 +116,16 @@ public class ModEntities {
         });
     }
 
-
-    @SubscribeEvent
-    public static void registerSP(SpawnPlacementRegisterEvent event) {
-
-        event.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_), SpawnPlacementRegisterEvent.Operation.OR);
-        event.register(FIRE_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-        event.register(AIR_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-        event.register(WATER_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-        event.register(EARTH_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-
-    }
+//
+//    @SubscribeEvent
+//    public static void registerSP(SpawnPlacementRegisterEvent event) {
+//
+//        event.register(SIREN_ENTITY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_), SpawnPlacementRegisterEvent.Operation.OR);
+//        event.register(FIRE_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+//        event.register(AIR_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+//        event.register(WATER_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+//        event.register(EARTH_MAGE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+//
+//    }
 
 }

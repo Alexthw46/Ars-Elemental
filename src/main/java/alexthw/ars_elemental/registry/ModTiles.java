@@ -7,25 +7,25 @@ import alexthw.ars_elemental.common.blocks.prism.AdvancedPrismTile;
 import alexthw.ars_elemental.common.blocks.upstream.AirUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.MagmaUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.WaterUpstreamTile;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 
 @SuppressWarnings("DataFlowIssue")
 public class ModTiles {
 
-    public static final RegistryObject<BlockEntityType<MermaidTile>> MERMAID_TILE;
-    public static final RegistryObject<BlockEntityType<WaterUpstreamTile>> WATER_UPSTREAM_TILE;
-    public static final RegistryObject<BlockEntityType<MagmaUpstreamTile>> LAVA_UPSTREAM_TILE;
-    public static final RegistryObject<BlockEntityType<AirUpstreamTile>> AIR_UPSTREAM_TILE;
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MermaidTile>> MERMAID_TILE;
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<WaterUpstreamTile>> WATER_UPSTREAM_TILE;
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MagmaUpstreamTile>> LAVA_UPSTREAM_TILE;
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<AirUpstreamTile>> AIR_UPSTREAM_TILE;
 
-    public static final RegistryObject<BlockEntityType<AdvancedPrismTile>> ADVANCED_PRISM;
-    public static final RegistryObject<BlockEntityType<EverfullUrnTile>> URN_TILE;
-    public static final RegistryObject<BlockEntityType<ElementalSpellTurretTile>> ELEMENTAL_TURRET;
-    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<AdvancedPrismTile>> ADVANCED_PRISM;
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<EverfullUrnTile>> URN_TILE;
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ElementalSpellTurretTile>> ELEMENTAL_TURRET;
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MODID);
 
     static {
         MERMAID_TILE = TILES.register("mermaid_tile", () -> BlockEntityType.Builder.of(MermaidTile::new, ModItems.MERMAID_ROCK.get()).build(null));

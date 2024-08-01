@@ -36,8 +36,8 @@ public class ShockPerk extends Perk implements IEffectResolvePerk {
         // If the effect is a damage effect, the raytrace result is a living entity, and the entity hit is not the shooter, then apply shocked or lightning lure.
         if (event.resolveEffect instanceof IDamageEffect damageEffect && event.rayTraceResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof LivingEntity livingEntity && livingEntity != event.shooter) {
             if (damageEffect.canDamage(event.shooter, event.spellStats, event.context, event.resolver, entityHitResult.getEntity())) {
-                int value = perkInstance.getSlot().value;
-                livingEntity.addEffect(new MobEffectInstance(value < 3 ? ModPotions.SHOCKED_EFFECT.get() : LIGHTNING_LURE.get(), 100, value < 3 ? value : 1));
+                int value = perkInstance.getSlot().value();
+                livingEntity.addEffect(new MobEffectInstance(value < 3 ? ModPotions.SHOCKED_EFFECT : LIGHTNING_LURE, 100, value < 3 ? value : 1));
             }
         }
     }

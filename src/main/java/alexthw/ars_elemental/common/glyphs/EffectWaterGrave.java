@@ -5,15 +5,15 @@ import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -33,7 +33,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
 
             // If augmented by Extend Time, apply the Water Grave potion effect.
             if (spellStats.hasBuff(AugmentExtendTime.INSTANCE)) {
-                this.applyConfigPotion(living, ModPotions.WATER_GRAVE.get(), spellStats);
+                this.applyConfigPotion(living, ModPotions.WATER_GRAVE, spellStats);
             } else {
                 //Otherwise, make the entity sink.
                 Vec3 delta = living.getDeltaMovement();
@@ -47,7 +47,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
             }
             // If the entity's air supply is depleted, deal damage.
             int airSupply = living.getAirSupply();
-            if (airSupply <= 0 || living.getMobType() == MobType.WATER) {
+            if (airSupply <= 0 || living.getType().is(EntityTypeTags.AQUATIC)) {
                 double damage = DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier();
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, living, buildDamageSource(world, shooter), (float) damage);
             } else {
@@ -75,7 +75,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
         addDamageConfig(builder, 5.0);

@@ -1,0 +1,19 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 55,
+  "inputs": [
+    {
+      "item": "minecraft:kelp"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "ars_nouveau:water_essence"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_watery_grave"
+  }
+}

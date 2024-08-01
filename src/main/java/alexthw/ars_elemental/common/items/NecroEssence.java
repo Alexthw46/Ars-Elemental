@@ -17,7 +17,9 @@ import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.NotNull;
 
 public class NecroEssence extends Item {
 
@@ -27,25 +29,25 @@ public class NecroEssence extends Item {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public InteractionResult interactLivingEntity(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand) {
-        if (pInteractionTarget instanceof AbstractHorse horse && !(pInteractionTarget instanceof ISummon) && !pPlayer.level.isClientSide()) {
+    public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack pStack, @NotNull Player pPlayer, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
+        if (pInteractionTarget instanceof AbstractHorse horse && !(pInteractionTarget instanceof ISummon) && !pPlayer.level().isClientSide()) {
 
             AbstractHorse newHorse = null;
 
             // convert horse to skeleton horse, skeleton horse to zombie horse, zombie horse to horse
-            if (horse instanceof Horse) {
-                newHorse = EntityType.SKELETON_HORSE.create(pPlayer.level());
-            } else if (horse instanceof SkeletonHorse) {
-                newHorse = EntityType.ZOMBIE_HORSE.create(pPlayer.level());
-            } else if (horse instanceof ZombieHorse) {
-                newHorse = EntityType.HORSE.create(pPlayer.level());
+            switch (horse) {
+                case Horse horse1 -> newHorse = EntityType.SKELETON_HORSE.create(pPlayer.level());
+                case SkeletonHorse skeletonHorse -> newHorse = EntityType.ZOMBIE_HORSE.create(pPlayer.level());
+                case ZombieHorse zombieHorse -> newHorse = EntityType.HORSE.create(pPlayer.level());
+                default -> {
+                }
             }
             if (newHorse == null) return InteractionResult.FAIL;
 
             // copy attributes
             if (horse.isTamed()) newHorse.tameWithName(pPlayer);
-            if (horse.isSaddled()) newHorse.equipSaddle(SoundSource.PLAYERS);
-            if (horse.isWearingArmor()) pPlayer.spawnAtLocation(horse.getItemBySlot(EquipmentSlot.CHEST));
+            if (horse.isSaddled()) newHorse.equipSaddle(Items.SADDLE.getDefaultInstance(),SoundSource.PLAYERS);
+            if (horse.isWearingBodyArmor()) pPlayer.spawnAtLocation(horse.getItemBySlot(EquipmentSlot.CHEST));
 
             // copy position
             newHorse.absMoveTo(horse.getX(), horse.getY(), horse.getZ(), horse.getYRot(), horse.getXRot());
@@ -59,10 +61,10 @@ public class NecroEssence extends Item {
             jumpHeight.setBaseValue(horse.getAttribute(Attributes.JUMP_STRENGTH).getValue());
 
             // spawn new horse
-            newHorse.finalizeSpawn((ServerLevelAccessor) pPlayer.level, pPlayer.level.getCurrentDifficultyAt(newHorse.blockPosition()), MobSpawnType.CONVERSION, null, null);
+            newHorse.finalizeSpawn((ServerLevelAccessor) pPlayer.level(), pPlayer.level().getCurrentDifficultyAt(newHorse.blockPosition()), MobSpawnType.CONVERSION, null);
             newHorse.setAge(horse.getAge());
             horse.discard();
-            pPlayer.level.addFreshEntity(newHorse);
+            pPlayer.level().addFreshEntity(newHorse);
             newHorse.spawnAnim();
 
             pStack.shrink(1);

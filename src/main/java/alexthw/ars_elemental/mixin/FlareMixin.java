@@ -13,7 +13,7 @@ public class FlareMixin {
 
     @Inject(method = "canDamage", remap = false, at = @At("TAIL"), cancellable = true)
     public void ars_elemental$canDamage(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(cir.getReturnValueZ() || livingEntity.hasEffect(ModPotions.MAGIC_FIRE.get()));
+        cir.setReturnValue(cir.getReturnValueZ() || livingEntity.hasEffect(ModPotions.MAGIC_FIRE));
     }
 
 }

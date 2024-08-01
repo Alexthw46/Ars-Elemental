@@ -30,7 +30,7 @@ public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurr
 
 
     @Override
-    public void actuallyRender(PoseStack poseStack, ElementalSpellTurretTile animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void actuallyRender(PoseStack poseStack, ElementalSpellTurretTile animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int color) {
         poseStack.pushPose();
         Direction direction = animatable.getBlockState().getValue(BasicSpellTurret.FACING);
         if (direction == Direction.UP) {
@@ -39,7 +39,7 @@ public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurr
             poseStack.translate(0.0, 0.5, 0.5);
         }
 
-        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, color);
         poseStack.popPose();
     }
 
@@ -56,7 +56,7 @@ public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurr
 
     @Override
     public ResourceLocation getTextureLocation(ElementalSpellTurretTile instance) {
-        return new ResourceLocation(ArsElemental.MODID, "textures/block/" + instance.getSchool().getId() + "_turret.png");
+        return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/block/" + instance.getSchool().getId() + "_turret.png");
     }
 
     public static class TurretModel<T extends ElementalSpellTurretTile> extends GeoModel<T> {
@@ -69,17 +69,17 @@ public class ElementalTurretRenderer extends GeoBlockRenderer<ElementalSpellTurr
 
         @Override
         public ResourceLocation getModelResource(T t) {
-            return new ResourceLocation(ArsNouveau.MODID, "geo/basic_spell_turret.geo.json");
+            return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "geo/basic_spell_turret.geo.json");
         }
 
         @Override
         public ResourceLocation getTextureResource(T t) {
-            return new ResourceLocation(ArsElemental.MODID, "textures/block/" + element + "_turret.png");
+            return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/block/" + element + "_turret.png");
         }
 
         @Override
         public ResourceLocation getAnimationResource(T t) {
-            return new ResourceLocation(ArsNouveau.MODID, "animations/basic_spell_turret_animations.json");
+            return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "animations/basic_spell_turret_animations.json");
         }
     }
 

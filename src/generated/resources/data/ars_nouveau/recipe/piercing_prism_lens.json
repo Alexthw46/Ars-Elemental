@@ -1,0 +1,19 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "input": {
+    "tag": "c:gems/quartz"
+  },
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:piercing_prism_lens"
+  },
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:manipulation_essence"
+    },
+    {
+      "item": "ars_nouveau:glyph_pierce"
+    }
+  ],
+  "source": 2000
+}

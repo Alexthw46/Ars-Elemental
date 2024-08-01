@@ -8,18 +8,16 @@ import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.datagen.Datagen.takeAll;
@@ -32,7 +30,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
+        Set<DeferredHolder<Block, ? extends Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
         takeAll(blocks, b -> b.get() instanceof FlowerPotBlock).forEach(this::registerOnlyState);
         takeAll(blocks, b -> b.get() instanceof TickableModBlock || b.get() instanceof ElementalTurret || b.get() instanceof SpellPrismBlock);
         takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock || b.get() instanceof StrippableLog).forEach(this::logBlock);
@@ -45,27 +43,27 @@ public class AEBlockStateProvider extends BlockStateProvider {
         blocks.forEach(this::basicBlock);
     }
 
-    public void registerOnlyState(RegistryObject<Block> obj) {
+    public void registerOnlyState(DeferredHolder<Block, ? extends Block> obj) {
         simpleBlock(obj.get(), new ModelFile.UncheckedModelFile(prefix("block/"+ obj.getId().getPath())));
     }
 
-    public void slabBlock(RegistryObject<Block> blockRegistryObject) {
+    public void slabBlock(DeferredHolder<Block, ? extends Block> blockRegistryObject) {
         String name = blockRegistryObject.getId().getPath();
         String baseName = name.substring(0, name.length() - 5);
         slabBlock((SlabBlock) blockRegistryObject.get(), prefix(baseName), prefix("block/" + baseName));
     }
 
-    public void logBlock(RegistryObject<Block> blockRegistryObject) {
+    public void logBlock(DeferredHolder<Block, ? extends Block> blockRegistryObject) {
 
     }
 
-    public void stairsBlock(RegistryObject<Block> blockRegistryObject) {
+    public void stairsBlock(DeferredHolder<Block, ? extends Block> blockRegistryObject) {
         String name = blockRegistryObject.getId().getPath();
         String baseName = name.substring(0, name.length() - 7);
         stairsBlock((StairBlock) blockRegistryObject.get(), prefix("block/" + baseName));
     }
 
-    public void basicBlock(RegistryObject<Block> blockRegistryObject) {
+    public void basicBlock(DeferredHolder<Block, ? extends net.minecraft.world.level.block.Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get());
     }
 

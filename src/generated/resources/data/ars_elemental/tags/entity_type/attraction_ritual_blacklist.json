@@ -1,0 +1,8 @@
+{
+  "values": [
+    "minecraft:player",
+    "#c:bosses",
+    "ars_nouveau:follow_proj",
+    "#ars_nouveau:familiar"
+  ]
+}

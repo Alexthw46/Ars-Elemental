@@ -16,12 +16,13 @@ public class LightningLureEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
         fallLightning(pLivingEntity);
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
         // Trigger the effect only once, when the time left reaches 1.
         return pDuration == 1;
     }
@@ -32,7 +33,7 @@ public class LightningLureEffect extends MobEffect {
         if (lightningbolt == null) return;
         lightningbolt.moveTo(Vec3.atBottomCenterOf(pLivingEntity.blockPosition()));
         lightningbolt.setCause(pLivingEntity instanceof ServerPlayer sp ? sp : null);
-        pLivingEntity.level.addFreshEntity(lightningbolt);
+        pLivingEntity.level().addFreshEntity(lightningbolt);
     }
 
 }

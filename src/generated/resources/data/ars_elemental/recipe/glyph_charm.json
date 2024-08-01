@@ -1,0 +1,22 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 55,
+  "inputs": [
+    {
+      "item": "ars_elemental:anima_essence"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "ars_nouveau:source_berry_pie"
+    },
+    {
+      "item": "minecraft:cake"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_charm"
+  }
+}

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -37,7 +37,7 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
         if (rayTraceResult.getEntity() instanceof LivingEntity target && canDamage(shooter, spellStats, spellContext, resolver, target)) {
             double damage = this.DAMAGE.get() + this.AMP_VALUE.get() * spellStats.getAmpMultiplier() + (target.isInWaterRainOrBubble() ? 2 : 0);
             attemptDamage(world, shooter, spellStats, spellContext, resolver, target, buildDamageSource(world, shooter), (float) damage);
-            this.applyConfigPotion(target, ModPotions.SHOCKED_EFFECT.get(), spellStats);
+            this.applyConfigPotion(target, ModPotions.SHOCKED_EFFECT, spellStats);
         }
     }
 
@@ -48,7 +48,7 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDamageConfig(builder, 3);
         addAmpConfig(builder, 1.5);
@@ -71,11 +71,6 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
 
     public int getExtendTimeDuration() {
         return this.EXTEND_TIME == null ? 5 : this.EXTEND_TIME.get();
-    }
-
-    @Override
-    public SpellTier defaultTier() {
-        return SpellTier.ONE;
     }
 
     @Override

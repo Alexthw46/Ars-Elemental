@@ -1,0 +1,17 @@
+{
+  "type": "ars_nouveau:enchantment",
+  "enchantment": "ars_elemental:mirror_shield",
+  "level": 3,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:enchanters_mirror"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    },
+    {
+      "tag": "neoforge:storage_blocks/source"
+    }
+  ],
+  "sourceCost": 8000
+}

@@ -6,9 +6,10 @@ import com.hollingsworth.arsnouveau.common.world.tree.MagicTrunkPlacer;
 import com.hollingsworth.arsnouveau.setup.registry.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
@@ -27,8 +28,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import static com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry.softDisk
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class ModWorldgen {
 
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(BuiltInRegistries.FEATURE, MODID);
 
     public static final String SIMPLE_FLASHING_ID = "simple_flashing";
     public static final String COMMON_FLASHING_ID = "common_flashing";
@@ -81,7 +81,7 @@ public class ModWorldgen {
             return ResourceKey.create(Registries.BIOME, prefix(name));
         }
 
-        public static void registerBiomes(BootstapContext<Biome> context) {
+        public static void registerBiomes(BootstrapContext<Biome> context) {
 
             BiomeRegistry.bootstrap(context);
 
@@ -92,7 +92,7 @@ public class ModWorldgen {
 
         }
 
-        public static Biome flashingArchwoodForest(BootstapContext<Biome> context) {
+        public static Biome flashingArchwoodForest(BootstrapContext<Biome> context) {
             MobSpawnSettings.Builder spawnBuilder = archwoodSpawns();
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(FLASHING_WEALD_WALKER.get(), 3, 1, 3));
 
@@ -111,11 +111,11 @@ public class ModWorldgen {
                             .foliageColorOverride(13084948)
                             .fogColor(12638463)
                             .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO.getHolder().get())).build())
+                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO)).build())
                     .build();
         }
 
-        private static Biome blazingArchwoodForest(BootstapContext<Biome> context) {
+        private static Biome blazingArchwoodForest(BootstrapContext<Biome> context) {
             MobSpawnSettings.Builder spawnBuilder = archwoodSpawns();
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.ENTITY_BLAZING_WEALD.get(), 3, 1, 1));
 
@@ -133,12 +133,12 @@ public class ModWorldgen {
                             .foliageColorOverride(2210437)
                             .fogColor(12638463)
                             .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO.getHolder().get())).build())
+                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO)).build())
                     .build();
 
         }
 
-        private static Biome cascadingArchwoodForest(BootstapContext<Biome> context) {
+        private static Biome cascadingArchwoodForest(BootstrapContext<Biome> context) {
             MobSpawnSettings.Builder spawnBuilder = archwoodSpawns();
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.ENTITY_CASCADING_WEALD.get(), 3, 1, 1));
 
@@ -156,11 +156,11 @@ public class ModWorldgen {
                             .foliageColorOverride(2210437)
                             .fogColor(12638463)
                             .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO.getHolder().get())).build())
+                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO)).build())
                     .build();
         }
 
-        private static Biome flourishArchwoodForest(BootstapContext<Biome> context) {
+        private static Biome flourishArchwoodForest(BootstrapContext<Biome> context) {
             MobSpawnSettings.Builder spawnBuilder = archwoodSpawns();
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.ENTITY_FLOURISHING_WEALD.get(), 3, 1, 1));
 
@@ -179,7 +179,7 @@ public class ModWorldgen {
                             .foliageColorOverride(2210437)
                             .fogColor(12638463)
                             .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO.getHolder().get())).build())
+                            .backgroundMusic(Musics.createGameMusic(SoundRegistry.ARIA_BIBLIO)).build())
                     .build();
         }
 
@@ -193,7 +193,7 @@ public class ModWorldgen {
             return spawnBuilder;
         }
 
-        private static BiomeGenerationSettings.Builder getArchwoodBiomeBuilder(ResourceKey<PlacedFeature> archwoodCluster, BootstapContext<Biome> context) {
+        private static BiomeGenerationSettings.Builder getArchwoodBiomeBuilder(ResourceKey<PlacedFeature> archwoodCluster, BootstrapContext<Biome> context) {
             BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
             //we need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
             globalOverworldGeneration(biomeBuilder);
@@ -216,7 +216,7 @@ public class ModWorldgen {
 
     }
 
-    public static void bootstrapConfiguredFeatures(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrapConfiguredFeatures(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
 
         WorldgenRegistry.bootstrapConfiguredFeatures(context);
@@ -240,7 +240,7 @@ public class ModWorldgen {
 
     }
 
-    public static void bootstrapPlacedFeatures(BootstapContext<PlacedFeature> context) {
+    public static void bootstrapPlacedFeatures(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configured = context.lookup(Registries.CONFIGURED_FEATURE);
 
         WorldgenRegistry.bootstrapPlacedFeatures(context);
@@ -261,15 +261,15 @@ public class ModWorldgen {
     }
 
     public static ResourceKey<Feature<?>> registerFeatureKey(String name) {
-        return ResourceKey.create(Registries.FEATURE, new ResourceLocation(MODID, name));
+        return ResourceKey.create(Registries.FEATURE, ResourceLocation.fromNamespaceAndPath(MODID, name));
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerConfKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(MODID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(MODID, name));
     }
 
     public static ResourceKey<PlacedFeature> registerPlacedKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(MODID, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(MODID, name));
     }
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> FLASHING_TREE_SAPLING = registerConfKey("flashing_tree_sapling");

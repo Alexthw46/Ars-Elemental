@@ -27,7 +27,7 @@ public class FireCannonGoal extends ProjCastingGoal<FirenandoEntity> {
         if (this.seeTime >= 40 && !this.hasAnimated) {
             this.hasAnimated = true;
             mob.getEntityData().set(SHOOTING, true);
-            Networking.sendToNearby(mob.level, mob, new PacketAnimEntity(mob.getId(), animId));
+            Networking.sendToNearbyClient(mob.level, mob, new PacketAnimEntity(mob.getId(), animId));
         }
 
         if (this.hasAnimated) {

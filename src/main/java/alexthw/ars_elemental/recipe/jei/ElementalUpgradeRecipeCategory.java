@@ -1,10 +1,9 @@
 package alexthw.ars_elemental.recipe.jei;
 
 import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
-import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
-import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
-import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
+import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.client.jei.EnchantingApparatusRecipeCategory;
+import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -35,11 +34,9 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
         if (provider.optionalCenter() != null) {
             var stacks = provider.optionalCenter().getItems();
             for (ItemStack stack : stacks) {
-                IPerkProvider<ItemStack> perkProvider = PerkRegistry.getPerkProvider(stack.getItem());
-                if (perkProvider != null) {
-                    if (perkProvider.getPerkHolder(stack) instanceof ArmorPerkHolder armorPerkHolder) {
-                        armorPerkHolder.setTier(2);
-                    }
+                ArmorPerkHolder armorPerkHolder = PerkUtil.getPerkHolder(stack);
+                if (armorPerkHolder != null) {
+                    armorPerkHolder.setTier(2);
                 }
             }
             builder.addSlot(RecipeIngredientRole.INPUT, 48, 45).addItemStacks(List.of(stacks));
@@ -64,10 +61,10 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     @Override
     public void draw(ElementalArmorRecipe recipe, @NotNull IRecipeSlotsView slotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Font renderer = Minecraft.getInstance().font;
-        guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.tier", 1 + recipe.tier), 0, 0, 10, false);
+        guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.tier", 3), 0, 0, 10, false);
 
         if (recipe.consumesSource())
-            guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.source", recipe.sourceCost), 0, 100, 10, false);
+            guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.source", recipe.sourceCost()), 0, 100, 10, false);
     }
 
 }

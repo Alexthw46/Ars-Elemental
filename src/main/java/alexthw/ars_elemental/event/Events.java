@@ -19,16 +19,16 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.item.ItemExpireEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.item.ItemExpireEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
@@ -38,7 +38,7 @@ import java.util.List;
 
 import static alexthw.ars_elemental.common.enchantments.SoulboundEnchantment.*;
 
-@Mod.EventBusSubscriber(modid = ArsElemental.MODID)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class Events {
 
     @SubscribeEvent
@@ -59,7 +59,7 @@ public class Events {
         if (!caster.level().isClientSide() && caster instanceof Player player) {
             //if the player is holding a focus, and the spell match the focus's school, apply the focus discount.
             var focus = ISchoolFocus.getFocus(player);
-            if (focus != null && event.context.getSpell().recipe.stream().anyMatch(focus.getSchool()::isPartOfSchool))
+            if (focus != null && event.context.getSpell().unsafeList().stream().anyMatch(focus.getSchool()::isPartOfSchool))
                 event.currentCost = (int) (event.currentCost - focus.getDiscount() * event.context.getSpell().getCost());
         }
     }
@@ -68,8 +68,8 @@ public class Events {
     public static void DeathEvent(LivingDeathEvent event) {
 
         //when the player dies, if they have the hymn of order effect, save the effect duration to the player's persistent data.
-        if (event.getEntity() instanceof Player player && player.hasEffect(ModPotions.HYMN_OF_ORDER.get())) {
-            MobEffectInstance effect = player.getEffect(ModPotions.HYMN_OF_ORDER.get());
+        if (event.getEntity() instanceof Player player && player.hasEffect(ModPotions.HYMN_OF_ORDER)) {
+            MobEffectInstance effect = player.getEffect(ModPotions.HYMN_OF_ORDER);
             if (effect == null) return;
             CompoundTag data = player.getPersistentData();
             if (!data.contains(Player.PERSISTED_NBT_TAG)) {
@@ -85,16 +85,15 @@ public class Events {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerDrop(LivingDropsEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player instanceof FakePlayer || player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+            if (player instanceof FakePlayer || player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
                 return;
             }
             //if the player has soulbound enchantment, save the item to the player's persistent data.
             Collection<ItemEntity> drops = event.getDrops();
-            if (drops == null) return;
             List<ItemEntity> keeps = new ArrayList<>();
             for (ItemEntity item : drops) {
                 ItemStack stack = item.getItem();
-                if (!stack.isEmpty() && stack.getEnchantmentLevel(ModRegistry.SOULBOUND.get()) > 0) {
+                if (!stack.isEmpty() && stack.getEnchantmentLevel(player.level().holderOrThrow(ModRegistry.SOULBOUND)) > 0) {
                     keeps.add(item);
                 }
             }
@@ -108,7 +107,7 @@ public class Events {
                 int i = 0;
                 for (ItemEntity keep : keeps) {
                     ItemStack stack = keep.getItem();
-                    CompoundTag cmp1 = stack.save(new CompoundTag());
+                    var cmp1 = stack.saveOptional(event.getEntity().registryAccess());
                     cmp.put(TAG_SOULBOUND_PREFIX + i, cmp1);
                     i++;
                 }
@@ -134,7 +133,7 @@ public class Events {
         if (data.contains(Player.PERSISTED_NBT_TAG)) {
             CompoundTag persist = data.getCompound(Player.PERSISTED_NBT_TAG);
             if (persist.contains("magic_locked") && persist.contains("magic_lock_duration")) {
-                event.getEntity().addEffect(new MobEffectInstance(ModPotions.HYMN_OF_ORDER.get(), persist.getInt("magic_lock_duration")));
+                event.getEntity().addEffect(new MobEffectInstance(ModPotions.HYMN_OF_ORDER, persist.getInt("magic_lock_duration")));
                 persist.remove("magic_locked");
                 persist.remove("magic_lock_duration");
             }
@@ -147,7 +146,7 @@ public class Events {
             List<ItemStack> recovered = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 CompoundTag toRecover = soulTag.getCompound(TAG_SOULBOUND_PREFIX + i);
-                ItemStack stack = ItemStack.of(toRecover);
+                ItemStack stack = ItemStack.parseOptional(event.getEntity().registryAccess(),toRecover);
                 if (!stack.isEmpty()) {
                     recovered.add(stack.copy());
                 }
@@ -171,14 +170,14 @@ public class Events {
 
     @SubscribeEvent
     public static void soulboundCurio(DropRulesEvent event) {
-        event.addOverride(i -> i.getEnchantmentLevel(ModRegistry.SOULBOUND.get()) > 0, ICurio.DropRule.ALWAYS_KEEP);
+        event.addOverride(i -> i.getEnchantmentLevel(event.getEntity().level.holderOrThrow(ModRegistry.SOULBOUND)) > 0, ICurio.DropRule.ALWAYS_KEEP);
     }
 
 
     @SubscribeEvent
     public static void despawnProtection(ItemExpireEvent event) {
-        var stackTag = event.getEntity().getItem().getTag();
-        if (stackTag != null && stackTag.contains("ae_netherite")) {
+        var stackTag = event.getEntity().getItem().get(ModRegistry.P4E);
+        if (stackTag != null && stackTag.flag()) {
             event.getEntity().setUnlimitedLifetime();
             event.setExtraLife(0);
         }

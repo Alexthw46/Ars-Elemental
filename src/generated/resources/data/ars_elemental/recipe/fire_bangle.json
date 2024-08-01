@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:fire_essence"
+    },
+    {
+      "item": "ars_nouveau:fire_essence"
+    },
+    {
+      "item": "minecraft:fire_charge"
+    },
+    {
+      "item": "ars_nouveau:fire_essence"
+    }
+  ],
+  "reagent": {
+    "item": "ars_elemental:base_bangle"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:fire_bangle"
+  },
+  "sourceCost": 0
+}

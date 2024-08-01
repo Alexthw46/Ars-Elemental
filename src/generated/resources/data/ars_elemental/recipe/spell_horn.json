@@ -1,0 +1,38 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:air_essence"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "tag": "neoforge:gems/source"
+    },
+    {
+      "tag": "neoforge:gems/source"
+    },
+    {
+      "tag": "neoforge:gems/source"
+    },
+    {
+      "tag": "neoforge:gems/source"
+    }
+  ],
+  "reagent": {
+    "item": "ars_nouveau:wilden_horn"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:spell_horn"
+  },
+  "sourceCost": 0
+}

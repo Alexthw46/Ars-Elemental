@@ -14,7 +14,7 @@ public class DynamicLightMixin {
 
     @Inject(method = "lightForEntity", at = @At("TAIL"), cancellable = true, remap = false)
     private static void ars_elemental$lightForEntity(Entity entity, CallbackInfoReturnable<Integer> cir) {
-        if (entity instanceof LivingEntity l && l.hasEffect(ModPotions.MAGIC_FIRE.get())) {
+        if (entity instanceof LivingEntity l && l.hasEffect(ModPotions.MAGIC_FIRE)) {
             cir.setReturnValue(15);
         }
     }

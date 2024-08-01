@@ -1,0 +1,34 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "input": {
+    "tag": "c:gems/quartz"
+  },
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:rainbow_prism_lens"
+  },
+  "pedestalItems": [
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    }
+  ],
+  "source": 2000
+}

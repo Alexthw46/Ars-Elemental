@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class TerrablenderAE {
     public static void registerBiomes() {
-        Regions.register(new ArchwoodRegion(new ResourceLocation(ArsElemental.MODID, "overworld"), ConfigHandler.Common.EXTRA_BIOMES.get()){
+        Regions.register(new ArchwoodRegion(ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "overworld"), ConfigHandler.Common.EXTRA_BIOMES.get()){
             @Override
             public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
                 this.addModifiedVanillaOverworldBiomes(mapper, (builder -> {

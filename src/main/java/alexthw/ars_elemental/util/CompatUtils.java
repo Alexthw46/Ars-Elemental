@@ -2,7 +2,7 @@ package alexthw.ars_elemental.util;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -28,11 +28,8 @@ public class CompatUtils {
         var lazy = CuriosApi.getCuriosInventory(player);
         SlotResult noResult = new SlotResult(null, ItemStack.EMPTY);
         if (lazy.isPresent()) {
-            var optional = lazy.resolve();
-            if (optional.isPresent()) {
-                var curioInv = optional.get();
+            var curioInv = lazy.get();
                 return curioInv.findFirstCurio(predicate).orElse(noResult);
-            }
         }
         return noResult;
     }

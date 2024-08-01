@@ -22,7 +22,7 @@ public class KindlingPerkMixin {
     private void onPreResolve(HitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, AbstractEffect effect, PerkInstance perkInstance, CallbackInfo ci) {
         if (effect instanceof IDamageEffect damageEffect && rayTraceResult instanceof EntityHitResult entityHitResult && perkInstance.getSlot() == PerkSlot.THREE) {
             if (damageEffect.canDamage(shooter, spellStats, spellContext, resolver, entityHitResult.getEntity()) && entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-                livingEntity.addEffect(new MobEffectInstance(ModPotions.MAGIC_FIRE.get(), 20), livingEntity);
+                livingEntity.addEffect(new MobEffectInstance(ModPotions.MAGIC_FIRE, 20), livingEntity);
             }
         }
     }

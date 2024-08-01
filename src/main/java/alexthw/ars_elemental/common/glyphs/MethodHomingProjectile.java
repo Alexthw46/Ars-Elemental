@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     @Override
     public CastResolveType onCastOnEntity(ItemStack stack, LivingEntity caster, Entity target, InteractionHand hand, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        onCast(stack, caster, caster.level, spellStats, spellContext, resolver);
+        onCast(stack, caster, caster.level(), spellStats, spellContext, resolver);
         return CastResolveType.SUCCESS;
     }
 
@@ -132,17 +132,17 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         if (!targetPlayers) {
             ignore.add(entity -> entity instanceof Player);
         }
-        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.recipe, 0);
+        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.unsafeList(), 0);
         if (!filters.isEmpty()) {
             ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
         }
         return ignore;
     }
 
-    public ForgeConfigSpec.IntValue PROJECTILE_TTL;
+    public ModConfigSpec.IntValue PROJECTILE_TTL;
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         PROJECTILE_TTL = builder.comment("Max lifespan of the projectile, in seconds.").defineInRange("max_lifespan", 30, 0, Integer.MAX_VALUE);
     }

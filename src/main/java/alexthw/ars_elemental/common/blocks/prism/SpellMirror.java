@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public class SpellMirror extends SpellPrismBlock {
 
@@ -26,7 +27,6 @@ public class SpellMirror extends SpellPrismBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         Direction direction = pState.getValue(FACING);
         BlockState blockstate = pLevel.getBlockState(pPos.relative(direction.getOpposite()));
@@ -34,8 +34,7 @@ public class SpellMirror extends SpellPrismBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+    public @NotNull BlockState updateShape(BlockState pState, @NotNull Direction pDirection, @NotNull BlockState pNeighborState, @NotNull LevelAccessor pLevel, @NotNull BlockPos pCurrentPos, @NotNull BlockPos pNeighborPos) {
         return pDirection == pState.getValue(FACING).getOpposite() && !this.canSurvive(pState, pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
     }
 
@@ -45,7 +44,7 @@ public class SpellMirror extends SpellPrismBlock {
         float factor = -0.9F;
         spell.prismRedirect++;
         if (spell.prismRedirect >= 3) {
-            ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.PRISMATIC, world, pos, 10);
+            ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.PRISMATIC.get(), world, pos, 10);
         }
         if (spell.spellResolver == null) {
             spell.remove(Entity.RemovalReason.DISCARDED);
@@ -69,9 +68,8 @@ public class SpellMirror extends SpellPrismBlock {
         BlockUtil.updateObservers(world, pos);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public @NotNull VoxelShape getShape(BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
         Direction direction = pState.getValue(FACING);
         return switch (direction) {
             case EAST -> east;

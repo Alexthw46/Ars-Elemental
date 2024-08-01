@@ -39,12 +39,12 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     }
 
     public SummonDolphin(SummonHorse oldHorse, Player summoner) {
-        this(summoner.level);
+        this(summoner.level());
         BlockPos position = oldHorse.blockPosition();
         setPos(position.getX(), position.getY(), position.getZ());
         ticksLeft = oldHorse.getTicksLeft();
         setOwnerID(summoner.getUUID());
-        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
+        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
     }
 
     @Override
@@ -61,26 +61,26 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
         this.goalSelector.addGoal(5, new DolphinJumpGoal(this, 10));
         this.goalSelector.addGoal(8, new FollowBoatGoal(this));
     }
-    protected void positionRider(@NotNull Entity pPassenger, Entity.@NotNull MoveFunction pCallback) {
-        if (this.hasPassenger(pPassenger)) {
-            double d0 = this.getY() + this.getPassengersRidingOffset() + pPassenger.getMyRidingOffset();
-            pCallback.accept(pPassenger, this.getX(), d0, this.getZ());
-            if (pPassenger instanceof Mob mob && this.getControllingPassenger() == pPassenger) {
+    protected void positionRider(@NotNull Entity passenger, Entity.MoveFunction callback) {
+        Vec3 vec3 = this.getPassengerRidingPosition(passenger);
+        Vec3 vec31 = passenger.getVehicleAttachmentPoint(this);
+        callback.accept(passenger, vec3.x - vec31.x, vec3.y - vec31.y, vec3.z - vec31.z);
+            if (passenger instanceof Mob mob && this.getControllingPassenger() == passenger) {
                 this.yBodyRot = mob.yBodyRot;
             }
-        }
+
     }
 
-    @Override
-    public double getPassengersRidingOffset() {
-        return 0.45D;
-    }
-
-
-    @Override
-    public boolean dismountsUnderwater() {
-        return false;
-    }
+//    @Override
+//    public Vec3 getPassengerRidingPosition(Entity entity) {
+//        return new Vec3(0,0.45D,0);
+//    }
+//
+//
+//    @Override
+//    public boolean dismountsUnderwater() {
+//        return false;
+//    }
 
     public LivingEntity getControllingPassenger() {
 
@@ -92,6 +92,8 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
         return null;
     }
 
+
+
     @Override
     protected boolean canRide(@NotNull Entity pEntity) {
         return pEntity instanceof Player;
@@ -101,7 +103,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     @Override
     public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
 
-        if (player.level.isClientSide()) return InteractionResult.PASS;
+        if (player.level().isClientSide()) return InteractionResult.PASS;
 
         if (player.getMainHandItem().isEmpty() && !player.isShiftKeyDown()) {
             player.startRiding(this);
@@ -171,25 +173,25 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(SummonDolphin.class, EntityDataSerializers.OPTIONAL_UUID);
 
     @Override
-    public int getExperienceReward() {
+    public int getBaseExperienceReward() {
         return 0;
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(OWNER_UUID, Optional.of(Util.NIL_UUID));
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(OWNER_UUID, Optional.of(Util.NIL_UUID));
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             ticksLeft--;
             if (ticksLeft <= 0) {
-                ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
+                ParticleUtil.spawnPoof((ServerLevel) level(), blockPosition());
                 this.remove(RemovalReason.DISCARDED);
-                onSummonDeath(level, null, true);
+                onSummonDeath(level(), null, true);
             }
         }
     }
@@ -197,7 +199,7 @@ public class SummonDolphin extends Dolphin implements PlayerRideableJumping, ISu
     @Override
     public void die(@NotNull DamageSource cause) {
         super.die(cause);
-        onSummonDeath(level, cause, false);
+        onSummonDeath(level(), cause, false);
     }
 
     @Override

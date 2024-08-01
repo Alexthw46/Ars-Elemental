@@ -1,16 +1,17 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.mob_effects.*;
-import alexthw.ars_elemental.mixin.PotionBrewingMixin;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.longPotion;
@@ -18,39 +19,39 @@ import static com.hollingsworth.arsnouveau.common.lib.LibPotions.potion;
 
 public class ModPotions {
 
-    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
-    public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MODID);
+    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, MODID);
+    public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(BuiltInRegistries.POTION, MODID);
 
-    public static final RegistryObject<MobEffect> MAGIC_FIRE;
-    public static final RegistryObject<MobEffect> FROZEN;
+    public static final DeferredHolder<MobEffect,MobEffect> MAGIC_FIRE;
+    public static final DeferredHolder<MobEffect,MobEffect> FROZEN;
 
-    public static final RegistryObject<MobEffect> WATER_GRAVE;
-    public static final RegistryObject<MobEffect> MANA_BUBBLE;
-    public static final RegistryObject<MobEffect> ENTHRALLED;
-    public static final RegistryObject<MobEffect> HYMN_OF_ORDER;
-    public static final RegistryObject<LifeLinkEffect> LIFE_LINK;
-    public static final RegistryObject<EnderferenceEffect> ENDERFERENCE;
-    public static final RegistryObject<LightningLureEffect> LIGHTNING_LURE;
-    public static final RegistryObject<RepelEffect> REPEL;
-    public static final RegistryObject<VenomEffect> VENOM;
-
-
-    public static final RegistryObject<Potion> ENDERFERENCE_POTION;
-    public static final RegistryObject<Potion> LONG_ENDERFERENCE_POTION;
-
-    public static final RegistryObject<Potion> SHOCK_POTION;
-    public static final RegistryObject<Potion> LONG_SHOCK_POTION;
+    public static final DeferredHolder<MobEffect,MobEffect> WATER_GRAVE;
+    public static final DeferredHolder<MobEffect,MobEffect> MANA_BUBBLE;
+    public static final DeferredHolder<MobEffect,MobEffect> ENTHRALLED;
+    public static final DeferredHolder<MobEffect,MobEffect> HYMN_OF_ORDER;
+    public static final DeferredHolder<MobEffect,LifeLinkEffect> LIFE_LINK;
+    public static final DeferredHolder<MobEffect,EnderferenceEffect> ENDERFERENCE;
+    public static final DeferredHolder<MobEffect,LightningLureEffect> LIGHTNING_LURE;
+    public static final DeferredHolder<MobEffect,RepelEffect> REPEL;
+    public static final DeferredHolder<MobEffect,VenomEffect> VENOM;
 
 
-    public static void addPotionRecipes() {
+    public static final DeferredHolder<Potion,Potion> ENDERFERENCE_POTION;
+    public static final DeferredHolder<Potion,Potion> LONG_ENDERFERENCE_POTION;
 
-        var invoker = (PotionBrewingMixin) new PotionBrewing();
+    public static final DeferredHolder<Potion,Potion> SHOCK_POTION;
+    public static final DeferredHolder<Potion,Potion> LONG_SHOCK_POTION;
 
-        invoker.callAddMix(Potions.AWKWARD, Items.TWISTING_VINES.asItem(), ENDERFERENCE_POTION.get());
-        invoker.callAddMix(ENDERFERENCE_POTION.get(), Items.GLOWSTONE_DUST, LONG_ENDERFERENCE_POTION.get());
 
-        invoker.callAddMix(Potions.AWKWARD, ModItems.FLASHING_POD.get().asItem(), SHOCK_POTION.get());
-        invoker.callAddMix(SHOCK_POTION.get(), Items.GLOWSTONE_DUST, LONG_SHOCK_POTION.get());
+    @SubscribeEvent
+    private static void addBrewingRecipes(final RegisterBrewingRecipesEvent event) {
+        PotionBrewing.Builder builder = event.getBuilder();
+
+        builder.addMix(Potions.AWKWARD, Items.TWISTING_VINES.asItem(), ENDERFERENCE_POTION);
+        builder.addMix(ENDERFERENCE_POTION, Items.GLOWSTONE_DUST, LONG_ENDERFERENCE_POTION);
+
+        builder.addMix(Potions.AWKWARD, ModItems.FLASHING_POD.get().asItem(), SHOCK_POTION);
+        builder.addMix(SHOCK_POTION, Items.GLOWSTONE_DUST, LONG_SHOCK_POTION);
 
     }
 
@@ -67,10 +68,10 @@ public class ModPotions {
         REPEL = EFFECTS.register("repel", RepelEffect::new);
         VENOM = EFFECTS.register("venom", VenomEffect::new);
 
-        ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 400)));
-        LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE.get(), 1200)));
-        SHOCK_POTION = POTIONS.register(potion("shock"), () -> new Potion(new MobEffectInstance(LIGHTNING_LURE.get(), 600)));
-        LONG_SHOCK_POTION = POTIONS.register(longPotion("shock"), () -> new Potion(new MobEffectInstance(LIGHTNING_LURE.get(), 400)));
+        ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 400)));
+        LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 1200)));
+        SHOCK_POTION = POTIONS.register(potion("shock"), () -> new Potion(new MobEffectInstance(LIGHTNING_LURE, 600)));
+        LONG_SHOCK_POTION = POTIONS.register(longPotion("shock"), () -> new Potion(new MobEffectInstance(LIGHTNING_LURE, 400)));
 
     }
 

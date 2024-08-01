@@ -1,10 +1,11 @@
 package alexthw.ars_elemental.common.items.foci;
 
-import alexthw.ars_elemental.ArsElemental;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +19,6 @@ import net.minecraft.world.phys.HitResult;
 import top.theillusivec4.curios.api.SlotContext;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.registry.ModPotions.MAGIC_FIRE;
@@ -49,29 +49,29 @@ public class GreaterElementalFocus extends ElementalFocus {
         if (player.tickCount % 20 == 0) {
             switch (getSchool().getId()) {
                 case "fire" -> {
-                    if (player.isOnFire() || player.isInLava() || player.hasEffect(MAGIC_FIRE.get()))
-                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), 200, 2));
+                    if (player.isOnFire() || player.isInLava() || player.hasEffect(MAGIC_FIRE))
+                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT, 200, 2));
                 }
                 case "water" -> {
                     if (player.isInWaterRainOrBubble()) {
                         if (player.isSwimming()) {
                             player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 200, 1));
-                            player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 1));
+                            player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 120, 1));
                         } else {
-                            player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 0));
+                            player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 120, 0));
                         }
                     }
                 }
                 case "air" -> {
-                    if (player.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
-                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 60, 1));
-                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT.get(), 60, 1));
+                    if (player.hasEffect(ModPotions.SHOCKED_EFFECT)) {
+                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 60, 1));
+                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT, 60, 1));
                     } else if (player.getY() > 200)
-                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 0));
+                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 120, 0));
                 }
                 case "earth" -> {
                     if (player.getY() < 0)
-                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 120, 0));
+                        player.addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 120, 0));
                 }
             }
         }
@@ -79,10 +79,10 @@ public class GreaterElementalFocus extends ElementalFocus {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
+    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation uuid, ItemStack stack) {
         if (element.equals(SpellSchools.ELEMENTAL_EARTH)) {
-            Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-            map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, ArsElemental.MODID + ":earth_focus", 0.2f, AttributeModifier.Operation.ADDITION));
+            Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
+            map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, 0.2f, AttributeModifier.Operation.ADD_VALUE));
             return map;
         }
         return super.getAttributeModifiers(slotContext, uuid, stack);

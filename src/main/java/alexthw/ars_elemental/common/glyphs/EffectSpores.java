@@ -28,8 +28,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -57,7 +57,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         double range = 3 + spellStats.getAoeMultiplier();
         int effectSec = (int) (POTION_TIME.get() + EXTEND_TIME.get() * spellStats.getDurationMultiplier());
 
-        MobEffectInstance venom = livingEntity.getEffect(ModPotions.VENOM.get());
+        MobEffectInstance venom = livingEntity.getEffect(ModPotions.VENOM);
         if (venom != null) {
             damage += 2 + 3 * venom.getAmplifier();
         }
@@ -82,7 +82,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
 
     @Override
     public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
-        return entity instanceof LivingEntity living && !(living.getHealth() <= 0) && (living.hasEffect(MobEffects.POISON) || living.hasEffect(MobEffects.HUNGER) || living.hasEffect(ModPotions.VENOM.get()));
+        return entity instanceof LivingEntity living && !(living.getHealth() <= 0) && (living.hasEffect(MobEffects.POISON) || living.hasEffect(MobEffects.HUNGER) || living.hasEffect(ModPotions.VENOM));
     }
 
     public void damage(Vec3 vec, ServerLevel world, @Nonnull LivingEntity shooter, SpellStats stats, float damage, int snareTime, LivingEntity livingEntity, SpellContext spellContext, SpellResolver resolver) {
@@ -96,7 +96,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
             if ((underfoot.getBlock() == Blocks.MOSS_BLOCK || underfoot.is(BlockTags.DIRT) || underfoot.is(BlockTags.LEAVES)) && world.getBlockState(feet.above()).isAir()) {
                 world.setBlockAndUpdate(feet.above(), ModItems.GROUND_BLOSSOM.get().defaultBlockState());
                 if (shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
-                    ModAdvTriggers.BLOSSOM.trigger(serverPlayer);
+                    ModAdvTriggers.BLOSSOM.get().trigger(serverPlayer);
             }
 
         } else
@@ -111,7 +111,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDamageConfig(builder, 6.0);
         addAmpConfig(builder, 2.5);

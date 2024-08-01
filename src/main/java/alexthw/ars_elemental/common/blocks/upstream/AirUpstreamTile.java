@@ -30,7 +30,7 @@ public class AirUpstreamTile extends BlockEntity implements ITickable {
 
             int power = 1;
             while (serverLevel.getBlockState(getBlockPos().below(power)) == this.getBlockState()) power++;
-            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos(), getBlockPos().above(46 * power)).inflate(1.1), e -> !e.isInWater() && !e.isInLava());
+            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().getCenter(), getBlockPos().above(46 * power).getCenter()).inflate(1.1), e -> !e.isInWater() && !e.isInLava());
 
             if (!entityList.isEmpty() && requiresSource()) {
                 var source = SourceUtil.takeSourceWithParticles(this.getBlockPos(), serverLevel, 10, power * AIR_ELEVATOR_COST.get());

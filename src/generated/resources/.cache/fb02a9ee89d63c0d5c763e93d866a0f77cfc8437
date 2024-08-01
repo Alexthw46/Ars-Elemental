@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-30T14:49:51.7874577	Ars Elemental Item Models
+// 1.21	2024-08-01T15:06:28.0868893	Ars Elemental Item Models
 a5b2cd6b765fcd98484c5cad23aa0a2775ae7d1a assets/ars_elemental/models/item/advanced_prism.json
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
@@ -43,6 +43,7 @@ e326e14fa8470667a133916991e22ce84ebcc6d8 assets/ars_elemental/models/item/lesser
 3c095e71ede593ddf9b6f0f58860c89088cd4300 assets/ars_elemental/models/item/lesser_fire_focus.json
 3bfebea068e4b6e7807981deb4f88fa473c4af56 assets/ars_elemental/models/item/lesser_water_focus.json
 7597c3bb234a009b508f61a87be206ac51cd2f01 assets/ars_elemental/models/item/magma_upstream.json
+8d9173fbf1b04a66dffcbf7e6a1413cfb8bbe345 assets/ars_elemental/models/item/manipulation_caster_tome.json
 1d82cf56d8a55f131bdb013325ca405784d4d036 assets/ars_elemental/models/item/manipulation_turret.json
 ed40950dfbebf15fbb9395bc4a141fdc692d3404 assets/ars_elemental/models/item/mark_of_mastery.json
 12e40d6e25ac2983ae7ba220b5317a5d24f5447b assets/ars_elemental/models/item/mermaid_rock.json

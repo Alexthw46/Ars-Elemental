@@ -11,12 +11,13 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 import java.nio.file.Path;
 
@@ -139,14 +140,14 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
 
         Path output = generator.getPackOutput().getOutputFolder();
         for (ImbuementRecipe g : recipes) {
-            Path path = getRecipePath(output, g.getId().getPath());
-            saveStable(cache, g.asRecipe(), path);
+            Path path = getRecipePath(output, g.id.getPath());
+            saveStable(cache, ImbuementRecipe.CODEC.encodeStart(JsonOps.INSTANCE, g).getOrThrow(), path);
         }
 
     }
 
     protected Path getRecipePath(Path pathIn, String str) {
-        return pathIn.resolve("data/ars_elemental/recipes/" + str + ".json");
+        return pathIn.resolve("data/ars_elemental/recipe/" + str + ".json");
     }
 
     @Override

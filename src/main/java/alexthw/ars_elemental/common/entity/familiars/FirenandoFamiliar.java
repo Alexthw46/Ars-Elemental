@@ -9,6 +9,7 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,11 +23,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +65,8 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     public void onCostCalc(SpellCostCalcEvent event) {
         if (this.isAlive())
             if (this.getOwner() != null && this.getOwner().equals(event.context.getUnwrappedCaster())) {
-                if (projectileGlyphs.contains(event.context.getSpell().recipe.get(0))) {
-                    event.currentCost -= (event.context.getSpell().getCost() * 0.5);
+                if (projectileGlyphs.contains(event.context.getSpell().unsafeList().getFirst())) {
+                    event.currentCost = (int) (event.currentCost - (event.context.getSpell().getCost() * 0.5));
                 }
             }
     }
@@ -98,9 +95,9 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.set(COLOR, Variants.MAGMA.toString());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(COLOR, Variants.MAGMA.toString());
     }
 
     @Override

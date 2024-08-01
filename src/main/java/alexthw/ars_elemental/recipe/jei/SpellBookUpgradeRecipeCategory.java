@@ -1,6 +1,8 @@
 package alexthw.ars_elemental.recipe.jei;
 
+import alexthw.ars_elemental.common.components.ElementProtectionFlag;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.client.jei.EnchantingApparatusRecipeCategory;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import mezz.jei.api.constants.VanillaTypes;
@@ -28,10 +30,10 @@ public class SpellBookUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, NetheriteUpgradeRecipe recipe, IFocusGroup focuses) {
         MultiProvider provider = multiProvider.apply(recipe);
-        List<Ingredient> inputs = recipe.pedestalItems;
+        List<Ingredient> inputs = recipe.pedestalItems();
         double angleBetweenEach = 360.0 / inputs.size();
         List<ItemStack> outputs = new ArrayList<>();
-        List<ItemStack> stacks = recipe.reagent == null ? new ArrayList<>() : List.of(recipe.reagent.getItems());
+        List<ItemStack> stacks = recipe.reagent() == null ? new ArrayList<>() : List.of(recipe.reagent().getItems());
         if (!focuses.isEmpty()) {
             //takes a copy of the magic armor hovered
             List<ItemStack> list = focuses.getItemStackFocuses(RecipeIngredientRole.CATALYST).map(i -> i.getTypedValue().getIngredient().copy()).filter(i -> i.getItem() instanceof SpellBook).toList();
@@ -47,7 +49,7 @@ public class SpellBookUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
 
         for (ItemStack input : stacks) {
             var temp = input.copy();
-            temp.getOrCreateTag().putBoolean("ae_netherite", true);
+            temp.set(ModRegistry.P4E, new ElementProtectionFlag(true));
             outputs.add(temp);
         }
 

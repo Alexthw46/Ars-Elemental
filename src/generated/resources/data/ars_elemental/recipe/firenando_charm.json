@@ -1,0 +1,29 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:fire_essence"
+    },
+    {
+      "item": "ars_nouveau:fire_essence"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    }
+  ],
+  "reagent": {
+    "item": "minecraft:magma_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:firenando_charm"
+  },
+  "sourceCost": 0
+}

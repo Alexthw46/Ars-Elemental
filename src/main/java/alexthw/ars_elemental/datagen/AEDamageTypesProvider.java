@@ -6,9 +6,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -19,7 +19,7 @@ public class AEDamageTypesProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.DAMAGE_TYPE, AEDamageTypesProvider::bootstrap);
 
 
-    public static void bootstrap(BootstapContext<DamageType> ctx) {
+    public static void bootstrap(BootstrapContext<DamageType> ctx) {
         ctx.register(ModRegistry.POISON, new DamageType("poison", 0.1F));
         ctx.register(ModRegistry.MAGIC_FIRE, new DamageType("hellfire", 0.1F));
         ctx.register(ModRegistry.SPARK, new DamageType("spark", 0.1F));

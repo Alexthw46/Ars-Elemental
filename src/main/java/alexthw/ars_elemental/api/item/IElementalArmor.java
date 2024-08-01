@@ -6,7 +6,8 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
-import com.hollingsworth.arsnouveau.common.armor.Materials;
+import com.hollingsworth.arsnouveau.setup.registry.MaterialRegistry;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
@@ -25,14 +26,14 @@ public interface IElementalArmor extends ISpellModifierItem {
 
     Map<SpellSchool, TagKey<DamageType>> damageResistances = new ConcurrentHashMap<>();
 
-    static ArmorMaterial schoolToMaterial(SpellSchool element) {
+    static Holder<ArmorMaterial> schoolToMaterial(SpellSchool element) {
         return switch (element.getId()) {
             case "fire" -> AAMaterials.fire;
             case "air" -> AAMaterials.air;
             case "earth" -> AAMaterials.earth;
             case "water" -> AAMaterials.water;
 
-            default -> Materials.MEDIUM;
+            default -> MaterialRegistry.MEDIUM;
         };
     }
 

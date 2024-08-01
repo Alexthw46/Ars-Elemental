@@ -13,7 +13,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ public class JeiArsExtraPlugin implements IModPlugin {
 
     @Override
     public @NotNull ResourceLocation getPluginUid() {
-        return new ResourceLocation(ArsElemental.MODID, "main");
+        return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "main");
     }
 
     @Override
@@ -45,10 +45,10 @@ public class JeiArsExtraPlugin implements IModPlugin {
         RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
         List<ElementalArmorRecipe> armorRecipes = new ArrayList<>();
         List<NetheriteUpgradeRecipe> spellbook = new ArrayList<>();
-        for (Recipe<?> i : manager.getRecipes()) {
-            if (i instanceof ElementalArmorRecipe aer) {
+        for (RecipeHolder<?> i : manager.getRecipes()) {
+            if (i.value() instanceof ElementalArmorRecipe aer) {
                 armorRecipes.add(aer);
-            } else if (i instanceof NetheriteUpgradeRecipe nur) {
+            } else if (i.value() instanceof NetheriteUpgradeRecipe nur) {
                 spellbook.add(nur);
             }
         }

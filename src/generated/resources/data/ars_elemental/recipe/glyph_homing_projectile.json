@@ -1,0 +1,22 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 160,
+  "inputs": [
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "ars_nouveau:manipulation_essence"
+    },
+    {
+      "item": "ars_nouveau:dowsing_rod"
+    },
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_homing_projectile"
+  }
+}

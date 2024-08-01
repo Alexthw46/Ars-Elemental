@@ -6,7 +6,7 @@ import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -23,7 +23,9 @@ public class EffectBubbleShield extends ElementalAbstractEffect implements IPoti
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity) {
-            CapabilityRegistry.getMana(livingEntity).ifPresent(mana -> this.applyConfigPotion(livingEntity, ModPotions.MANA_BUBBLE.get(), spellStats));
+            if (CapabilityRegistry.getMana(livingEntity) != null) {
+                this.applyConfigPotion(livingEntity, ModPotions.MANA_BUBBLE, spellStats);
+            }
         }
 
     }
@@ -44,10 +46,10 @@ public class EffectBubbleShield extends ElementalAbstractEffect implements IPoti
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
-        addGenericInt(builder,350, "Set how much mana is depleted every time a damage is mitigated by the Mana Bubble.","absorption_cost");
+        addGenericInt(builder, 350, "Set how much mana is depleted every time a damage is mitigated by the Mana Bubble.", "absorption_cost");
     }
 
     @NotNull

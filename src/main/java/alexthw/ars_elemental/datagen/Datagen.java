@@ -4,17 +4,17 @@ import alexthw.ars_elemental.ArsElemental;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
-@Mod.EventBusSubscriber(modid = ArsElemental.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsElemental.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Datagen {
 
     @SubscribeEvent
@@ -27,21 +27,22 @@ public class Datagen {
         gen.addProvider(event.includeClient(), new AEBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(event.includeClient(), new AEItemModelProvider(gen, existingFileHelper));
         BlockTagsProvider BTP = new AETagsProvider.AEBlockTagsProvider(gen, provider, existingFileHelper);
+        gen.addProvider(event.includeServer(), new AEEnchantmentProvider(output, provider));
         gen.addProvider(event.includeServer(), new AEDamageTypesProvider(output, provider));
         gen.addProvider(event.includeServer(), BTP);
         gen.addProvider(event.includeServer(), new AETagsProvider.AEMobEffectTagProvider(gen, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEItemTagsProvider(gen, provider, BTP, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEEntityTagProvider(gen, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEDamageTypeProvider(gen, provider, existingFileHelper));
-        gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
-        gen.addProvider(event.includeServer(), new AELootTables(gen));
+        gen.addProvider(event.includeServer(), new ModRecipeProvider(gen, provider));
+        gen.addProvider(event.includeServer(), new AELootTables(gen, provider));
 
         gen.addProvider(event.includeServer(), new AEImbuementProvider(gen));
         gen.addProvider(event.includeServer(), new AEGlyphProvider(gen));
         gen.addProvider(event.includeServer(), new AEApparatusProvider(gen));
 
         gen.addProvider(event.includeServer(), new AEPatchouliProvider(gen));
-        gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider, existingFileHelper));
+        //gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AECasterTomeProvider(gen));
 
 

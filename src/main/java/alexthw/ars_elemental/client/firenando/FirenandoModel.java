@@ -4,9 +4,9 @@ import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
@@ -45,7 +45,7 @@ public class FirenandoModel<M extends LivingEntity & GeoEntity> extends GeoModel
     public void setCustomAnimations(M entity, long uniqueID, AnimationState<M> customPredicate) {
         super.setCustomAnimations(entity, uniqueID, customPredicate);
         if (customPredicate == null || entity instanceof FirenandoEntity fe && !fe.isActive()) return;
-        CoreGeoBone head = this.getAnimationProcessor().getBone("head");
+        GeoBone head = this.getAnimationProcessor().getBone("head");
         EntityModelData extraData = (EntityModelData) customPredicate.getExtraData().get(DataTickets.ENTITY_MODEL_DATA);
         head.setRotX(extraData.headPitch() * ((float) Math.PI / 330F));
         head.setRotY(extraData.netHeadYaw() * ((float) Math.PI / 330F));

@@ -33,7 +33,7 @@ public class SummonUndead extends SummonSkeleton implements IUndeadSummon {
         Vec3 hit = oldSkeleton.position();
         setPos(hit.x(), hit.y(), hit.z());
         setTarget(summoner.getLastHurtMob());
-        oldSkeleton.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
+        oldSkeleton.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
     }
 
     @Override

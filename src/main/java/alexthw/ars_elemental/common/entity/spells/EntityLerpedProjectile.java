@@ -11,8 +11,6 @@ import com.hollingsworth.arsnouveau.common.util.EasingType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +18,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -157,12 +154,12 @@ public class EntityLerpedProjectile extends ColoredProjectile {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(to, new BlockPos(0, 0, 0));
-        this.entityData.define(from, new BlockPos(0, 0, 0));
-        this.entityData.define(OFFSET, 0.0f);
-        this.entityData.define(DIDOFFSET, false);
+    protected void defineSynchedData(SynchedEntityData.Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(to, new BlockPos(0, 0, 0));
+        entityData.define(from, new BlockPos(0, 0, 0));
+        entityData.define(OFFSET, 0.0f);
+        entityData.define(DIDOFFSET, false);
     }
 
 
@@ -171,8 +168,4 @@ public class EntityLerpedProjectile extends ColoredProjectile {
         return ModEntities.LERP_PROJECTILE.get();
     }
 
-    @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

@@ -1,0 +1,32 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "tag": "neoforge:logs/archwood"
+    },
+    {
+      "tag": "neoforge:logs/archwood"
+    },
+    {
+      "tag": "c:gems/quartz"
+    },
+    {
+      "tag": "c:gems/quartz"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "reagent": {
+    "tag": "neoforge:storage_blocks/source"
+  },
+  "result": {
+    "count": 2,
+    "id": "ars_elemental:spell_mirror"
+  },
+  "sourceCost": 0
+}

@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": true,
+  "pedestalItems": [
+    {
+      "item": "ars_elemental:mark_of_mastery"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "ars_nouveau:fire_essence"
+    },
+    {
+      "item": "ars_nouveau:fire_essence"
+    }
+  ],
+  "reagent": {
+    "tag": "ars_nouveau:boot"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:fire_boots"
+  },
+  "sourceCost": 7000
+}

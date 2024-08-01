@@ -5,7 +5,9 @@ import alexthw.ars_elemental.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.sound.ConfiguredSpellSound;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.CasterTomeData;
 import com.hollingsworth.arsnouveau.common.datagen.CasterTomeProvider;
+import com.hollingsworth.arsnouveau.common.items.CasterTome;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
@@ -13,11 +15,11 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
-import com.hollingsworth.arsnouveau.common.tomes.CasterTomeData;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.nio.file.Path;
 
@@ -90,19 +92,23 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                 ParticleUtil.soulColor));
 
         Path output = this.generator.getPackOutput().getOutputFolder();
-        for (CasterTomeData g : tomes) {
-            Path path = getRecipePath(output, g.getId().getPath());
-            saveStable(cache, g.toJson(), path);
+        for (CasterRecipeWrapper g : tomes) {
+            Path path = getRecipePath(output, g.id().getPath());
+            saveStable(cache, CasterTomeData.CODEC.encodeStart(JsonOps.INSTANCE, g.toData()).getOrThrow(), path);
         }
     }
 
-    public CasterTomeData buildTome(RegistryObject<Item> item, String id, String name, Spell spell, String flavorText, ParticleColor particleColor) {
-        return new CasterTomeData(prefix(id + "_tome"),
+    public CasterRecipeWrapper buildTome(DeferredHolder<Item, ? extends CasterTome> item, String id, String name, Spell spell, String flavorText, ParticleColor particleColor) {
+        return new CasterRecipeWrapper(prefix(id + "_tome"),
                 name,
                 spell.serializeRecipe(),
                 item.getId(),
                 flavorText,
                 ParticleColor.defaultParticleColor().serialize(), ConfiguredSpellSound.DEFAULT);
+    }
+
+    protected Path getRecipePath(Path pathIn, String str) {
+        return pathIn.resolve("data/ars_elemental/recipe/tomes/" + str + ".json");
     }
 
     @Override

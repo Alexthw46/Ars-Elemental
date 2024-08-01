@@ -23,12 +23,13 @@ public abstract class ServerLevelMixin {
     public void tickChunk(LevelChunk pChunk, int pRandomTickSpeed, CallbackInfo ci) {
         if (!ConfigHandler.Common.LIGHTNINGS_BIOME.get()) return;
         var level = pChunk.getLevel();
+        if (level == null || level.isClientSide) return;
         var chunkpos = pChunk.getPos();
         int x = chunkpos.getMinBlockX();
         int z = chunkpos.getMinBlockZ();
         if (level.random.nextInt(1000) == 0 && level.isRainingAt(new BlockPos(x,120,z))) {
             var biome = pChunk.getLevel().getBiomeManager().getBiome(new BlockPos(x,120,z));
-            if (biome.containsTag(AETagsProvider.AEBiomeTagsProvider.FLASHING_BIOME)) {
+            if (biome.is(AETagsProvider.AEBiomeTagsProvider.FLASHING_BIOME)) {
 
                 BlockPos blockpos = findLightningTargetAround(level.getBlockRandomPos(x, 0, z, 15));
                 if (blockpos != null) {

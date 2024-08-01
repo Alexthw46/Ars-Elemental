@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.ItemTags;
@@ -72,7 +73,7 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
 
         for (GlyphRecipe recipe : recipes) {
             Path path = getScribeGlyphPath(output, recipe.output.getItem());
-            saveStable(cache, recipe.asRecipe(), path);
+            saveStable(cache, GlyphRecipe.CODEC.encodeStart(JsonOps.INSTANCE, recipe).getOrThrow(), path);
         }
 
     }
@@ -86,7 +87,7 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
     }
 
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
-        return pathIn.resolve("data/ars_elemental/recipes/" + getRegistryName(glyph).getPath() + ".json");
+        return pathIn.resolve("data/ars_elemental/recipe/" + getRegistryName(glyph).getPath() + ".json");
     }
 
     @Override

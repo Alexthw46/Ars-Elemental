@@ -33,12 +33,13 @@ public class AllyVhexEntity extends EntityAllyVex implements IUndeadSummon {
         this(world,player);
 
         moveTo(oldVex.blockPosition(), 0.0F, 0.0F);
-        finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(oldVex.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+        finalizeSpawn((ServerLevelAccessor) level(), level().getCurrentDifficultyAt(oldVex.blockPosition()), MobSpawnType.MOB_SUMMONED, null);
         setOwner(player);
         setBoundOrigin(oldVex.getBoundOrigin());
-        setLimitedLife(50+oldVex.serializeNBT().getInt("LifeTicks"));
+        setLimitedLife(50+oldVex.getTicksLeft());
+        //setLimitedLife(50+oldVex.serializeNBT().getInt("LifeTicks"));
 
-        oldVex.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
+        oldVex.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
     }
 
     public EntityType<?> getType() {

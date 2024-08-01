@@ -1,0 +1,17 @@
+{
+  "type": "ars_nouveau:enchantment",
+  "enchantment": "ars_elemental:mirror_shield",
+  "level": 1,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:spell_prism"
+    },
+    {
+      "item": "ars_nouveau:manipulation_essence"
+    },
+    {
+      "item": "ars_nouveau:abjuration_essence"
+    }
+  ],
+  "sourceCost": 2000
+}

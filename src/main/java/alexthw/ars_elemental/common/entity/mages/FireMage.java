@@ -11,12 +11,14 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectFirework;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +47,7 @@ public class FireMage extends EntityMageBase {
     protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
         ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
-        book.getOrCreateTag().putInt("color", 14);
+        book.set(DataComponents.BASE_COLOR, DyeColor.RED);
     }
 
     @Override

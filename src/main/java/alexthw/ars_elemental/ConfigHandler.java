@@ -1,57 +1,57 @@
 package alexthw.ars_elemental;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ConfigHandler {
 
     public static class Common {
 
-        public final ForgeConfigSpec.ConfigValue<Double> MajorFocusDiscount;
-        public final ForgeConfigSpec.ConfigValue<Double> LesserFocusDiscount;
+        public final ModConfigSpec.ConfigValue<Double> MajorFocusDiscount;
+        public final ModConfigSpec.ConfigValue<Double> LesserFocusDiscount;
 
-        public final ForgeConfigSpec.ConfigValue<Double> FireMasteryBuff;
-        public final ForgeConfigSpec.ConfigValue<Double> WaterMasteryBuff;
-        public final ForgeConfigSpec.ConfigValue<Double> AirMasteryBuff;
-        public final ForgeConfigSpec.ConfigValue<Double> EarthMasteryBuff;
+        public final ModConfigSpec.ConfigValue<Double> FireMasteryBuff;
+        public final ModConfigSpec.ConfigValue<Double> WaterMasteryBuff;
+        public final ModConfigSpec.ConfigValue<Double> AirMasteryBuff;
+        public final ModConfigSpec.ConfigValue<Double> EarthMasteryBuff;
 
-        public final ForgeConfigSpec.ConfigValue<Double> FireMasteryDebuff;
-        public final ForgeConfigSpec.ConfigValue<Double> WaterMasteryDebuff;
-        public final ForgeConfigSpec.ConfigValue<Double> AirMasteryDebuff;
-        public final ForgeConfigSpec.ConfigValue<Double> EarthMasteryDebuff;
+        public final ModConfigSpec.ConfigValue<Double> FireMasteryDebuff;
+        public final ModConfigSpec.ConfigValue<Double> WaterMasteryDebuff;
+        public final ModConfigSpec.ConfigValue<Double> AirMasteryDebuff;
+        public final ModConfigSpec.ConfigValue<Double> EarthMasteryDebuff;
 
-        public final ForgeConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
-        public final ForgeConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
-        public final ForgeConfigSpec.ConfigValue<Boolean> IFRAME_SKIP;
+        public final ModConfigSpec.ConfigValue<Boolean> EnableGlyphEmpowering;
+        public final ModConfigSpec.ConfigValue<Boolean> EnableRegenBonus;
+        public final ModConfigSpec.ConfigValue<Boolean> IFRAME_SKIP;
 
-        public static ForgeConfigSpec.IntValue ARMOR_MAX_MANA;
-        public static ForgeConfigSpec.IntValue ARMOR_MANA_REGEN;
-        public static ForgeConfigSpec.BooleanValue HOMING_GLOWING;
-        public static ForgeConfigSpec.BooleanValue FIRENANDO_KILL;
+        public static ModConfigSpec.IntValue ARMOR_MAX_MANA;
+        public static ModConfigSpec.IntValue ARMOR_MANA_REGEN;
+        public static ModConfigSpec.BooleanValue HOMING_GLOWING;
+        public static ModConfigSpec.BooleanValue FIRENANDO_KILL;
 
-        public static ForgeConfigSpec.IntValue SIREN_MANA_COST;
-        public static ForgeConfigSpec.IntValue SIREN_MAX_PROGRESS;
-        public static ForgeConfigSpec.IntValue SIREN_BASE_ITEM;
-        public static ForgeConfigSpec.IntValue SIREN_UNIQUE_BONUS;
-        public static ForgeConfigSpec.DoubleValue SIREN_TREASURE_BONUS;
-        public static ForgeConfigSpec.IntValue SIREN_QUANTITY_CAP;
+        public static ModConfigSpec.IntValue SIREN_MANA_COST;
+        public static ModConfigSpec.IntValue SIREN_MAX_PROGRESS;
+        public static ModConfigSpec.IntValue SIREN_BASE_ITEM;
+        public static ModConfigSpec.IntValue SIREN_UNIQUE_BONUS;
+        public static ModConfigSpec.DoubleValue SIREN_TREASURE_BONUS;
+        public static ModConfigSpec.IntValue SIREN_QUANTITY_CAP;
 
-        public static ForgeConfigSpec.IntValue WATER_URN_COST;
-        public static ForgeConfigSpec.IntValue AIR_ELEVATOR_COST;
-        public static ForgeConfigSpec.IntValue LAVA_ELEVATOR_COST;
-        public static ForgeConfigSpec.IntValue WATER_ELEVATOR_COST;
+        public static ModConfigSpec.IntValue WATER_URN_COST;
+        public static ModConfigSpec.IntValue AIR_ELEVATOR_COST;
+        public static ModConfigSpec.IntValue LAVA_ELEVATOR_COST;
+        public static ModConfigSpec.IntValue WATER_ELEVATOR_COST;
 
-        public static ForgeConfigSpec.BooleanValue LIGHTNINGS_BIOME;
-        public static ForgeConfigSpec.BooleanValue SOULBOUND_LOOT;
-        public static ForgeConfigSpec.IntValue PIERCE_LENS_LIMIT;
+        public static ModConfigSpec.BooleanValue LIGHTNINGS_BIOME;
+        public static ModConfigSpec.BooleanValue SOULBOUND_LOOT;
+        public static ModConfigSpec.IntValue PIERCE_LENS_LIMIT;
 
-        public static ForgeConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
-        public static ForgeConfigSpec.BooleanValue MAGES_AGGRO;
+        public static ModConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
+        public static ModConfigSpec.BooleanValue MAGES_AGGRO;
         public static final Integer TREE_SPAWN_RATE = 200;
-        public static ForgeConfigSpec.IntValue EXTRA_BIOMES;
+        public static ModConfigSpec.IntValue EXTRA_BIOMES;
 
 
-        public Common(ForgeConfigSpec.Builder builder) {
+        public Common(ModConfigSpec.Builder builder) {
 
             LesserFocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the lesser focus")
                     .defineInRange("Elemental Focus discount", 0.15D, 0.0D, 0.99D);
@@ -130,13 +130,13 @@ public class ConfigHandler {
     }
 
     public static final Common COMMON;
-    public static final ForgeConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
 
     public static class Client {
-        public static ForgeConfigSpec.ConfigValue<Boolean> EnableSFRendering;
-        public static ForgeConfigSpec.ConfigValue<Boolean> NetheriteTexture;
+        public static ModConfigSpec.ConfigValue<Boolean> EnableSFRendering;
+        public static ModConfigSpec.ConfigValue<Boolean> NetheriteTexture;
 
-        public Client(ForgeConfigSpec.Builder builder) {
+        public Client(ModConfigSpec.Builder builder) {
             builder.push("Visual Configs");
 
             EnableSFRendering = builder.comment("Enables the rendering of the spell focus while equipped").define("Enable SpellFocusRender", true);
@@ -147,15 +147,15 @@ public class ConfigHandler {
     }
 
     public static final Client CLIENT;
-    public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final ModConfigSpec CLIENT_SPEC;
 
     static {
 
-        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = specPair.getRight();
         COMMON = specPair.getLeft();
 
-        final Pair<Client, ForgeConfigSpec> specClientPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        final Pair<Client, ModConfigSpec> specClientPair = new ModConfigSpec.Builder().configure(Client::new);
         CLIENT_SPEC = specClientPair.getRight();
         CLIENT = specClientPair.getLeft();
 

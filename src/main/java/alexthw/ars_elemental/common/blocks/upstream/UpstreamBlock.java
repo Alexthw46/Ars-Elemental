@@ -4,6 +4,7 @@ import com.hollingsworth.arsnouveau.common.block.TickableModBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class UpstreamBlock extends TickableModBlock {
@@ -14,7 +15,7 @@ public class UpstreamBlock extends TickableModBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
         return new WaterUpstreamTile(pPos, pState);
     }
 }

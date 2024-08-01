@@ -20,6 +20,7 @@ import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.common.items.PerkItem;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
@@ -197,8 +198,8 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addRitualPage(new RepulsionRitual());
         addRitualPage(new DetectionRitual());
 
-        addEnchantmentPage(ModRegistry.MIRROR.get());
-        addEnchantmentPage(ModRegistry.SOULBOUND.get());
+        addEnchantmentPage(ModRegistry.MIRROR);
+        addEnchantmentPage(ModRegistry.SOULBOUND);
         addPage(new PatchouliBuilder(ENCHANTMENTS, ItemsRegistry.NOVICE_SPELLBOOK.get()).withTextPage("ars_elemental.page.book_protection").withName("tooltip.ars_nouveau.blessed").withPage(new ApparatusPage(prefix("invincible_book").toString())), getPath(ENCHANTMENTS, "invincible_book"));
 
         for (PatchouliPage patchouliPage : pages) {
@@ -227,7 +228,7 @@ public class AEPatchouliProvider extends PatchouliProvider {
 
         @Override
         public ResourceLocation getType() {
-            return new ResourceLocation(ArsNouveau.MODID, "elemental_armor_recipe");
+            return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "elemental_armor_recipe");
         }
     }
 
@@ -269,15 +270,15 @@ public class AEPatchouliProvider extends PatchouliProvider {
         this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getRegistryName().getPath())));
     }
 
-    public void addEnchantmentPage(Enchantment enchantment) {
-        PatchouliBuilder builder = new PatchouliBuilder(ENCHANTMENTS, enchantment.getDescriptionId())
+    public void addEnchantmentPage(DeferredHolder<Enchantment, Enchantment> enchantment) {
+        PatchouliBuilder builder = new PatchouliBuilder(ENCHANTMENTS, String.valueOf(enchantment.get().description()))
                 .withIcon(getRegistryName(Items.ENCHANTED_BOOK).toString())
-                .withTextPage("ars_elemental.enchantment_desc." + getRegistryName(enchantment).getPath());
+                .withTextPage("ars_elemental.enchantment_desc." + enchantment.getId().getPath());
 
-        for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++) {
-            builder.withPage(new EnchantingPage("ars_nouveau:" + getRegistryName(enchantment).getPath() + "_" + i));
+        for (int i = enchantment.get().getMinLevel(); i <= enchantment.get().getMaxLevel(); i++) {
+            builder.withPage(new EnchantingPage("ars_nouveau:" + enchantment.getId().getPath() + "_" + i));
         }
-        this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, getRegistryName(enchantment).getPath())));
+        this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, enchantment.getId().getPath())));
     }
 
     public void addGlyphPage(AbstractSpellPart spellPart) {
@@ -309,11 +310,9 @@ public class AEPatchouliProvider extends PatchouliProvider {
     }
 
     private ResourceLocation getRegistryName(Item asItem) {
-        return ForgeRegistries.ITEMS.getKey(asItem);
+        return BuiltInRegistries.ITEM.getKey(asItem);
     }
 
-    private ResourceLocation getRegistryName(Enchantment enchantment) {
-        return ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
-    }
+
 
 }

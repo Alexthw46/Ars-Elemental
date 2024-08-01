@@ -4,10 +4,10 @@ import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.items.armor.SummonPerk;
-import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
+import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeBuilder;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.RecipeDatagen;
@@ -21,7 +21,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 import java.nio.file.Path;
 
@@ -229,28 +229,28 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(BlockRegistry.SPELL_PRISM)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
-                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 1, 2000));
+                .buildEnchantmentRecipe(ModRegistry.MIRROR, 1, 2000));
 
         recipes.add(builder()
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                .withPedestalItem(ModItems.SPELL_MIRROR)
-                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 2, 5000));
+                .withPedestalItem(ModItems.SPELL_MIRROR.get())
+                .buildEnchantmentRecipe(ModRegistry.MIRROR, 2, 5000));
 
         recipes.add(builder()
                 .withPedestalItem(ItemsRegistry.ENCHANTERS_MIRROR)
                 .withPedestalItem(Items.TOTEM_OF_UNDYING)
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
-                .buildEnchantmentRecipe(ModRegistry.MIRROR.get(), 3, 8000));
+                .buildEnchantmentRecipe(ModRegistry.MIRROR, 3, 8000));
 
         recipes.add(builder()
-                .withPedestalItem(ModItems.ANIMA_ESSENCE)
+                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
                 .withPedestalItem(Items.TOTEM_OF_UNDYING)
                 .withPedestalItem(Blocks.LAPIS_BLOCK)
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
-                .buildEnchantmentRecipe(ModRegistry.SOULBOUND.get(), 1, 10000));
+                .buildEnchantmentRecipe(ModRegistry.SOULBOUND, 1, 10000));
 
         addArmorRecipes(ModItems.FIRE_ARMOR, ItemsRegistry.FIRE_ESSENCE);
         addArmorRecipes(ModItems.WATER_ARMOR, ItemsRegistry.WATER_ESSENCE);
@@ -273,10 +273,10 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         );
 
         Path output = this.generator.getPackOutput().getOutputFolder();
-        for (EnchantingApparatusRecipe g : recipes) {
+        for (ApparatusRecipeBuilder.RecipeWrapper<? extends EnchantingApparatusRecipe> g : recipes) {
             if (g != null) {
-                Path path = getRecipePath(output, g.getId().getPath());
-                saveStable(cache, g.asRecipe(), path);
+                Path path = getRecipePath(output, g.id().getPath());
+                saveStable(cache, g.serialize(), path);
             }
         }
 
@@ -284,15 +284,15 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
 
     protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
 
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getHat()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_HOOD)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getChest()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_ROBE)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getLegs()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_LEG)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
-        recipes.add(new ElementalArmorRecipe(builder().withResult(armorSet.getBoots()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_BOOT)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build()));
+        recipes.add(builder().withResult(armorSet.getHat()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_HOOD)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getChest()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_ROBE)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getLegs()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_LEG)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(builder().withResult(armorSet.getBoots()).withReagent(Ingredient.of(AETagsProvider.AEItemTagsProvider.MAGIC_BOOT)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
 
     }
 
     protected static Path getRecipePath(Path pathIn, String str) {
-        return pathIn.resolve("data/ars_elemental/recipes/" + str + ".json");
+        return pathIn.resolve("data/ars_elemental/recipe/" + str + ".json");
     }
 
     @Override

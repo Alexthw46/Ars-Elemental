@@ -28,10 +28,10 @@ public class GlyphEffectUtil {
     /**
      * Places a block at the given position, respecting claims.
      */
-    public static void placeBlocks(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockState toPlace) {
+    public static void placeBlocks(BlockHitResult rayTraceResult, Level world, @Nullable Entity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockState toPlace) {
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer((ServerLevel) world);
         if (shooter == null) return;
-        for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
+        for (BlockPos pos : SpellUtil.calcAOEBlocks((LivingEntity) shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
             pos = rayTraceResult.isInside() ? pos : pos.relative(rayTraceResult.getDirection());
             if (!BlockUtil.destroyRespectsClaim(shooter instanceof Player player ? player : fakePlayer, world, pos))
                 continue;
@@ -48,7 +48,7 @@ public class GlyphEffectUtil {
      * Returns true if the given spell has the given effect after the current index.
      */
     public static boolean hasFollowingEffect(SpellContext spellContext, AbstractEffect toFind) {
-        for (AbstractSpellPart part : spellContext.getSpell().recipe.subList(spellContext.getCurrentIndex(), spellContext.getSpell().getSpellSize())) {
+        for (AbstractSpellPart part : spellContext.getSpell().unsafeList().subList(spellContext.getCurrentIndex(), spellContext.getSpell().size())) {
             if (part instanceof AbstractEffect) {
                 if (part == toFind) {
                     return true;
@@ -89,7 +89,7 @@ public class GlyphEffectUtil {
      * Returns a predicate that checks if an entity is affected by the given spell.
      */
     public static Predicate<Entity> getFilterPredicate(Spell spell, Predicate<Entity> defaultFilter) {
-        Set<IFilter> set = getFilters(spell.recipe, 0);
+        Set<IFilter> set = getFilters(spell.unsafeList(), 0);
         if (set.isEmpty()) return defaultFilter;
         return (entity -> !checkIgnoreFilters(entity, set));
     }

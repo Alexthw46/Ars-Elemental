@@ -5,11 +5,16 @@ import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.mixin.FoxInvoker;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -17,7 +22,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -33,7 +38,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
     }
 
     @Override
-    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         if (shooter instanceof Player player && world instanceof ServerLevel level) {
             if (rayTraceResult.getEntity() instanceof Mob mob) {
@@ -47,12 +52,12 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
                         double chanceBoost = 10 + spellStats.getAmpMultiplier() * 5;
 
                         // if the mob is undead and the shooter has the necrotic focus, increase the chance by 50%
-                        if (mob.getMobType() == MobType.UNDEAD && NecroticFocus.hasFocus(world, shooter)) {
+                        if (mob.getType().is(EntityTypeTags.UNDEAD) && NecroticFocus.hasFocus(world, shooter)) {
                             chanceBoost += 50;
                         }
 
                         if (rollToSeduce((int) resistance, chanceBoost, level.getRandom())) {
-                            applyPotion(mob, player, ENTHRALLED.get(), spellStats);
+                            applyPotion(mob, player, ENTHRALLED, spellStats);
                             playHeartParticles(mob, level);
                         }
                     }
@@ -95,7 +100,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
         addGenericInt(builder,150, "Set the max hp limit for Charm, mobs with more max hp will be immune.","charm_hp_limit");
@@ -107,7 +112,7 @@ public class EffectCharm extends ElementalAbstractEffect implements IPotionEffec
         return getPotionAugments();
     }
 
-    public void applyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats) {
+    public void applyPotion(LivingEntity entity, LivingEntity owner, Holder<MobEffect> potionEffect, SpellStats stats) {
         if (entity == null || owner == null) return;
         int ticks = getBaseDuration() * 20 + getExtendTimeDuration() * stats.getDurationInTicks();
         int amp = (int) stats.getAmpMultiplier();

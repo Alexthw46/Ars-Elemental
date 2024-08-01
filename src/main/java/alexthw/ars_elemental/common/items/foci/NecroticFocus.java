@@ -26,20 +26,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, modid = ArsElemental.MODID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = ArsElemental.MODID)
 public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     public NecroticFocus(Item.Properties properties) {
@@ -67,10 +66,9 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     public static boolean hasFocus(Level level, Entity entity) {
         if (!level.isClientSide && entity instanceof Player) {
-            Optional<IItemHandlerModifiable> curios = CuriosUtil.getAllWornItems((LivingEntity)entity).resolve();
-            if (curios.isPresent()) {
-                IItemHandlerModifiable items = curios.get();
-                return IntStream.range(0, items.getSlots()).anyMatch(i -> items.getStackInSlot(i).getItem() instanceof NecroticFocus);
+            IItemHandlerModifiable curios = CuriosUtil.getAllWornItems((LivingEntity)entity);
+            if (curios != null) {
+                return IntStream.range(0, curios.getSlots()).anyMatch(i -> curios.getStackInSlot(i).getItem() instanceof NecroticFocus);
             }
         }
         return false;
@@ -94,7 +92,7 @@ public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
     public static void lifeSteal(LivingDeathEvent event){
         // if the source of the damage is a summoned undead entity, heal the player who summoned it.
         if (event.getSource().getEntity() instanceof IUndeadSummon risen && risen.getOwnerUUID() != null && event.getEntity().level() instanceof ServerLevel level) {
-            Player player = event.getEntity().level.getPlayerByUUID(risen.getOwnerUUID());
+            Player player = event.getEntity().level().getPlayerByUUID(risen.getOwnerUUID());
             if (player != null) {
                 player.heal(2.0F);
                 level.addFreshEntity(new EntityFollowProjectile(level, risen.getLivingEntity().blockPosition(), player.blockPosition(), ParticleUtil.soulColor.toWrapper()));

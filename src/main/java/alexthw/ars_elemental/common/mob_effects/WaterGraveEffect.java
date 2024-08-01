@@ -12,12 +12,12 @@ public class WaterGraveEffect extends MobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int p_76397_1_, int p_76397_2_) {
+    public boolean shouldApplyEffectTickThisTick(int p_76397_1_, int p_76397_2_) {
         return true;
     }
 
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int amp) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int amp) {
         // bring the entity down if it is in water or rain
         if (!livingEntity.onGround() && livingEntity.isInWaterRainOrBubble()) {
             Vec3 vec3 = livingEntity.getDeltaMovement();
@@ -30,6 +30,7 @@ public class WaterGraveEffect extends MobEffect {
         } else {
             livingEntity.setAirSupply(livingEntity.getAirSupply() - 5);
         }
+        return true;
     }
 
 }

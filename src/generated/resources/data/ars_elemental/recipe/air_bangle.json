@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:air_essence"
+    },
+    {
+      "item": "ars_nouveau:air_essence"
+    },
+    {
+      "item": "minecraft:piston"
+    },
+    {
+      "item": "ars_nouveau:air_essence"
+    }
+  ],
+  "reagent": {
+    "item": "ars_elemental:base_bangle"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:air_bangle"
+  },
+  "sourceCost": 0
+}

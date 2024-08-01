@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": true,
+  "pedestalItems": [
+    {
+      "item": "ars_elemental:mark_of_mastery"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "ars_nouveau:water_essence"
+    },
+    {
+      "item": "ars_nouveau:water_essence"
+    }
+  ],
+  "reagent": {
+    "tag": "ars_nouveau:hood"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:aqua_hat"
+  },
+  "sourceCost": 7000
+}

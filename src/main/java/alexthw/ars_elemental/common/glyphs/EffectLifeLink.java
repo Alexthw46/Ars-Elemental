@@ -3,12 +3,13 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -28,8 +29,8 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
         //if the shooter has the necromancy focus, the effect will be forcefully applied to the target and the shooter
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity && shooter instanceof Player player && player != livingEntity) {
             if (resolver.hasFocus(ModItems.NECRO_FOCUS.get().getDefaultInstance()))
-                forceApplyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
-            else applyPotion(livingEntity, player, LIFE_LINK.get(), spellStats);
+                forceApplyPotion(livingEntity, player, LIFE_LINK, spellStats);
+            else applyPotion(livingEntity, player, LIFE_LINK, spellStats);
 
         }
 
@@ -46,7 +47,7 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
     }
@@ -57,14 +58,14 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
         return getSummonAugments();
     } //just time boosters
 
-    public void applyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats) {
+    public void applyPotion(LivingEntity entity, LivingEntity owner, Holder<MobEffect> potionEffect, SpellStats stats) {
         if (entity == null || owner == null) return;
         int ticks = getBaseDuration() * 20 + getExtendTimeDuration() * stats.getDurationInTicks();
         entity.addEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity));
         owner.addEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity));
     }
 
-    public void forceApplyPotion(LivingEntity entity, LivingEntity owner, MobEffect potionEffect, SpellStats stats) {
+    public void forceApplyPotion(LivingEntity entity, LivingEntity owner, Holder<MobEffect> potionEffect, SpellStats stats) {
         if (entity == null || owner == null) return;
         int ticks = getBaseDuration() * 20 + getExtendTimeDuration() * stats.getDurationInTicks();
         entity.forceAddEffect(new EntityCarryMEI(potionEffect, ticks, 0, false, true, owner, entity), entity);

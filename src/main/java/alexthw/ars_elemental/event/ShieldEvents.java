@@ -6,8 +6,9 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.items.EnchantersShield;
-import com.hollingsworth.arsnouveau.common.spell.casters.ReactiveCaster;
+import com.hollingsworth.arsnouveau.common.items.data.ReactiveCasterData;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.EnchantmentRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -22,13 +23,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 
-@Mod.EventBusSubscriber(modid = ArsElemental.MODID)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class ShieldEvents {
 
     @SubscribeEvent
@@ -38,7 +39,7 @@ public class ShieldEvents {
             ItemStack stack = player.getOffhandItem();
             //if the shield is an enchanters shield then check if the shield has the mirror enchantment
             if (stack.getItem() instanceof EnchantersShield) {
-                int level = stack.getEnchantmentLevel(ModRegistry.MIRROR.get());
+                int level = stack.getEnchantmentLevel(player.level.holderOrThrow(ModRegistry.MIRROR));
                 //bounce back the spell if the random number is less than the level of the enchantment
                 if (level * .25 >= Math.random()) {
                     projectileSpell.setDeltaMovement(projectileSpell.getDeltaMovement().reverse().add(0, 0.2, 0));
@@ -46,10 +47,10 @@ public class ShieldEvents {
                         homing.getIgnored().add((e) -> e == player);
                     }
                     //trigger the advancement and remove mana from the player and set the cooldown of the shield to 1 second per level
-                    if (player instanceof ServerPlayer) {
-                        ModAdvTriggers.MIRROR.trigger((ServerPlayer) player);
+                    if (player instanceof ServerPlayer && CapabilityRegistry.getMana(player) != null) {
+                        ModAdvTriggers.MIRROR.get().trigger((ServerPlayer) player);
                         float pay = projectileSpell.spellResolver.getResolveCost() / (level * 2f);
-                        CapabilityRegistry.getMana(player).ifPresent(mana -> mana.removeMana(pay));
+                        CapabilityRegistry.getMana(player).removeMana(pay);
                         player.getCooldowns().addCooldown(stack.getItem(), 20 * level);
                     }
                     event.setCanceled(true);
@@ -59,15 +60,14 @@ public class ShieldEvents {
     }
 
     @SubscribeEvent
-    public static void onBlockReactive(ShieldBlockEvent event){
+    public static void onBlockReactive(LivingShieldBlockEvent event){
 
         if (!(event.getEntity() instanceof Player player) || player.getCommandSenderWorld().isClientSide)
             return;
         ItemStack s = player.getOffhandItem();
         //if the shield is an enchanters shield then check if the shield has the reactive enchantment and if the roll is successful then cast the spell
-        if (s.getItem() instanceof EnchantersShield) {
-            if (s.getEnchantmentLevel(EnchantmentRegistry.REACTIVE_ENCHANTMENT.get()) * .25 >= Math.random() && new ReactiveCaster(s).getSpell().isValid()) {
-                ReactiveCaster reactiveCaster = new ReactiveCaster(s);
+        if (s.getItem() instanceof EnchantersShield && s.get(DataComponentRegistry.REACTIVE_CASTER) instanceof ReactiveCasterData reactiveCaster) {
+            if (s.getEnchantmentLevel(player.level.holderOrThrow((EnchantmentRegistry.REACTIVE_ENCHANTMENT))) * .25 >= Math.random() && reactiveCaster.getSpell().isValid()) {
                 reactiveCaster.castSpell(player.getCommandSenderWorld(), player, InteractionHand.OFF_HAND, null);
             }
         }
@@ -75,13 +75,13 @@ public class ShieldEvents {
     }
 
     @SubscribeEvent
-    public static void onSonicImpact(LivingAttackEvent event){
+    public static void onSonicImpact(LivingIncomingDamageEvent event){
         if (!(event.getEntity() instanceof Player player && player.getCommandSenderWorld() instanceof ServerLevel level))
             return;
         ItemStack s = player.getOffhandItem();
         //if the shield is an enchanters shield then check if the shield has the reactive enchantment and if the roll is successful then cast the spell
-        if (s.getItem() instanceof EnchantersShield && player.isBlocking() && s.getEnchantmentLevel(ModRegistry.MIRROR.get()) * .25 >= Math.random()) {
-            if (event.getSource().getSourcePosition() != null && event.getSource().is(DamageTypes.SONIC_BOOM)) {
+        if (s.getItem() instanceof EnchantersShield && player.isBlocking() && s.getEnchantmentLevel(level.holderOrThrow(ModRegistry.MIRROR)) * .25 >= Math.random()) {
+            if (event.getSource().getSourcePosition() != null && event.getSource().is(DamageTypes.SONIC_BOOM) && CapabilityRegistry.getMana(player) != null) {
 
                 Vec3 vec3 = player.getViewVector(1.0F);
                 Vec3 vec31 = event.getSource().getSourcePosition().vectorTo(player.position()).normalize();
@@ -92,7 +92,7 @@ public class ShieldEvents {
         }
     }
 
-    private static void reflectSonicBoom(LivingAttackEvent event, Player player, ItemStack stack, ServerLevel level) {
+    private static void reflectSonicBoom(LivingIncomingDamageEvent event, Player player, ItemStack stack, ServerLevel level) {
         event.setCanceled(true);
 
         if (!(event.getSource().getEntity() instanceof LivingEntity reflectTo)) {
@@ -113,8 +113,8 @@ public class ShieldEvents {
         double d0 = 2.5D * (1.0D - reflectTo.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
         reflectTo.push(vec32.x() * d0, vec32.y() * d1, vec32.z() * d0);
 
-        CapabilityRegistry.getMana(player).ifPresent(mana -> mana.removeMana(150));
-        player.getCooldowns().addCooldown(stack.getItem(), 20 * stack.getEnchantmentLevel(ModRegistry.MIRROR.get()));
+        CapabilityRegistry.getMana(player).removeMana(150);
+        player.getCooldowns().addCooldown(stack.getItem(), 20 * stack.getEnchantmentLevel(level.holderOrThrow(ModRegistry.MIRROR)));
         player.stopUsingItem();
     }
 

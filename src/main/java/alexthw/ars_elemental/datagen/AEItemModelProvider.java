@@ -7,6 +7,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -17,11 +18,10 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -35,14 +35,14 @@ public class AEItemModelProvider extends ItemModelProvider {
         super(generator.getPackOutput(), ArsElemental.MODID, existingFileHelper);
     }
 
-    private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
+    private static final ResourceLocation GENERATED = ResourceLocation.withDefaultNamespace("item/generated");
 
-    private static final ResourceLocation HANDHELD = new ResourceLocation("item/handheld");
-    private static final ResourceLocation SPAWN_EGG = new ResourceLocation("item/template_spawn_egg");
+    private static final ResourceLocation HANDHELD = ResourceLocation.withDefaultNamespace("item/handheld");
+    private static final ResourceLocation SPAWN_EGG = ResourceLocation.withDefaultNamespace("item/template_spawn_egg");
 
     @Override
     protected void registerModels() {
-        Set<RegistryObject<Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
+        Set<DeferredHolder<Item,? extends Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
 
         takeAll(items, i -> i.get() instanceof AnimBlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof SpellHorn);
@@ -57,41 +57,41 @@ public class AEItemModelProvider extends ItemModelProvider {
 
     }
 
-    private void spawnEgg(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void spawnEgg(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, SPAWN_EGG);
     }
 
-    private void handheldItem(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void handheldItem(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, HANDHELD).texture("layer0", ArsElemental.prefix("item/" + name));
     }
 
-    private void generatedItem(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void generatedItem(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, GENERATED).texture("layer0", ArsElemental.prefix("item/" + name));
     }
 
-    private void focusModel(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void focusModel(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         withExistingParent("item/focus/" + name, GENERATED).texture("layer0", ArsElemental.prefix("item/" + name));
     }
 
-    private void blockGeneratedItem(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void blockGeneratedItem(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, GENERATED).texture("layer0", ArsElemental.prefix("block/" + name));
     }
 
-    private void blockItem(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void blockItem(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         String root = "block/";
         if (i.get() instanceof BlockItem bi && (bi.getBlock() instanceof RotatedPillarBlock || bi.getBlock() instanceof LeavesBlock || bi.getBlock() instanceof StrippableLog))
             root = "block/archwood/";
         getBuilder(name).parent(new ModelFile.UncheckedModelFile(ArsElemental.prefix(root + name)));
     }
 
-    private void fenceBlockItem(RegistryObject<Item> i) {
-        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
+    private void fenceBlockItem(DeferredHolder<Item, ? extends Item> i) {
+        String name = BuiltInRegistries.ITEM.getKey(i.get()).getPath();
         String baseName = name.substring(0, name.length() - 6);
         fenceInventory(name, ArsElemental.prefix("block/" + baseName));
     }

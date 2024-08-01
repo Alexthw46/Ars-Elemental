@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "ars_elemental:yellow_archwood_log"
+    }
+  },
+  "pattern": [
+    "xx ",
+    "xx "
+  ],
+  "result": {
+    "count": 3,
+    "id": "ars_elemental:yellow_archwood"
+  }
+}

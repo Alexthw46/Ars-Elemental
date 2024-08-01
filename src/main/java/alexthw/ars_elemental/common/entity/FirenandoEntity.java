@@ -55,12 +55,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
@@ -187,7 +184,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     }
 
     @Override
-    public int getExperienceReward() {
+    protected int getBaseExperienceReward() {
         return 0;
     }
 
@@ -229,12 +226,12 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SHOOTING, false);
-        this.entityData.define(ACTIVE, true);
-        this.entityData.define(HOME, Optional.empty());
-        this.entityData.define(COLOR, Variants.MAGMA.toString());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(SHOOTING, false);
+        builder.define(ACTIVE, true);
+        builder.define(HOME, Optional.empty());
+        builder.define(COLOR, Variants.MAGMA.toString());
     }
 
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {

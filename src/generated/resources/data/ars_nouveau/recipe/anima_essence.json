@@ -1,0 +1,22 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "input": {
+    "tag": "neoforge:gems/source"
+  },
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:anima_essence"
+  },
+  "pedestalItems": [
+    {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "minecraft:golden_apple"
+    }
+  ],
+  "source": 3000
+}

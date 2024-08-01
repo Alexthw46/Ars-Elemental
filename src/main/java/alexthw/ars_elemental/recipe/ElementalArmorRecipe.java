@@ -1,89 +1,57 @@
 package alexthw.ars_elemental.recipe;
 
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
-import com.hollingsworth.arsnouveau.api.enchanting_apparatus.ITextOutput;
-import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
-import com.hollingsworth.arsnouveau.api.perk.IPerkHolder;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
-import com.hollingsworth.arsnouveau.common.block.tile.EnchantingApparatusTile;
-import net.minecraft.network.FriendlyByteBuf;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.ApparatusRecipeInput;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.ITextOutput;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.Serializers;
+import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 
 
 public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements ITextOutput {
 
     public int tier; // 0 indexed
 
-    public ElementalArmorRecipe(ResourceLocation id, List<Ingredient> pedestalItems, Ingredient reagent, ItemStack result, int cost, int tier) {
-        super(id, pedestalItems, reagent, result, cost, true);
-        this.tier = tier;
-    }
-
-    public ElementalArmorRecipe(EnchantingApparatusRecipe recipe) {
-        this(recipe.id, recipe.pedestalItems, recipe.reagent, recipe.result, recipe.sourceCost, 3);
-    }
-
-    public JsonElement asRecipe() {
-        JsonObject jsonobject = new JsonObject();
-        jsonobject.addProperty("type", "ars_elemental:armor_upgrade");
-
-        JsonArray pedestalArr = new JsonArray();
-        for (Ingredient i : this.pedestalItems) {
-            JsonObject object = new JsonObject();
-            object.add("item", i.toJson());
-            pedestalArr.add(object);
-        }
-        JsonArray reagent = new JsonArray();
-        reagent.add(this.reagent.toJson());
-        jsonobject.add("reagent", reagent);
-
-        JsonObject resultObj = new JsonObject();
-        resultObj.addProperty("item", getRegistryName(result.getItem()).toString());
-        jsonobject.add("pedestalItems", pedestalArr);
-        jsonobject.add("output", resultObj);
-        jsonobject.addProperty("sourceCost", sourceCost);
-        jsonobject.addProperty("tier", tier);
-        return jsonobject;
+    public ElementalArmorRecipe(Ingredient reagent, ItemStack result, List<Ingredient> pedestalItems, int cost) {
+        super(reagent, result, pedestalItems, cost, true);
+        //this.tier = tier;
     }
 
     @Override
-    public boolean isMatch(List<ItemStack> pedestalItems, ItemStack reagent, EnchantingApparatusTile enchantingApparatusTile, @Nullable Player player) {
-        IPerkHolder<ItemStack> perkHolder = PerkUtil.getPerkHolder(reagent);
+    public boolean matches(ApparatusRecipeInput input, Level level) {
+        ArmorPerkHolder perkHolder = PerkUtil.getPerkHolder(input.catalyst());
         if (!(perkHolder instanceof ArmorPerkHolder armorPerkHolder)) {
             return false;
         }
-        return armorPerkHolder.getTier() == (tier - 1) && super.isMatch(pedestalItems, reagent, enchantingApparatusTile, player);
+        return armorPerkHolder.getTier() == 2 && super.matches(input, level);
     }
 
     @Override
-    public ItemStack getResult(List<ItemStack> pedestalItems, ItemStack reagent, EnchantingApparatusTile enchantingApparatusTile) {
-        ItemStack result = this.result.copy();
-        if (reagent.hasTag()) {
-            result.setTag(reagent.getTag());
+    public ItemStack assemble(ApparatusRecipeInput input, HolderLookup.Provider p_346030_) {
+        ItemStack result = super.assemble(input, p_346030_);
+        if (!input.catalyst().isComponentsPatchEmpty()) {
+            result.applyComponents(input.catalyst().getComponents());
             result.setDamageValue(0);
         }
-        return result.copy();
+        return result;
     }
-
 
     @Override
     public RecipeType<?> getType() {
@@ -109,62 +77,34 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
     }
 
     public static class Serializer implements RecipeSerializer<ElementalArmorRecipe> {
-
-        @Override
-        public @NotNull ElementalArmorRecipe fromJson(@NotNull ResourceLocation recipeId, JsonObject json) {
-            int tier = json.has("tier") ? GsonHelper.getAsInt(json, "tier") : 0;
-            Ingredient reagent = Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "reagent"));
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            int cost = json.has("sourceCost") ? GsonHelper.getAsInt(json, "sourceCost") : 0;
-            JsonArray pedestalItems = GsonHelper.getAsJsonArray(json, "pedestalItems");
-            List<Ingredient> stacks = new ArrayList<>();
-
-            for (JsonElement e : pedestalItems) {
-                JsonObject obj = e.getAsJsonObject();
-                Ingredient input;
-                if (GsonHelper.isArrayNode(obj, "item")) {
-                    input = Ingredient.fromJson(GsonHelper.getAsJsonArray(obj, "item"));
-                } else {
-                    input = Ingredient.fromJson(GsonHelper.getAsJsonObject(obj, "item"));
-                }
-                stacks.add(input);
-            }
-            return new ElementalArmorRecipe(recipeId, stacks, reagent, output, cost, tier);
-        }
-
-        @Nullable
-        @Override
-        public ElementalArmorRecipe fromNetwork(@NotNull ResourceLocation recipeId, FriendlyByteBuf buffer) {
-
-            int length = buffer.readInt();
-            Ingredient reagent = Ingredient.fromNetwork(buffer);
-            ItemStack output = buffer.readItem();
-            List<Ingredient> stacks = new ArrayList<>();
-
-            for (int i = 0; i < length; i++) {
-                try {
-                    stacks.add(Ingredient.fromNetwork(buffer));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    break;
-                }
-            }
-            int cost = buffer.readInt();
-            int tier = buffer.readInt();
-            return new ElementalArmorRecipe(recipeId, stacks, reagent, output, cost, tier);
+        //CODEC
+        public @NotNull MapCodec<ElementalArmorRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buf, ElementalArmorRecipe recipe) {
-            buf.writeInt(recipe.pedestalItems.size());
-            recipe.reagent.toNetwork(buf);
-            buf.writeItem(recipe.result);
-            for (Ingredient i : recipe.pedestalItems) {
-                i.toNetwork(buf);
-            }
-            buf.writeInt(recipe.sourceCost);
-            buf.writeInt(recipe.tier);
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, ElementalArmorRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
+
+        public static MapCodec<ElementalArmorRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Ingredient.CODEC.fieldOf("reagent").forGetter(ElementalArmorRecipe::reagent),
+                ItemStack.CODEC.fieldOf("result").forGetter(ElementalArmorRecipe::result),
+                Ingredient.CODEC.listOf().fieldOf("pedestalItems").forGetter(ElementalArmorRecipe::pedestalItems),
+                Codec.INT.fieldOf("sourceCost").forGetter(ElementalArmorRecipe::sourceCost)
+        ).apply(instance, ElementalArmorRecipe::new));
+
+        public static StreamCodec<RegistryFriendlyByteBuf, ElementalArmorRecipe> STREAM_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC,
+                ElementalArmorRecipe::reagent,
+                ItemStack.STREAM_CODEC,
+                ElementalArmorRecipe::result,
+                Serializers.INGREDIENT_LIST_STREAM,
+                ElementalArmorRecipe::pedestalItems,
+                ByteBufCodecs.VAR_INT,
+                ElementalArmorRecipe::sourceCost,
+                ElementalArmorRecipe::new
+        );
     }
 
 

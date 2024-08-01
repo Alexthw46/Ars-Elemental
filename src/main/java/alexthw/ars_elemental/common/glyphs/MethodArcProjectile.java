@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -79,7 +79,7 @@ public class MethodArcProjectile extends ElementalAbstractForm {
 
     @Override
     public CastResolveType onCastOnEntity(ItemStack stack, LivingEntity caster, Entity target, InteractionHand hand, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        onCast(stack, caster, caster.level, spellStats, spellContext, resolver);
+        onCast(stack, caster, caster.level(), spellStats, spellContext, resolver);
         return CastResolveType.SUCCESS;
     }
 
@@ -99,10 +99,10 @@ public class MethodArcProjectile extends ElementalAbstractForm {
         return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE, AugmentExtract.INSTANCE);
     }
 
-    public ForgeConfigSpec.IntValue PROJECTILE_TTL;
+    public ModConfigSpec.IntValue PROJECTILE_TTL;
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         PROJECTILE_TTL = builder.comment("Max lifespan of the projectile, in seconds.").defineInRange("max_lifespan", 60, 0, Integer.MAX_VALUE);
     }

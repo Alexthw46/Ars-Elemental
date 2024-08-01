@@ -1,0 +1,16 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 27,
+  "inputs": [
+    {
+      "item": "ars_nouveau:allow_scroll"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_insect_filter"
+  }
+}

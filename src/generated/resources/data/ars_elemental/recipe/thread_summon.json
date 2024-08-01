@@ -1,0 +1,29 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:conjuration_essence"
+    },
+    {
+      "item": "ars_nouveau:conjuration_essence"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "tag": "ars_nouveau:wilden_drop"
+    },
+    {
+      "tag": "ars_nouveau:wilden_drop"
+    }
+  ],
+  "reagent": {
+    "item": "ars_nouveau:blank_thread"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:thread_summon"
+  },
+  "sourceCost": 0
+}

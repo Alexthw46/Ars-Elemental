@@ -20,8 +20,10 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -37,18 +39,18 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.STRIDER_SUMMON.get();
     }
 
     public SummonStrider(SummonHorse oldHorse, Player summoner) {
-        this(summoner.level);
+        this(summoner.level());
         BlockPos position = oldHorse.blockPosition();
         setPos(position.getX(), position.getY(), position.getZ());
         ticksLeft = oldHorse.getTicksLeft();
-        this.equipSaddle(SoundSource.NEUTRAL);
+        this.equipSaddle(Items.SADDLE.getDefaultInstance(), SoundSource.NEUTRAL);
         setOwnerID(summoner.getUUID());
-        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
+        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
     }
 
     public LivingEntity getControllingPassenger() {
@@ -62,12 +64,12 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    protected boolean canRide(Entity pEntity) {
+    protected boolean canRide(@NotNull Entity pEntity) {
         return pEntity instanceof Player;
     }
 
     @Override
-    public void travel(Vec3 pTravelVector) {
+    public void travel(@NotNull Vec3 pTravelVector) {
         if (this.isAlive()) {
             LivingEntity livingentity = this.getControllingPassenger();
             if (this.isVehicle() && livingentity != null) {
@@ -99,8 +101,8 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!player.level.isClientSide() && player.getMainHandItem().isEmpty() && !player.isShiftKeyDown()) {
+    public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
+        if (!player.level().isClientSide() && player.getMainHandItem().isEmpty() && !player.isShiftKeyDown()) {
             player.startRiding(this);
             return InteractionResult.SUCCESS;
         }
@@ -114,37 +116,37 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(SummonStrider.class, EntityDataSerializers.OPTIONAL_UUID);
 
     @Override
-    public int getExperienceReward() {
+    public int getBaseExperienceReward() {
         return 0;
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(OWNER_UUID, Optional.of(Util.NIL_UUID));
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(OWNER_UUID, Optional.of(Util.NIL_UUID));
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             ticksLeft--;
             if (ticksLeft <= 0) {
-                ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
+                ParticleUtil.spawnPoof((ServerLevel) level(), blockPosition());
                 this.remove(RemovalReason.DISCARDED);
-                onSummonDeath(level, null, true);
+                onSummonDeath(level(), null, true);
             }
         }
     }
 
     @Override
-    public void die(DamageSource cause) {
+    public void die(@NotNull DamageSource cause) {
         super.die(cause);
-        onSummonDeath(level, cause, false);
+        onSummonDeath(level(), cause, false);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.ticksLeft = compound.getInt("left");
         UUID uuid = null;
@@ -157,7 +159,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("left", ticksLeft);
         writeOwner(compound);
@@ -186,11 +188,11 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     //override
-    public Strider getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+    public Strider getBreedOffspring(@NotNull ServerLevel pLevel, @NotNull AgeableMob pOtherParent) {
         return null;
     }
 
-    public boolean isFood(ItemStack pStack) {
+    public boolean isFood(@NotNull ItemStack pStack) {
         return false;
     }
 
@@ -198,7 +200,7 @@ public class SummonStrider extends Strider implements PlayerRideable, ISummon {
     }
 
     @Override
-    public boolean canMate(Animal pOtherAnimal) {
+    public boolean canMate(@NotNull Animal pOtherAnimal) {
         return false;
     }
 

@@ -4,10 +4,11 @@ import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -21,16 +22,20 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 public class AELootTables extends LootTableProvider {
 
-    public AELootTables(DataGenerator dataGeneratorIn) {
-        super(dataGeneratorIn.getPackOutput(), new HashSet<>(), List.of(new SubProviderEntry(BlockLootTable::new, LootContextParamSets.BLOCK)));
+    public AELootTables(DataGenerator dataGeneratorIn, CompletableFuture<HolderLookup.Provider> provider) {
+        super(dataGeneratorIn.getPackOutput(), new HashSet<>(), List.of(new SubProviderEntry(BlockLootTable::new, LootContextParamSets.BLOCK)), provider);
     }
 
     private static final float[] DEFAULT_SAPLING_DROP_RATES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
@@ -38,18 +43,18 @@ public class AELootTables extends LootTableProvider {
     public static class BlockLootTable extends BlockLootSubProvider {
         public List<Block> list = new ArrayList<>();
 
-        protected BlockLootTable() {
-            super(Set.of(), FeatureFlags.REGISTRY.allFlags(), new HashMap<>());
+        protected BlockLootTable(HolderLookup.Provider provider) {
+            super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
         }
 
         @Override
-        public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> p_249322_) {
+        public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> p_249322_) {
             this.generate();
-            Set<ResourceLocation> set = new HashSet<>();
+            Set<ResourceKey<LootTable>> set = new HashSet<>();
 
             for (Block block : list) {
                 if (block.isEnabled(this.enabledFeatures)) {
-                    ResourceLocation resourcelocation = block.getLootTable();
+                    ResourceKey<LootTable> resourcelocation = block.getLootTable();
                     if (resourcelocation != BuiltInLootTables.EMPTY && set.add(resourcelocation)) {
                         LootTable.Builder loottable$builder = this.map.remove(resourcelocation);
                         if (loottable$builder == null) {
@@ -64,7 +69,7 @@ public class AELootTables extends LootTableProvider {
 
         @Override
         protected void generate() {
-            Set<RegistryObject<Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
+            Set<DeferredHolder<Block, ? extends Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
             Datagen.takeAll(blocks, b -> b.get() instanceof LeavesBlock);
             Datagen.takeAll(blocks, b -> !(b.get() instanceof SummonBlock)).forEach(b -> registerDropSelf(b.get()));
             registerLeavesAndSticks(ModItems.FLASHING_LEAVES.get(), ModItems.FLASHING_SAPLING.get());

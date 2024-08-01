@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.common.lib.RitualLib;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -16,22 +17,22 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModItems.*;
 
 
 public class ModRecipeProvider extends RecipeProvider {
-    public ModRecipeProvider(DataGenerator pGenerator) {
-        super(pGenerator.getPackOutput());
+    public ModRecipeProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider) {
+        super(pGenerator.getPackOutput(), provider);
     }
 
     @Override
-    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@NotNull RecipeOutput consumer) {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ADVANCED_PRISM.get())
                 .define('P', BlockRegistry.SPELL_PRISM.asItem())
@@ -46,7 +47,7 @@ public class ModRecipeProvider extends RecipeProvider {
         RecipeDatagen.makeWood(FLASHING_ARCHWOOD_LOG.get(), FLASHING_ARCHWOOD.get(), 3).save(consumer);
         strippedLogToWood(consumer, FLASHING_ARCHWOOD_LOG_STRIPPED.get(), FLASHING_ARCHWOOD_STRIPPED.get());
 
-        shapelessBuilder(getRitualItem(new ResourceLocation(ArsNouveau.MODID, RitualLib.FLIGHT)))
+        shapelessBuilder(getRitualItem(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, RitualLib.FLIGHT)))
                 .requires(FLASHING_ARCHWOOD_LOG.get())
                 .requires(ItemsRegistry.WILDEN_WING, 1)
                 .requires(Ingredient.of(Tags.Items.GEMS_DIAMOND), 2)
@@ -102,7 +103,7 @@ public class ModRecipeProvider extends RecipeProvider {
         return ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,result, resultCount).unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK));
     }
 
-    private static void strippedLogToWood(Consumer<FinishedRecipe> recipeConsumer, ItemLike stripped, ItemLike output) {
+    private static void strippedLogToWood(RecipeOutput recipeConsumer, ItemLike stripped, ItemLike output) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,output, 3).define('#', stripped).pattern("##").pattern("##").group("bark")
                 .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
                 .save(recipeConsumer);

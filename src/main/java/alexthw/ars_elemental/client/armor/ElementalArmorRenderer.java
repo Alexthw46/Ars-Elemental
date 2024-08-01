@@ -16,7 +16,7 @@ public class ElementalArmorRenderer extends ArmorRenderer {
     @Override
     public ResourceLocation getTextureLocation(AnimatedMagicArmor instance) {
         if (instance instanceof IElementalArmor armor) {
-            return new ResourceLocation(ArsElemental.MODID, "textures/armor/" + armor.getTier() + "_armor_" + armor.getSchool().getId() + ".png");
+            return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/armor/" + armor.getTier() + "_armor_" + armor.getSchool().getId() + ".png");
         }
         return super.getTextureLocation(instance);
     }

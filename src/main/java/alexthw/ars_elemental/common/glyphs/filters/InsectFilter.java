@@ -2,8 +2,8 @@ package alexthw.ars_elemental.common.glyphs.filters;
 
 import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
 import alexthw.ars_elemental.registry.ModRegistry;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -34,7 +34,7 @@ public class InsectFilter extends ElementalAbstractFilter {
      */
     @Override
     public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
-        return target.getEntity() instanceof LivingEntity living && (living.getMobType() == MobType.ARTHROPOD || living.getType().is(ModRegistry.INSECT));
+        return target.getEntity() instanceof LivingEntity living && (living.getType().is(EntityTypeTags.ARTHROPOD) || living.getType().is(ModRegistry.INSECT));
     }
 
 }

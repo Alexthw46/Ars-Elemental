@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#ars_elemental:siren_spawn",
+  "spawners": {
+    "type": "ars_elemental:siren_entity",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 3
+  }
+}

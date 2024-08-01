@@ -12,18 +12,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class VenomEffect extends ParticleMobEffect {
     public VenomEffect() {
-        super(MobEffectCategory.HARMFUL, MobEffects.POISON.getColor());
+        super(MobEffectCategory.HARMFUL, MobEffects.POISON.value().getColor());
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity living, int pAmplifier) {
-        if (living.level.isClientSide)
+    public boolean applyEffectTick(@NotNull LivingEntity living, int pAmplifier) {
+        if (living.level().isClientSide)
             //3 loops
             for (int i = 0; i < 3; i++) {
-                living.level.addParticle(getParticle(), living.getRandomX(.75D), 0.35 + living.getRandomY(), living.getRandomZ(.75D), 0.0D, 0.0D, 0.0D);
+                living.level().addParticle(getParticle(), living.getRandomX(.75D), 0.35 + living.getRandomY(), living.getRandomZ(.75D), 0.0D, 0.0D, 0.0D);
             }
         else
             living.hurt(DamageUtil.source(living.level(), ModRegistry.POISON), 2 + (0.25F * pAmplifier));
+        return true;
 
     }
 
@@ -33,7 +34,7 @@ public class VenomEffect extends ParticleMobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
         int j = switch (pAmplifier) {
             case 0 -> 20;
             case 1 -> 10;

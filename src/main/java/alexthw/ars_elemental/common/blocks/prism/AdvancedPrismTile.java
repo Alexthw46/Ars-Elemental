@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -16,11 +17,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity {
@@ -91,22 +92,22 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    public void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
+        super.saveAdditional(tag, pRegistries);
         tag.putFloat(TAG_ROTATION_Y, rotationY);
         tag.putFloat(TAG_ROTATION_X, rotationX);
         if (prismLens != null) {
-            tag.put(TAG_LENTS, prismLens.serializeNBT());
+            tag.put(TAG_LENTS, prismLens.save(pRegistries));
         }
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
+        super.loadAdditional(tag, pRegistries);
         rotationX = tag.getFloat(TAG_ROTATION_X);
         rotationY = tag.getFloat(TAG_ROTATION_Y);
         if (tag.contains(TAG_LENTS)) {
-            prismLens = ItemStack.of(tag.getCompound(TAG_LENTS));
+            prismLens = ItemStack.parse(pRegistries, tag.getCompound(TAG_LENTS)).orElse(ItemStack.EMPTY);
         }
     }
 

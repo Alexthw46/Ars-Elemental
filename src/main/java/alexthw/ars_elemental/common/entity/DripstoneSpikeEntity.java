@@ -9,27 +9,25 @@ import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpawnData, GeoEntity {
+public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWithComplexSpawn {
 
     private LivingEntity caster;
     private UUID casterUUID;
@@ -78,13 +76,12 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
     }
 
     public boolean damage(LivingEntity entity) {
-        return EffectSpike.INSTANCE.attemptDamage(entity.level, caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage);
+        return EffectSpike.INSTANCE.attemptDamage(entity.level(), caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage);
     }
 
 
     @Override
-    protected void defineSynchedData() {
-
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder pBuilder) {
     }
 
     public void setOwner(@Nullable LivingEntity pOwner) {
@@ -94,8 +91,8 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
 
     @Override
     public void tick() {
-        if (!this.level.isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * 5) && lifeTicks % 5 == 0) {
-            for (Entity entity : this.level.getEntities(this, this.getBoundingBox(), (e) -> e instanceof LivingEntity)) {
+        if (!this.level().isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * 5) && lifeTicks % 5 == 0) {
+            for (Entity entity : this.level().getEntities(this, this.getBoundingBox(), (e) -> e instanceof LivingEntity)) {
                 if (entity instanceof LivingEntity target) {
                     damage(target);
                 }
@@ -109,8 +106,8 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
 
     @Nullable
     public LivingEntity getOwner() {
-        if (this.caster == null && this.casterUUID != null && this.level instanceof ServerLevel) {
-            Entity entity = ((ServerLevel) this.level).getEntity(this.casterUUID);
+        if (this.caster == null && this.casterUUID != null && this.level() instanceof ServerLevel serverLevel) {
+            Entity entity = serverLevel.getEntity(this.casterUUID);
             if (entity instanceof LivingEntity) {
                 this.caster = (LivingEntity) entity;
             }
@@ -146,11 +143,6 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         compound.putDouble("aoe", aoe);
     }
 
-    @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
     private static final RawAnimation SPROUT_ANIM = RawAnimation.begin().thenPlay("sprout");
 
     @Override
@@ -167,9 +159,9 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
     }
 
     @Override
-    public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
-        var base = super.getDimensions(pPose);
-        return new EntityDimensions((float) (base.width * aoe), (float) (base.height * (aoe + pierce - 0.5)), false);
+        public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
+            var base = super.getDimensions(pPose);
+        return EntityDimensions.scalable((float) (base.width() * aoe), (float) (base.height() * (aoe + pierce - 0.5)));
     }
 
     /**
@@ -179,7 +171,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
      * @param buffer The packet data stream
      */
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         buffer.writeDouble(pierce);
         buffer.writeDouble(aoe);
     }
@@ -191,7 +183,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
      * @param additionalData The packet data stream
      */
     @Override
-    public void readSpawnData(FriendlyByteBuf additionalData) {
+    public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
         pierce = additionalData.readDouble();
         aoe = additionalData.readDouble();
     }

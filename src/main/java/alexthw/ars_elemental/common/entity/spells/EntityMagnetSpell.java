@@ -62,12 +62,12 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
             this.remove(RemovalReason.DISCARDED);
             return;
         }
-        if (level.isClientSide() && this.age > getParticleDelay()) {
+        if (level().isClientSide() && this.age > getParticleDelay()) {
             playParticles();
         }
         // Magnetize entities
-        if (!level.isClientSide() && this.age % 5 == 0) {
-            for (Entity entity : level.getEntities(this, new AABB(this.blockPosition()).inflate(getAoe()))) {
+        if (!level().isClientSide() && this.age % 5 == 0) {
+            for (Entity entity : level().getEntities(this, new AABB(this.blockPosition()).inflate(getAoe()))) {
                 if (testFilters(entity)) continue;
                 Vec3 vec3d = new Vec3(this.getX() - entity.getX(), this.getY() - entity.getY(), this.getZ() - entity.getZ());
                 if (vec3d.length() < 1) continue;
@@ -89,7 +89,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity);
         ignore.add(shooter::isAlliedTo);
-        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.recipe, index);
+        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.unsafeList(), index);
         if (!filters.isEmpty()) {
             ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
         }

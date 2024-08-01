@@ -41,7 +41,9 @@ public interface IPropagator{
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
         SpellContext newContext = spellContext.makeChildContext();
-        newContext.getSpell().recipe.add(0, DUMMY);
+        var mutable_spell = newContext.getSpell().mutable();
+        mutable_spell.recipe.addFirst(DUMMY);
+        newContext.withSpell(mutable_spell.immutable());
         spellContext.setCanceled(true);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
         propagate(world, rayTraceResult, shooter, stats, newResolver);

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": {
+      "item": "ars_nouveau:spell_prism"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "S": {
+      "tag": "neoforge:gems/source"
+    }
+  },
+  "pattern": [
+    "QSQ",
+    "SPS",
+    "QSQ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:advanced_prism"
+  }
+}

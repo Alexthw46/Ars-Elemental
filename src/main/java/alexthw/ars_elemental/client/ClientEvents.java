@@ -7,9 +7,9 @@ import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.client.particle.SparkParticle;
 import alexthw.ars_elemental.client.particle.VenomParticle;
+import alexthw.ars_elemental.client.summons.DireWolfRenderer;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
-import alexthw.ars_elemental.network.NetworkManager;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModParticles;
@@ -18,36 +18,33 @@ import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
+import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSummonSkeleton;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerRenderer;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import com.hollingsworth.arsnouveau.common.network.Networking;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.*;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-@Mod.EventBusSubscriber(modid = ArsElemental.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsElemental.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
 
-    static final ResourceLocation SkeletalHorseTexture = new ResourceLocation("textures/entity/horse/horse_skeleton.png");
+    static final ResourceLocation SkeletalHorseTexture = ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_skeleton.png");
     static final ResourceLocation VhexTexture = prefix("textures/entity/vhex.png");
 
     public static final KeyMapping CURIO_BAG_KEYBINDING = new KeyMapping("key.ars_elemental.open_pouch", GLFW.GLFW_KEY_J, "key.category.ars_nouveau.general");
@@ -78,7 +75,12 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.CAMEL_SUMMON.get(), manager -> new CamelRenderer(manager, ModelLayers.CAMEL));
 
         event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
-        event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), WitherSkeletonRenderer::new);
+        event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), renderManagerIn -> new RenderSummonSkeleton(renderManagerIn){
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull AbstractSkeleton entity) {
+                return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/wither_skeleton.png");
+            }
+        });
         event.registerEntityRenderer(ModEntities.DOLPHIN_SUMMON.get(), DolphinRenderer::new);
         event.registerEntityRenderer(ModEntities.STRIDER_SUMMON.get(), StriderRenderer::new);
         event.registerEntityRenderer(ModEntities.VHEX_SUMMON.get(), manager -> new VexRenderer(manager) {
@@ -103,7 +105,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull EntityLerpedProjectile pEntity) {
-                return new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png");
+                return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
             }
         });
 
@@ -118,17 +120,16 @@ public class ClientEvents {
 
     //Curio bag stuff
     @SubscribeEvent
-    public static void bindContainerRenderers(FMLClientSetupEvent event) {
-        MenuScreens.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
-        MenuScreens.register(ModRegistry.CASTER_HOLDER.get(), CurioHolderScreen::new);
+    public static void bindContainerRenderers(RegisterMenuScreensEvent event) {
+        event.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
+        event.register(ModRegistry.CASTER_HOLDER.get(), CurioHolderScreen::new);
     }
 
     private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {
-        return new RenderSpell(renderManager, new ResourceLocation(ArsNouveau.MODID, "textures/entity/spell_proj.png"));
+        return new RenderSpell(renderManager, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png"));
     }
 
-    @SubscribeEvent
-    public void openBackpackGui(TickEvent.ClientTickEvent event)
+    public void openBackpackGui(ClientTickEvent.Post event)
     {
         if (FMLEnvironment.dist == Dist.CLIENT)
         {
@@ -142,7 +143,7 @@ public class ClientEvents {
 
                     if (!backpack.isEmpty())
                     {
-                        NetworkManager.INSTANCE.send(PacketDistributor.SERVER.noArg(), new OpenCurioBagPacket());
+                        Networking.sendToServer(new OpenCurioBagPacket());
                     }
                 }
             }

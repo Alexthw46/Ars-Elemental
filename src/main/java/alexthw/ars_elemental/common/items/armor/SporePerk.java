@@ -35,7 +35,7 @@ public class SporePerk extends Perk implements IEffectResolvePerk {
         //if the effect is a damage effect, the raytrace result is a living entity, and the living entity is not the shooter, then apply poison or hunger
         if (event.resolveEffect instanceof IDamageEffect damageEffect && event.rayTraceResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof LivingEntity livingEntity && livingEntity != event.shooter) {
             if (damageEffect.canDamage(event.shooter, event.spellStats, event.context, event.resolver, entityHitResult.getEntity())) {
-                livingEntity.addEffect(new MobEffectInstance(livingEntity.isInvertedHealAndHarm() ? MobEffects.HUNGER : MobEffects.POISON, perkInstance.getSlot().value * 5 * 20, perkInstance.getSlot().value - 1));
+                livingEntity.addEffect(new MobEffectInstance(livingEntity.isInvertedHealAndHarm() ? MobEffects.HUNGER : MobEffects.POISON, perkInstance.getSlot().value() * 5 * 20, perkInstance.getSlot().value() - 1));
             }
         }
     }

@@ -3,13 +3,14 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -28,11 +29,11 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
             MobEffectInstance poison = target.getEffect(MobEffects.POISON);
             if (poison != null) {
                 spellStats.setAmpMultiplier(poison.getAmplifier() / 2F + spellStats.getAmpMultiplier());
-                this.applyConfigPotion(target, ModPotions.VENOM.get(), spellStats);
+                this.applyConfigPotion(target, ModPotions.VENOM, spellStats);
                 target.removeEffect(MobEffects.POISON);
             } else {
-                boolean earth_switch = target.getMobType() == MobType.UNDEAD && ISchoolFocus.earthCheck(resolver);
-                this.applyConfigPotion(target, earth_switch ? ModPotions.VENOM.get() : MobEffects.POISON, spellStats);
+                boolean earth_switch = (target.getType().is(EntityTypeTags.IGNORES_POISON_AND_REGEN) || target instanceof Spider) && ISchoolFocus.earthCheck(resolver);
+                this.applyConfigPotion(target, earth_switch ? ModPotions.VENOM : MobEffects.POISON, spellStats);
             }
         }
     }
@@ -59,7 +60,7 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addPotionConfig(builder, 5);
         addExtendTimeConfig(builder, 5);

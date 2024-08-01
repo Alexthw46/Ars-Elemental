@@ -1,0 +1,19 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 55,
+  "inputs": [
+    {
+      "item": "minecraft:poisonous_potato"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    {
+      "item": "minecraft:suspicious_stew"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_envenom"
+  }
+}

@@ -14,8 +14,8 @@ public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends Ge
     public ResourceLocation animationLoc;
 
     public ElementalArmorModel(String name) {
-        this.modelLocation = new ResourceLocation(ArsElemental.MODID, "geo/" + name + ".geo.json");
-        this.textLoc = new ResourceLocation(ArsElemental.MODID, "textures/armor/" + name + ".png");
+        this.modelLocation = ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "geo/" + name + ".geo.json");
+        this.textLoc = ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/armor/" + name + ".png");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends Ge
     }
 
     public GeoModel<T> withEmptyAnim() {
-        this.animationLoc = new ResourceLocation(ArsNouveau.MODID, "animations/empty.json");
+        this.animationLoc = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "animations/empty.json");
         return this;
     }
 

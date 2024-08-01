@@ -9,13 +9,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import static net.neoforged.neoforge.common.NeoForgeMod.WATER_TYPE;
 
 
 public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
@@ -28,7 +29,7 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
     }
 
     public SummonSkeleHorse(SummonHorse oldHorse, Player summoner){
-        this(summoner.level);
+        this(summoner.level());
         BlockPos position = oldHorse.blockPosition();
         setPos(position.getX(), position.getY(), position.getZ());
         ticksLeft = oldHorse.getTicksLeft();
@@ -36,12 +37,12 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
         getHorseInventory().setItem(0, new ItemStack(Items.SADDLE));
         setOwnerID(summoner.getUUID());
         setDropChance(EquipmentSlot.CHEST, 0.0F);
-        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
+        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
     }
 
     protected SoundEvent getAmbientSound() {
         super.getAmbientSound();
-        return this.isEyeInFluidType(net.minecraftforge.common.ForgeMod.WATER_TYPE.get()) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
+        return this.isEyeInFluidType(WATER_TYPE.value()) ? SoundEvents.SKELETON_HORSE_AMBIENT_WATER : SoundEvents.SKELETON_HORSE_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {
@@ -91,13 +92,9 @@ public class SummonSkeleHorse extends SummonHorse implements IUndeadSummon {
 
     }
 
-    public @NotNull MobType getMobType() {
-        return MobType.UNDEAD;
-    }
-
-    public double getPassengersRidingOffset() {
-        return super.getPassengersRidingOffset() - 0.1875D;
-    }
+//    public @NotNull MobType getMobType() {
+//        return MobType.UNDEAD;
+//    }
 
     @Override
     public boolean dismountsUnderwater() {

@@ -1,31 +1,30 @@
 package alexthw.ars_elemental.recipe;
 
+import alexthw.ars_elemental.common.components.ElementProtectionFlag;
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
-import com.hollingsworth.arsnouveau.common.block.tile.EnchantingApparatusTile;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.ApparatusRecipeInput;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.Serializers;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NetheriteUpgradeRecipe extends EnchantingApparatusRecipe {
 
-    public NetheriteUpgradeRecipe(ResourceLocation pRecipeId, Ingredient reagent, List<Ingredient> stacks, int cost) {
-        this.reagent = reagent;
-        this.pedestalItems = stacks;
-        this.sourceCost = cost;
-        this.id = pRecipeId;
-        this.keepNbtOfReagent = true;
+    public NetheriteUpgradeRecipe(Ingredient reagent, List<Ingredient> stacks, int cost) {
+        super(reagent, ItemStack.EMPTY, stacks, cost, true);
     }
 
     @Override
@@ -33,15 +32,17 @@ public class NetheriteUpgradeRecipe extends EnchantingApparatusRecipe {
         return true;
     }
 
+
     @Override
-    public boolean doesReagentMatch(ItemStack reag) {
-        return super.doesReagentMatch(reag) && !reag.copy().getOrCreateTag().contains("ae_netherite");
+    public boolean matches(ApparatusRecipeInput input, Level level) {
+        ElementProtectionFlag flag = input.catalyst().get(ModRegistry.P4E);
+        return super.matches(input, level) && flag != null && !flag.flag();
     }
 
     @Override
-    public ItemStack getResult(List<ItemStack> pedestalItems, ItemStack reagent, EnchantingApparatusTile enchantingApparatusTile) {
-        ItemStack temp = reagent.copy();
-        temp.getOrCreateTag().putBoolean("ae_netherite", true);
+    public ItemStack assemble(ApparatusRecipeInput input, HolderLookup.Provider p_346030_) {
+        ItemStack temp = input.catalyst().copy();
+        temp.set(ModRegistry.P4E, new ElementProtectionFlag(true));
         return temp;
     }
 
@@ -55,76 +56,33 @@ public class NetheriteUpgradeRecipe extends EnchantingApparatusRecipe {
         return ModRegistry.NETHERITE_UP_SERIALIZER.get();
     }
 
-
-    @Override
-    public JsonElement asRecipe() {
-        JsonObject jsonobject = new JsonObject();
-        jsonobject.addProperty("type", "ars_elemental:netherite_upgrade");
-        jsonobject.addProperty("sourceCost", getSourceCost());
-
-        JsonArray reagent = new JsonArray();
-        reagent.add(this.reagent.toJson());
-        jsonobject.add("reagent", reagent);
-
-        JsonArray pedestalArr = new JsonArray();
-        for (Ingredient i : this.pedestalItems) {
-            JsonObject object = new JsonObject();
-            object.add("item", i.toJson());
-            pedestalArr.add(object);
-        }
-        jsonobject.add("pedestalItems", pedestalArr);
-        return jsonobject;
-    }
-
     public static class Serializer implements RecipeSerializer<NetheriteUpgradeRecipe> {
 
-        @Override
-        public NetheriteUpgradeRecipe fromJson(ResourceLocation pRecipeId, JsonObject json) {
-
-            Ingredient reagent = Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "reagent"));
-            int cost = json.has("sourceCost") ? GsonHelper.getAsInt(json, "sourceCost") : 0;
-            JsonArray pedestalItems = GsonHelper.getAsJsonArray(json, "pedestalItems");
-            List<Ingredient> stacks = new ArrayList<>();
-
-            for (JsonElement e : pedestalItems) {
-                JsonObject obj = e.getAsJsonObject();
-                Ingredient input = GsonHelper.isArrayNode(obj, "item") ?
-                        Ingredient.fromJson(GsonHelper.getAsJsonArray(obj, "item")) :
-                        Ingredient.fromJson(GsonHelper.getAsJsonObject(obj, "item"));
-
-                stacks.add(input);
-            }
-            return new NetheriteUpgradeRecipe(pRecipeId, reagent, stacks, cost);
-        }
+        public static MapCodec<NetheriteUpgradeRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Ingredient.CODEC.fieldOf("reagent").forGetter(NetheriteUpgradeRecipe::reagent),
+                Ingredient.CODEC.listOf().fieldOf("pedestalItems").forGetter(NetheriteUpgradeRecipe::pedestalItems),
+                Codec.INT.fieldOf("sourceCost").forGetter(NetheriteUpgradeRecipe::sourceCost)
+        ).apply(instance, NetheriteUpgradeRecipe::new));
 
         @Override
-        public @Nullable NetheriteUpgradeRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf buffer) {
-            int length = buffer.readInt();
-            Ingredient reagent = Ingredient.fromNetwork(buffer);
-            List<Ingredient> stacks = new ArrayList<>();
-
-            for (int i = 0; i < length; i++) {
-                try {
-                    stacks.add(Ingredient.fromNetwork(buffer));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    break;
-                }
-            }
-            int cost = buffer.readInt();
-            return new NetheriteUpgradeRecipe(pRecipeId, reagent, stacks, cost);
+        public @NotNull MapCodec<NetheriteUpgradeRecipe> codec() {
+            return CODEC;
         }
+
+        public static StreamCodec<RegistryFriendlyByteBuf, NetheriteUpgradeRecipe> STREAM_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC,
+                NetheriteUpgradeRecipe::reagent,
+                Serializers.INGREDIENT_LIST_STREAM,
+                NetheriteUpgradeRecipe::pedestalItems,
+                ByteBufCodecs.VAR_INT,
+                NetheriteUpgradeRecipe::sourceCost,
+                NetheriteUpgradeRecipe::new
+        );
 
         @Override
-        public void toNetwork(FriendlyByteBuf buf, NetheriteUpgradeRecipe recipe) {
-            buf.writeInt(recipe.pedestalItems.size());
-            recipe.reagent.toNetwork(buf);
-            for (Ingredient i : recipe.pedestalItems) {
-                i.toNetwork(buf);
-            }
-            buf.writeInt(recipe.sourceCost);
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, NetheriteUpgradeRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
-
     }
 
 }

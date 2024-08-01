@@ -16,6 +16,7 @@ import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -25,11 +26,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -88,9 +89,8 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         }
 
         // Otherwise, try to fill the position with water if it is a fluid handler
-        BlockEntity be = world.getBlockEntity(toPos);
-        if (be != null && be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent() && be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).resolve().isPresent()) {
-            IFluidHandler tank = be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).resolve().get();
+        IFluidHandler tank = world.getCapability(Capabilities.FluidHandler.BLOCK, toPos, Direction.UP);
+        if (tank != null) {
             if (tank.fill(waterStack, IFluidHandler.FluidAction.SIMULATE) > 100) {
                 tank.fill(waterStack, IFluidHandler.FluidAction.EXECUTE);
                 return true;
@@ -134,7 +134,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
         if (level.getBlockState(storedPos).getBlock() instanceof AbstractCauldronBlock) {
             return true;
-        } else if (level.getBlockEntity(storedPos) != null && level.getBlockEntity(storedPos).getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent()) {
+        } else if (level.getBlockEntity(storedPos) != null && level.getCapability(Capabilities.FluidHandler.BLOCK, storedPos, Direction.UP) != null) {
             return true;
         } else return CompatUtils.isBotaniaLoaded() && BotaniaCompat.isApothecary(storedPos, level);
     }
@@ -174,8 +174,8 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
+        super.loadAdditional(tag, pRegistries);
         toList = new HashSet<>();
         int counter = 0;
 
@@ -188,8 +188,8 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    public void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
+        super.saveAdditional(tag, pRegistries);
         int counter = 0;
         for (BlockPos p : this.toList) {
             NBTUtil.storeBlockPos(tag, "to_" + counter, p);

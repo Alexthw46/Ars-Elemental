@@ -1,17 +1,25 @@
 package alexthw.ars_elemental.common.items.caster_tools;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
-import com.hollingsworth.arsnouveau.api.spell.*;
+import alexthw.ars_elemental.common.components.SchoolCasterTomeData;
+import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.mana.IManaCap;
+import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
+import com.hollingsworth.arsnouveau.common.network.Networking;
+import com.hollingsworth.arsnouveau.common.network.NotEnoughManaPacket;
+import com.hollingsworth.arsnouveau.common.util.PortUtil;
+import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -19,7 +27,7 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
     private final SpellSchool school;
 
     public ElementalCasterTome(Properties properties, SpellSchool school) {
-        super(properties);
+        super(properties.component(ModRegistry.E_TOME_CASTER, new SchoolCasterTomeData()));
         this.school = school;
     }
 
@@ -30,9 +38,9 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
 
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip2, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip2, TooltipFlag flagIn) {
         tooltip2.add(Component.translatable("tooltip.ars_elemental.caster_tome"));
-        super.appendHoverText(stack, worldIn, tooltip2, flagIn);
+        super.appendHoverText(stack, context, tooltip2, flagIn);
     }
 
     @Override
@@ -40,17 +48,7 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
         return 0;
     }
 
-    @Override
-    public @NotNull ISpellCaster getSpellCaster(ItemStack stack) {
-        return new TomeSpellCaster(stack) {
-            @Override
-            public SpellResolver getSpellResolver(SpellContext context, Level worldIn, LivingEntity playerIn, InteractionHand handIn) {
-                return new ETomeResolver(context, getSchool());
-            }
-        };
-    }
-
-    static class ETomeResolver extends SpellResolver {
+    public static class ETomeResolver extends SpellResolver {
 
         public SpellSchool getSchool() {
             return school;
@@ -71,6 +69,21 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
                 return getSchool() == SpellSchools.MANIPULATION;
             }
             return super.hasFocus(stack);
+        }
+
+        @Override
+        protected boolean enoughMana(LivingEntity entity) {
+            int totalCost = getResolveCost();
+            IManaCap manaCap = CapabilityRegistry.getMana(entity);
+            if (manaCap == null)
+                return false;
+            boolean canCast = totalCost <= manaCap.getCurrentMana() || manaCap.getCurrentMana() == manaCap.getMaxMana() || (entity instanceof Player player && player.isCreative());
+            if (!canCast && !entity.getCommandSenderWorld().isClientSide && !silent) {
+                PortUtil.sendMessageNoSpam(entity, Component.translatable("ars_nouveau.spell.no_mana"));
+                if (entity instanceof ServerPlayer serverPlayer)
+                    Networking.sendToPlayerClient(new NotEnoughManaPacket(totalCost), serverPlayer);
+            }
+            return canCast;
         }
 
         @Override

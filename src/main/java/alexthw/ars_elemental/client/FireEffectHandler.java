@@ -15,8 +15,8 @@ import net.minecraft.world.inventory.InventoryMenu;
 
 public class FireEffectHandler {
 
-    public static final Material FLAME = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(ArsNouveau.MODID, "block/fire_1"));
-    public static final Material FLAME_2 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(ArsNouveau.MODID, "block/fire_2"));
+    public static final Material FLAME = new Material(InventoryMenu.BLOCK_ATLAS, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/fire_1"));
+    public static final Material FLAME_2 = new Material(InventoryMenu.BLOCK_ATLAS, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/fire_2"));
 
     public static void renderWorldFireEffect(PoseStack pMatrixStack, MultiBufferSource pBuffer, Camera camera, Entity pEntity) {
         TextureAtlasSprite textureAtlasSprite0 = FLAME.sprite();
@@ -59,7 +59,7 @@ public class FireEffectHandler {
     }
 
     protected static void fireVertex(PoseStack.Pose pMatrixEntry, VertexConsumer pBuffer, float pX, float pY, float pZ, float pTexU, float pTexV) {
-        pBuffer.vertex(pMatrixEntry.pose(), pX, pY, pZ).color(255, 255, 255, 255).uv(pTexU, pTexV).overlayCoords(0, 10).uv2(240).normal(pMatrixEntry.normal(), 0.0F, 1.0F, 0.0F).endVertex();
+        pBuffer.addVertex(pMatrixEntry.pose(), pX, pY, pZ).setColor(255, 255, 255, 255).setUv(pTexU, pTexV).setUv1(0, 10).setLight(240).setNormal(pMatrixEntry, 0.0F, 1.0F, 0.0F);
     }
 
 }

@@ -14,12 +14,8 @@ import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
-import com.hollingsworth.arsnouveau.api.perk.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
-import com.hollingsworth.arsnouveau.api.registry.FamiliarRegistry;
-import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
-import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
-import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
+import com.hollingsworth.arsnouveau.api.registry.*;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
@@ -29,6 +25,7 @@ import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -57,6 +54,17 @@ public class ArsNouveauRegistry {
         registerFamiliars();
         registerPerks();
         linkDamageResistances();
+    }
+
+    private static void registerCasters() {
+        SpellCasterRegistry.register(ModItems.SPELL_HORN.get(), (stack) -> stack.get(DataComponentRegistry.SPELL_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.AIR_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.FIRE_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.EARTH_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.WATER_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.NECRO_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.SHAPERS_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+
     }
 
     private static void linkDamageResistances() {
@@ -120,6 +128,8 @@ public class ArsNouveauRegistry {
     }
 
     public static void postInit() {
+        registerCasters();
+
         //Schools
         addSchool(EffectHeal.INSTANCE, NECROMANCY);
         addSchool(EffectSummonVex.INSTANCE, NECROMANCY);
@@ -173,28 +183,28 @@ public class ArsNouveauRegistry {
         ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
         List<PerkSlot> perkSlots = Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE);
         for (ArmorSet set : medium_armors) {
-            PerkRegistry.registerPerkProvider(set.getHat(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
-            PerkRegistry.registerPerkProvider(set.getChest(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
-            PerkRegistry.registerPerkProvider(set.getLegs(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
-            PerkRegistry.registerPerkProvider(set.getBoots(), stack -> new ArmorPerkHolder(stack, List.of(perkSlots, perkSlots, perkSlots, perkSlots)));
+            PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
         }
 
     }
 
     public static void addLights() {
         ITEM_LIGHTMAP.put(ModItems.FLASHING_POD.getId(), 14);
-        LightManager.register(ModEntities.FIRENANDO_ENTITY.get(), (p -> {
-            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
+        LightManager.register(ModEntities.FIRENANDO_ENTITY.get(), p -> {
+            if (p.level().getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }
             return 0;
-        }));
-        LightManager.register(ModEntities.FIRENANDO_FAMILIAR.get(), (p -> {
-            if (p.level.getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
+        });
+        LightManager.register(ModEntities.FIRENANDO_FAMILIAR.get(), p -> {
+            if (p.level().getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;
             }
             return 0;
-        }));
+        });
 
     }
 

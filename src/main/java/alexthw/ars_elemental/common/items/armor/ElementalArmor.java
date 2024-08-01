@@ -6,11 +6,10 @@ import alexthw.ars_elemental.client.TooltipUtils;
 import alexthw.ars_elemental.client.armor.ElementalArmorModel;
 import alexthw.ars_elemental.client.armor.ElementalArmorRenderer;
 import alexthw.ars_elemental.registry.ModItems;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.api.perk.*;
-import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
+import com.hollingsworth.arsnouveau.api.perk.IPerk;
+import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
+import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
@@ -23,25 +22,21 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 import static alexthw.ars_elemental.ConfigHandler.Common.ARMOR_MANA_REGEN;
@@ -73,24 +68,24 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     @Override
     public int getManaDiscount(ItemStack i, Spell spell) {
-        return Mth.ceil(getDiscount(spell.recipe));
+        return Mth.ceil(getDiscount(spell.unsafeList()));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flags) {
-        IPerkProvider<ItemStack> perkProvider = PerkRegistry.getPerkProvider(stack.getItem());
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flags) {
+        var perkProvider = PerkUtil.getPerkHolder(stack);
         if (perkProvider != null) {
             tooltip.add(Component.translatable("ars_nouveau.tier", 4).withStyle(ChatFormatting.GOLD));
-            perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
+            perkProvider.appendPerkTooltip(tooltip, stack);
         }
-        TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, world, tooltip, flags), "armor_set");
+        TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, context, tooltip, flags), "armor_set");
     }
 
     EquipmentSlot[] OrderedSlots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     @OnlyIn(Dist.CLIENT)
-    public void addInformationAfterShift(ItemStack stack, Level world, List<Component> list, TooltipFlag flags) {
+    public void addInformationAfterShift(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag flags) {
         Player player = ArsNouveau.proxy.getPlayer();
         if (player != null) {
             ArmorSet set = getArmorSetFromElement(this.element);
@@ -138,24 +133,18 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         list.add(Component.translatable("ars_elemental.armor_set." + set.getName() + ".desc").withStyle(ChatFormatting.GRAY));
     }
 
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot pEquipmentSlot, ItemStack stack) {
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> attributes = new ImmutableMultimap.Builder<>();
-        attributes.putAll(super.getDefaultAttributeModifiers(pEquipmentSlot));
-        if (this.getType().getSlot() == pEquipmentSlot) {
-            UUID uuid = ARMOR_MODIFIER_UUID_PER_TYPE.get(this.getType());
-            IPerkHolder<ItemStack> perkHolder = PerkUtil.getPerkHolder(stack);
-            if (perkHolder != null) {
-                attributes.put(PerkAttributes.MAX_MANA.get(), new AttributeModifier(uuid, "max_mana_armor", ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADDITION));
-                attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_armor", ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADDITION));
-                for (PerkInstance perkInstance : perkHolder.getPerkInstances()) {
-                    IPerk perk = perkInstance.getPerk();
-                    attributes.putAll(perk.getModifiers(this.getType().getSlot(), stack, perkInstance.getSlot().value));
-                }
 
-            }
+    @Override
+    public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+        var modifiers = super.getDefaultAttributeModifiers();
+
+        modifiers.withModifierAdded(PerkAttributes.MAX_MANA, new AttributeModifier(ArsNouveau.prefix("max_mana_armor"), ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR);
+        modifiers.withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor"), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR);
+
+        for (PerkInstance perkInstance : PerkUtil.getPerksFromItem(stack)) {
+            IPerk perk = perkInstance.getPerk();
         }
-        return attributes.build();
+        return modifiers;
     }
 
 
@@ -163,7 +152,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         consumer.accept(new IClientItemExtensions() {
             private GeoArmorRenderer<?> renderer;
 
-            public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
+            public @NotNull HumanoidModel<?> getHumanoidArmorModel(@NotNull LivingEntity livingEntity, @NotNull ItemStack itemStack, @NotNull EquipmentSlot equipmentSlot, @NotNull HumanoidModel<?> original) {
                 if (this.renderer == null) {
                     this.renderer = new ElementalArmorRenderer(getArmorModel());
                 }
@@ -178,8 +167,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
      * Needed to avoid file not found errors since Geckolib doesn't redirect to the correct texture
      */
     @Override
-    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return new ResourceLocation(ArsElemental.MODID, "textures/armor/" + getTier() + "_armor_" + this.getSchool().getId() + ".png").toString();
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/armor/" + getTier() + "_armor_" + this.getSchool().getId() + ".png");
     }
-
 }

@@ -16,6 +16,7 @@ import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.*;
@@ -30,10 +31,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -43,8 +43,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
-import static alexthw.ars_elemental.registry.ModEntities.FIRENANDO_FAMILIAR;
-import static alexthw.ars_elemental.registry.ModEntities.SIREN_FAMILIAR;
+import static alexthw.ars_elemental.registry.ModEntities.*;
 import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
 
 public class AETagsProvider {
@@ -54,26 +53,24 @@ public class AETagsProvider {
         String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "feet", "head", "hands", "necklace", "ring"};
 
         static TagKey<Item> curiosTag(String key) {
-            return ItemTags.create(new ResourceLocation(CuriosApi.MODID, key));
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(CuriosApi.MODID, key));
         }
 
         public static final TagKey<Item> CURIO_SPELL_FOCUS = curiosTag("an_focus");
         public static final TagKey<Item> CURIO_BANGLE = curiosTag("bracelet");
-        public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "magic_shards"));
-        public static final TagKey<Item> SPELLBOOK = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spellbook"));
-        public static final TagKey<Item> PRISM_LENS = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "spell_prism_lens"));
+        public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "magic_shards"));
+        public static final TagKey<Item> SPELLBOOK = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "spellbook"));
+        public static final TagKey<Item> PRISM_LENS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "spell_prism_lens"));
 
 
-        public static final TagKey<Item> MAGIC_HOOD = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "hood"));
-        public static final TagKey<Item> MAGIC_ROBE = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "robe"));
-        public static final TagKey<Item> MAGIC_LEG = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "legs"));
-        public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(new ResourceLocation(ArsNouveau.MODID, "boot"));
+        public static final TagKey<Item> MAGIC_HOOD = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "hood"));
+        public static final TagKey<Item> MAGIC_ROBE = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "robe"));
+        public static final TagKey<Item> MAGIC_LEG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "legs"));
+        public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "boot"));
 
         // create log compat
-
-        public static final TagKey<Item> STRIPPED_LOGS = ItemTags.create(new ResourceLocation("forge", "stripped_logs"));
-        public static final TagKey<Item> STRIPPED_WOODS = ItemTags.create(new ResourceLocation("forge", "stripped_wood"));
-
+        public static final TagKey<Item> STRIPPED_LOGS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "stripped_logs"));
+        public static final TagKey<Item> STRIPPED_WOODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "stripped_wood"));
 
 
         public AEItemTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -83,7 +80,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            tag(SPELLBOOK).add(ItemsRegistry.NOVICE_SPELLBOOK.get(), ItemsRegistry.APPRENTICE_SPELLBOOK.get(), ItemsRegistry.ARCHMAGE_SPELLBOOK.get(), ItemsRegistry.CREATIVE_SPELLBOOK.get()).addOptional(new ResourceLocation("ars_omega", "arcane_book"));
+            tag(SPELLBOOK).add(ItemsRegistry.NOVICE_SPELLBOOK.get(), ItemsRegistry.APPRENTICE_SPELLBOOK.get(), ItemsRegistry.ARCHMAGE_SPELLBOOK.get(), ItemsRegistry.CREATIVE_SPELLBOOK.get()).addOptional(ResourceLocation.fromNamespaceAndPath("ars_omega", "arcane_book"));
             tag(ModRegistry.SOULBOUND_ABLE).add(Items.WRITABLE_BOOK, Items.WRITTEN_BOOK);
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get());
@@ -124,7 +121,8 @@ public class AETagsProvider {
     }
 
     public static class AEBlockTagsProvider extends BlockTagsProvider {
-        final TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(new ResourceLocation("minecraft", "leaves/archwood_leaves"));
+        final TagKey<Block> ARCHWOOD_LEAVES = BlockTags.create(ResourceLocation.fromNamespaceAndPath("minecraft", "leaves/archwood_leaves"));
+        final static public TagKey<Block> FLASHING_LOGS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(MODID, "logs/flashing_archwood"));
 
         public AEBlockTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen.getPackOutput(), provider, ArsElemental.MODID, existingFileHelper);
@@ -135,6 +133,11 @@ public class AETagsProvider {
             addPickMineable(1, ModItems.WATER_UPSTREAM_BLOCK.get(), ModItems.AIR_UPSTREAM_BLOCK.get(), ModItems.LAVA_UPSTREAM_BLOCK.get());
             addPickMineable(0, ModItems.SPELL_MIRROR.get(), ModItems.AIR_TURRET.get(), ModItems.FIRE_TURRET.get(), ModItems.EARTH_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.SHAPING_TURRET.get());
             logsTag(ModItems.FLASHING_ARCHWOOD_LOG.get(),
+                    ModItems.FLASHING_ARCHWOOD.get(),
+                    ModItems.FLASHING_ARCHWOOD_STRIPPED.get(),
+                    ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get()
+            );
+            tag(FLASHING_LOGS).add(ModItems.FLASHING_ARCHWOOD_LOG.get(),
                     ModItems.FLASHING_ARCHWOOD.get(),
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get(),
                     ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get()
@@ -234,6 +237,12 @@ public class AETagsProvider {
             this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
             this.tag(ModRegistry.ATTRACT_BLACKLIST).add(EntityType.PLAYER).addTag(Tags.EntityTypes.BOSSES).add(ModEntities.ENTITY_FOLLOW_PROJ.get()).addTag(EntityTags.FAMILIAR);
+            this.tag(EntityTypeTags.UNDEAD).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());
+            this.tag(EntityTypeTags.AQUATIC).add(SIREN_ENTITY.get(), SIREN_FAMILIAR.get());
+            this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(SIREN_ENTITY.get(), SIREN_FAMILIAR.get());
+            this.tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH).add(SIREN_ENTITY.get(), SIREN_FAMILIAR.get());
+            this.tag(EntityTypeTags.SKELETONS).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());
+            this.tag(EntityTypeTags.INVERTED_HEALING_AND_HARM).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());
         }
 
         @Override
@@ -245,14 +254,14 @@ public class AETagsProvider {
     public static class AEMobEffectTagProvider extends IntrinsicHolderTagsProvider<MobEffect> {
 
         public AEMobEffectTagProvider(DataGenerator pOutput, CompletableFuture<HolderLookup.Provider> pProvider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(pOutput.getPackOutput(), Registries.MOB_EFFECT, pProvider, ef -> ForgeRegistries.MOB_EFFECTS.getResourceKey(ef).get(), ArsElemental.MODID, existingFileHelper);
+            super(pOutput.getPackOutput(), Registries.MOB_EFFECT, pProvider, ef -> BuiltInRegistries.MOB_EFFECT.getResourceKey(ef).get(), ArsElemental.MODID, existingFileHelper);
         }
 
         public static TagKey<MobEffect> BUBBLE_BLACKLIST = TagKey.create(Registries.MOB_EFFECT, prefix("manabubble_blacklist"));
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider pProvider) {
-            tag(BUBBLE_BLACKLIST).add(MobEffects.LEVITATION, ModPotions.HYMN_OF_ORDER.get(), SUMMONING_SICKNESS_EFFECT.get());
+            tag(BUBBLE_BLACKLIST).add(MobEffects.LEVITATION.getKey(), ModPotions.HYMN_OF_ORDER.getKey(), SUMMONING_SICKNESS_EFFECT.getKey());
             tag(PotionEffectTags.TO_SYNC).add(ModPotions.MAGIC_FIRE.get(), ModPotions.VENOM.get());
         }
 

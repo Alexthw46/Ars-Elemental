@@ -1,0 +1,19 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 55,
+  "inputs": [
+    {
+      "item": "minecraft:pointed_dripstone"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "ars_nouveau:earth_essence"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_spike"
+  }
+}

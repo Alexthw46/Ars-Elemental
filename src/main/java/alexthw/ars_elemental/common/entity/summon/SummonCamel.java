@@ -25,7 +25,7 @@ public class SummonCamel extends Camel implements ISummon {
     public int ticksLeft;
 
     public SummonCamel(SummonHorse oldHorse, Player summoner) {
-        this(summoner.level);
+        this(summoner.level());
         BlockPos position = oldHorse.blockPosition();
         setPos(position.getX(), position.getY(), position.getZ());
         ticksLeft = oldHorse.getTicksLeft();
@@ -33,7 +33,7 @@ public class SummonCamel extends Camel implements ISummon {
         getHorseInventory().setItem(0, new ItemStack(Items.SADDLE));
         setOwnerID(summoner.getUUID());
         setDropChance(EquipmentSlot.CHEST, 0.0F);
-        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().isBeneficial()).forEach(this::addEffect);
+        oldHorse.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
 
     }
 
@@ -54,12 +54,12 @@ public class SummonCamel extends Camel implements ISummon {
     @Override
     public void tick() {
         super.tick();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             ticksLeft--;
             if (ticksLeft <= 0) {
-                ParticleUtil.spawnPoof((ServerLevel) level, blockPosition());
+                ParticleUtil.spawnPoof((ServerLevel) level(), blockPosition());
                 this.remove(RemovalReason.DISCARDED);
-                onSummonDeath(level, null, true);
+                onSummonDeath(level(), null, true);
             }
         }
     }
@@ -67,7 +67,7 @@ public class SummonCamel extends Camel implements ISummon {
     @Override
     public void die(@NotNull DamageSource cause) {
         super.die(cause);
-        onSummonDeath(level, cause, false);
+        onSummonDeath(level(), cause, false);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SummonCamel extends Camel implements ISummon {
     }
 
     @Override
-    public int getExperienceReward() {
+    public int getBaseExperienceReward() {
         return 0;
     }
 

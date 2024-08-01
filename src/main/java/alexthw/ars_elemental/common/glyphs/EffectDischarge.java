@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,15 +19,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
@@ -49,34 +48,31 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         DamageSource source = buildDamageSource(world, shooter);
 
         // If the target is shocked, damage all nearby entities and apply the shock effect to them
-        if (livingEntity.hasEffect(ModPotions.SHOCKED_EFFECT.get()) || livingEntity.hasEffect(LIGHTNING_LURE.get())) {
+        if (livingEntity.hasEffect(ModPotions.SHOCKED_EFFECT) || livingEntity.hasEffect(LIGHTNING_LURE)) {
             // If the target is static charged, damage is increased by 30% and the effect is removed
-            if (livingEntity.hasEffect(LIGHTNING_LURE.get())) {
+            if (livingEntity.hasEffect(LIGHTNING_LURE)) {
                 damage *= 1.3F;
-                livingEntity.removeEffect(LIGHTNING_LURE.get());
+                livingEntity.removeEffect(LIGHTNING_LURE);
             }
             // If the target wear energy armors, damage is increased by 10% for each armor piece and energy is drained
             for (ItemStack i : livingEntity.getArmorSlots()) {
-                LazyOptional<IEnergyStorage> lazyEnergyStorage = i.getCapability(ForgeCapabilities.ENERGY);
-                if (lazyEnergyStorage.isPresent()) {
-                    Optional<IEnergyStorage> energyStorage = lazyEnergyStorage.resolve();
-                    if (energyStorage.isPresent()) {
-                        energyStorage.get().extractEnergy((int) (energyStorage.get().getEnergyStored() * 0.25), false);
-                        damage *= 1.1F;
-                    }
+                IEnergyStorage energyStorage = i.getCapability(Capabilities.EnergyStorage.ITEM);
+                if (energyStorage != null) {
+                    energyStorage.extractEnergy((int) (energyStorage.getEnergyStored() * 0.25), false);
+                    damage *= 1.1F;
                 }
             }
             // Damage all nearby entities and apply the shock effect to them
             for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.blockPosition()).inflate(range), (e) -> !e.equals(shooter))) {
                 attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
-                this.applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT.get(), spellStats);
+                this.applyConfigPotion(entity, ModPotions.SHOCKED_EFFECT, spellStats);
                 DischargeEffectPacket.send(world, new ParticleColor(225, 200, 50), livingEntity.position(), entity.position());
             }
         }
     }
 
     @Override
-    public void applyPotion(LivingEntity entity, MobEffect potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles) {
+    public void applyPotion(LivingEntity entity, Holder<MobEffect> potionEffect, SpellStats stats, int baseDurationSeconds, int durationBuffSeconds, boolean showParticles) {
         if (entity == null) return;
         int ticks = baseDurationSeconds * 20 + durationBuffSeconds * stats.getDurationInTicks();
         int amp = (int) Math.min(stats.getAmpMultiplier(), 5);
@@ -90,7 +86,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDamageConfig(builder, 7.0);
         addAmpConfig(builder, 3.0);

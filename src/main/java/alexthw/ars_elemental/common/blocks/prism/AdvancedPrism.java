@@ -5,10 +5,12 @@ import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
@@ -34,31 +37,31 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public RenderShape getRenderShape(BlockState pState) {
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState pState) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
-    @SuppressWarnings("deprecation")
+
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pPlayer.level.isClientSide) {
-            super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+        if (!player.level().isClientSide) {
+            if (stack.getItem() instanceof SpellPrismLens && level.getBlockEntity(pos) instanceof AdvancedPrismTile tile) {
+                tile.setLens(stack.split(1), player);
+                return ItemInteractionResult.SUCCESS;
+            }
         }
-        if (pPlayer.getItemInHand(pHand).getItem() instanceof SpellPrismLens && pLevel.getBlockEntity(pPos) instanceof AdvancedPrismTile tile) {
-            tile.setLens(pPlayer.getItemInHand(pHand).split(1), pPlayer);
-            return InteractionResult.SUCCESS;
-        }
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
     public void onHit(ServerLevel world, BlockPos pos, EntityProjectileSpell spell) {
         if (!(world.getBlockEntity(pos) instanceof AdvancedPrismTile tile)) return;
-        Position iposition = getDispensePosition(new BlockSourceImpl(world, pos), tile);
+        Position iposition = getDispensePosition(pos, tile.getShootAngle());
         spell.setPos(iposition.x(), iposition.y(), iposition.z());
         spell.prismRedirect++;
         if (spell.prismRedirect >= 3) {
-            ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.PRISMATIC, world, pos, 10);
+            ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.PRISMATIC.get(), world, pos, 10);
         }
         if (spell.spellResolver == null) {
             spell.remove(Entity.RemovalReason.DISCARDED);
@@ -74,15 +77,14 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         BlockUtil.updateObservers(world, pos);
     }
 
-    public static Position getDispensePosition(BlockSource coords, AdvancedPrismTile tile) {
-        Vec3 direction = tile.getShootAngle().normalize();
-        double d0 = coords.x() + 0.5D * direction.x();
-        double d1 = coords.y() + 0.5D * direction.y();
-        double d2 = coords.z() + 0.5D * direction.z();
-        return new PositionImpl(d0, d1, d2);
+    public Position getDispensePosition(BlockPos coords, Vec3 direction) {
+        double d0 = coords.getX() + 0.5D * direction.x();
+        double d1 = coords.getY() + 0.5D * direction.y();
+        double d2 = coords.getZ() + 0.5D * direction.z();
+        return new Vec3(d0, d1, d2);
     }
 
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity placer, @NotNull ItemStack stack) {
         Direction orientation = placer == null ? Direction.WEST : Direction.orderedByNearest(placer)[0].getOpposite();
 
         if (!(world.getBlockEntity(pos) instanceof AdvancedPrismTile prismTile)) return;
@@ -108,7 +110,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
     }
 
     @Override
-    public BlockState rotate(BlockState state, LevelAccessor level, BlockPos pos, Rotation rot) {
+    public @NotNull BlockState rotate(@NotNull BlockState state, LevelAccessor level, @NotNull BlockPos pos, @NotNull Rotation rot) {
         if (level.getBlockEntity(pos) instanceof AdvancedPrismTile prismTile) {
             prismTile.setRotX(prismTile.getRotationX() + switch (rot) {
                         case NONE -> 0;
@@ -129,7 +131,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
         return new AdvancedPrismTile(pPos, pState);
     }
 }

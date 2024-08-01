@@ -15,14 +15,16 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.SummoningTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.ReloadableServerRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -30,7 +32,6 @@ import net.minecraft.world.level.block.CoralBlock;
 import net.minecraft.world.level.block.KelpPlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -150,7 +151,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
 
         // get the loot tables for fishing and create a fake player to get the loot context
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer(server);
-        LootDataManager lootData = server.getServer().getLootData();
+        ReloadableServerRegistries.Holder lootData = server.getServer().reloadableRegistries();
         LootTable lootTable = lootData.getLootTable(BuiltInLootTables.FISHING_FISH);
         LootTable lootTableTreasure = lootData.getLootTable(BuiltInLootTables.FISHING_TREASURE);
         LootTable lootTableJunk = lootData.getLootTable(BuiltInLootTables.FISHING_JUNK);
@@ -253,16 +254,16 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     }
 
     @Override
-    public void load(CompoundTag compound) {
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
         this.progress = compound.getInt("progress");
         this.bonus = compound.getInt("bonus");
         this.needsMana = compound.getBoolean("needsMana");
-        super.load(compound);
+        super.loadAdditional(compound, pRegistries);
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    public void saveAdditional(CompoundTag tag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(tag,pRegistries);
         tag.putInt("progress", progress);
         tag.putInt("bonus", bonus);
         tag.putBoolean("needsMana", needsMana);
@@ -278,6 +279,6 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
     private List<LivingEntity> getNearbyEntities() {
         // get a list of entities within 10 blocks of the shrine
         if (level == null) return ImmutableList.of();
-        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(10).west(10).below(10), getBlockPos().south(10).east(10).above(10)), e -> (e.getMobType() == MobType.WATER && !(e instanceof MermaidEntity)));
+        return level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().north(10).west(10).below(10).getCenter(), getBlockPos().south(10).east(10).above(10).getCenter()), e -> (e.getType().is(EntityTypeTags.AQUATIC) && !(e instanceof MermaidEntity)));
     }
 }

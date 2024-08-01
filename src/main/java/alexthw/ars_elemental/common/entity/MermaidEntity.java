@@ -36,7 +36,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.BreathAirGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
@@ -49,17 +48,14 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
@@ -90,13 +86,17 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
         super(p_21683_, p_21684_);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.1F, 0.7F, false);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.setMaxUpStep(1.5F);
+        this.setPathfindingMalus(PathType.WATER, 0.0F);
     }
 
     public MermaidEntity(Level level, boolean tamed) {
         this(ModEntities.SIREN_ENTITY.get(), level);
         setTamed(tamed);
+    }
+
+    @Override
+    public float maxUpStep() {
+        return super.maxUpStep() + 0.5F;
     }
 
     @Override
@@ -178,13 +178,13 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
         return false;
     }
 
-    @Override
-    public @NotNull MobType getMobType() {
-        return MobType.WATER;
-    }
+//    @Override
+//    public @NotNull MobType getMobType() {
+//        return MobType.WATER;
+//    }
 
     @Override
-    public int getExperienceReward() {
+    public int getBaseExperienceReward() {
         return 0;
     }
 
@@ -247,14 +247,14 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(HOME, Optional.empty());
-        this.entityData.define(TAMED, false);
-        this.entityData.define(JUMPING, false);
-        this.entityData.define(COLOR, Variants.random().toString());
-        this.entityData.define(CHANNELING, false);
-        this.entityData.define(CHANNELING_ENTITY, -1);
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(HOME, Optional.empty());
+        builder.define(TAMED, false);
+        builder.define(JUMPING, false);
+        builder.define(COLOR, Variants.random().toString());
+        builder.define(CHANNELING, false);
+        builder.define(CHANNELING_ENTITY, -1);
     }
 
     public boolean isJumping() {
@@ -405,7 +405,7 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
                 taming = false;
                 ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level().random.nextInt(2));
                 level().addFreshEntity(new ItemEntity(level(), getX(), getY() + 0.5, getZ(), stack));
-                ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.POOF_MOB, (ServerLevel) this.level(), this.getOnPos(), 10);
+                ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.POOF_MOB.get(), (ServerLevel) this.level(), this.getOnPos(), 10);
                 this.remove(RemovalReason.DISCARDED);
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 1f);
             }

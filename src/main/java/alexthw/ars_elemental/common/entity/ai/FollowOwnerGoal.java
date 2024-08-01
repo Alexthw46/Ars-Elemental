@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -44,8 +44,8 @@ public class FollowOwnerGoal extends Goal {
      */
     @Override
     public boolean canUse() {
-        if (!mob.hasEffect(ModPotions.ENTHRALLED.get()) || mob.getTarget() != null) return false;
-        var charmInstance = mob.getEffect(ModPotions.ENTHRALLED.get());
+        if (!mob.hasEffect(ModPotions.ENTHRALLED) || mob.getTarget() != null) return false;
+        var charmInstance = mob.getEffect(ModPotions.ENTHRALLED);
         if (charmInstance instanceof EntityCarryMEI charm) {
             Entity ownerEntity = charm.getOwner();
             if (ownerEntity instanceof LivingEntity living) {
@@ -69,8 +69,8 @@ public class FollowOwnerGoal extends Goal {
     public void start() {
         this.timeToRecalcPath = 0;
         this.navigation = mob.getNavigation();
-        this.oldWaterCost = this.mob.getPathfindingMalus(BlockPathTypes.WATER);
-        this.mob.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.oldWaterCost = this.mob.getPathfindingMalus(PathType.WATER);
+        this.mob.setPathfindingMalus(PathType.WATER, 0.0F);
     }
 
     /**
@@ -79,7 +79,7 @@ public class FollowOwnerGoal extends Goal {
     public void stop() {
         this.followingMob = null;
         this.navigation.stop();
-        this.mob.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.mob.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     }
 
     /**

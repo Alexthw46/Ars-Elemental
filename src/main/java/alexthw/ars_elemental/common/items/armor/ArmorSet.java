@@ -4,7 +4,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static alexthw.ars_elemental.registry.ModItems.ArmorProp;
 import static alexthw.ars_elemental.registry.ModItems.ITEMS;
@@ -25,10 +25,10 @@ public class ArmorSet {
         this.feet = ITEMS.register(name + "_boots", () -> new ElementalArmor(ArmorItem.Type.BOOTS, element, ArmorProp()));
     }
 
-    RegistryObject<Item> head;
-    RegistryObject<Item> chest;
-    RegistryObject<Item> legs;
-    RegistryObject<Item> feet;
+    DeferredHolder<Item,ElementalArmor> head;
+    DeferredHolder<Item,ElementalArmor> chest;
+    DeferredHolder<Item,ElementalArmor> legs;
+    DeferredHolder<Item,ElementalArmor> feet;
 
     public Item getHat() {
         return head.get();
