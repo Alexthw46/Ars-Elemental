@@ -77,10 +77,11 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         BlockUtil.updateObservers(world, pos);
     }
 
-    public Position getDispensePosition(BlockPos coords, Vec3 direction) {
-        double d0 = coords.getX() + 0.5D * direction.x();
-        double d1 = coords.getY() + 0.5D * direction.y();
-        double d2 = coords.getZ() + 0.5D * direction.z();
+    public Position getDispensePosition(BlockPos blockPos, Vec3 direction) {
+        Vec3 coords = Vec3.atCenterOf(blockPos);
+        double d0 = coords.x() + 0.5D * direction.x();
+        double d1 = coords.y() + 0.5D * direction.y();
+        double d2 = coords.z() + 0.5D * direction.z();
         return new Vec3(d0, d1, d2);
     }
 

@@ -36,6 +36,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -48,6 +49,11 @@ public class ClientEvents {
     static final ResourceLocation VhexTexture = prefix("textures/entity/vhex.png");
 
     public static final KeyMapping CURIO_BAG_KEYBINDING = new KeyMapping("key.ars_elemental.open_pouch", GLFW.GLFW_KEY_J, "key.category.ars_nouveau.general");
+
+    public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+
+    }
+
 
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {

@@ -30,9 +30,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 import java.util.ArrayList;
@@ -124,9 +124,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     }
 
     private Component getArmorSetTitle(ArmorSet set, int equipped) {
-        return Component.translatable(set.getTranslationKey())
-                .append(" (" + equipped + " / 4)")
-                .withStyle(ChatFormatting.DARK_AQUA);
+        return Component.translatable(set.getTranslationKey()).append(" (" + equipped + " / 4)").withStyle(ChatFormatting.DARK_AQUA);
     }
 
     public void addArmorSetDescription(ArmorSet set, List<Component> list) {
@@ -136,10 +134,9 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     @Override
     public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
-        var modifiers = super.getDefaultAttributeModifiers();
-
-        modifiers.withModifierAdded(PerkAttributes.MAX_MANA, new AttributeModifier(ArsNouveau.prefix("max_mana_armor"), ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR);
-        modifiers.withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor"), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR);
+        var modifiers = super.getDefaultAttributeModifiers()
+                .withModifierAdded(PerkAttributes.MAX_MANA, new AttributeModifier(ArsNouveau.prefix("max_mana_armor"), ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR)
+                .withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor"), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR);
 
         for (PerkInstance perkInstance : PerkUtil.getPerksFromItem(stack)) {
             IPerk perk = perkInstance.getPerk();
@@ -148,16 +145,13 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     }
 
 
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
+    @Override
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
             private GeoArmorRenderer<?> renderer;
 
-            public @NotNull HumanoidModel<?> getHumanoidArmorModel(@NotNull LivingEntity livingEntity, @NotNull ItemStack itemStack, @NotNull EquipmentSlot equipmentSlot, @NotNull HumanoidModel<?> original) {
-                if (this.renderer == null) {
-                    this.renderer = new ElementalArmorRenderer(getArmorModel());
-                }
-
-                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+            public <T extends LivingEntity> @NotNull HumanoidModel<?> getGeoArmorRenderer(@Nullable T livingEntity, ItemStack itemStack, @Nullable EquipmentSlot equipmentSlot, @Nullable HumanoidModel<T> original) {
+                if (this.renderer == null) this.renderer = new ElementalArmorRenderer(getArmorModel());
                 return this.renderer;
             }
         });
