@@ -36,10 +36,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static alexthw.ars_elemental.common.enchantments.SoulboundEnchantment.*;
-
 @EventBusSubscriber(modid = ArsElemental.MODID)
 public class Events {
+
+    public static final String TAG_SOULBOUND_DROP_COUNT = "tagSoulboundDC";
+    public static final String TAG_SOULBOUND_PREFIX = "tagSoulboundPrefix";
+    public static final String TAG_SOULBOUND = "tagSoulbound";
 
     @SubscribeEvent
     public static void customAI(EntityJoinLevelEvent event) {

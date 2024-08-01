@@ -4,13 +4,13 @@
     "translate": "enchantment.ars_elemental.mirror_shield"
   },
   "max_cost": {
-    "base": 50,
-    "per_level_above_first": 25
+    "base": 15,
+    "per_level_above_first": 15
   },
   "max_level": 3,
   "min_cost": {
     "base": 1,
-    "per_level_above_first": 25
+    "per_level_above_first": 10
   },
   "slots": [
     "offhand"

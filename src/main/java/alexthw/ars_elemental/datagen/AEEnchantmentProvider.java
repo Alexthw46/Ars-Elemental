@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -24,19 +23,14 @@ public class AEEnchantmentProvider extends DatapackBuiltinEntriesProvider {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.ENCHANTMENT, AEEnchantmentProvider::bootstrap);
 
-    public AEEnchantmentProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, RegistrySetBuilder datapackEntriesBuilder, Set<String> modIds) {
-        super(output, registries, datapackEntriesBuilder, modIds);
-    }
-
-
     public static void bootstrap(BootstrapContext<Enchantment> ctx) {
         HolderGetter<Item> holdergetter2 = ctx.lookup(Registries.ITEM);
         register(ctx, ModRegistry.SOULBOUND, Enchantment.enchantment(Enchantment.definition(
-                holdergetter2.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+                holdergetter2.getOrThrow(ModRegistry.SOULBOUND_ABLE),
                 5,
-                3,
-                Enchantment.dynamicCost(1, 11),
-                Enchantment.dynamicCost(12, 11),
+                1,
+                Enchantment.dynamicCost(1, 10),
+                Enchantment.dynamicCost(12, 15),
                 1,
                 EquipmentSlotGroup.ANY
         )));
@@ -44,8 +38,8 @@ public class AEEnchantmentProvider extends DatapackBuiltinEntriesProvider {
                 holdergetter2.getOrThrow(Tags.Items.TOOLS_SHIELD),
                 5,
                 3,
-                Enchantment.dynamicCost(1, 25),
-                Enchantment.dynamicCost(50, 25),
+                Enchantment.dynamicCost(1, 10),
+                Enchantment.dynamicCost(15, 15),
                 1,
                 EquipmentSlotGroup.OFFHAND
         )));

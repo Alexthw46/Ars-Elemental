@@ -1,6 +1,18 @@
 {
   "values": [
     "minecraft:writable_book",
-    "minecraft:written_book"
+    "minecraft:written_book",
+    "ars_elemental:curio_bag",
+    "ars_elemental:caster_bag",
+    "#ars_elemental:curio_bag_item",
+    "#ars_elemental:caster_bag_item",
+    "#minecraft:enchantable/armor",
+    "#minecraft:enchantable/equippable",
+    "#minecraft:enchantable/weapon",
+    "#minecraft:enchantable/bow",
+    "#minecraft:enchantable/crossbow",
+    "#minecraft:enchantable/durability",
+    "#ars_nouveau:spellbook",
+    "#c:tools"
   ]
 }

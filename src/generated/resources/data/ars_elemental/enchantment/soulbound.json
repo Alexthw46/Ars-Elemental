@@ -5,16 +5,16 @@
   },
   "max_cost": {
     "base": 12,
-    "per_level_above_first": 11
+    "per_level_above_first": 15
   },
-  "max_level": 3,
+  "max_level": 1,
   "min_cost": {
     "base": 1,
-    "per_level_above_first": 11
+    "per_level_above_first": 10
   },
   "slots": [
     "any"
   ],
-  "supported_items": "#minecraft:enchantable/armor",
+  "supported_items": "#ars_elemental:soulbound_extra",
   "weight": 5
 }
