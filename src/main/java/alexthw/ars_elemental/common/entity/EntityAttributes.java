@@ -34,8 +34,8 @@ public class EntityAttributes {
         event.put(ModEntities.DIREWOLF_SUMMON.get(), SummonDirewolf.createAttributes().build());
         event.put(ModEntities.WSKELETON_SUMMON.get(), SummonSkeleton.createAttributes().build());
         event.put(ModEntities.VHEX_SUMMON.get(), AllyVhexEntity.createAttributes().build());
-        event.put(ModEntities.DOLPHIN_SUMMON.get(), Dolphin.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 1.5).build());
-        event.put(ModEntities.STRIDER_SUMMON.get(), Strider.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.2).build());
+        event.put(ModEntities.DOLPHIN_SUMMON.get(), Dolphin.createAttributes().add(Attributes.MOVEMENT_SPEED, 1.5).build());
+        event.put(ModEntities.STRIDER_SUMMON.get(), Strider.createAttributes().add(Attributes.MOVEMENT_SPEED, 0.2).build());
 
         event.put(ModEntities.FIRE_MAGE.get(), EntityMageBase.createAttributes().build());
         event.put(ModEntities.WATER_MAGE.get(), EntityMageBase.createAttributes().build());
