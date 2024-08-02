@@ -20,7 +20,7 @@ public class ArcPrismLens extends AbstractPrismLens {
 
     @Override
     public boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos) {
-        return !(spell.isNoGravity());
+        return spell.isNoGravity();
     }
 
 }
