@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.common.glyphs.filters;
 
 import alexthw.ars_elemental.common.glyphs.ElementalAbstractFilter;
-import alexthw.ars_elemental.registry.ModRegistry;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -35,7 +34,7 @@ public class AquaticFilter extends ElementalAbstractFilter {
     @Override
     public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         if (target.getEntity() instanceof LivingEntity living) {
-            return living.getType().is(EntityTypeTags.AQUATIC) || living.getType().is(ModRegistry.AQUATIC);
+            return living.getType().is(EntityTypeTags.AQUATIC);
         }
         return false;
     }

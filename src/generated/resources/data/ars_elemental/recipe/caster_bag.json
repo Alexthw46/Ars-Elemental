@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "M": {
+      "item": "ars_nouveau:magebloom_fiber"
+    }
+  },
+  "pattern": [
+    "MDM",
+    "MCM",
+    "MMM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:caster_bag"
+  }
+}

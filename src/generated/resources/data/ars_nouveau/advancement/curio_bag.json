@@ -1,0 +1,32 @@
+{
+  "parent": "ars_nouveau:magebloom_crop",
+  "criteria": {
+    "has_curio_bag": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ars_elemental:curio_bag"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.curio_bag"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:curio_bag"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.curio_bag"
+    }
+  },
+  "requirements": [
+    [
+      "has_curio_bag"
+    ]
+  ]
+}

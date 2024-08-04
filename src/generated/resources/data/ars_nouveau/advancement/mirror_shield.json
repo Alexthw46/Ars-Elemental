@@ -1,0 +1,27 @@
+{
+  "parent": "ars_nouveau:enchanting_apparatus",
+  "criteria": {
+    "mirror_shield": {
+      "trigger": "ars_nouveau:mirror_shield"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.mirror_shield"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "ars_nouveau:enchanters_shield"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.mirror_shield"
+    }
+  },
+  "requirements": [
+    [
+      "mirror_shield"
+    ]
+  ]
+}

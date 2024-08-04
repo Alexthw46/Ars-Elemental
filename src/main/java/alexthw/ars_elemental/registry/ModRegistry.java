@@ -65,11 +65,10 @@ public class ModRegistry {
 
     public static final TagKey<EntityType<?>> ATTRACT_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, prefix("attraction_ritual_blacklist"));
 
-    public static final TagKey<EntityType<?>> AQUATIC = TagKey.create(Registries.ENTITY_TYPE, prefix("aquatic"));
     public static final TagKey<EntityType<?>> FIERY = TagKey.create(Registries.ENTITY_TYPE, prefix("fiery"));
     public static final TagKey<EntityType<?>> AERIAL = TagKey.create(Registries.ENTITY_TYPE, prefix("aerial"));
     public static final TagKey<EntityType<?>> INSECT = TagKey.create(Registries.ENTITY_TYPE, prefix("insect"));
-    public static final TagKey<EntityType<?>> UNDEAD = TagKey.create(Registries.ENTITY_TYPE, prefix("undead"));
+
     public static final ResourceKey<DamageType> POISON = key(Registries.DAMAGE_TYPE, "poison");
     public static final ResourceKey<DamageType> MAGIC_FIRE = key(Registries.DAMAGE_TYPE, "hellfire");
     public static final ResourceKey<DamageType> SPARK = key(Registries.DAMAGE_TYPE, "spark");

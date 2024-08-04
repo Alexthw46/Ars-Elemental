@@ -1,0 +1,32 @@
+{
+  "parent": "ars_nouveau:enchanting_apparatus",
+  "criteria": {
+    "has_firenando_charm": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ars_elemental:firenando_charm"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.firenando_charm"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:firenando_charm"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.firenando_charm"
+    }
+  },
+  "requirements": [
+    [
+      "has_firenando_charm"
+    ]
+  ]
+}

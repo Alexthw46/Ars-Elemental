@@ -11,20 +11,39 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
-import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import static alexthw.ars_elemental.datagen.Datagen.provider;
 
 public class AEImbuementProvider extends ImbuementRecipeProvider {
 
     public AEImbuementProvider(DataGenerator generatorIn) {
         super(generatorIn);
+    }
+
+    @Override
+    public @NotNull CompletableFuture<?> run(@NotNull CachedOutput pOutput) {
+        collectJsons(pOutput);
+        List<CompletableFuture<?>> futures = new ArrayList<>();
+        return provider.thenCompose((registry) -> {
+            for (ImbuementRecipe g : recipes) {
+                Path path = getRecipePath(output, g.id.getPath());
+                futures.add(DataProvider.saveStable(pOutput, registry, ImbuementRecipe.CODEC, g, path));
+            }
+            return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+        });
     }
 
     @Override
@@ -136,14 +155,6 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
                 .withPedestalItem(Ingredient.of(Tags.Items.DYES))
                 .withPedestalItem(Ingredient.of(Tags.Items.DYES))
         );
-
-
-        Path output = generator.getPackOutput().getOutputFolder();
-        for (ImbuementRecipe g : recipes) {
-            Path path = getRecipePath(output, g.id.getPath());
-            saveStable(cache, ImbuementRecipe.CODEC.encodeStart(JsonOps.INSTANCE, g).getOrThrow(), path);
-        }
-
     }
 
     protected Path getRecipePath(Path pathIn, String str) {
@@ -151,7 +162,7 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Ars Elemental Imbuement";
     }
 

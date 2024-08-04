@@ -2,7 +2,6 @@ package alexthw.ars_elemental.client.caster_tools;
 
 import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
-import com.hollingsworth.arsnouveau.client.renderer.item.FixedGeoItemRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -10,10 +9,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.Color;
 
 
-public class SpellHornRenderer extends FixedGeoItemRenderer<SpellHorn> {
+public class SpellHornRenderer extends GeoItemRenderer<SpellHorn> {
 
     public SpellHornRenderer() {
         super(new SpellHornModel());

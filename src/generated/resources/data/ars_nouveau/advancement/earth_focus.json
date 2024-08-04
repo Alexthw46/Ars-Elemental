@@ -1,0 +1,33 @@
+{
+  "parent": "ars_nouveau:lesser_earth_focus",
+  "criteria": {
+    "has_earth_focus": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ars_elemental:earth_focus"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.earth_focus"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:earth_focus"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.earth_focus"
+    }
+  },
+  "requirements": [
+    [
+      "has_earth_focus"
+    ]
+  ]
+}

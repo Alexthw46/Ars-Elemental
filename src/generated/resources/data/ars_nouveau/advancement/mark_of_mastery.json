@@ -1,0 +1,32 @@
+{
+  "parent": "ars_nouveau:wilden_tribute",
+  "criteria": {
+    "has_mark_of_mastery": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ars_elemental:mark_of_mastery"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.mark_of_mastery"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:mark_of_mastery"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.mark_of_mastery"
+    }
+  },
+  "requirements": [
+    [
+      "has_mark_of_mastery"
+    ]
+  ]
+}

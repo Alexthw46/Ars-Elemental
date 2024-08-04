@@ -1,0 +1,26 @@
+{
+  "parent": "ars_nouveau:lesser_earth_focus",
+  "criteria": {
+    "spore_blossom": {
+      "trigger": "ars_nouveau:blossoming"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.spore_blossom"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:spore_blossom_up"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.spore_blossom"
+    }
+  },
+  "requirements": [
+    [
+      "spore_blossom"
+    ]
+  ]
+}

@@ -15,7 +15,7 @@
       "item": "minecraft:glowstone_dust"
     },
     {
-      "tag": "neoforge:storage_blocks/source"
+      "tag": "c:storage_blocks/source"
     }
   ],
   "result": {

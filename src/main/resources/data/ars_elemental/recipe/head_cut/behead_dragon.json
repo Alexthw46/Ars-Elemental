@@ -1,0 +1,8 @@
+{
+  "type": "ars_elemental:head_cut",
+  "drop_chance": 20,
+  "mob": "minecraft:ender_dragon",
+  "output": {
+    "id": "minecraft:dragon_head"
+  }
+}

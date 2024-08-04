@@ -12,7 +12,6 @@
     "ItemEntityMixin",
     "KindlingPerkMixin",
     "LightningMixin",
-    "PotionBrewingMixin",
     "RitualAwakeningMixin",
     "ServerLevelMixin",
     "ZombieInvoker"

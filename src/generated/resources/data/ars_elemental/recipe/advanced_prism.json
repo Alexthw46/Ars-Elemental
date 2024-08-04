@@ -9,7 +9,7 @@
       "item": "minecraft:quartz"
     },
     "S": {
-      "tag": "neoforge:gems/source"
+      "tag": "c:gems/source"
     }
   },
   "pattern": [

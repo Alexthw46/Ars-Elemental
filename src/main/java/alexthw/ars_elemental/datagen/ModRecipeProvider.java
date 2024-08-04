@@ -89,10 +89,29 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Blocks.PISTON, 1)
                 .save(consumer, prefix("tablet_" + RepulsionRitual.ID));
 
+        shapedBuilder(CURIO_BAG.get())
+                .define('M', ItemsRegistry.MAGE_FIBER)
+                .define('C', Items.CHEST)
+                .pattern("MMM").pattern("MCM").pattern("MMM")
+                .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
+                .save(consumer, prefix("curio_bag"));
+
+        shapedBuilder(CASTER_BAG.get())
+                .define('M', ItemsRegistry.MAGE_FIBER)
+                .define('C', Items.CHEST)
+                .define('D', Tags.Items.GEMS_DIAMOND)
+                .pattern("MDM").pattern("MCM").pattern("MMM")
+                .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
+                .save(consumer, prefix("caster_bag"));
+
     }
 
     public Item getRitualItem(ResourceLocation id) {
         return RitualRegistry.getRitualItemMap().get(id);
+    }
+
+    public ShapedRecipeBuilder shapedBuilder(ItemLike result) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.MISC ,result);
     }
 
     public ShapelessRecipeBuilder shapelessBuilder(ItemLike result) {
@@ -100,11 +119,11 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     public ShapelessRecipeBuilder shapelessBuilder(ItemLike result, int resultCount) {
-        return ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,result, resultCount).unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK));
+        return ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, resultCount).unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK));
     }
 
     private static void strippedLogToWood(RecipeOutput recipeConsumer, ItemLike stripped, ItemLike output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,output, 3).define('#', stripped).pattern("##").pattern("##").group("bark")
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 3).define('#', stripped).pattern("##").pattern("##").group("bark")
                 .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
                 .save(recipeConsumer);
     }

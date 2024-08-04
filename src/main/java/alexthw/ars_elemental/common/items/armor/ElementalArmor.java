@@ -7,6 +7,7 @@ import alexthw.ars_elemental.client.armor.ElementalArmorModel;
 import alexthw.ars_elemental.client.armor.ElementalArmorRenderer;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.mana.IManaDiscountEquipment;
 import com.hollingsworth.arsnouveau.api.perk.IPerk;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
@@ -43,7 +44,7 @@ import static alexthw.ars_elemental.ConfigHandler.Common.ARMOR_MANA_REGEN;
 import static alexthw.ars_elemental.ConfigHandler.Common.ARMOR_MAX_MANA;
 
 
-public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmor {
+public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmor, IManaDiscountEquipment {
 
     final SpellSchool element;
 
@@ -73,7 +74,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flags) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flags) {
         var perkProvider = PerkUtil.getPerkHolder(stack);
         if (perkProvider != null) {
             tooltip.add(Component.translatable("ars_nouveau.tier", 4).withStyle(ChatFormatting.GOLD));
@@ -133,14 +134,16 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
 
     @Override
-    public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+    public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(@NotNull ItemStack stack) {
         var modifiers = super.getDefaultAttributeModifiers()
-                .withModifierAdded(PerkAttributes.MAX_MANA, new AttributeModifier(ArsNouveau.prefix("max_mana_armor"), ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR)
-                .withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor"), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ARMOR);
+                .withModifierAdded(PerkAttributes.MAX_MANA, new AttributeModifier(ArsNouveau.prefix("max_mana_armor"), ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
+                .withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor"), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()));
 
         for (PerkInstance perkInstance : PerkUtil.getPerksFromItem(stack)) {
             IPerk perk = perkInstance.getPerk();
+            modifiers = perk.applyAttributeModifiers(modifiers, stack, perkInstance.getSlot().value(), EquipmentSlotGroup.bySlot(this.type.getSlot()));
         }
+
         return modifiers;
     }
 
@@ -161,7 +164,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
      * Needed to avoid file not found errors since Geckolib doesn't redirect to the correct texture
      */
     @Override
-    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+    public @Nullable ResourceLocation getArmorTexture(@NotNull ItemStack stack, @NotNull Entity entity, @NotNull EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/armor/" + getTier() + "_armor_" + this.getSchool().getId() + ".png");
     }
 }

@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.recipe;
 
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.hollingsworth.arsnouveau.common.crafting.recipes.CheatSerializer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +15,18 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class HeadCutRecipe extends CustomRecipe {
+
+    public int chance() {
+        return chance;
+    }
+
+    public ResourceLocation mob() {
+        return mob;
+    }
+
+    public ItemStack result() {
+        return result;
+    }
 
     public ResourceLocation mob;
     public ItemStack result; // Result item
@@ -60,7 +72,15 @@ public class HeadCutRecipe extends CustomRecipe {
                 Codec.INT.fieldOf("drop_chance").forGetter(recipe -> recipe.chance)
         ).apply(instance, HeadCutRecipe::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, HeadCutRecipe> STREAM = CheatSerializer.create(CODEC);
+        public static final StreamCodec<RegistryFriendlyByteBuf, HeadCutRecipe> STREAM = StreamCodec.composite(
+                ItemStack.STREAM_CODEC,
+                HeadCutRecipe::result,
+                ResourceLocation.STREAM_CODEC,
+                HeadCutRecipe::mob,
+                ByteBufCodecs.VAR_INT,
+                HeadCutRecipe::chance,
+                HeadCutRecipe::new
+        );
 
         @Override
         public @NotNull MapCodec<HeadCutRecipe> codec() {

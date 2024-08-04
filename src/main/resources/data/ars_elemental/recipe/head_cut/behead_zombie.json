@@ -1,0 +1,8 @@
+{
+  "type": "ars_elemental:head_cut",
+  "drop_chance": 10,
+  "mob": "minecraft:zombie",
+  "output": {
+    "id": "minecraft:zombie_head"
+  }
+}

@@ -231,11 +231,12 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
+            this.tag(EntityTags.MAGIC_FIND).add(SIREN_ENTITY.get());
             this.tag(EntityTags.FAMILIAR).add(FIRENANDO_FAMILIAR.get(), SIREN_FAMILIAR.get());
             this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
             this.tag(ModRegistry.FIERY).add(EntityType.ENDER_DRAGON);
-            this.tag(ModRegistry.UNDEAD).add(EntityType.GHAST);
-            this.tag(ModRegistry.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
+            this.tag(EntityTypeTags.UNDEAD).add(EntityType.GHAST);
+            this.tag(EntityTypeTags.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
             this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
             this.tag(ModRegistry.ATTRACT_BLACKLIST).add(EntityType.PLAYER).addTag(Tags.EntityTypes.BOSSES).add(ModEntities.ENTITY_FOLLOW_PROJ.get()).addTag(EntityTags.FAMILIAR);
             this.tag(EntityTypeTags.UNDEAD).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());

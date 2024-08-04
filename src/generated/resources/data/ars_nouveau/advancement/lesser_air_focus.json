@@ -1,0 +1,32 @@
+{
+  "parent": "ars_nouveau:curio_bag",
+  "criteria": {
+    "has_lesser_air_focus": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ars_elemental:lesser_air_focus"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.lesser_air_focus"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:lesser_air_focus"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.lesser_air_focus"
+    }
+  },
+  "requirements": [
+    [
+      "has_lesser_air_focus"
+    ]
+  ]
+}

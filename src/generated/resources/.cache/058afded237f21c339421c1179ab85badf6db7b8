@@ -1,4 +1,4 @@
-// 1.21	2024-08-01T19:29:04.2222559	Ars Elemental Item Tags
+// 1.21	2024-08-03T11:40:08.10806	Ars Elemental Item Tags
 a1c191d75ca82bdd457d409695bd4e6e4ba9d471 data/ars_elemental/tags/item/blacklist_bag_item.json
 877c63c507be1e55a9f5eeed6e73dfabea015dab data/ars_elemental/tags/item/caster_bag_item.json
 96d00e66e9fa2dc85baa4cfb78e75a332c941ece data/ars_elemental/tags/item/curio_bag_item.json
@@ -13,10 +13,10 @@ fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/item/spellbook.js
 5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/item/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/item/an_focus.json
 e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/item/bracelet.json
+d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/c/tags/item/logs/archwood.json
 94a4d749a377695966e081e59ea56cb6f0d8c1fe data/c/tags/item/stripped_logs.json
 c63f828ff4bfc7df8bd18cf26ecd39040ac28049 data/c/tags/item/stripped_wood.json
 525c1a35787919fd6060975646b2c0a2a41ca910 data/minecraft/tags/item/leaves.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/item/logs.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/item/logs_that_burn.json
 9764206a29734fcec0ce6859c04d754c36205280 data/minecraft/tags/item/saplings.json
-d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/neoforge/tags/item/logs/archwood.json

@@ -3,10 +3,10 @@
   "keepNbtOfReagent": false,
   "pedestalItems": [
     {
-      "tag": "neoforge:logs/archwood"
+      "tag": "c:logs/archwood"
     },
     {
-      "tag": "neoforge:logs/archwood"
+      "tag": "c:logs/archwood"
     },
     {
       "tag": "c:gems/quartz"
@@ -22,7 +22,7 @@
     }
   ],
   "reagent": {
-    "tag": "neoforge:storage_blocks/source"
+    "tag": "c:storage_blocks/source"
   },
   "result": {
     "count": 2,

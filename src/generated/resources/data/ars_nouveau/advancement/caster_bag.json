@@ -1,0 +1,32 @@
+{
+  "parent": "ars_nouveau:curio_bag",
+  "criteria": {
+    "has_caster_bag": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ars_elemental:caster_bag"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.caster_bag"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:caster_bag"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.caster_bag"
+    }
+  },
+  "requirements": [
+    [
+      "has_caster_bag"
+    ]
+  ]
+}

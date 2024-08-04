@@ -17,12 +17,15 @@ import java.util.function.Predicate;
 @EventBusSubscriber(modid = ArsElemental.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Datagen {
 
+    public static CompletableFuture<HolderLookup.Provider> provider;
+    public static PackOutput output;
+
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
-        PackOutput output = gen.getPackOutput();
+        provider = event.getLookupProvider();
+        output = gen.getPackOutput();
 
         gen.addProvider(event.includeClient(), new AEBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(event.includeClient(), new AEItemModelProvider(gen, existingFileHelper));
@@ -40,9 +43,10 @@ public class Datagen {
         gen.addProvider(event.includeServer(), new AEImbuementProvider(gen));
         gen.addProvider(event.includeServer(), new AEGlyphProvider(gen));
         gen.addProvider(event.includeServer(), new AEApparatusProvider(gen));
+        gen.addProvider(event.includeServer(), new AECrushProvider(gen));
 
         gen.addProvider(event.includeServer(), new AEPatchouliProvider(gen));
-        //gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AECasterTomeProvider(gen));
 
 

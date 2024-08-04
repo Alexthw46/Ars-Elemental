@@ -1,8 +1,0 @@
-{
-  "type": "ars_elemental:head_cut",
-  "drop_chance": 10,
-  "mob": "minecraft:skeleton",
-  "output": {
-    "item": "minecraft:skeleton_skull"
-  }
-}

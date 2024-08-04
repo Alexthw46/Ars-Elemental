@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class AEAdvancementsProvider extends AdvancementProvider {
         }
 
         @Override
-        public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> con, ExistingFileHelper existingFileHelper) {
+        public void generate(HolderLookup.Provider registries, @NotNull Consumer<AdvancementHolder> con, @NotNull ExistingFileHelper existingFileHelper) {
             advancementConsumer = con;
 
             saveBasicItem(ModItems.SIREN_CHARM.get(), dummy("poof_mob"));

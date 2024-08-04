@@ -1,0 +1,37 @@
+{
+  "parent": "ars_nouveau:lesser_water_focus",
+  "criteria": {
+    "summon_dolphin": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "ars_elemental:summon_dolphin"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:summoned_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ars_elemental.adv.desc.summon_dolphin"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ars_elemental:water_caster_tome"
+    },
+    "title": {
+      "translate": "ars_elemental.adv.title.summon_dolphin"
+    }
+  },
+  "requirements": [
+    [
+      "summon_dolphin"
+    ]
+  ]
+}

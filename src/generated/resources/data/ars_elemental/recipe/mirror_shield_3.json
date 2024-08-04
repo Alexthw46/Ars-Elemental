@@ -10,7 +10,7 @@
       "item": "minecraft:totem_of_undying"
     },
     {
-      "tag": "neoforge:storage_blocks/source"
+      "tag": "c:storage_blocks/source"
     }
   ],
   "sourceCost": 8000
