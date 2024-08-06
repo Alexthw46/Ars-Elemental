@@ -14,5 +14,5 @@ public class ModParticles {
 
     public static final Supplier<SimpleParticleType> SPARK = PARTICLES.register("spark", () -> new SimpleParticleType(false));
 
-    public static final Supplier<SimpleParticleType> VENOM = PARTICLES.register("venom", () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> VENOM = PARTICLES.register("venom", () -> new SimpleParticleType(true));
 }

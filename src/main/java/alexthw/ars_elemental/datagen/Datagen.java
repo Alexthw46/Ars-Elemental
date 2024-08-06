@@ -46,6 +46,8 @@ public class Datagen {
         gen.addProvider(event.includeServer(), new AECrushProvider(gen));
 
         gen.addProvider(event.includeServer(), new AEPatchouliProvider(gen));
+        gen.addProvider(event.includeServer(), new AECurioProvider(output, existingFileHelper, provider));
+
         gen.addProvider(event.includeServer(), new AEAdvancementsProvider(output, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AECasterTomeProvider(gen));
 

@@ -47,7 +47,7 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
     public ItemStack assemble(ApparatusRecipeInput input, HolderLookup.Provider p_346030_) {
         ItemStack result = super.assemble(input, p_346030_);
         if (!input.catalyst().isComponentsPatchEmpty()) {
-            result.applyComponents(input.catalyst().getComponents());
+            result.applyComponents(input.catalyst().getComponentsPatch());
             result.setDamageValue(0);
         }
         return result;

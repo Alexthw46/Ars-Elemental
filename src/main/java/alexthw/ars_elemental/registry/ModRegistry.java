@@ -86,6 +86,7 @@ public class ModRegistry {
         ENTITIES.register(bus);
         TILES.register(bus);
         CONTAINERS.register(bus);
+        PARTICLES.register(bus);
         EFFECTS.register(bus);
         POTIONS.register(bus);
         ENCHANTMENTS.register(bus);
@@ -94,7 +95,6 @@ public class ModRegistry {
         FEATURES.register(bus);
         BS_PROVIDERS.register(bus);
         TABS.register(bus);
-        PARTICLES.register(bus);
         D_COMPONENTS.register(bus);
     }
 
