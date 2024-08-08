@@ -152,7 +152,7 @@ dependencies {
     implementation "com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}"
 
     implementation "software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}"
-
+    implementation "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
 
     compileOnly "mezz.jei:jei-1.21-neoforge-api:${jei_version}"
     implementation "mezz.jei:jei-1.21-neoforge:${jei_version}"
