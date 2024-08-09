@@ -8,12 +8,13 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.RisingParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.EffectParticleModificationEvent;
 import org.jetbrains.annotations.NotNull;
 
-@EventBusSubscriber
+@EventBusSubscriber(value = Dist.CLIENT)
 public class VenomParticle extends RisingParticle {
     private final SpriteSet spriteSet;
 
