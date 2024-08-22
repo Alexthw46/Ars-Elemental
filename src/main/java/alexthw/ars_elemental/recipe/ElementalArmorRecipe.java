@@ -44,7 +44,7 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
     }
 
     @Override
-    public ItemStack assemble(ApparatusRecipeInput input, HolderLookup.Provider p_346030_) {
+    public @NotNull ItemStack assemble(ApparatusRecipeInput input, HolderLookup.Provider p_346030_) {
         ItemStack result = super.assemble(input, p_346030_);
         if (!input.catalyst().isComponentsPatchEmpty()) {
             result.applyComponents(input.catalyst().getComponentsPatch());
@@ -54,12 +54,12 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public @NotNull RecipeType<?> getType() {
         return ModRegistry.ELEMENTAL_ARMOR_UP.get();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
         return ModRegistry.ELEMENTAL_ARMOR_UP_SERIALIZER.get();
     }
 

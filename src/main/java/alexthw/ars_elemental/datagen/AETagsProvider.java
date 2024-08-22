@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
@@ -97,7 +98,7 @@ public class AETagsProvider {
                     ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get().asItem(),
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem()
             );
-            tag(ItemTagProvider.MAGIC_FOOD).add(ModItems.FLASHING_POD.get().asItem());
+            tag(ItemTagProvider.SHADY_WIZARD_FRUITS).add(ModItems.FLASHING_POD.get().asItem());
             tag(MAGIC_HOOD).add(ItemsRegistry.BATTLEMAGE_HOOD.get(), ItemsRegistry.ARCANIST_HOOD.get(), ItemsRegistry.SORCERER_HOOD.get());
             tag(MAGIC_ROBE).add(ItemsRegistry.BATTLEMAGE_ROBES.get(), ItemsRegistry.ARCANIST_ROBES.get(), ItemsRegistry.SORCERER_ROBES.get());
             tag(MAGIC_LEG).add(ItemsRegistry.BATTLEMAGE_LEGGINGS.get(), ItemsRegistry.ARCANIST_LEGGINGS.get(), ItemsRegistry.SORCERER_LEGGINGS.get());
@@ -113,6 +114,27 @@ public class AETagsProvider {
 
             tag(STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get().asItem());
             tag(STRIPPED_WOODS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
+
+            addArmorTags(ModItems.AIR_ARMOR);
+            addArmorTags(ModItems.FIRE_ARMOR);
+            addArmorTags(ModItems.EARTH_ARMOR);
+            addArmorTags(ModItems.WATER_ARMOR);
+
+        }
+
+        public void addArmorTags(ArmorSet set) {
+            tag(ItemTags.ARMOR_ENCHANTABLE).add(set.getHat(), set.getChest(), set.getLegs(), set.getBoots());
+            tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(set.getHat(), set.getChest(), set.getLegs(), set.getBoots());
+            tag(ItemTags.DURABILITY_ENCHANTABLE).add(set.getHat(), set.getChest(), set.getLegs(), set.getBoots());
+
+            tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(set.getHat());
+            tag(ItemTags.HEAD_ARMOR).add(set.getHat());
+            tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(set.getChest());
+            tag(ItemTags.CHEST_ARMOR).add(set.getChest());
+            tag(ItemTags.LEG_ARMOR_ENCHANTABLE).add(set.getLegs());
+            tag(ItemTags.LEG_ARMOR).add(set.getLegs());
+            tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(set.getBoots());
+            tag(ItemTags.FOOT_ARMOR).add(set.getBoots());
         }
 
         @Override
@@ -148,6 +170,7 @@ public class AETagsProvider {
             tag(BlockTags.MINEABLE_WITH_HOE).add(ModItems.FLASHING_LEAVES.get());
             tag(BlockTags.SAPLINGS).add(ModItems.FLASHING_SAPLING.get());
             tag(BlockTagProvider.MAGIC_SAPLINGS).add(ModItems.FLASHING_SAPLING.get());
+            tag(BlockTagProvider.MAGIC_PLANTS).add(ModItems.FLASHING_POD.get());
 
         }
 
