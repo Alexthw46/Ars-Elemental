@@ -1,4 +1,4 @@
-// 1.21	2024-08-17T12:47:07.3459276	Ars Elemental Item Tags
+// 1.21.1	2024-08-29T15:38:31.1995651	Ars Elemental Item Tags
 a1c191d75ca82bdd457d409695bd4e6e4ba9d471 data/ars_elemental/tags/item/blacklist_bag_item.json
 877c63c507be1e55a9f5eeed6e73dfabea015dab data/ars_elemental/tags/item/caster_bag_item.json
 96d00e66e9fa2dc85baa4cfb78e75a332c941ece data/ars_elemental/tags/item/curio_bag_item.json
@@ -12,7 +12,7 @@ ac42f29459995dfce1ddd28eb24c261e8cc6a67a data/ars_nouveau/tags/item/robe.json
 fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/item/spellbook.json
 5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/item/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/item/an_focus.json
-e38fdb60334bbd44aac7de2fcfd509b70197059c data/curios/tags/item/bracelet.json
+093b982bcf3efffd59a052d7473d47981f1ec738 data/curios/tags/item/bracelet.json
 d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/c/tags/item/logs/archwood.json
 94a4d749a377695966e081e59ea56cb6f0d8c1fe data/c/tags/item/stripped_logs.json
 c63f828ff4bfc7df8bd18cf26ecd39040ac28049 data/c/tags/item/stripped_wood.json

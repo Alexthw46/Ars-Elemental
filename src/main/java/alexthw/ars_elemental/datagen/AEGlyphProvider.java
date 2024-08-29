@@ -3,6 +3,8 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.common.glyphs.filters.*;
 import alexthw.ars_elemental.registry.ModItems;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
@@ -17,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 
@@ -76,14 +79,26 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
             saveStable(cache, GlyphRecipe.CODEC.encodeStart(JsonOps.INSTANCE, recipe).getOrThrow(), path);
         }
 
+        var conditionalRecipe = GlyphRecipe.CODEC.encodeStart(JsonOps.INSTANCE, addRecipe(EffectNullify.INSTANCE, Items.NETHER_STAR, ModItems.MARK_OF_MASTERY, Items.NETHERITE_BLOCK, ModItems.MARK_OF_MASTERY)).getOrThrow();
+        // wrap conditionalRecipe in a ConfigCondition
+        var condition = new JsonObject();
+        condition.addProperty("config", "frame_skip_recipe");
+        condition.addProperty("type", "ars_elemental:config");
+        var array = new JsonArray();
+        array.add(condition);
+        conditionalRecipe.getAsJsonObject().add("neoforge:conditions", array);
+
+        saveStable(cache, conditionalRecipe, getScribeGlyphPath(output, EffectNullify.INSTANCE.getGlyph()));
+
     }
 
-    public void addRecipe(AbstractSpellPart part, ItemLike... items) {
+    public GlyphRecipe addRecipe(AbstractSpellPart part, ItemLike... items) {
         var builder = get(part);
         for (ItemLike item : items) {
             builder.withItem(item);
         }
         recipes.add(builder);
+        return builder;
     }
 
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
@@ -91,7 +106,7 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Ars Elemental Glyph Recipes";
     }
 }

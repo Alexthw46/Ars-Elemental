@@ -111,6 +111,10 @@ public class ArsNouveauRegistry {
         register(UndeadFilter.NOT_INSTANCE);
         register(SummonFilter.INSTANCE);
         register(SummonFilter.NOT_INSTANCE);
+
+        // the bullshit one
+
+        register(EffectNullify.INSTANCE);
     }
 
     public static void registerRituals() {

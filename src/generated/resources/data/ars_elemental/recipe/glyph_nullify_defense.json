@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "ars_elemental:config",
+      "config": "frame_skip_recipe"
+    }
+  ],
+  "type": "ars_nouveau:glyph",
+  "exp": 160,
+  "inputs": [
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "ars_elemental:mark_of_mastery"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    },
+    {
+      "item": "ars_elemental:mark_of_mastery"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_nullify_defense"
+  }
+}

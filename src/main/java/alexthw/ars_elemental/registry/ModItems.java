@@ -122,6 +122,8 @@ public class ModItems {
     public static final DeferredHolder<Item, WaterBangles> WATER_BANGLE;
     public static final DeferredHolder<Item, AirBangles> AIR_BANGLE;
     public static final DeferredHolder<Item, EarthBangles> EARTH_BANGLE;
+    public static final DeferredHolder<Item, SummonBangles> SUMMON_BANGLE;
+    public static final DeferredHolder<Item, AnimaBangles> ANIMA_BANGLE;
 
     public static final DeferredHolder<Item, CurioHolder> CURIO_BAG;
     public static final DeferredHolder<Item, CasterHolder> CASTER_BAG;
@@ -187,6 +189,8 @@ public class ModItems {
         WATER_BANGLE = ITEMS.register("water_bangle", () -> new WaterBangles(UncommonProp()));
         AIR_BANGLE = ITEMS.register("air_bangle", () -> new AirBangles(UncommonProp()));
         EARTH_BANGLE = ITEMS.register("earth_bangle", () -> new EarthBangles(UncommonProp()));
+        SUMMON_BANGLE = ITEMS.register("summon_bangle", () -> new SummonBangles(UncommonProp()));
+        ANIMA_BANGLE = ITEMS.register("anima_bangle", () -> new AnimaBangles(UncommonProp()));
 
         //caster tomes
         CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(itemProps().fireResistant().stacksTo(1)));

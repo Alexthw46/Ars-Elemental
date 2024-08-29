@@ -53,35 +53,39 @@ public class ConfigHandler {
 
         public Common(ModConfigSpec.Builder builder) {
 
+            IFRAME_SKIP = builder.comment("Enable iframe skip glyph recipe").define("frame_skip_recipe", false);
+
+            builder.comment("Adjust these values to balance how much the matching spell cost gets discounted by foci.")
+                    .push("Elemental Spell Foci - Discount");
+
             LesserFocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the lesser focus")
-                    .defineInRange("Elemental Focus discount", 0.15D, 0.0D, 0.99D);
+                    .defineInRange("elemental_less_focus_discount", 0.15D, 0.0D, 0.99D);
             MajorFocusDiscount = builder.comment("Adjust this value to define how much the matching spell cost gets discounted by the greater focus")
-                    .defineInRange("Elemental Focus discount", 0.25D, 0.0D, 0.99D);
+                    .defineInRange("elemental_maj_focus_discount", 0.25D, 0.0D, 0.99D);
 
             builder.comment("Adjust these values to balance how much a spell gets amplified by the matching spell focus, doubled for major foci.")
                     .push("Elemental Spell Foci - Amplify");
 
-            FireMasteryBuff = builder.define("Fire Focus buff", 1.0D);
-            WaterMasteryBuff = builder.define("Water Focus buff", 1.0D);
-            AirMasteryBuff = builder.define("Air Focus buff", 1.0D);
-            EarthMasteryBuff = builder.define("Earth Focus buff", 1.0D);
+            FireMasteryBuff = builder.define("fire_focus_buff", 1.0D);
+            WaterMasteryBuff = builder.define("water_focus_buff", 1.0D);
+            AirMasteryBuff = builder.define("air_focus_buff", 1.0D);
+            EarthMasteryBuff = builder.define("earth_focus_buff", 1.0D);
 
             builder.pop();
 
             builder.comment("Adjust these values to balance how much an elemental spell gets dampened by a not-matching lesser spell focus")
                     .push("Elemental Spell Foci - Dampening");
-            FireMasteryDebuff = builder.define("Fire Focus debuff", -1.0D);
-            WaterMasteryDebuff = builder.define("Water Focus debuff", -1.0D);
-            AirMasteryDebuff = builder.define("Air Focus debuff", -1.0D);
-            EarthMasteryDebuff = builder.define("Earth Focus debuff", -1.0D);
+            FireMasteryDebuff = builder.define("fire_focus_debuff", -1.0D);
+            WaterMasteryDebuff = builder.define("water_focus_debuff", -1.0D);
+            AirMasteryDebuff = builder.define("air_focus_debuff", -1.0D);
+            EarthMasteryDebuff = builder.define("earth_focus_debuff", -1.0D);
 
             builder.pop();
 
             builder.comment("Enable or disable the passive bonus of the foci").push("Elemental Spell Foci - Abilities");
 
-            EnableGlyphEmpowering = builder.define("Enable glyph empowering", true);
-            EnableRegenBonus = builder.define("Enable regen bonus under special conditions", true);
-            IFRAME_SKIP = builder.define("Enable iframe skip combos", true);
+            EnableGlyphEmpowering = builder.comment("Enable glyph empowering").define("glyph_empower", true);
+            EnableRegenBonus = builder.comment("Enable regen bonus under special conditions").define("regen_bonus", true);
 
             builder.pop();
 

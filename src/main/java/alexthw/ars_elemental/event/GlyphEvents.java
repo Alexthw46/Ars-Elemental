@@ -39,8 +39,6 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.List;
 
-import static alexthw.ars_elemental.ConfigHandler.COMMON;
-
 @EventBusSubscriber(modid = ArsElemental.MODID)
 public class GlyphEvents {
 
@@ -90,15 +88,14 @@ public class GlyphEvents {
         }
         if (event.resolveEffect == EffectFreeze.INSTANCE) {
             if (event.shooter != living && hasWater) {
-                if (living instanceof Skeleton skel && skel.getType() == EntityType.SKELETON) {
-                    skel.setFreezeConverting(true);
+                if (living instanceof Skeleton skeleton && skeleton.getType() == EntityType.SKELETON) {
+                    skeleton.setFreezeConverting(true);
                 }
                 living.setIsInPowderSnow(true);
                 int newFrozenTicks = living.getTicksFrozen() + (int) (60 * event.spellStats.getAmpMultiplier());
                 living.setTicksFrozen(newFrozenTicks);
-                if (living.isFullyFrozen() && living.canFreeze() && !living.hasEffect(ModPotions.FROZEN) && living.invulnerableTime > 10) {
-                    if (COMMON.IFRAME_SKIP.get()) living.invulnerableTime = 0;
-                    living.forceAddEffect(new MobEffectInstance(ModPotions.FROZEN, 10, 0, false, false, false), living);
+                if (living.isFullyFrozen() && living.canFreeze()) {
+                    living.forceAddEffect(new MobEffectInstance(ModPotions.FROZEN, 60, 0, false, false, false), living);
                 }
             }
         }

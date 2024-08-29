@@ -25,10 +25,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.ArsNouveauRegistry.registeredSpells;
@@ -165,6 +162,20 @@ public class AEPatchouliProvider extends PatchouliProvider {
                 , getPath(EQUIPMENT, "earth_bangle")
         );
 
+        addPage(new PatchouliBuilder(EQUIPMENT, ModItems.SUMMON_BANGLE.get())
+                        .withIcon(ModItems.SUMMON_BANGLE.get())
+                        .withTextPage("ars_elemental.page1.summon_bangle")
+                        .withPage(new ApparatusPage(ModItems.SUMMON_BANGLE.get()))
+                , getPath(EQUIPMENT, "summon_bangle")
+        );
+
+        addPage(new PatchouliBuilder(EQUIPMENT, ModItems.ANIMA_BANGLE.get())
+                        .withIcon(ModItems.ANIMA_BANGLE.get())
+                        .withTextPage("ars_elemental.page1.anima_bangle")
+                        .withPage(new ApparatusPage(ModItems.ANIMA_BANGLE.get()))
+                , getPath(EQUIPMENT, "anima_bangle")
+        );
+
         addPage(new PatchouliBuilder(AUTOMATION, ModItems.SIREN_CHARM.get())
                         .withIcon(ModItems.SIREN_CHARM.get())
                         .withTextPage("ars_elemental.page1.mermaid")
@@ -270,16 +281,18 @@ public class AEPatchouliProvider extends PatchouliProvider {
         this.pages.add(new PatchouliPage(builder, getPath(RITUALS, ritual.getRegistryName().getPath())));
     }
 
-    public void addEnchantmentPage(DeferredHolder<Enchantment, Enchantment> enchantment) {
-        PatchouliBuilder builder = new PatchouliBuilder(ENCHANTMENTS, String.valueOf(enchantment.get().description()))
-                .withIcon(getRegistryName(Items.ENCHANTED_BOOK).toString())
-                .withTextPage("ars_elemental.enchantment_desc." + enchantment.getId().getPath());
-
-        for (int i = enchantment.get().getMinLevel(); i <= enchantment.get().getMaxLevel(); i++) {
-            builder.withPage(new EnchantingPage("ars_nouveau:" + enchantment.getId().getPath() + "_" + i));
-        }
-        this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, enchantment.getId().getPath())));
-    }
+//    public void addEnchantmentPage(ResourceKey<Enchantment> enchantmentKey) {
+//        Enchantment enchantment = ArsNouveau.proxy.getClientWorld().registryAccess().registryOrThrow(Registries.ENCHANTMENT).get(enchantmentKey);
+//        if (enchantment == null) return;
+//        PatchouliBuilder builder = new PatchouliBuilder(ENCHANTMENTS, String.valueOf(enchantment.description()))
+//                .withIcon(getRegistryName(Items.ENCHANTED_BOOK).toString())
+//                .withTextPage("ars_elemental.enchantment_desc." + enchantmentKey.location().getPath());
+//
+//        for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++) {
+//            builder.withPage(new EnchantingPage("ars_nouveau:" + enchantmentKey.location().getPath() + "_" + i));
+//        }
+//        this.pages.add(new PatchouliPage(builder, getPath(ENCHANTMENTS, enchantmentKey.location().getPath())));
+//    }
 
     public void addGlyphPage(AbstractSpellPart spellPart) {
         ResourceLocation category = switch (spellPart.defaultTier().value) {

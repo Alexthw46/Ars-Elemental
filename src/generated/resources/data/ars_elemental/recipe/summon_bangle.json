@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:conjuration_essence"
+    },
+    {
+      "item": "ars_nouveau:conjuration_essence"
+    },
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "ars_nouveau:wilden_horn"
+    }
+  ],
+  "reagent": {
+    "item": "ars_elemental:base_bangle"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:summon_bangle"
+  },
+  "sourceCost": 0
+}

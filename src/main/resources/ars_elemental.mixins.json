@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "ars_elemental.refmap.json",
   "mixins": [
+    "ChillingPerkMixin",
     "DynamicLightMixin",
     "EvaporateMixin",
     "FlareMixin",

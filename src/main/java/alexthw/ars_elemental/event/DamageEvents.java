@@ -11,6 +11,7 @@ import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
@@ -20,9 +21,11 @@ import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
+import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import com.hollingsworth.arsnouveau.setup.registry.RegistryHelper;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -36,6 +39,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -43,9 +47,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -121,15 +128,38 @@ public class DamageEvents {
 
         //if the player is wearing a bangle, apply special effects on hit
         if (event.getSource().getEntity() instanceof Player player && eventTarget != player) {
+            if (eventTarget instanceof ISummon summon && summon.getOwnerAlt() == player) return;
             SpellSchool bangle = ISchoolBangle.hasBangle(event.getEntity().level(), player);
             if (bangle != null) {
                 switch (bangle.getId()) {
                     case "fire" -> eventTarget.setRemainingFireTicks(20 * 5);
                     case "water" -> eventTarget.setTicksFrozen(eventTarget.getTicksFrozen() + 100);
                     case "earth" -> eventTarget.addEffect(new MobEffectInstance(ModPotions.SNARE_EFFECT, 60));
+                    case "necromancy" -> {
+                        if (player.getRandom().nextBoolean())
+                            eventTarget.addEffect(new MobEffectInstance(MobEffects.WITHER, 60));
+                        else {
+                            eventTarget.heal(1.0F);
+                            player.heal(1.0F);
+                        }
+                    }
+                    case "conjuration" -> {
+                        BlockPos pos = player.blockPosition();
+                        // fetch all summons around the player and aggro them to the target
+                        player.level().getEntitiesOfClass(LivingEntity.class, new AABB(pos.north(30).west(30).below(10).getCenter(), pos.south(30).east(30).above(10).getCenter()), e -> e instanceof ISummon s && player.equals(s.getOwnerAlt())).forEach(e -> {
+                            if (e instanceof Monster mob) {
+                                mob.setTarget(eventTarget);
+                            } else if (e instanceof NeutralMob neutralMob) {
+                                neutralMob.setTarget(eventTarget);
+                            }
+                            e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 80, 1));
+                        });
+
+                    }
                 }
             }
         }
+
         if (eventTarget instanceof Player player && (event.getSource().is(DamageTypes.CACTUS) || event.getSource().is(DamageTypes.SWEET_BERRY_BUSH))) {
             if (ISchoolBangle.hasBangle(event.getEntity().level(), player) == ELEMENTAL_EARTH) {
                 event.setCanceled(true);
@@ -148,18 +178,24 @@ public class DamageEvents {
         if (event.getEntity().hasEffect(FROZEN)) {
             event.setCanceled(true);
         }
-        //increase healing if you have hellfire and reset the invulnerability time
-        if (event.getEntity().hasEffect(MAGIC_FIRE) && COMMON.IFRAME_SKIP.get()) {
-            event.setAmount((float) (event.getAmount() * 1.25));
-            event.getEntity().invulnerableTime = 0;
-        }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public static void damageTweaking(LivingDamageEvent.Pre event) {
 
         var dealer = event.getSource().getEntity();
         var target = event.getEntity();
+
+        // if frozen, boost next fire damage
+        if (target.hasEffect(FROZEN) && event.getSource().is(ModRegistry.FIRE_DAMAGE)) {
+            event.setNewDamage(event.getNewDamage() * 1.5F);
+            target.removeEffect(FROZEN);
+        }
+        // if the target has magic fire, reduce earth damage
+        if (target.hasEffect(MAGIC_FIRE) && event.getSource().is(ModRegistry.EARTH_DAMAGE)) {
+            event.setNewDamage(event.getNewDamage() * 0.85F);
+        }
+
 
         SpellSchool focus = ISchoolFocus.hasFocus(dealer);
         if (dealer instanceof Player && focus != null) {
@@ -226,14 +262,14 @@ public class DamageEvents {
                     bonusReduction += 5;
                 }
 
-//                if (bonusReduction > 0) {
-//                    int finalBonusReduction = bonusReduction;
-//                    //convert the damage reduction into mana and add the mana regen effect
-//                    CapabilityRegistry.getMana(player).ifPresent(mana -> {
-//                        if (finalBonusReduction > 3) mana.addMana(event.getAmount() * 5);
-//                        event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT.get(), 200, finalBonusReduction / 2));
-//                    });
-//                }
+                if (bonusReduction > 0) {
+                    //convert the damage reduction into mana and add the mana regen effect
+                    var mana = CapabilityRegistry.getMana(player);
+                    if (mana != null) {
+                        if (bonusReduction > 3) mana.addMana(event.getOriginalDamage() * 5);
+                        event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 200, bonusReduction / 2));
+                    }
+                }
 
             }
         }
@@ -241,25 +277,31 @@ public class DamageEvents {
         if (bonusReduction > 0 && not_bypassEnchants)
             event.setNewDamage(event.getNewDamage() * (1 - bonusReduction / 10F));
 
+        // if damage is magic and target has magic fire, add back the half the damage that was reduced from the armor points
+        if (event.getSource().is(Tags.DamageTypes.IS_MAGIC) && target.hasEffect(MAGIC_FIRE)) {
+            var armorReduction = event.getContainer().getReduction(DamageContainer.Reduction.ARMOR);
+            event.setNewDamage(event.getNewDamage() + armorReduction * 0.5F);
+        }
+
         int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get();
-
-
         //check if the entity has the mana bubble effect and if so, reduce the damage
-        if (not_bypassEnchants && event.getEntity() != null && event.getEntity().hasEffect(MANA_BUBBLE)) {
+        if (not_bypassEnchants && event.getEntity().hasEffect(MANA_BUBBLE)) {
             LivingEntity living = event.getEntity();
-//            CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
-//                double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
-//                double amp = Math.min(1 + living.getEffect(MANA_BUBBLE.get()).getAmplifier() / 2D, maxReduction);
-//                float newDamage = (float) Math.max(0.1, event.getAmount() - amp);
-//                float actualReduction = event.getAmount() - newDamage;
-//                if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost) {
-//                    event.setAmount(newDamage);
-//                    mana.removeMana(actualReduction * ManaBubbleCost);
-//                }
-//                if (mana.getCurrentMana() < ManaBubbleCost) {
-//                    living.removeEffect(MANA_BUBBLE.get());
-//                }
-//            });
+            var mana = CapabilityRegistry.getMana(event.getEntity());
+            if (mana != null) {
+                double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
+                double amp = Math.min(1 + living.getEffect(MANA_BUBBLE).getAmplifier() / 2D, maxReduction);
+                float newDamage = (float) Math.max(0.1, event.getNewDamage() - amp);
+                float actualReduction = event.getNewDamage() - newDamage;
+                // don't deplete mana if the entity is invulnerable due to a previous attack
+                if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost && event.getContainer().getPostAttackInvulnerabilityTicks() != event.getEntity().invulnerableTime) {
+                    event.setNewDamage(newDamage);
+                    mana.removeMana(actualReduction * ManaBubbleCost);
+                }
+                if (mana.getCurrentMana() < ManaBubbleCost) {
+                    living.removeEffect(MANA_BUBBLE);
+                }
+            }
         }
     }
 
@@ -267,21 +309,22 @@ public class DamageEvents {
     //When the entity have the mana bubble and is hit by a harmful effect, it will consume mana to try to protect against it
     @SubscribeEvent
     public static void statusProtect(MobEffectEvent.Applicable event) {
-        if (event.getEntity().hasEffect(MANA_BUBBLE))
+        if (event.getEntity().hasEffect(MANA_BUBBLE) && event.getEffectInstance() != null)
             if (event.getEffectInstance().getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
                 Optional<HolderSet.Named<MobEffect>> effects = event.getEntity().level().registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(AETagsProvider.AEMobEffectTagProvider.BUBBLE_BLACKLIST);
                 if (effects.isPresent() && effects.get().stream().anyMatch(effect -> effect.value() == event.getEffectInstance().getEffect()))
                     return;
 
                 int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() * 2;
-//                if (event.getEntity().getRandom().nextInt(10) == 0) {
-//                    CapabilityRegistry.getMana(event.getEntity()).ifPresent(mana -> {
-//                        if (mana.getCurrentMana() >= ManaBubbleCost) {
-//                            mana.removeMana((double) ManaBubbleCost / 2);
-//                            event.setResult(Event.Result.DENY);
-//                        }
-//                    });
-//                }
+                if (event.getEntity().getRandom().nextInt(10) == 0) {
+                    var mana = CapabilityRegistry.getMana(event.getEntity());
+                    if (mana != null) {
+                        if (mana.getCurrentMana() >= ManaBubbleCost) {
+                            mana.removeMana((double) ManaBubbleCost / 2);
+                            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                        }
+                    }
+                }
             } else if (event.getEffectInstance().getEffect() == MAGIC_FIRE.get()) {
                 event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
             }

@@ -7,6 +7,7 @@ import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.summon.*;
 import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -44,7 +45,6 @@ public class SummonEvents {
                     event.summon.getLivingEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 1));
                 }
             }
-
 
             // change summoned entities if water/fire/necromancy focus is equipped
             if (event.summon instanceof SummonHorse oldHorse && event.shooter instanceof ServerPlayer summoner) {
@@ -121,8 +121,9 @@ public class SummonEvents {
 
     @SubscribeEvent
     public static void summonSickReduction(MobEffectEvent.Added event) {
-        if (event.getEntity() != null && event.getEffectInstance().getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT.get() && PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) > 0) {
-            event.getEffectInstance().duration = event.getEffectInstance().getDuration() * (1 - PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) / 10);
+        MobEffectInstance effectInstance = event.getEffectInstance();
+        if (effectInstance != null && effectInstance.getEffect() == ModPotions.SUMMONING_SICKNESS_EFFECT) {
+            effectInstance.duration = effectInstance.getDuration() * (1 - PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) / 10);
         }
     }
 
@@ -130,10 +131,9 @@ public class SummonEvents {
     public static void summonPowerup(LivingDamageEvent.Pre event) {
         if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().level() instanceof ServerLevel) {
             if (summon.getOwner() instanceof Player player) {
-                int threadLevel = PerkUtil.countForPerk(SummonPerk.INSTANCE, event.getEntity()) - 1;
-                if (threadLevel > 0) {
-                    event.setNewDamage(event.getNewDamage() + threadLevel);
-                }
+
+                event.setNewDamage((float) (event.getNewDamage() + player.getAttributeValue(ModRegistry.SUMMON_POWER)));
+
                 if (summon instanceof SummonWolf) {
                     SpellSchool school = ISchoolFocus.hasFocus(player);
                     if (school != null) switch (school.getId()) {

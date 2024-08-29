@@ -1,22 +1,19 @@
 package alexthw.ars_elemental.util;
 
-import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
 import com.hollingsworth.arsnouveau.common.items.curios.ShapersFocus;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,15 +25,13 @@ public class GlyphEffectUtil {
     /**
      * Places a block at the given position, respecting claims.
      */
-    public static void placeBlocks(BlockHitResult rayTraceResult, Level world, @Nullable Entity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockState toPlace) {
-        ANFakePlayer fakePlayer = ANFakePlayer.getPlayer((ServerLevel) world);
-        if (shooter == null) return;
-        for (BlockPos pos : SpellUtil.calcAOEBlocks((LivingEntity) shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
+    public static void placeBlocks(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockState toPlace) {
+        for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
             pos = rayTraceResult.isInside() ? pos : pos.relative(rayTraceResult.getDirection());
-            if (!BlockUtil.destroyRespectsClaim(shooter instanceof Player player ? player : fakePlayer, world, pos))
+            if (!BlockUtil.destroyRespectsClaim(shooter, world, pos))
                 continue;
             BlockState state = world.getBlockState(pos);
-            if (state.canBeReplaced() && world.isUnobstructed(toPlace, pos, CollisionContext.of(fakePlayer))) {
+            if (state.canBeReplaced() && world.isUnobstructed(toPlace, pos, CollisionContext.of(shooter))) {
                 world.setBlockAndUpdate(pos, toPlace);
                 ShapersFocus.tryPropagateBlockSpell(new BlockHitResult(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5),
                         rayTraceResult.getDirection(), pos, false), world, shooter, spellContext, resolver);

@@ -26,7 +26,6 @@ public class WaterGraveEffect extends MobEffect {
             livingEntity.setDeltaMovement(vec3.x, d0, vec3.z);
             int air = Math.max(-19, livingEntity.getAirSupply() - 5 * (1 + amp));
             livingEntity.setAirSupply(air);
-            livingEntity.invulnerableTime = Math.max(0, livingEntity.invulnerableTime - 5);
         } else {
             livingEntity.setAirSupply(livingEntity.getAirSupply() - 5);
         }

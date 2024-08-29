@@ -1,5 +1,6 @@
-// 1.21	2024-08-01T14:28:20.1276569	Tags for minecraft:damage_type mod id ars_elemental
+// 1.21.1	2024-08-29T12:35:28.4334012	Tags for minecraft:damage_type mod id ars_elemental
 e213c76d34003d3eae388c93f275b13f5cebff4b data/ars_elemental/tags/damage_type/air_damage.json
-1efc5c3832978fb73f0ed8388b4047759e3e103d data/ars_elemental/tags/damage_type/earth_damage.json
+a1da8850cad282d5da87c7f56897d892faa2cf7e data/ars_elemental/tags/damage_type/earth_damage.json
 d559741906286fd27cae40e93d79ced3bf91f66e data/ars_elemental/tags/damage_type/fire_damage.json
 f987de4869fb23c34f97210432191073383526e5 data/ars_elemental/tags/damage_type/water_damage.json
+8e8ae0c3f8e6e00cb57a3074537acc20e7a2075f data/neoforge/tags/damage_type/is_poison.json
