@@ -1,0 +1,13 @@
+{
+  "values": {
+    "ars_elemental:flashpine_pod": {
+      "chance": 0.3
+    },
+    "ars_elemental:yellow_archwood_leaves": {
+      "chance": 0.3
+    },
+    "ars_elemental:yellow_archwood_sapling": {
+      "chance": 0.3
+    }
+  }
+}

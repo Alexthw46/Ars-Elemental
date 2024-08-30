@@ -9,15 +9,21 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import static alexthw.ars_elemental.ArsElemental.prefix;
 
+public class CurioHolderScreen<T extends CurioHolderContainer> extends AbstractContainerScreen<T> {
 
-public class CurioHolderScreen extends AbstractContainerScreen<CurioHolderContainer> {
+    public final ResourceLocation BACKGROUND;
 
-    public static final ResourceLocation BACKGROUND = prefix("textures/gui/curio_bag.png");
-
-    public CurioHolderScreen(CurioHolderContainer screenContainer, Inventory inv, Component titleIn) {
+    public CurioHolderScreen(T screenContainer, Inventory inv, Component titleIn, ResourceLocation background, int xSize, int ySize) {
         super(screenContainer, inv, titleIn);
+        BACKGROUND = background;
+        imageWidth = xSize;
+        imageHeight = ySize;
+    }
+
+    public CurioHolderScreen(T screenContainer, Inventory inv, Component titleIn, ResourceLocation background) {
+        super(screenContainer, inv, titleIn);
+        BACKGROUND = background;
     }
 
     @Override

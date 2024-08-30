@@ -1,24 +1,32 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "C": {
-      "item": "minecraft:chest"
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_nouveau:manipulation_essence"
     },
-    "D": {
-      "tag": "c:gems/diamond"
+    {
+      "item": "ars_nouveau:manipulation_essence"
     },
-    "M": {
-      "item": "ars_nouveau:magebloom_fiber"
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:gold_block"
     }
-  },
-  "pattern": [
-    "MDM",
-    "MCM",
-    "MMM"
   ],
+  "reagent": {
+    "item": "ars_elemental:curio_bag"
+  },
   "result": {
     "count": 1,
     "id": "ars_elemental:caster_bag"
-  }
+  },
+  "sourceCost": 0
 }

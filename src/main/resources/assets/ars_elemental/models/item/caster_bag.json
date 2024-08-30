@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ars_elemental:item/caster_bag",
+    "layer1": "ars_elemental:item/caster_bag_trim"
+  }
+}

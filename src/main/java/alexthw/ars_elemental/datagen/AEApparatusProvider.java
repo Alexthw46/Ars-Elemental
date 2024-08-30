@@ -291,6 +291,17 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .build()
         );
 
+        recipes.add(builder()
+                .withResult(ModItems.CASTER_BAG.get())
+                .withReagent(ModItems.CURIO_BAG.get())
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(Items.BLAZE_POWDER)
+                .withPedestalItem(Items.BLAZE_POWDER)
+                .withPedestalItem(Items.GOLD_BLOCK)
+                .withPedestalItem(Items.GOLD_BLOCK)
+                .build());
+
         Path output = this.generator.getPackOutput().getOutputFolder();
         for (ApparatusRecipeBuilder.RecipeWrapper<? extends EnchantingApparatusRecipe> g : recipes) {
             if (g != null) {

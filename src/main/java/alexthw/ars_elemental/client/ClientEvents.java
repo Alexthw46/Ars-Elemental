@@ -8,13 +8,12 @@ import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.client.particle.SparkParticle;
 import alexthw.ars_elemental.client.particle.VenomParticle;
 import alexthw.ars_elemental.client.summons.DireWolfRenderer;
+import alexthw.ars_elemental.common.CasterHolderContainer;
+import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
-import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.registry.ModParticles;
-import alexthw.ars_elemental.registry.ModRegistry;
-import alexthw.ars_elemental.registry.ModTiles;
+import alexthw.ars_elemental.registry.*;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
@@ -26,10 +25,13 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -117,6 +119,12 @@ public class ClientEvents {
 
     }
 
+    @SubscribeEvent
+    public static void initItemColors(final RegisterColorHandlersEvent.Item event) {
+        event.register((stack, color) -> color > 0 ? -1 :
+                stack.get(DataComponents.BASE_COLOR).getTextureDiffuseColor() + 0xFF000000,
+                ModItems.CASTER_BAG.get());
+    }
 
     //keybinding
     @SubscribeEvent
@@ -127,8 +135,8 @@ public class ClientEvents {
     //Curio bag stuff
     @SubscribeEvent
     public static void bindContainerRenderers(RegisterMenuScreensEvent event) {
-        event.register(ModRegistry.CURIO_HOLDER.get(), CurioHolderScreen::new);
-        event.register(ModRegistry.CASTER_HOLDER.get(), CurioHolderScreen::new);
+        event.register(ModRegistry.CURIO_HOLDER.get(), (CurioHolderContainer screenContainer, Inventory inv, Component titleIn) -> new CurioHolderScreen<>(screenContainer, inv, titleIn, prefix("textures/gui/curio_bag.png"),175, 163));
+        event.register(ModRegistry.CASTER_HOLDER.get(), (CasterHolderContainer screenContainer, Inventory inv, Component titleIn) -> new CurioHolderScreen<>(screenContainer, inv, titleIn, prefix("textures/gui/curio_bag_2.png"), 175, 217));
     }
 
     private static @NotNull EntityRenderer<EntityProjectileSpell> projectileRender(EntityRendererProvider.Context renderManager) {

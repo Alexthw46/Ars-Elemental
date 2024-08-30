@@ -1,4 +1,4 @@
-// 1.21.1	2024-08-29T15:28:43.727712	Ars Elemental Apparatus
+// 1.21.1	2024-08-30T18:52:46.960969	Ars Elemental Apparatus
 59dd089a3501f291dd053dd81461a723b577d33e data/ars_elemental/recipe/air_bangle.json
 0300e954a1e256fdb7ca3dcd0d0c5247ebfcfea3 data/ars_elemental/recipe/air_boots.json
 a1b20673d2370e59c1c50a0299e66cef1b9751e3 data/ars_elemental/recipe/air_focus.json
@@ -12,6 +12,7 @@ f77a0256d2c9375a745152d17e7e7073fc93d722 data/ars_elemental/recipe/aqua_boots.js
 139e3f4e341d6d63e46884ee6deb8876109a02cf data/ars_elemental/recipe/aqua_leggings.json
 38955ae9219632b06ba3009c127d966d4b2ecce5 data/ars_elemental/recipe/aqua_robes.json
 a6342dd36973b6fe82ddac7bee0767c5c81e7958 data/ars_elemental/recipe/base_bangle.json
+d62b70b96df93b08c1312045e649e06becbca5b7 data/ars_elemental/recipe/caster_bag.json
 1cb620fd2064d9f754ceb321abfecb8f1278805d data/ars_elemental/recipe/earth_bangle.json
 dc692a0b9f21d7f569fe3b8563f8a8a2daa16cc4 data/ars_elemental/recipe/earth_boots.json
 831ee625744da146756f3b1f39519a872f9c987d data/ars_elemental/recipe/earth_focus.json

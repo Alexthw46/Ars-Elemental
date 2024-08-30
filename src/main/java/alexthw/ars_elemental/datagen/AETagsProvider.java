@@ -86,8 +86,7 @@ public class AETagsProvider {
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get(), ModItems.ANIMA_BANGLE.get(), ModItems.SUMMON_BANGLE.get());
             tag(SUMMON_SHARDS).add(ModItems.SIREN_SHARDS.get(), ItemsRegistry.DRYGMY_SHARD.get(), ItemsRegistry.STARBUNCLE_SHARD.get(), ItemsRegistry.WIXIE_SHARD.get(), ItemsRegistry.WHIRLISPRIG_SHARDS.get());
             tag(PRISM_LENS).add(ModItems.ARC_LENS.get(), ModItems.HOMING_LENS.get(), ModItems.RGB_LENS.get(), ModItems.PIERCE_LENS.get(), ModItems.ACC_LENS.get(), ModItems.DEC_LENS.get());
-            tag(ModRegistry.CURIO_BAGGABLE).add(ItemsRegistry.ALCHEMISTS_CROWN.get(), ItemsRegistry.WORN_NOTEBOOK.get(), ItemsRegistry.DOMINION_ROD.get(), ItemsRegistry.DOWSING_ROD.get(), ItemsRegistry.JAR_OF_LIGHT.get(), ItemsRegistry.VOID_JAR.get(), ItemsRegistry.RUNIC_CHALK.get(), ItemsRegistry.WARP_SCROLL.get(), ItemsRegistry.STABLE_WARP_SCROLL.get(), ItemsRegistry.SPELL_PARCHMENT.get()).addTag(SUMMON_SHARDS).addTag(PRISM_LENS);
-            tag(ModRegistry.CASTER_BAGGABLE).add(ItemsRegistry.ENCHANTERS_SHIELD.get());
+
             this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
             this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
             this.copy(BlockTags.LOGS, ItemTags.LOGS);
@@ -105,10 +104,11 @@ public class AETagsProvider {
             tag(MAGIC_BOOT).add(ItemsRegistry.BATTLEMAGE_BOOTS.get(), ItemsRegistry.ARCANIST_BOOTS.get(), ItemsRegistry.SORCERER_BOOTS.get());
 
             Arrays.stream(curioSlots).map(AEItemTagsProvider::curiosTag).forEach(t ->
-                    tag(ModRegistry.CURIO_BAGGABLE).addOptionalTag(t.location())
+                    tag(ModRegistry.SOULBOUND_ABLE).addOptionalTag(t.location())
             );
+
             //noinspection unchecked
-            tag(ModRegistry.SOULBOUND_ABLE).addTags(ModRegistry.CURIO_BAGGABLE, ModRegistry.CASTER_BAGGABLE, ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, SPELLBOOK, Tags.Items.TOOLS);
+            tag(ModRegistry.SOULBOUND_ABLE).addTags(ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, SPELLBOOK, Tags.Items.TOOLS);
 
             tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
 

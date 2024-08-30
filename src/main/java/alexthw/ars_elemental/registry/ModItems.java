@@ -31,15 +31,13 @@ import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -172,6 +170,8 @@ public class ModItems {
         PIERCE_LENS = ITEMS.register("piercing_prism_lens", () -> new PiercingPrismLens(itemProps()));
         //curio
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(itemProps().fireResistant().stacksTo(1)));
+        CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(itemProps().fireResistant().stacksTo(1).component(DataComponents.BASE_COLOR, DyeColor.RED)));
+
         FIRE_FOCUS = ITEMS.register("fire_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_FIRE));
         WATER_FOCUS = ITEMS.register("water_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_WATER));
         AIR_FOCUS = ITEMS.register("air_focus", () -> new GreaterElementalFocus(FocusProp(), SpellSchools.ELEMENTAL_AIR));
@@ -193,7 +193,6 @@ public class ModItems {
         ANIMA_BANGLE = ITEMS.register("anima_bangle", () -> new AnimaBangles(UncommonProp()));
 
         //caster tomes
-        CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(itemProps().fireResistant().stacksTo(1)));
         FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_FIRE));
         WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_WATER));
         AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_AIR));

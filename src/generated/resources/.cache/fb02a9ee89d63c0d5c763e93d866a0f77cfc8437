@@ -1,4 +1,4 @@
-// 1.21.1	2024-08-29T12:35:28.4314016	Ars Elemental Item Models
+// 1.21.1	2024-08-30T18:52:46.956971	Ars Elemental Item Models
 a5b2cd6b765fcd98484c5cad23aa0a2775ae7d1a assets/ars_elemental/models/item/advanced_prism.json
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
@@ -17,7 +17,6 @@ f93b93df834cd0cd38da310473cbd4358199669e assets/ars_elemental/models/item/aqua_h
 6edacc4a92515b78fdc6edc949565934596554f8 assets/ars_elemental/models/item/aqua_leggings.json
 a6f4862cb5edf7b396834e19e3f48f2979eb3175 assets/ars_elemental/models/item/aqua_robes.json
 5d62036867bfe8af37005aef074c35a8e76f96d4 assets/ars_elemental/models/item/base_bangle.json
-5c4950466d5186118ff69f6674bdc3765379b047 assets/ars_elemental/models/item/caster_bag.json
 e679315b353940bdbd2256fb1d81afe6febcf2f3 assets/ars_elemental/models/item/curio_bag.json
 c307a1c7c459c68c9fe602cb560cb22c05070582 assets/ars_elemental/models/item/debug.json
 372c93f5a7ab30fe2433efa4cec04f362c0fda87 assets/ars_elemental/models/item/earth_bangle.json

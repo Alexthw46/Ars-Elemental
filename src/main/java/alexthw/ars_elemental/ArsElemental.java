@@ -53,7 +53,7 @@ public class ArsElemental {
         modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(this::attachCaps);
         NeoForge.EVENT_BUS.register(ModPotions.class);
-        if(FMLEnvironment.dist.isClient()){
+        if (FMLEnvironment.dist.isClient()) {
             NeoForge.EVENT_BUS.addListener(new ClientEvents()::openBackpackGui);
             modEventBus.addListener(this::doClientStuff);
         }
@@ -88,10 +88,6 @@ public class ArsElemental {
 
     public void loadComplete(FMLLoadCompleteEvent event) {
         event.enqueueWork(() -> {
-//            COMPOSTABLES.putIfAbsent(ModItems.FLASHING_SAPLING.get().asItem(), 0.3F);
-//            COMPOSTABLES.putIfAbsent(ModItems.FLASHING_POD.get().asItem(), 0.3F);
-//            COMPOSTABLES.putIfAbsent(ModItems.FLASHING_LEAVES.get().asItem(), 0.3f);
-
             FlowerPotBlock potBlock = (FlowerPotBlock) Blocks.FLOWER_POT;
 
             potBlock.addPlant(prefix("yellow_archwood_sapling"), ModItems.POT_FLASHING_SAPLING);
@@ -99,7 +95,7 @@ public class ArsElemental {
     }
 
     public void attachCaps(final RegisterCapabilitiesEvent event) {
-        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, ctx) -> new ComponentItemHandler(stack, DataComponents.CONTAINER, 27), ModItems.CASTER_BAG.get());
+        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, ctx) -> new ComponentItemHandler(stack, DataComponents.CONTAINER, 27 * 2), ModItems.CASTER_BAG.get());
         event.registerItem(Capabilities.ItemHandler.ITEM, (stack, ctx) -> new ComponentItemHandler(stack, DataComponents.CONTAINER, 27), ModItems.CURIO_BAG.get());
     }
 

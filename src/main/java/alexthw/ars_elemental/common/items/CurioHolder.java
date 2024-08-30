@@ -1,11 +1,8 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.common.CurioHolderContainer;
-import com.hollingsworth.arsnouveau.api.item.AbstractSummonCharm;
 import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
-import com.hollingsworth.arsnouveau.common.items.ItemScroll;
-import com.hollingsworth.arsnouveau.common.items.PotionFlask;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -20,10 +17,8 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper;
 import org.jetbrains.annotations.NotNull;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import static alexthw.ars_elemental.registry.ModRegistry.BLACKLIST_BAGGABLE;
-import static alexthw.ars_elemental.registry.ModRegistry.CURIO_BAGGABLE;
 
 public class CurioHolder extends Item {
     public CurioHolder(Properties pProperties) {
@@ -53,9 +48,7 @@ public class CurioHolder extends Item {
     }
 
     public static boolean canStore(ItemStack stack) {
-        Item item = stack.getItem();
-        if (stack.is(BLACKLIST_BAGGABLE)) return false;
-        return item instanceof ItemScroll || item instanceof AbstractSummonCharm || stack.is(CURIO_BAGGABLE) || item instanceof ICurioItem || item instanceof PotionFlask;
+        return !stack.is(BLACKLIST_BAGGABLE);
     }
 
     @Override
