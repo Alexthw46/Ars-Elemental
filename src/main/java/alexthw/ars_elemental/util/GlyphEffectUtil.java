@@ -33,13 +33,13 @@ public class GlyphEffectUtil {
         if (shooter == null) return;
         for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats)) {
             pos = rayTraceResult.isInside() ? pos : pos.relative(rayTraceResult.getDirection());
-            if (!BlockUtil.destroyRespectsClaim(shooter instanceof Player player ? player : fakePlayer, world, pos))
+            if (!BlockUtil.destroyRespectsClaim(shooter instanceof Player player ? (Entity) player : fakePlayer, world, pos))
                 continue;
             BlockState state = world.getBlockState(pos);
             if (state.canBeReplaced() && world.isUnobstructed(toPlace, pos, CollisionContext.of(fakePlayer))) {
                 world.setBlockAndUpdate(pos, toPlace);
                 ShapersFocus.tryPropagateBlockSpell(new BlockHitResult(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5),
-                        rayTraceResult.getDirection(), pos, false), world, shooter, spellContext, resolver);
+                        rayTraceResult.getDirection(), pos, false), world, (Entity) shooter, spellContext, resolver);
             }
         }
     }

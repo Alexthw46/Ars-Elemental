@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectEvaporate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -26,10 +27,10 @@ public abstract class EvaporateMixin extends AbstractEffect {
     }
 
     @Inject(method = "evaporate", at = @At("HEAD"), cancellable = true)
-    public void evaporate(Level world, BlockPos p, BlockHitResult rayTraceResult, LivingEntity shooter, SpellContext context, SpellResolver resolver, CallbackInfo ci){
+    public void evaporate(Level world, BlockPos p, BlockHitResult rayTraceResult, LivingEntity shooter, SpellContext context, SpellResolver resolver, CallbackInfo ci) {
 
         BlockState state = world.getBlockState(p);
-        if (BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, p)) {
+        if (BlockUtil.destroyRespectsClaim((Entity) getPlayer(shooter, (ServerLevel) world), world, p)) {
             if (state.getBlock() == Blocks.MUD) {
                 world.setBlockAndUpdate(p, Blocks.CLAY.defaultBlockState());
                 ci.cancel();
