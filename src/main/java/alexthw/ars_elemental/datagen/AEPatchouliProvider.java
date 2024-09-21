@@ -107,6 +107,20 @@ public class AEPatchouliProvider extends PatchouliProvider {
                 , getPath(EQUIPMENT, "necrotic_focus")
         );
 
+        addPage(new PatchouliBuilder(EQUIPMENT, ModItems.SUMMON_BANGLE.get())
+                        .withIcon(ModItems.SUMMON_BANGLE.get())
+                        .withTextPage("ars_elemental.page1.summon_bangle")
+                        .withPage(new ApparatusPage(ModItems.SUMMON_BANGLE.get()))
+                , getPath(EQUIPMENT, "summon_bangle")
+        );
+
+        addPage(new PatchouliBuilder(EQUIPMENT, ModItems.ANIMA_BANGLE.get())
+                        .withIcon(ModItems.ANIMA_BANGLE.get())
+                        .withTextPage("ars_elemental.page1.anima_bangle")
+                        .withPage(new ApparatusPage(ModItems.ANIMA_BANGLE.get()))
+                , getPath(EQUIPMENT, "anima_bangle")
+        );
+
         addPage(new PatchouliBuilder(EQUIPMENT, ModItems.FIRE_FOCUS.get())
                         .withIcon(ModItems.FIRE_FOCUS.get())
                         .withTextPage("ars_elemental.page1.fire_focus")

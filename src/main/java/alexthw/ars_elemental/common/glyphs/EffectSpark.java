@@ -53,7 +53,7 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
         addDamageConfig(builder, 3);
         addAmpConfig(builder, 1.5);
         addPotionConfig(builder, 15);
-        addExtendTimeConfig(builder, 5);
+        addExtendTimeTicksConfig(builder, 5 * 20);
     }
 
     @Override
@@ -71,11 +71,6 @@ public class EffectSpark extends ElementalAbstractEffect implements IPotionEffec
 
     public int getExtendTimeDuration() {
         return this.EXTEND_TIME == null ? 5 : this.EXTEND_TIME.get();
-    }
-
-    @Override
-    public SpellTier defaultTier() {
-        return SpellTier.ONE;
     }
 
     @Override

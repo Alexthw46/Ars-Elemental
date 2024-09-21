@@ -62,7 +62,7 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addPotionConfig(builder, 5);
-        addExtendTimeConfig(builder, 5);
+        addExtendTimeTicksConfig(builder, 5 * 20);
     }
 
     @Override

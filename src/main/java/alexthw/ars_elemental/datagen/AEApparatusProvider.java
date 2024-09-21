@@ -179,6 +179,26 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .build()
         );
 
+        recipes.add(builder()
+                .withResult(ModItems.SUMMON_BANGLE.get())
+                .withReagent(ModItems.ENCHANTER_BANGLE.get())
+                .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
+                .withPedestalItem(Items.BONE)
+                .withPedestalItem(ItemsRegistry.WILDEN_HORN)
+                .build()
+        );
+
+        recipes.add(builder()
+                .withResult(ModItems.ANIMA_BANGLE.get())
+                .withReagent(ModItems.ENCHANTER_BANGLE.get())
+                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(Items.GHAST_TEAR)
+                .withPedestalItem(Items.WITHER_ROSE)
+                .build()
+        );
+
         //focus upgrade
 
         recipes.add(builder()

@@ -11,6 +11,7 @@ import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
+import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,6 +21,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
@@ -105,6 +108,8 @@ public class ModRegistry {
 
     public static final RegistryObject<BlockStateProviderType<?>> AE_BLOCKSTATE_PROVIDER;
 
+    public static final RegistryObject<Attribute> SUMMON_POWER;
+
     public static final RegistryObject<Enchantment> MIRROR;
     public static final RegistryObject<Enchantment> SOULBOUND;
 
@@ -134,6 +139,8 @@ public class ModRegistry {
         }));
 
         AE_BLOCKSTATE_PROVIDER = BS_PROVIDERS.register("ae_stateprovider", () -> new BlockStateProviderType<>(SupplierBlockStateProviderAE.CODEC));
+
+        SUMMON_POWER = PerkAttributes.registerAttribute("ars_elemental.perk.summon_power", (id) -> new RangedAttribute(id, 0.0, 0.0, 10000.0D).setSyncable(true), "3923ee66-b216-756d-4b1d-bb9338b0315b");
 
         MIRROR = ENCHANTMENTS.register("mirror_shield", MirrorShieldEnchantment::new);
         SOULBOUND = ENCHANTMENTS.register("soulbound", SoulboundEnchantment::new);

@@ -11,6 +11,7 @@ import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
@@ -24,6 +25,7 @@ import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import com.hollingsworth.arsnouveau.setup.registry.RegistryHelper;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -38,11 +40,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -128,6 +132,27 @@ public class DamageEvents {
                     case "fire" -> living.setSecondsOnFire(5);
                     case "water" -> living.setTicksFrozen(living.getTicksFrozen() + 100);
                     case "earth" -> living.addEffect(new MobEffectInstance(ModPotions.SNARE_EFFECT.get(), 60));
+                    case "necromancy" -> {
+                        if (player.getRandom().nextBoolean())
+                            living.addEffect(new MobEffectInstance(MobEffects.WITHER, 60));
+                        else {
+                            living.heal(1.0F);
+                            player.heal(1.0F);
+                        }
+                    }
+                    case "conjuration" -> {
+                        BlockPos pos = player.blockPosition();
+                        // fetch all summons around the player and aggro them to the target
+                        player.level().getEntitiesOfClass(LivingEntity.class, new AABB(pos.north(30).west(30).below(10).getCenter(), pos.south(30).east(30).above(10).getCenter()), e -> e instanceof ISummon s && player.equals(s.getOwnerAlt())).forEach(e -> {
+                            if (e instanceof Monster mob) {
+                                mob.setTarget(living);
+                            } else if (e instanceof NeutralMob neutralMob) {
+                                neutralMob.setTarget(living);
+                            }
+                            e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 80, 1));
+                        });
+
+                    }
                 }
             }
         }

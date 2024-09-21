@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentRandomize;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -31,13 +32,16 @@ public class EffectPhantom extends ElementalAbstractEffect implements IDamageEff
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (rayTraceResult.getEntity() instanceof LivingEntity entity) {
+        if (rayTraceResult.getEntity() instanceof LivingEntity entity && world instanceof ServerLevel serverLevel) {
+
             if (entity.isRemoved() || entity.getHealth() <= 0)
                 return;
 
             float healVal = (float) (GENERIC_DOUBLE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
             // If the entity is undead, heal it
             if (entity.isInvertedHealAndHarm()) {
+                if (spellStats.isRandomized())
+                    healVal += randomRolls(spellStats, serverLevel);
                 entity.heal(healVal);
             } else {
                 if (attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), healVal))// And consume saturation

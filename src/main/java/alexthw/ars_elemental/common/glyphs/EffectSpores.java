@@ -116,7 +116,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         addDamageConfig(builder, 6.0);
         addAmpConfig(builder, 2.5);
         addPotionConfig(builder, 10);
-        addExtendTimeConfig(builder, 3);
+        addExtendTimeTicksConfig(builder, 3 * 20);
 
     }
 

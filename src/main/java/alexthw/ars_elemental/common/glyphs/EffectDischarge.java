@@ -1,8 +1,10 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.network.DischargeEffectPacket;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
@@ -86,7 +88,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
         shooter = !(shooter instanceof Player) ? ANFakePlayer.getPlayer((ServerLevel) world) : shooter;
-        return shooter.damageSources().lightningBolt();
+        return DamageUtil.source(world, ModRegistry.SPARK, shooter);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class EffectDischarge extends ElementalAbstractEffect implements IDamageE
         addDamageConfig(builder, 7.0);
         addAmpConfig(builder, 3.0);
         addPotionConfig(builder, 15);
-        addExtendTimeConfig(builder, 5);
+        addExtendTimeTicksConfig(builder, 5 * 20);
     }
 
     @Override
