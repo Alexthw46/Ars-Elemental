@@ -27,8 +27,6 @@ public class AnimaBangles extends ElementalCurio implements ISchoolBangle {
         return map;
     }
 
-
-
     @Override
     public SpellSchool getSchool() {
         return ArsNouveauRegistry.NECROMANCY;
