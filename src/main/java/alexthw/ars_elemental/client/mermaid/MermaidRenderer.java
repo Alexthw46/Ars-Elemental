@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
@@ -19,14 +20,14 @@ public class MermaidRenderer<T extends LivingEntity & GeoEntity> extends GeoEnti
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull T instance) {
-        if (instance instanceof MermaidEntity var) return var.getTexture(var);
-        if (instance instanceof MermaidFamiliar var) return var.getTexture(var);
+        if (instance instanceof MermaidEntity var) return var.getTexture();
+        if (instance instanceof MermaidFamiliar var) return var.getTexture();
         return super.getTextureLocation(instance);
     }
 
 
     @Override
-    public RenderType getRenderType(T animatable, ResourceLocation texture, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, float partialTick) {
+    public RenderType getRenderType(T animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
         return RenderType.entityCutoutNoCull(texture);
     }
 

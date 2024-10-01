@@ -7,7 +7,6 @@ import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
-import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.spell.*;
@@ -18,6 +17,8 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
+import com.hollingsworth.arsnouveau.common.items.data.ICharmSerializable;
+import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
@@ -68,7 +69,7 @@ import java.util.function.Predicate;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, RangedAttackMob, GeoEntity, ITooltipProvider, IAnimationListener, IWandable, IDispellable, IVariantColorProvider<FirenandoEntity> {
+public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, RangedAttackMob, GeoEntity, ITooltipProvider, IAnimationListener, IWandable, IDispellable, ICharmSerializable {
 
     private final RawAnimation idle = RawAnimation.begin().thenLoop("idle.body");
     private final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("inactive");
@@ -140,6 +141,12 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     }
 
     @Override
+    public void fromCharmData(PersistentFamiliarData data) {
+        setColor(data.color());
+        setCustomName(data.name());
+    }
+
+    @Override
     public boolean onDispel(@Nullable LivingEntity caster) {
         if (this.isRemoved() || level().isClientSide) return false;
 
@@ -153,7 +160,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
 
     @Override
     public void performRangedAttack(@NotNull LivingEntity target, float pVelocity) {
-        ParticleColor spellColor = getColor(this).equals(Variants.MAGMA.toString()) ? color : colorAlt;
+        ParticleColor spellColor = getColor().equals(Variants.MAGMA.toString()) ? color : colorAlt;
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level(), spell, this, new LivingCaster(this)).withColors(spellColor));
         EntityHomingProjectileSpell projectileSpell = new EntityHomingProjectileSpell(level(), resolver);
         List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver.spell);
@@ -226,7 +233,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(SHOOTING, false);
         builder.define(ACTIVE, true);
@@ -324,11 +331,11 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         }
     }
 
-    public String getColor(FirenandoEntity firenando) {
+    public String getColor() {
         return this.entityData.get(COLOR);
     }
 
-    public void setColor(String color, FirenandoEntity firenando) {
+    public void setColor(String color) {
         this.entityData.set(COLOR, color);
     }
 
@@ -337,13 +344,13 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         if (!player.level().isClientSide && player.getUUID().equals(owner)) {
             ItemStack stack = player.getItemInHand(hand);
 
-            if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor(this).equals(Variants.MAGMA.toString())) {
-                this.setColor(Variants.MAGMA.toString(), this);
+            if (stack.getItem() == Blocks.MAGMA_BLOCK.asItem() && !getColor().equals(Variants.MAGMA.toString())) {
+                this.setColor(Variants.MAGMA.toString());
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
-            if (stack.getItem() == Blocks.SOUL_SAND.asItem() && !getColor(this).equals(Variants.SOUL.toString())) {
-                this.setColor(Variants.SOUL.toString(), this);
+            if (stack.getItem() == Blocks.SOUL_SAND.asItem() && !getColor().equals(Variants.SOUL.toString())) {
+                this.setColor(Variants.SOUL.toString());
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
@@ -362,10 +369,9 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         return super.mobInteract(player, hand);
     }
 
-    @Override
-    public ResourceLocation getTexture(FirenandoEntity entity) {
+    public ResourceLocation getTexture() {
         if (!isActive()) return prefix("textures/entity/firenando_inactive.png");
-        return prefix("textures/entity/firenando_" + (getColor(entity).isEmpty() ? Variants.MAGMA.toString() : getColor(entity)) + ".png");
+        return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
     }
 
 }

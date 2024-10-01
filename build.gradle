@@ -160,8 +160,6 @@ dependencies {
     implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21-4.0.0.0'
     implementation "curse.maven:jade-324717:5444008"
     implementation 'top.theillusivec4.curios:curios-neoforge:9.0.4+1.21'
-
-    compileOnly "curse.maven:ars-elemental-561470:5255908"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

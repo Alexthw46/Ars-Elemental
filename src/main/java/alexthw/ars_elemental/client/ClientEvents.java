@@ -18,7 +18,7 @@ import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSummonSkeleton;
-import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerRenderer;
+import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerModel;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import net.minecraft.client.KeyMapping;
@@ -41,6 +41,7 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
@@ -83,7 +84,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.CAMEL_SUMMON.get(), manager -> new CamelRenderer(manager, ModelLayers.CAMEL));
 
         event.registerEntityRenderer(ModEntities.DIREWOLF_SUMMON.get(), DireWolfRenderer::new);
-        event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), renderManagerIn -> new RenderSummonSkeleton(renderManagerIn){
+        event.registerEntityRenderer(ModEntities.WSKELETON_SUMMON.get(), renderManagerIn -> new RenderSummonSkeleton(renderManagerIn) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull AbstractSkeleton entity) {
                 return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/wither_skeleton.png");
@@ -98,7 +99,7 @@ public class ClientEvents {
             }
         });
 
-        event.registerEntityRenderer(ModEntities.FLASHING_WEALD_WALKER.get(), (manager) -> new WealdWalkerRenderer<>(manager, "flashing_weald"));
+        event.registerEntityRenderer(ModEntities.FLASHING_WEALD_WALKER.get(), v -> new GeoEntityRenderer<>(v, new WealdWalkerModel<>("flashing_weald")));
 
         event.registerEntityRenderer(ModEntities.FIRE_MAGE.get(), MageRenderer::new);
         event.registerEntityRenderer(ModEntities.WATER_MAGE.get(), MageRenderer::new);
@@ -122,7 +123,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void initItemColors(final RegisterColorHandlersEvent.Item event) {
         event.register((stack, color) -> color > 0 ? -1 :
-                stack.get(DataComponents.BASE_COLOR).getTextureDiffuseColor() + 0xFF000000,
+                        stack.get(DataComponents.BASE_COLOR).getTextureDiffuseColor() + 0xFF000000,
                 ModItems.CASTER_BAG.get());
     }
 
@@ -135,7 +136,7 @@ public class ClientEvents {
     //Curio bag stuff
     @SubscribeEvent
     public static void bindContainerRenderers(RegisterMenuScreensEvent event) {
-        event.register(ModRegistry.CURIO_HOLDER.get(), (CurioHolderContainer screenContainer, Inventory inv, Component titleIn) -> new CurioHolderScreen<>(screenContainer, inv, titleIn, prefix("textures/gui/curio_bag.png"),175, 163));
+        event.register(ModRegistry.CURIO_HOLDER.get(), (CurioHolderContainer screenContainer, Inventory inv, Component titleIn) -> new CurioHolderScreen<>(screenContainer, inv, titleIn, prefix("textures/gui/curio_bag.png"), 175, 163));
         event.register(ModRegistry.CASTER_HOLDER.get(), (CasterHolderContainer screenContainer, Inventory inv, Component titleIn) -> new CurioHolderScreen<>(screenContainer, inv, titleIn, prefix("textures/gui/curio_bag_2.png"), 175, 217));
     }
 
@@ -143,20 +144,15 @@ public class ClientEvents {
         return new RenderSpell(renderManager, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png"));
     }
 
-    public void openBackpackGui(ClientTickEvent.Post event)
-    {
-        if (FMLEnvironment.dist == Dist.CLIENT)
-        {
+    public void openBackpackGui(ClientTickEvent.Post event) {
+        if (FMLEnvironment.dist == Dist.CLIENT) {
             Minecraft minecraft = Minecraft.getInstance();
             Player playerEntity = minecraft.player;
-            if (!(minecraft.screen instanceof CurioHolderScreen) && (playerEntity != null))
-            {
-                if (CURIO_BAG_KEYBINDING.isDown())
-                {
+            if (!(minecraft.screen instanceof CurioHolderScreen) && (playerEntity != null)) {
+                if (CURIO_BAG_KEYBINDING.isDown()) {
                     SlotReference backpack = CurioHolder.isEquipped(playerEntity);
 
-                    if (!backpack.isEmpty())
-                    {
+                    if (!backpack.isEmpty()) {
                         Networking.sendToServer(new OpenCurioBagPacket());
                     }
                 }

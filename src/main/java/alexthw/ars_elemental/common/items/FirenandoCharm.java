@@ -3,6 +3,8 @@ package alexthw.ars_elemental.common.items;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
 import com.hollingsworth.arsnouveau.api.item.AbstractSummonCharm;
 import com.hollingsworth.arsnouveau.common.block.tile.SummoningTile;
+import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
+import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
@@ -19,6 +21,7 @@ public class FirenandoCharm extends AbstractSummonCharm {
     public InteractionResult useOnBlock(UseOnContext context, Level world, BlockPos pos) {
         FirenandoEntity firenando = new FirenandoEntity(world);
         Vec3 vec = context.getClickLocation();
+        firenando.fromCharmData(context.getItemInHand().getOrDefault(DataComponentRegistry.PERSISTENT_FAMILIAR_DATA, new PersistentFamiliarData()));
         firenando.setPos(vec.x, vec.y, vec.z);
         firenando.setHome(pos);
         firenando.setOwner(context.getPlayer());

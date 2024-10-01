@@ -26,7 +26,7 @@ public class FirenandoRenderer<M extends LivingEntity & GeoEntity> extends GeoEn
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull M instance) {
-        return instance instanceof FirenandoEntity var ? var.getTexture(var) : super.getTextureLocation(instance);
+        return instance instanceof FirenandoEntity var ? var.getTexture() : super.getTextureLocation(instance);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FirenandoRenderer<M extends LivingEntity & GeoEntity> extends GeoEn
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
 
         if (entity instanceof FirenandoEntity fe && fe.isActive()) {
-            ParticleColor color = fe.getColor(fe).equals("soul") ? color2 : color1;
+            ParticleColor color = fe.getColor().equals("soul") ? color2 : color1;
             entity.level().addParticle(GlowParticleData.createData(color, false, 0.30f, 0.7f, 15),
                     entity.getX() + ParticleUtil.inRange(-0.1, 0.1) / 4, entity.getY() + 0.6, entity.getZ() + ParticleUtil.inRange(-0.1, 0.1) / 4,
                     0, -0.05F, 0);

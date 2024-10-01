@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.client.firenando;
 
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
-import com.hollingsworth.arsnouveau.api.client.IVariantTextureProvider;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -31,6 +30,6 @@ public class FirenandoFamiliarRenderer <M extends FirenandoFamiliar> extends Fir
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull M instance) {
-        return instance.getTexture(instance);
+        return instance.getTexture();
     }
 }

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +49,7 @@ public class CurioHolder extends Item {
     }
 
     public static boolean canStore(ItemStack stack) {
-        return !stack.is(BLACKLIST_BAGGABLE);
+        return !stack.is(BLACKLIST_BAGGABLE) && stack.getCapability(Capabilities.ItemHandler.ITEM) == null;
     }
 
     @Override

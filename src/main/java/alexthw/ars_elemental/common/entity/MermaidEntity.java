@@ -4,7 +4,6 @@ import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.entity.ai.*;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
-import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.api.util.SummonUtil;
@@ -15,6 +14,8 @@ import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
+import com.hollingsworth.arsnouveau.common.items.data.ICharmSerializable;
+import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -68,7 +69,7 @@ import java.util.stream.Collectors;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimationListener, IVariantColorProvider<MermaidEntity>, IDispellable {
+public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimationListener, IDispellable, ICharmSerializable {
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -423,8 +424,8 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
         // if the player is holding a dye, change the mermaid's color
         if (isTamed()) {
             String color = Variants.getColorFromStack(stack);
-            if (color != null && !getColor(this).equals(color)) {
-                this.setColor(color, this);
+            if (color != null && !getColor().equals(color)) {
+                this.setColor(color);
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
@@ -474,17 +475,22 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
         }
     }
 
-    public String getColor(MermaidEntity mermaidEntity) {
+    @Override
+    public void fromCharmData(PersistentFamiliarData data) {
+        setColor(data.color());
+        setCustomName(data.name());
+    }
+
+    public String getColor() {
         return this.entityData.get(COLOR);
     }
 
-    public void setColor(String color, MermaidEntity mermaidEntity) {
+    public void setColor(String color) {
         this.entityData.set(COLOR, color);
     }
 
-    @Override
-    public ResourceLocation getTexture(MermaidEntity entity) {
-        return prefix("textures/entity/mermaid_" + (getColor(entity).isEmpty() ? Variants.KELP.toString() : getColor(entity)) + ".png");
+    public ResourceLocation getTexture() {
+        return prefix("textures/entity/mermaid_" + (getColor().isEmpty() ? Variants.KELP.toString() : getColor()) + ".png");
     }
 
 }

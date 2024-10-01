@@ -2,14 +2,12 @@ package alexthw.ars_elemental.common.entity.familiars;
 
 import alexthw.ars_elemental.common.entity.FirenandoEntity.Variants;
 import alexthw.ars_elemental.registry.ModEntities;
-import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,7 +28,7 @@ import java.util.List;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener, IVariantColorProvider<FamiliarEntity> {
+public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListener {
     public FirenandoFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
@@ -95,12 +93,6 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(COLOR, Variants.MAGMA.toString());
-    }
-
-    @Override
     public PlayState walkPredicate(AnimationState event) {
         return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
     }
@@ -109,20 +101,8 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
         return event.setAndContinue(RawAnimation.begin().thenLoop("idle.body"));
     }
 
-    @Override
-    public void setColor(String color, FamiliarEntity object) {
-        super.setColor(color);
-    }
-
-    @Override
-    public String getColor(FamiliarEntity firenandoFamiliar) {
-        return this.entityData.get(COLOR);
-    }
-
-    @Override
-    public ResourceLocation getTexture(FamiliarEntity entity) {
+    public ResourceLocation getTexture() {
         return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
     }
-
 
 }

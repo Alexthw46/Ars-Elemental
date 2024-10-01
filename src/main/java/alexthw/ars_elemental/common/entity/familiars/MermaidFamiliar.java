@@ -3,14 +3,11 @@ package alexthw.ars_elemental.common.entity.familiars;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.MermaidEntity.Variants;
 import alexthw.ars_elemental.registry.ModEntities;
-import com.hollingsworth.arsnouveau.api.client.IVariantColorProvider;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
-import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,7 +29,7 @@ import java.util.Locale;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener, IVariantColorProvider<FamiliarEntity> {
+public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastListener {
     public MermaidFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -87,8 +84,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         super.registerControllers(data);
-        data.add(new AnimationController<>(this, "actionController", 10, event -> event.setAndContinue(getDeltaMovement().length() > 0 || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? swim : idle)))
-        ;
+        data.add(new AnimationController<>(this, "actionController", 10, event -> event.setAndContinue(getDeltaMovement().length() > 0 || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? swim : idle)));
     }
 
     RawAnimation swim = RawAnimation.begin().thenLoop("swim");
@@ -98,9 +94,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
 
     @Override
     public PlayState walkPredicate(AnimationState event) {
-
         return event.setAndContinue(onGround() && !isInWater() || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? ground : floating);
-
     }
 
     public @NotNull EntityType<?> getType() {
@@ -114,24 +108,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
         return newNav;
     }
 
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(COLOR, Variants.KELP.toString());
-    }
-
-    @Override
-    public void setColor(String color, FamiliarEntity object) {
-        super.setColor(color);
-    }
-
-    @Override
-    public String getColor(FamiliarEntity mermaidFamiliar) {
-        return this.entityData.get(COLOR);
-    }
-
-    @Override
-    public ResourceLocation getTexture(FamiliarEntity entity) {
+    public ResourceLocation getTexture() {
         return prefix("textures/entity/mermaid_" + (getColor().isEmpty() ? Variants.KELP.toString() : getColor()) + ".png");
     }
 

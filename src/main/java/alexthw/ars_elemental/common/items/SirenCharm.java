@@ -5,6 +5,8 @@ import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.item.AbstractSummonCharm;
 import com.hollingsworth.arsnouveau.common.block.tile.SummoningTile;
+import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
+import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
@@ -32,6 +34,7 @@ public class SirenCharm extends AbstractSummonCharm {
         if (world.getBlockEntity(pos) instanceof MermaidTile) {
             MermaidEntity mermaid = new MermaidEntity(world, true);
             Vec3 vec = context.getClickLocation();
+            mermaid.fromCharmData(context.getItemInHand().getOrDefault(DataComponentRegistry.PERSISTENT_FAMILIAR_DATA, new PersistentFamiliarData()));
             mermaid.setPos(vec.x, vec.y, vec.z);
             mermaid.setHome(pos);
             world.addFreshEntity(mermaid);
