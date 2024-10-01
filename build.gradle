@@ -9,11 +9,12 @@ plugins {
 
 base {
     version = "${minecraft_version}-${mod_version}"
-    group = 'alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-    archivesName = project.mod_id
+    group = 'com.alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+    archivesName = mod_id + '-' + minecraft_version
 }
 // Mojang ships Java 21 to end users in 1.21+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.withSourcesJar()
 
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
