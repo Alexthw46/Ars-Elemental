@@ -24,7 +24,7 @@ apply plugin: 'idea'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = "${mc_version}-${mod_version}"
+version = mod_version
 group = 'com.alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_id + "-" + mc_version
 
