@@ -8,7 +8,7 @@ plugins {
 
 
 base {
-    version = "${minecraft_version}-${mod_version}"
+    version = mod_version
     group = 'com.alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
     archivesName = mod_id + '-' + minecraft_version
 }
