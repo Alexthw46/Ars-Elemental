@@ -117,6 +117,11 @@ repositories {
     }
 
     maven {
+        // url of the maven that hosts Aquacultures files
+        url "https://girafi.dk/maven/"
+    }
+
+    maven {
         name 'LDTTeam - Modding'
         url 'https://ldtteam.jfrog.io/ldtteam/modding/'
     }
@@ -155,7 +160,6 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-    //implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curio_version}")
 
     /*implementation*/ compileOnly fg.deobf("vazkii.botania:Botania:1.19.2-437-FORGE-SNAPSHOT")
@@ -165,13 +169,15 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:cyanide-541676:3832812") // Cyanide
 
     //runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4086496")
-    //runtimeOnly fg.deobf("curse.maven:omega-597007:3819746")
+
     runtimeOnly fg.deobf("curse.maven:cofh-core-69162:4970669")
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:0.2.0-beta.8"))
     implementation("com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.8")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    runtimeOnly fg.deobf("com.teammetallurgy.aquaculture:aquaculture2_${mc_version}:${mc_version}-2.5.2")
 
 }
 
