@@ -152,7 +152,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         // get the loot tables for fishing and create a fake player to get the loot context
         ANFakePlayer fakePlayer = ANFakePlayer.getPlayer(server);
         ReloadableServerRegistries.Holder lootData = server.getServer().reloadableRegistries();
-        LootTable lootTable = lootData.getLootTable(BuiltInLootTables.FISHING_FISH);
+        LootTable lootTable = lootData.getLootTable(BuiltInLootTables.FISHING);
         LootTable lootTableTreasure = lootData.getLootTable(BuiltInLootTables.FISHING_TREASURE);
         LootTable lootTableJunk = lootData.getLootTable(BuiltInLootTables.FISHING_JUNK);
 
@@ -170,10 +170,10 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         // roll the loot table for each bonus roll and drop the items, if the counter is greater than the cap, stop
         // if the bonus is greater than 30, there is at least 10% chance to get a treasure item, otherwise there is a 20% chance to get a junk item
         for (int i = 0; i < Common.SIREN_BASE_ITEM.get() + bonus_rolls; i++) {
-            if (flag && bonus > 30 && this.level.random.nextDouble() < 0.1 + bonus * Common.SIREN_TREASURE_BONUS.get()) {
+            if (flag && bonus > 50 && this.level.random.nextDouble() < Math.max(0.1, bonus * Common.SIREN_TREASURE_BONUS.get())) {
                 list = lootTableTreasure.getRandomItems(lootContext);
                 flag = false;
-            } else if (flag && bonus <= 25 && this.level.random.nextDouble() < 0.2F) {
+            } else if (flag && bonus <= 25 && this.level.random.nextDouble() < 0.5F) {
                 list = lootTableJunk.getRandomItems(lootContext);
             } else list = lootTable.getRandomItems(lootContext);
 
@@ -184,6 +184,7 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
             }
             if (counter >= Common.SIREN_QUANTITY_CAP.get()) break;
         }
+
 
         //reset the progress and mana
         this.progress = 0;

@@ -12,6 +12,11 @@ base {
     group = 'com.alexthw.ars_elemental' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
     archivesName = mod_id + '-' + minecraft_version
 }
+
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
+
 // Mojang ships Java 21 to end users in 1.21+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 java.withSourcesJar()
@@ -205,8 +210,4 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
-}
-
-if (System.getenv('BUILD_NUMBER') != null) {
-    version += "." + System.getenv('BUILD_NUMBER')
 }
