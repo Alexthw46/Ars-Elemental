@@ -4,6 +4,7 @@ import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.client.jei.EnchantingApparatusRecipeCategory;
 import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
+import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -36,7 +37,7 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
             for (ItemStack stack : stacks) {
                 ArmorPerkHolder armorPerkHolder = PerkUtil.getPerkHolder(stack);
                 if (armorPerkHolder != null) {
-                    armorPerkHolder.setTier(2);
+                    stack.set(DataComponentRegistry.ARMOR_PERKS, armorPerkHolder.setTier(2));
                 }
             }
             builder.addSlot(RecipeIngredientRole.INPUT, 48, 45).addItemStacks(List.of(stacks));

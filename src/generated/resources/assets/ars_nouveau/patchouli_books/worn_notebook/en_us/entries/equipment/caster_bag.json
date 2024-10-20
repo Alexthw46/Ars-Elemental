@@ -8,7 +8,7 @@
       "text": "ars_elemental.page.caster_bag"
     },
     {
-      "type": "patchouli:crafting",
+      "type": "ars_nouveau:apparatus_recipe",
       "recipe": "ars_elemental:caster_bag"
     }
   ]

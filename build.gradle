@@ -123,16 +123,6 @@ repositories {
             includeGroup("software.bernie.geckolib")
         }
     }
-    exclusiveContent {
-        forRepository {
-            maven {
-                url "https://cursemaven.com"
-            }
-        }
-        filter {
-            includeGroup "curse.maven"
-        }
-    }
     maven {
         name = "Illusive Soulworks maven"
         url = "https://maven.theillusivec4.top/"
@@ -155,16 +145,15 @@ repositories {
 
 dependencies {
 
-    implementation "com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}"
+    implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}") { transitive = false }
 
-    implementation "software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}"
+    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:${geckolib_version}"
     implementation "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
 
     compileOnly "mezz.jei:jei-1.21-neoforge-api:${jei_version}"
     implementation "mezz.jei:jei-1.21-neoforge:${jei_version}"
     implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21-4.0.0.0'
-    implementation "curse.maven:jade-324717:5444008"
-    implementation 'top.theillusivec4.curios:curios-neoforge:9.0.4+1.21'
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

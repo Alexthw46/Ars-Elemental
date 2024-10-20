@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements ITextOutput {
 
-    public int tier; // 0 indexed
+    public int tier = 3; // 0 indexed
 
     public ElementalArmorRecipe(Ingredient reagent, ItemStack result, List<Ingredient> pedestalItems, int cost) {
         super(reagent, result, pedestalItems, cost, true);
