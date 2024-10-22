@@ -1,0 +1,22 @@
+{
+  "type": "ars_nouveau:caster_tome",
+  "color": {
+    "b": 180,
+    "g": 25,
+    "id": "ars_nouveau:constant",
+    "r": 255
+  },
+  "flavour_text": "Make an enemy levitate and hit it with wind cuts.",
+  "name": "Windgardium Leviosa",
+  "sound": {},
+  "spell": [
+    "ars_nouveau:glyph_projectile",
+    "ars_nouveau:glyph_launch",
+    "ars_nouveau:glyph_extend_time",
+    "ars_nouveau:glyph_extend_time",
+    "ars_nouveau:glyph_wind_shear",
+    "ars_nouveau:glyph_delay",
+    "ars_nouveau:glyph_wind_shear"
+  ],
+  "tome_type": "ars_elemental:air_caster_tome"
+}

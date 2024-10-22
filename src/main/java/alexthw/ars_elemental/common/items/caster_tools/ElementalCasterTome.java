@@ -18,8 +18,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
 
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip2, TooltipFlag flagIn) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltip2, @NotNull TooltipFlag flagIn) {
         tooltip2.add(Component.translatable("tooltip.ars_elemental.caster_tome"));
         super.appendHoverText(stack, context, tooltip2, flagIn);
     }
@@ -63,12 +65,17 @@ public class ElementalCasterTome extends CasterTome implements ISchoolFocus {
 
         @Override
         public boolean hasFocus(ItemStack stack) {
-            if (stack.getItem() instanceof ISchoolFocus focus) {
-                return getSchool() == focus.getSchool();
-            } else if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get()) {
-                return getSchool() == SpellSchools.MANIPULATION;
+            return hasFocus(stack.getItem());
+        }
+
+        @Override
+        public boolean hasFocus(Item item) {
+            if (item instanceof ISchoolFocus focus) {
+                return school == focus.getSchool();
+            } else if (item == ItemsRegistry.SHAPERS_FOCUS.get()) {
+                return school == SpellSchools.MANIPULATION;
             }
-            return super.hasFocus(stack);
+            return super.hasFocus(item);
         }
 
         @Override

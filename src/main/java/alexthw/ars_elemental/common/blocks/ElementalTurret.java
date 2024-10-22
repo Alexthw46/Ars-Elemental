@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class ElementalTurret extends BasicSpellTurret {
 
@@ -20,7 +21,7 @@ public class ElementalTurret extends BasicSpellTurret {
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new ElementalSpellTurretTile(pos, state).setSchool(school);
     }
 
@@ -35,17 +36,17 @@ public class ElementalTurret extends BasicSpellTurret {
 
         @Override
         public boolean hasFocus(ItemStack stack) {
-            if (stack.getItem() instanceof ISchoolFocus focus) {
-                return school == focus.getSchool();
-            } else if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get()) {
-                return school == SpellSchools.MANIPULATION;
-            }
-            return super.hasFocus(stack);
+            return hasFocus(stack.getItem());
         }
 
         @Override
         public boolean hasFocus(Item item) {
-            return hasFocus(item.getDefaultInstance());
+            if (item instanceof ISchoolFocus focus) {
+                return school == focus.getSchool();
+            } else if (item == ItemsRegistry.SHAPERS_FOCUS.get()) {
+                return school == SpellSchools.MANIPULATION;
+            }
+            return super.hasFocus(item);
         }
 
 

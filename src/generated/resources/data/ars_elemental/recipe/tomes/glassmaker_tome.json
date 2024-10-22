@@ -1,0 +1,25 @@
+{
+  "type": "ars_nouveau:caster_tome",
+  "color": {
+    "b": 180,
+    "g": 25,
+    "id": "ars_nouveau:constant",
+    "r": 255
+  },
+  "flavour_text": "Encase yourself in glass.",
+  "name": "Safety Jar",
+  "sound": {},
+  "spell": [
+    "ars_nouveau:glyph_underfoot",
+    "ars_elemental:glyph_conjure_terrain",
+    "ars_nouveau:glyph_aoe",
+    "ars_nouveau:glyph_aoe",
+    "ars_nouveau:glyph_aoe",
+    "ars_nouveau:glyph_pierce",
+    "ars_nouveau:glyph_pierce",
+    "ars_nouveau:glyph_pierce",
+    "ars_nouveau:glyph_crush",
+    "ars_nouveau:glyph_smelt"
+  ],
+  "tome_type": "ars_elemental:manipulation_caster_tome"
+}

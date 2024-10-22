@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
+import alexthw.ars_elemental.common.glyphs.EffectConjureTerrain;
 import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.sound.ConfiguredSpellSound;
@@ -8,13 +9,12 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.CasterTomeData;
 import com.hollingsworth.arsnouveau.common.datagen.CasterTomeProvider;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodUnderfoot;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -33,6 +33,15 @@ public class AECasterTomeProvider extends CasterTomeProvider {
 
     @Override
     public void collectJsons(CachedOutput cache) {
+
+        tomes.add(buildTome(SHAPERS_CTOME, "glassmaker", "Safety Jar", new Spell().add(MethodUnderfoot.INSTANCE)
+                        .add(EffectConjureTerrain.INSTANCE)
+                        .add(AugmentAOE.INSTANCE, 3)
+                        .add(AugmentPierce.INSTANCE, 3)
+                        .add(EffectCrush.INSTANCE)
+                        .add(EffectSmelt.INSTANCE)
+                , "Encase yourself in glass.",
+                ParticleUtil.airColor));
 
         tomes.add(buildTome(WATER_CTOME, "dolphin", "Poseidon's Steed", new Spell()
                         .add(MethodSelf.INSTANCE)
@@ -72,16 +81,31 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                 "Creates a gravity center that also attract nearby blocks.",
                 ParticleUtil.earthColor));
 
-        tomes.add(buildTome(FIRE_CTOME, "hellflare", "Phoenix Fire", new Spell()
+        tomes.add(buildTome(FIRE_CTOME, "hellflare", "Magiflare", new Spell()
                         .add(MethodTouch.INSTANCE)
                         .add(EffectIgnite.INSTANCE)
+                        .add(EffectHex.INSTANCE)
                         .add(EffectFlare.INSTANCE)
-                        .add(EffectHeal.INSTANCE)
-                        .add(EffectFlare.INSTANCE)
-                        .add(EffectHeal.INSTANCE)
-                        .add(EffectFlare.INSTANCE)
-                , "The magic flames are fueled by the healing magic.",
+                , "These flames make magic burn through armor.",
                 ParticleUtil.fireColor));
+
+        tomes.add(buildTome(WATER_CTOME, "frostbite", "Frostbite", new Spell()
+                        .add(MethodTouch.INSTANCE)
+                        .add(EffectFreeze.INSTANCE)
+                        .add(EffectColdSnap.INSTANCE)
+                , "When cold bites deep into the bones, healing is not an option.",
+                ParticleUtil.waterColor));
+
+        tomes.add(buildTome(AIR_CTOME, "leviosa", "Windgardium Leviosa", new Spell()
+                        .add(MethodProjectile.INSTANCE)
+                        .add(EffectLaunch.INSTANCE)
+                        .add(AugmentExtendTime.INSTANCE)
+                        .add(AugmentExtendTime.INSTANCE)
+                        .add(EffectWindshear.INSTANCE)
+                        .add(EffectDelay.INSTANCE)
+                        .add(EffectWindshear.INSTANCE)
+                , "Make an enemy levitate and hit it with wind cuts.",
+                ParticleUtil.airColor));
 
         tomes.add(buildTome(NECRO_CTOME, "skelehorse", "Undead Steed", new Spell()
                         .add(MethodSelf.INSTANCE)

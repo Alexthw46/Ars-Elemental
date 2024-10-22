@@ -1,0 +1,18 @@
+{
+  "type": "ars_nouveau:caster_tome",
+  "color": {
+    "b": 180,
+    "g": 25,
+    "id": "ars_nouveau:constant",
+    "r": 255
+  },
+  "flavour_text": "When cold bites deep into the bones, healing is not an option.",
+  "name": "Frostbite",
+  "sound": {},
+  "spell": [
+    "ars_nouveau:glyph_touch",
+    "ars_nouveau:glyph_freeze",
+    "ars_nouveau:glyph_cold_snap"
+  ],
+  "tome_type": "ars_elemental:water_caster_tome"
+}

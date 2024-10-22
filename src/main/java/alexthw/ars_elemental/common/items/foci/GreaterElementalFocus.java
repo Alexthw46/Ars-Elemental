@@ -50,7 +50,7 @@ public class GreaterElementalFocus extends ElementalFocus {
             switch (getSchool().getId()) {
                 case "fire" -> {
                     if (player.isOnFire() || player.isInLava() || player.hasEffect(MAGIC_FIRE))
-                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT, 200, 2));
+                        player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT, 200, 1));
                 }
                 case "water" -> {
                     if (player.isInWaterRainOrBubble()) {

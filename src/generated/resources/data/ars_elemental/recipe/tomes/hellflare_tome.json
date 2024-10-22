@@ -6,16 +6,13 @@
     "id": "ars_nouveau:constant",
     "r": 255
   },
-  "flavour_text": "The magic flames are fueled by the healing magic.",
-  "name": "Phoenix Fire",
+  "flavour_text": "These flames make magic burn through armor.",
+  "name": "Magiflare",
   "sound": {},
   "spell": [
     "ars_nouveau:glyph_touch",
     "ars_nouveau:glyph_ignite",
-    "ars_nouveau:glyph_flare",
-    "ars_nouveau:glyph_heal",
-    "ars_nouveau:glyph_flare",
-    "ars_nouveau:glyph_heal",
+    "ars_nouveau:glyph_hex",
     "ars_nouveau:glyph_flare"
   ],
   "tome_type": "ars_elemental:fire_caster_tome"

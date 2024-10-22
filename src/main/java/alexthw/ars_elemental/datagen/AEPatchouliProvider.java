@@ -60,8 +60,11 @@ public class AEPatchouliProvider extends PatchouliProvider {
         addBasicItem(ModItems.WATER_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.WATER_UPSTREAM_BLOCK.get()));
         addBasicItem(ModItems.LAVA_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.LAVA_UPSTREAM_BLOCK.get()));
         addBasicItem(ModItems.AIR_UPSTREAM_BLOCK.get(), MACHINES, new ApparatusPage(ModItems.AIR_UPSTREAM_BLOCK.get()));
-        addBasicItem(ModItems.CURIO_BAG.get(), EQUIPMENT, new CraftingPage(ModItems.CURIO_BAG.get()));
-        addBasicItem(ModItems.CASTER_BAG.get(), EQUIPMENT, new ApparatusPage(ModItems.CASTER_BAG.get()));
+        addPage(new PatchouliBuilder(EQUIPMENT, ModItems.CURIO_BAG.get())
+                        .withPage(new CraftingPage(ModItems.CURIO_BAG.get()))
+                        .withPage(new ApparatusPage(ModItems.CASTER_BAG.get())),
+                getPath(EQUIPMENT, "bags"));
+
         addBasicItem(ModItems.ENCHANTER_BANGLE.get(), EQUIPMENT, new ApparatusPage(ModItems.ENCHANTER_BANGLE.get()));
 
         addBasicItem(ModItems.SPELL_MIRROR.get(), AUTOMATION, new ApparatusPage(ModItems.SPELL_MIRROR.get()));
@@ -325,7 +328,6 @@ public class AEPatchouliProvider extends PatchouliProvider {
     private ResourceLocation getRegistryName(Item asItem) {
         return BuiltInRegistries.ITEM.getKey(asItem);
     }
-
 
 
 }

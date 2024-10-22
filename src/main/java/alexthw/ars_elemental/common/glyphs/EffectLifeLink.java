@@ -28,7 +28,7 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         //if the shooter has the necromancy focus, the effect will be forcefully applied to the target and the shooter
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity && shooter instanceof Player player && player != livingEntity) {
-            if (resolver.hasFocus(ModItems.NECRO_FOCUS.get().getDefaultInstance()))
+            if (resolver.hasFocus(ModItems.NECRO_FOCUS.get()))
                 forceApplyPotion(livingEntity, player, LIFE_LINK, spellStats);
             else applyPotion(livingEntity, player, LIFE_LINK, spellStats);
 

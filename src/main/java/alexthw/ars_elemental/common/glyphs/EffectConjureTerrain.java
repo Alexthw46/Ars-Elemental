@@ -33,9 +33,9 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
         // Get the number of Amplify Augments in the spell and use that to determine the block to place
         int amps = spellStats.getBuffCount(AugmentAmplify.INSTANCE);
         BlockState toPlace = switch (amps){
-            default -> Blocks.DIRT.defaultBlockState();
             case 1 -> Blocks.COBBLESTONE.defaultBlockState();
             case 2 -> Blocks.COBBLED_DEEPSLATE.defaultBlockState();
+            default -> Blocks.DIRT.defaultBlockState();
         };
         // If the spell contains a Conjure Water effect, place mud instead, and if it contains a Crush effect, place sand instead
         if (spellContext.hasNextPart()) {
