@@ -282,6 +282,10 @@ public class AETagsProvider {
 
     public static class AEEntityTagProvider extends EntityTypeTagsProvider {
 
+        // TODO: Replace with their respective fields in EntityTags when available
+        public static final TagKey<EntityType<?>> VITALIC_GROWTH_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID,"vitalic_growth_blacklist"));
+        public static final TagKey<EntityType<?>> VITALIC_DEATH_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID,"vitalic_death_blacklist"));
+
         public AEEntityTagProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
         }
@@ -304,6 +308,8 @@ public class AETagsProvider {
             this.tag(EntityTypeTags.SKELETONS).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());
             this.tag(EntityTypeTags.INVERTED_HEALING_AND_HARM).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());
             this.tag(ModRegistry.CHARM_BLACKLIST);
+            this.tag(VITALIC_GROWTH_BLACKLIST).add(FLASHING_WEALD_WALKER.get());
+            this.tag(VITALIC_DEATH_BLACKLIST).add(FLASHING_WEALD_WALKER.get());
         }
 
         @Override
