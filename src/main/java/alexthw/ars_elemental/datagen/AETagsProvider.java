@@ -282,9 +282,8 @@ public class AETagsProvider {
 
     public static class AEEntityTagProvider extends EntityTypeTagsProvider {
 
-        // TODO: Replace with their respective fields in EntityTags when available
-        public static final TagKey<EntityType<?>> VITALIC_GROWTH_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID,"vitalic_growth_blacklist"));
-        public static final TagKey<EntityType<?>> VITALIC_DEATH_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID,"vitalic_death_blacklist"));
+        public static final TagKey<EntityType<?>> VITALIC_GROWTH_BLACKLIST = EntityTags.VITALIC_GROWTH_BLACKLIST;
+        public static final TagKey<EntityType<?>> VITALIC_DEATH_BLACKLIST = EntityTags.VITALIC_DEATH_BLACKLIST;
 
         public AEEntityTagProvider(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
