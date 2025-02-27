@@ -1,4 +1,4 @@
-// 1.21.1	2024-12-28T18:42:45.7951278	Ars Elemental Item Tags
+// 1.21.1	2025-02-27T11:43:48.6800014	Ars Elemental Item Tags
 a1c191d75ca82bdd457d409695bd4e6e4ba9d471 data/ars_elemental/tags/item/blacklist_bag_item.json
 5b9e1effce30a548495e187c1ff51d42479e731f data/ars_elemental/tags/item/soulbound_extra.json
 f4df44c664b9190c5385bc3d96382af26add802b data/ars_nouveau/tags/item/boot.json
@@ -11,6 +11,7 @@ fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/item/spellbook.js
 5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/item/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/item/an_focus.json
 093b982bcf3efffd59a052d7473d47981f1ec738 data/curios/tags/item/bracelet.json
+1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/c/tags/item/foods/fruit.json
 d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/c/tags/item/logs/archwood.json
 94a4d749a377695966e081e59ea56cb6f0d8c1fe data/c/tags/item/stripped_logs.json
 c63f828ff4bfc7df8bd18cf26ecd39040ac28049 data/c/tags/item/stripped_wood.json

@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.world.ModWorldgen;
 import net.minecraft.core.Holder;
@@ -32,7 +33,9 @@ public class AEWorldgenProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.CONFIGURED_FEATURE, ModWorldgen::bootstrapConfiguredFeatures)
             .add(Registries.PLACED_FEATURE, ModWorldgen::bootstrapPlacedFeatures)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, AEWorldgenProvider::generateBiomeModifiers)
-            .add(Registries.BIOME, ModWorldgen.Biomes::registerBiomes);
+            .add(Registries.BIOME, ModWorldgen.Biomes::registerBiomes)
+            .add(Registries.BANNER_PATTERN, ArsNouveauRegistry::bootstrapPatterns);
+
 
     public AEWorldgenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ArsElemental.MODID));

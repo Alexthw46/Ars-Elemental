@@ -11,6 +11,7 @@ import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestRitual;
+import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestationRitual;
 import alexthw.ars_elemental.mixin.SpellSchoolAccessor;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
@@ -29,19 +30,25 @@ import com.hollingsworth.arsnouveau.common.light.LightManager;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import com.hollingsworth.arsnouveau.setup.registry.BannerRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.api.item.IElementalArmor.damageResistances;
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
@@ -120,16 +127,7 @@ public class ArsNouveauRegistry {
         register(EffectNullify.INSTANCE);
     }
 
-    public static void registerRituals() {
-
-        registerRitual(new SquirrelRitual());
-        registerRitual(new TeslaRitual());
-        registerRitual(new DetectionRitual());
-        registerRitual(new RepulsionRitual());
-        registerRitual(new AttractionRitual());
-        registerRitual(new ArchwoodForestRitual());
-
-    }
+    public static final ResourceKey<BannerPattern> ANIMA_PATTERN = createBannerPattern("anima");
 
     public static void registerRitual(AbstractRitual ritual) {
         RitualRegistry.registerRitual(ritual);
@@ -282,4 +280,26 @@ public class ArsNouveauRegistry {
 
     }
 
+
+    // Banner patterns
+
+    public static void registerRituals() {
+
+        registerRitual(new SquirrelRitual());
+        registerRitual(new TeslaRitual());
+        registerRitual(new DetectionRitual());
+        registerRitual(new RepulsionRitual());
+        registerRitual(new AttractionRitual());
+        registerRitual(new ArchwoodForestRitual());
+        registerRitual(new ArchwoodForestationRitual());
+
+    }
+
+    private static ResourceKey<BannerPattern> createBannerPattern(String name) {
+        return ResourceKey.create(Registries.BANNER_PATTERN, prefix(name));
+    }
+
+    public static void bootstrapPatterns(BootstrapContext<BannerPattern> bannerPatternBootstrapContext) {
+        BannerRegistry.register(bannerPatternBootstrapContext, ANIMA_PATTERN);
+    }
 }

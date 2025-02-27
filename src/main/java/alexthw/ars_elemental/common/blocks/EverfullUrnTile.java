@@ -24,9 +24,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractCauldronBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -35,16 +32,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import static alexthw.ars_elemental.ConfigHandler.Common.WATER_URN_COST;
 import static net.minecraft.world.level.material.Fluids.WATER;
 
 public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable, ITooltipProvider {
 
-    Set<BlockPos> toList = new HashSet<>();
+    HashMap<BlockPos, Direction> toList = new HashMap<>();
 
     public EverfullUrnTile(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModTiles.URN_TILE.get(), pWorldPosition, pBlockState);
@@ -58,10 +55,10 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         ArrayList<BlockPos> stale = new ArrayList<>();
 
         // Iterate over all the positions in the list and try to refill them if they are still valid
-        for (BlockPos toPos : toList) {
+        for (BlockPos toPos : toList.keySet()) {
             if (!level.isLoaded(toPos))
                 continue;
-            if (!isRefillable(toPos, level)) {
+            if (!isRefillable(toPos, level, toList.get(toPos))) {
                 // If the position is no longer valid, add it to the stale list, so it can be removed later
                 stale.add(toPos);
                 continue;
@@ -83,14 +80,8 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
     private boolean tryRefill(Level world, BlockPos toPos) {
 
-        // If the position is a cauldron, try to fill it with water and return true if successful
-        if (world.getBlockState(toPos) == Blocks.CAULDRON.defaultBlockState()) {
-            world.setBlockAndUpdate(toPos, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
-            return true;
-        }
-
         // Otherwise, try to fill the position with water if it is a fluid handler
-        IFluidHandler tank = world.getCapability(Capabilities.FluidHandler.BLOCK, toPos, Direction.UP);
+        IFluidHandler tank = world.getCapability(Capabilities.FluidHandler.BLOCK, toPos, toList.getOrDefault(toPos, Direction.UP));
         if (tank != null) {
             if (tank.fill(waterStack, IFluidHandler.FluidAction.SIMULATE) > 100) {
                 tank.fill(waterStack, IFluidHandler.FluidAction.EXECUTE);
@@ -115,12 +106,12 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     }
 
     @Override
-    public void onFinishedConnectionFirst(@Nullable GlobalPos storedPosG, @Nullable LivingEntity storedEntity, Player playerEntity) {
+    public void onFinishedConnectionFirst(@Nullable GlobalPos storedPosG, @Nullable Direction face, @Nullable LivingEntity storedEntity, Player playerEntity) {
         if (storedPosG == null || !(level instanceof ServerLevel) || storedPosG.pos().equals(getBlockPos()))
             return;
         BlockPos storedPos = storedPosG.pos();
-        if (this.isRefillable(storedPos, level)) {
-            if (this.setSendTo(storedPos.immutable())) {
+        if (this.isRefillable(storedPos, level, face)) {
+            if (this.setSendTo(storedPos.immutable(), face)) {
                 PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.send", DominionWand.getPosString(storedPos)));
                 ParticleUtil.beam(storedPos, worldPosition, level);
             } else {
@@ -131,12 +122,10 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         }
     }
 
-    private boolean isRefillable(BlockPos storedPos, Level level) {
+    private boolean isRefillable(BlockPos storedPos, Level level, @Nullable Direction face) {
         if (storedPos == null) return false;
 
-        if (level.getBlockState(storedPos).getBlock() instanceof AbstractCauldronBlock) {
-            return true;
-        } else if (level.getBlockEntity(storedPos) != null && level.getCapability(Capabilities.FluidHandler.BLOCK, storedPos, Direction.UP) != null) {
+        if (level.getCapability(Capabilities.FluidHandler.BLOCK, storedPos, face) != null) {
             return true;
         } else return CompatUtils.isBotaniaLoaded() && BotaniaCompat.isApothecary(storedPos, level);
     }
@@ -149,9 +138,9 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
         level.addFreshEntity(orb);
     }
 
-    public boolean setSendTo(BlockPos pos) {
+    public boolean setSendTo(BlockPos pos, Direction face) {
         if (closeEnough(pos)) {
-            toList.add(pos);
+            toList.put(pos, face);
             updateBlock();
             return true;
         }
@@ -178,12 +167,17 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     @Override
     public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
         super.loadAdditional(tag, pRegistries);
-        toList = new HashSet<>();
+        toList = new HashMap<>();
         int counter = 0;
 
         while (NBTUtil.hasBlockPos(tag, "to_" + counter)) {
             BlockPos pos = NBTUtil.getNullablePos(tag, "to_" + counter);
-            if (pos != null) this.toList.add(pos);
+            if (pos != null) {
+                Direction face = Direction.UP;
+                if (tag.contains("to_direction_" + counter))
+                    face = Direction.from3DDataValue(tag.getInt("to_direction_" + counter));
+                this.toList.put(pos, face);
+            }
             counter++;
         }
 
@@ -193,8 +187,9 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     public void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
         super.saveAdditional(tag, pRegistries);
         int counter = 0;
-        for (BlockPos p : this.toList) {
-            NBTUtil.storeBlockPos(tag, "to_" + counter, p);
+        for (Map.Entry<BlockPos, Direction> p : this.toList.entrySet()) {
+            NBTUtil.storeBlockPos(tag, "to_" + counter, p.getKey());
+            tag.putInt("to_direction_" + counter, (p.getValue() != null ? p.getValue() : Direction.UP).ordinal());
             counter++;
         }
     }

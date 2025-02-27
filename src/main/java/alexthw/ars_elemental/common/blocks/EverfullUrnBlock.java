@@ -96,7 +96,12 @@ public class EverfullUrnBlock extends TickableModBlock implements BucketPickup {
     }
 
     @Override
-    public @NotNull Optional<SoundEvent> getPickupSound() {
+    public Optional<SoundEvent> getPickupSound() {
+        return Optional.of(SoundEvents.BUCKET_FILL);
+    }
+
+    @Override
+    public @NotNull Optional<SoundEvent> getPickupSound(@NotNull BlockState state) {
         return Optional.of(SoundEvents.BUCKET_FILL);
     }
 

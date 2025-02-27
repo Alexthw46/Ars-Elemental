@@ -335,6 +335,7 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page.grow", "While wearing an Earth Focus, Grow will deal magic damage to undead with a chance of spawning a spore blossom.");
         add("ars_elemental.page.cut", "Cut can sever Life Links. While wearing an Air Focus, Cut will have chances to behead the target if it deals the killing blow. Up to 4 Luck augments can be used to boost the chances.");
 
+
         for (FamiliarScript i : FamiliarRegistry.getFamiliarScriptMap().values()) {
             if (i.familiar.getRegistryName().getNamespace().equals(ArsElemental.MODID)) {
                 add("ars_elemental.familiar_desc." + i.familiar.getRegistryName().getPath(), i.familiar.getBookDescription());

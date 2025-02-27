@@ -37,6 +37,7 @@ public class Datagen {
         gen.addProvider(event.includeServer(), new AETagsProvider.AEItemTagsProvider(gen, provider, BTP, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEEntityTagProvider(gen, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new AETagsProvider.AEDamageTypeProvider(gen, provider, existingFileHelper));
+        gen.addProvider(event.includeServer(), new AETagsProvider.AEBannerTagsProvider(output, provider, existingFileHelper));
         gen.addProvider(event.includeServer(), new ModRecipeProvider(gen, provider));
         gen.addProvider(event.includeServer(), new AELootTables(gen, provider));
         gen.addProvider(event.includeServer(), new CompostablesProvider(output, provider));

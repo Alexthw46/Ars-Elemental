@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
@@ -20,6 +21,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.*;
@@ -46,6 +48,7 @@ import java.util.concurrent.CompletableFuture;
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.*;
+import static com.hollingsworth.arsnouveau.common.datagen.BannerTagsProvider.bannerTag;
 import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
 
 public class AETagsProvider {
@@ -99,6 +102,7 @@ public class AETagsProvider {
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem()
             );
             tag(ItemTagProvider.SHADY_WIZARD_FRUITS).add(ModItems.FLASHING_POD.get().asItem());
+            tag(Tags.Items.FOODS_FRUIT).add(ModItems.FLASHING_POD.get().asItem());
             tag(MAGIC_HOOD).add(ItemsRegistry.BATTLEMAGE_HOOD.get(), ItemsRegistry.ARCANIST_HOOD.get(), ItemsRegistry.SORCERER_HOOD.get());
             tag(MAGIC_ROBE).add(ItemsRegistry.BATTLEMAGE_ROBES.get(), ItemsRegistry.ARCANIST_ROBES.get(), ItemsRegistry.SORCERER_ROBES.get());
             tag(MAGIC_LEG).add(ItemsRegistry.BATTLEMAGE_LEGGINGS.get(), ItemsRegistry.ARCANIST_LEGGINGS.get(), ItemsRegistry.SORCERER_LEGGINGS.get());
@@ -374,6 +378,17 @@ public class AETagsProvider {
                     .addOptional(ModRegistry.SPARK.location())
                     .addOptional(DamageTypesRegistry.WINDSHEAR.location());
 
+        }
+    }
+
+    public static class AEBannerTagsProvider extends BannerPatternTagsProvider {
+        public AEBannerTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, provider, ArsElemental.MODID, existingFileHelper);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
+            tag(bannerTag).addOptional(ArsNouveauRegistry.ANIMA_ICON.location());
         }
     }
 }

@@ -57,7 +57,7 @@ public class ArchwoodForestRitual extends ConjureBiomeRitual {
 
     @Override
     public boolean canConsumeItem(ItemStack stack) {
-        boolean pod = getConsumedItems().stream().anyMatch(i -> stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof ArchfruitPod);
+        boolean pod = getConsumedItems().stream().anyMatch(i -> i.getItem() instanceof BlockItem bi && bi.getBlock() instanceof ArchfruitPod);
         return super.canConsumeItem(stack) || (stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof ArchfruitPod && !pod);
     }
 

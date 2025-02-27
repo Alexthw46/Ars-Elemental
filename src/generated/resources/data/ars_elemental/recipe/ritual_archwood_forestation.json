@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:logs/archwood"
+    },
+    {
+      "item": "ars_nouveau:ritual_forestation"
+    },
+    {
+      "item": "ars_nouveau:air_essence"
+    },
+    {
+      "item": "ars_nouveau:earth_essence"
+    },
+    {
+      "item": "ars_nouveau:water_essence"
+    },
+    {
+      "item": "ars_nouveau:fire_essence"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ars_elemental:ritual_archwood_forestation"
+  }
+}

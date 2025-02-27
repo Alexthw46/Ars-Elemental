@@ -2,7 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestRitual;
-import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestationRitual;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
@@ -40,6 +40,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(SPARKFLOWER.get())
                 .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
                 .save(consumer, prefix("sparkflower_to_glowstone"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, FLASHING_SAPLING.get())
+                .requires(Ingredient.of(BlockRegistry.CASCADING_SAPLING.get(),
+                        BlockRegistry.FLOURISHING_SAPLING.get(),
+                        BlockRegistry.BLAZING_SAPLING.get(),
+                        BlockRegistry.VEXING_SAPLING.get())
+                ).requires(ItemsRegistry.AIR_ESSENCE)
+                .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
+                .save(consumer, prefix("flashing_sapling"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ADVANCED_PRISM.get())
                 .define('P', BlockRegistry.SPELL_PRISM.asItem())
@@ -98,12 +107,18 @@ public class ModRecipeProvider extends RecipeProvider {
 
         shapelessBuilder(getRitualItem(prefix(ArchwoodForestRitual.ID)))
                 .requires(ItemTagProvider.ARCHWOOD_LOG_TAG)
-                .requires(BlockRegistry.BLAZING_SAPLING.get())
-                .requires(BlockRegistry.CASCADING_SAPLING.get())
-                .requires(BlockRegistry.VEXING_SAPLING.get())
-                .requires(BlockRegistry.FLOURISHING_SAPLING.get())
-                .requires(ModItems.FLASHING_SAPLING.get())
+                .requires(ItemsRegistry.ABJURATION_ESSENCE.get())
+                .requires(ItemsRegistry.CONJURATION_ESSENCE.get())
                 .save(consumer, prefix(ArchwoodForestRitual.ID));
+
+        shapelessBuilder(getRitualItem(prefix(ArchwoodForestationRitual.ID)))
+                .requires(ItemTagProvider.ARCHWOOD_LOG_TAG)
+                .requires(getRitualItem(ArsNouveau.prefix(RitualLib.FORESTATION)))
+                .requires(ItemsRegistry.AIR_ESSENCE)
+                .requires(ItemsRegistry.EARTH_ESSENCE)
+                .requires(ItemsRegistry.WATER_ESSENCE)
+                .requires(ItemsRegistry.FIRE_ESSENCE)
+                .save(consumer, prefix(ArchwoodForestationRitual.ID));
 
         shapedBuilder(CURIO_BAG.get())
                 .define('M', ItemsRegistry.MAGE_FIBER)
