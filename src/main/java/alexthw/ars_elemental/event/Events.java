@@ -88,7 +88,7 @@ public class Events {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerDrop(LivingDropsEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.level.holder(ModRegistry.MIRROR).isEmpty())
+            if (player.level.holder(ModRegistry.SOULBOUND).isEmpty())
                 return;
             if (player instanceof FakePlayer || player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
                 return;
