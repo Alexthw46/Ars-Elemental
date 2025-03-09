@@ -3,6 +3,9 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +14,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.ars_elemental.registry.ModPotions.LIFE_LINK;
@@ -58,8 +62,8 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return getSummonAugments();
-    } //just time boosters
+        return augmentSetOf(AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE, AugmentSensitive.INSTANCE);
+    }
 
     public void applyPotion(LivingEntity entity, LivingEntity owner, Holder<MobEffect> potionEffect, SpellStats stats) {
         if (entity == null || owner == null) return;
@@ -76,8 +80,14 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
     }
 
     @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentSensitive.INSTANCE, "Inverts the direction of the link, sharing your healing with the target and receiving half of their damage.");
+    }
+
+    @Override
     public String getBookDescription() {
-        return "You create a link between your life force and the target's. Any damage dealt to you will be shared with the target and any healing of the target will be shared with you. Using sensitive reverses the direction of the link. Cut can sever the life link, ending the effect on both sides.";
+        return "You create a link between your life force and the target's. Any damage dealt to you will be shared with the target and any healing of the target will be shared with you equally. Using sensitive reverses the direction of the link. Cut can sever the life link, ending the effect on both sides.";
     }
 
     @Override
