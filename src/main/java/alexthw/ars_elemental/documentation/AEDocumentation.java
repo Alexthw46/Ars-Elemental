@@ -139,6 +139,7 @@ public class AEDocumentation {
 
     private static void addArmorSet(ArmorSet armorSet) {
         registerEntry(ARMOR, new AEDocEntryBuilder(ARMOR, armorSet.getTranslationKey())
+                .withIcon(armorSet.getHat())
                 .withPage(TextEntry.create("ars_elemental.page.armor_set." + armorSet.getName(), armorSet.getTranslationKey()))
                 .withSortNum(10)
                 .withCraftingPages(armorSet.getHat())

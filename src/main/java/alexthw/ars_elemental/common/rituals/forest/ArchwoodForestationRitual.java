@@ -25,7 +25,6 @@ public class ArchwoodForestationRitual extends FeaturePlacementRitual {
     @Override
     public void addFeatures(List<IPlaceableFeature> features) {
         features.add(new BonemealFeature(6, 0.8));
-        features.add(new PlaceableLightFeature(0, 0.1));
         switch (biomeType) {
             case 0 -> {
                 features.add(new RandomTreeFeature(List.of(BlockRegistry.BLAZING_SAPLING.defaultBlockState()), 8, 0.8));
@@ -69,7 +68,7 @@ public class ArchwoodForestationRitual extends FeaturePlacementRitual {
             }
 
         }
-
+        features.add(new PlaceableLightFeature(4, 0.1));
     }
 
 

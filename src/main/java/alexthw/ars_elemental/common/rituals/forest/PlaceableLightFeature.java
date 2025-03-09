@@ -21,7 +21,7 @@ public class PlaceableLightFeature extends PlaceBlockFeature {
     public boolean onPlace(Level level, BlockPos pos, FeaturePlacementRitual placementRitual, RitualBrazierTile brazierTile) {
         BlockState state = block.get();
         RandomSource random = level.random;
-        if (random.nextFloat() < chance) {
+        if (random.nextFloat() < chance && level.getBlockState(pos).isAir()) {
             level.setBlockAndUpdate(pos, state);
             if (level.getBlockEntity(pos) instanceof LightTile tile) {
                 tile.color = new ParticleColor(

@@ -374,6 +374,21 @@ public class AELangDatagen extends LanguageProvider {
                 }
             }
         }
+
+        // to remove when patchouli is completely removed
+        add("ars_elemental.page.spell_mirror", "Mirror similar to a Spell Prism that can be placed on walls, floor and ceiling. If a spell projectile hits the mirror, it will be reflected by with a mirrored angle.");
+        add("ars_elemental.page.magma_upstream", "This block generates an upstream current that will make surrounding entities in lava float upwards and gain a short Fire Resistance effect. Sneaking will allow to descend");
+        add("ars_elemental.page.air_upstream", "This block generates an upstream current that will make surrounding entities levitate. Sneaking will give Slowfall and allow to descend. Consumes Source when at least an entity is affected.");
+        add("ars_elemental.page.everfull_urn", "This magic urn converts Source into water. Link a cauldron or an Apothecary to the urn using a dominion wand and it will be refilled for a cheap amount of source.");
+        add("ars_elemental.page1.fire_golem", "The Flarecannon can be used as a wandering sentry, like the weald walkers. It will shoot flare homing projectiles at enemies and patrol around the area assigned using the dominion wand. Soul Sand and Magma blocks can be used to change appearance. If defeated, it can be reactivated with blaze powder or magma cream. Friends call it Firenando.");
+        add("ars_elemental.page1.mermaid", "Sirens are found in warmer seas, jumping out of the water or following boats. You can befriend a wild mermaid by giving them a sea pickle, they will jump and leave behind few tokens. The siren charm can be used to summon a Siren and if used on Prismarine it will transform in a Siren Shrine. Tamed sirens can change colors if you give them kelp or corals.");
+        add("ars_elemental.page2.mermaid", "The Shrine will slowly generate fishing loot items over time, asking for source after each cycle. The number of items and chance of getting a treasure will increase if many different water animals and plants are near the Shrine. You should build an aquarium or pond around the Shrine, to let your sirens have fun. [Note: it will take some time to update the score].");
+        add("ars_elemental.page2.necrotic_focus", "By imbuing the Focus of Summoning with evil energies, you can corrupt its powers towards Necromancy. Glyphs of the Anima school will get two free ExtendTime, Heal gets two amplify and Charm has way more chance to affect undead mobs. Summon Steed will change in Summon Skeletal Steed, which is able to walk and breathe underwater.");
+        add("ars_elemental.page3.necrotic_focus", "Summoned Wolves, Undead and Vexes seems unchanged at first, but if they die while the summoner wear this focus they will rise from death once, filled with blood lust. These undead summons will cast Homing spells when you do and heal you every time they kill an enemy.");
+        add("ars_elemental.page.water_upstream", "This block generates an upstream current that will make surrounding entities in water float upwards as if inside a bubble column, even if they are not in source blocks. Sneaking will allow to descend.");
+        add("ars_elemental.page.curio_bag", "All those magical trinkets can easily clutter your inventory, but fear not! Using some magebloom fiber you can make a magic pouch to store items. You can also open it with $(k:ars_elemental.open_pouch) while in the hotbar or in a curio slot. You can further upgrade it into the Spellcaster bag, which is larger and can be dyed.");
+
+
     }
 
 }
