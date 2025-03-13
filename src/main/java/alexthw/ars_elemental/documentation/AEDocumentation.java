@@ -35,10 +35,6 @@ import static com.hollingsworth.arsnouveau.setup.registry.Documentation.*;
 
 public class AEDocumentation {
 
-    static DocCategory EQUIPMENT = DocumentationRegistry.ITEMS;
-    static DocCategory AUTOMATION = DocumentationRegistry.CRAFTING;
-
-
     private static DocEntry addPage(DocEntryBuilder builder) {
         return DocumentationRegistry.registerEntry(builder.category, builder.build());
     }
@@ -46,16 +42,17 @@ public class AEDocumentation {
     public static void init(ReloadDocumentationEvent.AddEntries ignored) {
         addPage(new AEDocEntryBuilder(GETTING_STARTED, "spell_schools").withIcon(ModItems.DEBUG_ICON.get()).withTextPage("ars_elemental.page.schools").withPage(TextEntry.create(Component.translatable("ars_elemental.page.anima"), Component.translatable("ars_nouveau.school.necromancy"), ModItems.ANIMA_ESSENCE.get())));
 
-        addBasicItem(ModItems.WATER_URN.get(), AUTOMATION);
-        addBasicItem(ModItems.AIR_UPSTREAM_BLOCK.get(), CRAFTING);
-        addBasicItem(ModItems.WATER_UPSTREAM_BLOCK.get(), CRAFTING);
-        addBasicItem(ModItems.LAVA_UPSTREAM_BLOCK.get(), CRAFTING);
+        addBasicItem(ModItems.WATER_URN.get(), DocumentationRegistry.CRAFTING);
+        addPage(new AEDocEntryBuilder(CRAFTING, ModItems.AIR_UPSTREAM_BLOCK.get()).withName("ars_elemental.title.upstream_blocks").withIntroPage("upstream_blocks").withCraftingPages().withCraftingPages(
+                ModItems.WATER_UPSTREAM_BLOCK.get(),
+                ModItems.LAVA_UPSTREAM_BLOCK.get()
+        ));
 
-        var curioBag = addPage(new AEDocEntryBuilder(EQUIPMENT, ModItems.CURIO_BAG.get()).withIntroPage().withCraftingPages(ModItems.CURIO_BAG.get()).withCraftingPages(ModItems.CASTER_BAG.get()));
+        var curioBag = addPage(new AEDocEntryBuilder(DocumentationRegistry.ITEMS, ModItems.CURIO_BAG.get()).withIntroPage().withCraftingPages(ModItems.CURIO_BAG.get()).withCraftingPages(ModItems.CASTER_BAG.get()));
 
-        addBasicItem(ModItems.SPELL_MIRROR.get(), AUTOMATION);
+        addBasicItem(ModItems.SPELL_MIRROR.get(), DocumentationRegistry.CRAFTING);
 
-        var advancedPrism = addPage(new AEDocEntryBuilder(AUTOMATION, ModItems.ADVANCED_PRISM.get()).withTextPage("ars_elemental.page1.advanced_prism")
+        var advancedPrism = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.ADVANCED_PRISM.get()).withTextPage("ars_elemental.page1.advanced_prism")
                 .withCraftingPages(ModItems.ADVANCED_PRISM.get())
                 .withCraftingPages(ModItems.ARC_LENS.get())
                 .withCraftingPages(ModItems.HOMING_LENS.get())
@@ -65,7 +62,7 @@ public class AEDocumentation {
                 .withCraftingPages(ModItems.RGB_LENS.get()))
                 .withRelation(getBaseEntry("block.ars_nouveau." + SPELL_PRISM));
 
-        var elementalTurrets = addPage(new AEDocEntryBuilder(AUTOMATION, "elemental_turrets").withIcon(ModItems.FIRE_TURRET.get()).withTextPage("ars_elemental.page1.elemental_turrets")
+        var elementalTurrets = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, "elemental_turrets").withIcon(ModItems.FIRE_TURRET.get()).withTextPage("ars_elemental.page1.elemental_turrets")
                 .withCraftingPages(ModItems.FIRE_TURRET.get())
                 .withCraftingPages(ModItems.WATER_TURRET.get())
                 .withCraftingPages(ModItems.AIR_TURRET.get())
@@ -109,9 +106,9 @@ public class AEDocumentation {
                 .withCraftingPages(ModItems.EARTH_FOCUS.get())
         );
 
-        var sirenCharm = addPage(new AEDocEntryBuilder(AUTOMATION, ModItems.SIREN_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.SIREN_ENTITY.get())).withTextPage("ars_elemental.page2.siren_charm"));
+        var sirenCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.SIREN_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.SIREN_ENTITY.get())).withTextPage("ars_elemental.page2.siren_charm"));
 
-        var firenandoCharm = addPage(new AEDocEntryBuilder(AUTOMATION, ModItems.FIRENANDO_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FIRENANDO_ENTITY.get())));
+        var firenandoCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FIRENANDO_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FIRENANDO_ENTITY.get())));
 
         addPage(new AEDocEntryBuilder(ARMOR, ModItems.MARK_OF_MASTERY.get()).withName("ars_elemental.title.elemental_upgrades").withIntroPage().withCraftingPages().withSortNum(5));
         addArmorSet(ModItems.FIRE_ARMOR);
@@ -119,7 +116,7 @@ public class AEDocumentation {
         addArmorSet(ModItems.AIR_ARMOR);
         addArmorSet(ModItems.EARTH_ARMOR);
 
-        addPage(new AEDocEntryBuilder(EQUIPMENT, ModItems.ENCHANTER_BANGLE.get())
+        addPage(new AEDocEntryBuilder(DocumentationRegistry.ITEMS, ModItems.ENCHANTER_BANGLE.get())
                 .withIntroPage()
                 .withCraftingPages(ModItems.ENCHANTER_BANGLE.get())
                 .withTextPage("ars_elemental.page.fire_bangle")
@@ -166,8 +163,10 @@ public class AEDocumentation {
 
         getBaseEntry("spell_books").addPage(TextEntry.create("ars_elemental.page.book_protection", "tooltip.ars_nouveau.blessed")).addPage(P4EEntry.create(protectionBook));
 
-        getBaseEntryItem(ItemsRegistry.ENCHANTERS_SHIELD).addPage(TextEntry.create("ars_elemental.page.enchanters_shield"))
-                .withRelation(getEntry(prefix("mirror_shield")));
+        DocEntry mirrorShield = getEntry(prefix("mirror_shield"));
+        if (mirrorShield != null)
+            getBaseEntryItem(ItemsRegistry.ENCHANTERS_SHIELD).addPage(TextEntry.create("ars_elemental.page.enchanters_shield"))
+                    .withRelation(mirrorShield);
 
         getBaseEntryGlyph(EffectIgnite.INSTANCE).addPage(TextEntry.create("ars_elemental.page.ignite"));
         getBaseEntryGlyph(EffectGravity.INSTANCE).addPage(TextEntry.create("ars_elemental.page.gravity"));

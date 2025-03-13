@@ -9,10 +9,6 @@
       "required": false
     },
     {
-      "id": "ars_elemental:spark",
-      "required": false
-    },
-    {
       "id": "ars_nouveau:windshear",
       "required": false
     }

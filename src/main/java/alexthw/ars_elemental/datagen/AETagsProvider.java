@@ -371,11 +371,12 @@ public class AETagsProvider {
                     .addTag(Tags.DamageTypes.IS_POISON)
                     .addOptional(DamageTypesRegistry.CRUSH.location());
 
+            tag(DamageTypeTags.IS_LIGHTNING).addOptional(ModRegistry.SPARK.location());
+
             tag(ModRegistry.AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
                             DamageTypes.FLY_INTO_WALL,
                             DamageTypes.SONIC_BOOM)
                     .addOptional(ModRegistry.CUT.location())
-                    .addOptional(ModRegistry.SPARK.location())
                     .addOptional(DamageTypesRegistry.WINDSHEAR.location());
 
         }

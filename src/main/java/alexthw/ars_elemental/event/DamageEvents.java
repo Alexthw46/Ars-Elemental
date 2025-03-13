@@ -14,9 +14,12 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
+import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
+import com.hollingsworth.arsnouveau.api.util.ManaUtil;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectConjureWater;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import com.hollingsworth.arsnouveau.setup.registry.RegistryHelper;
@@ -274,21 +277,24 @@ public class DamageEvents {
             event.setAmount(event.getAmount() + armorReduction * 0.5F);
         }
 
-        int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get();
-        //check if the entity has the mana bubble effect and if so, reduce the damage
         LivingEntity living = event.getEntity();
+        int ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() - ManaUtil.getPlayerDiscounts(living, new Spell(EffectConjureWater.INSTANCE), ItemStack.EMPTY);
+        //check if the entity has the mana bubble effect and if so, reduce the damage
         MobEffectInstance bubbleEffect = living.getEffect(MANA_BUBBLE);
         if (not_bypassEnchants && bubbleEffect != null) {
             var mana = CapabilityRegistry.getMana(living);
-            if (mana != null) {
+            // guard against infinite damage that would cause NaN mana
+            if (mana != null && event.getAmount() < 100000) {
                 double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
-                double amp = Math.min(1 + bubbleEffect.getAmplifier() / 2D, maxReduction);
+                double amp = Math.min(1 + bubbleEffect.getAmplifier(), maxReduction);
                 float newDamage = (float) Math.max(0.1, event.getAmount() - amp);
                 float actualReduction = event.getAmount() - newDamage;
                 // don't deplete mana if the entity is invulnerable due to a previous attack
-                if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost && event.getContainer().getPostAttackInvulnerabilityTicks() != event.getEntity().invulnerableTime) {
+                if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost) {
                     event.setAmount(newDamage);
-                    mana.removeMana(actualReduction * ManaBubbleCost);
+                    if (event.getContainer().getPostAttackInvulnerabilityTicks() != event.getEntity().invulnerableTime) {
+                        mana.removeMana(actualReduction * ManaBubbleCost);
+                    }
                 }
                 if (mana.getCurrentMana() < ManaBubbleCost) {
                     living.removeEffect(MANA_BUBBLE);

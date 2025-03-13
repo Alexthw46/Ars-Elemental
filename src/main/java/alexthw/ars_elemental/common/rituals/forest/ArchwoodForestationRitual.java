@@ -24,32 +24,32 @@ public class ArchwoodForestationRitual extends FeaturePlacementRitual {
 
     @Override
     public void addFeatures(List<IPlaceableFeature> features) {
-        features.add(new BonemealFeature(6, 0.8));
+        features.add(new BonemealFeature(6, 0.4));
         switch (biomeType) {
             case 0 -> {
                 features.add(new RandomTreeFeature(List.of(BlockRegistry.BLAZING_SAPLING.defaultBlockState()), 8, 0.8));
                 features.add(new PlaceBlockFeature(2, 0.1, Blocks.TORCHFLOWER::defaultBlockState));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.BOMBEGRANTE_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(1, 0.15, BlockRegistry.BOMBEGRANTE_POD.defaultBlockState()));
             }
             case 1 -> {
                 features.add(new RandomTreeFeature(List.of(BlockRegistry.CASCADING_SAPLING.defaultBlockState()), 8, 0.8));
                 features.add(new PlaceBlockFeature(2, 0.1, Blocks.PITCHER_PLANT::defaultBlockState));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.FROSTAYA_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(1, 0.15, BlockRegistry.FROSTAYA_POD.defaultBlockState()));
             }
             case 2 -> {
                 features.add(new RandomTreeFeature(List.of(BlockRegistry.VEXING_SAPLING.defaultBlockState()), 8, 0.8));
                 features.add(new PlaceBlockFeature(2, 0.1, BlockRegistry.SOURCEBERRY_BUSH.get()::defaultBlockState));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.BASTION_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(1, 0.15, BlockRegistry.BASTION_POD.defaultBlockState()));
             }
             case 3 -> {
                 features.add(new RandomTreeFeature(List.of(BlockRegistry.FLOURISHING_SAPLING.defaultBlockState()), 8, 0.8));
                 features.add(new PlaceBlockFeature(2, 0.1, ModItems.GROUND_BLOSSOM.get()::defaultBlockState));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.MENDOSTEEN_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(1, 0.15, BlockRegistry.MENDOSTEEN_POD.defaultBlockState()));
             }
             case 4 -> {
                 features.add(new RandomTreeFeature(List.of(ModItems.FLASHING_SAPLING.get().defaultBlockState()), 8, 0.8));
                 features.add(new PlaceBlockFeature(2, 0.1, ModItems.SPARKFLOWER.get()::defaultBlockState));
-                features.add(new ArchpodFeature(0.5, 0.15, ModItems.FLASHING_POD.get().defaultBlockState()));
+                features.add(new ArchpodFeature(1, 0.15, ModItems.FLASHING_POD.get().defaultBlockState()));
             }
             default -> {
                 // all the above
@@ -60,11 +60,11 @@ public class ArchwoodForestationRitual extends FeaturePlacementRitual {
                         ModItems.FLASHING_SAPLING.get().defaultBlockState()
                 ), 8, 0.8));
                 features.add(new PlaceBlockFeature(2, 0.1, BlockRegistry.SOURCEBERRY_BUSH.get()::defaultBlockState));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.BOMBEGRANTE_POD.defaultBlockState()));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.FROSTAYA_POD.defaultBlockState()));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.BASTION_POD.defaultBlockState()));
-                features.add(new ArchpodFeature(0.5, 0.15, BlockRegistry.MENDOSTEEN_POD.defaultBlockState()));
-                features.add(new ArchpodFeature(0.5, 0.15, ModItems.FLASHING_POD.get().defaultBlockState()));
+                features.add(new ArchpodFeature(0.5, 0.1, BlockRegistry.BOMBEGRANTE_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(0.5, 0.1, BlockRegistry.FROSTAYA_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(0.5, 0.1, BlockRegistry.BASTION_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(0.5, 0.1, BlockRegistry.MENDOSTEEN_POD.defaultBlockState()));
+                features.add(new ArchpodFeature(0.5, 0.1, ModItems.FLASHING_POD.get().defaultBlockState()));
             }
 
         }
