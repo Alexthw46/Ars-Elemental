@@ -31,12 +31,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.monster.Monster;
@@ -52,6 +52,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
+import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -81,34 +82,50 @@ public class DamageEvents {
     }
 
     @SubscribeEvent
-    public static void bypassRes(LivingIncomingDamageEvent event) {
-        LivingEntity living = event.getEntity();
-        if (event.getSource().getEntity() instanceof Player player) {
+    public static void changeDamageType(SpellDamageEvent.Pre preSpellDamageEvent) {
+        if (preSpellDamageEvent.damageSource.is(DamageTypeTags.IS_FIRE) && preSpellDamageEvent.target instanceof LivingEntity living) {
+            if (living.hasEffect(MobEffects.FIRE_RESISTANCE) && living.hasEffect(MAGIC_FIRE)) {
+                // preserve the luck level of the spell damage source
+                DamageUtil.SpellDamageSource newSource = (DamageUtil.SpellDamageSource) DamageUtil.source(living.level(), ModRegistry.MAGIC_FIRE, preSpellDamageEvent.damageSource.getEntity());
+                if (preSpellDamageEvent.damageSource instanceof DamageUtil.SpellDamageSource oldspellDamageSource) {
+                    newSource.setLuckLevel(oldspellDamageSource.getLuckLevel());
+                }
+                preSpellDamageEvent.damageSource = newSource;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void bypassDmgInv(EntityInvulnerabilityCheckEvent event) {
+        Entity living = event.getEntity();
+        // the target was invulnerable to the damage source
+        if (event.getSource().getEntity() instanceof Player player && event.getOriginalInvulnerability()) {
+            var source = event.getSource();
             Set<SpellSchool> focus = ISchoolFocus.getFociSchools(player);
             if (!focus.isEmpty()) {
-                focusTriggered:
+                boolean flag = true;
                 for (SpellSchool school : focus) {
                     switch (school.getId()) {
                         case "fire" -> {
-                            if (event.getSource().is(DamageTypeTags.IS_FIRE) && (living.fireImmune() || living.hasEffect(MobEffects.FIRE_RESISTANCE))) {
-                                event.setCanceled(true);
-                                DamageSource newDamage = DamageUtil.source(player.level(), ModRegistry.MAGIC_FIRE, player);
-                                living.hurt(newDamage, event.getAmount());
-                                break focusTriggered;
+                            // check if target was invulnerable only to fire damage, not a true invulnerability
+                            if (source.is(DamageTypeTags.IS_FIRE) && living.fireImmune()) {
+                                flag = flag && (living.isRemoved()
+                                        || living.isInvulnerable() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.isCreativePlayer());
                             }
                         }
-                        case "water" -> {
-                            if (event.getSource().is(DamageTypeTags.IS_DROWNING) && living.getType().is(EntityTypeTags.AQUATIC)) {
-                                event.setCanceled(true);
-                                DamageSource newDamage = DamageUtil.source(player.level(), DamageTypes.MAGIC, player);
-                                living.hurt(newDamage, event.getAmount());
-                                break focusTriggered;
+                        case "air" -> {
+                            // check if target was invulnerable only to fall damage, not a true invulnerability
+                            if (source.is(DamageTypeTags.IS_FALL) && living.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE)) {
+                                flag = flag && (living.isRemoved()
+                                        || living.isInvulnerable() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.isCreativePlayer());
                             }
                         }
                     }
                 }
+                // the target was invulnerable to the damage source and the player has a focus that bypasses it
+                if (!flag)
+                    event.setInvulnerable(false);
             }
-
         }
     }
 
