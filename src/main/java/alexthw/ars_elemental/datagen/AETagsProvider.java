@@ -176,6 +176,8 @@ public class AETagsProvider {
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get(),
                     ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get()
             );
+            tag(Tags.Blocks.STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get());
+            tag(Tags.Blocks.STRIPPED_WOODS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get());
             tag(BlockTags.LEAVES).add(ModItems.FLASHING_LEAVES.get());
             tag(ARCHWOOD_LEAVES).add(ModItems.FLASHING_LEAVES.get());
             tag(BlockTags.MINEABLE_WITH_HOE).add(ModItems.FLASHING_LEAVES.get());
