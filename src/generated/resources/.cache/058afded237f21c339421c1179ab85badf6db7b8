@@ -1,11 +1,7 @@
-// 1.21.1	2025-02-27T11:43:48.6800014	Ars Elemental Item Tags
+// 1.21.1	2025-04-01T16:06:05.1622659	Ars Elemental Item Tags
 a1c191d75ca82bdd457d409695bd4e6e4ba9d471 data/ars_elemental/tags/item/blacklist_bag_item.json
 5b9e1effce30a548495e187c1ff51d42479e731f data/ars_elemental/tags/item/soulbound_extra.json
-f4df44c664b9190c5385bc3d96382af26add802b data/ars_nouveau/tags/item/boot.json
-a6f57b5698003165658cebac60702657955e2733 data/ars_nouveau/tags/item/hood.json
-0c442262894975c5a4a45bf93b6d70503c166856 data/ars_nouveau/tags/item/legs.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/item/magic_shards.json
-ac42f29459995dfce1ddd28eb24c261e8cc6a67a data/ars_nouveau/tags/item/robe.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/item/shady_wizard_fruits.json
 fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/item/spellbook.json
 5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/item/spell_prism_lens.json

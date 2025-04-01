@@ -67,11 +67,6 @@ public class AETagsProvider {
         public static final TagKey<Item> SPELLBOOK = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "spellbook"));
         public static final TagKey<Item> PRISM_LENS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "spell_prism_lens"));
 
-        public static final TagKey<Item> MAGIC_HOOD = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "hood"));
-        public static final TagKey<Item> MAGIC_ROBE = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "robe"));
-        public static final TagKey<Item> MAGIC_LEG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "legs"));
-        public static final TagKey<Item> MAGIC_BOOT = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "boot"));
-
         // create log compat
         public static final TagKey<Item> STRIPPED_LOGS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "stripped_logs"));
         public static final TagKey<Item> STRIPPED_WOODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "stripped_wood"));
@@ -103,10 +98,6 @@ public class AETagsProvider {
             );
             tag(ItemTagProvider.SHADY_WIZARD_FRUITS).add(ModItems.FLASHING_POD.get().asItem());
             tag(Tags.Items.FOODS_FRUIT).add(ModItems.FLASHING_POD.get().asItem());
-            tag(MAGIC_HOOD).add(ItemsRegistry.BATTLEMAGE_HOOD.get(), ItemsRegistry.ARCANIST_HOOD.get(), ItemsRegistry.SORCERER_HOOD.get());
-            tag(MAGIC_ROBE).add(ItemsRegistry.BATTLEMAGE_ROBES.get(), ItemsRegistry.ARCANIST_ROBES.get(), ItemsRegistry.SORCERER_ROBES.get());
-            tag(MAGIC_LEG).add(ItemsRegistry.BATTLEMAGE_LEGGINGS.get(), ItemsRegistry.ARCANIST_LEGGINGS.get(), ItemsRegistry.SORCERER_LEGGINGS.get());
-            tag(MAGIC_BOOT).add(ItemsRegistry.BATTLEMAGE_BOOTS.get(), ItemsRegistry.ARCANIST_BOOTS.get(), ItemsRegistry.SORCERER_BOOTS.get());
 
             Arrays.stream(curioSlots).map(AEItemTagsProvider::curiosTag).forEach(t ->
                     tag(ModRegistry.SOULBOUND_ABLE).addOptionalTag(t.location())

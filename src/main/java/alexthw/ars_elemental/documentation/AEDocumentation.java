@@ -35,10 +35,6 @@ import static com.hollingsworth.arsnouveau.setup.registry.Documentation.*;
 
 public class AEDocumentation {
 
-    private static DocEntry addPage(DocEntryBuilder builder) {
-        return DocumentationRegistry.registerEntry(builder.category, builder.build());
-    }
-
     public static void init(ReloadDocumentationEvent.AddEntries ignored) {
         addPage(new AEDocEntryBuilder(GETTING_STARTED, "spell_schools").withIcon(ModItems.DEBUG_ICON.get()).withTextPage("ars_elemental.page.schools").withPage(TextEntry.create(Component.translatable("ars_elemental.page.anima"), Component.translatable("ars_nouveau.school.necromancy"), ModItems.ANIMA_ESSENCE.get())));
 

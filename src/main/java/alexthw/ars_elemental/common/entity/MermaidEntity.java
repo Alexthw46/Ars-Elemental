@@ -57,8 +57,8 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
@@ -473,7 +473,7 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
 
         @Override
         public String toString() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.ROOT);
         }
     }
 
