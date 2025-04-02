@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -77,17 +78,18 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
     }
 
     @Override
-    public void onWanded(Player playerEntity) {
-        // remove prism lens and drop it
+    public Result onClearConnections(Player playerEntity) {
         if (prismLens != null) {
             playerEntity.level().addFreshEntity(new ItemEntity(playerEntity.level(), getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), prismLens));
             prismLens = ItemStack.EMPTY;
-        }
+        } else return Result.FAIL;
         updateBlock();
+        return Result.CLEAR;
     }
 
+
     @Override
-    public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable LivingEntity storedEntity, Player playerEntity) {
+    public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable Direction face, @Nullable LivingEntity storedEntity, Player playerEntity) {
         if (storedPos != null) this.aim(storedPos, playerEntity);
     }
 
@@ -160,7 +162,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
     }
 
     void setLens(ItemStack lent, Player pPlayer) {
-        onWanded(pPlayer);
+        onClearConnections(pPlayer);
         this.prismLens = lent;
         updateBlock();
     }

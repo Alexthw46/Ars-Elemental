@@ -16,7 +16,6 @@ import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -95,9 +94,10 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
 
     @Override
-    public void onWanded(Player playerEntity) {
+    public Result onClearConnections(Player playerEntity) {
         this.clearPos();
         PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.cleared"));
+        return Result.CLEAR;
     }
 
     public void clearPos() {
@@ -106,10 +106,9 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     }
 
     @Override
-    public void onFinishedConnectionFirst(@Nullable GlobalPos storedPosG, @Nullable Direction face, @Nullable LivingEntity storedEntity, Player playerEntity) {
-        if (storedPosG == null || !(level instanceof ServerLevel) || storedPosG.pos().equals(getBlockPos()))
+    public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable Direction face, @Nullable LivingEntity storedEntity, Player playerEntity) {
+        if (storedPos == null || !(level instanceof ServerLevel) || storedPos.equals(getBlockPos()))
             return;
-        BlockPos storedPos = storedPosG.pos();
         if (this.isRefillable(storedPos, level, face)) {
             if (this.setSendTo(storedPos.immutable(), face)) {
                 PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.send", DominionWand.getPosString(storedPos)));
