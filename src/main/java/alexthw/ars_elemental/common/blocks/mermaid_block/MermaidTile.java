@@ -5,7 +5,6 @@ import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.registry.ModTiles;
 import com.google.common.collect.ImmutableList;
-import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
@@ -167,14 +166,13 @@ public class MermaidTile extends SummoningTile implements ITooltipProvider {
         if (!(this.level instanceof ServerLevel server)) return;
 
         // get the loot tables for fishing and create a fake player to get the loot context
-        ANFakePlayer fakePlayer = ANFakePlayer.getPlayer(server);
         ReloadableServerRegistries.Holder lootData = server.getServer().reloadableRegistries();
         LootTable lootTable = lootData.getLootTable(BuiltInLootTables.FISHING);
         LootTable lootTableTreasure = lootData.getLootTable(BuiltInLootTables.FISHING_TREASURE);
         LootTable lootTableJunk = lootData.getLootTable(BuiltInLootTables.FISHING_JUNK);
 
         LootParams lootContext = (new LootParams.Builder(server))
-                .withParameter(LootContextParams.ORIGIN, fakePlayer.position())
+                .withParameter(LootContextParams.ORIGIN, this.getBlockPos().getCenter())
                 .withParameter(LootContextParams.TOOL, getRod())
                 .create(LootContextParamSets.FISHING);
 
