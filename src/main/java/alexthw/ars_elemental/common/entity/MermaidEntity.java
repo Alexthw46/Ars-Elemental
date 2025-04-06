@@ -470,7 +470,7 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
 
         @Override
         public String toString() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.ROOT);
         }
     }
 
