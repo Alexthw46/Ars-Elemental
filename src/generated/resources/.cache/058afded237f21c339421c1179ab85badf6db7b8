@@ -1,10 +1,10 @@
-// 1.21.1	2025-04-01T16:06:05.1622659	Ars Elemental Item Tags
+// 1.21.1	2025-04-07T14:53:27.0954424	Ars Elemental Item Tags
 a1c191d75ca82bdd457d409695bd4e6e4ba9d471 data/ars_elemental/tags/item/blacklist_bag_item.json
-5b9e1effce30a548495e187c1ff51d42479e731f data/ars_elemental/tags/item/soulbound_extra.json
+5540379e0aabd2f9633623d80cc9fdaf9e576654 data/ars_elemental/tags/item/soulbound_extra.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/item/magic_shards.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/item/shady_wizard_fruits.json
 fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/item/spellbook.json
-5ad5980593ba929737f9aeda4c944036e222fe3b data/ars_nouveau/tags/item/spell_prism_lens.json
+bb8638ea7e8c91cece989a9c826c5a320fb1ba54 data/ars_nouveau/tags/item/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/item/an_focus.json
 093b982bcf3efffd59a052d7473d47981f1ec738 data/curios/tags/item/bracelet.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/c/tags/item/foods/fruit.json

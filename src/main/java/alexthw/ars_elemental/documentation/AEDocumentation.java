@@ -50,12 +50,15 @@ public class AEDocumentation {
 
         var advancedPrism = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.ADVANCED_PRISM.get()).withTextPage("ars_elemental.page1.advanced_prism")
                 .withCraftingPages(ModItems.ADVANCED_PRISM.get())
+                .withTextPage("ars_elemental.page2.advanced_prism")
+                .withCraftingPages(ModItems.RGB_LENS.get())
                 .withCraftingPages(ModItems.ARC_LENS.get())
                 .withCraftingPages(ModItems.HOMING_LENS.get())
                 .withCraftingPages(ModItems.ACC_LENS.get())
                 .withCraftingPages(ModItems.DEC_LENS.get())
+                .withTextPage("ars_elemental.page3.advanced_prism")
                 .withCraftingPages(ModItems.PIERCE_LENS.get())
-                .withCraftingPages(ModItems.RGB_LENS.get()))
+                .withCraftingPages(ModItems.CHAIN_LENS.get()))
                 .withRelation(getBaseEntry("block.ars_nouveau." + SPELL_PRISM));
 
         var elementalTurrets = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, "elemental_turrets").withIcon(ModItems.FIRE_TURRET.get()).withTextPage("ars_elemental.page1.elemental_turrets")

@@ -55,7 +55,7 @@ public class AETagsProvider {
 
     public static class AEItemTagsProvider extends ItemTagsProvider {
 
-        String[] curioSlots = {"curio", "back", "belt", "body", "bracelet", "charm", "feet", "head", "hands", "necklace", "ring", "spellbook"};
+        String[] curioSlots = {"an_focus", "curio", "back", "belt", "body", "bracelet", "charm", "feet", "head", "hands", "necklace", "ring", "spellbook"};
 
         static TagKey<Item> curiosTag(String key) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(CuriosApi.MODID, key));
@@ -84,7 +84,7 @@ public class AETagsProvider {
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get(), ModItems.ANIMA_BANGLE.get(), ModItems.SUMMON_BANGLE.get());
             tag(SUMMON_SHARDS).add(ModItems.SIREN_SHARDS.get(), ItemsRegistry.DRYGMY_SHARD.get(), ItemsRegistry.STARBUNCLE_SHARD.get(), ItemsRegistry.WIXIE_SHARD.get(), ItemsRegistry.WHIRLISPRIG_SHARDS.get());
-            tag(PRISM_LENS).add(ModItems.ARC_LENS.get(), ModItems.HOMING_LENS.get(), ModItems.RGB_LENS.get(), ModItems.PIERCE_LENS.get(), ModItems.ACC_LENS.get(), ModItems.DEC_LENS.get());
+            tag(PRISM_LENS).add(ModItems.ARC_LENS.get(), ModItems.HOMING_LENS.get(), ModItems.RGB_LENS.get(), ModItems.PIERCE_LENS.get(), ModItems.ACC_LENS.get(), ModItems.DEC_LENS.get(), ModItems.CHAIN_LENS.get());
 
             this.copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
             this.copy(BlockTags.LEAVES, ItemTags.LEAVES);

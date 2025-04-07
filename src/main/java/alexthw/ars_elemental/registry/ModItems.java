@@ -135,6 +135,7 @@ public class ModItems {
     public static final DeferredHolder<Item, DecelerationPrismLens> DEC_LENS;
     public static final DeferredHolder<Item, PiercingPrismLens> PIERCE_LENS;
     public static final DeferredHolder<Item, RainbowPrismLens> RGB_LENS;
+    public static final DeferredHolder<Item, ChainingPrismLens> CHAIN_LENS;
 
     public static final DeferredHolder<Item, NecroEssence> ANIMA_ESSENCE;
 
@@ -168,6 +169,8 @@ public class ModItems {
         ACC_LENS = ITEMS.register("acceleration_prism_lens", () -> new AccelerationPrismLens(itemProps()));
         DEC_LENS = ITEMS.register("deceleration_prism_lens", () -> new DecelerationPrismLens(itemProps()));
         PIERCE_LENS = ITEMS.register("piercing_prism_lens", () -> new PiercingPrismLens(itemProps()));
+        CHAIN_LENS = ITEMS.register("chaining_prism_lens", () -> new ChainingPrismLens(itemProps()));
+
         //curio
         CURIO_BAG = ITEMS.register("curio_bag", () -> new CurioHolder(itemProps().fireResistant().stacksTo(1)));
         CASTER_BAG = ITEMS.register("caster_bag", () -> new CasterHolder(itemProps().fireResistant().stacksTo(1).component(DataComponents.BASE_COLOR, DyeColor.RED)));

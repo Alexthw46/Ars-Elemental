@@ -1,12 +1,15 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
+import alexthw.ars_elemental.api.item.SpellPrismLens;
 import alexthw.ars_elemental.registry.ModTiles;
+import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,7 +28,9 @@ import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity {
+import java.util.List;
+
+public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity, ITooltipProvider {
     private static final String TAG_LENTS = "prismLent";
     private static final String TAG_ROTATION_X = "rotationX";
     private static final String TAG_ROTATION_Y = "rotationY";
@@ -38,7 +43,17 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
     }
 
     public AdvancedPrismTile(BlockPos pos, BlockState state) {
-        super(ModTiles.ADVANCED_PRISM.get(), pos, state);
+        this(ModTiles.ADVANCED_PRISM.get(), pos, state);
+    }
+
+
+    @Override
+    public void getTooltip(List<Component> tooltip) {
+        if (getLens().isEmpty()) return;
+        tooltip.add(Component.translatable("tooltip.ars_elemental.prism_lens", getLens().getHoverName()));
+        if (getLens().getItem() instanceof SpellPrismLens lens) {
+            lens.addTooltip(tooltip, getLens());
+        }
     }
 
     public void aim(@Nullable BlockPos blockPos, Player playerEntity) {
@@ -87,10 +102,15 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
         return Result.CLEAR;
     }
 
-
     @Override
-    public void onFinishedConnectionFirst(@Nullable BlockPos storedPos, @Nullable Direction face, @Nullable LivingEntity storedEntity, Player playerEntity) {
-        if (storedPos != null) this.aim(storedPos, playerEntity);
+    public Result onFirstConnection(@Nullable GlobalPos storedPos, @Nullable Direction face, @Nullable LivingEntity storedEntity, Player playerEntity) {
+        if (IWandable.super.onFirstConnection(storedPos, face, storedEntity, playerEntity) == Result.SUCCESS) {
+            if (storedPos != null) {
+                this.aim(storedPos.pos(), playerEntity);
+                return Result.SUCCESS;
+            }
+        }
+        return Result.FAIL;
     }
 
     @Override
@@ -99,7 +119,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
         tag.putFloat(TAG_ROTATION_Y, rotationY);
         tag.putFloat(TAG_ROTATION_X, rotationX);
         if (prismLens != null) {
-            tag.put(TAG_LENTS, prismLens.save(pRegistries));
+            tag.put(TAG_LENTS, prismLens.saveOptional(pRegistries));
         }
     }
 
@@ -109,7 +129,7 @@ public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlock
         rotationX = tag.getFloat(TAG_ROTATION_X);
         rotationY = tag.getFloat(TAG_ROTATION_Y);
         if (tag.contains(TAG_LENTS)) {
-            prismLens = ItemStack.parse(pRegistries, tag.getCompound(TAG_LENTS)).orElse(ItemStack.EMPTY);
+            prismLens = ItemStack.parseOptional(pRegistries, tag.getCompound(TAG_LENTS));
         }
     }
 

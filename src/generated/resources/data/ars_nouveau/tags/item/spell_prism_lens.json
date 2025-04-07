@@ -5,6 +5,7 @@
     "ars_elemental:rainbow_prism_lens",
     "ars_elemental:piercing_prism_lens",
     "ars_elemental:acceleration_prism_lens",
-    "ars_elemental:deceleration_prism_lens"
+    "ars_elemental:deceleration_prism_lens",
+    "ars_elemental:chaining_prism_lens"
   ]
 }

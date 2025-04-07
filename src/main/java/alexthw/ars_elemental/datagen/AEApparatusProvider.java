@@ -23,6 +23,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 
@@ -243,6 +244,15 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .build()
         );
 
+        recipes.add(builder()
+                .withResult(ModItems.CHAIN_LENS.get().getDefaultInstance())
+                .withReagent(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(BlockRegistry.SOURCE_GEM_BLOCK)
+                .withPedestalItem(ItemsRegistry.BLANK_PARCHMENT)
+                .build()
+        );
+
         //mirror shield enchant
         recipes.add(builder()
                 .withPedestalItem(BlockRegistry.SPELL_PRISM)
@@ -327,7 +337,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Ars Elemental Apparatus";
     }
 

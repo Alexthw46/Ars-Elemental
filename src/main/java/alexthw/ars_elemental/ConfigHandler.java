@@ -44,10 +44,9 @@ public class ConfigHandler {
         public static ModConfigSpec.BooleanValue LIGHTNINGS_BIOME;
         public static ModConfigSpec.BooleanValue SOULBOUND_LOOT;
         public static ModConfigSpec.IntValue PIERCE_LENS_LIMIT;
-
+        public static ModConfigSpec.IntValue CHAIN_LENS_LIMIT;
         public static ModConfigSpec.IntValue SQUIRREL_REFRESH_RATE;
         public static ModConfigSpec.BooleanValue MAGES_AGGRO;
-        public static final Integer TREE_SPAWN_RATE = 200;
         public static ModConfigSpec.IntValue EXTRA_BIOMES;
 
 
@@ -123,7 +122,9 @@ public class ConfigHandler {
             HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
             SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);
             SOULBOUND_LOOT = builder.comment("If enabled, soulbound enchantment can appear in randomly enchanted loot chests.").define("soulbound_loot", true);
-            PIERCE_LENS_LIMIT = builder.comment("Define the maximum number of pierce that a lens can apply to a spell.").defineInRange("pierceLensLimit", 10, 1, Integer.MAX_VALUE);
+            PIERCE_LENS_LIMIT = builder.comment("Define the maximum number of pierce that a piercing lens can apply to a projectile.").defineInRange("pierceLensLimit", 10, 1, Integer.MAX_VALUE);
+            CHAIN_LENS_LIMIT = builder.comment("Define the maximum number of glyph that a chain lens can add to a projectile. This limit includes the existing glyphs on the projectile.").defineInRange("chainLensLimit", 15, 1, Integer.MAX_VALUE);
+
             builder.pop();
 
             builder.push("Mobs-Disabled");

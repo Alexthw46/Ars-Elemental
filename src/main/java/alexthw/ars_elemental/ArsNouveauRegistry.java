@@ -73,6 +73,7 @@ public class ArsNouveauRegistry {
         SpellCasterRegistry.register(ModItems.WATER_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
         SpellCasterRegistry.register(ModItems.NECRO_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
         SpellCasterRegistry.register(ModItems.SHAPERS_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.CHAIN_LENS.get(), (stack) -> stack.get(DataComponentRegistry.SPELL_CASTER));
 
     }
 

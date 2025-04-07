@@ -4,9 +4,13 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 public interface SpellPrismLens {
 
@@ -19,4 +23,8 @@ public interface SpellPrismLens {
     }
 
     boolean canConvert(EntityProjectileSpell spell, Level level, BlockPos pos);
+
+    default void addTooltip(List<Component> tooltip, ItemStack lensStack) {
+
+    }
 }

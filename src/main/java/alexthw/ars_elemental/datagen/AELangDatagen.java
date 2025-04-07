@@ -77,6 +77,7 @@ public class AELangDatagen extends LanguageProvider {
         add("item.ars_elemental.acceleration_prism_lens", "Acceleration Prism Lens");
         add("item.ars_elemental.deceleration_prism_lens", "Deceleration Prism Lens");
         add("item.ars_elemental.piercing_prism_lens", "Piercing Prism Lens");
+        add("item.ars_elemental.chaining_prism_lens", "Chaining Prism Lens");
         add("item.ars_elemental.sparkflower", "Sparkflower");
         add("block.ars_elemental.water_upstream", "Bubble Current Elevator");
         add("block.ars_elemental.magma_upstream", "Magmatic Current Elevator");
@@ -176,8 +177,9 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page1.firenando_charm", "The Flarecannon can be used as a wandering sentry, like the weald walkers. It will shoot flare homing projectiles at enemies and patrol around the area assigned using the dominion wand. Soul Sand and Magma blocks can be used to change appearance. If defeated, it can be reactivated with blaze powder or magma cream. Friends call it Firenando.");
         add("ars_elemental.page1.siren_charm", "Sirens are usually found near coral formations, jumping out of the water or following boats. You can befriend a wild mermaid by giving them a sea pickle, they will jump and leave behind few tokens. The siren charm can be used to summon a Siren and if used on Prismarine it will transform in a Siren Shrine. Tamed sirens can change colors if you give them kelp or corals.");
         add("ars_elemental.page2.siren_charm", "The Shrine will slowly generate fishing loot items over time, asking for source after each cycle. The number of items and chance of getting a treasure will increase if many different water animals and plants are near the Shrine. You should build an aquarium or pond around the Shrine, to let your sirens have fun. [Note: it will take some time to update the score].");
-        add("ars_elemental.page1.advanced_prism", "Upgrade of the Spell Prism that can be adjusted to aim to a specific block. Use the dominion wand to link the prism to a block. This prism also allows lenses, but can't be pushed by pistons. Some lens will require a bit of source whenever a spell is redirected.");
+        add("ars_elemental.page1.advanced_prism", "Upgrade of the Spell Prism that can be adjusted to aim to a specific block. This prism also allows to equip a lens that modifies the redirected projectile, but can't be pushed by pistons. Use the dominion wand to aim the prism to a block, shift-click to remove the lens. Specific lens may require source whenever a projectile is redirected to extend the spell, their limits can be configured.");
         add("ars_elemental.page2.advanced_prism", "A Prism Lens can be applied to this advanced prisms to customize how the prism redirects projectiles. Arc and Homing lenses change the projectile to be an arc or homing projectile. Rainbow lens randomize the color of the projectile, while Acceleration and Deceleration lenses allow to adjust the speed.");
+        add("ars_elemental.page3.advanced_prism", "Piercing and Chaining lenses require source to work. Chaining lens can be inscribed on a table and will append its glyphs on the projectile redirected, if valid. Cost scales linearly with the new spell created. Piercing lens will allow to increase the projectile piercing for a fixed cost.");
         add("ars_nouveau.page.spell_mirror", "Mirror similar to a Spell Prism that can be placed on walls, floor and ceiling. If a spell projectile hits the mirror, it will be reflected by with a mirrored angle.");
         add("ars_elemental.page.elemental_turrets", "Elemental Infused Turrets");
         add("ars_elemental.page1.elemental_turrets", "Enchanted Turrets can be imbued with the power of an elemental focus to gift them a fractions of its abilities. Spells shot by these turrets will trigger the combos of the corresponding focus and will be discounted by 65 %% if the spell contains a glyph of the matching elemental school.");
@@ -224,6 +226,7 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.lens.acceleration", "Increase the speed of the redirected projectile.");
         add("ars_elemental.lens.deceleration", "Decrease the speed of the redirected projectile.");
         add("ars_elemental.lens.pierce", "Makes the redirected projectile pierce through more blocks/entities if source is supplied to the prism.");
+        add("ars_elemental.lens.chaining", "Adds the glyphs inscribed on the lens to redirected projectiles.");
         add("ars_elemental.page.armor_set.wip", "Note: Since the Armor Rework requires a lot of assets work, the light and heavy elemental armors variants won't be ready for 1.19, so the 'medium' elemental armors can be crafted will all three types. Upgrading will keep enchants and threads, but requires the base armor to be at tier 3.");
         add("ars_elemental.armor_set.fire", "Pyromancer's Set");
         add("ars_elemental.armor_set.fire.desc", "Absorb some fire-related damage and convert into mana, instantly clears fire.");
@@ -241,6 +244,7 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.tablet_of", "Tablet of %s");
         add("tooltip.siren_shards", "Obtained by giving a sea pickle to a siren.");
         add("tooltip.ars_elemental.lens", "Can be applied on Advanced Spell Prisms.");
+        add("tooltip.ars_elemental.prism_lens", "Using a %s");
         add("tooltip.ars_nouveau.blessed", "Protection of the 4 elements");
         add("ars_elemental.focus.shift_info", "Hold %s for more focus info");
         add("tooltip.ars_elemental.focus_element", "Focus attuned to a specific element, empowers some glyphs with new effects.");
