@@ -105,6 +105,7 @@ public class AETagsProvider {
 
             //noinspection unchecked
             tag(ModRegistry.SOULBOUND_ABLE).addTags(ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, SPELLBOOK, Tags.Items.TOOLS);
+            tag(ModRegistry.SOULBOUND_ABLE).add(ItemsRegistry.WAND.asItem()).addOptional(ResourceLocation.fromNamespaceAndPath("not_enough_glyphs", "spellbinder"));
 
             tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
 

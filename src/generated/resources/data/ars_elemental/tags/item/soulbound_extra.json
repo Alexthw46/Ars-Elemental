@@ -63,6 +63,11 @@
     "#minecraft:enchantable/crossbow",
     "#minecraft:enchantable/durability",
     "#ars_nouveau:spellbook",
-    "#c:tools"
+    "#c:tools",
+    "ars_nouveau:wand",
+    {
+      "id": "not_enough_glyphs:spellbinder",
+      "required": false
+    }
   ]
 }
