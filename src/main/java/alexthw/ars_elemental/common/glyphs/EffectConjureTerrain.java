@@ -66,7 +66,7 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
                         // If the spell contains a Smelt effect with an Amplify augment, place deepslate instead
                         toPlace = amps > 1 ? Blocks.DEEPSLATE.defaultBlockState() : Blocks.STONE.defaultBlockState();
                         if (spellStats.isRandomized() && toPlace.getBlock() == Blocks.STONE) {
-                            toPlace = switch (world.random.nextInt(5)) {
+                            toPlace = switch (world.random.nextInt(6)) {
                                 case 0 -> Blocks.DIORITE.defaultBlockState();
                                 case 1 -> Blocks.ANDESITE.defaultBlockState();
                                 case 2 -> Blocks.GRANITE.defaultBlockState();
