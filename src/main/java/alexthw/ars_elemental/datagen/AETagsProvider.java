@@ -107,7 +107,7 @@ public class AETagsProvider {
             tag(ModRegistry.SOULBOUND_ABLE).addTags(ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, SPELLBOOK, Tags.Items.TOOLS);
             tag(ModRegistry.SOULBOUND_ABLE).add(ItemsRegistry.WAND.asItem()).addOptional(ResourceLocation.fromNamespaceAndPath("not_enough_glyphs", "spellbinder"));
 
-            tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
+            tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get(), Items.BUNDLE);
 
             tag(STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get().asItem());
             tag(STRIPPED_WOODS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
