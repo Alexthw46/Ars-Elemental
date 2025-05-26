@@ -1,8 +1,6 @@
 package alexthw.ars_elemental.registry;
 
-import alexthw.ars_elemental.common.entity.DripstoneSpikeEntity;
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
-import alexthw.ars_elemental.common.entity.IceSpikeEntity;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
@@ -10,6 +8,9 @@ import alexthw.ars_elemental.common.entity.mages.*;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.entity.spells.FlashLightning;
+import alexthw.ars_elemental.common.entity.spikes.DripstoneSpikeEntity;
+import alexthw.ars_elemental.common.entity.spikes.EnchantedDripstoneEntity;
+import alexthw.ars_elemental.common.entity.spikes.IceSpikeEntity;
 import alexthw.ars_elemental.common.entity.summon.*;
 import alexthw.ars_elemental.common.glyphs.EffectSpark;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
@@ -66,6 +67,7 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<FlashLightning>> FLASH_LIGHTNING;
     public static final DeferredHolder<EntityType<?>, EntityType<DripstoneSpikeEntity>> DRIPSTONE_SPIKE;
     public static final DeferredHolder<EntityType<?>, EntityType<IceSpikeEntity>> ICE_SPIKE;
+    public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_SPIKE;
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -101,7 +103,7 @@ public class ModEntities {
         FLASH_LIGHTNING = addEntity("flash_lightning", 0.5F, 0.5F, true, true, FlashLightning::new, MobCategory.MISC);
         DRIPSTONE_SPIKE = addEntity("dripstone_spike", 1.0F, 1.0F, true, true, DripstoneSpikeEntity::new, MobCategory.MISC);
         ICE_SPIKE = addEntity("ice_spike", 1.0F, 1.0F, true, true, IceSpikeEntity::new, MobCategory.MISC);
-
+        THROWN_SPIKE = addEntity("conjured_dripstone", 1.0F, 1.0F, true, true, EnchantedDripstoneEntity::new, MobCategory.MISC);
     }
 
     static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {

@@ -225,12 +225,14 @@ public class ArsNouveauRegistry {
             @Override
             public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
                 EntityHomingProjectileSpell spell = new EntityHomingProjectileSpell(world, resolver);
+                SpellStats stats = resolver.getCastStats();
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
                 spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+                float velocity = MethodHomingProjectile.getProjectileSpeed(stats);
                 if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
                     Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
-                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.25f, 0);
+                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), velocity, 0);
                 }
                 world.addFreshEntity(spell);
             }
@@ -240,12 +242,14 @@ public class ArsNouveauRegistry {
             @Override
             public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position position, Direction direction) {
                 EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver);
+                SpellStats stats = resolver.getCastStats();
                 spell.setGravity(true);
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
+                float velocity = MethodArcProjectile.getProjectileSpeed(stats);
                 if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
                     Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
-                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), 0.6f, 0);
+                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), velocity, 0);
                 }
                 world.addFreshEntity(spell);
             }

@@ -99,7 +99,7 @@ public class AELangDatagen extends LanguageProvider {
         add("block.ars_elemental.air_turret", "Air Infused Turret");
         add("block.ars_elemental.earth_turret", "Earth Infused Turret");
         add("block.ars_elemental.manipulation_turret", "Manipulation Infused Turret");
-        add("entity.ars_elemental.homing_projectile", "Homing Projectile");
+        add("block.ars_elemental.flashpine_pod", "Flashpine");
         add("entity.ars_elemental.lerp", "Interpolated Source Effect");
         add("entity.ars_elemental.summon_skelehorse", "Summoned Skeletal Steed");
         add("entity.ars_elemental.summon_camel", "Summoned Camel");

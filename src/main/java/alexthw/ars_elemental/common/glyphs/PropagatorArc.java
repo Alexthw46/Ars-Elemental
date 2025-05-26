@@ -25,6 +25,11 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
 
     public static PropagatorArc INSTANCE = new PropagatorArc();
 
+    @Override
+    public AbstractCastMethod getCastType() {
+        return MethodArcProjectile.INSTANCE;
+    }
+
     public PropagatorArc() {
         super("propagator_arc", "Propagate Arc");
         EffectReset.RESET_LIMITS.add(this);

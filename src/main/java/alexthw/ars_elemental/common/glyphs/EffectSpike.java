@@ -1,9 +1,11 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.api.item.ISchoolFocus;
-import alexthw.ars_elemental.common.entity.DripstoneSpikeEntity;
-import alexthw.ars_elemental.common.entity.IceSpikeEntity;
+import alexthw.ars_elemental.common.entity.spikes.DripstoneSpikeEntity;
+import alexthw.ars_elemental.common.entity.spikes.EnchantedDripstoneEntity;
+import alexthw.ars_elemental.common.entity.spikes.IceSpikeEntity;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.items.curios.ShapersFocus;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -53,9 +55,17 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         for (int i = 0; i < 5; i++) {
             if (world.getBlockState(pos.above(i)).isAir()) continue;
             summonSpike(world, shooter, spellStats, spellContext, resolver, pos);
-            break;
+            return;
         }
 
+        // no valid position found, shoot a spike instead
+
+        //create falling block entity from a dripstone spike
+        float damagePerDistance = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
+        var spike = new EnchantedDripstoneEntity(world, pos, resolver, spellStats);
+        spike.setHurtsEntities(damagePerDistance, GENERIC_INT.get());
+        world.addFreshEntity(spike);
+        ShapersFocus.tryPropagateEntitySpell(spike, world, shooter, spellContext, resolver);
     }
 
     @Override
@@ -78,6 +88,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         super.buildConfig(builder);
         addDamageConfig(builder, 8.0);
         addAmpConfig(builder, 2.5);
+        addGenericInt(builder, 40, "The maximum damage a thrown spike can deal to a single entity. The damage from thrown spikes scales with the height difference.", "maxFallDamage");
     }
 
     @Override

@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.mob_effects;
 
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.util.EntityCarryMEI;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,8 +30,8 @@ public class LifeLinkEffect extends MobEffect {
         if (event.getEntity().hasEffect(ModPotions.LIFE_LINK)) {
             MobEffectInstance instance = event.getEntity().getEffect(ModPotions.LIFE_LINK);
             if (instance instanceof EntityCarryMEI mei && mei.getTarget() == event.getEntity()) {
-                if (mei.getOwner().isAlive()) {
-                    int shared = (int) (event.getAmount() / 2F);
+                if (mei.getOwner() != null && mei.getOwner().isAlive()) {
+                    float shared = event.getAmount() / 2F;
                     mei.getOwner().heal(shared);
                     event.setAmount(shared);
                 } else {
@@ -41,11 +42,11 @@ public class LifeLinkEffect extends MobEffect {
     }
 
     public void hurtForHurt(LivingDamageEvent.Pre event) {
-        if (event.getEntity().hasEffect(ModPotions.LIFE_LINK)) {
+        if (!event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY) && event.getEntity().hasEffect(ModPotions.LIFE_LINK)) {
             MobEffectInstance instance = event.getEntity().getEffect(ModPotions.LIFE_LINK);
             if (instance instanceof EntityCarryMEI mei && mei.getOwner() == event.getEntity()) {
-                if (mei.getTarget().isAlive()) {
-                    int shared = (int) (event.getNewDamage() / 2F);
+                if (mei.getTarget() != null && mei.getTarget().isAlive()) {
+                    float shared = event.getNewDamage() / 2F;
                     mei.getTarget().hurt(event.getSource(), shared);
                     event.setNewDamage(shared);
                 } else {

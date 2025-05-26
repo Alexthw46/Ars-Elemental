@@ -24,6 +24,11 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
 
     public static PropagatorHoming INSTANCE = new PropagatorHoming();
 
+    @Override
+    public AbstractCastMethod getCastType() {
+        return MethodHomingProjectile.INSTANCE;
+    }
+
     public PropagatorHoming() {
         super("propagator_homing", "Propagate Homing");
         EffectReset.RESET_LIMITS.add(this);

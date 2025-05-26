@@ -1,4 +1,4 @@
-package alexthw.ars_elemental.common.entity;
+package alexthw.ars_elemental.common.entity.spikes;
 
 import alexthw.ars_elemental.common.glyphs.EffectSpike;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -78,7 +78,6 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
     public boolean damage(LivingEntity entity) {
         return EffectSpike.INSTANCE.attemptDamage(entity.level(), caster, stats, context, resolver, entity, DamageUtil.source(entity.level(), DamageTypes.STALAGMITE, caster), damage);
     }
-
 
     @Override
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder pBuilder) {

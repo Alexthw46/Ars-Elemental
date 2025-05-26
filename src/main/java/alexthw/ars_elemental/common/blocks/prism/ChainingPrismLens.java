@@ -56,7 +56,7 @@ public class ChainingPrismLens extends AbstractPrismLens implements ICasterTool 
                 mutable.add(spellCaster.getSpell().mutable().recipe.toArray(AbstractSpellPart[]::new));
                 List<SpellValidationError> validationErrors = ArsNouveauAPI.getInstance().getSpellCraftingSpellValidator().validate(mutable.recipe);
                 int manaCost = mutable.immutable().getCost();
-                return mutable.recipe.size() < ConfigHandler.Common.CHAIN_LENS_LIMIT.get() && validationErrors.isEmpty() && SourceUtil.hasSourceNearby(pos, level, 5, manaCost);
+                return mutable.recipe.size() < ConfigHandler.Common.CHAIN_LENS_LIMIT.get() && validationErrors.isEmpty() && SourceUtil.hasSourceNearby(pos, level, 10, manaCost);
             }
         }
         return false;

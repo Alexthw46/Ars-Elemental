@@ -1,9 +1,6 @@
 package alexthw.ars_elemental.api;
 
-import com.hollingsworth.arsnouveau.api.spell.AbstractAugment;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
-import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.RuneBlock;
@@ -20,6 +17,14 @@ import org.jetbrains.annotations.Nullable;
 public interface IPropagator{
 
     AbstractAugment DUMMY = AugmentDampen.INSTANCE;
+
+    /**
+     * @return the new cast method for the propagated resolver
+     */
+    @Nullable
+    default AbstractCastMethod getCastType() {
+        return null;
+    }
 
     static Vec3 getDirection(LivingEntity shooter, SpellResolver resolver, Vec3 pos) {
         Vec3 direction = pos.subtract(shooter.position());
@@ -40,8 +45,11 @@ public interface IPropagator{
         var mutable_spell = newContext.getSpell().mutable();
         mutable_spell.recipe.addFirst(DUMMY);
         newContext.withSpell(mutable_spell.immutable());
-        spellContext.setCanceled(true);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
+        spellContext.setCanceled(true);
+        AbstractCastMethod newCastType = getCastType();
+        if (newCastType != null)
+            newResolver.castType = newCastType;
         propagate(world, rayTraceResult, shooter, stats, newResolver);
     }
 

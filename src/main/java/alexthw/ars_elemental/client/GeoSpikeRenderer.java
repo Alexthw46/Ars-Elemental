@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.client;
 
-import alexthw.ars_elemental.common.entity.DripstoneSpikeEntity;
+import alexthw.ars_elemental.common.entity.spikes.DripstoneSpikeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -10,12 +10,12 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-public class SpikeRenderer extends GeoEntityRenderer<DripstoneSpikeEntity> {
-    public SpikeRenderer(EntityRendererProvider.Context renderManager) {
+public class GeoSpikeRenderer extends GeoEntityRenderer<DripstoneSpikeEntity> {
+    public GeoSpikeRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new DripGeoModel());
     }
 
-    public SpikeRenderer(EntityRendererProvider.Context renderManager, ResourceLocation textureLocation) {
+    public GeoSpikeRenderer(EntityRendererProvider.Context renderManager, ResourceLocation textureLocation) {
         super(renderManager, new DripGeoModel(textureLocation));
     }
 
