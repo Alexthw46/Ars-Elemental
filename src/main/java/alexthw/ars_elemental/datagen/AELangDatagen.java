@@ -122,6 +122,8 @@ public class AELangDatagen extends LanguageProvider {
         add("entity.ars_elemental.flashing_weald_walker", "Flashing Weald Walker");
         add("entity.ars_elemental.dripstone_spike", "Earth Spike");
         add("entity.ars_elemental.ice_spike", "Ice Spike");
+        add("entity.ars_elemental.conjured_dripstone", "Falling Spike");
+        add("entity.ars_elemental.conjured_ice_spike", "Falling Ice Spike");
         add("key.ars_elemental.open_pouch", "[Elemental] Open trinkets pouch");
         add("curios.modifiers.an_focus", "While in spell focus slot:");
         add("curios.modifiers.bangle", "While in bangle slot:");

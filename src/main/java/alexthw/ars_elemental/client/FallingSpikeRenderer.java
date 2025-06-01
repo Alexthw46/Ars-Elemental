@@ -28,7 +28,7 @@ public class FallingSpikeRenderer extends GeoEntityRenderer<EnchantedDripstoneEn
 
     @Override
     public void scaleModelForRender(float widthScale, float heightScale, PoseStack poseStack, EnchantedDripstoneEntity animatable, BakedGeoModel model, boolean isReRender, float partialTick, int packedLight, int packedOverlay) {
-        super.scaleModelForRender(0.75F, 0.75F, poseStack, animatable, model, isReRender, partialTick, packedLight, packedOverlay);
+        super.scaleModelForRender(0.5F, 0.5F, poseStack, animatable, model, isReRender, partialTick, packedLight, packedOverlay);
     }
 
     private static class FallingSpikeGeoModel extends GeoModel<EnchantedDripstoneEntity> {

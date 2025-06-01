@@ -29,7 +29,6 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -156,11 +155,11 @@ public class GlyphEvents {
 
             for (BlockPos pos1 : posList) {
                 state = event.world.getBlockState(pos1);
-                if (state.getBlock() instanceof IceBlock ice) {
+                if (state.is(BlockTags.ICE) || state.is(BlockTags.SNOW)) {
                     if (flag) {
                         event.world.setBlock(pos1, Blocks.AIR.defaultBlockState(), 3);
                     } else {
-                        ice.playerDestroy(event.world, player, pos1, state, null, ItemStack.EMPTY);
+                        state.getBlock().playerDestroy(event.world, player, pos1, state, null, ItemStack.EMPTY);
                     }
                     event.setCanceled(true);
                 }

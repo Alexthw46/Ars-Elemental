@@ -13,11 +13,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import org.jetbrains.annotations.NotNull;
 
+import static alexthw.ars_elemental.api.item.ISchoolFocus.waterCheck;
+
 public class EnchantedDripstoneEntity extends EnchantedFallingBlock {
 
-    public EnchantedDripstoneEntity(EntityType<? extends ColoredProjectile> entityType, Level level) {
+    boolean icy;
+
+    public EnchantedDripstoneEntity(EntityType<? extends ColoredProjectile> entityType, Level level, boolean ice) {
         super(entityType, level);
         dropItem = false;
+        this.icy = ice;
     }
 
     public EnchantedDripstoneEntity(Level world, BlockPos pos, SpellResolver resolver, SpellStats spellStats) {
@@ -25,13 +30,18 @@ public class EnchantedDripstoneEntity extends EnchantedFallingBlock {
         dropItem = false;
         this.context = resolver.spellContext;
         this.spellStats = spellStats;
+        this.icy = waterCheck(resolver);
         this.setXRot(0);
         this.setYRot(0);
     }
 
+    public EnchantedDripstoneEntity(EntityType<EnchantedDripstoneEntity> enchantedDripstoneEntityEntityType, Level level) {
+        this(enchantedDripstoneEntityEntityType, level, false);
+    }
+
     @Override
     public @NotNull EntityType<?> getType() {
-        return ModEntities.THROWN_SPIKE.get();
+        return icy ? ModEntities.THROWN_ICE_SPIKE.get() : ModEntities.THROWN_SPIKE.get();
     }
 
 }

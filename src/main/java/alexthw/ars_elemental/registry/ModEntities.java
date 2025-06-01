@@ -68,6 +68,7 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<DripstoneSpikeEntity>> DRIPSTONE_SPIKE;
     public static final DeferredHolder<EntityType<?>, EntityType<IceSpikeEntity>> ICE_SPIKE;
     public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_SPIKE;
+    public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_ICE_SPIKE;
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -103,7 +104,9 @@ public class ModEntities {
         FLASH_LIGHTNING = addEntity("flash_lightning", 0.5F, 0.5F, true, true, FlashLightning::new, MobCategory.MISC);
         DRIPSTONE_SPIKE = addEntity("dripstone_spike", 1.0F, 1.0F, true, true, DripstoneSpikeEntity::new, MobCategory.MISC);
         ICE_SPIKE = addEntity("ice_spike", 1.0F, 1.0F, true, true, IceSpikeEntity::new, MobCategory.MISC);
-        THROWN_SPIKE = addEntity("conjured_dripstone", 1.0F, 1.0F, true, true, EnchantedDripstoneEntity::new, MobCategory.MISC);
+        THROWN_SPIKE = addEntity("conjured_dripstone", .7F, .7F, true, true, EnchantedDripstoneEntity::new, MobCategory.MISC);
+        THROWN_ICE_SPIKE = addEntity("conjured_ice_spike", .7F, .7F, true, true, (entityType, level) -> new EnchantedDripstoneEntity(entityType, level, true), MobCategory.MISC);
+
     }
 
     static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerEntity(String name, float width, float height, EntityType.EntityFactory<T> factory, MobCategory kind) {

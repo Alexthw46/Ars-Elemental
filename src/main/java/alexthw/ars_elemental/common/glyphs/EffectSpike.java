@@ -62,7 +62,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
         //create falling block entity from a dripstone spike
         float damagePerDistance = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
-        var spike = new EnchantedDripstoneEntity(world, pos, resolver, spellStats);
+        EnchantedDripstoneEntity spike = new EnchantedDripstoneEntity(world, pos, resolver, spellStats);
         spike.setHurtsEntities(damagePerDistance, GENERIC_INT.get());
         world.addFreshEntity(spike);
         ShapersFocus.tryPropagateEntitySpell(spike, world, shooter, spellContext, resolver);

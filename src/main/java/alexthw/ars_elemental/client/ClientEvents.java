@@ -112,6 +112,7 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.DRIPSTONE_SPIKE.get(), GeoSpikeRenderer::new);
         event.registerEntityRenderer(ModEntities.ICE_SPIKE.get(), renderManager -> new GeoSpikeRenderer(renderManager, prefix("textures/entity/ice_spike.png")));
         event.registerEntityRenderer(ModEntities.THROWN_SPIKE.get(), FallingSpikeRenderer::new);
+        event.registerEntityRenderer(ModEntities.THROWN_ICE_SPIKE.get(), renderManager -> new FallingSpikeRenderer(renderManager, prefix("textures/entity/ice_spike.png")));
 
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override

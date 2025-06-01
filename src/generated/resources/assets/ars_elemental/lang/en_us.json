@@ -362,6 +362,8 @@
   "enchantment.ars_elemental.soulbound": "Soulbound",
   "enchantment.ars_elemental.soulbound.description": "Preserve items on death.",
   "entity.ars_elemental.air_mage": "Rogue Air Mage",
+  "entity.ars_elemental.conjured_dripstone": "Falling Spike",
+  "entity.ars_elemental.conjured_ice_spike": "Falling Ice Spike",
   "entity.ars_elemental.dripstone_spike": "Earth Spike",
   "entity.ars_elemental.earth_mage": "Rogue Earth Mage",
   "entity.ars_elemental.fire_mage": "Rogue Fire Mage",
