@@ -33,11 +33,19 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         BlockPos pos = rayTraceResult.getEntity().getOnPos();
         //check if the blockstate below the entity is air up to 5 blocks, if not spawn a dripstone spike entity,
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             if (world.getBlockState(pos.below(i)).isAir()) continue;
             summonSpike(world, shooter, spellStats, spellContext, resolver, pos);
-            break;
+            return;
         }
+
+        // no valid position found below, summon a falling spike over it instead
+        float damagePerDistance = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
+        EnchantedDripstoneEntity spike = new EnchantedDripstoneEntity(world, pos.above(2), resolver, spellStats);
+        spike.setHurtsEntities(damagePerDistance, GENERIC_INT.get());
+        world.addFreshEntity(spike);
+        ShapersFocus.tryPropagateEntitySpell(spike, world, shooter, spellContext, resolver);
+
     }
 
     private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos) {
@@ -52,9 +60,9 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         BlockPos pos = rayTraceResult.getBlockPos();
         //check if the blockstate hit is air, if not spawn a dripstone spike entity
-        for (int i = 0; i < 5; i++) {
-            if (world.getBlockState(pos.above(i)).isAir()) continue;
-            summonSpike(world, shooter, spellStats, spellContext, resolver, pos);
+        for (int i = -1; i < 3; i++) {
+            if (world.getBlockState(pos.below(i)).isAir()) continue;
+            summonSpike(world, shooter, spellStats, spellContext, resolver, pos.below(i));
             return;
         }
 
@@ -103,7 +111,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
     @Override
     public String getBookDescription() {
-        return "Creates a spike of dripstone that will damage entities that touch it. Can be augmented with AoE and Pierce to make it wider or taller, with ExtendTime to make it last longer or with Amplify to make it deal more damage.";
+        return "Creates a spike of dripstone that will damage entities that touch it. Can be augmented with AoE and Pierce to make it wider or taller, with ExtendTime to make it last longer or with Amplify to make it deal more damage. If a spike can't be placed, a falling spike will be summoned instead, which only can be augmented with Amplify to increase the damage it deals based on the height it falls from.";
     }
 
     @Override
@@ -116,7 +124,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return setOf(SpellSchools.ELEMENTAL_EARTH);
+        return setOf(SpellSchools.ELEMENTAL_EARTH, SpellSchools.ELEMENTAL_WATER);
     }
 
 }
