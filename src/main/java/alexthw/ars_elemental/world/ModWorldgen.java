@@ -216,12 +216,12 @@ public class ModWorldgen {
             //we need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
             globalOverworldGeneration(biomeBuilder);
             BiomeDefaultFeatures.addMossyStoneBlock(biomeBuilder);
+            BiomeDefaultFeatures.addLightBambooVegetation(biomeBuilder);
             BiomeDefaultFeatures.addForestFlowers(biomeBuilder);
             BiomeDefaultFeatures.addFerns(biomeBuilder);
             BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
             BiomeDefaultFeatures.addExtraGold(biomeBuilder);
             BiomeDefaultFeatures.addDefaultSoftDisks(biomeBuilder);
-            BiomeDefaultFeatures.addLightBambooVegetation(biomeBuilder);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CLUSTER_FLOURISHING_CONFIGURED);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, SPARSE_JUNGLE);
             BiomeDefaultFeatures.addWarmFlowers(biomeBuilder);
