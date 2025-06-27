@@ -105,7 +105,13 @@ public class AETagsProvider {
 
             //noinspection unchecked
             tag(ModRegistry.SOULBOUND_ABLE).addTags(ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, SPELLBOOK, Tags.Items.TOOLS);
-            tag(ModRegistry.SOULBOUND_ABLE).add(ItemsRegistry.WAND.asItem()).addOptional(ResourceLocation.fromNamespaceAndPath("not_enough_glyphs", "spellbinder"));
+            tag(ModRegistry.SOULBOUND_ABLE)
+                    .add(ItemsRegistry.WAND.asItem())
+                    .add(ItemsRegistry.ENCHANTERS_MIRROR.asItem())
+                    .add(ItemsRegistry.ENCHANTERS_FISHING_ROD.asItem())
+                    .add(ItemsRegistry.SCRY_CASTER.asItem())
+                    .add(ModItems.SPELL_HORN.get())
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("not_enough_glyphs", "spellbinder"));
 
             tag(ModRegistry.BLACKLIST_BAGGABLE).add(ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get(), Items.BUNDLE);
 
@@ -178,6 +184,7 @@ public class AETagsProvider {
             tag(BlockTagProvider.MAGIC_PLANTS).add(ModItems.FLASHING_POD.get());
             tag(AQUARIUM_BONUS).addTag(BlockTags.CORALS).add(Blocks.SEAGRASS, Blocks.TALL_SEAGRASS, Blocks.KELP, Blocks.KELP_PLANT, Blocks.TURTLE_EGG);
             tag(SUMMER_CROPS).add(ModItems.FLASHING_POD.get(), ModItems.FLASHING_SAPLING.get());
+            tag(BlockTags.create(ArsNouveau.prefix("whirlisprig/greatly_likes"))).add(ModItems.GROUND_BLOSSOM.get());
         }
 
         void logsTag(Block... blocks) {

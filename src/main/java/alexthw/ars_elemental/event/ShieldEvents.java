@@ -49,7 +49,7 @@ public class ShieldEvents {
                     //trigger the advancement and remove mana from the player and set the cooldown of the shield to 1 second per level
                     if (player instanceof ServerPlayer && CapabilityRegistry.getMana(player) != null) {
                         ModAdvTriggers.MIRROR.get().trigger((ServerPlayer) player);
-                        float pay = projectileSpell.spellResolver.getResolveCost() / (level * 2f);
+                        float pay = projectileSpell.resolver().getResolveCost() / (level * 2f);
                         CapabilityRegistry.getMana(player).removeMana(pay);
                         player.getCooldowns().addCooldown(stack.getItem(), 20 * level);
                     }

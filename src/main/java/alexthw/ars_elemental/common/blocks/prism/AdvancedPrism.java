@@ -62,7 +62,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         if (spell.prismRedirect >= 3) {
             ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.PRISMATIC.get(), world, pos, 10);
         }
-        if (spell.spellResolver == null) {
+        if (spell.resolver() == null) {
             spell.remove(Entity.RemovalReason.DISCARDED);
             return;
         }

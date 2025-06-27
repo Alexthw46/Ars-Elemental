@@ -1,5 +1,6 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.api.spell_style.GravityWellMotion;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
@@ -15,10 +16,17 @@ import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestationRitual;
 import alexthw.ars_elemental.mixin.SpellSchoolAccessor;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModParticles;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.documentation.DocAssets;
+import com.hollingsworth.arsnouveau.api.particle.configurations.IParticleMotionType;
+import com.hollingsworth.arsnouveau.api.particle.configurations.SimpleParticleMotionType;
+import com.hollingsworth.arsnouveau.api.particle.configurations.properties.ParticleTypeProperty;
+import com.hollingsworth.arsnouveau.api.particle.timelines.IParticleTimelineType;
+import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
+import com.hollingsworth.arsnouveau.api.particle.timelines.SimpleParticleTimelineType;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.registry.*;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
@@ -43,6 +51,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +59,8 @@ import java.util.List;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.api.item.IElementalArmor.damageResistances;
+import static com.hollingsworth.arsnouveau.api.registry.ParticleMotionRegistry.PARTICLE_CONFIG;
+import static com.hollingsworth.arsnouveau.api.registry.ParticleTimelineRegistry.TIMELINE_DF;
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.setup.config.Config.ITEM_LIGHTMAP;
@@ -136,37 +147,9 @@ public class ArsNouveauRegistry {
 
     public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
 
-    public static void postInit() {
-        ((SpellSchoolAccessor) SpellSchools.NECROMANCY).setDocIcon(ANIMA_ICON);
-
-        registerCasters();
-
-        //Schools
-        addSchool(EffectHeal.INSTANCE, SpellSchools.NECROMANCY);
-        addSchool(EffectSummonVex.INSTANCE, SpellSchools.NECROMANCY);
-        addSchool(EffectWither.INSTANCE, SpellSchools.NECROMANCY);
-        addSchool(EffectHex.INSTANCE, SpellSchools.NECROMANCY);
-        addSchool(EffectLifeLink.INSTANCE, SpellSchools.NECROMANCY);
-        addSchool(EffectCharm.INSTANCE, SpellSchools.NECROMANCY);
-        addSchool(EffectSummonUndead.INSTANCE, SpellSchools.NECROMANCY);
-
-        addSchool(EffectCut.INSTANCE, SpellSchools.ELEMENTAL_AIR);
-
-        //Tweaks
-        EffectFirework.INSTANCE.compatibleAugments.add(AugmentDampen.INSTANCE);
-        EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
-        EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
-        EffectGravity.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
-        EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
-
-        ArsNouveauRegistry.addLights();
-        ArsNouveauRegistry.addPerkSlots();
-
-        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
-        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
-
-        FirenandoFamiliar.projectileGlyphs.addAll(List.of(MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE, MethodProjectile.INSTANCE, PropagatorHoming.INSTANCE, PropagatorArc.INSTANCE));
-    }
+    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
+//    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> HOMING_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodHomingProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
+    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<LingerTimeline>> GRAVITY_TIMELINE = TIMELINE_DF.register("gravity", () -> new SimpleParticleTimelineType<>(EffectGravity.INSTANCE, LingerTimeline.CODEC, LingerTimeline.STREAM_CODEC, LingerTimeline::new));
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {
         part.spellSchools.add(school);
@@ -218,6 +201,44 @@ public class ArsNouveauRegistry {
         });
 
     }
+    public static final DeferredHolder<IParticleMotionType<?>, IParticleMotionType<GravityWellMotion>> GRAVITY_FIELD_TYPE = PARTICLE_CONFIG.register("gravity_field", () -> new SimpleParticleMotionType<>(GravityWellMotion.CODEC, GravityWellMotion.STREAM, GravityWellMotion::new));
+
+    public static void postInit() {
+        ((SpellSchoolAccessor) SpellSchools.NECROMANCY).setDocIcon(ANIMA_ICON);
+
+        registerCasters();
+
+        //Schools
+        addSchool(EffectHeal.INSTANCE, SpellSchools.NECROMANCY);
+        addSchool(EffectSummonVex.INSTANCE, SpellSchools.NECROMANCY);
+        addSchool(EffectWither.INSTANCE, SpellSchools.NECROMANCY);
+        addSchool(EffectHex.INSTANCE, SpellSchools.NECROMANCY);
+        addSchool(EffectLifeLink.INSTANCE, SpellSchools.NECROMANCY);
+        addSchool(EffectCharm.INSTANCE, SpellSchools.NECROMANCY);
+        addSchool(EffectSummonUndead.INSTANCE, SpellSchools.NECROMANCY);
+
+        addSchool(EffectCut.INSTANCE, SpellSchools.ELEMENTAL_AIR);
+
+        //Tweaks
+        EffectFirework.INSTANCE.compatibleAugments.add(AugmentDampen.INSTANCE);
+        EffectLaunch.INSTANCE.compatibleAugments.add(AugmentExtendTime.INSTANCE);
+        EffectLaunch.INSTANCE.compatibleAugments.add(AugmentDurationDown.INSTANCE);
+        EffectGravity.INSTANCE.compatibleAugments.add(AugmentSensitive.INSTANCE);
+        EffectWindshear.INSTANCE.compatibleAugments.add(AugmentFortune.INSTANCE);
+
+        ArsNouveauRegistry.addLights();
+        ArsNouveauRegistry.addPerkSlots();
+
+        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
+        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
+
+        FirenandoFamiliar.projectileGlyphs.addAll(List.of(MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE, MethodProjectile.INSTANCE, PropagatorHoming.INSTANCE, PropagatorArc.INSTANCE));
+
+        ParticleTypeProperty.addType(new ParticleTypeProperty.ParticleData(ModParticles.SPARK_2.get(), true));
+        ParticleTypeProperty.addType(new ParticleTypeProperty.ParticleData(ModParticles.VENOM_2.get(), true));
+        LingerTimeline.TRAIL_OPTIONS.add(GRAVITY_FIELD_TYPE.get());
+    }
+
 
     static {
 

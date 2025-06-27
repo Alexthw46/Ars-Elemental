@@ -4,7 +4,7 @@ import alexthw.ars_elemental.common.components.ElementProtectionFlag;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ApparatusRecipeInput;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
-import com.hollingsworth.arsnouveau.common.crafting.recipes.Serializers;
+import com.hollingsworth.arsnouveau.common.util.ANCodecs;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -72,7 +72,7 @@ public class NetheriteUpgradeRecipe extends EnchantingApparatusRecipe {
         public static StreamCodec<RegistryFriendlyByteBuf, NetheriteUpgradeRecipe> STREAM_CODEC = StreamCodec.composite(
                 Ingredient.CONTENTS_STREAM_CODEC,
                 NetheriteUpgradeRecipe::reagent,
-                Serializers.INGREDIENT_LIST_STREAM,
+                ANCodecs.INGREDIENT_LIST_STREAM,
                 NetheriteUpgradeRecipe::pedestalItems,
                 ByteBufCodecs.VAR_INT,
                 NetheriteUpgradeRecipe::sourceCost,

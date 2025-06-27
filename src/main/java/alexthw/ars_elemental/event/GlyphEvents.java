@@ -113,7 +113,7 @@ public class GlyphEvents {
         }
         if (event.resolveEffect == EffectGravity.INSTANCE) {
             if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && hasEarth) {
-                var magnet = EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.context, event.rayTraceResult.getLocation());
+                var magnet = EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.resolver, event.rayTraceResult.getLocation());
                 magnet.setTracked(entityHitResult.getEntity());
                 event.world.addFreshEntity(magnet);
                 event.setCanceled(true);
@@ -139,7 +139,7 @@ public class GlyphEvents {
 
         if (event.resolveEffect == EffectGravity.INSTANCE) {
             if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && hasEarth) {
-                var magnet = EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.context, event.rayTraceResult.getLocation());
+                var magnet = EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.resolver, event.rayTraceResult.getLocation());
                 event.world.addFreshEntity(magnet);
                 event.setCanceled(true);
             }

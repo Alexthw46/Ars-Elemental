@@ -5,8 +5,8 @@ import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ApparatusRecipeInput;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ITextOutput;
-import com.hollingsworth.arsnouveau.common.crafting.recipes.Serializers;
 import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
+import com.hollingsworth.arsnouveau.common.util.ANCodecs;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -99,7 +99,7 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
                 ElementalArmorRecipe::reagent,
                 ItemStack.STREAM_CODEC,
                 ElementalArmorRecipe::result,
-                Serializers.INGREDIENT_LIST_STREAM,
+                ANCodecs.INGREDIENT_LIST_STREAM,
                 ElementalArmorRecipe::pedestalItems,
                 ByteBufCodecs.VAR_INT,
                 ElementalArmorRecipe::sourceCost,

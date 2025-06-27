@@ -1,12 +1,17 @@
 package alexthw.ars_elemental.common.entity.spells;
 
+import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.util.GlyphEffectUtil;
-import com.hollingsworth.arsnouveau.api.spell.IFilter;
-import com.hollingsworth.arsnouveau.api.spell.Spell;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
-import com.hollingsworth.arsnouveau.api.spell.SpellStats;
-import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import com.hollingsworth.arsnouveau.api.particle.ParticleEmitter;
+import com.hollingsworth.arsnouveau.api.particle.PropertyParticleOptions;
+import com.hollingsworth.arsnouveau.api.particle.configurations.properties.WallProperty;
+import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
+import com.hollingsworth.arsnouveau.api.particle.timelines.TimelineEntryData;
+import com.hollingsworth.arsnouveau.api.particle.timelines.TimelineMap;
+import com.hollingsworth.arsnouveau.api.registry.ParticlePropertyRegistry;
+import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.client.ClientInfo;
 import com.hollingsworth.arsnouveau.common.entity.EntityLingeringSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
@@ -18,20 +23,23 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class EntityMagnetSpell extends EntityLingeringSpell {
+public class EntityMagnetSpell extends EntityProjectileSpell {
 
     List<Predicate<Entity>> ignored;
     public static final EntityDataAccessor<Float> DURATION_UP = SynchedEntityData.defineId(EntityMagnetSpell.class, EntityDataSerializers.FLOAT);
-    LivingEntity tracked;
+    public static final EntityDataAccessor<Float> AOE = SynchedEntityData.defineId(EntityMagnetSpell.class, EntityDataSerializers.FLOAT);
 
+    LivingEntity tracked;
     public EntityMagnetSpell(EntityType<? extends EntityProjectileSpell> type, Level worldIn) {
         super(type, worldIn);
     }
@@ -40,14 +48,15 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         super(ModEntities.LINGER_MAGNET.get(), worldIn);
     }
 
-    static public EntityMagnetSpell createMagnet(Level world, LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, Vec3 location) {
+    static public EntityMagnetSpell createMagnet(Level world, LivingEntity shooter, SpellStats spellStats, SpellResolver spellResolver, Vec3 location) {
         EntityMagnetSpell magnet = new EntityMagnetSpell(world);
+        SpellContext spellContext = spellResolver.spellContext;
         magnet.ignored = makeIgnores(shooter, spellContext.getSpell(), spellContext.getCurrentIndex() + 1);
         magnet.setPos(location);
         magnet.setAoe((float) spellStats.getAoeMultiplier());
         magnet.setOwner(shooter);
         magnet.setExtendedTime(spellStats.getDurationMultiplier());
-        magnet.setColor(spellContext.getColors());
+        magnet.setResolver(spellResolver);
         return magnet;
     }
 
@@ -56,14 +65,12 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
         return ModEntities.LINGER_MAGNET.get();
     }
 
-    @Override
-    public boolean shouldFall() {
-        return false;
+    public float getAoe() {
+        return 3 + entityData.get(AOE);
     }
 
-    @Override
-    public float getAoe() {
-        return super.getAoe() / 2;
+    public void setAoe(float aoe) {
+        entityData.set(AOE, aoe);
     }
 
     @Override
@@ -88,16 +95,7 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
 
     @Override
     public void tick() {
-
-        age++;
-
-        if (this.age > getExpirationTime()) {
-            this.remove(RemovalReason.DISCARDED);
-            return;
-        }
-        if (level().isClientSide() && this.age > getParticleDelay()) {
-            playParticles();
-        }
+        super.tick();
         // Magnetize entities
         if (!level().isClientSide() && this.age % 5 == 0) {
             for (Entity entity : level().getEntities(this, new AABB(this.blockPosition()).inflate(getAoe()))) {
@@ -108,13 +106,20 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
                 entity.hurtMarked = true;
             }
         }
-        tickNextPosition();
     }
 
     @Override
-    public void playParticles() {
-        alexthw.ars_elemental.util.ParticleUtil.gravityParticles(getOnPos(), level, random, getParticleColor(), Math.round(getAoe()), 25, 10);
-        ParticleUtil.spawnLight(level, getParticleColor(), position().add(0, 0.5, 0), 5);
+    public void buildEmitters() {
+        TimelineMap timelineMap = this.resolver().spell.particleTimeline();
+        LingerTimeline projectileTimeline = timelineMap.get(ArsNouveauRegistry.GRAVITY_TIMELINE.get());
+        TimelineEntryData trailConfig = projectileTimeline.trailEffect;
+        TimelineEntryData resolveConfig = projectileTimeline.onResolvingEffect;
+        this.tickEmitter = new ParticleEmitter(() -> this.getPosition(ClientInfo.partialTicks), this::getRotationVector, trailConfig);
+        this.resolveEmitter = new ParticleEmitter(() -> this.getPosition(ClientInfo.partialTicks), this::getRotationVector, resolveConfig);
+        if (this.tickEmitter.particleOptions instanceof PropertyParticleOptions propertyParticleOptions) {
+            propertyParticleOptions.map.set(ParticlePropertyRegistry.WALL_PROPERTY.get(), new WallProperty(Math.round(getAoe()), 5, 20, getDirection()));
+        }
+        this.resolveSound = projectileTimeline.resolveSound.sound;
     }
 
     public boolean testFilters(Entity entity) {
@@ -144,5 +149,15 @@ public class EntityMagnetSpell extends EntityLingeringSpell {
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DURATION_UP, 0.0F);
+        pBuilder.define(AOE, 0f);
+    }
+
+    @Override
+    public void traceAnyHit(@Nullable HitResult raytraceresult, Vec3 thisPosition, Vec3 nextPosition) {
+    }
+
+    @Override
+    public int getParticleDelay() {
+        return 0;
     }
 }

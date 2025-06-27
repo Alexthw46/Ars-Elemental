@@ -16,6 +16,7 @@ import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.*;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
+import com.hollingsworth.arsnouveau.client.particle.WrappedProvider;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSummonSkeleton;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerModel;
@@ -63,6 +64,8 @@ public class ClientEvents {
     public static void registerParticles(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.SPARK.get(), SparkParticle::factory);
         event.registerSpriteSet(ModParticles.VENOM.get(), VenomParticle::factory);
+        event.registerSpriteSet(ModParticles.SPARK_2.get(), (sprites -> new WrappedProvider(ModParticles.SPARK.get(), SparkParticle::factory)));
+        event.registerSpriteSet(ModParticles.VENOM_2.get(), (sprites -> new WrappedProvider(ModParticles.VENOM.get(), VenomParticle::factory)));
     }
 
     @SubscribeEvent

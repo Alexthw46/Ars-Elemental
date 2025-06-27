@@ -11,6 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Random;
 
 import static com.hollingsworth.arsnouveau.client.particle.ParticleColor.defaultParticleColor;
+import static com.hollingsworth.arsnouveau.client.particle.ParticleUtil.inRange;
 
 public class ParticleUtil {
 
@@ -55,14 +56,14 @@ public class ParticleUtil {
         BlockPos.withinManhattanStream(pos, range, range, range).forEach(blockPos -> {
             if (rand.nextInt(chance) == 0) {
                 for (int i = 0; i < rand.nextInt(numParticles); i++) {
-                    double x = blockPos.getX() + com.hollingsworth.arsnouveau.client.particle.ParticleUtil.inRange(-0.5, 0.5) + 0.5;
-                    double y = blockPos.getY() + com.hollingsworth.arsnouveau.client.particle.ParticleUtil.inRange(0.5, 1);
-                    double z = blockPos.getZ() + com.hollingsworth.arsnouveau.client.particle.ParticleUtil.inRange(-0.5, 0.5) + 0.5;
+                    double x = blockPos.getX() + inRange(-0.5, 0.5) + 0.5;
+                    double y = blockPos.getY() + inRange(0.5, 1);
+                    double z = blockPos.getZ() + inRange(-0.5, 0.5) + 0.5;
 
                     // Add the particle to the world
                     world.addParticle(ParticleLineData.createData(color),
                             x, y, z,
-                            pos.getX() + 0.5, pos.getY() + 1 + com.hollingsworth.arsnouveau.client.particle.ParticleUtil.inRange(0.25, 0.75), pos.getZ() + 0.5);
+                            pos.getX() + 0.5, pos.getY() + 1 + inRange(0.25, 0.75), pos.getZ() + 0.5);
                 }
             }
         });

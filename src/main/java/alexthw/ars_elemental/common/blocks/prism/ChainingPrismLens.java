@@ -35,11 +35,12 @@ public class ChainingPrismLens extends AbstractPrismLens implements ICasterTool 
         if (world.getBlockEntity(pos) instanceof AdvancedPrismTile ap) {
             AbstractCaster<?> spellCaster = getSpellCaster(ap.getLens());
             if (spellCaster != null) {
-                Spell.Mutable mutable = spell.spellResolver.spell.mutable();
+                SpellResolver spellResolver = spell.resolver();
+                Spell.Mutable mutable = spellResolver.spell.mutable();
                 mutable.add(spellCaster.getSpell().mutable().recipe.toArray(AbstractSpellPart[]::new));
-                spell.spellResolver.spellContext = spell.spellResolver.spellContext.withSpell(mutable.immutable());
-                spell.spellResolver.spell = mutable.immutable();
-                int cost = spell.spellResolver.getResolveCost();
+                spellResolver.spellContext = spellResolver.spellContext.withSpell(mutable.immutable());
+                spellResolver.spell = mutable.immutable();
+                int cost = spellResolver.getResolveCost();
                 // source check done in canConvert
                 SourceUtil.takeSourceMultipleWithParticles(pos, world, 10, cost);
             }
@@ -52,7 +53,7 @@ public class ChainingPrismLens extends AbstractPrismLens implements ICasterTool 
         if (level.getBlockEntity(pos) instanceof AdvancedPrismTile ap) {
             AbstractCaster<?> spellCaster = getSpellCaster(ap.getLens());
             if (spellCaster != null) {
-                Spell.Mutable mutable = projectileSpell.spellResolver.spell.mutable();
+                Spell.Mutable mutable = projectileSpell.resolver().spell.mutable();
                 mutable.add(spellCaster.getSpell().mutable().recipe.toArray(AbstractSpellPart[]::new));
                 List<SpellValidationError> validationErrors = ArsNouveauAPI.getInstance().getSpellCraftingSpellValidator().validate(mutable.recipe);
                 int manaCost = mutable.immutable().getCost();

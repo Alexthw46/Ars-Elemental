@@ -399,6 +399,10 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page.water_upstream", "This block generates an upstream current that will make surrounding entities in water float upwards as if inside a bubble column, even if they are not in source blocks. Sneaking will allow to descend.");
         add("ars_elemental.page.curio_bag", "All those magical trinkets can easily clutter your inventory, but fear not! Using some magebloom fiber you can make a magic pouch to store items. You can also open it with $(k:ars_elemental.open_pouch) while in the hotbar or in a curio slot. You can further upgrade it into the Spellcaster bag, which is larger and can be dyed.");
 
+        add("ars_elemental.particle.spark_spell", "Elemental Spark");
+        add("ars_elemental.particle.venom_spell", "Envenom Skulls");
+        add("ars_elemental.particle.skull_spell", "Skulls");
+        add("ars_nouveau.particle_config.gravity_field", "Gravity Well");
 
     }
 

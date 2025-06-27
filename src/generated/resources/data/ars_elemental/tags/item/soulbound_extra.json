@@ -65,6 +65,10 @@
     "#ars_nouveau:spellbook",
     "#c:tools",
     "ars_nouveau:wand",
+    "ars_nouveau:enchanters_mirror",
+    "ars_nouveau:enchanters_fishing_rod",
+    "ars_nouveau:enchanters_eye",
+    "ars_elemental:spell_horn",
     {
       "id": "not_enough_glyphs:spellbinder",
       "required": false
