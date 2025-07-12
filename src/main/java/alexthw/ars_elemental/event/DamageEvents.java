@@ -20,6 +20,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.api.util.ManaUtil;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import com.hollingsworth.arsnouveau.setup.registry.RegistryHelper;
 import com.mojang.authlib.GameProfile;
@@ -168,7 +169,7 @@ public class DamageEvents {
             }
         }
 
-        if (eventTarget instanceof Player player && (event.getSource().is(DamageTypes.CACTUS) || event.getSource().is(DamageTypes.SWEET_BERRY_BUSH))) {
+        if (eventTarget instanceof Player player && (event.getSource().is(DamageTypes.CACTUS) || event.getSource().is(DamageTypes.SWEET_BERRY_BUSH) || event.getSource().is(DamageTypesRegistry.SOURCE_BERRY_BUSH))) {
             if (ISchoolBangle.hasBangle(event.getEntity().level(), player, ELEMENTAL_EARTH)) {
                 event.setCanceled(true);
             }

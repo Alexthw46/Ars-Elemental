@@ -45,7 +45,7 @@ public class EarthMage extends EntityMageBase {
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectCrush.INSTANCE, AugmentAmplify.INSTANCE, AugmentAmplify.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectSnare.INSTANCE, AugmentExtendTime.INSTANCE, EffectSpike.INSTANCE));
 
-        pSpells.add(new Spell(MethodPantomime.INSTANCE, EffectConjureTerrain.INSTANCE, EffectLeap.INSTANCE));
+        pSpells.add(new Spell(MethodPantomime.INSTANCE, EffectConjureTerrain.INSTANCE, AugmentAmplify.INSTANCE, AugmentAmplify.INSTANCE, EffectLeap.INSTANCE));
     }
 
     @Override

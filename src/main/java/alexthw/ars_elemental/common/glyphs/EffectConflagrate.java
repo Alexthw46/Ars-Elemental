@@ -33,7 +33,7 @@ public class EffectConflagrate extends ElementalAbstractEffect implements IDamag
 
     @Override
     public String getBookDescription() {
-        return "When it hits a target on fire, it causes a detonation that deals damage to all entities in range. That explosion might spread explosive powder on them, causing them to explode after a while.";
+        return "When it hits a target on fire, it causes a detonation that deals damage to all entities in range and sets them on fire. That explosion might spread explosive powder on them, causing them to explode after a while.";
     }
 
     @Override
@@ -51,6 +51,7 @@ public class EffectConflagrate extends ElementalAbstractEffect implements IDamag
                     ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.3);
             for (Entity e : world.getEntities(shooter, new AABB(
                     livingEntity.position().add(range, range, range), livingEntity.position().subtract(range, range, range)))) {
+                e.setRemainingFireTicks(e.getRemainingFireTicks() + 60);
                 if (e.equals(livingEntity) || !(e instanceof LivingEntity liv))
                     continue;
                 if (attemptDamage(world, shooter, spellStats, spellContext, resolver, e, source, damage * 0.75F)) {
@@ -79,7 +80,7 @@ public class EffectConflagrate extends ElementalAbstractEffect implements IDamag
     public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDamageConfig(builder, 9.0);
-        addAmpConfig(builder, 3.0);
+        addAmpConfig(builder, 5.0);
     }
 
     @Override

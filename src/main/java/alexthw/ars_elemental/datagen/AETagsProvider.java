@@ -365,12 +365,14 @@ public class AETagsProvider {
 
             tag(ModRegistry.EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
                             DamageTypes.FALLING_STALACTITE,
+                            DamageTypes.STALAGMITE,
                             DamageTypes.CACTUS,
                             DamageTypes.FALLING_ANVIL,
                             DamageTypes.STING,
                             DamageTypes.SWEET_BERRY_BUSH)
                     .addTag(Tags.DamageTypes.IS_POISON)
-                    .addOptional(DamageTypesRegistry.CRUSH.location());
+                    .addOptional(DamageTypesRegistry.CRUSH.location())
+                    .addOptional(DamageTypesRegistry.SOURCE_BERRY_BUSH.location());
 
             tag(DamageTypeTags.IS_LIGHTNING).addOptional(ModRegistry.SPARK.location());
 
