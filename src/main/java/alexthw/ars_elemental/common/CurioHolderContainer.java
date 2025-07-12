@@ -40,12 +40,24 @@ public class CurioHolderContainer extends AbstractContainerMenu {
         int offset = offset();
         for (int l = 0; l < 3; ++l) {
             for (int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(playerInv, j1 + (l + 1) * 9, 8 + j1 * 18, offset + 84 + l * 18));
+                this.addSlot(new Slot(playerInv, j1 + (l + 1) * 9, 8 + j1 * 18, offset + 84 + l * 18) {
+                    @Override
+                    public boolean mayPickup(@NotNull Player playerIn) {
+                        if (this.getItem().is(backpack.getItem())) return false;
+                        return super.mayPickup(playerIn);
+                    }
+                });
             }
         }
 
         for (int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(playerInv, i1, 8 + i1 * 18, offset + 142));
+            this.addSlot(new Slot(playerInv, i1, 8 + i1 * 18, offset + 142) {
+                @Override
+                public boolean mayPickup(@NotNull Player playerIn) {
+                    if (this.getItem().is(backpack.getItem())) return false;
+                    return super.mayPickup(playerIn);
+                }
+            });
         }
     }
 
@@ -56,7 +68,6 @@ public class CurioHolderContainer extends AbstractContainerMenu {
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return CurioHolder.canStore(stack);
             }
-
         };
     }
 
