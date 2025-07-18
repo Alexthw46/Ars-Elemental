@@ -36,7 +36,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     @Override
     public String getBookDescription() {
-        return "This projectile seek the nearest entity and follow it, will behave as a classic projectile while there are no valid targets. Players will only be targeted if augmented by Sensitive.";
+        return "This projectile seek the nearest entity and follow it, will behave as a classic projectile while there are no valid targets. Players will be targeted only if augmented by Sensitive.";
     }
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver, List<Predicate<LivingEntity>> ignore) {
@@ -47,6 +47,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         for (int i = 0; i < numSplits; i++) {
             EntityHomingProjectileSpell spell = new EntityHomingProjectileSpell(world, resolver);
             projectiles.add(spell);
+            if (stats.hasBuff(AugmentDampen.INSTANCE)) spell.setGravity(true);
         }
         float velocity = getProjectileSpeed(stats);
         int opposite = -1;
@@ -120,12 +121,13 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
     @Override
     protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentPierce.INSTANCE.getRegistryName(), 1);
+        defaults.put(AugmentDampen.INSTANCE.getRegistryName(), 1);
     }
 
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE);
+        return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE, AugmentDampen.INSTANCE);
     }
 
     public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, Boolean targetPlayers, Spell spell) {
@@ -156,6 +158,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         map.put(AugmentAccelerate.INSTANCE, "Projectiles will move faster.");
         map.put(AugmentDecelerate.INSTANCE, "Projectiles will move slower.");
         map.put(AugmentSensitive.INSTANCE, "Projectiles will also target players.");
+        map.put(AugmentDampen.INSTANCE, "Projectiles will be affected by gravity.");
     }
 
     @Override

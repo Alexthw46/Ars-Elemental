@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,10 +71,10 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
         Vec3 direction = IPropagator.getDirection(shooter, resolver, pos);
         for (EntityProjectileSpell proj : projectiles) {
             proj.setPos(proj.position().add(0, 0.25 * sizeRatio, 0));
-            if (!(shooter instanceof FakePlayer)) {
-                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
-            } else {
+            if (stats.hasBuff(AugmentExtract.INSTANCE) || shooter instanceof FakePlayer) {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);
+            } else {
+                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
             }
             world.addFreshEntity(proj);
         }
@@ -92,7 +93,9 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return MethodArcProjectile.INSTANCE.getCompatibleAugments();
+        var extended = new HashSet<>(MethodArcProjectile.INSTANCE.getCompatibleAugments());
+        extended.add(AugmentExtract.INSTANCE);
+        return extended;
     }
 
     public SpellTier defaultTier() {
@@ -112,5 +115,6 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
         map.put(AugmentAccelerate.INSTANCE, "Projectiles will move faster.");
         map.put(AugmentDecelerate.INSTANCE, "Projectiles will move slower.");
         map.put(AugmentSensitive.INSTANCE, "Projectiles will hit plants and other materials that do not block motion.");
+        map.put(AugmentExtract.INSTANCE, "Projectile direction will be relative to caster position.");
     }
 }

@@ -13,10 +13,7 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static alexthw.ars_elemental.common.glyphs.MethodHomingProjectile.getProjectileSpeed;
 
@@ -60,10 +57,11 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         for (EntityHomingProjectileSpell proj : projectiles) {
             proj.setPos(pos.add(0, 1, 0));
             proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
-            if (!(shooter instanceof FakePlayer)) {
-                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
-            } else {
+            if (stats.hasBuff(AugmentDampen.INSTANCE)) proj.setGravity(true);
+            if (stats.hasBuff(AugmentExtract.INSTANCE) || (shooter instanceof FakePlayer)) {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);
+            } else {
+                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
             }
             opposite = opposite * -1;
             counter++;
@@ -85,7 +83,9 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return MethodHomingProjectile.INSTANCE.getCompatibleAugments();
+        var extended = new HashSet<>(MethodHomingProjectile.INSTANCE.getCompatibleAugments());
+        extended.add(AugmentExtract.INSTANCE);
+        return extended;
     }
 
     public SpellTier defaultTier() {
@@ -110,5 +110,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         map.put(AugmentAccelerate.INSTANCE, "Projectiles will move faster.");
         map.put(AugmentDecelerate.INSTANCE, "Projectiles will move slower.");
         map.put(AugmentSensitive.INSTANCE, "Projectiles will also target players.");
+        map.put(AugmentDampen.INSTANCE, "Projectiles will be affected by gravity.");
+        map.put(AugmentExtract.INSTANCE, "Projectile direction will be relative to caster position.");
     }
 }

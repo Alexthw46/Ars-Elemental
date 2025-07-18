@@ -82,7 +82,6 @@
     ],
     [
       "minecraft:glow_lichen",
-      "minecraft:forest_flowers",
       "minecraft:patch_large_fern",
       "ars_elemental:less_trees_mangrove",
       "minecraft:patch_grass_normal",
@@ -96,7 +95,8 @@
       "minecraft:sea_pickle",
       "ars_elemental:cluster_cascading_archwood",
       "ars_nouveau:mojang_grass",
-      "ars_nouveau:mojang_flowers"
+      "ars_nouveau:mojang_flowers",
+      "ars_elemental:mojang_forest_flowers"
     ],
     [
       "minecraft:freeze_top_layer"

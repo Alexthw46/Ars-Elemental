@@ -84,7 +84,6 @@
     [
       "minecraft:glow_lichen",
       "minecraft:bamboo_light",
-      "minecraft:forest_flowers",
       "minecraft:patch_large_fern",
       "ars_elemental:cluster_flourishing_archwood",
       "ars_elemental:sparse_jungle_trees",
@@ -101,6 +100,7 @@
       "minecraft:classic_vines_cave_feature",
       "ars_nouveau:mojang_grass",
       "ars_nouveau:mojang_flowers",
+      "ars_elemental:mojang_forest_flowers",
       "ars_elemental:scattered_blossoms"
     ],
     [

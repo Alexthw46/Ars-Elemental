@@ -1,0 +1,99 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "fly": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 4.75,
+      "bones": {
+        "master": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.0": {
+              "vector": [
+                25,
+                0,
+                0
+              ]
+            }
+          },
+          "position": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.0": {
+              "vector": [
+                0,
+                "0+2",
+                0
+              ]
+            }
+          }
+        },
+        "wing_left": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              "-90+math.sin(query.anim_time * 500) * 45"
+            ]
+          }
+        },
+        "wing_right": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              "90+math.sin(query.anim_time * 500) * -45"
+            ]
+          }
+        },
+        "tail": {
+          "rotation": {
+            "vector": [
+              -22.5,
+              0,
+              0
+            ]
+          }
+        },
+        "legs": {
+          "rotation": {
+            "vector": [
+              10,
+              0,
+              0
+            ]
+          }
+        },
+        "feets": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.0": {
+              "vector": [
+                57.5,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

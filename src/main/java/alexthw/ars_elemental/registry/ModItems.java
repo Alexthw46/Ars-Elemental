@@ -10,6 +10,7 @@ import alexthw.ars_elemental.common.blocks.prism.*;
 import alexthw.ars_elemental.common.blocks.upstream.AirUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.MagmaUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.UpstreamBlock;
+import alexthw.ars_elemental.common.blocks.upstream.WaterUpstreamTile;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.bangles.*;
@@ -207,7 +208,12 @@ public class ModItems {
         WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Blocks.CLAY, MapColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));
         MERMAID_ROCK = addBlock("mermaid_rock", () -> new MermaidRock(blockProps(Blocks.STONE, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.CORAL_BLOCK).strength(2.0f, 6.0f).noOcclusion().lightLevel(b -> 10)));
         GROUND_BLOSSOM = addBlock("spore_blossom_up", () -> new SporeBlossomGround(blockProps(Blocks.SPORE_BLOSSOM, MapColor.COLOR_PINK).sound(SoundType.SPORE_BLOSSOM).noOcclusion()));
-        WATER_UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)));
+        WATER_UPSTREAM_BLOCK = addBlock("water_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
+            @Override
+            public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+                return new WaterUpstreamTile(pPos, pState);
+            }
+        });
         LAVA_UPSTREAM_BLOCK = addBlock("magma_upstream", () -> new UpstreamBlock(blockProps(Blocks.STONE, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f)) {
             @Override
             public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {

@@ -84,7 +84,6 @@
     ],
     [
       "minecraft:glow_lichen",
-      "minecraft:forest_flowers",
       "minecraft:patch_large_fern",
       "minecraft:trees_windswept_savanna",
       "minecraft:brown_mushroom_normal",
@@ -94,6 +93,7 @@
       "ars_elemental:cluster_blazing_archwood",
       "ars_nouveau:mojang_grass",
       "ars_nouveau:mojang_flowers",
+      "ars_elemental:mojang_forest_flowers",
       "ars_elemental:scattered_torchflowers"
     ],
     [
