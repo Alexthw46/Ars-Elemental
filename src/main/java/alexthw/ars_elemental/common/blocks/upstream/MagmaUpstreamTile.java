@@ -20,11 +20,6 @@ public class MagmaUpstreamTile extends UpstreamTile {
     }
 
     @Override
-    protected int getTickRate() {
-        return 0;
-    }
-
-    @Override
     protected boolean isValidTarget(LivingEntity entity) {
         return !entity.isSpectator() && entity.isInLava() && !entity.isCrouching();
     }
