@@ -24,6 +24,10 @@ public class SelfCastGoal<T extends EntityMageBase> extends CastGoal<T> {
         this.index = index;
     }
 
+    public boolean canUse() {
+        return this.canUse.get();
+    }
+
     @Override
     public void tick() {
         super.tick();

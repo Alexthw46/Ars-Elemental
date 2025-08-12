@@ -27,15 +27,15 @@ public interface IElementalArmor extends ISpellModifierItem {
 
     Map<SpellSchool, TagKey<DamageType>> damageResistances = new ConcurrentHashMap<>();
 
-    static Holder<ArmorMaterial> schoolToMaterial(SpellSchool element) {
-        return switch (element.getId()) {
-            case "fire" -> AAMaterials.fire;
-            case "air" -> AAMaterials.air;
-            case "earth" -> AAMaterials.earth;
-            case "water" -> AAMaterials.water;
+    Map<String, Holder<ArmorMaterial>> SCHOOL_TO_MATERIAL = new ConcurrentHashMap<>() {{
+        put("fire", AAMaterials.fire);
+        put("air", AAMaterials.air);
+        put("earth", AAMaterials.earth);
+        put("water", AAMaterials.water);
+    }};
 
-            default -> MaterialRegistry.MEDIUM;
-        };
+    static Holder<ArmorMaterial> schoolToMaterial(SpellSchool element) {
+        return SCHOOL_TO_MATERIAL.getOrDefault(element.getId(), MaterialRegistry.MEDIUM);
     }
 
     @Override
@@ -64,13 +64,14 @@ public interface IElementalArmor extends ISpellModifierItem {
         // check if the damage source is in the list of damage sources that this armor can absorb
         return damageResistances.containsKey(getSchool()) && damageSource.is(damageResistances.get(getSchool()));
     }
+
     default boolean fillAbsorptions(DamageSource damageSource, HashMap<SpellSchool, Integer> bonusMap) {
         // check if the damage source is in the list of damage sources that this armor can absorb
         // then add the school to the bonus map
         if (doAbsorb(damageSource)) {
             bonusMap.put(getSchool(), bonusMap.getOrDefault(getSchool(), 0) + 1);
             return true;
-        }else return false;
+        } else return false;
     }
 
 }

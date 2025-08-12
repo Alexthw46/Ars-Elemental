@@ -130,7 +130,6 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
         }
         pierce = compound.getDouble("pierce");
         aoe = compound.getDouble("aoe");
-
     }
 
     protected void addAdditionalSaveData(@NotNull CompoundTag compound) {

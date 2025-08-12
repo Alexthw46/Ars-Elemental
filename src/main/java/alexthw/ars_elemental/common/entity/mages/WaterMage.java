@@ -33,14 +33,14 @@ public class WaterMage extends EntityMageBase {
      * 1: WaterGrave
      * 2: Cold Snapper
      * 3: Burst Spike
-     * <p>      
+     * <p>
      * SelfSpells
      * 1: Bubble Shield
      */
     public WaterMage(EntityType<? extends EntityMageBase> p_21368_, Level level) {
         super(p_21368_, level);
         this.school = SpellSchools.ELEMENTAL_WATER;
-        pSpells.add(new Spell(MethodHomingProjectile.INSTANCE, EffectBubble.INSTANCE, EffectWaterGrave.INSTANCE, AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE));
+        pSpells.add(new Spell(MethodHomingProjectile.INSTANCE, AugmentSensitive.INSTANCE, EffectBubble.INSTANCE, EffectWaterGrave.INSTANCE, AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectFreeze.INSTANCE, EffectColdSnap.INSTANCE, AugmentAmplify.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectBurst.INSTANCE, AugmentSensitive.INSTANCE, EffectSpike.INSTANCE, AugmentAmplify.INSTANCE));
 

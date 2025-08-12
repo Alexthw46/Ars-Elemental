@@ -3,11 +3,13 @@ package alexthw.ars_elemental.common.entity.spikes;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
-import com.hollingsworth.arsnouveau.common.entity.ColoredProjectile;
 import com.hollingsworth.arsnouveau.common.entity.EnchantedFallingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
@@ -19,7 +21,7 @@ public class EnchantedDripstoneEntity extends EnchantedFallingBlock {
 
     boolean icy;
 
-    public EnchantedDripstoneEntity(EntityType<? extends ColoredProjectile> entityType, Level level, boolean ice) {
+    public EnchantedDripstoneEntity(EntityType<? extends EnchantedFallingBlock> entityType, Level level, boolean ice) {
         super(entityType, level);
         dropItem = false;
         this.icy = ice;
@@ -42,6 +44,19 @@ public class EnchantedDripstoneEntity extends EnchantedFallingBlock {
     @Override
     public @NotNull EntityType<?> getType() {
         return icy ? ModEntities.THROWN_ICE_SPIKE.get() : ModEntities.THROWN_SPIKE.get();
+    }
+
+    public @NotNull DamageSource getDamageSource(Entity owner, Entity entity) {
+        DamageSource damagesource;
+        if (owner == null) {
+            damagesource = level.damageSources().fallingStalactite(this);
+        } else {
+            damagesource = level.damageSources().fallingStalactite(owner);
+            if (owner instanceof LivingEntity livingOwner) {
+                livingOwner.setLastHurtMob(entity);
+            }
+        }
+        return damagesource;
     }
 
 }

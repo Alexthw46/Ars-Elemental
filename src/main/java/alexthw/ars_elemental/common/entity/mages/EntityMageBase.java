@@ -90,7 +90,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
         this.goalSelector.addGoal(3, new MageProjCastingGoal<>(this, 1.0d, 30, 64f, () -> castCooldown <= 0, 2, 10));
-        this.goalSelector.addGoal(2, new SelfCastGoal<>(this, 10, 0, () -> (castCooldown <= 10 && (getHealth() <= getMaxHealth() / 4)), 1, 10));
+        this.goalSelector.addGoal(2, new SelfCastGoal<>(this, 10, 0, () -> (castCooldown <= 10 && (getHealth() <= getMaxHealth() / 3)), 1, 10));
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -124,7 +124,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 50.0D)
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0D)
                 .add(Attributes.ATTACK_DAMAGE, 1)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.FOLLOW_RANGE, 16D);

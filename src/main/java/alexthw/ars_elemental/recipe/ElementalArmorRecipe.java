@@ -29,9 +29,17 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
 
     public int tier = 3; // 0 indexed
 
+    public int tier() {
+        return tier;
+    }
+
     public ElementalArmorRecipe(Ingredient reagent, ItemStack result, List<Ingredient> pedestalItems, int cost) {
         super(reagent, result, pedestalItems, cost, true);
-        //this.tier = tier;
+    }
+
+    public ElementalArmorRecipe(Ingredient reagent, ItemStack result, List<Ingredient> pedestalItems, int cost, int tier) {
+        super(reagent, result, pedestalItems, cost, true);
+        this.tier = tier;
     }
 
     @Override
@@ -40,12 +48,12 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
         if (!(perkHolder instanceof ArmorPerkHolder armorPerkHolder)) {
             return false;
         }
-        return armorPerkHolder.getTier() == 2 && super.matches(input, level);
+        return armorPerkHolder.getTier() == (tier - 1) && super.matches(input, level);
     }
 
     @Override
-    public @NotNull ItemStack assemble(ApparatusRecipeInput input, HolderLookup.Provider p_346030_) {
-        ItemStack result = super.assemble(input, p_346030_);
+    public @NotNull ItemStack assemble(ApparatusRecipeInput input, HolderLookup.@NotNull Provider provider) {
+        ItemStack result = super.assemble(input, provider);
         if (!input.catalyst().isComponentsPatchEmpty()) {
             result.applyComponents(input.catalyst().getComponentsPatch());
             result.setDamageValue(0);
@@ -91,7 +99,8 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
                 Ingredient.CODEC.fieldOf("reagent").forGetter(ElementalArmorRecipe::reagent),
                 ItemStack.CODEC.fieldOf("result").forGetter(ElementalArmorRecipe::result),
                 Ingredient.CODEC.listOf().fieldOf("pedestalItems").forGetter(ElementalArmorRecipe::pedestalItems),
-                Codec.INT.fieldOf("sourceCost").forGetter(ElementalArmorRecipe::sourceCost)
+                Codec.INT.fieldOf("sourceCost").forGetter(ElementalArmorRecipe::sourceCost),
+                Codec.INT.optionalFieldOf("tier", 3).forGetter(recipe -> recipe.tier)
         ).apply(instance, ElementalArmorRecipe::new));
 
         public static StreamCodec<RegistryFriendlyByteBuf, ElementalArmorRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -103,6 +112,8 @@ public class ElementalArmorRecipe extends EnchantingApparatusRecipe implements I
                 ElementalArmorRecipe::pedestalItems,
                 ByteBufCodecs.VAR_INT,
                 ElementalArmorRecipe::sourceCost,
+                ByteBufCodecs.VAR_INT,
+                ElementalArmorRecipe::tier,
                 ElementalArmorRecipe::new
         );
     }

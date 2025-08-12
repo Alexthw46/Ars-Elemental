@@ -66,7 +66,7 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
             spell.remove(Entity.RemovalReason.DISCARDED);
             return;
         }
-        Vec3 vec3d = tile.getShootAngle().normalize();
+        Vec3 vec3d = tile.getShootAngle();
         // get the lens from the tile and check if it can convert the spell, if it can, shoot it, if not use the default lens
         if (tile.getLens().getItem() instanceof SpellPrismLens lens && lens.canConvert(spell, world, pos)) {
             lens.shoot(world, pos, spell, vec3d);

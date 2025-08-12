@@ -3,10 +3,12 @@ package alexthw.ars_elemental.common.glyphs;
 import alexthw.ars_elemental.mixin.ZombieInvoker;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Zombie;
@@ -61,7 +63,7 @@ public class EffectWaterGrave extends ElementalAbstractEffect implements IDamage
 
     @Override
     public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
-        return shooter.damageSources().drown();
+        return DamageUtil.source(world, DamageTypes.DROWN, shooter);
     }
 
     @Override

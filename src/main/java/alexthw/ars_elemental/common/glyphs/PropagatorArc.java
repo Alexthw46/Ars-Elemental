@@ -87,7 +87,7 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
 
     @Override
     public int getDefaultManaCost() {
-        return 200;
+        return 150;
     }
 
     @NotNull
