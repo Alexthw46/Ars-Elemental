@@ -3,6 +3,7 @@ package alexthw.ars_elemental;
 import alexthw.ars_elemental.api.spell_style.GravityWellMotion;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
+import alexthw.ars_elemental.common.entity.familiars.FlashjackHolder;
 import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.glyphs.*;
 import alexthw.ars_elemental.common.glyphs.filters.*;
@@ -164,6 +165,7 @@ public class ArsNouveauRegistry {
     public static void registerFamiliars() {
         FamiliarRegistry.registerFamiliar(new MermaidHolder());
         FamiliarRegistry.registerFamiliar(new FirenandoHolder());
+        FamiliarRegistry.registerFamiliar(new FlashjackHolder());
     }
 
     public static void registerPerks() {

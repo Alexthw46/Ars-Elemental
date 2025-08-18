@@ -1,11 +1,43 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "fly": {
+    "idle.flapping": {
       "loop": "hold_on_last_frame",
       "animation_length": 4.75,
       "bones": {
-        "master": {
+        "wing_left": {
+          "rotation": {
+            "vector": [
+              -10,
+              0,
+              "-90+math.sin(query.anim_time * 500) * 45"
+            ]
+          }
+        },
+        "wing_right": {
+          "rotation": {
+            "vector": [
+              -10,
+              0,
+              "90+math.sin(query.anim_time * 500) * -45"
+            ]
+          }
+        },
+        "head": {
+          "rotation": {
+            "vector": [
+              "10 + 2.5 * math.sin(query.anim_time*-500)",
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "attack": {
+      "animation_length": 1.5,
+      "bones": {
+        "head": {
           "rotation": {
             "0.0": {
               "vector": [
@@ -14,9 +46,9 @@
                 0
               ]
             },
-            "1.0": {
+            "0.75": {
               "vector": [
-                25,
+                -25,
                 0,
                 0
               ]
@@ -30,52 +62,16 @@
                 0
               ]
             },
-            "1.0": {
+            "0.75": {
               "vector": [
                 0,
-                "0+2",
+                0,
                 0
               ]
             }
           }
         },
-        "wing_left": {
-          "rotation": {
-            "vector": [
-              0,
-              0,
-              "-90+math.sin(query.anim_time * 500) * 45"
-            ]
-          }
-        },
-        "wing_right": {
-          "rotation": {
-            "vector": [
-              0,
-              0,
-              "90+math.sin(query.anim_time * 500) * -45"
-            ]
-          }
-        },
-        "tail": {
-          "rotation": {
-            "vector": [
-              -22.5,
-              0,
-              0
-            ]
-          }
-        },
-        "legs": {
-          "rotation": {
-            "vector": [
-              10,
-              0,
-              0
-            ]
-          }
-        },
-        "feets": {
+        "body": {
           "rotation": {
             "0.0": {
               "vector": [
@@ -84,13 +80,155 @@
                 0
               ]
             },
-            "1.0": {
+            "0.5": {
               "vector": [
-                57.5,
+                -17.5,
                 0,
                 0
               ]
             }
+          }
+        },
+        "wing_left": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.5": {
+              "vector": [
+                -150,
+                0,
+                0
+              ],
+              "easing": "easeInOutSine"
+            },
+            "1.25": {
+              "vector": [
+                -150,
+                -70,
+                0
+              ],
+              "easing": "easeOutSine"
+            }
+          }
+        },
+        "wing_right": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.5": {
+              "vector": [
+                -150,
+                0,
+                0
+              ],
+              "easing": "easeInOutSine"
+            },
+            "1.25": {
+              "vector": [
+                -150,
+                70,
+                0
+              ],
+              "easing": "easeOutSine"
+            }
+          }
+        }
+      }
+    },
+    "idle.air": {
+      "loop": true,
+      "animation_length": 3,
+      "bones": {
+        "master": {
+          "rotation": {
+            "vector": [
+              15,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "vector": [
+              0,
+              "0+2",
+              0
+            ]
+          }
+        },
+        "tail": {
+          "rotation": {
+            "vector": [
+              "-20 + math.sin(query.anim_time * -500) * 10",
+              0,
+              0
+            ]
+          }
+        },
+        "legs": {
+          "rotation": {
+            "vector": [
+              "10 + math.sin(query.anim_time * 500) * 7.5",
+              0,
+              0
+            ]
+          }
+        },
+        "feets": {
+          "rotation": {
+            "vector": [
+              57.5,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "idle.ground": {
+      "loop": "hold_on_last_frame",
+      "bones": {
+        "body": {
+          "rotation": {
+            "vector": [
+              -10,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "legs": {
+          "rotation": {
+            "vector": [
+              7.5,
+              0,
+              0
+            ]
+          }
+        },
+        "feets": {
+          "rotation": {
+            "vector": [
+              12.5,
+              0,
+              0
+            ]
           }
         }
       }

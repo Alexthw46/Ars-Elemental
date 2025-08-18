@@ -11,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Dolphin;
+import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Strider;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,6 +28,10 @@ public class EntityAttributes {
 
         event.put(ModEntities.FIRENANDO_ENTITY.get(), FirenandoEntity.createAttributes().build());
         event.put(ModEntities.FIRENANDO_FAMILIAR.get(), FamiliarEntity.attributes().build());
+
+        event.put(ModEntities.FLASHJACK_ENTITY.get(), Parrot.createAttributes().build());
+        event.put(ModEntities.FLASHJACK_FAMILIAR.get(), FamiliarEntity.attributes().build());
+
 
         event.put(ModEntities.FLASHING_WEALD_WALKER.get(), WealdWalker.attributes().build());
         event.put(ModEntities.SKELEHORSE_SUMMON.get(), AbstractHorse.createBaseHorseAttributes().build());

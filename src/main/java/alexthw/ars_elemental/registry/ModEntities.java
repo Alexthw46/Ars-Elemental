@@ -1,8 +1,10 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.common.entity.FirenandoEntity;
+import alexthw.ars_elemental.common.entity.FlashjackEntity;
 import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
+import alexthw.ars_elemental.common.entity.familiars.FlashjackFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
 import alexthw.ars_elemental.common.entity.mages.*;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
@@ -46,6 +48,9 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<FirenandoEntity>> FIRENANDO_ENTITY;
     public static final DeferredHolder<EntityType<?>, EntityType<FirenandoFamiliar>> FIRENANDO_FAMILIAR;
 
+    public static final DeferredHolder<EntityType<?>, EntityType<FlashjackEntity>> FLASHJACK_ENTITY;
+    public static final DeferredHolder<EntityType<?>, EntityType<FlashjackFamiliar>> FLASHJACK_FAMILIAR;
+
     public static final DeferredHolder<EntityType<?>, EntityType<WealdWalker>> FLASHING_WEALD_WALKER;
 
     public static final DeferredHolder<EntityType<?>, EntityType<EntityMageBase>> FIRE_MAGE;
@@ -76,6 +81,10 @@ public class ModEntities {
 
         FIRENANDO_ENTITY = addEntity("firenando_entity", 1.0F, 2.2F, true, false, FirenandoEntity::new, MobCategory.CREATURE);
         FIRENANDO_FAMILIAR = addEntity("firenando_familiar", 1.0F, 1.8F, true, false, FirenandoFamiliar::new, MobCategory.CREATURE);
+
+        FLASHJACK_ENTITY = registerEntity("flashjack_entity", 0.6F, 0.9F, FlashjackEntity::new, MobCategory.CREATURE);
+        FLASHJACK_FAMILIAR = registerEntity("flashjack_familiar", 0.6F, 0.9F, FlashjackFamiliar::new, MobCategory.CREATURE);
+
 
         FIRE_MAGE = registerEntity("fire_mage", 0.5F, 1.8F, FireMage::new, MobCategory.MONSTER);
         WATER_MAGE = registerEntity("water_mage", 0.5F, 1.8F, WaterMage::new, MobCategory.MONSTER);
@@ -134,6 +143,7 @@ public class ModEntities {
 
         event.register(FLASHING_WEALD_WALKER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, com.hollingsworth.arsnouveau.setup.registry.ModEntities::genericGroundSpawn, RegisterSpawnPlacementsEvent.Operation.AND);
         event.register(SIREN_ENTITY.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (p_186238_, p_186239_, p_186240_, p_186241_, p_186242_) -> MermaidEntity.checkSurfaceWaterAnimalSpawnRules(p_186239_, p_186241_), RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(FLASHJACK_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, FlashjackEntity::checkSpawnRules, RegisterSpawnPlacementsEvent.Operation.AND);
         event.register(FIRE_MAGE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ModEntities::surfaceSpawn, RegisterSpawnPlacementsEvent.Operation.AND);
         event.register(AIR_MAGE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ModEntities::surfaceSpawn, RegisterSpawnPlacementsEvent.Operation.AND);
         event.register(WATER_MAGE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ModEntities::surfaceSpawn, RegisterSpawnPlacementsEvent.Operation.AND);

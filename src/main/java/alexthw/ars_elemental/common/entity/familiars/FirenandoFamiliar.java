@@ -101,6 +101,7 @@ public class FirenandoFamiliar extends FamiliarEntity implements ISpellCastListe
         return event.setAndContinue(RawAnimation.begin().thenLoop("idle.body"));
     }
 
+    @NotNull
     public ResourceLocation getTexture() {
         return prefix("textures/entity/firenando_" + (getColor().isEmpty() ? Variants.MAGMA.toString() : getColor()) + ".png");
     }

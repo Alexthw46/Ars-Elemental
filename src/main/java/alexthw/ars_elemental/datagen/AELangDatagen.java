@@ -65,6 +65,7 @@ public class AELangDatagen extends LanguageProvider {
         add("item.ars_elemental.siren_shards", "Siren Token");
         add("item.ars_elemental.siren_charm", "Siren Charm");
         add("item.ars_elemental.firenando_charm", "Flarecannon Charm");
+        add("item.ars_elemental.flashjack_charm", "Flashjack Charm");
         add("item.ars_elemental.curio_bag", "Trinkets Pouch");
         add("item.ars_elemental.caster_bag", "Spellcaster Bag");
         add("item.ars_elemental.debug", "Focus of Debug");
@@ -115,6 +116,9 @@ public class AELangDatagen extends LanguageProvider {
         add("entity.ars_elemental.firenando_entity", "Flarecannon");
         add("entity.ars_elemental.firenando_familiar", "Flarecannon Familiar");
         add("entity.ars_nouveau.firenando_familiar", "Flarecannon Familiar");
+        add("entity.ars_elemental.flashjack_entity", "Flashjack");
+        add("entity.ars_elemental.flashjack_familiar", "Flashjack Familiar");
+        add("entity.ars_nouveau.flashjack_familiar", "Flashjack Familiar");
         add("entity.ars_elemental.fire_mage", "Rogue Fire Mage");
         add("entity.ars_elemental.water_mage", "Rogue Water Mage");
         add("entity.ars_elemental.air_mage", "Rogue Air Mage");

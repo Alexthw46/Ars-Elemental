@@ -3,6 +3,8 @@ package alexthw.ars_elemental.client;
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.client.firenando.FirenandoFamiliarRenderer;
 import alexthw.ars_elemental.client.firenando.FirenandoRenderer;
+import alexthw.ars_elemental.client.flashjack.FlashJackFamiliarRenderer;
+import alexthw.ars_elemental.client.flashjack.FlashJackRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.client.particle.SparkParticle;
@@ -77,6 +79,10 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.FIRENANDO_ENTITY.get(), FirenandoRenderer::new);
         event.registerEntityRenderer(ModEntities.FIRENANDO_FAMILIAR.get(), FirenandoFamiliarRenderer::new);
+
+        event.registerEntityRenderer(ModEntities.FLASHJACK_ENTITY.get(), FlashJackRenderer::new);
+        event.registerEntityRenderer(ModEntities.FLASHJACK_FAMILIAR.get(), FlashJackFamiliarRenderer::new);
+
 
         event.registerEntityRenderer(ModEntities.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
             @Override
