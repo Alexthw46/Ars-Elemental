@@ -16,6 +16,7 @@ import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -24,17 +25,16 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializable {
 
     public static final EntityDataAccessor<Optional<BlockPos>> HOME = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    private final RawAnimation idle = RawAnimation.begin().thenLoop("idle.air");
-    private final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("idle.ground");
-    private final RawAnimation flapping = RawAnimation.begin().thenLoop("idle.flapping");
-    private final RawAnimation attack = RawAnimation.begin().thenPlayAndHold("attack");
+    public static final RawAnimation idle = RawAnimation.begin().thenLoop("idle.air");
+    public static final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("idle.ground");
+    public static final RawAnimation flapping = RawAnimation.begin().thenLoop("idle.flapping");
+    public static final RawAnimation attack = RawAnimation.begin().thenPlayAndHold("attack");
 
     public FlashjackEntity(EntityType<? extends Parrot> entityType, Level level) {
         super(entityType, level);

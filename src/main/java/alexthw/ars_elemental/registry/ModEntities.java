@@ -82,7 +82,7 @@ public class ModEntities {
         FIRENANDO_ENTITY = addEntity("firenando_entity", 1.0F, 2.2F, true, false, FirenandoEntity::new, MobCategory.CREATURE);
         FIRENANDO_FAMILIAR = addEntity("firenando_familiar", 1.0F, 1.8F, true, false, FirenandoFamiliar::new, MobCategory.CREATURE);
 
-        FLASHJACK_ENTITY = registerEntity("flashjack_entity", 0.6F, 0.9F, FlashjackEntity::new, MobCategory.CREATURE);
+        FLASHJACK_ENTITY = registerEntity("flashjack_entity", 0.6F, 1.1F, FlashjackEntity::new, MobCategory.CREATURE);
         FLASHJACK_FAMILIAR = registerEntity("flashjack_familiar", 0.6F, 0.9F, FlashjackFamiliar::new, MobCategory.CREATURE);
 
 

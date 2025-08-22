@@ -14,7 +14,7 @@ public record ConfigCondition(String configPath) implements ICondition {
     ).apply(instance, ConfigCondition::new));
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "config(\"" + configPath + "\")";
     }
 

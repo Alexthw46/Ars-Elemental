@@ -6,17 +6,19 @@ import com.hollingsworth.arsnouveau.api.familiar.IFamiliar;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
 public class FlashjackHolder extends AbstractFamiliarHolder {
 
     public FlashjackHolder() {
-        super("flashjack_familiar", (e) -> e instanceof FlashjackEntity);
+        super(prefix("flashjack_familiar"), (e) -> e instanceof FlashjackEntity);
     }
 
     @Override
     public IFamiliar getSummonEntity(Level world, CompoundTag tag) {
         var flashjack = new FlashjackFamiliar(world);
         flashjack.setTagData(tag);
-        return null;
+        return flashjack;
     }
 
     @Override
