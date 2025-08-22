@@ -1,6 +1,5 @@
 package alexthw.ars_elemental;
 
-import alexthw.ars_elemental.api.spell_style.GravityWellMotion;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.FlashjackHolder;
@@ -14,7 +13,6 @@ import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.rituals.*;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestRitual;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestationRitual;
-import alexthw.ars_elemental.mixin.SpellSchoolAccessor;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModParticles;
@@ -22,8 +20,6 @@ import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.documentation.DocAssets;
-import com.hollingsworth.arsnouveau.api.particle.configurations.IParticleMotionType;
-import com.hollingsworth.arsnouveau.api.particle.configurations.SimpleParticleMotionType;
 import com.hollingsworth.arsnouveau.api.particle.configurations.properties.ParticleTypeProperty;
 import com.hollingsworth.arsnouveau.api.particle.timelines.IParticleTimelineType;
 import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
@@ -59,8 +55,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
-import static alexthw.ars_elemental.api.item.IElementalArmor.damageResistances;
-import static com.hollingsworth.arsnouveau.api.registry.ParticleMotionRegistry.PARTICLE_CONFIG;
+import static com.alexthw.sauce.api.item.IElementalArmor.damageResistances;
+import static com.alexthw.sauce.registry.ModRegistry.E_TOME_CASTER;
 import static com.hollingsworth.arsnouveau.api.registry.ParticleTimelineRegistry.TIMELINE_DF;
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
@@ -79,12 +75,12 @@ public class ArsNouveauRegistry {
 
     private static void registerCasters() {
         SpellCasterRegistry.register(ModItems.SPELL_HORN.get(), (stack) -> stack.get(DataComponentRegistry.SPELL_CASTER.get()));
-        SpellCasterRegistry.register(ModItems.AIR_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
-        SpellCasterRegistry.register(ModItems.FIRE_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
-        SpellCasterRegistry.register(ModItems.EARTH_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
-        SpellCasterRegistry.register(ModItems.WATER_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
-        SpellCasterRegistry.register(ModItems.NECRO_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
-        SpellCasterRegistry.register(ModItems.SHAPERS_CTOME.get(), (stack) -> stack.get(ModRegistry.E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.AIR_CTOME.get(), (stack) -> stack.get(E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.FIRE_CTOME.get(), (stack) -> stack.get(E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.EARTH_CTOME.get(), (stack) -> stack.get(E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.WATER_CTOME.get(), (stack) -> stack.get(E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.NECRO_CTOME.get(), (stack) -> stack.get(E_TOME_CASTER.get()));
+        SpellCasterRegistry.register(ModItems.SHAPERS_CTOME.get(), (stack) -> stack.get(E_TOME_CASTER.get()));
         SpellCasterRegistry.register(ModItems.CHAIN_LENS.get(), (stack) -> stack.get(DataComponentRegistry.SPELL_CASTER));
 
     }
@@ -203,11 +199,8 @@ public class ArsNouveauRegistry {
         });
 
     }
-    public static final DeferredHolder<IParticleMotionType<?>, IParticleMotionType<GravityWellMotion>> GRAVITY_FIELD_TYPE = PARTICLE_CONFIG.register("gravity_field", () -> new SimpleParticleMotionType<>(GravityWellMotion.CODEC, GravityWellMotion.STREAM, GravityWellMotion::new));
 
     public static void postInit() {
-        ((SpellSchoolAccessor) SpellSchools.NECROMANCY).setDocIcon(ANIMA_ICON);
-
         registerCasters();
 
         //Schools
@@ -232,13 +225,11 @@ public class ArsNouveauRegistry {
         ArsNouveauRegistry.addPerkSlots();
 
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.NETHERITE_UP.get());
-        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
         FirenandoFamiliar.projectileGlyphs.addAll(List.of(MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE, MethodProjectile.INSTANCE, PropagatorHoming.INSTANCE, PropagatorArc.INSTANCE));
 
         ParticleTypeProperty.addType(new ParticleTypeProperty.ParticleData(ModParticles.SPARK_2.get(), true));
         ParticleTypeProperty.addType(new ParticleTypeProperty.ParticleData(ModParticles.VENOM_2.get(), true));
-        LingerTimeline.TRAIL_OPTIONS.add(GRAVITY_FIELD_TYPE.get());
     }
 
 

@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.client.patchouli;
 
 
-import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
+import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.resources.ResourceLocation;

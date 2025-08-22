@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.client.armor;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.IElementalArmor;
+import com.alexthw.sauce.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.client.renderer.item.ArmorRenderer;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.resources.ResourceLocation;

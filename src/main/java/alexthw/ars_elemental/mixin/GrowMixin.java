@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.mixin;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.IDamageEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
@@ -17,7 +17,7 @@ public class GrowMixin implements IDamageEffect {
 
     @Override
     public boolean canDamage(LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, @NotNull Entity entity) {
-        return entity instanceof LivingEntity living && !(living.getHealth() <= 0 || entity.isAlliedTo(shooter)) && living.getType().is(EntityTypeTags.UNDEAD) && ISchoolFocus.earthCheck(resolver);
+        return entity instanceof LivingEntity living && !(living.getHealth() <= 0 || entity.isAlliedTo(shooter)) && living.getType().is(EntityTypeTags.UNDEAD) && CompatUtils.earthCheck(resolver);
     }
 
 }

@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.common.entity.mages;
 
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
-import alexthw.ars_elemental.api.item.ISchoolProvider;
 import alexthw.ars_elemental.common.entity.ai.MageProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.api.item.ISchoolFocus;
+import com.alexthw.sauce.api.item.ISchoolProvider;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -44,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static alexthw.ars_elemental.util.ParticleUtil.schoolToColor;
+import static com.alexthw.sauce.util.ParticleUtil.schoolToColor;
 
 public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolProvider, IAnimationListener {
 

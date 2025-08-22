@@ -2,7 +2,7 @@ package alexthw.ars_elemental.common.entity.spells;
 
 import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.registry.ModEntities;
-import alexthw.ars_elemental.util.GlyphEffectUtil;
+import com.alexthw.sauce.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.particle.ParticleEmitter;
 import com.hollingsworth.arsnouveau.api.particle.PropertyParticleOptions;
 import com.hollingsworth.arsnouveau.api.particle.configurations.properties.WallProperty;

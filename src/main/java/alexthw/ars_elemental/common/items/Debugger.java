@@ -1,10 +1,10 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.mages.*;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.registry.ModPotions;
+import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

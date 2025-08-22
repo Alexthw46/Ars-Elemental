@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.entity.ai;
 
 import alexthw.ars_elemental.registry.ModPotions;
-import alexthw.ars_elemental.util.EntityCarryMEI;
+import com.alexthw.sauce.util.EntityCarryMEI;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;

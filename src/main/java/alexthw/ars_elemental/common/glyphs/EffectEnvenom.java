@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModPotions;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -37,7 +37,7 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
                 this.applyConfigPotion(target, ModPotions.VENOM, spellStats);
                 target.removeEffect(MobEffects.POISON);
             } else {
-                boolean earth_switch = (target.getType().is(EntityTypeTags.IGNORES_POISON_AND_REGEN) || target instanceof Spider) && ISchoolFocus.earthCheck(resolver);
+                boolean earth_switch = (target.getType().is(EntityTypeTags.IGNORES_POISON_AND_REGEN) || target instanceof Spider) && CompatUtils.earthCheck(resolver);
                 this.applyConfigPotion(target, earth_switch ? ModPotions.VENOM : MobEffects.POISON, spellStats);
             }
         }

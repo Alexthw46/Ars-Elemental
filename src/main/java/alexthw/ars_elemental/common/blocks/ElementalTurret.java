@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.blocks;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
+import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;

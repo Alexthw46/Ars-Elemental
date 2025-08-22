@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 
-import static alexthw.ars_elemental.util.ParticleUtil.schoolToColor;
+import static com.alexthw.sauce.util.ParticleUtil.schoolToColor;
 
 public class SelfCastGoal<T extends EntityMageBase> extends CastGoal<T> {
 

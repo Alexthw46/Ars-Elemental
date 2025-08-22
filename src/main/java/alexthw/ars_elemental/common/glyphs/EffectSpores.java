@@ -1,10 +1,10 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
@@ -98,7 +98,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
         world.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, vec.x, vec.y + 0.5, vec.z, 50,
                 ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.5);
         //if the entity is dead, spawn a ground blossom on the ground below it
-        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && ISchoolFocus.earthCheck(resolver)) {
+        if (livingEntity.isDeadOrDying() && world.getRandom().nextInt(100) < 5 && CompatUtils.earthCheck(resolver)) {
             BlockPos feet = livingEntity.getOnPos();
             BlockState underfoot = world.getBlockState(feet);
             if ((underfoot.getBlock() == Blocks.MOSS_BLOCK || underfoot.is(BlockTags.DIRT) || underfoot.is(BlockTags.LEAVES)) && world.getBlockState(feet.above()).isAir()) {

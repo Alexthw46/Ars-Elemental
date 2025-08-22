@@ -6,7 +6,6 @@
   "mixins": [
     "ChillingPerkMixin",
     "CutMixin",
-    "DocumentationMixin",
     "DynamicLightMixin",
     "EvaporateMixin",
     "FlareMixin",
@@ -17,7 +16,6 @@
     "LightningMixin",
     "RitualAwakeningMixin",
     "ServerLevelMixin",
-    "SpellSchoolAccessor",
     "TurretAccessor",
     "ZombieInvoker"
   ],

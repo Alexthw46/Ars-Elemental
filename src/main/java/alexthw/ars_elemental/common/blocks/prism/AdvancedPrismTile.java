@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.api.item.SpellPrismLens;
 import alexthw.ars_elemental.registry.ModTiles;
+import com.alexthw.sauce.api.item.SpellPrismLens;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;

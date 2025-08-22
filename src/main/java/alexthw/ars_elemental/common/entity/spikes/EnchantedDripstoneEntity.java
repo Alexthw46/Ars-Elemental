@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity.spikes;
 
 import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.common.entity.EnchantedFallingBlock;
@@ -14,8 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import org.jetbrains.annotations.NotNull;
-
-import static alexthw.ars_elemental.api.item.ISchoolFocus.waterCheck;
 
 public class EnchantedDripstoneEntity extends EnchantedFallingBlock {
 
@@ -32,7 +31,7 @@ public class EnchantedDripstoneEntity extends EnchantedFallingBlock {
         dropItem = false;
         this.context = resolver.spellContext;
         this.spellStats = spellStats;
-        this.icy = waterCheck(resolver);
+        this.icy = CompatUtils.waterCheck(resolver);
         this.setXRot(0);
         this.setYRot(0);
     }

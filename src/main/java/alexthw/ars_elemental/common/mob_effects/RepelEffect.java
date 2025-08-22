@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.mob_effects;
 
 import alexthw.ars_elemental.registry.ModPotions;
-import alexthw.ars_elemental.util.PosCarryMEI;
+import com.alexthw.sauce.util.PosCarryMEI;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

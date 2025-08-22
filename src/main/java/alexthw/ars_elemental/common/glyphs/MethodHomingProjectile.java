@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.util.GlyphEffectUtil;
+import com.alexthw.sauce.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;

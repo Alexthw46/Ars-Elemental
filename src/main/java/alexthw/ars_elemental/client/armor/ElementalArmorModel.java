@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.client.armor;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.IElementalArmor;
+import com.alexthw.sauce.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.animatable.GeoItem;

@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.rituals;
 
 import alexthw.ars_elemental.registry.ModPotions;
-import alexthw.ars_elemental.util.PosCarryMEI;
+import com.alexthw.sauce.util.PosCarryMEI;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.core.HolderLookup;

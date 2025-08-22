@@ -2,13 +2,13 @@ package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
-import alexthw.ars_elemental.util.EntityCarryMEI;
-import alexthw.ars_elemental.util.GlyphEffectUtil;
+import alexthw.ars_elemental.util.CompatUtils;
+import com.alexthw.sauce.util.EntityCarryMEI;
+import com.alexthw.sauce.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.IDamageEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
@@ -58,10 +58,10 @@ public class GlyphEvents {
         if (!(entityHitResult.getEntity() instanceof LivingEntity living && event.world instanceof ServerLevel))
             return;
 
-        boolean hasFire = ISchoolFocus.fireCheck(resolver);
-        boolean hasWater = ISchoolFocus.waterCheck(resolver);
-        boolean hasEarth = ISchoolFocus.earthCheck(resolver);
-        boolean hasAir = ISchoolFocus.airCheck(resolver);
+        boolean hasFire = CompatUtils.fireCheck(resolver);
+        boolean hasWater = CompatUtils.waterCheck(resolver);
+        boolean hasEarth = CompatUtils.earthCheck(resolver);
+        boolean hasAir = CompatUtils.airCheck(resolver);
         //boolean hasAnima = resolver.hasFocus(ModItems.NECRO_FOCUS.get().getDefaultInstance());
 
         if (event.resolveEffect == EffectCut.INSTANCE) {
@@ -123,9 +123,9 @@ public class GlyphEvents {
 
     public static void empowerResolveOnBlocks(EffectResolveEvent.Pre event, BlockHitResult blockHitResult, SpellResolver resolver) {
 
-        boolean hasFire = ISchoolFocus.fireCheck(resolver);
-        boolean hasWater = ISchoolFocus.waterCheck(resolver);
-        boolean hasEarth = ISchoolFocus.earthCheck(resolver);
+        boolean hasFire = CompatUtils.fireCheck(resolver);
+        boolean hasWater = CompatUtils.waterCheck(resolver);
+        boolean hasEarth = CompatUtils.earthCheck(resolver);
         //boolean hasAir = ISchoolFocus.airCheck(resolver);
 
         if (event.resolveEffect == EffectConjureWater.INSTANCE) {

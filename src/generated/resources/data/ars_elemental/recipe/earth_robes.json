@@ -1,5 +1,5 @@
 {
-  "type": "ars_elemental:armor_upgrade",
+  "type": "sauce:armor_upgrade",
   "pedestalItems": [
     {
       "item": "ars_elemental:mark_of_mastery"

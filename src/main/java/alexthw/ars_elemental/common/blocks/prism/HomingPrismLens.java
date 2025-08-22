@@ -21,7 +21,7 @@ public class HomingPrismLens extends AbstractPrismLens {
     public void shoot(ServerLevel world, BlockPos pos, EntityProjectileSpell spell, Vec3 angle) {
         // create a new EntityHomingProjectile and copy the properties of the spell
         EntityHomingProjectileSpell newProjectile = new EntityHomingProjectileSpell(world, spell.resolver());
-        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(spell.resolver().spellContext.getUnwrappedCaster(), true, spell.spellResolver.spell);
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(spell.resolver().spellContext.getUnwrappedCaster(), true, spell.resolver().spell);
         newProjectile.setIgnored(ignore);
         newProjectile.setColor(spell.getParticleColor());
         newProjectile.pierceLeft = spell.pierceLeft;

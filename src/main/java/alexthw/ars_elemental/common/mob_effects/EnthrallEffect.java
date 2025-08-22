@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.mob_effects;
 
 import alexthw.ars_elemental.registry.ModPotions;
-import alexthw.ars_elemental.util.EntityCarryMEI;
+import com.alexthw.sauce.util.EntityCarryMEI;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;

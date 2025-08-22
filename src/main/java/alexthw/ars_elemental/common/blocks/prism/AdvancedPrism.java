@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.api.item.SpellPrismLens;
+import com.alexthw.sauce.api.item.SpellPrismLens;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;

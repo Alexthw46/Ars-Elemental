@@ -1,9 +1,9 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.spikes.DripstoneSpikeEntity;
 import alexthw.ars_elemental.common.entity.spikes.EnchantedDripstoneEntity;
 import alexthw.ars_elemental.common.entity.spikes.IceSpikeEntity;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.items.curios.ShapersFocus;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
@@ -50,7 +50,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
     private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos) {
         float baseDamage = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
-        DripstoneSpikeEntity spike = ISchoolFocus.waterCheck(resolver) ?
+        DripstoneSpikeEntity spike = CompatUtils.waterCheck(resolver) ?
                 new IceSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver) :
                 new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
         world.addFreshEntity(spike);

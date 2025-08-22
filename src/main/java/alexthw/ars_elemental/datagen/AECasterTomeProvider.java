@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.glyphs.*;
-import alexthw.ars_elemental.util.ParticleUtil;
+import com.alexthw.sauce.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.sound.ConfiguredSpellSound;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;

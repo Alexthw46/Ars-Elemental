@@ -46,7 +46,7 @@ public class SpellMirror extends SpellPrismBlock {
         if (spell.prismRedirect >= 3) {
             ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.PRISMATIC.get(), world, pos, 10);
         }
-        if (spell.spellResolver == null) {
+        if (spell.resolver() == null) {
             spell.remove(Entity.RemovalReason.DISCARDED);
             return;
         }

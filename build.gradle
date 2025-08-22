@@ -157,6 +157,12 @@ repositories {
 dependencies {
 
     implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}")
+    jarJar(implementation("com.alexthw.sauce:sauce-${minecraft_version}") {
+        version {
+            strictly '[0.0.1.6,)'
+            prefer sauce_version
+        }
+    }) { transitive = false }
 
     // only need the compileOnly, the runtime dependency is handled by Ars Nouveau
     compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"

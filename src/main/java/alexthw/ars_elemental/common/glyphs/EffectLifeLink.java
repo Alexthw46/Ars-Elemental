@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.registry.ModItems;
-import alexthw.ars_elemental.util.EntityCarryMEI;
+import com.alexthw.sauce.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;

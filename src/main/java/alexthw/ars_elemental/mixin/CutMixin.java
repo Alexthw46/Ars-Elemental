@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.mixin;
 
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
@@ -23,7 +23,7 @@ public class CutMixin {
 
     @WrapOperation(method = "onResolveEntity", at = @At(value = "INVOKE", target = "Lcom/hollingsworth/arsnouveau/common/spell/effect/EffectCut;attemptDamage(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lcom/hollingsworth/arsnouveau/api/spell/SpellStats;Lcom/hollingsworth/arsnouveau/api/spell/SpellContext;Lcom/hollingsworth/arsnouveau/api/spell/SpellResolver;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     public boolean attemptDamage(EffectCut instance, Level level, LivingEntity living, SpellStats spellStats, SpellContext spellContext, SpellResolver spellResolver, Entity entity, DamageSource damageSource, float v, Operation<Boolean> original) {
-        if (ISchoolFocus.airCheck(spellResolver))
+        if (CompatUtils.airCheck(spellResolver))
             return original.call(instance, level, living, spellStats, spellContext, spellResolver, entity, DamageUtil.source(level, ModRegistry.CUT, ANFakePlayer.getOrFakePlayer((ServerLevel) level, living)), v);
         return original.call(instance, level, living, spellStats, spellContext, spellResolver, entity, damageSource, v);
     }

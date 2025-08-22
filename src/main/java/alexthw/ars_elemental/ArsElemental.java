@@ -8,7 +8,6 @@ import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -49,7 +48,6 @@ public class ArsElemental {
         ModRegistry.registerRegistries(modEventBus);
         ArsNouveauRegistry.init();
         modEventBus.addListener(this::setup);
-        //modEventBus.addListener(this::sendImc);
         modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(this::attachCaps);
         NeoForge.EVENT_BUS.register(ModPotions.class);
@@ -58,8 +56,6 @@ public class ArsElemental {
             modEventBus.addListener(this::doClientStuff);
         }
         ModAdvTriggers.init();
-        ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = !FMLEnvironment.production;
-
     }
 
     public static ResourceLocation prefix(String path) {

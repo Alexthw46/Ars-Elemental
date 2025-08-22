@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.ConfigHandler.Common;
-import alexthw.ars_elemental.api.item.ISchoolProvider;
 import alexthw.ars_elemental.common.entity.ai.FireCannonGoal;
 import alexthw.ars_elemental.common.glyphs.EffectConflagrate;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.api.item.ISchoolProvider;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;

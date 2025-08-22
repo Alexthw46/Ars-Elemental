@@ -1,11 +1,11 @@
 package alexthw.ars_elemental.common.items.armor;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.IElementalArmor;
 import alexthw.ars_elemental.client.TooltipUtils;
 import alexthw.ars_elemental.client.armor.ElementalArmorModel;
 import alexthw.ars_elemental.client.armor.ElementalArmorRenderer;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.mana.IManaDiscountEquipment;
 import com.hollingsworth.arsnouveau.api.perk.IPerk;
@@ -15,8 +15,10 @@ import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
+import com.hollingsworth.arsnouveau.setup.registry.MaterialRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +40,8 @@ import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import static alexthw.ars_elemental.ConfigHandler.Common.ARMOR_MANA_REGEN;
@@ -48,11 +52,12 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     final SpellSchool element;
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public ElementalArmor(ArmorItem.Type slot, SpellSchool element, Properties builder) {
-        super(IElementalArmor.schoolToMaterial(element), slot, new ElementalArmorModel("medium_armor_e").withEmptyAnim());
-        this.element = element;
-    }
+    static Map<String, Holder<ArmorMaterial>> SCHOOL_TO_MATERIAL = new ConcurrentHashMap<>() {{
+        put("fire", AAMaterials.fire);
+        put("air", AAMaterials.air);
+        put("earth", AAMaterials.earth);
+        put("water", AAMaterials.water);
+    }};
 
     @Override
     public int getMinTier() {
@@ -166,5 +171,15 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     @Override
     public @Nullable ResourceLocation getArmorTexture(@NotNull ItemStack stack, @NotNull Entity entity, @NotNull EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         return ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/armor/" + getTier() + "_armor_" + this.getSchool().getId() + ".png");
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public ElementalArmor(ArmorItem.Type slot, SpellSchool element, Properties builder) {
+        super(schoolToMaterial(element), slot, new ElementalArmorModel("medium_armor_e").withEmptyAnim());
+        this.element = element;
+    }
+
+    static Holder<ArmorMaterial> schoolToMaterial(SpellSchool element) {
+        return SCHOOL_TO_MATERIAL.getOrDefault(element.getId(), MaterialRegistry.MEDIUM);
     }
 }

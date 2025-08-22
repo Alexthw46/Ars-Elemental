@@ -1,12 +1,12 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.IUndeadSummon;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.common.entity.summon.*;
 import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
-import alexthw.ars_elemental.registry.ModRegistry;
+import com.alexthw.sauce.api.IUndeadSummon;
+import com.alexthw.sauce.api.item.ISchoolFocus;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;

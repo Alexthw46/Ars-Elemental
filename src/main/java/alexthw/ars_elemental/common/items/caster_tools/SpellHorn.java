@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.items.caster_tools;
 
 import alexthw.ars_elemental.client.caster_tools.SpellHornRenderer;
-import alexthw.ars_elemental.util.GlyphEffectUtil;
+import com.alexthw.sauce.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.*;

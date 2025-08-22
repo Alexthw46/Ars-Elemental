@@ -14,13 +14,13 @@ import alexthw.ars_elemental.common.blocks.upstream.WaterUpstreamTile;
 import alexthw.ars_elemental.common.items.*;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.bangles.*;
-import alexthw.ars_elemental.common.items.caster_tools.ElementalCasterTome;
 import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.world.ModWorldgen;
+import com.alexthw.sauce.common.item.SchoolCasterTome;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
@@ -108,12 +108,12 @@ public class ModItems {
     public static final ArmorSet EARTH_ARMOR = new ArmorSet("earth", SpellSchools.ELEMENTAL_EARTH);
     public static final ArmorSet WATER_ARMOR = new ArmorSet("aqua", SpellSchools.ELEMENTAL_WATER);
 
-    public static final DeferredHolder<Item, ElementalCasterTome> FIRE_CTOME;
-    public static final DeferredHolder<Item, ElementalCasterTome> AIR_CTOME;
-    public static final DeferredHolder<Item, ElementalCasterTome> WATER_CTOME;
-    public static final DeferredHolder<Item, ElementalCasterTome> EARTH_CTOME;
-    public static final DeferredHolder<Item, ElementalCasterTome> NECRO_CTOME;
-    public static final DeferredHolder<Item, ElementalCasterTome> SHAPERS_CTOME;
+    public static final DeferredHolder<Item, SchoolCasterTome> FIRE_CTOME;
+    public static final DeferredHolder<Item, SchoolCasterTome> AIR_CTOME;
+    public static final DeferredHolder<Item, SchoolCasterTome> WATER_CTOME;
+    public static final DeferredHolder<Item, SchoolCasterTome> EARTH_CTOME;
+    public static final DeferredHolder<Item, SchoolCasterTome> NECRO_CTOME;
+    public static final DeferredHolder<Item, SchoolCasterTome> SHAPERS_CTOME;
 
 
     public static final DeferredHolder<Item, BaseBangle> ENCHANTER_BANGLE;
@@ -199,12 +199,12 @@ public class ModItems {
         ANIMA_BANGLE = ITEMS.register("anima_bangle", () -> new AnimaBangles(UncommonProp()));
 
         //caster tomes
-        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_FIRE));
-        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_WATER));
-        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_AIR));
-        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.ELEMENTAL_EARTH));
-        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.NECROMANCY));
-        SHAPERS_CTOME = ITEMS.register("manipulation_caster_tome", () -> new ElementalCasterTome(itemProps(), SpellSchools.MANIPULATION));
+        FIRE_CTOME = ITEMS.register("fire_caster_tome", () -> new SchoolCasterTome(itemProps(), SpellSchools.ELEMENTAL_FIRE));
+        WATER_CTOME = ITEMS.register("water_caster_tome", () -> new SchoolCasterTome(itemProps(), SpellSchools.ELEMENTAL_WATER));
+        AIR_CTOME = ITEMS.register("air_caster_tome", () -> new SchoolCasterTome(itemProps(), SpellSchools.ELEMENTAL_AIR));
+        EARTH_CTOME = ITEMS.register("earth_caster_tome", () -> new SchoolCasterTome(itemProps(), SpellSchools.ELEMENTAL_EARTH));
+        NECRO_CTOME = ITEMS.register("anima_caster_tome", () -> new SchoolCasterTome(itemProps(), SpellSchools.NECROMANCY));
+        SHAPERS_CTOME = ITEMS.register("manipulation_caster_tome", () -> new SchoolCasterTome(itemProps(), SpellSchools.MANIPULATION));
 
         //blocks
         WATER_URN = addBlock("everfull_urn", () -> new EverfullUrnBlock(blockProps(Blocks.CLAY, MapColor.COLOR_BROWN).sound(SoundType.PACKED_MUD).noOcclusion()));

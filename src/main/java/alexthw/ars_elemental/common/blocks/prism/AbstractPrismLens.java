@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
-import alexthw.ars_elemental.api.item.SpellPrismLens;
 import alexthw.ars_elemental.client.TooltipUtils;
+import com.alexthw.sauce.api.item.SpellPrismLens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

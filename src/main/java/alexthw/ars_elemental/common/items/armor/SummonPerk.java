@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.items.armor;
 
-import alexthw.ars_elemental.registry.ModRegistry;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.perk.Perk;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;

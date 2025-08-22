@@ -1,10 +1,10 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.SpellPrismLens;
 import alexthw.ars_elemental.common.items.CasterHolder;
 import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.api.item.SpellPrismLens;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;

@@ -4,7 +4,7 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.mixin.FoxInvoker;
 import alexthw.ars_elemental.registry.ModRegistry;
-import alexthw.ars_elemental.util.EntityCarryMEI;
+import com.alexthw.sauce.util.EntityCarryMEI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;

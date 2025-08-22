@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.entity.summon;
 
-import alexthw.ars_elemental.api.IUndeadSummon;
 import alexthw.ars_elemental.registry.ModEntities;
+import com.alexthw.sauce.api.IUndeadSummon;
 import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;

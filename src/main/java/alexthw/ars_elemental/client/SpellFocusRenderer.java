@@ -1,9 +1,9 @@
 package alexthw.ars_elemental.client;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
-import alexthw.ars_elemental.util.ParticleUtil;
-import alexthw.ars_elemental.util.ParticleUtil.ParticleBuilder;
+import com.alexthw.sauce.api.item.ISchoolFocus;
+import com.alexthw.sauce.util.ParticleUtil;
+import com.alexthw.sauce.util.ParticleUtil.ParticleBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;

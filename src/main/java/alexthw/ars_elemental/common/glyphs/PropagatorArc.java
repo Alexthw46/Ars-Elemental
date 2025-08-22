@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import alexthw.ars_elemental.api.IPropagator;
+import com.alexthw.sauce.api.IPropagator;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;

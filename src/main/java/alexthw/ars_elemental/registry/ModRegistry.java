@@ -3,18 +3,13 @@ package alexthw.ars_elemental.registry;
 import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.components.ElementProtectionFlag;
-import alexthw.ars_elemental.common.components.SchoolCasterTomeData;
 import alexthw.ars_elemental.common.items.CasterHolder;
 import alexthw.ars_elemental.common.items.CurioHolder;
-import alexthw.ars_elemental.recipe.ConfigCondition;
-import alexthw.ars_elemental.recipe.ElementalArmorRecipe;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
-import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,7 +21,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -36,11 +30,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -64,9 +56,6 @@ public class ModRegistry {
     public static final DeferredRegister<BlockStateProviderType<?>> BS_PROVIDERS = DeferredRegister.create(Registries.BLOCK_STATE_PROVIDER_TYPE, MODID);
     public static final DeferredRegister<RecipeType<?>> RECIPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MODID);
-    public static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
-
-    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("config", () -> ConfigCondition.CODEC);
 
     public static final TagKey<Item> BLACKLIST_BAGGABLE = ItemTags.create(prefix("blacklist_bag_item"));
 
@@ -108,7 +97,6 @@ public class ModRegistry {
         BS_PROVIDERS.register(bus);
         TABS.register(bus);
         D_COMPONENTS.register(bus);
-        CONDITION_CODECS.register(bus);
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ELEMENTAL_TAB;
@@ -122,18 +110,12 @@ public class ModRegistry {
     public static final ResourceKey<Enchantment> MIRROR = key(Registries.ENCHANTMENT,"mirror_shield");
     public static final ResourceKey<Enchantment> SOULBOUND = key(Registries.ENCHANTMENT,"soulbound");
 
-    public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute("ars_elemental.perk.summon_power", (id) -> new RangedAttribute(id,0,0,10000.0D), "ee3a4090-c5f5-4a26-a9c2-6044e9e609de");
-
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ElementProtectionFlag>> P4E = D_COMPONENTS.register("p4e", () -> DataComponentType.<ElementProtectionFlag>builder().persistent(ElementProtectionFlag.CODEC).networkSynchronized(ElementProtectionFlag.STREAM_CODEC).build());
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SchoolCasterTomeData>> E_TOME_CASTER = D_COMPONENTS.register("elemental_tome_caster", () -> DataComponentType.<SchoolCasterTomeData>builder().persistent(SchoolCasterTomeData.CODEC.codec()).networkSynchronized(SchoolCasterTomeData.STREAM_CODEC).build());
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<NetheriteUpgradeRecipe>> NETHERITE_UP;
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<NetheriteUpgradeRecipe>> NETHERITE_UP_SERIALIZER;
-    public static final DeferredHolder<RecipeType<?>, RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP;
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP_SERIALIZER;
     public static final DeferredHolder<RecipeType<?>, RecipeType<HeadCutRecipe>> HEAD_CUT;
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeadCutRecipe>> HEAD_CUT_SERIALIZER;
-
 
     static {
 
@@ -158,8 +140,6 @@ public class ModRegistry {
         HEAD_CUT_SERIALIZER = SERIALIZERS.register("head_cut", HeadCutRecipe.Serializer::new);
         NETHERITE_UP = RECIPES.register("netherite_upgrade", () -> RecipeType.simple(prefix("netherite_upgrade")));
         NETHERITE_UP_SERIALIZER = SERIALIZERS.register("netherite_upgrade", NetheriteUpgradeRecipe.Serializer::new);
-        ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("armor_upgrade")));
-        ELEMENTAL_ARMOR_UP_SERIALIZER = SERIALIZERS.register("armor_upgrade", ElementalArmorRecipe.Serializer::new);
 
         ELEMENTAL_TAB = TABS.register("general", () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.ars_elemental"))

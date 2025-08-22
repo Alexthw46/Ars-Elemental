@@ -1,10 +1,10 @@
 package alexthw.ars_elemental.common.items.foci;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.api.item.ISchoolFocus;
 import alexthw.ars_elemental.client.TooltipUtils;
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.network.chat.Component;
