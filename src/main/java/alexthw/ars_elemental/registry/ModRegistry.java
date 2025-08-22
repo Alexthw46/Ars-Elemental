@@ -9,7 +9,9 @@ import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
+import com.alexthw.sauce.common.recipe.ConfigCondition;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -45,6 +48,7 @@ import static alexthw.ars_elemental.registry.ModPotions.EFFECTS;
 import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
 import static alexthw.ars_elemental.registry.ModTiles.TILES;
 import static alexthw.ars_elemental.world.ModWorldgen.FEATURES;
+import static com.alexthw.sauce.registry.ModRegistry.CONDITION_CODECS;
 
 public class ModRegistry {
 
@@ -116,6 +120,7 @@ public class ModRegistry {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<NetheriteUpgradeRecipe>> NETHERITE_UP_SERIALIZER;
     public static final DeferredHolder<RecipeType<?>, RecipeType<HeadCutRecipe>> HEAD_CUT;
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeadCutRecipe>> HEAD_CUT_SERIALIZER;
+    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("ae_config", () -> ConfigCondition.CODEC);
 
     static {
 
