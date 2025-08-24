@@ -5,11 +5,11 @@ import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.components.ElementProtectionFlag;
 import alexthw.ars_elemental.common.items.CasterHolder;
 import alexthw.ars_elemental.common.items.CurioHolder;
+import alexthw.ars_elemental.recipe.ConfigCondition;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
-import com.alexthw.sauce.common.recipe.ConfigCondition;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
@@ -120,7 +120,7 @@ public class ModRegistry {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<NetheriteUpgradeRecipe>> NETHERITE_UP_SERIALIZER;
     public static final DeferredHolder<RecipeType<?>, RecipeType<HeadCutRecipe>> HEAD_CUT;
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeadCutRecipe>> HEAD_CUT_SERIALIZER;
-    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("ae_config", () -> ConfigCondition.CODEC);
+    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> AE_CONFIG_CONDITION = CONDITION_CODECS.register("ae_config", () -> ConfigCondition.CODEC);
 
     static {
 
