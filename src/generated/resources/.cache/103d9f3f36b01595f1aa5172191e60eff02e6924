@@ -1,6 +1,7 @@
-// 1.21.1	2025-07-18T18:14:36.9241897	Registries
+// 1.21.1	2025-08-25T00:34:39.9153251	Registries
 e765642f1cf1e473024e88d1e8b6a0b462bb9bc1 data/ars_elemental/banner_pattern/anima.json
 e4cc463783f870f2f25a85605fd15a889610a73a data/ars_elemental/neoforge/biome_modifier/common_flashing_archwood.json
+d468e637ed3e79f03703d334ec5441e8d962cfe9 data/ars_elemental/neoforge/biome_modifier/flashjack_spawns.json
 ecd7d81f8315e29351c86d4d97d25f0cf40b56c2 data/ars_elemental/neoforge/biome_modifier/siren_spawns.json
 5a1cc498bc17113291efdcbb359ec5c5ddbfb896 data/ars_elemental/worldgen/biome/blazing_forest.json
 0eea23210af38fac0ed4d96ec5c836662f35b84b data/ars_elemental/worldgen/biome/cascading_forest.json
