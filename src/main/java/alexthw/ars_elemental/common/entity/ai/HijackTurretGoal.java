@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.common.entity.ai;
 
+import alexthw.ars_elemental.common.entity.FlashjackEntity;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
@@ -7,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -16,18 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HijackTurretGoal extends Goal {
-    private final Mob mob;
+    private final FlashjackEntity mob;
     private final float detectionRange;
     int cooldown = 0;
 
-    public HijackTurretGoal(Mob mob, float detectionRange) {
+    public HijackTurretGoal(FlashjackEntity mob, float detectionRange) {
         this.mob = mob;
         this.detectionRange = detectionRange;
     }
 
     @Override
     public boolean canUse() {
-        return mob.getTarget() != null && mob.getTarget().isAlive();
+        return mob != null && mob.isTamed() && mob.getTarget() != null && mob.getTarget().isAlive();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class HijackTurretGoal extends Goal {
             }
             cooldown += 20; // Cooldown to prevent constant retargeting
         }
-        var walkers = mob.level().getEntitiesOfClass(WealdWalker.class, mob.getBoundingBox().inflate(detectionRange), e -> e != mob && e.isAlive());
+        var walkers = mob.level().getEntitiesOfClass(WealdWalker.class, mob.getBoundingBox().inflate(detectionRange), LivingEntity::isAlive);
         for (WealdWalker walker : walkers) {
             walker.setTarget(mob.getTarget());
         }

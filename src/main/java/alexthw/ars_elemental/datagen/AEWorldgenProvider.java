@@ -50,12 +50,12 @@ public class AEWorldgenProvider extends DatapackBuiltinEntriesProvider {
         HolderSet<Biome> OVERWORLD_TAG = context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD);
         HolderSet<Biome> COMMON_FLASH_ARCHWOOD_TAG = context.lookup(Registries.BIOME).getOrThrow(AETagsProvider.AEBiomeTagsProvider.FLASHING_TREE_COMMON_BIOME);
         HolderSet<Biome> SIREN_SPAWN_TAG = context.lookup(Registries.BIOME).getOrThrow(AETagsProvider.AEBiomeTagsProvider.SIREN_SPAWN_TAG);
-        HolderSet<Biome> FLASHJACK_SPAWN_TAG = context.lookup(Registries.BIOME).getOrThrow(AETagsProvider.AEBiomeTagsProvider.FLASHING_BIOME);
+        HolderSet<Biome> FLASHJACK_SPAWN_TAG = context.lookup(Registries.BIOME).getOrThrow(AETagsProvider.AEBiomeTagsProvider.FLASHJACK_SPAWN_TAG);
 
         context.register(SIREN_SPAWN, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(SIREN_SPAWN_TAG, new MobSpawnSettings.SpawnerData(ModEntities.SIREN_ENTITY.get(),
                 3, 1, 3)));
         context.register(FLASHJACK_SPAWN, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(FLASHJACK_SPAWN_TAG, new MobSpawnSettings.SpawnerData(ModEntities.FLASHJACK_ENTITY.get(),
-                5, 1, 2)));
+                7, 1, 2)));
 
         try {
             Holder.Reference<PlacedFeature> TREESET_CMN = context.lookup(Registries.PLACED_FEATURE).get(COMMON_FLASHING_CONFIGURED).orElseThrow();

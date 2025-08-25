@@ -217,6 +217,7 @@ public class AETagsProvider {
             super(generator.getPackOutput(), provider, ArsElemental.MODID, existingFileHelper);
         }
 
+        public static final TagKey<Biome> FLASHJACK_SPAWN_TAG = TagKey.create(Registries.BIOME, prefix("flashjack_spawn"));
         public static final TagKey<Biome> SIREN_SPAWN_TAG = TagKey.create(Registries.BIOME, prefix("siren_spawn"));
         public static final TagKey<Biome> FLASHING_BIOME = TagKey.create(Registries.BIOME, prefix("flashing_biome"));
         public static final TagKey<Biome> FLASHING_TREE_COMMON_BIOME = TagKey.create(Registries.BIOME, prefix("flashing_tree_biome"));
@@ -229,12 +230,11 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
+            this.tag(FLASHJACK_SPAWN_TAG).addTag(Tags.Biomes.IS_MOUNTAIN_PEAK);
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addOptionalTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG.location());
             this.tag(FLASHING_BIOME).addOptional(ModWorldgen.Biomes.FLASHING_FOREST_KEY.location());
             this.tag(FLASHING_TREE_COMMON_BIOME).addOptional(BiomeRegistry.ARCHWOOD_FOREST.location());
             this.tag(BiomeTags.IS_MOUNTAIN).addOptional(ModWorldgen.Biomes.FLASHING_FOREST_KEY.location());
-            this.tag(Tags.Biomes.IS_MOUNTAIN_PEAK).addOptional(ModWorldgen.Biomes.FLASHING_FOREST_KEY.location());
-
 
             this.tag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addOptional(ModWorldgen.Biomes.CASCADING_FOREST_KEY.location());
             this.tag(BiomeTags.IS_BEACH).addOptional(ModWorldgen.Biomes.CASCADING_FOREST_KEY.location());

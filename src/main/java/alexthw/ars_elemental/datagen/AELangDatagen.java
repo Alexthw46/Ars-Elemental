@@ -129,11 +129,7 @@ public class AELangDatagen extends LanguageProvider {
         add("entity.ars_elemental.conjured_dripstone", "Falling Spike");
         add("entity.ars_elemental.conjured_ice_spike", "Falling Ice Spike");
         add("key.ars_elemental.open_pouch", "[Elemental] Open trinkets pouch");
-        add("curios.modifiers.an_focus", "While in spell focus slot:");
-        add("curios.modifiers.bangle", "While in bangle slot:");
-        add("curios.identifier.bundle", "Bundle");
-        add("curios.identifier.bangle", "Bangle");
-        add("ars_elemental.perk.summon_power", "Summoning Power");
+
         add("effect.ars_elemental.enderference", "Enderference");
         add("effect.ars_elemental.enderference.description", "Makes the target unable to teleport or be teleported.");
         add("effect.ars_elemental.watery_grave", "Watery Grave");

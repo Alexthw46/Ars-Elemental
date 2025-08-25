@@ -171,6 +171,12 @@
         "maxCount": 2,
         "minCount": 1,
         "weight": 6
+      },
+      {
+        "type": "ars_elemental:flashjack_entity",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 35
       }
     ],
     "misc": [],

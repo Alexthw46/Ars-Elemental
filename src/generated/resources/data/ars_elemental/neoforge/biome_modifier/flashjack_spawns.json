@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#ars_elemental:flashjack_spawn",
+  "spawners": {
+    "type": "ars_elemental:flashjack_entity",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 7
+  }
+}

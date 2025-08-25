@@ -155,6 +155,9 @@ public class ConfigHandler {
     public static final Client CLIENT;
     public static final ModConfigSpec CLIENT_SPEC;
 
+    public static final Startup STARTUP;
+    public static final ModConfigSpec STARTUP_SPEC;
+
     static {
 
         final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
@@ -164,6 +167,29 @@ public class ConfigHandler {
         final Pair<Client, ModConfigSpec> specClientPair = new ModConfigSpec.Builder().configure(Client::new);
         CLIENT_SPEC = specClientPair.getRight();
         CLIENT = specClientPair.getLeft();
+
+        final Pair<Startup, ModConfigSpec> specStartupPair = new ModConfigSpec.Builder().configure(Startup::new);
+        STARTUP_SPEC = specStartupPair.getRight();
+        STARTUP = specStartupPair.getLeft();
+
+    }
+
+    public static class Startup {
+
+        public static ModConfigSpec.IntValue FLASHING_WOOD_LIGHT;
+        public static ModConfigSpec.IntValue FLASHING_WOOD_STRIP_LIGHT;
+        public static ModConfigSpec.IntValue FLASHING_LEAVES_LIGHT;
+
+        public Startup(ModConfigSpec.Builder builder) {
+
+            builder.push("Flashing Archwood Settings");
+
+            FLASHING_WOOD_LIGHT = builder.comment("Light level emitted by flashing archwood logs and wood.").defineInRange("flashingWoodLight", 6, 0, 15);
+            FLASHING_WOOD_STRIP_LIGHT = builder.comment("Light level emitted by stripped flashing archwood logs and wood.").defineInRange("flashingWoodStripLight", 8, 0, 15);
+            FLASHING_LEAVES_LIGHT = builder.comment("Light level emitted by flashing archwood leaves.").defineInRange("flashingLeavesLight", 6, 0, 15);
+
+            builder.pop();
+        }
 
     }
 

@@ -8,7 +8,6 @@ import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
@@ -24,6 +23,7 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -205,7 +205,7 @@ public class Events {
             ServerLevelAccessor level = event.getLevel();
             BlockPos pos = event.getPos();
             if (level.getBiome(pos).is(FLASHING_BIOME)) {
-                if (pos.getY() < 45 || level.getRawBrightness(pos, 0) > 6 || !level.getBlockState(pos.below()).is(BlockTags.DIRT)) {
+                if (pos.getY() < 45 || level.getRawBrightness(pos, 0) > 6 || level.getBlockState(pos.below()).is(Blocks.AIR)) {
                     event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
                 }
             }

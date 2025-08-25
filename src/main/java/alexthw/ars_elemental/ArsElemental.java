@@ -43,6 +43,7 @@ public class ArsElemental {
     public ArsElemental(IEventBus modEventBus, ModContainer modContainer) {
         terrablenderLoaded = ModList.get().isLoaded("terrablender");
 
+        modContainer.registerConfig(ModConfig.Type.STARTUP, ConfigHandler.STARTUP_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
         ModRegistry.registerRegistries(modEventBus);
