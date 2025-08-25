@@ -230,7 +230,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            this.tag(FLASHJACK_SPAWN_TAG).addTag(Tags.Biomes.IS_MOUNTAIN_PEAK);
+            this.tag(FLASHJACK_SPAWN_TAG).addOptional(BiomeRegistry.ARCHWOOD_FOREST.location()).addTag(Tags.Biomes.IS_MOUNTAIN_PEAK);
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addOptionalTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG.location());
             this.tag(FLASHING_BIOME).addOptional(ModWorldgen.Biomes.FLASHING_FOREST_KEY.location());
             this.tag(FLASHING_TREE_COMMON_BIOME).addOptional(BiomeRegistry.ARCHWOOD_FOREST.location());
@@ -296,10 +296,10 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            this.tag(EntityTags.MAGIC_FIND).add(SIREN_ENTITY.get());
+            this.tag(EntityTags.MAGIC_FIND).add(SIREN_ENTITY.get(), FLASHJACK_ENTITY.get());
             this.tag(EntityTags.MAGIC_FIND).add(AIR_MAGE.get(), FIRE_MAGE.get(), EARTH_MAGE.get(), WATER_MAGE.get());
             this.tag(EntityTags.FAMILIAR).add(FIRENANDO_FAMILIAR.get(), SIREN_FAMILIAR.get());
-            this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get());
+            this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get(), FLASHJACK_ENTITY.get());
             this.tag(ModRegistry.FIERY).add(EntityType.ENDER_DRAGON);
             this.tag(EntityTypeTags.UNDEAD).add(EntityType.GHAST);
             this.tag(EntityTypeTags.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);

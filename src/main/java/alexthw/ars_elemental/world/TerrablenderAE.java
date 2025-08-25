@@ -43,7 +43,7 @@ public class TerrablenderAE {
                 new ParameterUtils.ParameterPointListBuilder()
                         .temperature(ParameterUtils.Temperature.ICY, ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
                         .humidity(ParameterUtils.Humidity.HUMID, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.NEUTRAL)
-                        .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.OCEAN, ParameterUtils.Continentalness.FAR_INLAND))
+                        .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.FAR_INLAND))
                         .erosion(ParameterUtils.Erosion.FULL_RANGE)
                         .depth(Climate.Parameter.span(-1.0F, 0.2F))
                         .weirdness(ParameterUtils.Weirdness.FULL_RANGE)

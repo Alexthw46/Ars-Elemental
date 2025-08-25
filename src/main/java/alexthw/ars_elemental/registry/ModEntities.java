@@ -29,6 +29,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -152,7 +153,7 @@ public class ModEntities {
     }
 
     public static boolean surfaceSpawn(EntityType<? extends Entity> animal, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return worldIn.getBlockState(pos.below()).is(BlockTags.DIRT) && pos.getY() > 45 && worldIn.getRawBrightness(pos, 0) <= 6;
+        return worldIn.getBlockState(pos.below()).is(BlockTags.DIRT) && pos.getY() > 45 && worldIn.getBrightness(LightLayer.BLOCK, pos) <= 6;
     }
 
 }

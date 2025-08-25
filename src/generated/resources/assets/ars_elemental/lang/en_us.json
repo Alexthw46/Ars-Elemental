@@ -433,6 +433,7 @@
   "item.ars_elemental.firenando_familiar": "Flarecannon",
   "item.ars_elemental.flashjack_charm": "Flashjack Charm",
   "item.ars_elemental.flashjack_familiar": "Flashjack",
+  "item.ars_elemental.flashjack_shards": "Flashjack Token",
   "item.ars_elemental.flashpine_pod": "Flashpine",
   "item.ars_elemental.homing_prism_lens": "Homing Prism Lens",
   "item.ars_elemental.lesser_air_focus": "Lesser Focus of Air",
@@ -502,5 +503,6 @@
   "tooltip.ars_elemental.lens": "Can be applied on Advanced Spell Prisms.",
   "tooltip.ars_elemental.prism_lens": "Using a %s",
   "tooltip.ars_nouveau.blessed": "Protection of the 4 elements",
+  "tooltip.flashjack_shards": "Obtained by giving a flashpine to a flashjack.",
   "tooltip.siren_shards": "Obtained by giving a sea pickle to a siren."
 }

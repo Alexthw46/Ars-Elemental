@@ -16,6 +16,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
@@ -205,7 +206,7 @@ public class Events {
             ServerLevelAccessor level = event.getLevel();
             BlockPos pos = event.getPos();
             if (level.getBiome(pos).is(FLASHING_BIOME)) {
-                if (pos.getY() < 45 || level.getRawBrightness(pos, 0) > 6 || level.getBlockState(pos.below()).is(Blocks.AIR)) {
+                if (pos.getY() < 45 || Monster.isDarkEnoughToSpawn(level, pos, event.getRandom()) || level.getBlockState(pos.below()).is(Blocks.AIR)) {
                     event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
                 }
             }

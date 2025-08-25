@@ -10,6 +10,7 @@
     "minecraft:vex",
     "minecraft:bee",
     "ars_nouveau:wilden_stalker",
-    "ars_nouveau:wilden_boss"
+    "ars_nouveau:wilden_boss",
+    "ars_elemental:flashjack_entity"
   ]
 }

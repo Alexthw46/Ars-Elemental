@@ -1,0 +1,9 @@
+{
+  "values": [
+    {
+      "id": "ars_nouveau:archwood_forest",
+      "required": false
+    },
+    "#c:is_mountain/peak"
+  ]
+}

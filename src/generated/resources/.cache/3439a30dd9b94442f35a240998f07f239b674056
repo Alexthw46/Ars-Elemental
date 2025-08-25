@@ -1,11 +1,11 @@
-// 1.21.1	2025-02-16T11:24:32.384346368	Ars Elemental Entity Tags
-5a1b665b20647aaf991e2e9e62362101dfdb2b8b data/ars_elemental/tags/entity_type/aerial.json
+// 1.21.1	2025-08-25T15:29:58.2860226	Ars Elemental Entity Tags
+8ca1eb3bfd491e5e0c6dee93f81ea495bc69c24f data/ars_elemental/tags/entity_type/aerial.json
 eb45c11cd68f735f9b05fd78fe254410a2661119 data/ars_elemental/tags/entity_type/attraction_ritual_blacklist.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/ars_elemental/tags/entity_type/charm_blacklist.json
 e00f2931577049b9a4400a87ed9c249373be376c data/ars_elemental/tags/entity_type/fiery.json
 938693c0d925c28b546fc000571541b1f61e42c1 data/ars_elemental/tags/entity_type/insect.json
 dbc6cbd7bb32b7011a4f6df206946967d12c4c69 data/ars_nouveau/tags/entity_type/familiar.json
-04ec7c1734c9bebdf1f9367ba18785714c683493 data/ars_nouveau/tags/entity_type/magic_find.json
+9fab2fcff0c50099d5b9465e0bc41499cac29a56 data/ars_nouveau/tags/entity_type/magic_find.json
 dbf000ec436139d2e3f60e60dfe22b6276ee8686 data/ars_nouveau/tags/entity_type/vitalic_death_blacklist.json
 dbf000ec436139d2e3f60e60dfe22b6276ee8686 data/ars_nouveau/tags/entity_type/vitalic_growth_blacklist.json
 8e9fb776d59a83f3a42ba358b9be563bc5f3e95b data/minecraft/tags/entity_type/aquatic.json

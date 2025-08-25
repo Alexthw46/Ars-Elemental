@@ -62,6 +62,7 @@ public class AELangDatagen extends LanguageProvider {
         add("item.ars_elemental.anima_caster_tome", "Caster Tome of Anima");
         add("item.ars_elemental.manipulation_caster_tome", "Caster Tome of Manipulation");
         add("tooltip.ars_elemental.caster_tome", "Mimics the abilities of a school focus.");
+        add("item.ars_elemental.flashjack_shards", "Flashjack Token");
         add("item.ars_elemental.siren_shards", "Siren Token");
         add("item.ars_elemental.siren_charm", "Siren Charm");
         add("item.ars_elemental.firenando_charm", "Flarecannon Charm");
@@ -244,6 +245,7 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page.armor_set.earth", "Attuned to the School of Earth, each piece of this armor will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve.");
         add("ars_elemental.thread_of", "Thread of %s");
         add("ars_elemental.tablet_of", "Tablet of %s");
+        add("tooltip.flashjack_shards", "Obtained by giving a flashpine to a flashjack.");
         add("tooltip.siren_shards", "Obtained by giving a sea pickle to a siren.");
         add("tooltip.ars_elemental.lens", "Can be applied on Advanced Spell Prisms.");
         add("tooltip.ars_elemental.prism_lens", "Using a %s");
@@ -344,7 +346,6 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_nouveau.augment_desc.glyph_launch_glyph_duration_down", "While wearing an Air Focus, Launch will apply Levitate. Reduce time of levitation.");
         add("ars_nouveau.augment_desc.glyph_launch_glyph_extend_time", "Change effects wearing an Air Focus, Launch will apply Levitate. Increase time of levitation.");
         add("ars_nouveau.augment_desc.glyph_gravity_glyph_sensitive", "Change effects wearing an Earth Focus, creates a gravity well that pull entities towards its center.");
-
 
 
         for (FamiliarScript i : FamiliarRegistry.getFamiliarScriptMap().values()) {
