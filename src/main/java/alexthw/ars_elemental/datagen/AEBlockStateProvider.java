@@ -1,9 +1,9 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.common.block.FocusEnhancedSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.SpellPrismBlock;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
@@ -32,7 +32,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         Set<DeferredHolder<Block, ? extends Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
         takeAll(blocks, b -> b.get() instanceof FlowerPotBlock).forEach(this::registerOnlyState);
-        takeAll(blocks, b -> b.get() instanceof TickableModBlock || b.get() instanceof ElementalTurret || b.get() instanceof SpellPrismBlock);
+        takeAll(blocks, b -> b.get() instanceof TickableModBlock || b.get() instanceof FocusEnhancedSpellTurret || b.get() instanceof SpellPrismBlock);
         takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock || b.get() instanceof StrippableLog).forEach(this::logBlock);
         takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
         takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);

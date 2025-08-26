@@ -1,9 +1,7 @@
 package alexthw.ars_elemental.registry;
 
 import alexthw.ars_elemental.ConfigHandler;
-import alexthw.ars_elemental.client.ElementalTurretRenderer;
 import alexthw.ars_elemental.client.PrismRenderer;
-import alexthw.ars_elemental.common.blocks.ElementalTurret;
 import alexthw.ars_elemental.common.blocks.EverfullUrnBlock;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
@@ -21,6 +19,8 @@ import alexthw.ars_elemental.common.items.foci.GreaterElementalFocus;
 import alexthw.ars_elemental.common.items.foci.NecroticFocus;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.world.ModWorldgen;
+import com.alexthw.sauce.client.FocusTurretRenderer;
+import com.alexthw.sauce.common.block.FocusEnhancedSpellTurret;
 import com.alexthw.sauce.common.item.SchoolCasterTome;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
@@ -234,11 +234,11 @@ public class ModItems {
         });
 
         //turrets
-        FIRE_TURRET = addGeckoBlock("fire_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
-        WATER_TURRET = addGeckoBlock("water_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
-        AIR_TURRET = addGeckoBlock("air_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
-        EARTH_TURRET = addGeckoBlock("earth_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
-        SHAPING_TURRET = addGeckoBlock("manipulation_turret", () -> new ElementalTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
+        FIRE_TURRET = addGeckoBlock("fire_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
+        WATER_TURRET = addGeckoBlock("water_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
+        AIR_TURRET = addGeckoBlock("air_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
+        EARTH_TURRET = addGeckoBlock("earth_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
+        SHAPING_TURRET = addGeckoBlock("manipulation_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
 
 
         ADVANCED_PRISM = BLOCKS.register("advanced_prism", () -> new AdvancedPrism(blockProps(Blocks.STONE, MapColor.TERRACOTTA_WHITE)));
@@ -295,7 +295,7 @@ public class ModItems {
             @Override
             @OnlyIn(Dist.CLIENT)
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
-                return () -> ElementalTurretRenderer.getISTER(model);
+                return () -> FocusTurretRenderer.getISTER(model);
             }
         });
         return block;

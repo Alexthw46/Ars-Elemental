@@ -3,7 +3,7 @@
   "parent": "builtin/entity",
   "render_type": "cutout",
   "textures": {
-    "particle": "ars_elemental:block/air_turret"
+    "particle": "ars_nouveau:block/air_turret"
   },
   "texture_size": [
     32,

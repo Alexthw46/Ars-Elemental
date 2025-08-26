@@ -16,7 +16,6 @@
     "LightningMixin",
     "RitualAwakeningMixin",
     "ServerLevelMixin",
-    "TurretAccessor",
     "ZombieInvoker"
   ],
   "minVersion": "0.8",

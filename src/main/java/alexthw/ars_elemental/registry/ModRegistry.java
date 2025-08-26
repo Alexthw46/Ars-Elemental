@@ -101,6 +101,7 @@ public class ModRegistry {
         BS_PROVIDERS.register(bus);
         TABS.register(bus);
         D_COMPONENTS.register(bus);
+        bus.addListener(ModTiles::addBlocksToTiles);
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ELEMENTAL_TAB;
