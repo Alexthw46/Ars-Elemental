@@ -15,6 +15,7 @@ public class FlashJackModel<M extends LivingEntity & GeoEntity> extends GeoModel
 
     public static final ResourceLocation MODEL = prefix("geo/flashjack.geo.json");
     public static final ResourceLocation DEF_TEXTURE = prefix("textures/entity/flashjack.png");
+    public static final ResourceLocation ALT_TEXTURE = prefix("textures/entity/flapjack.png");
     public static final ResourceLocation ANIMATIONS = prefix("animations/flashjack.animation.json");
 
     @Override
@@ -49,4 +50,5 @@ public class FlashJackModel<M extends LivingEntity & GeoEntity> extends GeoModel
         head.setRotX(extraData.headPitch() * ((float) Math.PI / 330F));
         head.setRotY(extraData.netHeadYaw() * ((float) Math.PI / 330F));
     }
+
 }

@@ -2,7 +2,12 @@ package alexthw.ars_elemental.common.entity.familiars;
 
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
+import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
+import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
+import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
+import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -19,21 +24,37 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.PlayState;
 
-import static alexthw.ars_elemental.ArsElemental.prefix;
-import static alexthw.ars_elemental.common.entity.FlashjackEntity.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class FlashjackFamiliar extends FlyingFamiliarEntity {
+import static alexthw.ars_elemental.ArsElemental.prefix;
+import static alexthw.ars_elemental.common.entity.FlashjackEntity.attack;
+import static alexthw.ars_elemental.common.entity.FlashjackEntity.flapping;
+import static alexthw.ars_elemental.common.entity.FlashjackEntity.idle;
+import static alexthw.ars_elemental.common.entity.FlashjackEntity.inactive;
+
+public class FlashjackFamiliar extends FlyingFamiliarEntity implements ISpellCastListener {
+
+    static final Map<DyeColor, String> dyeToVariantMap = Map.of(
+            DyeColor.RED, "flapjack",
+            DyeColor.YELLOW, "flashjack"
+    );
+    public static List<AbstractSpellPart> movementGlyphs = new ArrayList<>();
+
     public FlashjackFamiliar(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -85,14 +106,43 @@ public class FlashjackFamiliar extends FlyingFamiliarEntity {
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 6000, 0, false, false));
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 6000, 0, false, false));
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 6000, 0, false, false));
+            } else if (player.getMainHandItem().is(Tags.Items.DYES)) {
+                DyeColor color = DyeColor.getColor(stack);
+                if (color == null) return InteractionResult.PASS;
+                String variant = dyeToVariantMap.getOrDefault(color, "flashjack");
+                if (this.entityData.get(COLOR).equals(variant))
+                    return InteractionResult.SUCCESS;
+                setColor(variant);
+                return InteractionResult.SUCCESS;
             }
         }
         return super.mobInteract(player, hand);
     }
 
     @Override
-    public @Nullable ResourceLocation getTexture() {
-        return prefix("textures/entity/flashjack.png");
+    public void onModifier(SpellModifierEvent event) {
+        // if the mermaid is alive and the owner is the player who cast the spell, and the spell is a water spell, increase the damage of the spell by 2
+        if (this.isAlive() && this.getOwner() != null && this.getOwner().equals(event.caster) && SpellSchools.ELEMENTAL_AIR.isPartOfSchool(event.spellPart)) {
+            event.builder.addDamageModifier(2.0D);
+        }
+    }
+
+    @Override
+    public void onCostCalc(SpellCostCalcEvent event) {
+        if (this.isAlive())
+            if (this.getOwner() != null && this.getOwner().equals(event.context.getUnwrappedCaster())) {
+                if (movementGlyphs.contains(event.context.getSpell().unsafeList().getFirst())) {
+                    event.currentCost = (int) (event.currentCost - (event.context.getSpell().getCost() * 0.5));
+                }
+            }
+    }
+
+
+    public @NotNull ResourceLocation getTexture() {
+        String variant = getColor().toLowerCase();
+        if (variant.isEmpty())
+            variant = "flashjack";
+        return prefix("textures/entity/" + variant + ".png");
     }
 
     static class ParrotWanderGoal extends WaterAvoidingRandomFlyingGoal {
@@ -100,7 +150,7 @@ public class FlashjackFamiliar extends FlyingFamiliarEntity {
             super(p_186224_, p_186225_);
         }
 
-        @javax.annotation.Nullable
+        @Nullable
         protected Vec3 getPosition() {
             Vec3 vec3 = null;
             if (this.mob.isInWater()) {

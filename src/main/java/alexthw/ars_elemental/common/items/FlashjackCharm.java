@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 public class FlashjackCharm extends AbstractSummonCharm {
 
     public FlashjackCharm(Properties properties) {
-        super(properties.component(DataComponentRegistry.PERSISTENT_FAMILIAR_DATA, new PersistentFamiliarData()));
+        super(properties.component(DataComponentRegistry.PERSISTENT_FAMILIAR_DATA, new PersistentFamiliarData().setColor("flashjack")));
     }
 
     @Override
