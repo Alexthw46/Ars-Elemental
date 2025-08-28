@@ -491,7 +491,6 @@
   "itemGroup.ars_elemental": "Ars Elemental",
   "key.ars_elemental.open_pouch": "[Elemental] Open trinkets pouch",
   "tooltip.ars_elemental.bags": "Can be opened with %s while in the hotbar or in a curio slot.",
-  "tooltip.ars_elemental.caster_tome": "Mimics the abilities of a school focus.",
   "tooltip.ars_elemental.focus_anima": "Entities summoned will raise from death once as a more powerful version. These revenant will mirror your homing spells and heal you when they kill an enemy.",
   "tooltip.ars_elemental.focus_boost": "Amplifies and discount glyphs of the %s school.",
   "tooltip.ars_elemental.focus_element": "Focus attuned to a specific element, empowers some glyphs with new effects.",

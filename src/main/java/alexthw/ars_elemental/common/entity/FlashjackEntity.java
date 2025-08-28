@@ -5,15 +5,24 @@ import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.ISchoolProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
+import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.api.util.SummonUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
+import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.items.data.ICharmSerializable;
 import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
+import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
+import com.hollingsworth.nuggets.client.overlay.IWorldTooltipProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,11 +35,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -46,11 +61,14 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
+import static com.hollingsworth.nuggets.common.registry.RegistryHelper.getRegistryName;
 
-public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializable, IDispellable, ISchoolProvider {
+public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializable, IDispellable, ISchoolProvider, IWorldTooltipProvider, IWandable {
     public static final EntityDataAccessor<String> COLOR = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<Optional<BlockPos>> HOME = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -58,6 +76,18 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     public static final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("idle.ground");
     public static final RawAnimation flapping = RawAnimation.begin().thenLoop("idle.flapping");
     public static final RawAnimation attack = RawAnimation.begin().thenPlayAndHold("attack");
+
+
+    List<BlockPos> turrets = new ArrayList<>();
+    List<EntityType<?>> blacklist = new ArrayList<>();
+
+    public static AttributeSupplier.@NotNull Builder createAttributes() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 36.0F).add(Attributes.FLYING_SPEED, 0.6F).add(Attributes.MOVEMENT_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 6.0F);
+    }
+
+    public List<BlockPos> getTurrets() {
+        return turrets;
+    }
 
     public FlashjackEntity(EntityType<? extends Parrot> entityType, Level level) {
         super(entityType, level);
@@ -67,6 +97,20 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         super(ModEntities.FLASHJACK_ENTITY.get(), world);
     }
 
+    List<EntityType<?>> getBlacklist() {
+        return blacklist;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double p_213397_1_) {
+        return false;
+    }
+
+    @Override
+    protected int getBaseExperienceReward() {
+        return 0;
+    }
+
     @Override
     public SpellSchool getSchool() {
         return SpellSchools.ELEMENTAL_AIR;
@@ -74,9 +118,13 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
 
     @Override
     protected void registerGoals() {
-        super.registerGoals();
-        this.goalSelector.addGoal(2, new HijackTurretGoal(this, 40));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Monster.class, true));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(2, new ParrotWanderGoal(this, 1.0F));
+        this.goalSelector.addGoal(2, new HijackTurretGoal(this, 30));
+        this.goalSelector.addGoal(3, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, true, (entity) -> entity instanceof Enemy && entity.isAlive() && !getBlacklist().contains(entity.getType())));
     }
 
     @Override
@@ -178,7 +226,7 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     }
 
     @Override
-    public boolean onDispel(@javax.annotation.Nullable LivingEntity caster) {
+    public boolean onDispel(@Nullable LivingEntity caster) {
         if (this.isRemoved())
             return false;
 
@@ -211,15 +259,90 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     }
 
     @Override
+    public void getTooltip(List<Component> tooltip) {
+        if (getHome() != null) {
+            String home = getHome().getX() + ", " + getHome().getY() + ", " + getHome().getZ();
+            tooltip.add(Component.translatable("ars_nouveau.weald_walker.home", home));
+        } else {
+            tooltip.add(Component.translatable("ars_nouveau.weald_walker.home", Component.translatable("ars_nouveau.nothing").getString()));
+        }
+    }
+
+
+    @Override
     public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putString("color", this.entityData.get(COLOR));
+        NBTUtil.storeBlockPos(compound, "home", getHome());
+
+        int counter = 0;
+        for (BlockPos pos : this.turrets) {
+            NBTUtil.storeBlockPos(compound, "turret_" + counter, pos);
+            counter++;
+        }
+        counter = 0;
+        for (EntityType<?> type : this.blacklist) {
+            compound.putString("blacklist_" + counter, getRegistryName(type).toString());
+            counter++;
+        }
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.entityData.set(COLOR, compound.getString("color"));
+        if (NBTUtil.hasBlockPos(compound, "home")) {
+            setHome(NBTUtil.getNullablePos(compound, "home"));
+        }
+        this.turrets.clear();
+        this.blacklist.clear();
+        int counter = 0;
+        while (NBTUtil.hasBlockPos(compound, "turret_" + counter)) {
+            BlockPos pos = NBTUtil.getNullablePos(compound, "turret_" + counter);
+            if (pos != null) {
+                this.turrets.add(pos);
+            }
+            counter++;
+        }
+        counter = 0;
+        while (compound.contains("blacklist_" + counter)) {
+            EntityType.byString(compound.getString("blacklist_" + counter)).
+                    ifPresent(type -> this.blacklist.add(type));
+            counter++;
+        }
     }
-    
+
+    @Override
+    public Result onFirstConnection(@Nullable GlobalPos storedPos, @Nullable Direction face, @Nullable LivingEntity
+            storedEntity, Player playerEntity) {
+        if (storedPos != null && playerEntity.level().getBlockEntity(storedPos.pos()) instanceof RotatingTurretTile) {
+            this.turrets.add(storedPos.pos());
+            // result msg
+            playerEntity.sendSystemMessage(Component.translatable("flashjack.connect"));
+        }
+
+        return IWandable.super.onFirstConnection(storedPos, face, storedEntity, playerEntity);
+    }
+
+
+    @Override
+    public Result onLastConnection(@Nullable GlobalPos storedPos, @Nullable Direction face, @Nullable LivingEntity
+            storedEntity, Player playerEntity) {
+
+        if (storedEntity != null) {
+            if (blacklist.contains(storedEntity.getType())) {
+                blacklist.remove(storedEntity.getType());
+                playerEntity.sendSystemMessage(Component.translatable("flashjack.deny.remove"));
+            } else {
+                blacklist.add(storedEntity.getType());
+                playerEntity.sendSystemMessage(Component.translatable("flashjack.deny"));
+            }
+        } else if (storedPos != null && !(playerEntity.level().getBlockEntity(storedPos.pos()) instanceof RotatingTurretTile)) {
+            setHome(storedPos.pos());
+            PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.home_set"));
+        }
+
+        return IWandable.super.onLastConnection(storedPos, face, storedEntity, playerEntity);
+    }
+
 }

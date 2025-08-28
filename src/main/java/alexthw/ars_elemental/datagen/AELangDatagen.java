@@ -61,7 +61,6 @@ public class AELangDatagen extends LanguageProvider {
         add("item.ars_elemental.earth_caster_tome", "Caster Tome of Earth");
         add("item.ars_elemental.anima_caster_tome", "Caster Tome of Anima");
         add("item.ars_elemental.manipulation_caster_tome", "Caster Tome of Manipulation");
-        add("tooltip.ars_elemental.caster_tome", "Mimics the abilities of a school focus.");
         add("item.ars_elemental.flashjack_shards", "Flashjack Token");
         add("item.ars_elemental.siren_shards", "Siren Token");
         add("item.ars_elemental.siren_charm", "Siren Charm");

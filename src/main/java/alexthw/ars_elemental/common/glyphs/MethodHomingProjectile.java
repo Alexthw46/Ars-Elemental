@@ -1,11 +1,17 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.common.entity.FlashjackEntity;
 import com.alexthw.sauce.util.GlyphEffectUtil;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
-import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
@@ -135,7 +141,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
         ignore.add((entity -> !entity.isAlive()));
         ignore.add((entity -> entity == shooter));
-        ignore.add(entity -> entity instanceof FamiliarEntity);
+        ignore.add(entity -> entity instanceof FamiliarEntity || entity instanceof FlashjackEntity);
         ignore.add(entity -> entity.hasEffect(MobEffects.INVISIBILITY));
         ignore.add(shooter::isAlliedTo);
         if (!targetPlayers) {

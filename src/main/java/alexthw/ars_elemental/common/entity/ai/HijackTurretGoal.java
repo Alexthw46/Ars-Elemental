@@ -41,9 +41,10 @@ public class HijackTurretGoal extends Goal {
             return;
         }
         // Detect nearby adjustable turret tiles
-        var turrets = pedestalList(mob.blockPosition(), (int) detectionRange, mob.level());
+        var turrets = mob.getTurrets();
         if (!turrets.isEmpty()) {
-            for (RotatingTurretTile turret : turrets) {
+            for (BlockPos turretPos : turrets) {
+                if (!(mob.level().getBlockEntity(turretPos) instanceof RotatingTurretTile turret)) continue;
                 // Hijack the turret to target the mob's target
                 turret.aim(mob.getTarget().blockPosition(), ANFakePlayer.getPlayer((ServerLevel) mob.level()));
                 turret.shootSpell();

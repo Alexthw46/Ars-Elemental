@@ -34,6 +34,7 @@ tasks.named('wrapper', Wrapper).configure {
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
+    validateAccessTransformers = true
 
     parchment {
         mappingsVersion = project.parchment_version
