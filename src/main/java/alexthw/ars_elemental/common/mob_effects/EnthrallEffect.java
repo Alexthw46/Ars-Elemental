@@ -1,57 +1,52 @@
 package alexthw.ars_elemental.common.mob_effects;
 
-import alexthw.ars_elemental.registry.ModPotions;
+import com.alexthw.sauce.common.entity.EnthrallUtil;
 import com.alexthw.sauce.util.EntityCarryMEI;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.EffectCure;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+
+import static alexthw.ars_elemental.registry.ModPotions.ENTHRALLED;
+import static com.alexthw.sauce.common.entity.EnthrallUtil.THRALL_KEY;
 
 public class EnthrallEffect extends MobEffect {
 
     public EnthrallEffect() {
         super(MobEffectCategory.NEUTRAL, 0);
-        NeoForge.EVENT_BUS.addListener(this::onTarget);
+        NeoForge.EVENT_BUS.addListener(this::onRemove);
     }
 
-    public void onTarget(LivingChangeTargetEvent event) {
-        // If the entity is a thrall and the new target is a player, and the player is the owner of the thrall, then set the target to the last mob that hurt the player.
-        if (!(event.getOriginalAboutToBeSetTarget() instanceof Player player)) return;
-        if (event.getEntity() instanceof Mob thrall && isEnthralledBy(thrall, player)) {
-            if (player.getLastHurtMob() != null && player.getLastHurtMob() != thrall) {
-                event.setNewAboutToBeSetTarget(player.getLastHurtMob());
-                // If the thrall is a neutral mob, set the persistent anger target to the last mob that the player hit.
-                if (thrall instanceof NeutralMob angry)
-                    angry.setPersistentAngerTarget(player.getLastHurtMob().getUUID());
-            } else if (player.getLastHurtByMob() != null && player.getLastHurtByMob() != thrall) {
-                event.setNewAboutToBeSetTarget(player.getLastHurtByMob());
-                // If the thrall is a neutral mob, set the persistent anger target to the last mob that hurt the player.
-                if (thrall instanceof NeutralMob angry)
-                    angry.setPersistentAngerTarget(player.getLastHurtByMob().getUUID());
-            } else {
-                // If the player has no last hurt mob, set the target to null.
-                event.setNewAboutToBeSetTarget(null);
-                if (thrall instanceof NeutralMob angry) angry.setRemainingPersistentAngerTime(0);
-            }
+    private void onRemove(MobEffectEvent.Remove event) {
+        event.getEntity().getPersistentData().remove(THRALL_KEY);
+    }
+
+    @Override
+    public void onEffectAdded(@NotNull LivingEntity livingEntity, int amplifier) {
+        super.onEffectAdded(livingEntity, amplifier);
+        if (livingEntity.getEffect(ENTHRALLED) instanceof EntityCarryMEI mei) {
+            EnthrallUtil.permanentEnthrall(mei.getOwner(), livingEntity);
         }
     }
 
-    static public boolean isEnthralledBy(LivingEntity entity, Player player) {
-        if (entity.hasEffect(ModPotions.ENTHRALLED)) {
-            MobEffectInstance instance = entity.getEffect(ModPotions.ENTHRALLED);
-            if (instance instanceof EntityCarryMEI mei) return mei.getOwner() == player;
-        }
-        return false;
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
+        // Trigger the effect only once, when the time left reaches 1.
+        return pDuration == 1;
     }
+
+    @Override
+    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+        pLivingEntity.getPersistentData().remove(THRALL_KEY);
+        return true;
+    }
+
 
     @Override
     public void fillEffectCures(@NotNull Set<EffectCure> cures, @NotNull MobEffectInstance effectInstance) {

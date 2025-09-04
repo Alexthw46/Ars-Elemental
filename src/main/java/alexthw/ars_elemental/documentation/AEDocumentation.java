@@ -15,7 +15,12 @@ import com.hollingsworth.arsnouveau.api.documentation.search.ConnectedSearch;
 import com.hollingsworth.arsnouveau.api.documentation.search.Search;
 import com.hollingsworth.arsnouveau.api.registry.DocumentationRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import com.hollingsworth.arsnouveau.common.spell.effect.*;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectFreeze;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectGravity;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectGrow;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
 import com.hollingsworth.arsnouveau.setup.registry.ItemRegistryWrapper;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.network.chat.Component;
@@ -31,7 +36,10 @@ import static alexthw.ars_elemental.registry.ModRegistry.NETHERITE_UP;
 import static com.hollingsworth.arsnouveau.api.registry.DocumentationRegistry.*;
 import static com.hollingsworth.arsnouveau.common.lib.LibBlockNames.BASIC_SPELL_TURRET;
 import static com.hollingsworth.arsnouveau.common.lib.LibBlockNames.SPELL_PRISM;
-import static com.hollingsworth.arsnouveau.setup.registry.Documentation.*;
+import static com.hollingsworth.arsnouveau.setup.registry.Documentation.addBasicItem;
+import static com.hollingsworth.arsnouveau.setup.registry.Documentation.addPage;
+import static com.hollingsworth.arsnouveau.setup.registry.Documentation.getLangPath;
+import static com.hollingsworth.arsnouveau.setup.registry.Documentation.getRecipePages;
 
 public class AEDocumentation {
 
@@ -108,6 +116,8 @@ public class AEDocumentation {
         var sirenCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.SIREN_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.SIREN_ENTITY.get())).withTextPage("ars_elemental.page2.siren_charm"));
 
         var firenandoCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FIRENANDO_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FIRENANDO_ENTITY.get())));
+
+        var flashjackCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FLASHJACK_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FLASHJACK_ENTITY.get())));
 
         addPage(new AEDocEntryBuilder(ARMOR, ModItems.MARK_OF_MASTERY.get()).withName("ars_elemental.title.elemental_upgrades").withIntroPage().withCraftingPages().withSortNum(5));
         addArmorSet(ModItems.FIRE_ARMOR);

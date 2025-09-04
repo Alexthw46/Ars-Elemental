@@ -4,6 +4,8 @@ import alexthw.ars_elemental.common.entity.FlashjackEntity;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
+import com.hollingsworth.arsnouveau.common.network.Networking;
+import com.hollingsworth.arsnouveau.common.network.PacketAnimEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -40,6 +42,7 @@ public class HijackTurretGoal extends Goal {
             cooldown--;
             return;
         }
+        Networking.sendToNearbyClient(mob.level, mob, new PacketAnimEntity(mob.getId(), 0));
         // Detect nearby adjustable turret tiles
         var turrets = mob.getTurrets();
         if (!turrets.isEmpty()) {

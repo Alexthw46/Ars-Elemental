@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.common.entity.ai.HijackTurretGoal;
+import alexthw.ars_elemental.common.entity.spells.FlashLightning;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.ISchoolProvider;
@@ -11,10 +12,13 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.api.util.SummonUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.items.data.ICharmSerializable;
 import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
+import com.hollingsworth.arsnouveau.common.network.Networking;
+import com.hollingsworth.arsnouveau.common.network.PacketAnimEntity;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import com.hollingsworth.nuggets.client.overlay.IWorldTooltipProvider;
@@ -34,6 +38,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -57,6 +62,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -68,14 +74,14 @@ import java.util.Optional;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static com.hollingsworth.nuggets.common.registry.RegistryHelper.getRegistryName;
 
-public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializable, IDispellable, ISchoolProvider, IWorldTooltipProvider, IWandable {
+public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializable, IAnimationListener, IDispellable, ISchoolProvider, IWorldTooltipProvider, IWandable {
     public static final EntityDataAccessor<String> COLOR = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<Optional<BlockPos>> HOME = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public static final RawAnimation idle = RawAnimation.begin().thenLoop("idle.air");
     public static final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("idle.ground");
     public static final RawAnimation flapping = RawAnimation.begin().thenLoop("idle.flapping");
-    public static final RawAnimation attack = RawAnimation.begin().thenPlayAndHold("attack");
+    public static final RawAnimation attack = RawAnimation.begin().thenPlayXTimes("attack", 2).thenWait(40).thenLoop("idle.flapping");
 
 
     List<BlockPos> turrets = new ArrayList<>();
@@ -84,6 +90,7 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     public static AttributeSupplier.@NotNull Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 36.0F).add(Attributes.FLYING_SPEED, 0.6F).add(Attributes.MOVEMENT_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 6.0F);
     }
+    AnimationController<FlashjackEntity> actionController;
 
     public List<BlockPos> getTurrets() {
         return turrets;
@@ -148,26 +155,56 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         }
     }
 
+    private static PlayState attackPredicate(AnimationState<FlashjackEntity> event) {
+        // If the entity is on the ground, stop the animation
+        if (event.getAnimatable().onGround())
+            return PlayState.STOP;
+
+        if (event.isCurrentAnimation(attack))
+            return PlayState.CONTINUE;
+
+        // If the entity is in the attack animation, continue it until the end
+        // Defaults to flapping animation if in the air and not attacking
+        return event.setAndContinue(flapping);
+    }
+
     @Override
     public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
-        if (!player.level().isClientSide && this.isOwnedBy(player)) {
+        if (!player.level().isClientSide) {
             ItemStack stack = player.getItemInHand(hand);
+            if (this.isOwnedBy(player)) {
 
-            if (stack.is(Tags.Items.DYES_YELLOW) && !this.getColor().equals("flashjack")) {
-                this.setColor("flashjack");
-                stack.shrink(1);
-                return InteractionResult.SUCCESS;
-            }
+                if (stack.is(Tags.Items.DYES_YELLOW) && !this.getColor().equals("flashjack")) {
+                    this.setColor("flashjack");
+                    stack.shrink(1);
+                    return InteractionResult.SUCCESS;
+                }
 
-            if (stack.is(Tags.Items.DYES_RED) && !this.getColor().equals("flapjack")) {
-                this.setColor("flapjack");
+                if (stack.is(Tags.Items.DYES_RED) && !this.getColor().equals("flapjack")) {
+                    this.setColor("flapjack");
+                    stack.shrink(1);
+                    return InteractionResult.SUCCESS;
+                }
+
+                if (stack.is(Tags.Items.DYES_BLUE) && !this.getColor().equals("bluejay")) {
+                    this.setColor("bluejay");
+                    stack.shrink(1);
+                    return InteractionResult.SUCCESS;
+                }
+
+                if (stack.getItem() == ModItems.FLASHING_POD.get().asItem()) {
+                    var flash = new FlashLightning(this.level);
+                    flash.setPos(this.getX(), this.getY(), this.getZ());
+                    player.level().addFreshEntity(flash);
+                    Networking.sendToNearbyClient(this.level, this, new PacketAnimEntity(this.getId(), 0));
+                }
+
+            } else if (stack.getItem() == ModItems.FLASHING_POD.get().asItem()) {
                 stack.shrink(1);
-                return InteractionResult.SUCCESS;
-            }
-            if (stack.is(Tags.Items.DYES_BLUE) && !this.getColor().equals("bluejay")) {
-                this.setColor("bluejay");
-                stack.shrink(1);
-                return InteractionResult.SUCCESS;
+                this.tame(player);
+                var flash = new FlashLightning(this.level);
+                flash.setPos(this.getX(), this.getY(), this.getZ());
+                player.level().addFreshEntity(flash);
             }
         }
         return InteractionResult.PASS;
@@ -186,23 +223,21 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     }
 
     @Override
+    public void thunderHit(@NotNull ServerLevel level, @NotNull LightningBolt lightning) {
+    }
+
+    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         data.add(new AnimationController<>(this, "idle_controller", 5, event -> onGround() ? event.setAndContinue(inactive) : event.setAndContinue(idle)));
-        data.add(new AnimationController<>(this, "action_controller", 5, event -> {
-            // Play the attack animation if the entity has a target, try to not loop it
-            if (isActive() && !event.isCurrentAnimation(attack)) {
-                return event.setAndContinue(attack);
-            }
-            // If the entity is on the ground, stop the animation
-            if (event.getAnimatable().onGround())
-                return PlayState.STOP;
-            // If the entity is in the attack animation, continue it until the end
-            if (event.isCurrentAnimation(attack) && event.animationTick < 100) {
-                return PlayState.CONTINUE;
-            }
-            // Defaults to flapping animation if in the air and not attacking
-            return event.setAndContinue(flapping);
-        }));
+        actionController = new AnimationController<>(this, "action_controller", 5, FlashjackEntity::attackPredicate);
+        data.add(actionController);
+    }
+
+    @Override
+    public void startAnimation(int arg) {
+        if (arg == 0 && actionController != null) {
+            actionController.setAnimation(attack);
+        }
     }
 
     @Override

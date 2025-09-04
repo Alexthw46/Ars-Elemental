@@ -191,7 +191,6 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
         List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver.spell);
         ignore.add(entity -> !(entity instanceof Enemy));
         ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
-        projectileSpell.setColor(spellColor);
         projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);
         projectileSpell.setIgnored(ignore);
         level().addFreshEntity(projectileSpell);
@@ -302,7 +301,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
     PlayState attackPredicate(AnimationState<FirenandoEntity> event) {
         if (!isActive()) return PlayState.STOP;
         if (attackController.getCurrentAnimation() == null) {
-           return event.setAndContinue(mainIdle);
+            return event.setAndContinue(mainIdle);
         }
         return PlayState.CONTINUE;
     }
@@ -314,7 +313,7 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
 
     @Override
     public void startAnimation(int arg) {
-        if (arg == Animations.SHOOT.ordinal()) {
+        if (arg == Animations.SHOOT.ordinal() && attackController != null) {
             if (attackController.getCurrentAnimation() != null && (attackController.getCurrentAnimation().animation().name().equals("shoot"))) {
                 return;
             }

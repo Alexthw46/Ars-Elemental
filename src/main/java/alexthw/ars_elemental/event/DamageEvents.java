@@ -4,13 +4,13 @@ import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.mages.WaterMage;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
-import alexthw.ars_elemental.common.mob_effects.EnthrallEffect;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.alexthw.sauce.api.item.IElementalArmor;
 import com.alexthw.sauce.api.item.ISchoolBangle;
 import com.alexthw.sauce.api.item.ISchoolFocus;
+import com.alexthw.sauce.common.entity.EnthrallUtil;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
@@ -62,7 +62,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
-import static alexthw.ars_elemental.registry.ModPotions.*;
+import static alexthw.ars_elemental.registry.ModPotions.FROZEN;
+import static alexthw.ars_elemental.registry.ModPotions.MAGIC_FIRE;
+import static alexthw.ars_elemental.registry.ModPotions.MANA_BUBBLE;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
@@ -239,7 +241,7 @@ public class DamageEvents {
         }
 
         boolean not_bypassEnchants = !event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS);
-        if (event.getSource().getEntity() instanceof LivingEntity living && target instanceof Player player && EnthrallEffect.isEnthralledBy(living, player))
+        if (event.getSource().getEntity() instanceof LivingEntity living && target instanceof Player player && EnthrallUtil.isEnthralledBy(living, player))
             event.setAmount(event.getAmount() * .5F);
 
         if (target instanceof Player || target instanceof EntityMageBase) {

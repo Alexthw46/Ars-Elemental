@@ -31,6 +31,8 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import java.util.UUID;
 
+import static com.alexthw.sauce.Sauce.ENABLE_ENTHRALL;
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(ArsElemental.MODID)
 public class ArsElemental {
@@ -42,7 +44,7 @@ public class ArsElemental {
 
     public ArsElemental(IEventBus modEventBus, ModContainer modContainer) {
         terrablenderLoaded = ModList.get().isLoaded("terrablender");
-
+        ENABLE_ENTHRALL = true;
         modContainer.registerConfig(ModConfig.Type.STARTUP, ConfigHandler.STARTUP_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
