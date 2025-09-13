@@ -180,6 +180,8 @@ public class ConfigHandler {
         public static ModConfigSpec.IntValue FLASHING_WOOD_STRIP_LIGHT;
         public static ModConfigSpec.IntValue FLASHING_LEAVES_LIGHT;
 
+        public static ModConfigSpec.BooleanValue ENABLE_ARMOR_REWORK;
+
         public Startup(ModConfigSpec.Builder builder) {
 
             builder.push("Flashing Archwood Settings");
@@ -188,6 +190,10 @@ public class ConfigHandler {
             FLASHING_WOOD_STRIP_LIGHT = builder.comment("Light level emitted by stripped flashing archwood logs and wood.").defineInRange("flashingWoodStripLight", 8, 0, 15);
             FLASHING_LEAVES_LIGHT = builder.comment("Light level emitted by flashing archwood leaves.").defineInRange("flashingLeavesLight", 6, 0, 15);
 
+            builder.pop();
+
+            builder.push("Beta Features");
+            ENABLE_ARMOR_REWORK = builder.comment("Enable the armor rework, which changes how elemental armors work by adding an heavy and light variant. Requires a restart to take effect.").define("enableArmorRework", false);
             builder.pop();
         }
 

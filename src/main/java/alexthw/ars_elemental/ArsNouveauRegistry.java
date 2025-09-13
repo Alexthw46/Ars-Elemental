@@ -204,7 +204,9 @@ public class ArsNouveauRegistry {
             PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
             PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
         }
-        if (FMLEnvironment.production) return;
+        if (FMLEnvironment.production && !ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get()) {
+            return;
+        }
         ArmorSet[] heavy_armors = {ModItems.AIR_ARMOR_H, ModItems.FIRE_ARMOR_H, ModItems.EARTH_ARMOR_H, ModItems.WATER_ARMOR_H};
         for (ArmorSet set : heavy_armors) {
             PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));

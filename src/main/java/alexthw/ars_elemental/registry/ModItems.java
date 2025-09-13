@@ -174,7 +174,7 @@ public class ModItems {
 
     static {
 
-        if (!FMLEnvironment.production) {
+        if (!FMLEnvironment.production || ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get()) {
             WATER_ARMOR_H = new ArmorSet.Heavy("aqua", SpellSchools.ELEMENTAL_WATER);
             EARTH_ARMOR_H = new ArmorSet.Heavy("earth", SpellSchools.ELEMENTAL_EARTH);
             AIR_ARMOR_H = new ArmorSet.Heavy("air", SpellSchools.ELEMENTAL_AIR);
