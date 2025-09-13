@@ -205,22 +205,6 @@ public class AELangDatagen extends LanguageProvider {
         add("death.attack.spark.item", "%1$s was shocked to death    by %2$s using %3$s");
         add("death.attack.beheading", "%1$s was cut into pieces");
         add("death.attack.beheading.item", "%1$s was cut to shreds by %2$s using %3$s");
-        add("item.ars_elemental.fire_hat", "Pyromancer's Hat");
-        add("item.ars_elemental.fire_robes", "Pyromancer's Robes");
-        add("item.ars_elemental.fire_leggings", "Pyromancer's Leggings");
-        add("item.ars_elemental.fire_boots", "Pyromancer's Boots");
-        add("item.ars_elemental.aqua_hat", "Aquamancer's Hat");
-        add("item.ars_elemental.aqua_robes", "Aquamancer's Robes");
-        add("item.ars_elemental.aqua_leggings", "Aquamancer's Leggings");
-        add("item.ars_elemental.aqua_boots", "Aquamancer's Boots");
-        add("item.ars_elemental.earth_hat", "Geomancer's Hat");
-        add("item.ars_elemental.earth_robes", "Geomancer's Robes");
-        add("item.ars_elemental.earth_leggings", "Geomancer's Leggings");
-        add("item.ars_elemental.earth_boots", "Geomancer's Boots");
-        add("item.ars_elemental.air_hat", "Aethermancer's Hat");
-        add("item.ars_elemental.air_robes", "Aethermancer's Robes");
-        add("item.ars_elemental.air_leggings", "Aethermancer's Leggings");
-        add("item.ars_elemental.air_boots", "Aethermancer's Boots");
         add("ars_elemental.armor_set.shift_info", "Hold %s for set info");
         add("ars_elemental.lens.shift_info", "Hold %s for lens info");
         add("ars_elemental.lens.arc", "Convert the redirected projectile in an Arc Projectile.");
@@ -231,13 +215,21 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.lens.pierce", "Makes the redirected projectile pierce through more blocks/entities if source is supplied to the prism.");
         add("ars_elemental.lens.chaining", "Adds the glyphs inscribed on the lens to redirected projectiles.");
         add("ars_elemental.page.armor_set.wip", "Note: Since the Armor Rework requires a lot of assets work, the light and heavy elemental armors variants won't be ready for 1.19, so the 'medium' elemental armors can be crafted will all three types. Upgrading will keep enchants and threads, but requires the base armor to be at tier 3.");
+        add("ars_elemental.armor_set.fire_light", "Pyromaniac's Set");
         add("ars_elemental.armor_set.fire", "Pyromancer's Set");
+        add("ars_elemental.armor_set.fire_heavy", "Netherguard's Set");
         add("ars_elemental.armor_set.fire.desc", "Absorb some fire-related damage and convert into mana, instantly clears fire.");
+        add("ars_elemental.armor_set.aqua_light", "Nereid's Set");
         add("ars_elemental.armor_set.aqua", "Aquamancer's Set");
+        add("ars_elemental.armor_set.aqua_heavy", "Winterguard's Set");
         add("ars_elemental.armor_set.aqua.desc", "Absorb some water-related damage and convert into mana, refill air if about to drown.");
+        add("ars_elemental.armor_set.earth_light", "Dryad's Set");
         add("ars_elemental.armor_set.earth", "Geomancer's Set");
+        add("ars_elemental.armor_set.earth_heavy", "Wealdguard's Set");
         add("ars_elemental.armor_set.earth.desc", "Absorb some earth-related damage and convert into mana, gives food deep underground if about to starve.");
+        add("ars_elemental.armor_set.air_light", "Olympian's Set");
         add("ars_elemental.armor_set.air", "Aethermancer's Set");
+        add("ars_elemental.armor_set.air_heavy", "Thunderguard's Set");
         add("ars_elemental.armor_set.air.desc", "Absorb some air-related damage and convert into mana, highly reduce fall damage.");
         add("ars_elemental.page.armor_set.fire", "Attuned to the School of Fire, each piece of this armor will amplify fire glyphs, make them cheaper, and reduce damage related to fire, like lava, dragon breath and magma.$(br)When all the pieces are equipped, the damage reduced is converted into mana and fire is immediately put out.");
         add("ars_elemental.page.armor_set.aqua", "Attuned to the School of Water, each piece of this armor will amplify water glyphs, make them cheaper and reduce damage related to water, like drowning, freezing and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and refill air if about to drown.");
@@ -404,6 +396,60 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.particle.venom_spell", "Envenom Skulls");
         add("ars_elemental.particle.skull_spell", "Skulls");
         add("ars_nouveau.particle_config.gravity_field", "Gravity Well");
+
+        // Medium Armors
+        add("item.ars_elemental.fire_hat", "Pyromancer's Hat");
+        add("item.ars_elemental.fire_robes", "Pyromancer's Robes");
+        add("item.ars_elemental.fire_leggings", "Pyromancer's Leggings");
+        add("item.ars_elemental.fire_boots", "Pyromancer's Boots");
+        add("item.ars_elemental.aqua_hat", "Aquamancer's Hat");
+        add("item.ars_elemental.aqua_robes", "Aquamancer's Robes");
+        add("item.ars_elemental.aqua_leggings", "Aquamancer's Leggings");
+        add("item.ars_elemental.aqua_boots", "Aquamancer's Boots");
+        add("item.ars_elemental.earth_hat", "Geomancer's Hat");
+        add("item.ars_elemental.earth_robes", "Geomancer's Robes");
+        add("item.ars_elemental.earth_leggings", "Geomancer's Leggings");
+        add("item.ars_elemental.earth_boots", "Geomancer's Boots");
+        add("item.ars_elemental.air_hat", "Aethermancer's Hat");
+        add("item.ars_elemental.air_robes", "Aethermancer's Robes");
+        add("item.ars_elemental.air_leggings", "Aethermancer's Leggings");
+        add("item.ars_elemental.air_boots", "Aethermancer's Boots");
+
+        // Heavy Armors
+        add("item.ars_elemental.fire_helmet", "Netherguard's Helmet");
+        add("item.ars_elemental.fire_chestplate", "Netherguard's Chestplate");
+        add("item.ars_elemental.fire_leggings_heavy", "Netherguard's Leggings");
+        add("item.ars_elemental.fire_boots_heavy", "Netherguard's Boots");
+        add("item.ars_elemental.aqua_helmet", "Winterguard's Helmet");
+        add("item.ars_elemental.aqua_chestplate", "Winterguard's Chestplate");
+        add("item.ars_elemental.aqua_leggings_heavy", "Winterguard's Leggings");
+        add("item.ars_elemental.aqua_boots_heavy", "Winterguard's Boots");
+        add("item.ars_elemental.earth_helmet", "Wealdguard's Helmet");
+        add("item.ars_elemental.earth_chestplate", "Wealdguard's Chestplate");
+        add("item.ars_elemental.earth_leggings_heavy", "Wealdguard's Leggings");
+        add("item.ars_elemental.earth_boots_heavy", "Wealdguard's Boots");
+        add("item.ars_elemental.air_helmet", "Thunderguard's Helmet");
+        add("item.ars_elemental.air_chestplate", "Thunderguard's Chestplate");
+        add("item.ars_elemental.air_leggings_heavy", "Thunderguard's Leggings");
+        add("item.ars_elemental.air_boots_heavy", "Thunderguard's Boots");
+
+        // Light Armors
+        add("item.ars_elemental.fire_hood", "Pyromaniac's Hood");
+        add("item.ars_elemental.fire_tunic", "Pyromaniac's Tunic");
+        add("item.ars_elemental.fire_pants", "Pyromaniac's Pants");
+        add("item.ars_elemental.fire_shoes", "Pyromaniac's Shoes");
+        add("item.ars_elemental.aqua_hood", "Nereid's Hood");
+        add("item.ars_elemental.aqua_tunic", "Nereid's Tunic");
+        add("item.ars_elemental.aqua_pants", "Nereid's Pants");
+        add("item.ars_elemental.aqua_shoes", "Nereid's Shoes");
+        add("item.ars_elemental.earth_hood", "Nymph's Hood");
+        add("item.ars_elemental.earth_tunic", "Nymph's Tunic");
+        add("item.ars_elemental.earth_pants", "Nymph's Pants");
+        add("item.ars_elemental.earth_shoes", "Nymph's Shoes");
+        add("item.ars_elemental.air_hood", "Olympian's Hood");
+        add("item.ars_elemental.air_tunic", "Olympian's Tunic");
+        add("item.ars_elemental.air_pants", "Olympian's Pants");
+        add("item.ars_elemental.air_shoes", "Olympian's Shoes");
 
     }
 

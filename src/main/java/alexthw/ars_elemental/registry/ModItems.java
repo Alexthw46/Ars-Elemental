@@ -28,7 +28,9 @@ import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.ModItem;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
+import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
+import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -38,7 +40,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,6 +53,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -104,10 +111,20 @@ public class ModItems {
     public static final DeferredHolder<Item, ElementalFocus> LESSER_WATER_FOCUS;
     public static final DeferredHolder<Item, ElementalFocus> LESSER_EARTH_FOCUS;
 
-    public static final ArmorSet FIRE_ARMOR = new ArmorSet("fire", SpellSchools.ELEMENTAL_FIRE);
-    public static final ArmorSet AIR_ARMOR = new ArmorSet("air", SpellSchools.ELEMENTAL_AIR);
-    public static final ArmorSet EARTH_ARMOR = new ArmorSet("earth", SpellSchools.ELEMENTAL_EARTH);
-    public static final ArmorSet WATER_ARMOR = new ArmorSet("aqua", SpellSchools.ELEMENTAL_WATER);
+    public static final ArmorSet FIRE_ARMOR = new ArmorSet.Medium("fire", SpellSchools.ELEMENTAL_FIRE);
+    public static final ArmorSet AIR_ARMOR = new ArmorSet.Medium("air", SpellSchools.ELEMENTAL_AIR);
+    public static final ArmorSet EARTH_ARMOR = new ArmorSet.Medium("earth", SpellSchools.ELEMENTAL_EARTH);
+    public static final ArmorSet WATER_ARMOR = new ArmorSet.Medium("aqua", SpellSchools.ELEMENTAL_WATER);
+
+    public static ArmorSet FIRE_ARMOR_L;
+    public static ArmorSet AIR_ARMOR_L;
+    public static ArmorSet EARTH_ARMOR_L;
+    public static ArmorSet WATER_ARMOR_L;
+
+    public static ArmorSet FIRE_ARMOR_H;
+    public static ArmorSet AIR_ARMOR_H;
+    public static ArmorSet EARTH_ARMOR_H;
+    public static ArmorSet WATER_ARMOR_H;
 
     public static final DeferredHolder<Item, SchoolCasterTome> FIRE_CTOME;
     public static final DeferredHolder<Item, SchoolCasterTome> AIR_CTOME;
@@ -156,6 +173,17 @@ public class ModItems {
             .alwaysEdible().build();
 
     static {
+
+        if (!FMLEnvironment.production) {
+            WATER_ARMOR_H = new ArmorSet.Heavy("aqua", SpellSchools.ELEMENTAL_WATER);
+            EARTH_ARMOR_H = new ArmorSet.Heavy("earth", SpellSchools.ELEMENTAL_EARTH);
+            AIR_ARMOR_H = new ArmorSet.Heavy("air", SpellSchools.ELEMENTAL_AIR);
+            WATER_ARMOR_L = new ArmorSet.Light("aqua", SpellSchools.ELEMENTAL_WATER);
+            EARTH_ARMOR_L = new ArmorSet.Light("earth", SpellSchools.ELEMENTAL_EARTH);
+            AIR_ARMOR_L = new ArmorSet.Light("air", SpellSchools.ELEMENTAL_AIR);
+            FIRE_ARMOR_L = new ArmorSet.Light("fire", SpellSchools.ELEMENTAL_FIRE);
+            FIRE_ARMOR_H = new ArmorSet.Heavy("fire", SpellSchools.ELEMENTAL_FIRE);
+        }
 
         SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.siren_shards")));
         FLASHJACK_SHARDS = ITEMS.register("flashjack_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.flashjack_shards")));
@@ -280,7 +308,7 @@ public class ModItems {
     }
 
     public static Item.Properties ArmorProp() {
-        return itemProps().rarity(Rarity.EPIC);
+        return itemProps().stacksTo(1).rarity(Rarity.EPIC).component(DataComponentRegistry.ARMOR_PERKS, new ArmorPerkHolder());
     }
 
     static DeferredHolder<Block, ? extends Block> addBlock(String name, Supplier<Block> blockSupp) {

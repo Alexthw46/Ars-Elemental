@@ -77,12 +77,6 @@ public class ModRegistry {
     public static final ResourceKey<DamageType> MAGIC_FIRE = key(Registries.DAMAGE_TYPE, "hellfire");
     public static final ResourceKey<DamageType> SPARK = key(Registries.DAMAGE_TYPE, "spark");
 
-    public static TagKey<DamageType> FIRE_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("fire_damage"));
-    public static TagKey<DamageType> WATER_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("water_damage"));
-    public static TagKey<DamageType> EARTH_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("earth_damage"));
-    public static TagKey<DamageType> AIR_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("air_damage"));
-
-
     public static void registerRegistries(IEventBus bus) {
         A_MATERIALS.register(bus);
         BLOCKS.register(bus);
@@ -132,6 +126,7 @@ public class ModRegistry {
                 stack = ModItems.CURIO_BAG.get().getDefaultInstance();
             return new CurioHolderContainer(id, inv, stack);
         }));
+
         CASTER_HOLDER = CONTAINERS.register("caster_holder", () -> IMenuTypeExtension.create((id, inv, extraData) -> {
             int slot = extraData.readInt();
             ItemStack stack = slot < 0 ? CompatUtils.getCurio(inv.player, i -> i.getItem() instanceof CasterHolder).stack() : inv.getItem(slot);
@@ -161,4 +156,5 @@ public class ModRegistry {
     static <T> ResourceKey<T> key(ResourceKey<Registry<T>> registryResourceKey, String name) {
         return ResourceKey.create(registryResourceKey, prefix(name));
     }
+
 }

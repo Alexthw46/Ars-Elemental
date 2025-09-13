@@ -7,16 +7,14 @@ import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
-import com.alexthw.sauce.api.item.IElementalArmor;
 import com.alexthw.sauce.api.item.ISchoolBangle;
 import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.alexthw.sauce.common.entity.EnthrallUtil;
+import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
-import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.api.util.ManaUtil;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
@@ -41,7 +39,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
@@ -57,7 +54,6 @@ import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
 
@@ -65,23 +61,10 @@ import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.registry.ModPotions.FROZEN;
 import static alexthw.ars_elemental.registry.ModPotions.MAGIC_FIRE;
 import static alexthw.ars_elemental.registry.ModPotions.MANA_BUBBLE;
-import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
 @EventBusSubscriber(modid = ArsElemental.MODID)
 public class DamageEvents {
-
-
-    @SubscribeEvent
-    public static void betterFilters(SpellDamageEvent.Pre event) {
-        //if the spell has a filter, and the target of the attack is not valid, cancel the event
-        // event.context.getCurrentIndex() - 1 is the current, we check the one before it
-        if (event.context != null && event.context.getCurrentIndex() > 1 && event.context.getSpell().unsafeList().get(event.context.getCurrentIndex() - 2) instanceof IFilter filter) {
-            if (!filter.shouldResolveOnEntity(event.target, event.target.level())) {
-                event.setCanceled(true);
-            }
-        }
-    }
 
     @SubscribeEvent
     public static void changeDamageType(SpellDamageEvent.Pre preSpellDamageEvent) {
@@ -198,12 +181,12 @@ public class DamageEvents {
         var target = event.getEntity();
 
         // if frozen, boost next fire damage
-        if (target.hasEffect(FROZEN) && event.getSource().is(ModRegistry.FIRE_DAMAGE)) {
+        if (target.hasEffect(FROZEN) && event.getSource().is(SauceTags.FIRE_DAMAGE)) {
             event.setAmount(event.getAmount() * 1.5F);
             target.removeEffect(FROZEN);
         }
         // if the target has magic fire, reduce earth damage
-        if (target.hasEffect(MAGIC_FIRE) && event.getSource().is(ModRegistry.EARTH_DAMAGE)) {
+        if (target.hasEffect(MAGIC_FIRE) && event.getSource().is(SauceTags.EARTH_DAMAGE)) {
             event.setAmount(event.getAmount() * 0.85F);
         }
 
@@ -229,66 +212,9 @@ public class DamageEvents {
             }
         }
 
-        //fetch the damage reduction from the armor according to the damage source
-        HashMap<SpellSchool, Integer> bonusMap = new HashMap<>();
-        int bonusReduction = 0;
-
-        for (ItemStack stack : event.getEntity().getArmorSlots()) {
-            Item item = stack.getItem();
-            if (item instanceof IElementalArmor armor && armor.fillAbsorptions(event.getSource(), bonusMap)) {
-                bonusReduction++;
-            }
-        }
-
         boolean not_bypassEnchants = !event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS);
         if (event.getSource().getEntity() instanceof LivingEntity living && target instanceof Player player && EnthrallUtil.isEnthralledBy(living, player))
             event.setAmount(event.getAmount() * .5F);
-
-        if (target instanceof Player || target instanceof EntityMageBase) {
-
-            Set<SpellSchool> schools = ISchoolFocus.getFociSchools(target);
-
-            if (not_bypassEnchants) {
-                //reduce damage from elytra if you have air focus
-                if (event.getSource().is(DamageTypes.FLY_INTO_WALL) && schools.contains(ELEMENTAL_AIR)) {
-                    event.setAmount(event.getAmount() * .1F);
-                }
-
-                //if you have 4 pieces of the fire school, fire is removed. Apply the fire focus buff if you have it, since it wouldn't detect the fire otherwise
-                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                    target.clearFire();
-                    if (schools.contains(SpellSchools.ELEMENTAL_FIRE)) {
-                        target.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT, 200, 2));
-                    }
-                }
-                //if you have 4 pieces of the water school, you get extra air when drowning
-                if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_WATER, 0) == 4 && event.getSource().is(DamageTypes.DROWN)) {
-                    target.setAirSupply(target.getMaxAirSupply());
-                    bonusReduction += 5;
-                }
-                //if you have 4 pieces of the earth school, you get extra food when you are low
-                if (target instanceof Player player && bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && target.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 4) {
-                    player.getFoodData().setFoodLevel(20);
-                }
-                //if you have 4 pieces of the air school, you get extra fall damage reduction
-                if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().is(DamageTypeTags.IS_FALL)) {
-                    bonusReduction += 5;
-                }
-
-                if (bonusReduction > 0) {
-                    //convert the damage reduction into mana and add the mana regen effect
-                    var mana = CapabilityRegistry.getMana(target);
-                    if (mana != null) {
-                        if (bonusReduction > 3) mana.addMana(event.getOriginalAmount() * 5);
-                        event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 200, bonusReduction / 2));
-                    }
-                }
-
-            }
-        }
-
-        if (bonusReduction > 0 && not_bypassEnchants)
-            event.setAmount(event.getAmount() * (1 - bonusReduction / 10F));
 
         // if damage is magic and target has magic fire, add back the half the damage that was reduced from the armor points
         if (event.getSource().is(Tags.DamageTypes.IS_MAGIC) && target.hasEffect(MAGIC_FIRE)) {

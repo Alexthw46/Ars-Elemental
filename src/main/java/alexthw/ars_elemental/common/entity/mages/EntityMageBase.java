@@ -3,11 +3,13 @@ package alexthw.ars_elemental.common.entity.mages;
 import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.entity.ai.MageProjCastingGoal;
 import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
-import alexthw.ars_elemental.common.items.armor.ArmorSet;
-import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.alexthw.sauce.api.item.ISchoolProvider;
-import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.Spell;
+import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
@@ -43,6 +45,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static alexthw.ars_elemental.common.items.armor.ElementalArmor.getArmorSetFromElement;
 import static com.alexthw.sauce.util.ParticleUtil.schoolToColor;
 
 public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolProvider, IAnimationListener {
@@ -51,10 +54,12 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     public final List<Spell> sSpells = new ArrayList<>();
 
     public SpellSchool school;
+    public String type = "medium";
 
     public int castCooldown = 0;
     public int animationTimer = 0;
     public int currentAnim = -1;
+
     /**
      * Default Proj -> simple harm
      * Default Self -> simple heal
@@ -101,20 +106,18 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
     }
 
-    @Override
-    protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
-        if (school != null) {
-            for (EquipmentSlot slot : EquipmentSlot.values()) {
-                setItemSlot(slot, getArmorForSlot(slot, this.school));
-            }
-        } else {
-            setItemSlot(EquipmentSlot.HEAD, ItemsRegistry.BATTLEMAGE_HOOD.get().getDefaultInstance());
-            setItemSlot(EquipmentSlot.CHEST, ItemsRegistry.BATTLEMAGE_ROBES.get().getDefaultInstance());
-            setItemSlot(EquipmentSlot.LEGS, ItemsRegistry.BATTLEMAGE_LEGGINGS.get().getDefaultInstance());
-            setItemSlot(EquipmentSlot.FEET, ItemsRegistry.BATTLEMAGE_BOOTS.get().getDefaultInstance());
-        }
-        setItemInHand(InteractionHand.MAIN_HAND, ItemsRegistry.APPRENTICE_SPELLBOOK.get().getDefaultInstance());
+    public static ItemStack getArmorForSlot(EquipmentSlot slot, SpellSchool school, String type) {
+        Item item = switch (slot) {
+            case HEAD -> getArmorSetFromElement(school, type).getHat();
+            case CHEST -> getArmorSetFromElement(school, type).getChest();
+            case LEGS -> getArmorSetFromElement(school, type).getLegs();
+            case FEET -> getArmorSetFromElement(school, type).getBoots();
+            default -> null;
+        };
+
+        if (item == null) return ItemStack.EMPTY;
+
+        return item.getDefaultInstance();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -204,28 +207,20 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
         return 15;
     }
 
-    public static ItemStack getArmorForSlot(EquipmentSlot slot, SpellSchool school) {
-        Item item = switch (slot) {
-            case HEAD -> getArmorSetFromElement(school).getHat();
-            case CHEST -> getArmorSetFromElement(school).getChest();
-            case LEGS -> getArmorSetFromElement(school).getLegs();
-            case FEET -> getArmorSetFromElement(school).getBoots();
-            default -> null;
-        };
-
-        if (item == null) return ItemStack.EMPTY;
-
-        return item.getDefaultInstance();
-    }
-
-    private static ArmorSet getArmorSetFromElement(SpellSchool school) {
-        return switch (school.getId()) {
-            case "fire" -> ModItems.FIRE_ARMOR;
-            case "water" -> ModItems.WATER_ARMOR;
-            case "earth" -> ModItems.EARTH_ARMOR;
-            case "air" -> ModItems.AIR_ARMOR;
-            default -> new ArmorSet("necro", SpellSchools.NECROMANCY);
-        };
+    @Override
+    protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
+        if (school != null) {
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                setItemSlot(slot, getArmorForSlot(slot, this.school, this.type));
+            }
+        } else {
+            setItemSlot(EquipmentSlot.HEAD, ItemsRegistry.BATTLEMAGE_HOOD.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.CHEST, ItemsRegistry.BATTLEMAGE_ROBES.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.LEGS, ItemsRegistry.BATTLEMAGE_LEGGINGS.get().getDefaultInstance());
+            setItemSlot(EquipmentSlot.FEET, ItemsRegistry.BATTLEMAGE_BOOTS.get().getDefaultInstance());
+        }
+        setItemInHand(InteractionHand.MAIN_HAND, ItemsRegistry.APPRENTICE_SPELLBOOK.get().getDefaultInstance());
     }
 
     @Override

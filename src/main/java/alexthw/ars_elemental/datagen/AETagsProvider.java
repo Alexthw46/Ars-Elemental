@@ -7,6 +7,7 @@ import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.world.ModWorldgen;
+import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.datagen.BiomeTagProvider;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
@@ -14,7 +15,6 @@ import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
 import com.hollingsworth.arsnouveau.common.lib.EntityTags;
 import com.hollingsworth.arsnouveau.common.lib.PotionEffectTags;
 import com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry;
-import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.minecraft.core.HolderLookup;
@@ -24,8 +24,12 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.*;
-import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -48,6 +52,7 @@ import java.util.concurrent.CompletableFuture;
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.*;
+import static com.alexthw.sauce.registry.SauceTags.*;
 import static com.hollingsworth.arsnouveau.common.datagen.BannerTagsProvider.bannerTag;
 import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
 
@@ -55,17 +60,9 @@ public class AETagsProvider {
 
     public static class AEItemTagsProvider extends ItemTagsProvider {
 
-        String[] curioSlots = {"an_focus", "curio", "back", "belt", "body", "bracelet", "charm", "feet", "head", "hands", "necklace", "ring", "spellbook"};
-
         static TagKey<Item> curiosTag(String key) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(CuriosApi.MODID, key));
         }
-
-        public static final TagKey<Item> CURIO_SPELL_FOCUS = curiosTag("an_focus");
-        public static final TagKey<Item> CURIO_BANGLE = curiosTag("bracelet");
-        public static final TagKey<Item> SUMMON_SHARDS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "magic_shards"));
-        public static final TagKey<Item> SPELLBOOK = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "spellbook"));
-        public static final TagKey<Item> PRISM_LENS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "spell_prism_lens"));
 
         // create log compat
         public static final TagKey<Item> STRIPPED_LOGS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "stripped_logs"));
@@ -213,6 +210,7 @@ public class AETagsProvider {
     }
 
     public static class AEBiomeTagsProvider extends BiomeTagsProvider {
+
         public AEBiomeTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(generator.getPackOutput(), provider, ArsElemental.MODID, existingFileHelper);
         }
@@ -266,6 +264,7 @@ public class AETagsProvider {
     }
 
     public static class AEFeatureTagsProvider extends TagsProvider<PlacedFeature> {
+
         public AEFeatureTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(generator.getPackOutput(), Registries.PLACED_FEATURE, provider, ArsElemental.MODID, existingFileHelper);
         }
@@ -350,37 +349,17 @@ public class AETagsProvider {
             tag(Tags.DamageTypes.IS_MAGIC).addOptional(ModRegistry.MAGIC_FIRE.location()).addOptional(ModRegistry.SPARK.location()).addOptional(ModRegistry.CUT.location()).addOptional(ModRegistry.POISON.location());
             tag(DamageTypeTags.ALWAYS_HURTS_ENDER_DRAGONS).addOptional(ModRegistry.MAGIC_FIRE.location()).addOptional(ModRegistry.SPARK.location()).addOptional(ModRegistry.CUT.location()).addOptional(ModRegistry.POISON.location());
 
-            tag(Tags.DamageTypes.IS_POISON).addOptional(ModRegistry.POISON.location());
+            tag(Tags.DamageTypes.IS_POISON)
+                    .addOptional(ModRegistry.POISON.location());
 
-            tag(ModRegistry.FIRE_DAMAGE).addTag(DamageTypeTags.IS_FIRE).add(
-                            DamageTypes.DRAGON_BREATH,
-                            DamageTypes.EXPLOSION,
-                            DamageTypes.PLAYER_EXPLOSION,
-                            DamageTypes.FIREWORKS)
+            tag(SauceTags.FIRE_DAMAGE)
                     .addOptional(ModRegistry.MAGIC_FIRE.location());
 
-            tag(ModRegistry.WATER_DAMAGE).addTag(DamageTypeTags.IS_FREEZING).addTag(DamageTypeTags.IS_DROWNING).add(
-                    DamageTypes.TRIDENT,
-                    DamageTypes.MAGIC);
+            tag(DamageTypeTags.IS_LIGHTNING)
+                    .addOptional(ModRegistry.SPARK.location());
 
-            tag(ModRegistry.EARTH_DAMAGE).add(DamageTypes.FALLING_BLOCK,
-                            DamageTypes.FALLING_STALACTITE,
-                            DamageTypes.STALAGMITE,
-                            DamageTypes.CACTUS,
-                            DamageTypes.FALLING_ANVIL,
-                            DamageTypes.STING,
-                            DamageTypes.SWEET_BERRY_BUSH)
-                    .addTag(Tags.DamageTypes.IS_POISON)
-                    .addOptional(DamageTypesRegistry.CRUSH.location())
-                    .addOptional(DamageTypesRegistry.SOURCE_BERRY_BUSH.location());
-
-            tag(DamageTypeTags.IS_LIGHTNING).addOptional(ModRegistry.SPARK.location());
-
-            tag(ModRegistry.AIR_DAMAGE).addTag(DamageTypeTags.IS_LIGHTNING).add(DamageTypes.FALL,
-                            DamageTypes.FLY_INTO_WALL,
-                            DamageTypes.SONIC_BOOM)
-                    .addOptional(ModRegistry.CUT.location())
-                    .addOptional(DamageTypesRegistry.WINDSHEAR.location());
+            tag(SauceTags.AIR_DAMAGE)
+                    .addOptional(ModRegistry.CUT.location());
 
         }
     }

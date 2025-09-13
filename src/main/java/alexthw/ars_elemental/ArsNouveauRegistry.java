@@ -27,6 +27,7 @@ import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModParticles;
 import alexthw.ars_elemental.registry.ModRegistry;
+import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.documentation.DocAssets;
@@ -71,6 +72,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
@@ -109,10 +111,10 @@ public class ArsNouveauRegistry {
     }
 
     private static void linkDamageResistances() {
-        damageResistances.put(SpellSchools.ELEMENTAL_FIRE, ModRegistry.FIRE_DAMAGE);
-        damageResistances.put(SpellSchools.ELEMENTAL_AIR, ModRegistry.AIR_DAMAGE);
-        damageResistances.put(SpellSchools.ELEMENTAL_EARTH, ModRegistry.EARTH_DAMAGE);
-        damageResistances.put(SpellSchools.ELEMENTAL_WATER, ModRegistry.WATER_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_FIRE, SauceTags.FIRE_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_AIR, SauceTags.AIR_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_EARTH, SauceTags.EARTH_DAMAGE);
+        damageResistances.put(SpellSchools.ELEMENTAL_WATER, SauceTags.WATER_DAMAGE);
     }
 
 
@@ -155,7 +157,6 @@ public class ArsNouveauRegistry {
         register(SummonFilter.NOT_INSTANCE);
 
         // the bullshit one
-
         register(EffectNullify.INSTANCE);
     }
 
@@ -202,6 +203,21 @@ public class ArsNouveauRegistry {
             PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
             PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
             PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
+        }
+        if (FMLEnvironment.production) return;
+        ArmorSet[] heavy_armors = {ModItems.AIR_ARMOR_H, ModItems.FIRE_ARMOR_H, ModItems.EARTH_ARMOR_H, ModItems.WATER_ARMOR_H};
+        for (ArmorSet set : heavy_armors) {
+            PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
+        }
+        ArmorSet[] light_armors = {ModItems.AIR_ARMOR_L, ModItems.FIRE_ARMOR_L, ModItems.EARTH_ARMOR_L, ModItems.WATER_ARMOR_L};
+        for (ArmorSet set : light_armors) {
+            PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots));
         }
 
     }

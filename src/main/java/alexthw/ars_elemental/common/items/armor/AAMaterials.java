@@ -57,4 +57,12 @@ public class AAMaterials {
     public final static Holder<ArmorMaterial> earth = A_MATERIALS.register("medium_earth", () -> new ArmorMaterial(ARMOR_SLOT_PROTECTION_M, 40, new Holder.Direct<>(SoundEvents.GLASS_PLACE), () -> Ingredient.EMPTY, List.of(new ArmorMaterial.Layer(ArsElemental.prefix("medium_earth"))), 2.0f, 0.02F));
     public final static Holder<ArmorMaterial> air = A_MATERIALS.register("medium_air", () -> new ArmorMaterial(ARMOR_SLOT_PROTECTION_M, 40, SoundEvents.ARMOR_EQUIP_ELYTRA, () -> Ingredient.EMPTY, List.of(new ArmorMaterial.Layer(ArsElemental.prefix("medium_air"))), 2.0f, 0));
 
+    public final static Holder<ArmorMaterial> h_fire = A_MATERIALS.register("heavy_fire", () -> new ArmorMaterial(ARMOR_SLOT_PROTECTION_H
+            , 40, new Holder.Direct<>(SoundEvents.GENERIC_BURN), () -> Ingredient.EMPTY, List.of(new ArmorMaterial.Layer(ArsElemental.prefix("heavy_fire"))), 4.0f, 0));
+    public final static Holder<ArmorMaterial> h_water = A_MATERIALS.register("heavy_water", () -> new ArmorMaterial(ARMOR_SLOT_PROTECTION_H
+            , 40, new Holder.Direct<>(SoundEvents.BREWING_STAND_BREW), () -> Ingredient.EMPTY, List.of(new ArmorMaterial.Layer(ArsElemental.prefix("heavy_water"))), 4.0f, 0));
+    public final static Holder<ArmorMaterial> h_earth = A_MATERIALS.register("heavy_earth", () -> new ArmorMaterial(ARMOR_SLOT_PROTECTION_H, 40, new Holder.Direct<>(SoundEvents.GLASS_PLACE), () -> Ingredient.EMPTY, List.of(new ArmorMaterial.Layer(ArsElemental.prefix("heavy_earth"))), 4.0f, 0.04F));
+    public final static Holder<ArmorMaterial> h_air = A_MATERIALS.register("heavy_air", () -> new ArmorMaterial(ARMOR_SLOT_PROTECTION_H, 40, SoundEvents.ARMOR_EQUIP_ELYTRA, () -> Ingredient.EMPTY, List.of(new ArmorMaterial.Layer(ArsElemental.prefix("heavy_air"))), 4.0f, 0));
+
+
 }

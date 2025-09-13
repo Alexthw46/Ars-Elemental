@@ -12,11 +12,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HijackTurretGoal extends Goal {
     private final FlashjackEntity mob;
@@ -60,13 +55,4 @@ public class HijackTurretGoal extends Goal {
         }
     }
 
-    List<RotatingTurretTile> pedestalList(BlockPos blockPos, int offset, @NotNull Level level) {
-        ArrayList<RotatingTurretTile> posList = new ArrayList<>();
-        for (BlockPos b : BlockPos.betweenClosed(blockPos.offset(offset, -offset, offset), blockPos.offset(-offset, offset, -offset))) {
-            if (level.getBlockEntity(b) instanceof RotatingTurretTile tile) {
-                posList.add(tile);
-            }
-        }
-        return posList;
-    }
 }

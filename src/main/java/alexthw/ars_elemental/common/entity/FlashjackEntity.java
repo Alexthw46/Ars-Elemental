@@ -186,11 +186,11 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
                     return InteractionResult.SUCCESS;
                 }
 
-                if (stack.is(Tags.Items.DYES_BLUE) && !this.getColor().equals("bluejay")) {
-                    this.setColor("bluejay");
-                    stack.shrink(1);
-                    return InteractionResult.SUCCESS;
-                }
+//                if (stack.is(Tags.Items.DYES_BLUE) && !this.getColor().equals("bluejay")) {
+//                    this.setColor("bluejay");
+//                    stack.shrink(1);
+//                    return InteractionResult.SUCCESS;
+//                }
 
                 if (stack.getItem() == ModItems.FLASHING_POD.get().asItem()) {
                     var flash = new FlashLightning(this.level);

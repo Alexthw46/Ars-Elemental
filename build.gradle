@@ -160,7 +160,7 @@ dependencies {
     implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}")
     jarJar(implementation("com.alexthw.sauce:sauce-${minecraft_version}") {
         version {
-            strictly '[0.0.6.19,)'
+            strictly '[0.0.8.28,)'
             prefer sauce_version
         }
     }) { transitive = false }
@@ -176,7 +176,8 @@ dependencies {
 
     // cyanide to debug worldgen
     localRuntime "curse.maven:cyanide-541676:5782674"
-
+    localRuntime "curse.maven:placebo-283644:6751290"
+    localRuntime "curse.maven:apothic-attributes-898963:6751650"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
