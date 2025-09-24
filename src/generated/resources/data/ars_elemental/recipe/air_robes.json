@@ -15,7 +15,7 @@
     }
   ],
   "reagent": {
-    "tag": "ars_nouveau:magic_robe"
+    "item": "ars_nouveau:arcanist_robes"
   },
   "result": {
     "count": 1,

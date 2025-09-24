@@ -281,10 +281,20 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
                 .buildEnchantmentRecipe(ModRegistry.SOULBOUND, 1, 10000));
 
-        addArmorRecipes(ModItems.FIRE_ARMOR, ItemsRegistry.FIRE_ESSENCE);
-        addArmorRecipes(ModItems.WATER_ARMOR, ItemsRegistry.WATER_ESSENCE);
-        addArmorRecipes(ModItems.AIR_ARMOR, ItemsRegistry.AIR_ESSENCE);
-        addArmorRecipes(ModItems.EARTH_ARMOR, ItemsRegistry.EARTH_ESSENCE);
+        addArmorRecipes(ModItems.FIRE_ARMOR, ItemsRegistry.FIRE_ESSENCE, "medium");
+        addArmorRecipes(ModItems.WATER_ARMOR, ItemsRegistry.WATER_ESSENCE, "medium");
+        addArmorRecipes(ModItems.AIR_ARMOR, ItemsRegistry.AIR_ESSENCE, "medium");
+        addArmorRecipes(ModItems.EARTH_ARMOR, ItemsRegistry.EARTH_ESSENCE, "medium");
+
+        addArmorRecipes(ModItems.FIRE_ARMOR_L, ItemsRegistry.FIRE_ESSENCE, "light");
+        addArmorRecipes(ModItems.WATER_ARMOR_L, ItemsRegistry.WATER_ESSENCE, "light");
+        addArmorRecipes(ModItems.AIR_ARMOR_L, ItemsRegistry.AIR_ESSENCE, "light");
+        addArmorRecipes(ModItems.EARTH_ARMOR_L, ItemsRegistry.EARTH_ESSENCE, "light");
+
+        addArmorRecipes(ModItems.FIRE_ARMOR_H, ItemsRegistry.FIRE_ESSENCE, "heavy");
+        addArmorRecipes(ModItems.WATER_ARMOR_H, ItemsRegistry.WATER_ESSENCE, "heavy");
+        addArmorRecipes(ModItems.AIR_ARMOR_H, ItemsRegistry.AIR_ESSENCE, "heavy");
+        addArmorRecipes(ModItems.EARTH_ARMOR_H, ItemsRegistry.EARTH_ESSENCE, "heavy");
 
         recipes.add(builder()
                 .withResult(new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5))
@@ -323,12 +333,36 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
 
     }
 
-    protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence) {
+    protected void addArmorRecipes(ArmorSet armorSet, ItemLike essence, String armorType) {
 
-        recipes.add(Abuilder().withResult(armorSet.getHat()).withReagent(Ingredient.of(ItemTagProvider.MAGIC_HOOD)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
-        recipes.add(Abuilder().withResult(armorSet.getChest()).withReagent(Ingredient.of(ItemTagProvider.MAGIC_ROBE)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
-        recipes.add(Abuilder().withResult(armorSet.getLegs()).withReagent(Ingredient.of(ItemTagProvider.MAGIC_LEGS)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
-        recipes.add(Abuilder().withResult(armorSet.getBoots()).withReagent(Ingredient.of(ItemTagProvider.MAGIC_BOOT)).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(Abuilder().withResult(armorSet.getHat()).withReagent(Ingredient.of(
+                switch (armorType) {
+                    case "light" -> ItemsRegistry.SORCERER_HOOD.asItem();
+                    case "heavy" -> ItemsRegistry.BATTLEMAGE_HOOD.asItem();
+                    default -> ItemsRegistry.ARCANIST_HOOD.asItem();
+                }
+        )).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(Abuilder().withResult(armorSet.getChest()).withReagent(Ingredient.of(
+                switch (armorType) {
+                    case "light" -> ItemsRegistry.SORCERER_ROBES.asItem();
+                    case "heavy" -> ItemsRegistry.BATTLEMAGE_ROBES.asItem();
+                    default -> ItemsRegistry.ARCANIST_ROBES.asItem();
+                }
+        )).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(Abuilder().withResult(armorSet.getLegs()).withReagent(Ingredient.of(
+                switch (armorType) {
+                    case "light" -> ItemsRegistry.SORCERER_LEGGINGS.asItem();
+                    case "heavy" -> ItemsRegistry.BATTLEMAGE_LEGGINGS.asItem();
+                    default -> ItemsRegistry.ARCANIST_LEGGINGS.asItem();
+                }
+        )).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
+        recipes.add(Abuilder().withResult(armorSet.getBoots()).withReagent(Ingredient.of(
+                switch (armorType) {
+                    case "light" -> ItemsRegistry.SORCERER_BOOTS.asItem();
+                    case "heavy" -> ItemsRegistry.BATTLEMAGE_BOOTS.asItem();
+                    default -> ItemsRegistry.ARCANIST_BOOTS.asItem();
+                }
+        )).withPedestalItem(ModItems.MARK_OF_MASTERY.get()).withPedestalItem(Items.NETHERITE_INGOT).withPedestalItem(2, essence).withSourceCost(7000).keepNbtOfReagent(true).build());
 
     }
 

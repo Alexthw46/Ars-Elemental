@@ -15,11 +15,11 @@
     }
   ],
   "reagent": {
-    "item": "ars_nouveau:arcanist_boots"
+    "item": "ars_nouveau:battlemage_boots"
   },
   "result": {
     "count": 1,
-    "id": "ars_elemental:aqua_boots"
+    "id": "ars_elemental:aqua_boots_heavy"
   },
   "sourceCost": 7000
 }

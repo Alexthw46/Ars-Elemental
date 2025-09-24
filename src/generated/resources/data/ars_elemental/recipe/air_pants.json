@@ -8,18 +8,18 @@
       "item": "minecraft:netherite_ingot"
     },
     {
-      "item": "ars_nouveau:water_essence"
+      "item": "ars_nouveau:air_essence"
     },
     {
-      "item": "ars_nouveau:water_essence"
+      "item": "ars_nouveau:air_essence"
     }
   ],
   "reagent": {
-    "item": "ars_nouveau:arcanist_boots"
+    "item": "ars_nouveau:sorcerer_leggings"
   },
   "result": {
     "count": 1,
-    "id": "ars_elemental:aqua_boots"
+    "id": "ars_elemental:air_pants"
   },
   "sourceCost": 7000
 }

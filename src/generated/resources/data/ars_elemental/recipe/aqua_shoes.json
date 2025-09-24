@@ -15,11 +15,11 @@
     }
   ],
   "reagent": {
-    "item": "ars_nouveau:arcanist_boots"
+    "item": "ars_nouveau:sorcerer_boots"
   },
   "result": {
     "count": 1,
-    "id": "ars_elemental:aqua_boots"
+    "id": "ars_elemental:aqua_shoes"
   },
   "sourceCost": 7000
 }

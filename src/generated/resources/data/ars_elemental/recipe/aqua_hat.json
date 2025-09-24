@@ -15,7 +15,7 @@
     }
   ],
   "reagent": {
-    "tag": "ars_nouveau:magic_hood"
+    "item": "ars_nouveau:arcanist_hood"
   },
   "result": {
     "count": 1,

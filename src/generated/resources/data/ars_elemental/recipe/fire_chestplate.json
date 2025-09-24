@@ -8,18 +8,18 @@
       "item": "minecraft:netherite_ingot"
     },
     {
-      "item": "ars_nouveau:water_essence"
+      "item": "ars_nouveau:fire_essence"
     },
     {
-      "item": "ars_nouveau:water_essence"
+      "item": "ars_nouveau:fire_essence"
     }
   ],
   "reagent": {
-    "item": "ars_nouveau:arcanist_boots"
+    "item": "ars_nouveau:battlemage_robes"
   },
   "result": {
     "count": 1,
-    "id": "ars_elemental:aqua_boots"
+    "id": "ars_elemental:fire_chestplate"
   },
   "sourceCost": 7000
 }
