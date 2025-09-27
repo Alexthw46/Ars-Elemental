@@ -59,18 +59,13 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
-import com.hollingsworth.arsnouveau.setup.registry.BannerRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -79,7 +74,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static alexthw.ars_elemental.ArsElemental.prefix;
 import static com.alexthw.sauce.api.item.IElementalArmor.damageResistances;
 import static com.alexthw.sauce.registry.ModRegistry.E_TOME_CASTER;
 import static com.hollingsworth.arsnouveau.api.registry.ParticleTimelineRegistry.TIMELINE_DF;
@@ -160,12 +154,11 @@ public class ArsNouveauRegistry {
         register(EffectNullify.INSTANCE);
     }
 
-    public static final ResourceKey<BannerPattern> ANIMA_PATTERN = createBannerPattern("anima");
-
     public static void registerRitual(AbstractRitual ritual) {
         RitualRegistry.registerRitual(ritual);
     }
 
+    @Deprecated
     public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
 
     //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
@@ -356,11 +349,5 @@ public class ArsNouveauRegistry {
 
     }
 
-    private static ResourceKey<BannerPattern> createBannerPattern(String name) {
-        return ResourceKey.create(Registries.BANNER_PATTERN, prefix(name));
-    }
 
-    public static void bootstrapPatterns(BootstrapContext<BannerPattern> bannerPatternBootstrapContext) {
-        BannerRegistry.register(bannerPatternBootstrapContext, ANIMA_PATTERN);
-    }
 }

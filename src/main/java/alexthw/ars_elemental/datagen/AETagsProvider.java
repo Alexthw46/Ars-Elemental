@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ArsNouveauRegistry;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
@@ -21,8 +20,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.*;
+import net.minecraft.data.tags.BiomeTagsProvider;
+import net.minecraft.data.tags.DamageTypeTagsProvider;
+import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
@@ -53,7 +56,6 @@ import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModEntities.*;
 import static com.alexthw.sauce.registry.SauceTags.*;
-import static com.hollingsworth.arsnouveau.common.datagen.BannerTagsProvider.bannerTag;
 import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
 
 public class AETagsProvider {
@@ -364,14 +366,4 @@ public class AETagsProvider {
         }
     }
 
-    public static class AEBannerTagsProvider extends BannerPatternTagsProvider {
-        public AEBannerTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(output, provider, ArsElemental.MODID, existingFileHelper);
-        }
-
-        @Override
-        protected void addTags(HolderLookup.@NotNull Provider provider) {
-            tag(bannerTag).addOptional(ArsNouveauRegistry.ANIMA_ICON.location());
-        }
-    }
 }
