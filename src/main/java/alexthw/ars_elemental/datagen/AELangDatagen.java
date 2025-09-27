@@ -150,6 +150,8 @@ public class AELangDatagen extends LanguageProvider {
         add("effect.ars_elemental.venom.description", "The target is poisoned with a deadly venom and takes more damage from poison spores.");
         add("effect.ars_elemental.frozen", "Frozen");
         add("effect.ars_elemental.frozen.description", "The target is frozen and can't heal, next fire damage taken is increased but dispels the effect.");
+        add("effect.ars_elemental.repel", "Repelled");
+        add("effect.ars_elemental.repel.description", "The target is repelled from one or more places by a magic force.");
         add("enchantment.ars_elemental.mirror_shield", "Spell Reflection");
         add("enchantment.ars_elemental.mirror_shield.desc", "Shield have a chance to reflect projectile spells");
         add("enchantment.ars_elemental.soulbound", "Soulbound");
