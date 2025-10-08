@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "berries=false": {
+      "model": "ars_elemental:block/source_vines"
+    },
+    "berries=true": {
+      "model": "ars_elemental:block/source_vines_lit"
+    }
+  }
+}

@@ -216,7 +216,7 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.lens.deceleration", "Decrease the speed of the redirected projectile.");
         add("ars_elemental.lens.pierce", "Makes the redirected projectile pierce through more blocks/entities if source is supplied to the prism.");
         add("ars_elemental.lens.chaining", "Adds the glyphs inscribed on the lens to redirected projectiles.");
-        add("ars_elemental.page.armor_set.wip", "Note: Since the Armor Rework requires a lot of assets work, the light and heavy elemental armors variants won't be ready for 1.19, so the 'medium' elemental armors can be crafted will all three types. Upgrading will keep enchants and threads, but requires the base armor to be at tier 3.");
+        add("ars_elemental.page.armor_set.wip", "Note: Since the Armor Rework requires a lot of assets work, the light and heavy elemental armors variants still uses the medium assets. Upgrading will keep enchants and threads, but requires the base armor to be at tier 3.");
         add("ars_elemental.armor_set.fire_light", "Pyromaniac's Set");
         add("ars_elemental.armor_set.fire", "Pyromancer's Set");
         add("ars_elemental.armor_set.fire_heavy", "Netherguard's Set");

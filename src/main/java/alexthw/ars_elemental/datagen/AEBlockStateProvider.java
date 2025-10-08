@@ -37,6 +37,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
         takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
         takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
         takeAll(blocks, b -> b.get() instanceof LeavesBlock);
+        takeAll(blocks, b -> b.get() instanceof CaveVinesBlock || b.get() instanceof CaveVinesPlantBlock).forEach(this::caveVines);
         takeAll(blocks, b -> b.get() instanceof SaplingBlock);
         takeAll(blocks, b -> b.get() instanceof ArchfruitPod);
         takeAll(blocks, b -> b.get() instanceof SporeBlossomGround);
@@ -45,7 +46,7 @@ public class AEBlockStateProvider extends BlockStateProvider {
     }
 
     public void registerOnlyState(DeferredHolder<Block, ? extends Block> obj) {
-        simpleBlock(obj.get(), new ModelFile.UncheckedModelFile(prefix("block/"+ obj.getId().getPath())));
+        simpleBlock(obj.get(), new ModelFile.UncheckedModelFile(prefix("block/" + obj.getId().getPath())));
     }
 
     public void slabBlock(DeferredHolder<Block, ? extends Block> blockRegistryObject) {
@@ -62,6 +63,17 @@ public class AEBlockStateProvider extends BlockStateProvider {
         String name = blockRegistryObject.getId().getPath();
         String baseName = name.substring(0, name.length() - 7);
         stairsBlock((StairBlock) blockRegistryObject.get(), prefix("block/" + baseName));
+    }
+
+    public void caveVines(DeferredHolder<Block, ? extends net.minecraft.world.level.block.Block> blockRegistryObject) {
+        String name = blockRegistryObject.getId().getPath();
+
+        ModelFile normal = models().cross(name, modLoc("block/" + name)).renderType("cutout");
+        ModelFile lit = models().cross(name + "_lit", modLoc("block/" + name + "_lit")).renderType("cutout");
+
+        getVariantBuilder(blockRegistryObject.get())
+                .partialState().with(CaveVinesBlock.BERRIES, false).modelForState().modelFile(normal).addModel()
+                .partialState().with(CaveVinesBlock.BERRIES, true).modelForState().modelFile(lit).addModel();
     }
 
     public void basicBlock(DeferredHolder<Block, ? extends net.minecraft.world.level.block.Block> blockRegistryObject) {

@@ -1,9 +1,9 @@
 {
-  "feature": "minecraft:forest_flowers",
+  "feature": "ars_elemental:sourcestone_formation",
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 5
+      "chance": 2
     },
     {
       "type": "minecraft:in_square"
@@ -17,19 +17,6 @@
         },
         "min_inclusive": {
           "above_bottom": 0
-        }
-      }
-    },
-    {
-      "type": "minecraft:count",
-      "count": {
-        "type": "minecraft:clamped",
-        "max_inclusive": 1,
-        "min_inclusive": 0,
-        "source": {
-          "type": "minecraft:uniform",
-          "max_inclusive": 1,
-          "min_inclusive": -3
         }
       }
     },

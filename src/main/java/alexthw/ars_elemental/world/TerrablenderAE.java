@@ -55,7 +55,7 @@ public class TerrablenderAE {
                         .humidity(ParameterUtils.Humidity.FULL_RANGE)
                         .continentalness(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
                         .erosion(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_1, ParameterUtils.Erosion.EROSION_2)
-                        .depth(Climate.Parameter.span(-1.0F, 0.2F))
+                        .depth(Climate.Parameter.span(-1.0F, 0.1F))
                         .weirdness(Climate.Parameter.span(-1.0F, -0.4F), Climate.Parameter.span(0.4F, 1.0F))
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.FLASHING_FOREST_KEY));
 
@@ -64,21 +64,31 @@ public class TerrablenderAE {
                         .temperature(ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM, ParameterUtils.Temperature.HOT)
                         .humidity(ParameterUtils.Humidity.ARID, ParameterUtils.Humidity.DRY, ParameterUtils.Humidity.NEUTRAL)
                         .continentalness(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
-                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_5))
+                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_2, ParameterUtils.Erosion.EROSION_5))
                         .depth(Climate.Parameter.span(-1.0F, 0.2F))
                         .weirdness(Climate.Parameter.span(-0.56666666F, 0.56666666F))
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.BLAZING_FOREST_KEY));
 
                 // Flourishing Forest is a biome where warmth and humidity are dominant, more frequent flowers and lush vegetation
                 new ParameterUtils.ParameterPointListBuilder()
-                        .temperature(ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
+                        .temperature(ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
                         .humidity(ParameterUtils.Humidity.NEUTRAL, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.HUMID)
                         .continentalness(ParameterUtils.Continentalness.INLAND)
                         .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_4))
-                        .depth(Climate.Parameter.span(-0.4F, 0.8F))
+                        .depth(Climate.Parameter.span(-0.4F, 0.3F))
                         .weirdness(Climate.Parameter.span(-0.4F, 0.4F))
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.FLOURISHING_FOREST_KEY));
 
+
+                // Vexing Caves is an underground biome with large plateaus to give room for vegetation, more frequent wilden mob spawns
+                new ParameterUtils.ParameterPointListBuilder()
+                        .temperature(ParameterUtils.Temperature.FROZEN, ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL)
+                        .humidity(ParameterUtils.Humidity.FULL_RANGE)
+                        .continentalness(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
+                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_3))
+                        .depth(Climate.Parameter.span(0.05F, .80F))
+                        .weirdness(ParameterUtils.Weirdness.FULL_RANGE)
+                        .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.VEXING_CAVES_KEY));
                 // Add our points to the mapper
                 builder.build().forEach(mapper);
             }
@@ -90,11 +100,11 @@ public class TerrablenderAE {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK);
 
     public static SurfaceRules.RuleSource makeRules() {
-        SurfaceRules.ConditionSource aboveOrHighUnderground = SurfaceRules.yBlockCheck(VerticalAnchor.aboveBottom(64 + 16), 0);
+        SurfaceRules.ConditionSource aboveOrHighUnderground = SurfaceRules.yBlockCheck(VerticalAnchor.aboveBottom(6), 0);
         SurfaceRules.RuleSource grassSurface = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(aboveOrHighUnderground, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, GRASS_BLOCK)),
                 SurfaceRules.ifTrue(aboveOrHighUnderground, SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT)));
-        return SurfaceRules.ifTrue(SurfaceRules.isBiome(ModWorldgen.Biomes.FLOURISHING_FOREST_KEY), grassSurface);
+        return SurfaceRules.ifTrue(SurfaceRules.isBiome(ModWorldgen.Biomes.FLOURISHING_FOREST_KEY, ModWorldgen.Biomes.VEXING_CAVES_KEY), grassSurface);
     }
 
     private static SurfaceRules.RuleSource makeStateRule(Block block) {

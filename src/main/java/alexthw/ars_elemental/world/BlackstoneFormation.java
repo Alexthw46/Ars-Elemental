@@ -69,6 +69,7 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
             // Gradually adjust the radius for the next layer with some randomness
             basePos = basePos.below();
             currentRadius += random.nextBoolean() ? 1 : 0; // Occasionally expand radius for a natural look
+            if (basePos.getY() <= 0) break; // Prevent going too low
         }
 
 

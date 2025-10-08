@@ -3,14 +3,15 @@
     "air": [
       "minecraft:cave",
       "minecraft:cave_extra_underground",
-      "minecraft:canyon"
+      "minecraft:canyon",
+      "ars_elemental:vexing_cave_carver"
     ]
   },
-  "downfall": 0.6,
+  "downfall": 0.5,
   "effects": {
-    "fog_color": 12638463,
-    "foliage_color": 30464,
-    "grass_color": 1346066,
+    "fog_color": 14386175,
+    "foliage_color": 8535186,
+    "grass_color": 6566546,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -21,11 +22,11 @@
       "max_delay": 24000,
       "min_delay": 12000,
       "replace_current_music": false,
-      "sound": "ars_nouveau:aria_biblio"
+      "sound": "ars_nouveau:firel_the_wild_hunt"
     },
-    "sky_color": 7978751,
-    "water_color": 7978751,
-    "water_fog_color": 329011
+    "sky_color": 10979583,
+    "water_color": 12080623,
+    "water_fog_color": 11832560
   },
   "features": [
     [],
@@ -35,7 +36,7 @@
     ],
     [
       "minecraft:amethyst_geode",
-      "minecraft:forest_rock",
+      "ars_elemental:sourcestone_formation_placed",
       "ars_nouveau:placed_lights"
     ],
     [
@@ -74,7 +75,8 @@
       "minecraft:ore_gold_extra",
       "minecraft:disk_sand",
       "minecraft:disk_clay",
-      "minecraft:disk_gravel"
+      "minecraft:disk_gravel",
+      "ars_elemental:ore_sourcestone_placed"
     ],
     [],
     [
@@ -83,25 +85,22 @@
     ],
     [
       "minecraft:glow_lichen",
-      "minecraft:bamboo_light",
       "minecraft:patch_large_fern",
-      "ars_elemental:cluster_flourishing_archwood",
-      "ars_elemental:sparse_jungle_trees",
-      "minecraft:flower_warm",
-      "minecraft:patch_grass_jungle",
-      "minecraft:lush_caves_ceiling_vegetation",
-      "minecraft:cave_vines",
       "minecraft:rooted_azalea_tree",
-      "minecraft:spore_blossom",
-      "minecraft:classic_vines_cave_feature",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
       "minecraft:patch_sugar_cane",
       "minecraft:patch_pumpkin",
+      "ars_elemental:cluster_vexing_archwood",
       "ars_nouveau:mojang_grass",
       "ars_nouveau:mojang_flowers",
       "ars_elemental:mojang_forest_flowers",
-      "ars_elemental:scattered_blossoms"
+      "ars_elemental:ceiling_berry_cave",
+      "ars_elemental:placed_berry_bush_cave",
+      "ars_elemental:placed_lights_underground",
+      "ars_elemental:cave_vexing_archwood",
+      "ars_elemental:short_vexing_archwood",
+      "ars_elemental:sourcestone_formation_placed"
     ],
     [
       "minecraft:freeze_top_layer"
@@ -110,14 +109,7 @@
   "has_precipitation": true,
   "spawn_costs": {},
   "spawners": {
-    "ambient": [
-      {
-        "type": "minecraft:bat",
-        "maxCount": 8,
-        "minCount": 8,
-        "weight": 10
-      }
-    ],
+    "ambient": [],
     "axolotls": [],
     "creature": [
       {
@@ -139,46 +131,10 @@
         "weight": 2
       },
       {
-        "type": "minecraft:sheep",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 12
-      },
-      {
-        "type": "minecraft:pig",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 10
-      },
-      {
-        "type": "minecraft:chicken",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 10
-      },
-      {
-        "type": "minecraft:cow",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 8
-      },
-      {
-        "type": "minecraft:rabbit",
-        "maxCount": 3,
-        "minCount": 2,
-        "weight": 6
-      },
-      {
-        "type": "ars_nouveau:flourishing_weald_walker",
+        "type": "ars_nouveau:vexing_weald_walker",
         "maxCount": 3,
         "minCount": 1,
         "weight": 10
-      },
-      {
-        "type": "minecraft:panda",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 6
       }
     ],
     "misc": [],
@@ -186,20 +142,14 @@
       {
         "type": "minecraft:spider",
         "maxCount": 4,
-        "minCount": 4,
-        "weight": 60
-      },
-      {
-        "type": "minecraft:bogged",
-        "maxCount": 4,
         "minCount": 2,
-        "weight": 60
+        "weight": 50
       },
       {
         "type": "minecraft:zombie",
         "maxCount": 4,
-        "minCount": 4,
-        "weight": 20
+        "minCount": 2,
+        "weight": 55
       },
       {
         "type": "minecraft:zombie_villager",
@@ -210,20 +160,20 @@
       {
         "type": "minecraft:skeleton",
         "maxCount": 4,
-        "minCount": 4,
-        "weight": 60
+        "minCount": 2,
+        "weight": 50
       },
       {
         "type": "minecraft:creeper",
         "maxCount": 4,
-        "minCount": 4,
-        "weight": 60
+        "minCount": 2,
+        "weight": 50
       },
       {
         "type": "minecraft:slime",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 40
+        "weight": 100
       },
       {
         "type": "minecraft:enderman",
@@ -238,22 +188,27 @@
         "weight": 5
       },
       {
-        "type": "ars_elemental:earth_mage",
+        "type": "ars_nouveau:wilden_hunter",
+        "maxCount": 5,
+        "minCount": 3,
+        "weight": 100
+      },
+      {
+        "type": "ars_nouveau:wilden_stalker",
         "maxCount": 3,
         "minCount": 1,
-        "weight": 4
-      }
-    ],
-    "underground_water_creature": [
+        "weight": 100
+      },
       {
-        "type": "minecraft:glow_squid",
-        "maxCount": 6,
-        "minCount": 4,
-        "weight": 10
+        "type": "ars_nouveau:wilden_guardian",
+        "maxCount": 5,
+        "minCount": 2,
+        "weight": 80
       }
     ],
+    "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 0.7
+  "temperature": 0.5
 }

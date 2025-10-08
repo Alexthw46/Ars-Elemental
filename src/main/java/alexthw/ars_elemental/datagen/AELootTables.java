@@ -3,6 +3,7 @@ package alexthw.ars_elemental.datagen;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.SummonBlock;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -13,6 +14,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CaveVines;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -72,6 +74,7 @@ public class AELootTables extends LootTableProvider {
             Set<DeferredHolder<Block, ? extends Block>> blocks = new HashSet<>(ModItems.BLOCKS.getEntries());
             Datagen.takeAll(blocks, b -> b.get() instanceof LeavesBlock);
             Datagen.takeAll(blocks, b -> !(b.get() instanceof SummonBlock)).forEach(b -> registerDropSelf(b.get()));
+            Datagen.takeAll(blocks, b -> b.get() instanceof CaveVines).forEach(b -> registerDropBush(b.get()));
             registerLeavesAndSticks(ModItems.FLASHING_LEAVES.get(), ModItems.FLASHING_SAPLING.get());
 
             list.add(ModItems.MERMAID_ROCK.get());
@@ -94,6 +97,18 @@ public class AELootTables extends LootTableProvider {
         public void registerDropSelf(Block block) {
             list.add(block);
             dropSelf(block);
+        }
+
+        public void registerDropBush(Block bush) {
+            list.add(bush);
+            this.add(bush, block -> LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1.0F))
+                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(bush)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CaveVines.BERRIES, true)))
+                            .add(LootItem.lootTableItem(BlockRegistry.SOURCEBERRY_BUSH.get()))
+                    )
+            );
         }
 
         @Override

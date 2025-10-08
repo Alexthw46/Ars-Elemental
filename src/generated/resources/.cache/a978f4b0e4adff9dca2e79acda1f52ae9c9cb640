@@ -1,4 +1,10 @@
-// 1.21.1	2025-01-05T18:02:21.8297052	Ars Elemental BlockStates
+// 1.21.1	2025-10-05T20:55:11.9556175	Ars Elemental BlockStates
 0360f7b500ef4f89514f3e5499f393877b03b1b6 assets/ars_elemental/blockstates/potted_sparkflower.json
 c8a2962ce1c3c7b2de3fe042005f06c20d2155df assets/ars_elemental/blockstates/potted_yellow_archwood_sapling.json
+add355f1bb23693f68e1752191ae76c9cf7eb85e assets/ars_elemental/blockstates/source_vines.json
+80a493597556f3266f571f3c557b8a466d56c7b4 assets/ars_elemental/blockstates/source_vines_plant.json
 c2473c0bc5ba115bf2f5b8f9c535ffb543844997 assets/ars_elemental/blockstates/sparkflower.json
+530246035b842e1b47be6ae324492c071835e70a assets/ars_elemental/models/block/source_vines.json
+bf56810de47e9a9fd9010425ed626e7a8e163400 assets/ars_elemental/models/block/source_vines_lit.json
+e143208678a05f2588fdd1de11198ead7a377e33 assets/ars_elemental/models/block/source_vines_plant.json
+3dfade2f57abfe877de2503e68240e7118537458 assets/ars_elemental/models/block/source_vines_plant_lit.json

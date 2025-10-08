@@ -31,6 +31,7 @@ public class AEWorldgenProvider extends DatapackBuiltinEntriesProvider {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, ModWorldgen::bootstrapConfiguredFeatures)
             .add(Registries.PLACED_FEATURE, ModWorldgen::bootstrapPlacedFeatures)
+            .add(Registries.CONFIGURED_CARVER, ModWorldgen::bootstrapCaveCarvers)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, AEWorldgenProvider::generateBiomeModifiers)
             .add(Registries.BIOME, ModWorldgen.Biomes::registerBiomes);
 

@@ -30,27 +30,41 @@ import com.hollingsworth.arsnouveau.common.items.ModItem;
 import com.hollingsworth.arsnouveau.common.items.RendererBlockItem;
 import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.common.world.tree.MagicTree;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -59,12 +73,14 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.LOG_PROP;
 import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.SAP_PROP;
+import static net.minecraft.world.level.block.CaveVines.BERRIES;
 
 @SuppressWarnings("SameParameterValue")
 public class ModItems {
@@ -86,6 +102,8 @@ public class ModItems {
     public static final DeferredHolder<Block, FlowerPotBlock> POT_SPARKFLOWER;
 
     public static final DeferredHolder<Block, ? extends Block> GROUND_BLOSSOM;
+    public static final DeferredHolder<Block, CaveVinesBlock> SOURCE_VINES;
+    public static final DeferredHolder<Block, CaveVinesPlantBlock> SOURCE_VINES_PLANT;
 
     public static final DeferredHolder<Block, ? extends Block> WATER_UPSTREAM_BLOCK;
     public static final DeferredHolder<Block, ? extends Block> LAVA_UPSTREAM_BLOCK;
@@ -293,6 +311,79 @@ public class ModItems {
         SPARKFLOWER = addBlock("sparkflower", () -> new FlowerBlock(ModPotions.SHOCKED_EFFECT, 200, blockProps(Blocks.POPPY, MapColor.COLOR_YELLOW).lightLevel(b -> 8).sound(SoundType.GRASS).noOcclusion()));
         POT_SPARKFLOWER = BLOCKS.register("potted_sparkflower", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, SPARKFLOWER, blockProps(Blocks.FLOWER_POT, MapColor.COLOR_YELLOW).instabreak().noOcclusion()));
 
+
+        // Source Vines
+        SOURCE_VINES = BLOCKS.register(
+                "source_vines",
+                () -> new CaveVinesBlock(
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.PLANT)
+                                .randomTicks()
+                                .noCollission()
+                                .lightLevel(CaveVines.emission(14))
+                                .instabreak()
+                                .sound(SoundType.CAVE_VINES)
+                                .pushReaction(PushReaction.DESTROY)
+                ) {
+
+                    @Override
+                    protected @NotNull Block getBodyBlock() {
+                        return SOURCE_VINES_PLANT.get();
+                    }
+
+                    @Override
+                    public @NotNull ItemStack getCloneItemStack(@NotNull BlockState state, @NotNull HitResult target, @NotNull LevelReader level, @NotNull BlockPos pos, @NotNull Player player) {
+                        return BlockRegistry.SOURCEBERRY_BUSH.get().asItem().getDefaultInstance();
+                    }
+
+                    @Override
+                    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState p_152980_, @NotNull Level p_152981_, @NotNull BlockPos p_152982_, @NotNull Player p_152983_, @NotNull BlockHitResult p_152985_) {
+                        return harvestBerry(p_152983_, p_152980_, p_152981_, p_152982_);
+                    }
+                }
+        );
+        SOURCE_VINES_PLANT = BLOCKS.register(
+                "source_vines_plant",
+                () -> new CaveVinesPlantBlock(
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.PLANT)
+                                .noCollission()
+                                .lightLevel(CaveVines.emission(14))
+                                .instabreak()
+                                .sound(SoundType.CAVE_VINES)
+                                .pushReaction(PushReaction.DESTROY)
+                ) {
+
+                    @Override
+                    protected @NotNull GrowingPlantHeadBlock getHeadBlock() {
+                        return SOURCE_VINES.get();
+                    }
+
+                    @Override
+                    public @NotNull ItemStack getCloneItemStack(@NotNull BlockState state, @NotNull HitResult target, @NotNull LevelReader level, @NotNull BlockPos pos, @NotNull Player player) {
+                        return BlockRegistry.SOURCEBERRY_BUSH.get().asItem().getDefaultInstance();
+                    }
+
+                    @Override
+                    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState p_152980_, @NotNull Level p_152981_, @NotNull BlockPos p_152982_, @NotNull Player p_152983_, @NotNull BlockHitResult p_152985_) {
+                        return harvestBerry(p_152983_, p_152980_, p_152981_, p_152982_);
+                    }
+                }
+        );
+    }
+
+    static InteractionResult harvestBerry(@Nullable Entity entity, BlockState state, Level level, BlockPos pos) {
+        if (state.getValue(BERRIES)) {
+            Block.popResource(level, pos, BlockRegistry.SOURCEBERRY_BUSH.get().asItem().getDefaultInstance());
+            float f = Mth.randomBetween(level.random, 0.8F, 1.2F);
+            level.playSound(null, pos, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, f);
+            BlockState blockstate = state.setValue(BERRIES, Boolean.FALSE);
+            level.setBlock(pos, blockstate, 2);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else {
+            return InteractionResult.PASS;
+        }
     }
 
     static Item.Properties itemProps() {

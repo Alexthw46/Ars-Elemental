@@ -44,6 +44,8 @@ public class ArchwoodForestRitual extends ConjureBiomeRitual {
                 biome = ModWorldgen.Biomes.CASCADING_FOREST_KEY;
             } else if (pod.get() == BlockRegistry.MENDOSTEEN_POD.get()) {
                 biome = ModWorldgen.Biomes.FLOURISHING_FOREST_KEY;
+            } else if (pod.get() == BlockRegistry.BASTION_POD.get()) {
+                biome = ModWorldgen.Biomes.VEXING_CAVES_KEY;
             } else if (pod.get() == ModItems.FLASHING_POD.get()) {
                 biome = ModWorldgen.Biomes.FLASHING_FOREST_KEY;
             }
