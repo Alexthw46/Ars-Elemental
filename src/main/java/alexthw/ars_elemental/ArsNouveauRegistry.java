@@ -67,8 +67,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -190,31 +190,31 @@ public class ArsNouveauRegistry {
     private static void addPerkSlots() {
 
         ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
-        List<PerkSlot> perkSlots = Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE);
         for (ArmorSet set : medium_armors) {
-            PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots, perkSlots, perkSlots));
-        }
-        if (FMLEnvironment.production && !ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get()) {
-            return;
+            PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
         }
         ArmorSet[] heavy_armors = {ModItems.AIR_ARMOR_H, ModItems.FIRE_ARMOR_H, ModItems.EARTH_ARMOR_H, ModItems.WATER_ARMOR_H};
         for (ArmorSet set : heavy_armors) {
-            PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots, perkSlots, perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
+            PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
         }
         ArmorSet[] light_armors = {ModItems.AIR_ARMOR_L, ModItems.FIRE_ARMOR_L, ModItems.EARTH_ARMOR_L, ModItems.WATER_ARMOR_L};
         for (ArmorSet set : light_armors) {
-            PerkRegistry.registerPerkProvider(set.getHat(), List.of(perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getChest(), List.of(perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getLegs(), List.of(perkSlots, perkSlots));
-            PerkRegistry.registerPerkProvider(set.getBoots(), List.of(perkSlots, perkSlots));
+            PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
         }
 
+    }
+
+    private static @NotNull List<List<PerkSlot>> makePerkList(List<PerkSlot> perkSlots) {
+        return List.of(perkSlots, perkSlots, perkSlots, perkSlots);
     }
 
     public static void addLights() {

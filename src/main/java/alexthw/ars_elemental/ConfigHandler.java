@@ -193,7 +193,7 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Beta Features");
-            ENABLE_ARMOR_REWORK = builder.comment("Enable the wip armor rework, which changes how elemental armors work by adding an heavy and light variant. Requires a restart to take effect.").define("enableArmorReworkTest", true);
+            ENABLE_ARMOR_REWORK = builder.comment("Enable the wip armor rework, which changes how elemental armors work by adding an heavy and light variant. Requires a restart to take effect.").define("enableArmorReworkTest", false);
             builder.pop();
         }
 

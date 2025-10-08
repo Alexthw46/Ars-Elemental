@@ -67,7 +67,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -134,15 +133,15 @@ public class ModItems {
     public static final ArmorSet EARTH_ARMOR = new ArmorSet.Medium("earth", SpellSchools.ELEMENTAL_EARTH);
     public static final ArmorSet WATER_ARMOR = new ArmorSet.Medium("aqua", SpellSchools.ELEMENTAL_WATER);
 
-    public static ArmorSet FIRE_ARMOR_L;
-    public static ArmorSet AIR_ARMOR_L;
-    public static ArmorSet EARTH_ARMOR_L;
-    public static ArmorSet WATER_ARMOR_L;
+    public static final ArmorSet FIRE_ARMOR_L;
+    public static final ArmorSet AIR_ARMOR_L;
+    public static final ArmorSet EARTH_ARMOR_L;
+    public static final ArmorSet WATER_ARMOR_L;
 
-    public static ArmorSet FIRE_ARMOR_H;
-    public static ArmorSet AIR_ARMOR_H;
-    public static ArmorSet EARTH_ARMOR_H;
-    public static ArmorSet WATER_ARMOR_H;
+    public static final ArmorSet FIRE_ARMOR_H;
+    public static final ArmorSet AIR_ARMOR_H;
+    public static final ArmorSet EARTH_ARMOR_H;
+    public static final ArmorSet WATER_ARMOR_H;
 
     public static final DeferredHolder<Item, SchoolCasterTome> FIRE_CTOME;
     public static final DeferredHolder<Item, SchoolCasterTome> AIR_CTOME;
@@ -192,16 +191,15 @@ public class ModItems {
 
     static {
 
-        if (!FMLEnvironment.production || ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get()) {
-            WATER_ARMOR_H = new ArmorSet.Heavy("aqua", SpellSchools.ELEMENTAL_WATER);
-            EARTH_ARMOR_H = new ArmorSet.Heavy("earth", SpellSchools.ELEMENTAL_EARTH);
-            AIR_ARMOR_H = new ArmorSet.Heavy("air", SpellSchools.ELEMENTAL_AIR);
-            WATER_ARMOR_L = new ArmorSet.Light("aqua", SpellSchools.ELEMENTAL_WATER);
-            EARTH_ARMOR_L = new ArmorSet.Light("earth", SpellSchools.ELEMENTAL_EARTH);
-            AIR_ARMOR_L = new ArmorSet.Light("air", SpellSchools.ELEMENTAL_AIR);
-            FIRE_ARMOR_L = new ArmorSet.Light("fire", SpellSchools.ELEMENTAL_FIRE);
-            FIRE_ARMOR_H = new ArmorSet.Heavy("fire", SpellSchools.ELEMENTAL_FIRE);
-        }
+        WATER_ARMOR_H = new ArmorSet.Heavy("aqua", SpellSchools.ELEMENTAL_WATER);
+        EARTH_ARMOR_H = new ArmorSet.Heavy("earth", SpellSchools.ELEMENTAL_EARTH);
+        AIR_ARMOR_H = new ArmorSet.Heavy("air", SpellSchools.ELEMENTAL_AIR);
+        WATER_ARMOR_L = new ArmorSet.Light("aqua", SpellSchools.ELEMENTAL_WATER);
+        EARTH_ARMOR_L = new ArmorSet.Light("earth", SpellSchools.ELEMENTAL_EARTH);
+        AIR_ARMOR_L = new ArmorSet.Light("air", SpellSchools.ELEMENTAL_AIR);
+        FIRE_ARMOR_L = new ArmorSet.Light("fire", SpellSchools.ELEMENTAL_FIRE);
+        FIRE_ARMOR_H = new ArmorSet.Heavy("fire", SpellSchools.ELEMENTAL_FIRE);
+
 
         SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.siren_shards")));
         FLASHJACK_SHARDS = ITEMS.register("flashjack_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.flashjack_shards")));

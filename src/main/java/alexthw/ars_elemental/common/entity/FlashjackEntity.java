@@ -90,6 +90,7 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     public static AttributeSupplier.@NotNull Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 36.0F).add(Attributes.FLYING_SPEED, 0.6F).add(Attributes.MOVEMENT_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 6.0F);
     }
+
     AnimationController<FlashjackEntity> actionController;
 
     public List<BlockPos> getTurrets() {
@@ -205,6 +206,11 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
                 var flash = new FlashLightning(this.level);
                 flash.setPos(this.getX(), this.getY(), this.getZ());
                 player.level().addFreshEntity(flash);
+            }
+
+            if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && stack.isEmpty()) {
+                this.setOrderedToSit(!this.isOrderedToSit());
+                return InteractionResult.sidedSuccess(this.level().isClientSide);
             }
         }
         return InteractionResult.PASS;
@@ -353,7 +359,7 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         if (storedPos != null && playerEntity.level().getBlockEntity(storedPos.pos()) instanceof RotatingTurretTile) {
             this.turrets.add(storedPos.pos());
             // result msg
-            playerEntity.sendSystemMessage(Component.translatable("flashjack.connect"));
+            playerEntity.sendSystemMessage(Component.translatable("ars_elemental.flashjack.connect"));
         }
 
         return IWandable.super.onFirstConnection(storedPos, face, storedEntity, playerEntity);
@@ -367,10 +373,10 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         if (storedEntity != null) {
             if (blacklist.contains(storedEntity.getType())) {
                 blacklist.remove(storedEntity.getType());
-                playerEntity.sendSystemMessage(Component.translatable("flashjack.deny.remove"));
+                playerEntity.sendSystemMessage(Component.translatable("ars_elemental.flashjack.deny.remove"));
             } else {
                 blacklist.add(storedEntity.getType());
-                playerEntity.sendSystemMessage(Component.translatable("flashjack.deny"));
+                playerEntity.sendSystemMessage(Component.translatable("ars_elemental.flashjack.deny"));
             }
         } else if (storedPos != null && !(playerEntity.level().getBlockEntity(storedPos.pos()) instanceof RotatingTurretTile)) {
             setHome(storedPos.pos());

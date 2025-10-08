@@ -127,6 +127,14 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         );
 
         recipes.add(builder()
+                .withResult(ModItems.FLASHJACK_CHARM.get())
+                .withReagent(ModItems.FLASHJACK_SHARDS.get())
+                .withPedestalItem(2, ItemsRegistry.AIR_ESSENCE)
+                .withPedestalItem(2, Items.GOLD_INGOT)
+                .build()
+        );
+
+        recipes.add(builder()
                 .withResult(ModItems.SPELL_HORN.get())
                 .withReagent(ItemsRegistry.WILDEN_HORN)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
@@ -300,14 +308,14 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withResult(new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5))
                 .withSourceCost(10000)
                 .withReagent(ItemsRegistry.WILDEN_TRIBUTE)
-                .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
-                .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
-                .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                 .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
-                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
                 .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
+                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
+                .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
                 .build()
         );
 

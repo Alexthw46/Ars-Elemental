@@ -1,5 +1,6 @@
 package alexthw.ars_elemental.documentation;
 
+import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -113,17 +114,17 @@ public class AEDocumentation {
                 .withCraftingPages(ModItems.EARTH_FOCUS.get())
         );
 
-        var sirenCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.SIREN_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.SIREN_ENTITY.get())).withTextPage("ars_elemental.page2.siren_charm"));
+        var sirenCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.SIREN_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.SIREN_ENTITY.get())).withTextPage("ars_elemental.page2.siren_charm").withCraftingPages());
 
-        var firenandoCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FIRENANDO_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FIRENANDO_ENTITY.get())));
+        var firenandoCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FIRENANDO_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FIRENANDO_ENTITY.get())).withCraftingPages());
 
-        var flashjackCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FLASHJACK_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FLASHJACK_ENTITY.get())));
+        var flashjackCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FLASHJACK_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FLASHJACK_ENTITY.get())).withCraftingPages());
 
-        addPage(new AEDocEntryBuilder(ARMOR, ModItems.MARK_OF_MASTERY.get()).withName("ars_elemental.title.elemental_upgrades").withIntroPage().withCraftingPages().withSortNum(5));
-        addArmorSet(ModItems.FIRE_ARMOR);
-        addArmorSet(ModItems.WATER_ARMOR);
-        addArmorSet(ModItems.AIR_ARMOR);
-        addArmorSet(ModItems.EARTH_ARMOR);
+        addPage(new AEDocEntryBuilder(ARMOR, ModItems.MARK_OF_MASTERY.get()).withIntroPage().withCraftingPages().withSortNum(5));
+        addArmorSet(ModItems.FIRE_ARMOR, ModItems.FIRE_ARMOR_L, ModItems.FIRE_ARMOR_H);
+        addArmorSet(ModItems.WATER_ARMOR, ModItems.WATER_ARMOR_L, ModItems.WATER_ARMOR_H);
+        addArmorSet(ModItems.AIR_ARMOR, ModItems.AIR_ARMOR_L, ModItems.AIR_ARMOR_H);
+        addArmorSet(ModItems.EARTH_ARMOR, ModItems.EARTH_ARMOR_L, ModItems.EARTH_ARMOR_H);
 
         addPage(new AEDocEntryBuilder(DocumentationRegistry.ITEMS, ModItems.ENCHANTER_BANGLE.get())
                 .withIntroPage()
@@ -143,18 +144,19 @@ public class AEDocumentation {
         );
     }
 
-    private static void addArmorSet(ArmorSet armorSet) {
-        registerEntry(ARMOR, new AEDocEntryBuilder(ARMOR, armorSet.getTranslationKey())
-                .withIcon(armorSet.getHat())
-                .withPage(TextEntry.create("ars_elemental.page.armor_set." + armorSet.getName(), armorSet.getTranslationKey()))
-                .withSortNum(10)
-                .withCraftingPages(armorSet.getHat())
-                .withCraftingPages(armorSet.getChest())
-                .withCraftingPages(armorSet.getLegs())
-                .withCraftingPages(armorSet.getBoots())
-                .build()
-        );
+    public static void addArmorSet(ArmorSet mediumSet, ArmorSet lightningSet, ArmorSet heavySet) {
+        DocEntryBuilder builder = new AEDocEntryBuilder(ARMOR, mediumSet.getTranslationKey())
+                .withIcon(mediumSet.getHat())
+                .withPage(TextEntry.create("ars_elemental.page.armor_set." + mediumSet.getName(), mediumSet.getTranslationKey()))
+                .withSortNum(10);
 
+        for (ArmorSet armorSet : ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get() ? new ArmorSet[]{mediumSet, lightningSet, heavySet} : new ArmorSet[]{mediumSet}) {
+            builder.withCraftingPages(armorSet.getHat())
+                    .withCraftingPages(armorSet.getChest())
+                    .withCraftingPages(armorSet.getLegs())
+                    .withCraftingPages(armorSet.getBoots());
+        }
+        registerEntry(ARMOR, builder.build());
     }
 
 

@@ -24,7 +24,7 @@ public class SpellBookUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
 
     @Override
     public RecipeType<NetheriteUpgradeRecipe> getRecipeType() {
-        return JeiArsExtraPlugin.SPELLBOOK_NETHERITE_TYPE;
+        return JeiElementalPlugin.SPELLBOOK_NETHERITE_TYPE;
     }
 
     @Override

@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-24T17:50:55.7059246	Ars Elemental Apparatus
+// 1.21.1	2025-10-08T17:32:15.8744488	Ars Elemental Apparatus
 59dd089a3501f291dd053dd81461a723b577d33e data/ars_elemental/recipe/air_bangle.json
 805a484f9698715df73c2ea2d924e3ebf8807ee8 data/ars_elemental/recipe/air_boots.json
 055ee2eaf11ac7c915f4088cdfeb4577c89c5fb5 data/ars_elemental/recipe/air_boots_heavy.json
@@ -60,8 +60,9 @@ cab6bf4548f6de1eb5ad12bc4aa08e31dc90572d data/ars_elemental/recipe/fire_boots.js
 e69e0d91cb3c3a34c51782ac91fcb33af5ad2569 data/ars_elemental/recipe/fire_robes.json
 2292c7b3451776e46a06ba99bc9552074867f9b0 data/ars_elemental/recipe/fire_shoes.json
 b62732d55f72240638c87f344ea07296065b8209 data/ars_elemental/recipe/fire_tunic.json
+2da144f50ffe33c0f017937e4cd4487dc8f330fc data/ars_elemental/recipe/flashjack_charm.json
 b2c0832acfa1644a5a2da5aac295a9ad4f5f7f13 data/ars_elemental/recipe/magma_upstream.json
-01ffc8974662b386217cd6c52f04c1acc77ecb72 data/ars_elemental/recipe/mark_of_mastery.json
+aa843a05130846e7258ea1fbdf7aca561784f12c data/ars_elemental/recipe/mark_of_mastery.json
 8ca27bc373bc3616d0a3c9403e420eafb4ab907c data/ars_elemental/recipe/mirror_shield_1.json
 2bed2484890dd34656c9ba6deac74b5ce73e2fa5 data/ars_elemental/recipe/mirror_shield_2.json
 2f291e3f46a25fab51866ef675646c138bc0e13b data/ars_elemental/recipe/mirror_shield_3.json

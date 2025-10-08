@@ -181,7 +181,7 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page1.firenando_charm", "The Flarecannon can be used as a wandering sentry, like the weald walkers. It will shoot flare homing projectiles at enemies and patrol around the area assigned using the dominion wand. Soul Sand and Magma blocks can be used to change appearance. If defeated, it can be reactivated with blaze powder or magma cream. Friends call it Firenando.");
         add("ars_elemental.page1.siren_charm", "Sirens are usually found near coral formations, jumping out of the water or following boats. You can befriend a wild mermaid by giving them a sea pickle, they will jump and leave behind few tokens. The siren charm can be used to summon a Siren and if used on Prismarine it will transform in a Siren Shrine. Tamed sirens can change colors if you give them kelp or corals.");
         add("ars_elemental.page2.siren_charm", "The Shrine will slowly generate fishing loot items over time, asking for source after each cycle. The number of items and chance of getting a treasure will increase if many different water animals and plants are near the Shrine. You should build an aquarium or pond around the Shrine, to let your sirens have fun. [Note: it will take some time to update the score].");
-        add("ars_elemental.page1.flashjack_charm", "Flashjacks are usually found in flashing archwood forests, hiding among the trees. You can befriend a wild flashjack by giving them a flashpine. In the current version, they don't have a fully implemented job yet.");
+        add("ars_elemental.page1.flashjack_charm", "Flashjacks are usually found in flashing archwood forests, hiding among the trees. You can befriend a wild flashjack by giving them a flashpine. In the current version, they don't have a fully implemented job yet but try to link them to a turret loaded with an attack spell in front of an horde, if you are curious.");
         add("ars_elemental.page1.advanced_prism", "Upgrade of the Spell Prism that can be adjusted to aim to a specific block. This prism also allows to equip a lens that modifies the redirected projectile, but can't be pushed by pistons. Use the dominion wand to aim the prism to a block, shift-click to remove the lens. Specific lens may require source whenever a projectile is redirected to extend the spell, their limits can be configured.");
         add("ars_elemental.page2.advanced_prism", "A Prism Lens can be applied to this advanced prisms to customize how the prism redirects projectiles. Arc and Homing lenses change the projectile to be an arc or homing projectile. Rainbow lens randomize the color of the projectile, while Acceleration and Deceleration lenses allow to adjust the speed.");
         add("ars_elemental.page3.advanced_prism", "Piercing and Chaining lenses require source to work. Chaining lens can be inscribed on a table and will append its glyphs on the projectile redirected, if valid. Cost scales linearly with the new spell created. Piercing lens will allow to increase the projectile piercing for a fixed cost.");
@@ -327,8 +327,8 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_nouveau.page6.weald_walker", "Cast launch followed by wind shear.");
         add("ars_elemental.page.spell_schools", "Schools of Magic");
         add("ars_elemental.page.schools", "Most glyphs have a school of magic associated with them. The elemental schools are Fire, Water, Air and Earth. The other schools are Manipulation, Conjuration, Abjuration and Anima. Magical equipment may be attuned to a specific school, giving bonuses or discounts to spells with glyphs of that school.");
-        add("ars_elemental.title.elemental_upgrades", "Elemental Armor Sets");
-        add("ars_elemental.page.elemental_upgrades", "Elemental Armor Sets are attuned to the four elemental schools of magic. Each piece of armor will amplify glyphs of its school, make them cheaper, and reduce damage related to its element. When all pieces are equipped, the chunk of damage reduced is converted into mana and a special effect may trigger.");
+        add("ars_elemental.title.mark_of_mastery", "Elemental Armor Sets");
+        add("ars_elemental.page1.mark_of_mastery", "Elemental Armor Sets are attuned to the four elemental schools of magic. Each piece of armor will amplify glyphs of its school, make them cheaper, and reduce damage related to its element. When all pieces are equipped, the chunk of damage reduced is converted into mana and a special effect may trigger.");
         add("ars_elemental.title.upstream_blocks", "Elemental Upstream Blocks");
         add("ars_elemental.page1.upstream_blocks", "Upstream blocks generate currents that let entities float upwards, or slowly descend while sneaking. You can stack multiple elevator blocks to increase the vertical range. The slipstream will need source to work, giving levitation or slowfall. The magmatic only works on entities in lava, while giving fire resistance, while the bubble will only work in water while restoring air.");
         add("ars_elemental.page.ignite", "Using Ignite on ice blocks will melt them. While wearing a Fire Focus, ignite will inflict Magic Burn. The magic flames can bypass the resistance to fire innate of some mobs or acquired from portions. It slightly decrease damage taken from earth, but let magic damage pierce through some of the armor.");
@@ -399,6 +399,10 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.particle.skull_spell", "Skulls");
         add("ars_nouveau.particle_config.gravity_field", "Gravity Well");
 
+        // Flashjack dominion wand
+        add("ars_elemental.flashjack.connect", "Flashjack connected to turret");
+        add("ars_elemental.flashjack.deny", "Flashjack will not target this entity");
+        add("ars_elemental.flashjack.deny.remove", "Flashjack will target this entity again");
         // Medium Armors
         add("item.ars_elemental.fire_hat", "Pyromancer's Hat");
         add("item.ars_elemental.fire_robes", "Pyromancer's Robes");
