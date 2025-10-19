@@ -1,8 +1,16 @@
 {
   "values": [
+    "ars_elemental:air_pants",
+    "ars_elemental:fire_pants",
+    "ars_elemental:earth_pants",
+    "ars_elemental:aqua_pants",
     "ars_elemental:air_leggings",
     "ars_elemental:fire_leggings",
     "ars_elemental:earth_leggings",
-    "ars_elemental:aqua_leggings"
+    "ars_elemental:aqua_leggings",
+    "ars_elemental:air_leggings_heavy",
+    "ars_elemental:fire_leggings_heavy",
+    "ars_elemental:earth_leggings_heavy",
+    "ars_elemental:aqua_leggings_heavy"
   ]
 }

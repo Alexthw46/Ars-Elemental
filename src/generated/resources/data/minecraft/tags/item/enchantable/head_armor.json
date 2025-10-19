@@ -1,8 +1,16 @@
 {
   "values": [
+    "ars_elemental:air_hood",
+    "ars_elemental:fire_hood",
+    "ars_elemental:earth_hood",
+    "ars_elemental:aqua_hood",
     "ars_elemental:air_hat",
     "ars_elemental:fire_hat",
     "ars_elemental:earth_hat",
-    "ars_elemental:aqua_hat"
+    "ars_elemental:aqua_hat",
+    "ars_elemental:air_helmet",
+    "ars_elemental:fire_helmet",
+    "ars_elemental:earth_helmet",
+    "ars_elemental:aqua_helmet"
   ]
 }

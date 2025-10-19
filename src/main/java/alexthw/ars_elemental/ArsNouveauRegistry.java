@@ -187,23 +187,24 @@ public class ArsNouveauRegistry {
         PerkRegistry.registerPerk(SummonPerk.INSTANCE);
     }
 
+    public static ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
+    public static ArmorSet[] heavy_armors = {ModItems.AIR_ARMOR_H, ModItems.FIRE_ARMOR_H, ModItems.EARTH_ARMOR_H, ModItems.WATER_ARMOR_H};
+    public static ArmorSet[] light_armors = {ModItems.AIR_ARMOR_L, ModItems.FIRE_ARMOR_L, ModItems.EARTH_ARMOR_L, ModItems.WATER_ARMOR_L};
+
     private static void addPerkSlots() {
 
-        ArmorSet[] medium_armors = {ModItems.AIR_ARMOR, ModItems.FIRE_ARMOR, ModItems.EARTH_ARMOR, ModItems.WATER_ARMOR};
         for (ArmorSet set : medium_armors) {
             PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
         }
-        ArmorSet[] heavy_armors = {ModItems.AIR_ARMOR_H, ModItems.FIRE_ARMOR_H, ModItems.EARTH_ARMOR_H, ModItems.WATER_ARMOR_H};
         for (ArmorSet set : heavy_armors) {
             PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
             PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
         }
-        ArmorSet[] light_armors = {ModItems.AIR_ARMOR_L, ModItems.FIRE_ARMOR_L, ModItems.EARTH_ARMOR_L, ModItems.WATER_ARMOR_L};
         for (ArmorSet set : light_armors) {
             PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));

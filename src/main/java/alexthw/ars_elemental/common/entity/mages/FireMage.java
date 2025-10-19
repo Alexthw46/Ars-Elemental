@@ -31,12 +31,11 @@ public class FireMage extends EntityMageBase {
      * 3: Homing Explosion
      */
     public FireMage(EntityType<? extends EntityMageBase> type, Level level) {
-        super(type, level);
+        super(type, level, SpellSchools.ELEMENTAL_FIRE);
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectIgnite.INSTANCE, EffectFlare.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectIgnite.INSTANCE, EffectConflagrate.INSTANCE));
         pSpells.add(new Spell(MethodArcProjectile.INSTANCE, AugmentSplit.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentPierce.INSTANCE, EffectFirework.INSTANCE, AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodHomingProjectile.INSTANCE, AugmentSensitive.INSTANCE, EffectExplosion.INSTANCE, AugmentAmplify.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE));
-        this.school = SpellSchools.ELEMENTAL_FIRE;
     }
 
     public FireMage(Level level) {

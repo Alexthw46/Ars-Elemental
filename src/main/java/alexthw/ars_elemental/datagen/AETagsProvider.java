@@ -54,6 +54,9 @@ import java.util.concurrent.CompletableFuture;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
+import static alexthw.ars_elemental.ArsNouveauRegistry.heavy_armors;
+import static alexthw.ars_elemental.ArsNouveauRegistry.light_armors;
+import static alexthw.ars_elemental.ArsNouveauRegistry.medium_armors;
 import static alexthw.ars_elemental.registry.ModEntities.*;
 import static com.alexthw.sauce.registry.SauceTags.*;
 import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
@@ -117,10 +120,15 @@ public class AETagsProvider {
             tag(STRIPPED_LOGS).add(ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get().asItem());
             tag(STRIPPED_WOODS).add(ModItems.FLASHING_ARCHWOOD_STRIPPED.get().asItem());
 
-            addArmorTags(ModItems.AIR_ARMOR);
-            addArmorTags(ModItems.FIRE_ARMOR);
-            addArmorTags(ModItems.EARTH_ARMOR);
-            addArmorTags(ModItems.WATER_ARMOR);
+            for (ArmorSet set : light_armors) {
+                addArmorTags(set);
+            }
+            for (ArmorSet set : medium_armors) {
+                addArmorTags(set);
+            }
+            for (ArmorSet set : heavy_armors) {
+                addArmorTags(set);
+            }
 
             Item[] books = {ModItems.AIR_CTOME.get(), ModItems.FIRE_CTOME.get(), ModItems.EARTH_CTOME.get(), ModItems.WATER_CTOME.get(), ModItems.NECRO_CTOME.get(), ModItems.SHAPERS_CTOME.get()};
             this.tag(ItemTags.LECTERN_BOOKS).add(books);

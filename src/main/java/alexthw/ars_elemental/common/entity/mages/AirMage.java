@@ -33,10 +33,11 @@ public class AirMage extends EntityMageBase {
      * <p>
      * ProjSpells
      * 1: Bouncing Lightning
+     * 2: Launch + Shear
+     * 3: Spark-Discharge
      */
     public AirMage(EntityType<? extends EntityMageBase> p_21368_, Level level) {
-        super(p_21368_, level);
-        this.school = SpellSchools.ELEMENTAL_AIR;
+        super(p_21368_, level, SpellSchools.ELEMENTAL_AIR);
         sSpells.add(new Spell(MethodSelf.INSTANCE, EffectLeap.INSTANCE, AugmentAmplify.INSTANCE, EffectBounce.INSTANCE));
         sSpells.add(new Spell(MethodSelf.INSTANCE, EffectOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectLaunch.INSTANCE, AugmentDurationDown.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE));

@@ -111,6 +111,8 @@ public class ModWorldgen {
 
 
     public static final ResourceKey<PlacedFeature> PLACED_MOJANK_FLOREST_FLOWERS = registerPlacedKey("mojang_forest_flowers");
+    public static final ResourceKey<PlacedFeature> PLACED_MOJANK_PUMPKINS = registerPlacedKey("mojang_pumpkins");
+    public static final ResourceKey<PlacedFeature> PLACED_MOJANK_SUGAR_CANE = registerPlacedKey("mojang_sugar_cane");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHORT_VEXING_TREE = registerConfKey("short_vexing_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CAVE_VEXING_TREE = registerConfKey("cave_vexing_tree");
     public static final ResourceKey<PlacedFeature> VEXING_CONFIGURED_CAVE = registerPlacedKey(FINAL_CAVE_VEXING);
@@ -479,6 +481,21 @@ public class ModWorldgen {
                 CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 1), 0, 1)),
                 BiomeFilter.biome())));
 
+        context.register(PLACED_MOJANK_PUMPKINS, new PlacedFeature(configured.get(VegetationFeatures.PATCH_PUMPKIN).get(),
+                List.of(RarityFilter.onAverageOnceEvery(300),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP,
+                        BiomeFilter.biome()
+                )));
+
+        context.register(PLACED_MOJANK_SUGAR_CANE, new PlacedFeature(configured.get(VegetationFeatures.PATCH_SUGAR_CANE).get(),
+                List.of(RarityFilter.onAverageOnceEvery(6),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP,
+                        BiomeFilter.biome())
+        ));
+
+
         context.register(SPARSE_JUNGLE, new PlacedFeature(configured.get(VegetationFeatures.TREES_JUNGLE).get(), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1F, 1))));
 
         context.register(CEILING_BERRY_CAVE, new PlacedFeature(configured.get(SOURCE_CAVE_VINES).get(),
@@ -604,7 +621,7 @@ public class ModWorldgen {
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_DEAD_BUSH);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_WATERLILY);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, POOLS_WITH_DRIP_PLACED);
-            BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
+            addDefaultExtraVegetation(biomeBuilder);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AquaticPlacements.WARM_OCEAN_VEGETATION)
                     .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AquaticPlacements.SEAGRASS_WARM)
                     .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AquaticPlacements.SEA_PICKLE);
@@ -655,7 +672,7 @@ public class ModWorldgen {
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CavePlacements.SPORE_BLOSSOM);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CavePlacements.CLASSIC_VINES);
             BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
-            BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
+            addDefaultExtraVegetation(biomeBuilder);
             biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, WorldgenRegistry.PLACED_LIGHTS);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldgenRegistry.PLACED_MOJANK_GRASS);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldgenRegistry.PLACED_MOJANK_FLOWERS);
@@ -726,6 +743,11 @@ public class ModWorldgen {
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldgenRegistry.PLACED_MOJANK_FLOWERS);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PLACED_MOJANK_FLOREST_FLOWERS);
             return biomeBuilder;
+        }
+
+        static void addDefaultExtraVegetation(BiomeGenerationSettings.Builder builder) {
+            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PLACED_MOJANK_PUMPKINS);
+            builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PLACED_MOJANK_SUGAR_CANE);
         }
 
         public static Biome vexingCaves(BootstrapContext<Biome> context) {

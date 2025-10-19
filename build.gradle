@@ -178,6 +178,10 @@ dependencies {
     localRuntime "curse.maven:cyanide-541676:5782674"
     localRuntime "curse.maven:placebo-283644:6751290"
     localRuntime "curse.maven:apothic-attributes-898963:6751650"
+
+    // Iris Shader tests
+    // localRuntime "curse.maven:irisshaders-455508:6661598"
+    localRuntime "curse.maven:sodium-394468:6382651"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

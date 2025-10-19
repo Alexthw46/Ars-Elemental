@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class WaterMage extends EntityMageBase {
+
     /**
      * ProjSpells
      * 1: WaterGrave
@@ -38,8 +39,7 @@ public class WaterMage extends EntityMageBase {
      * 1: Bubble Shield
      */
     public WaterMage(EntityType<? extends EntityMageBase> p_21368_, Level level) {
-        super(p_21368_, level);
-        this.school = SpellSchools.ELEMENTAL_WATER;
+        super(p_21368_, level, SpellSchools.ELEMENTAL_WATER);
         pSpells.add(new Spell(MethodHomingProjectile.INSTANCE, AugmentSensitive.INSTANCE, EffectBubble.INSTANCE, EffectWaterGrave.INSTANCE, AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectFreeze.INSTANCE, EffectColdSnap.INSTANCE, AugmentAmplify.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectBurst.INSTANCE, AugmentSensitive.INSTANCE, EffectSpike.INSTANCE, AugmentAmplify.INSTANCE));

@@ -60,13 +60,20 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     public int animationTimer = 0;
     public int currentAnim = -1;
 
+    public EntityMageBase(EntityType<? extends Monster> type, Level level, @Nullable SpellSchool school) {
+        this(type, level);
+        this.school = school;
+    }
+
     /**
      * Default Proj -> simple harm
      * Default Self -> simple heal
      */
     protected EntityMageBase(EntityType<? extends Monster> type, Level level) {
         super(type, level);
-        pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectHarm.INSTANCE, AugmentAmplify.INSTANCE));
+        if (pSpells.isEmpty()) {
+            pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectHarm.INSTANCE, AugmentAmplify.INSTANCE));
+        }
         sSpells.add(new Spell(MethodSelf.INSTANCE, EffectHeal.INSTANCE, AugmentAmplify.INSTANCE));
     }
 

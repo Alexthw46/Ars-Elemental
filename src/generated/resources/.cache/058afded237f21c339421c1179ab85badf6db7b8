@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-20T01:12:34.9564006	Ars Elemental Item Tags
+// 1.21.1	2025-10-19T18:26:13.0718837	Ars Elemental Item Tags
 25c25fe991f3c519320705f8f43330f7257ab6f2 data/ars_elemental/tags/item/blacklist_bag_item.json
 ec8f4130b0fdab4f776c26202bb8ba546fcee9ec data/ars_elemental/tags/item/soulbound_extra.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/item/magic_shards.json
@@ -12,19 +12,19 @@ d509873737ca1fe57cd2a10ea128f12f3fcadae0 data/c/tags/item/logs/archwood.json
 94a4d749a377695966e081e59ea56cb6f0d8c1fe data/c/tags/item/stripped_logs.json
 c63f828ff4bfc7df8bd18cf26ecd39040ac28049 data/c/tags/item/stripped_wood.json
 7d244938ad9f01ad827473519936baf152ba09fd data/minecraft/tags/item/bookshelf_books.json
-a81dbfaa585e9527315d66451868d62a24872d07 data/minecraft/tags/item/chest_armor.json
-d79049c42d2c264fb2139c17ffe7bb2017945a15 data/minecraft/tags/item/enchantable/armor.json
-a81dbfaa585e9527315d66451868d62a24872d07 data/minecraft/tags/item/enchantable/chest_armor.json
-d79049c42d2c264fb2139c17ffe7bb2017945a15 data/minecraft/tags/item/enchantable/durability.json
-d79049c42d2c264fb2139c17ffe7bb2017945a15 data/minecraft/tags/item/enchantable/equippable.json
-08c3570d5ee2a899d1fdfca9890c8ec6340b282d data/minecraft/tags/item/enchantable/foot_armor.json
-876fdb8b18de387ea47e4d940d28c7d6aa1ec559 data/minecraft/tags/item/enchantable/head_armor.json
-50b4057da83a6595652ef6688a52e559aed86398 data/minecraft/tags/item/enchantable/leg_armor.json
-08c3570d5ee2a899d1fdfca9890c8ec6340b282d data/minecraft/tags/item/foot_armor.json
-876fdb8b18de387ea47e4d940d28c7d6aa1ec559 data/minecraft/tags/item/head_armor.json
+aac8a888c5540a98f9beb7cfcaf35a98ff6f8ba3 data/minecraft/tags/item/chest_armor.json
+b631b5b5fe7a2bae43b68bab8b4cc270058acb10 data/minecraft/tags/item/enchantable/armor.json
+aac8a888c5540a98f9beb7cfcaf35a98ff6f8ba3 data/minecraft/tags/item/enchantable/chest_armor.json
+b631b5b5fe7a2bae43b68bab8b4cc270058acb10 data/minecraft/tags/item/enchantable/durability.json
+b631b5b5fe7a2bae43b68bab8b4cc270058acb10 data/minecraft/tags/item/enchantable/equippable.json
+fc755eac29017eb89ac4ef700922465e823cd57e data/minecraft/tags/item/enchantable/foot_armor.json
+aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/minecraft/tags/item/enchantable/head_armor.json
+57e8510f5ca943ff1628b3650e0c0f6c942794c1 data/minecraft/tags/item/enchantable/leg_armor.json
+fc755eac29017eb89ac4ef700922465e823cd57e data/minecraft/tags/item/foot_armor.json
+aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/minecraft/tags/item/head_armor.json
 525c1a35787919fd6060975646b2c0a2a41ca910 data/minecraft/tags/item/leaves.json
 7d244938ad9f01ad827473519936baf152ba09fd data/minecraft/tags/item/lectern_books.json
-50b4057da83a6595652ef6688a52e559aed86398 data/minecraft/tags/item/leg_armor.json
+57e8510f5ca943ff1628b3650e0c0f6c942794c1 data/minecraft/tags/item/leg_armor.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/item/logs.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/minecraft/tags/item/logs_that_burn.json
 9764206a29734fcec0ce6859c04d754c36205280 data/minecraft/tags/item/saplings.json

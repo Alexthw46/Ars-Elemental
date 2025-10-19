@@ -38,8 +38,7 @@ public class EarthMage extends EntityMageBase {
      * 5: Shoot Terrain
      */
     public EarthMage(EntityType<? extends EntityMageBase> p_21368_, Level level) {
-        super(p_21368_, level);
-        this.school = SpellSchools.ELEMENTAL_EARTH;
+        super(p_21368_, level, SpellSchools.ELEMENTAL_EARTH);
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectEnvenom.INSTANCE, EffectSpores.INSTANCE, AugmentAmplify.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectBurst.INSTANCE, AugmentSensitive.INSTANCE, EffectSpike.INSTANCE, AugmentAmplify.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectCrush.INSTANCE, AugmentAmplify.INSTANCE, AugmentAmplify.INSTANCE));

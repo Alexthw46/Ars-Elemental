@@ -1,8 +1,16 @@
 {
   "values": [
+    "ars_elemental:air_shoes",
+    "ars_elemental:fire_shoes",
+    "ars_elemental:earth_shoes",
+    "ars_elemental:aqua_shoes",
     "ars_elemental:air_boots",
     "ars_elemental:fire_boots",
     "ars_elemental:earth_boots",
-    "ars_elemental:aqua_boots"
+    "ars_elemental:aqua_boots",
+    "ars_elemental:air_boots_heavy",
+    "ars_elemental:fire_boots_heavy",
+    "ars_elemental:earth_boots_heavy",
+    "ars_elemental:aqua_boots_heavy"
   ]
 }
