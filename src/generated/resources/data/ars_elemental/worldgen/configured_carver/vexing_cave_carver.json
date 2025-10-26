@@ -32,13 +32,13 @@
     },
     "horizontal_radius_multiplier": {
       "type": "minecraft:uniform",
-      "max_exclusive": 7.0,
-      "min_inclusive": 3.0
+      "max_exclusive": 6.0,
+      "min_inclusive": 2.0
     },
     "lava_level": {
       "above_bottom": 8
     },
-    "probability": 0.25,
+    "probability": 0.2,
     "replaceable": "#minecraft:overworld_carver_replaceables",
     "vertical_radius_multiplier": {
       "type": "minecraft:uniform",

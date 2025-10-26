@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-19T18:26:13.0761658	Registries
+// 1.21.1	2025-10-26T13:57:51.8952437	Registries
 e4cc463783f870f2f25a85605fd15a889610a73a data/ars_elemental/neoforge/biome_modifier/common_flashing_archwood.json
 9cf5f8f2fa1647eb4eea1dd6843a999aeb55f2d0 data/ars_elemental/neoforge/biome_modifier/flashjack_spawns.json
 ecd7d81f8315e29351c86d4d97d25f0cf40b56c2 data/ars_elemental/neoforge/biome_modifier/siren_spawns.json
@@ -6,8 +6,8 @@ ecd7d81f8315e29351c86d4d97d25f0cf40b56c2 data/ars_elemental/neoforge/biome_modif
 ed24fd7a44f452e857a4ddb76097564b7940b2e7 data/ars_elemental/worldgen/biome/cascading_forest.json
 55189a86e19e1a23edfd79051a03bb61b6cab97a data/ars_elemental/worldgen/biome/flashing_forest.json
 1b11ae7a02300286008b54b0d188a8eb958662df data/ars_elemental/worldgen/biome/flourishing_forest.json
-830cef06fea7ab29a7c1b19f5b5b6473cdbf8a28 data/ars_elemental/worldgen/biome/vexing_caves.json
-c6d357b353ae33d8da8a0baf1e4c07b43c17f75b data/ars_elemental/worldgen/configured_carver/vexing_cave_carver.json
+acf1c70b0bdb29f3d300efc4c0cff331ee785ef6 data/ars_elemental/worldgen/biome/vexing_caves.json
+0fb220aafdf7ceb3eea601c002ececca5621bbb0 data/ars_elemental/worldgen/configured_carver/vexing_cave_carver.json
 f9be7d96f0960ed292a66cdff7447fe6282a3ccb data/ars_elemental/worldgen/configured_feature/blackstone_rock.json
 cee7f70d50fe3bde0e02c66b9ac89564e2717901 data/ars_elemental/worldgen/configured_feature/cave_source_vines.json
 e9e2338d9878be180a1ca666bb9f0a0d90e883e1 data/ars_elemental/worldgen/configured_feature/cave_vexing_tree.json

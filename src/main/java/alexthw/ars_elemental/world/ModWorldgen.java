@@ -206,13 +206,13 @@ public class ModWorldgen {
 
         context.register(CAVE_CARVER, WorldCarver.CAVE.configured(
                 new CaveCarverConfiguration(
-                        0.25F,
+                        0.20F,
                         UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(180)),
                         UniformFloat.of(2.F, 5.0F),
                         VerticalAnchor.aboveBottom(8),
                         CarverDebugSettings.of(false, BlockRegistry.ARCHWOOD_BUTTON.defaultBlockState()),
                         holdergetter.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
-                        UniformFloat.of(3.0F, 7F),
+                        UniformFloat.of(2.0F, 6F),
                         UniformFloat.of(2F, 6F),
                         UniformFloat.of(-1.0F, -0.4F)
                 ))
@@ -758,8 +758,8 @@ public class ModWorldgen {
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SKELETON, 50, 2, 4));
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.CREEPER, 50, 2, 4));
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SLIME, 100, 4, 4));
-            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.ENDERMAN, 10, 1, 4));
-            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.WITCH, 5, 1, 1));
+            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.ENDERMAN, 30, 1, 4));
+            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.WITCH, 15, 1, 1));
 
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.STARBUNCLE_TYPE.get(), 2, 3, 5));
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.ENTITY_DRYGMY.get(), 2, 1, 3));
@@ -769,6 +769,12 @@ public class ModWorldgen {
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.WILDEN_HUNTER.get(), 100, 3, 5));
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.WILDEN_STALKER.get(), 100, 1, 3));
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.WILDEN_GUARDIAN.get(), 80, 2, 5));
+
+
+            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(AIR_MAGE.get(), 4, 1, 3));
+            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(FIRE_MAGE.get(), 4, 1, 3));
+            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(WATER_MAGE.get(), 4, 1, 3));
+            spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EARTH_MAGE.get(), 4, 1, 3));
 
             BiomeGenerationSettings.Builder biomeBuilder = getArchwoodBiomeBuilder(CLUSTER_VEXING_CONFIGURED, context, SOURCESTONE_FORMATION_PLACED, CavePlacements.ROOTED_AZALEA_TREE);
             biomeBuilder.addCarver(GenerationStep.Carving.AIR, CAVE_CARVER);

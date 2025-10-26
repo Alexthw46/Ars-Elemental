@@ -35,7 +35,7 @@ public class SourcestoneFormationFeature extends Feature<NoneFeatureConfiguratio
 
         BlockState baseSourcestone = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, LibBlockNames.SOURCESTONE)).defaultBlockState();
         BlockState var1Sourcestone = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, LibBlockNames.SOURCESTONE_ALTERNATING)).defaultBlockState();
-        BlockState var2Sourcestone = BlockRegistry.SOURCE_LAMP.defaultBlockState().setValue(SourceLamp.LIT, true).setValue(SourceLamp.LIGHT_LEVEL, 7);
+        BlockState var2Sourcestone = BlockRegistry.SOURCE_LAMP.defaultBlockState().setValue(SourceLamp.LIT, true).setValue(SourceLamp.LIGHT_LEVEL, 8);
 
         // Search for valid ground
         BlockPos blockpos = origin;

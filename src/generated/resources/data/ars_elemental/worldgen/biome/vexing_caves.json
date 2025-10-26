@@ -179,13 +179,13 @@
         "type": "minecraft:enderman",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 10
+        "weight": 30
       },
       {
         "type": "minecraft:witch",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 5
+        "weight": 15
       },
       {
         "type": "ars_nouveau:wilden_hunter",
@@ -204,6 +204,30 @@
         "maxCount": 5,
         "minCount": 2,
         "weight": 80
+      },
+      {
+        "type": "ars_elemental:air_mage",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
+      },
+      {
+        "type": "ars_elemental:fire_mage",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
+      },
+      {
+        "type": "ars_elemental:water_mage",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
+      },
+      {
+        "type": "ars_elemental:earth_mage",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 4
       }
     ],
     "underground_water_creature": [],

@@ -55,6 +55,10 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
                         // Check and fill below if the block is floating
                         BlockPos fillPos = basePos.offset(dx, 0, dz);
                         while (level.isEmptyBlock(fillPos.below()) && fillPos.getY() > level.getMinBuildHeight()) {
+                            if (!isTooFar(origin, fillPos)
+                                    && fillPos.getY() >= level.getMinBuildHeight()
+                                    && fillPos.getY() < level.getMaxBuildHeight())
+                                break;
                             level.setBlock(fillPos.below(), random.nextFloat() <= 0.1 ? GILDED_BLACKSTONE : BLACKSTONE, 3);
                             fillPos = fillPos.below();
                             hasFloatingBlocks = true; // Indicates we need to taper further
@@ -85,6 +89,10 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
             for (int dx = -radius; dx <= radius; dx++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     BlockPos pos = basePos.offset(dx, y, dz);
+                    if (!isTooFar(origin, pos)
+                            && pos.getY() >= level.getMinBuildHeight()
+                            && pos.getY() < level.getMaxBuildHeight())
+                        continue;
                     if (dx * dx + dz * dz <= radius * radius + random.nextInt(2)) { // Irregular edges
                         BlockState block = BLACKSTONE;
 
@@ -130,4 +138,11 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
         }
         return true;
     }
+
+    private static boolean isTooFar(BlockPos origin, BlockPos pos) {
+        int dx = Math.abs(pos.getX() - origin.getX());
+        int dz = Math.abs(pos.getZ() - origin.getZ());
+        return dx > 32 || dz > 32;
+    }
+
 }

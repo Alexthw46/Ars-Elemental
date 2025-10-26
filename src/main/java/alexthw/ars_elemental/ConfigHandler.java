@@ -117,7 +117,7 @@ public class ConfigHandler {
 
             builder.push("Misc");
             FIRENANDO_KILL = builder.comment("If enabled, flarecannons will simply die and drop the charm, instead of deactivating, if killed by their owner").define("flarecannon_owner_kill", true);
-            EXTRA_BIOMES = builder.comment("Set over 0 to enable archwood forests with specific trees").defineInRange("extra_biomes", 0, 0, 100);
+            EXTRA_BIOMES = builder.comment("Set over 0 to enable archwood forests with specific trees").defineInRange("extra_biomes", 1, 0, 100);
             LIGHTNINGS_BIOME = builder.comment("Set to false to disable the lightning crashing often on flashing archwood biome(s).").define("always_thunder", true);
             HOMING_GLOWING = builder.comment("If enabled, homing will be able to target mobs only if they're glowing").define("homing_nerf", false);
             SQUIRREL_REFRESH_RATE = builder.comment("Define the refresh rate of the Squirrel Ritual buff, in ticks.").defineInRange("squirrelRefreshRate", 600, 1, Integer.MAX_VALUE);
