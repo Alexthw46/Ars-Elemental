@@ -621,11 +621,10 @@ public class ModWorldgen {
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_DEAD_BUSH);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_WATERLILY);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, POOLS_WITH_DRIP_PLACED);
-            addDefaultExtraVegetation(biomeBuilder);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AquaticPlacements.WARM_OCEAN_VEGETATION)
                     .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AquaticPlacements.SEAGRASS_WARM)
                     .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AquaticPlacements.SEA_PICKLE);
-
+            addDefaultExtraVegetation(biomeBuilder);
             biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, WorldgenRegistry.PLACED_LIGHTS);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CLUSTER_CASCADING_CONFIGURED);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldgenRegistry.PLACED_MOJANK_GRASS);
@@ -736,7 +735,7 @@ public class ModWorldgen {
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, vanillatree);
 
             BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
-            BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
+            addDefaultExtraVegetation(biomeBuilder);
             biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, WorldgenRegistry.PLACED_LIGHTS);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, archwoodCluster);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, WorldgenRegistry.PLACED_MOJANK_GRASS);
