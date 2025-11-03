@@ -143,12 +143,17 @@ public class AETagsProvider {
 
             tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(set.getHat());
             tag(ItemTags.HEAD_ARMOR).add(set.getHat());
+            tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("allthearcanistgear", "elemental_hat"))).add(set.getHat());
             tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(set.getChest());
             tag(ItemTags.CHEST_ARMOR).add(set.getChest());
+            tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("allthearcanistgear", "elemental_chest"))).add(set.getHat());
             tag(ItemTags.LEG_ARMOR_ENCHANTABLE).add(set.getLegs());
             tag(ItemTags.LEG_ARMOR).add(set.getLegs());
+            tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("allthearcanistgear", "elemental_legs"))).add(set.getHat());
             tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(set.getBoots());
             tag(ItemTags.FOOT_ARMOR).add(set.getBoots());
+            tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("allthearcanistgear", "elemental_boots"))).add(set.getHat());
+
         }
 
         @Override

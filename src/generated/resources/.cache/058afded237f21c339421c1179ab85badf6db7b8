@@ -1,4 +1,8 @@
-// 1.21.1	2025-10-19T18:26:13.0718837	Ars Elemental Item Tags
+// 1.21.1	2025-11-03T11:31:43.2282945	Ars Elemental Item Tags
+aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/allthearcanistgear/tags/item/elemental_boots.json
+aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/allthearcanistgear/tags/item/elemental_chest.json
+aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/allthearcanistgear/tags/item/elemental_hat.json
+aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/allthearcanistgear/tags/item/elemental_legs.json
 25c25fe991f3c519320705f8f43330f7257ab6f2 data/ars_elemental/tags/item/blacklist_bag_item.json
 ec8f4130b0fdab4f776c26202bb8ba546fcee9ec data/ars_elemental/tags/item/soulbound_extra.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/item/magic_shards.json
