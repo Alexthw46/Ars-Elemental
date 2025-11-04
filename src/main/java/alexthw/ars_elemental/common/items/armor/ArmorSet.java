@@ -20,15 +20,15 @@ public abstract class ArmorSet {
 
     public static final Map<SpellSchool, SpellSchool> weaknessMap = Map.of(
             SpellSchools.ELEMENTAL_FIRE, SpellSchools.ELEMENTAL_WATER,
-            SpellSchools.ELEMENTAL_WATER, SpellSchools.ELEMENTAL_EARTH,
-            SpellSchools.ELEMENTAL_EARTH, SpellSchools.ELEMENTAL_AIR,
-            SpellSchools.ELEMENTAL_AIR, SpellSchools.ELEMENTAL_FIRE
+            SpellSchools.ELEMENTAL_WATER, SpellSchools.ELEMENTAL_AIR,
+            SpellSchools.ELEMENTAL_EARTH, SpellSchools.ELEMENTAL_FIRE,
+            SpellSchools.ELEMENTAL_AIR, SpellSchools.ELEMENTAL_EARTH
     );
     public static final Map<SpellSchool, SpellSchool> resistanceMap = Map.of(
             SpellSchools.ELEMENTAL_WATER, SpellSchools.ELEMENTAL_FIRE,
-            SpellSchools.ELEMENTAL_EARTH, SpellSchools.ELEMENTAL_WATER,
-            SpellSchools.ELEMENTAL_AIR, SpellSchools.ELEMENTAL_EARTH,
-            SpellSchools.ELEMENTAL_FIRE, SpellSchools.ELEMENTAL_AIR
+            SpellSchools.ELEMENTAL_EARTH, SpellSchools.ELEMENTAL_AIR,
+            SpellSchools.ELEMENTAL_AIR, SpellSchools.ELEMENTAL_WATER,
+            SpellSchools.ELEMENTAL_FIRE, SpellSchools.ELEMENTAL_EARTH
     );
     protected String name;
     protected DeferredHolder<Item, ElementalArmor> head;

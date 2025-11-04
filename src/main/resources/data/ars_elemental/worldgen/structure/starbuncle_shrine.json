@@ -19,5 +19,16 @@
   // What mobs can spawn over time in the structure.
   // Make sure you add the mob to the right category (monster, creature, etc)
   "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "ars_nouveau:starbuncle",
+          "weight": 5,
+          "minCount": 1,
+          "maxCount": 3
+        }
+      ]
+    }
   }
 }
