@@ -69,6 +69,7 @@ public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEff
         super.buildConfig(builder);
         addPotionConfig(builder, 5);
         addExtendTimeConfig(builder, 5);
+        addAmpConfig(builder, 5);
     }
 
     @Override

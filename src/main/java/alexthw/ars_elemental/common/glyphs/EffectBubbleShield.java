@@ -54,15 +54,15 @@ public class EffectBubbleShield extends ElementalAbstractEffect implements IPoti
     public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
+        addAmpConfig(builder, 2);
         addGenericInt(builder, 350, "Set how much mana is depleted every time a damage is mitigated by the Mana Bubble.", "absorption_cost");
     }
 
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return getSummonAugments();
-    } //just time boosters
-
+        return getPotionAugments();
+    }
 
     @Override
     public int getBaseDuration() {

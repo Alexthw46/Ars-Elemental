@@ -226,13 +226,13 @@ public class DamageEvents {
         //check if the entity has the mana bubble effect and if so, reduce the damage
         MobEffectInstance bubbleEffect = living.getEffect(MANA_BUBBLE);
         if (not_bypassEnchants && bubbleEffect != null) {
-            float ManaBubbleCost = EffectBubbleShield.INSTANCE.GENERIC_INT.get() - ManaUtil.getPlayerDiscounts(living, new Spell(EffectBubbleShield.INSTANCE), ItemStack.EMPTY) * 0.75F;
+            float ManaBubbleCost = Math.max(0, EffectBubbleShield.INSTANCE.GENERIC_INT.get() - ManaUtil.getPlayerDiscounts(living, new Spell(EffectBubbleShield.INSTANCE), ItemStack.EMPTY) * 0.75F);
             var mana = CapabilityRegistry.getMana(living);
             // guard against infinite damage that would cause NaN mana
             if (mana != null && event.getAmount() < 100000) {
                 double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
                 double amp = Math.min(1 + bubbleEffect.getAmplifier(), maxReduction);
-                float newDamage = (float) Math.max(1, event.getAmount() - amp);
+                float newDamage = (float) Math.max(0, event.getAmount() - amp);
                 float actualReduction = event.getAmount() - newDamage;
                 // don't deplete mana if the entity is invulnerable due to a previous attack
                 if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost) {
