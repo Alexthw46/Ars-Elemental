@@ -15,6 +15,10 @@
     {
       "id": "ars_elemental:flourishing_forest",
       "required": false
+    },
+    {
+      "id": "ars_elemental:vexing_caves",
+      "required": false
     }
   ]
 }

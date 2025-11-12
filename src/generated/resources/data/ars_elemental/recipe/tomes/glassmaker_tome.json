@@ -21,5 +21,28 @@
     "ars_nouveau:glyph_crush",
     "ars_nouveau:glyph_smelt"
   ],
+  "spellData": {
+    "color": {
+      "b": 26,
+      "g": 255,
+      "id": "ars_nouveau:constant",
+      "r": 255
+    },
+    "name": "Safety Jar",
+    "particleTimeline": {},
+    "recipe": [
+      "ars_nouveau:glyph_underfoot",
+      "ars_elemental:glyph_conjure_terrain",
+      "ars_nouveau:glyph_aoe",
+      "ars_nouveau:glyph_aoe",
+      "ars_nouveau:glyph_aoe",
+      "ars_nouveau:glyph_pierce",
+      "ars_nouveau:glyph_pierce",
+      "ars_nouveau:glyph_pierce",
+      "ars_nouveau:glyph_crush",
+      "ars_nouveau:glyph_smelt"
+    ],
+    "sound": {}
+  },
   "tome_type": "ars_elemental:manipulation_caster_tome"
 }

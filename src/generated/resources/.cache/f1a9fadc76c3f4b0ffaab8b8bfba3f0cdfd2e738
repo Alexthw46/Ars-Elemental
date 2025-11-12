@@ -1,12 +1,12 @@
-// 1.21.1	2024-10-26T23:50:01.172012	Ars Elemental Caster Tomes Datagen
-7a2fda208bac43e2ce74b7f0bda7a249a72e94c0 data/ars_elemental/recipe/tomes/camel_tome.json
-f5c1d80734abbe1a2c419e959207c9eb9ce6ba2a data/ars_elemental/recipe/tomes/dolphin_tome.json
-6f408e1eb6b950735a402b94b1b8245999669e88 data/ars_elemental/recipe/tomes/flower_tome.json
-5bf5ad2591ccf5fc26b503315b9e95eb01465b29 data/ars_elemental/recipe/tomes/frostbite_tome.json
-456f2f607a9c59ba58364815efd66835860d5487 data/ars_elemental/recipe/tomes/glassmaker_tome.json
-aefc832b869c330f4ac5f4b21e60098874bab9c4 data/ars_elemental/recipe/tomes/hellflare_tome.json
-8c4bd7d98bb41b35b4186eb7b41f210e4ede8022 data/ars_elemental/recipe/tomes/leviosa_tome.json
-a1367d36a4afc388e6b5b7b3e48fd39ea3b467a7 data/ars_elemental/recipe/tomes/magnet_tome.json
-cb01aef3ef273ebb60a15144aee30f6b03e4d76a data/ars_elemental/recipe/tomes/skelehorse_tome.json
-f37ad795144403dc1ee11f2f4e7f7179932c4935 data/ars_elemental/recipe/tomes/strider_tome.json
-de611d26ff8834a1ac11213d8293857aeae5e638 data/ars_elemental/recipe/tomes/zap_tome.json
+// 1.21.1	2025-11-12T15:54:48.3500456	Ars Elemental Caster Tomes Datagen
+968f3f412304051590e67a54845971e3c899e75f data/ars_elemental/recipe/tomes/camel_tome.json
+f518e7fabfe7f3951f7e85969fe05ad4de70a520 data/ars_elemental/recipe/tomes/dolphin_tome.json
+4b8a84785d70f0c664de6e26686db897d1e054d7 data/ars_elemental/recipe/tomes/flower_tome.json
+a6bf59925b0d17127116dcfc5ef780a8b0677047 data/ars_elemental/recipe/tomes/frostbite_tome.json
+03e3900225456ae2ee9db2ecc9cb9d5972e0f768 data/ars_elemental/recipe/tomes/glassmaker_tome.json
+b4c43ff90f31b2ccc989ceffbc4425deb21938d6 data/ars_elemental/recipe/tomes/hellflare_tome.json
+57ebf14ecb6c9a1009129bd278e1ccfd864404b5 data/ars_elemental/recipe/tomes/leviosa_tome.json
+c71f41129af577e31c90832a6ac428276dcc0c0b data/ars_elemental/recipe/tomes/magnet_tome.json
+d4edf927aa7f4d49b77065a421db88766523f31d data/ars_elemental/recipe/tomes/skelehorse_tome.json
+3c29556a468028430afa3bb5615e0d34580efc55 data/ars_elemental/recipe/tomes/strider_tome.json
+580915a88a041c695b55804cbcade104e61061bb data/ars_elemental/recipe/tomes/zap_tome.json

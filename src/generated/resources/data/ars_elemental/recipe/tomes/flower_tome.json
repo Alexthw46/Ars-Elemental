@@ -14,5 +14,21 @@
     "ars_elemental:glyph_envenom",
     "ars_elemental:glyph_poison_spores"
   ],
+  "spellData": {
+    "color": {
+      "b": 55,
+      "g": 250,
+      "id": "ars_nouveau:constant",
+      "r": 50
+    },
+    "name": "Poison Blossom",
+    "particleTimeline": {},
+    "recipe": [
+      "ars_nouveau:glyph_touch",
+      "ars_elemental:glyph_envenom",
+      "ars_elemental:glyph_poison_spores"
+    ],
+    "sound": {}
+  },
   "tome_type": "ars_elemental:earth_caster_tome"
 }

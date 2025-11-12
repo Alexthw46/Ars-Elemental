@@ -44,7 +44,7 @@ public class TerrablenderAE {
                         .temperature(ParameterUtils.Temperature.ICY, ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
                         .humidity(ParameterUtils.Humidity.HUMID, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.NEUTRAL)
                         .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.FAR_INLAND))
-                        .erosion(ParameterUtils.Erosion.FULL_RANGE)
+                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_5))
                         .depth(Climate.Parameter.span(-1.0F, 0.2F))
                         .weirdness(ParameterUtils.Weirdness.FULL_RANGE)
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.CASCADING_FOREST_KEY));

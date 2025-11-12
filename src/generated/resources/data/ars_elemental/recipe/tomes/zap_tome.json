@@ -14,5 +14,21 @@
     "ars_elemental:glyph_spark",
     "ars_elemental:glyph_discharge"
   ],
+  "spellData": {
+    "color": {
+      "b": 26,
+      "g": 255,
+      "id": "ars_nouveau:constant",
+      "r": 255
+    },
+    "name": "Static Discharge",
+    "particleTimeline": {},
+    "recipe": [
+      "ars_nouveau:glyph_touch",
+      "ars_elemental:glyph_spark",
+      "ars_elemental:glyph_discharge"
+    ],
+    "sound": {}
+  },
   "tome_type": "ars_elemental:air_caster_tome"
 }

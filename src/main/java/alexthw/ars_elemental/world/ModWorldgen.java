@@ -546,7 +546,8 @@ public class ModWorldgen {
                 FLASHING_FOREST_KEY.location(),
                 BLAZING_FOREST_KEY.location(),
                 CASCADING_FOREST_KEY.location(),
-                FLOURISHING_FOREST_KEY.location()
+                FLOURISHING_FOREST_KEY.location(),
+                VEXING_CAVES_KEY.location()
         };
 
         public static ResourceKey<Biome> register(String name) {

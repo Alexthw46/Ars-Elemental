@@ -14,5 +14,21 @@
     "ars_nouveau:glyph_freeze",
     "ars_nouveau:glyph_cold_snap"
   ],
+  "spellData": {
+    "color": {
+      "b": 250,
+      "g": 50,
+      "id": "ars_nouveau:constant",
+      "r": 50
+    },
+    "name": "Frostbite",
+    "particleTimeline": {},
+    "recipe": [
+      "ars_elemental:glyph_homing_projectile",
+      "ars_nouveau:glyph_freeze",
+      "ars_nouveau:glyph_cold_snap"
+    ],
+    "sound": {}
+  },
   "tome_type": "ars_elemental:water_caster_tome"
 }

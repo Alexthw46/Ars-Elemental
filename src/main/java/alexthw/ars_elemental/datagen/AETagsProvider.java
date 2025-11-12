@@ -261,6 +261,9 @@ public class AETagsProvider {
             this.tag(BiomeTags.HAS_WOODLAND_MANSION).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
             this.tag(Tags.Biomes.IS_MAGICAL).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
 
+            this.tag(Tags.Biomes.IS_CAVE).addOptional(ModWorldgen.Biomes.VEXING_CAVES_KEY.location());
+            this.tag(Tags.Biomes.IS_SPOOKY).addOptional(ModWorldgen.Biomes.VEXING_CAVES_KEY.location());
+
             for (var forest : ModWorldgen.Biomes.ArchwoodBiomes) {
                 this.tag(BiomeTagProvider.ARCHWOOD_BIOME_TAG).addOptional(forest);
                 this.tag(BiomeTagProvider.BERRY_SPAWN).addOptional(forest);
@@ -270,6 +273,7 @@ public class AETagsProvider {
 
             this.tag(cobblemonBiomeTag("volcanic")).addOptional(ModWorldgen.Biomes.BLAZING_FOREST_KEY.location());
             this.tag(cobblemonBiomeTag("frozen")).addOptional(ModWorldgen.Biomes.CASCADING_FOREST_KEY.location());
+
         }
 
         @Override

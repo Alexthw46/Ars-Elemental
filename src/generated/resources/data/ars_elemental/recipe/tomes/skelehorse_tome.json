@@ -15,5 +15,22 @@
     "ars_nouveau:glyph_extend_time",
     "ars_nouveau:glyph_extend_time"
   ],
+  "spellData": {
+    "color": {
+      "b": 200,
+      "g": 200,
+      "id": "ars_nouveau:constant",
+      "r": 200
+    },
+    "name": "Undead Steed",
+    "particleTimeline": {},
+    "recipe": [
+      "ars_nouveau:glyph_self",
+      "ars_nouveau:glyph_summon_steed",
+      "ars_nouveau:glyph_extend_time",
+      "ars_nouveau:glyph_extend_time"
+    ],
+    "sound": {}
+  },
   "tome_type": "ars_elemental:anima_caster_tome"
 }
