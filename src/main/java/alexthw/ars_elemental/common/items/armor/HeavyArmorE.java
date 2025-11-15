@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.items.armor;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.ConfigHandler;
 import com.alexthw.sauce.event.AttributeEventHandler;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
@@ -40,6 +41,6 @@ public class HeavyArmorE extends ElementalArmor {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flags) {
         super.appendHoverText(stack, context, tooltip, flags);
-        tooltip.add(Component.literal("Set bonus, Model and Texture still work in progress, currently same as medium variant.").withStyle(ChatFormatting.RED));
+        tooltip.add(Component.literal("Set bonus, Model and Texture still work in progress, currently same as medium variant." + (ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get() ? " Thread slots will change with beta features enabled." : "")).withStyle(ChatFormatting.RED));
     }
 }

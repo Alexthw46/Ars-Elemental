@@ -1,9 +1,9 @@
-// 1.21.1	2025-11-12T15:54:48.3488117	Ars Elemental Biome Tags
+// 1.21.1	2025-11-15T17:51:22.6285238	Ars Elemental Biome Tags
 42342da53df806f29b3400f2a0b18ea8a140a5b5 data/ars_additions/tags/worldgen/biome/has_structure/arcane_library.json
 42342da53df806f29b3400f2a0b18ea8a140a5b5 data/ars_additions/tags/worldgen/biome/has_structure/nexus_tower.json
 21eb494d0c70f73324b96eef7a1c04ab263e7da8 data/ars_elemental/tags/worldgen/biome/flashing_biome.json
 859946db9588e7163d2f19cc5b9baa6d6f52db6b data/ars_elemental/tags/worldgen/biome/flashing_tree_biome.json
-8d6cbb9c783a14fb95613f02bc7c75eaf5430c05 data/ars_elemental/tags/worldgen/biome/flashjack_spawn.json
+f190ff46fc49d6f44fadccce4eb249a35d77a22f data/ars_elemental/tags/worldgen/biome/flashjack_spawn.json
 3c76ca29a928e50aec3d78cf90df262b8ad1b1fc data/ars_elemental/tags/worldgen/biome/siren_spawn.json
 42342da53df806f29b3400f2a0b18ea8a140a5b5 data/ars_nouveau/tags/worldgen/biome/archwood_biome.json
 42342da53df806f29b3400f2a0b18ea8a140a5b5 data/ars_nouveau/tags/worldgen/biome/berry_spawn.json

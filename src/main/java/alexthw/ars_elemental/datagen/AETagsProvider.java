@@ -243,7 +243,7 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            this.tag(FLASHJACK_SPAWN_TAG).addOptional(BiomeRegistry.ARCHWOOD_FOREST.location()).addTag(Tags.Biomes.IS_MOUNTAIN_PEAK);
+            this.tag(FLASHJACK_SPAWN_TAG).addTag(Tags.Biomes.IS_MOUNTAIN_PEAK).addTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG);
             this.tag(SIREN_SPAWN_TAG).addTag(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL).addOptionalTag(BiomeTagProvider.ARCHWOOD_BIOME_TAG.location());
             this.tag(FLASHING_BIOME).addOptional(ModWorldgen.Biomes.FLASHING_FOREST_KEY.location());
             this.tag(FLASHING_TREE_COMMON_BIOME).addOptional(BiomeRegistry.ARCHWOOD_FOREST.location());

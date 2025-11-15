@@ -1,9 +1,6 @@
 {
   "values": [
-    {
-      "id": "ars_nouveau:archwood_forest",
-      "required": false
-    },
-    "#c:is_mountain/peak"
+    "#c:is_mountain/peak",
+    "#ars_nouveau:archwood_biome"
   ]
 }
