@@ -125,6 +125,7 @@ public class ModWorldgen {
     public static final ResourceKey<PlacedFeature> SIMPLE_FLASHING_PLACED = registerPlacedKey(SIMPLE_FLASHING_ID);
     public static final ResourceKey<PlacedFeature> COMMON_FLASHING_PLACED = registerPlacedKey(COMMON_FLASHING_ID);
     public static final ResourceKey<PlacedFeature> LESS_MANGROVE_PLACED = registerPlacedKey("less_trees_mangrove");
+    public static final ResourceKey<PlacedFeature> ALT_WINDSWEPT = registerPlacedKey("mojang_windswept_hills_trees");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RARE_FLASHING_TREES = registerConfKey(RARE_RANDOM_FLASHING_ID);
     public static final ResourceKey<ConfiguredFeature<?, ?>> COMMON_FLASHING_TREES = registerConfKey(COMMON_RANDOM_FLASHING_ID);
     public static final ResourceKey<PlacedFeature> RARE_FLASHING_CONFIGURED = registerPlacedKey(FINAL_RARE_FLASHING);
@@ -394,6 +395,18 @@ public class ModWorldgen {
                 )
         );
 
+        context.register(ALT_WINDSWEPT, new PlacedFeature(configured.get(ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.withDefaultNamespace("trees_windswept_hills"))).get(),
+                        List.of(new PlacementModifier[]{
+                                        PlacementUtils.countExtra(3, 0.1F, 1),
+                                        InSquarePlacement.spread(),
+                                        SurfaceWaterDepthFilter.forMaxDepth(0),
+                                        PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+                                        BiomeFilter.biome()
+                                }
+                        )
+                )
+        );
+
         context.register(PLACED_BERRY_BUSH_CAVE, new PlacedFeature(configured.get(PATCH_BERRY_BUSH).get(), List.of(
                 RarityFilter.onAverageOnceEvery(2),
                 InSquarePlacement.spread(),
@@ -571,7 +584,7 @@ public class ModWorldgen {
             spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.BREEZE, 5, 1, 1));
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.GOAT, 6, 1, 2));
             spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(FLASHJACK_ENTITY.get(), 35, 1, 2));
-            BiomeGenerationSettings.Builder biomeBuilder = getArchwoodBiomeBuilder(CLUSTER_FLASHING_CONFIGURED, context, QUARTZ_ROCK_PLACED, VegetationPlacements.TREES_WINDSWEPT_HILLS);
+            BiomeGenerationSettings.Builder biomeBuilder = getArchwoodBiomeBuilder(CLUSTER_FLASHING_CONFIGURED, context, QUARTZ_ROCK_PLACED, ALT_WINDSWEPT);
             biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, SCATTERED_SPARKFLOWERS);
 
             return new Biome.BiomeBuilder()
