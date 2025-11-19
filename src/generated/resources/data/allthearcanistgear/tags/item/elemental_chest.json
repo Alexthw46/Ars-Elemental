@@ -1,16 +1,16 @@
 {
   "values": [
-    "ars_elemental:air_hood",
-    "ars_elemental:fire_hood",
-    "ars_elemental:earth_hood",
-    "ars_elemental:aqua_hood",
-    "ars_elemental:air_hat",
-    "ars_elemental:fire_hat",
-    "ars_elemental:earth_hat",
-    "ars_elemental:aqua_hat",
-    "ars_elemental:air_helmet",
-    "ars_elemental:fire_helmet",
-    "ars_elemental:earth_helmet",
-    "ars_elemental:aqua_helmet"
+    "ars_elemental:air_tunic",
+    "ars_elemental:fire_tunic",
+    "ars_elemental:earth_tunic",
+    "ars_elemental:aqua_tunic",
+    "ars_elemental:air_robes",
+    "ars_elemental:fire_robes",
+    "ars_elemental:earth_robes",
+    "ars_elemental:aqua_robes",
+    "ars_elemental:air_chestplate",
+    "ars_elemental:fire_chestplate",
+    "ars_elemental:earth_chestplate",
+    "ars_elemental:aqua_chestplate"
   ]
 }
