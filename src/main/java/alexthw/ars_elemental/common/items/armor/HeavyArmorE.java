@@ -22,7 +22,7 @@ import static alexthw.ars_elemental.common.items.armor.ArmorSet.resistanceMap;
 public class HeavyArmorE extends ElementalArmor {
 
     public HeavyArmorE(ArmorItem.Type slot, SpellSchool element, Properties builder) {
-        super(slot, element, schoolToMaterial(element.getId() + "_heavy"), builder);
+        super(slot, element, schoolToMaterial(element.getId() + "_heavy"), builder.durability(slot.getDurability(50)));
     }
 
     @Override

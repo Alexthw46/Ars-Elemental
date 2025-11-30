@@ -37,6 +37,8 @@ public class AELangDatagen extends LanguageProvider {
         add("biome.ars_elemental.cascading_forest.desc", "A forest of watery trees with waterfalls and rivers.");
         add("biome.ars_elemental.flourishing_forest", "Flourishing Archwood Forest");
         add("biome.ars_elemental.flourishing_forest.desc", "A forest of earthy trees with blossoms and lushy caves.");
+        add("biome.ars_elemental.vexing_caves", "Vexing Caves");
+        add("biome.ars_elemental.vexing_caves.desc", "Dangerous caves where the source overflows and where, between the source vines and the vexing trees, the wilden dwells.");
         add("ars_nouveau.school.elemental", "Elemental");
         add("item.ars_elemental.spell_horn", "Enchanter's Horn");
         add("item.ars_elemental.fire_focus", "Focus of Fire");
@@ -207,6 +209,8 @@ public class AELangDatagen extends LanguageProvider {
         add("death.attack.spark.item", "%1$s was shocked to death    by %2$s using %3$s");
         add("death.attack.beheading", "%1$s was cut into pieces");
         add("death.attack.beheading.item", "%1$s was cut to shreds by %2$s using %3$s");
+        add("death.attack.magic.item", "%1$s was killed by %2$s using %3$s");
+        add("death.attack.stalactite.item", "%1$s was impaled by falling spikes summoned by %2$s using %3$s");
         add("ars_elemental.armor_set.shift_info", "Hold %s for set info");
         add("ars_elemental.lens.shift_info", "Hold %s for lens info");
         add("ars_elemental.lens.arc", "Convert the redirected projectile in an Arc Projectile.");

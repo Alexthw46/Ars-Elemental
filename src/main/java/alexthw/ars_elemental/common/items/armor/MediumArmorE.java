@@ -1,7 +1,6 @@
 package alexthw.ars_elemental.common.items.armor;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.ConfigHandler;
 import com.alexthw.sauce.event.AttributeEventHandler;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
@@ -17,18 +16,15 @@ import static alexthw.ars_elemental.common.items.armor.ArmorSet.weaknessMap;
 public class MediumArmorE extends ElementalArmor {
 
     public MediumArmorE(ArmorItem.Type slot, SpellSchool element, Properties builder) {
-        super(slot, element, schoolToMaterial(element.getId()), builder);
+        super(slot, element, schoolToMaterial(element.getId()), builder.durability(slot.getDurability(35)));
     }
 
     @Override
     public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(@NotNull ItemStack stack) {
-        if (ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get()) {
-            return super.getDefaultAttributeModifiers(stack)
-                    .withModifierAdded(AttributeEventHandler.schoolToDefenseAttribute.get(weaknessMap.getOrDefault(this.element, SpellSchools.ELEMENTAL)), new AttributeModifier(ArsElemental.prefix("elemental_weakness_armor_" + this.type.getName()), -25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
-                    .withModifierAdded(AttributeEventHandler.schoolToDefenseAttribute.get(this.element), new AttributeModifier(ArsElemental.prefix("elemental_defense_armor_" + this.type.getName()), 75, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
-                    .withModifierAdded(AttributeEventHandler.schoolToPowerAttribute.get(this.element), new AttributeModifier(ArsElemental.prefix("elemental_power_armor_" + this.type.getName()), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()));
-        }
-        return super.getDefaultAttributeModifiers(stack);
+        return super.getDefaultAttributeModifiers(stack)
+                .withModifierAdded(AttributeEventHandler.schoolToDefenseAttribute.get(weaknessMap.getOrDefault(this.element, SpellSchools.ELEMENTAL)), new AttributeModifier(ArsElemental.prefix("elemental_weakness_armor_" + this.type.getName()), -25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
+                .withModifierAdded(AttributeEventHandler.schoolToDefenseAttribute.get(this.element), new AttributeModifier(ArsElemental.prefix("elemental_defense_armor_" + this.type.getName()), 75, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
+                .withModifierAdded(AttributeEventHandler.schoolToPowerAttribute.get(this.element), new AttributeModifier(ArsElemental.prefix("elemental_power_armor_" + this.type.getName()), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()));
     }
 
 }

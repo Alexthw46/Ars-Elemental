@@ -22,7 +22,7 @@ import static alexthw.ars_elemental.common.items.armor.ArmorSet.weaknessMap;
 public class LightArmorE extends ElementalArmor {
 
     public LightArmorE(ArmorItem.Type slot, SpellSchool element, Properties builder) {
-        super(slot, element, schoolToMaterial(element.getId() + "_light"), builder);
+        super(slot, element, schoolToMaterial(element.getId() + "_light"), builder.durability(slot.getDurability(30)));
     }
 
     @Override
