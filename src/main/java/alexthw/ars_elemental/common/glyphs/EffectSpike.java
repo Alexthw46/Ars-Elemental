@@ -13,8 +13,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Set;
@@ -31,11 +33,10 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
 
         BlockPos pos = rayTraceResult.getEntity().getOnPos();
-        //check if the blockstate below the entity is air up to 5 blocks, if not spawn a dripstone spike entity,
 
         for (int i = 0; i < 3; i++) {
             if (world.getBlockState(pos.below(i)).isAir()) continue;
-            summonSpike(world, shooter, spellStats, spellContext, resolver, pos);
+            summonSpike(world, shooter, spellStats, spellContext, resolver, pos, rayTraceResult.getEntity().position());
             return;
         }
 
@@ -48,12 +49,14 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
 
     }
 
-    private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos) {
+    private void summonSpike(Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, BlockPos pos, @Nullable Vec3 originalPosition) {
         float baseDamage = (float) (DAMAGE.get() + spellStats.getAmpMultiplier() * AMP_VALUE.get());
         DripstoneSpikeEntity spike = CompatUtils.waterCheck(resolver) ?
                 new IceSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver) :
                 new DripstoneSpikeEntity(world, pos, baseDamage, shooter, spellStats, spellContext, resolver);
         world.addFreshEntity(spike);
+        if (originalPosition != null)
+            spike.setPos(new Vec3(originalPosition.x, spike.getY(), originalPosition.z));
     }
 
     @Override
@@ -62,7 +65,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         //check if the blockstate hit is air, if not spawn a dripstone spike entity
         for (int i = -1; i < 3; i++) {
             if (world.getBlockState(pos.below(i)).isAir()) continue;
-            summonSpike(world, shooter, spellStats, spellContext, resolver, pos.below(i));
+            summonSpike(world, shooter, spellStats, spellContext, resolver, pos.below(i), null);
             return;
         }
 

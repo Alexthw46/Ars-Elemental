@@ -160,7 +160,7 @@ dependencies {
     implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}")
     jarJar(implementation("com.alexthw.sauce:sauce-${minecraft_version}") {
         version {
-            strictly '[0.0.13.42,)'
+            strictly '[0.0.14,)'
             prefer sauce_version
         }
     }) { transitive = false }
