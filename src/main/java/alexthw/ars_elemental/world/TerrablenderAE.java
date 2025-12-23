@@ -9,6 +9,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -34,7 +35,7 @@ public class TerrablenderAE {
                         .humidity(ParameterUtils.Humidity.DRY, ParameterUtils.Humidity.NEUTRAL, ParameterUtils.Humidity.WET)
                         .continentalness(ParameterUtils.Continentalness.INLAND, ParameterUtils.Continentalness.FAR_INLAND)
                         .erosion(ParameterUtils.Erosion.FULL_RANGE)
-                        .depth(Climate.Parameter.span(-1.0F, 0.2F))
+                        .depth(ParameterUtils.Depth.FULL_RANGE)
                         .weirdness(Climate.Parameter.span(-0.4F, 0.4F))
                         .build().forEach(point -> builder.add(point, BiomeRegistry.ARCHWOOD_FOREST));
 
@@ -44,7 +45,7 @@ public class TerrablenderAE {
                         .temperature(ParameterUtils.Temperature.ICY, ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL, ParameterUtils.Temperature.WARM)
                         .humidity(ParameterUtils.Humidity.HUMID, ParameterUtils.Humidity.WET, ParameterUtils.Humidity.NEUTRAL)
                         .continentalness(ParameterUtils.Continentalness.span(ParameterUtils.Continentalness.COAST, ParameterUtils.Continentalness.FAR_INLAND))
-                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_5))
+                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_6))
                         .depth(Climate.Parameter.span(-1.0F, 0.2F))
                         .weirdness(ParameterUtils.Weirdness.FULL_RANGE)
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.CASCADING_FOREST_KEY));
@@ -84,11 +85,32 @@ public class TerrablenderAE {
                 new ParameterUtils.ParameterPointListBuilder()
                         .temperature(ParameterUtils.Temperature.FROZEN, ParameterUtils.Temperature.COOL, ParameterUtils.Temperature.NEUTRAL)
                         .humidity(ParameterUtils.Humidity.FULL_RANGE)
-                        .continentalness(ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
+                        .continentalness(ParameterUtils.Continentalness.MUSHROOM_FIELDS, ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
                         .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_3))
                         .depth(Climate.Parameter.span(0.05F, .80F))
                         .weirdness(ParameterUtils.Weirdness.FULL_RANGE)
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.VEXING_CAVES_KEY));
+
+                // Fill in oceans in the region to prevent weirdness in all-water regions
+                new ParameterUtils.ParameterPointListBuilder()
+                        .temperature(ParameterUtils.Temperature.FULL_RANGE)
+                        .humidity(ParameterUtils.Humidity.FULL_RANGE)
+                        .continentalness(ParameterUtils.Continentalness.MUSHROOM_FIELDS, ParameterUtils.Continentalness.DEEP_OCEAN, ParameterUtils.Continentalness.OCEAN, ParameterUtils.Continentalness.COAST)
+                        .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_4, ParameterUtils.Erosion.EROSION_6))
+                        .depth(ParameterUtils.Depth.FULL_RANGE)
+                        .weirdness(ParameterUtils.Weirdness.FULL_RANGE)
+                        .build().forEach(point -> builder.add(point, Biomes.OCEAN));
+
+                // Add rivers in the valleys
+                new ParameterUtils.ParameterPointListBuilder()
+                        .temperature(ParameterUtils.Temperature.FULL_RANGE)
+                        .humidity(ParameterUtils.Humidity.FULL_RANGE)
+                        .continentalness(ParameterUtils.Continentalness.INLAND)
+                        .erosion(ParameterUtils.Erosion.FULL_RANGE)
+                        .depth(ParameterUtils.Depth.SURFACE)
+                        .weirdness(ParameterUtils.Weirdness.VALLEY)
+                        .build().forEach(point -> builder.add(point, Biomes.RIVER));
+
                 // Add our points to the mapper
                 builder.build().forEach(mapper);
             }

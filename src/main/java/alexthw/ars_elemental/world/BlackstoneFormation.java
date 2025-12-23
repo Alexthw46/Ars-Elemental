@@ -40,7 +40,7 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
         int height = baseRadius / 2 + random.nextInt(3) + 2;     // Height (4-6 blocks)
 
         // Ensure no floating edges by checking and filling below the entire base layer with organic tapering
-        BlockPos basePosCopy = new BlockPos(origin); // Keep a copy of the base position
+        BlockPos basePosCopy = origin.above(); // Keep a copy one block above the ground
         BlockPos basePos = origin.above(); // Start one block above the ground
         int currentRadius = baseRadius; // Start with the base radius
 
@@ -54,11 +54,8 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
 
                         // Check and fill below if the block is floating
                         BlockPos fillPos = basePos.offset(dx, 0, dz);
-                        while (level.isEmptyBlock(fillPos.below()) && fillPos.getY() > level.getMinBuildHeight()) {
-                            if (!isTooFar(origin, fillPos)
-                                    && fillPos.getY() >= level.getMinBuildHeight()
-                                    && fillPos.getY() < level.getMaxBuildHeight())
-                                break;
+                        // Continue filling down while below is empty and within world limits and not too far
+                        while (level.isEmptyBlock(fillPos.below()) && fillPos.getY() > level.getMinBuildHeight() && !isTooFar(origin, fillPos)) {
                             level.setBlock(fillPos.below(), random.nextFloat() <= 0.1 ? GILDED_BLACKSTONE : BLACKSTONE, 3);
                             fillPos = fillPos.below();
                             hasFloatingBlocks = true; // Indicates we need to taper further
@@ -89,9 +86,8 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
             for (int dx = -radius; dx <= radius; dx++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     BlockPos pos = basePos.offset(dx, y, dz);
-                    if (!isTooFar(origin, pos)
-                            && pos.getY() >= level.getMinBuildHeight()
-                            && pos.getY() < level.getMaxBuildHeight())
+                    // Skip positions that are too far or out of vertical bounds
+                    if (isTooFar(origin, pos) || pos.getY() < level.getMinBuildHeight() || pos.getY() >= level.getMaxBuildHeight())
                         continue;
                     if (dx * dx + dz * dz <= radius * radius + random.nextInt(2)) { // Irregular edges
                         BlockState block = BLACKSTONE;
@@ -122,9 +118,12 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
 
         // Lava flow down the side (randomized direction)
         if (random.nextBoolean()) {
-            BlockPos flowStart = lavaCenter.mutable();
+            BlockPos.MutableBlockPos flowStart = lavaCenter.mutable();
             for (int i = 0; i < 3; i++) {
-                BlockPos flowPos = flowStart.offset(random.nextInt(3) - 1, -i, random.nextInt(3) - 1);
+                flowStart.setX(lavaCenter.getX() + random.nextInt(3) - 1);
+                flowStart.setZ(lavaCenter.getZ() + random.nextInt(3) - 1);
+                flowStart.setY(lavaCenter.getY() - i);
+                BlockPos flowPos = flowStart.immutable();
                 if (level.isEmptyBlock(flowPos) || level.getBlockState(flowPos).canBeReplaced()) {
                     level.setBlock(flowPos, LAVA, 3);
 

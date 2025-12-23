@@ -1,6 +1,5 @@
 package alexthw.ars_elemental.documentation;
 
-import alexthw.ars_elemental.ConfigHandler;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -150,7 +149,7 @@ public class AEDocumentation {
                 .withPage(TextEntry.create("ars_elemental.page.armor_set." + mediumSet.getName(), mediumSet.getTranslationKey()))
                 .withSortNum(10);
 
-        for (ArmorSet armorSet : ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get() ? new ArmorSet[]{mediumSet, lightningSet, heavySet} : new ArmorSet[]{mediumSet}) {
+        for (ArmorSet armorSet : new ArmorSet[]{mediumSet, lightningSet, heavySet}) {
             builder.withCraftingPages(armorSet.getHat())
                     .withCraftingPages(armorSet.getChest())
                     .withCraftingPages(armorSet.getLegs())
