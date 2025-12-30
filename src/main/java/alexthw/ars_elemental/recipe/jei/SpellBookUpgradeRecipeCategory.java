@@ -13,6 +13,8 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,13 @@ public class SpellBookUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     }
 
     @Override
-    public RecipeType<NetheriteUpgradeRecipe> getRecipeType() {
-        return JeiElementalPlugin.SPELLBOOK_NETHERITE_TYPE;
+    public @NotNull RecipeType<RecipeHolder<NetheriteUpgradeRecipe>> getRecipeType() {
+        return JeiElementalPlugin.SPELLBOOK_NETHERITE_TYPE.get();
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, NetheriteUpgradeRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<NetheriteUpgradeRecipe> holder, IFocusGroup focuses) {
+        NetheriteUpgradeRecipe recipe = holder.value();
         MultiProvider provider = multiProvider.apply(recipe);
         List<Ingredient> inputs = recipe.pedestalItems();
         double angleBetweenEach = 360.0 / inputs.size();

@@ -17,10 +17,14 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
+import static mezz.jei.api.recipe.RecipeType.createFromDeferredVanilla;
+
 @JeiPlugin
 public class JeiElementalPlugin implements IModPlugin {
 
-    public static final RecipeType<NetheriteUpgradeRecipe> SPELLBOOK_NETHERITE_TYPE = RecipeType.create(ArsElemental.MODID, "netherite_upgrade", NetheriteUpgradeRecipe.class);
+    public static final Supplier<RecipeType<RecipeHolder<NetheriteUpgradeRecipe>>> SPELLBOOK_NETHERITE_TYPE = createFromDeferredVanilla(ModRegistry.NETHERITE_UP);
 
     @Override
     public @NotNull ResourceLocation getPluginUid() {
@@ -38,13 +42,13 @@ public class JeiElementalPlugin implements IModPlugin {
     public void registerRecipes(@NotNull IRecipeRegistration registry) {
         assert Minecraft.getInstance().level != null;
         RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
-        registry.addRecipes(SPELLBOOK_NETHERITE_TYPE, manager.getAllRecipesFor(ModRegistry.NETHERITE_UP.get()).stream().map(RecipeHolder::value).toList());
+        registry.addRecipes(SPELLBOOK_NETHERITE_TYPE.get(), manager.getAllRecipesFor(ModRegistry.NETHERITE_UP.get()).stream().toList());
 
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
-        registry.addRecipeCatalyst(new ItemStack(BlockRegistry.ENCHANTING_APP_BLOCK), SPELLBOOK_NETHERITE_TYPE);
+        registry.addRecipeCatalyst(new ItemStack(BlockRegistry.ENCHANTING_APP_BLOCK), SPELLBOOK_NETHERITE_TYPE.get());
     }
 
 }
