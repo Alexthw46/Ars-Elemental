@@ -138,7 +138,7 @@ public class Events {
     }
 
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW) // Since it's not slot-sensitive, do this after other mods
     public static void onPlayerRespawnHW(PlayerEvent.Clone event) {
         if (!event.isWasDeath() || event.getEntity().level().holder(ModRegistry.SOULBOUND).isEmpty()) return;
         CompoundTag data = event.getEntity().getPersistentData();
@@ -150,7 +150,6 @@ public class Events {
                 persist.remove("magic_locked");
                 persist.remove("magic_lock_duration");
             }
-
 
             //when the player respawns, if they have soulbound items, give them back to the player.
             CompoundTag soulTag = persist.getCompound(TAG_SOULBOUND);
@@ -177,7 +176,6 @@ public class Events {
             }
 
             persist.remove(TAG_SOULBOUND);
-
         }
     }
 
