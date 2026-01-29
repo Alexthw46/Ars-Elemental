@@ -1,6 +1,7 @@
 package alexthw.ars_elemental;
 
 import alexthw.ars_elemental.client.ClientEvents;
+import alexthw.ars_elemental.client.CreoCompat;
 import alexthw.ars_elemental.client.SpellFocusRenderer;
 import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
@@ -77,6 +78,9 @@ public class ArsElemental {
 
     @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
+        if (CompatUtils.isCreoLoaded()) {
+            CreoCompat.registerHats();
+        }
         if (!ConfigHandler.Client.EnableSFRendering.get()) return;
         CuriosRendererRegistry.register(ModItems.FIRE_FOCUS.get(), SpellFocusRenderer::new);
         CuriosRendererRegistry.register(ModItems.WATER_FOCUS.get(), SpellFocusRenderer::new);

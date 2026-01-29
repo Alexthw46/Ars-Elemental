@@ -13,21 +13,29 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static com.alexthw.sauce.api.item.ISchoolFocus.getFociSchools;
-import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.*;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_FIRE;
+import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_WATER;
 
 public class CompatUtils {
     static boolean botania = false;
+    static boolean creo = false;
 
     public static boolean isBotaniaLoaded() {
         return botania;
     }
 
+    public static boolean isCreoLoaded() {
+        return creo;
+    }
 
     public static void checkCompats() {
 
         ModList modList = ModList.get();
 
         botania = modList.isLoaded("botania");
+        creo = modList.isLoaded("ars_creo");
 
     }
 

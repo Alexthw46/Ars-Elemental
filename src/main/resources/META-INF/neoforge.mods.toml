@@ -40,3 +40,10 @@ modId = "ars_nouveau"
 versionRange = "[1.21.1-5.11,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.ars_elemental]]
+modId = "ars_creo"
+versionRange = "[1.21.1-5.2,)"
+ordering = "AFTER"
+side = "BOTH"
+mandatory = false

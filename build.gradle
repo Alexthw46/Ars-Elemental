@@ -172,6 +172,8 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     compileOnly "com.hollingsworth.nuggets:nuggets-neoforge-1.21:${nuggets_version}"
     compileOnly "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
+    // localRuntime "curse.maven:create-328085:7408951"
+    compileOnly "curse.maven:ars-creo-575698:7528185"
     //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     // cyanide to debug worldgen
