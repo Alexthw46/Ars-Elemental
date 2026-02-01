@@ -184,6 +184,7 @@ dependencies {
     // Iris Shader tests
     // localRuntime "curse.maven:irisshaders-455508:6661598"
     localRuntime "curse.maven:sodium-394468:6382651"
+    localRuntime "curse.maven:neocontinuity-1377279:7178602"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

@@ -46,4 +46,5 @@ modId = "ars_creo"
 versionRange = "[1.21.1-5.2,)"
 ordering = "AFTER"
 side = "BOTH"
-mandatory = false
+type = "optional"
+reason = "Adds Train Conductor Hats to mobs."
