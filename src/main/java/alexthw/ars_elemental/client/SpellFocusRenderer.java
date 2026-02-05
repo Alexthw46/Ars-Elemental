@@ -1,6 +1,6 @@
 package alexthw.ars_elemental.client;
 
-import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.alexthw.sauce.util.ParticleUtil;
 import com.alexthw.sauce.util.ParticleUtil.ParticleBuilder;
@@ -23,7 +23,7 @@ public class SpellFocusRenderer implements ICurioRenderer {
 
         if (stack.getItem() instanceof ISchoolFocus focus && slotContext.entity() instanceof Player player) {
 
-            if (player.getUUID().equals(ArsElemental.Dev)) {
+            if (focus == ModItems.DEBUG_ICON.get()) {
                 specialRender(player, ageInTicks);
             } else {
                 double XRot = getRelativeAngleX(player, 0.5, 0);
