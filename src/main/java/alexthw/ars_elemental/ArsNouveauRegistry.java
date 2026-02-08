@@ -236,6 +236,9 @@ public class ArsNouveauRegistry {
 
     public static void addLights() {
         ITEM_LIGHTMAP.put(ModItems.FLASHING_POD.getId(), 14);
+        LightManager.register(ModEntities.FLASHJACK_ENTITY.get(), p -> 8);
+        LightManager.register(ModEntities.FLASHJACK_FAMILIAR.get(), p -> 8);
+
         LightManager.register(ModEntities.FIRENANDO_ENTITY.get(), p -> {
             if (p.level().getBrightness(LightLayer.BLOCK, p.blockPosition()) < 6) {
                 return 10;

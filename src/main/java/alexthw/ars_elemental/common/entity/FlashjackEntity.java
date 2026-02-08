@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.common.entity.ai.HijackTurretGoal;
+import alexthw.ars_elemental.common.entity.ai.HoverAroundTargetGoal;
 import alexthw.ars_elemental.common.entity.spells.FlashLightning;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
@@ -127,11 +128,18 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, new ParrotWanderGoal(this, 1.0F));
+        this.goalSelector.addGoal(5, new ParrotWanderGoal(this, 1.0F));
         this.goalSelector.addGoal(2, new HijackTurretGoal(this, 30));
-        this.goalSelector.addGoal(3, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null));
+        this.goalSelector.addGoal(3, new HoverAroundTargetGoal(this, 0.75, 3.0f, 6.0f));
+        this.goalSelector.addGoal(2, new GoBackHomeGoal(this, this::getHome, 10, () -> this.getTarget() == null || this.getHome() != null && this.distanceToSqr(this.getHome().getCenter()) > 600) {
+            @Override
+            public void start() {
+                // When going back home, clear the mob's target so it doesn't try to attack while flying back
+                setTarget(null);
+            }
+        });
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, true, (entity) -> entity instanceof Enemy && entity.isAlive() && !getBlacklist().contains(entity.getType())));
     }
 
