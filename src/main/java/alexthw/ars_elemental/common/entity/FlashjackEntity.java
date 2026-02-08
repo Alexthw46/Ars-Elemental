@@ -12,6 +12,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.api.util.SummonUtil;
+import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
@@ -19,6 +20,7 @@ import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.items.data.ICharmSerializable;
 import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
 import com.hollingsworth.arsnouveau.common.network.Networking;
+import com.hollingsworth.arsnouveau.common.network.PacketANEffect;
 import com.hollingsworth.arsnouveau.common.network.PacketAnimEntity;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
@@ -33,6 +35,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -83,10 +87,11 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     public static final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("idle.ground");
     public static final RawAnimation flapping = RawAnimation.begin().thenLoop("idle.flapping");
     public static final RawAnimation attack = RawAnimation.begin().thenPlayXTimes("attack", 2).thenWait(40).thenLoop("idle.flapping");
-
+    public static final EntityDataAccessor<Boolean> BEING_TAMED = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.BOOLEAN);
 
     List<BlockPos> turrets = new ArrayList<>();
     List<EntityType<?>> blacklist = new ArrayList<>();
+    public int tamingTime;
 
     public static AttributeSupplier.@NotNull Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 36.0F).add(Attributes.FLYING_SPEED, 0.6F).add(Attributes.MOVEMENT_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 6.0F);
@@ -148,10 +153,20 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         return SummonUtil.canSummonTakeDamage(pSource) && super.hurt(pSource, pAmount);
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-        SummonUtil.healOverTime(this);
+    private static PlayState attackPredicate(AnimationState<FlashjackEntity> event) {
+        if (event.isCurrentAnimation(attack))
+            return PlayState.CONTINUE;
+
+        if (event.getAnimatable().entityData.get(BEING_TAMED) && !event.getAnimatable().isTamed())
+            return event.setAndContinue(attack);
+
+        // If the entity is on the ground, stop the animation
+        if (event.getAnimatable().onGround())
+            return PlayState.STOP;
+
+        // If the entity is in the attack animation, continue it until the end
+        // Defaults to flapping animation if in the air and not attacking
+        return event.setAndContinue(flapping);
     }
 
     @Override
@@ -164,17 +179,39 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         }
     }
 
-    private static PlayState attackPredicate(AnimationState<FlashjackEntity> event) {
-        // If the entity is on the ground, stop the animation
-        if (event.getAnimatable().onGround())
-            return PlayState.STOP;
+    @Override
+    public void tick() {
+        super.tick();
+        SummonUtil.healOverTime(this);
 
-        if (event.isCurrentAnimation(attack))
-            return PlayState.CONTINUE;
+        // Add taming process logic
+        if (!isTamed() && this.entityData.get(BEING_TAMED)) {
+            tamingTime++;
 
-        // If the entity is in the attack animation, continue it until the end
-        // Defaults to flapping animation if in the air and not attacking
-        return event.setAndContinue(flapping);
+            // Show particles every 20 ticks
+            if (tamingTime % 20 == 0 && !level.isClientSide()) {
+                Networking.sendToNearbyClient(level, this, new PacketANEffect(PacketANEffect.EffectType.TIMED_HELIX, blockPosition(), ParticleColor.YELLOW));
+            }
+
+            // After 60 ticks (3 seconds), drop shards and create lightning effect
+            if (tamingTime > 60 && !level.isClientSide) {
+                ItemStack stack = new ItemStack(ModItems.FLASHJACK_SHARDS.get(), 1 + level.random.nextInt(2));
+                level.addFreshEntity(new ItemEntity(level, getX(), getY() + 0.5, getZ(), stack));
+
+                // Spawn lightning effect
+                var flash = new FlashLightning(this.level);
+                flash.setPos(this.getX(), this.getY(), this.getZ());
+                level.addFreshEntity(flash);
+
+                this.remove(RemovalReason.DISCARDED);
+                level.playSound(null, getX(), getY(), getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, SoundSource.NEUTRAL, 1f, 1f);
+            }
+        }
+    }
+
+    @Override
+    public boolean canBeHitByProjectile() {
+        return false;
     }
 
     @Override
@@ -209,11 +246,8 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
                 }
 
             } else if (stack.getItem() == ModItems.FLASHING_POD.get().asItem()) {
+                entityData.set(BEING_TAMED, true);
                 stack.shrink(1);
-                this.tame(player);
-                var flash = new FlashLightning(this.level);
-                flash.setPos(this.getX(), this.getY(), this.getZ());
-                player.level().addFreshEntity(flash);
             }
 
             if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && stack.isEmpty()) {
@@ -272,6 +306,7 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         super.defineSynchedData(builder);
         builder.define(HOME, Optional.empty());
         builder.define(COLOR, "flashjack");
+        builder.define(BEING_TAMED, false);
     }
 
     @Override
@@ -334,6 +369,10 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
             compound.putString("blacklist_" + counter, getRegistryName(type).toString());
             counter++;
         }
+        if (!this.isTamed()) {
+            compound.putInt("taming", tamingTime);
+            compound.putBoolean("beingTamed", this.entityData.get(BEING_TAMED));
+        }
     }
 
     @Override
@@ -358,6 +397,10 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
             EntityType.byString(compound.getString("blacklist_" + counter)).
                     ifPresent(type -> this.blacklist.add(type));
             counter++;
+        }
+        if (!this.isTamed()) {
+            this.tamingTime = compound.getInt("taming");
+            this.entityData.set(BEING_TAMED, compound.getBoolean("beingTamed"));
         }
     }
 

@@ -24,7 +24,7 @@ public class HoverAroundTargetGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.flashjack.getTarget() != null && this.flashjack.getTarget().isAlive();
+        return this.flashjack.getTarget() != null && this.flashjack.getTarget().isAlive() && !this.flashjack.getTurrets().isEmpty();
     }
 
     @Override

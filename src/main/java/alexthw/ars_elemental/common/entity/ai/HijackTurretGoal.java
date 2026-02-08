@@ -1,7 +1,10 @@
 package alexthw.ars_elemental.common.entity.ai;
 
 import alexthw.ars_elemental.common.entity.FlashjackEntity;
+import alexthw.ars_elemental.registry.ModParticles;
+import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
 import com.hollingsworth.arsnouveau.common.network.Networking;
@@ -19,6 +22,7 @@ public class HijackTurretGoal extends Goal {
     private final FlashjackEntity mob;
     private final float detectionRange;
     int cooldown = 0;
+    int attackCooldown = 0;
 
     public HijackTurretGoal(FlashjackEntity mob, float detectionRange) {
         this.mob = mob;
@@ -36,11 +40,29 @@ public class HijackTurretGoal extends Goal {
         LivingEntity target = mob.getTarget();
         if (target == null) return;
         target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40));
+
+        // If the mob is close enough to the target and the attack cooldown is ready, perform a shock attack
+        if (mob.distanceTo(target) <= 7 && attackCooldown <= 0) {
+            Networking.sendToNearbyClient(mob.level, mob, new PacketAnimEntity(mob.getId(), 0));
+            target.hurt(DamageUtil.source(mob.level, ModRegistry.SPARK, mob), 4);
+            // Spawn some electric particles around the target
+            for (int i = 0; i < 5; i++) {
+                double offsetX = (mob.getRandom().nextDouble() - 0.5) * target.getBbWidth();
+                double offsetY = mob.getRandom().nextDouble() * target.getBbHeight();
+                double offsetZ = (mob.getRandom().nextDouble() - 0.5) * target.getBbWidth();
+                mob.level().addParticle(ModParticles.SPARK.get(), target.getX() + offsetX, target.getY() + offsetY, target.getZ() + offsetZ, 0, 0, 0);
+            }
+            attackCooldown = 40; // Cooldown for the shock attack
+            return;
+        } else if (attackCooldown > 0) {
+            attackCooldown--;
+        }
+
         if (cooldown > 0) {
             cooldown--;
             return;
         }
-        Networking.sendToNearbyClient(mob.level, mob, new PacketAnimEntity(mob.getId(), 0));
+
         // Detect nearby adjustable turret tiles
         var turrets = mob.getTurrets();
         if (!turrets.isEmpty()) {
@@ -57,13 +79,13 @@ public class HijackTurretGoal extends Goal {
                 turret.rotationY = turret.neededRotationY;
                 turret.shootSpell();
             }
-            cooldown += 20; // Cooldown to prevent constant retargeting
         }
         // Only if the walker is close enough to the flashjack
         var walkers = mob.level().getEntitiesOfClass(WealdWalker.class, mob.getBoundingBox().inflate(detectionRange), LivingEntity::isAlive);
         for (WealdWalker walker : walkers) {
             walker.setTarget(target);
         }
+        cooldown = 20; // Cooldown to prevent constant retargeting
     }
 
 }
