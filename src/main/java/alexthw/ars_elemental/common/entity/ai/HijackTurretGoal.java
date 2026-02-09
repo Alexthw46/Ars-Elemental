@@ -50,7 +50,8 @@ public class HijackTurretGoal extends Goal {
                 double offsetX = (mob.getRandom().nextDouble() - 0.5) * target.getBbWidth();
                 double offsetY = mob.getRandom().nextDouble() * target.getBbHeight();
                 double offsetZ = (mob.getRandom().nextDouble() - 0.5) * target.getBbWidth();
-                mob.level().addParticle(ModParticles.SPARK.get(), target.getX() + offsetX, target.getY() + offsetY, target.getZ() + offsetZ, 0, 0, 0);
+                if (mob.level() instanceof ServerLevel sl)
+                    sl.sendParticles(ModParticles.SPARK.get(), target.getX() + offsetX, target.getY() + offsetY, target.getZ() + offsetZ, 1, 0, 0, 0, 0);
             }
             attackCooldown = 40; // Cooldown for the shock attack
             return;

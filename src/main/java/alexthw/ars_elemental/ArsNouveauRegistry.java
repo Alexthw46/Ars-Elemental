@@ -80,6 +80,7 @@ import static com.hollingsworth.arsnouveau.api.registry.ParticleTimelineRegistry
 import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
 import static com.hollingsworth.arsnouveau.setup.config.Config.ITEM_LIGHTMAP;
+import static net.neoforged.fml.loading.FMLLoader.isProduction;
 
 public class ArsNouveauRegistry {
     public static final List<AbstractSpellPart> registeredSpells = new ArrayList<>();
@@ -152,6 +153,10 @@ public class ArsNouveauRegistry {
 
         // the bullshit one
         register(EffectNullify.INSTANCE);
+
+        if (!isProduction()) {
+            register(MethodCarianPhalanx.INSTANCE);
+        }
     }
 
     public static void registerRitual(AbstractRitual ritual) {

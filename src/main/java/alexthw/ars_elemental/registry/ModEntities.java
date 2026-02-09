@@ -6,7 +6,12 @@ import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FlashjackFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.MermaidFamiliar;
-import alexthw.ars_elemental.common.entity.mages.*;
+import alexthw.ars_elemental.common.entity.mages.AirMage;
+import alexthw.ars_elemental.common.entity.mages.EarthMage;
+import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
+import alexthw.ars_elemental.common.entity.mages.FireMage;
+import alexthw.ars_elemental.common.entity.mages.WaterMage;
+import alexthw.ars_elemental.common.entity.spells.CarianPhalanx;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
 import alexthw.ars_elemental.common.entity.spells.FlashLightning;
@@ -26,7 +31,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
@@ -76,6 +85,8 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_SPIKE;
     public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_ICE_SPIKE;
 
+    public static final DeferredHolder<EntityType<?>, EntityType<CarianPhalanx>> PHALANX_PROJ;
+
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
         SIREN_FAMILIAR = registerEntity("siren_familiar", 0.4F, 1.0F, MermaidFamiliar::new, MobCategory.WATER_CREATURE);
@@ -111,6 +122,7 @@ public class ModEntities {
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
         LERP_PROJECTILE = addEntity("lerp", 0.5F, 0.5F, true, true, EntityLerpedProjectile::new, MobCategory.MISC);
+        PHALANX_PROJ = addEntity("phalanx", 0.5f, 0.5f, true, true, CarianPhalanx::new, MobCategory.MISC);
         FLASH_LIGHTNING = addEntity("flash_lightning", 0.5F, 0.5F, true, true, FlashLightning::new, MobCategory.MISC);
         DRIPSTONE_SPIKE = addEntity("dripstone_spike", 1.0F, 1.0F, true, true, DripstoneSpikeEntity::new, MobCategory.MISC);
         ICE_SPIKE = addEntity("ice_spike", 1.0F, 1.0F, true, true, IceSpikeEntity::new, MobCategory.MISC);

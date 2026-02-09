@@ -15,12 +15,17 @@ import alexthw.ars_elemental.common.CurioHolderContainer;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
-import alexthw.ars_elemental.registry.*;
+import alexthw.ars_elemental.registry.ModEntities;
+import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModParticles;
+import alexthw.ars_elemental.registry.ModRegistry;
+import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.client.particle.WrappedProvider;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSummonSkeleton;
+import com.hollingsworth.arsnouveau.client.renderer.entity.StyledSpellRender;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerModel;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.network.Networking;
@@ -41,7 +46,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -129,6 +139,8 @@ public class ClientEvents {
                 return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
             }
         });
+
+        event.registerEntityRenderer(ModEntities.PHALANX_PROJ.get(), StyledSpellRender::new);
 
     }
 
