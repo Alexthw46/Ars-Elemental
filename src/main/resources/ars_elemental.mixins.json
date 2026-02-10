@@ -14,6 +14,7 @@
     "ItemEntityMixin",
     "KindlingPerkMixin",
     "LightningMixin",
+    "LivingEntityMixin",
     "RitualAwakeningMixin",
     "ServerLevelMixin",
     "ZombieInvoker"

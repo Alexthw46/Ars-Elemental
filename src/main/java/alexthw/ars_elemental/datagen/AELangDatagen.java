@@ -130,6 +130,11 @@ public class AELangDatagen extends LanguageProvider {
         add("entity.ars_elemental.ice_spike", "Ice Spike");
         add("entity.ars_elemental.conjured_dripstone", "Falling Spike");
         add("entity.ars_elemental.conjured_ice_spike", "Falling Ice Spike");
+        add("entity.ars_elemental.phalanx_projectile", "Carian Phalanx Projectile");
+        add("entity.ars_elemental.water_jet", "Water Jet Origin");
+        add("entity.ars_elemental.geyser", "Geyser");
+        add("entity.ars_elemental.lava_geyser", "Lava Geyser");
+        add("entity.ars_elemental.mist_cloud", "Mist Cloud");
         add("key.ars_elemental.open_pouch", "[Elemental] Open trinkets pouch");
 
         add("effect.ars_elemental.enderference", "Enderference");
@@ -154,6 +159,10 @@ public class AELangDatagen extends LanguageProvider {
         add("effect.ars_elemental.frozen.description", "The target is frozen and can't heal, next fire damage taken is increased but dispels the effect.");
         add("effect.ars_elemental.repel", "Repelled");
         add("effect.ars_elemental.repel.description", "The target is repelled from one or more places by a magic force.");
+        add("effect.ars_elemental.mist", "Mist");
+        add("effect.ars_elemental.mist.description", "Similar to blindness, mist reduces the field of vision of mobs and players");
+        add("effect.ars_elemental.slime_feet", "Slippery Feet");
+        add("effect.ars_elemental.slime_feet.description", "Makes the entity slide as if on ice while on normal blocks, increased slipperiness on ice blocks.");
         add("enchantment.ars_elemental.mirror_shield", "Spell Reflection");
         add("enchantment.ars_elemental.mirror_shield.desc", "Shield have a chance to reflect projectile spells");
         add("enchantment.ars_elemental.soulbound", "Soulbound");

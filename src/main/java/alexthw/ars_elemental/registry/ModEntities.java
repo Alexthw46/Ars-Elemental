@@ -11,10 +11,7 @@ import alexthw.ars_elemental.common.entity.mages.EarthMage;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.mages.FireMage;
 import alexthw.ars_elemental.common.entity.mages.WaterMage;
-import alexthw.ars_elemental.common.entity.spells.CarianPhalanx;
-import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
-import alexthw.ars_elemental.common.entity.spells.EntityMagnetSpell;
-import alexthw.ars_elemental.common.entity.spells.FlashLightning;
+import alexthw.ars_elemental.common.entity.spells.*;
 import alexthw.ars_elemental.common.entity.spikes.DripstoneSpikeEntity;
 import alexthw.ars_elemental.common.entity.spikes.EnchantedDripstoneEntity;
 import alexthw.ars_elemental.common.entity.spikes.IceSpikeEntity;
@@ -48,7 +45,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 
-@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MODID)
 public class ModEntities {
 
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
@@ -85,7 +82,11 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_SPIKE;
     public static final DeferredHolder<EntityType<?>, EntityType<EnchantedDripstoneEntity>> THROWN_ICE_SPIKE;
 
-    public static final DeferredHolder<EntityType<?>, EntityType<CarianPhalanx>> PHALANX_PROJ;
+    public static final DeferredHolder<EntityType<?>, EntityType<EntityCarianPhalanx>> PHALANX_PROJ;
+    public static final DeferredHolder<EntityType<?>, EntityType<EntityWaterJet>> WATER_JET_MARKER;
+    public static final DeferredHolder<EntityType<?>, EntityType<EntityGeyser>> GEYSER;
+    public static final DeferredHolder<EntityType<?>, EntityType<EntityLavaGeyser>> FIRE_GEYSER;
+    public static final DeferredHolder<EntityType<?>, EntityType<EntityMistCloud>> MIST_CLOUD;
 
     static {
         SIREN_ENTITY = registerEntity("siren_entity", 0.4F, 1.0F, MermaidEntity::new, MobCategory.WATER_CREATURE);
@@ -122,8 +123,12 @@ public class ModEntities {
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
         LERP_PROJECTILE = addEntity("lerp", 0.5F, 0.5F, true, true, EntityLerpedProjectile::new, MobCategory.MISC);
-        PHALANX_PROJ = addEntity("phalanx", 0.5f, 0.5f, true, true, CarianPhalanx::new, MobCategory.MISC);
+        PHALANX_PROJ = addEntity("phalanx_projectile", 0.5f, 0.5f, true, true, EntityCarianPhalanx::new, MobCategory.MISC);
+        WATER_JET_MARKER = addEntity("water_jet", 0.5f, 0.5f, true, true, EntityWaterJet::new, MobCategory.MISC);
         FLASH_LIGHTNING = addEntity("flash_lightning", 0.5F, 0.5F, true, true, FlashLightning::new, MobCategory.MISC);
+        GEYSER = addEntity("geyser", 1, 1, true, true, EntityGeyser::new, MobCategory.MISC);
+        FIRE_GEYSER = addEntity("lava_geyser", 1, 1, true, true, EntityLavaGeyser::new, MobCategory.MISC);
+        MIST_CLOUD = addEntity("mist_cloud", 1, 1, true, true, EntityMistCloud::new, MobCategory.MISC);
         DRIPSTONE_SPIKE = addEntity("dripstone_spike", 1.0F, 1.0F, true, true, DripstoneSpikeEntity::new, MobCategory.MISC);
         ICE_SPIKE = addEntity("ice_spike", 1.0F, 1.0F, true, true, IceSpikeEntity::new, MobCategory.MISC);
         THROWN_SPIKE = addEntity("conjured_dripstone", .7F, .7F, true, true, EnchantedDripstoneEntity::new, MobCategory.MISC);

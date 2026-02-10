@@ -1,7 +1,12 @@
 package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.glyphs.*;
-import alexthw.ars_elemental.common.glyphs.filters.*;
+import alexthw.ars_elemental.common.glyphs.filters.AerialFilter;
+import alexthw.ars_elemental.common.glyphs.filters.AquaticFilter;
+import alexthw.ars_elemental.common.glyphs.filters.FieryFilter;
+import alexthw.ars_elemental.common.glyphs.filters.InsectFilter;
+import alexthw.ars_elemental.common.glyphs.filters.SummonFilter;
+import alexthw.ars_elemental.common.glyphs.filters.UndeadFilter;
 import alexthw.ars_elemental.registry.ModItems;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -46,6 +51,11 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(EffectLifeLink.INSTANCE, Items.LEAD, ModItems.ANIMA_ESSENCE.get(), Items.SCULK_SENSOR);
         addRecipe(EffectPhantom.INSTANCE, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, ModItems.ANIMA_ESSENCE.get());
         addRecipe(EffectConflagrate.INSTANCE, Items.GUNPOWDER, ItemsRegistry.FIRE_ESSENCE, BlockRegistry.BOMBEGRANTE_POD.asItem(), Items.NETHERITE_SCRAP);
+
+        addRecipe(EffectSlimeFeet.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.ABJURATION_ESSENCE, Items.SLIME_BALL, Items.ICE);
+        addRecipe(EffectGeyser.INSTANCE, ItemsRegistry.FIRE_ESSENCE, ItemsRegistry.WATER_ESSENCE, Items.MAGMA_BLOCK, Items.WIND_CHARGE);
+        addRecipe(EffectMist.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.AIR_ESSENCE, Items.PHANTOM_MEMBRANE, Items.BLUE_ICE);
+        addRecipe(EffectWaterJet.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.MANIPULATION_ESSENCE, Items.PRISMARINE_SHARD, ItemsRegistry.WILDEN_SPIKE, Items.BREEZE_ROD);
 
         addRecipe(EffectSpike.INSTANCE, Items.POINTED_DRIPSTONE, Items.NETHERITE_INGOT, ItemsRegistry.EARTH_ESSENCE);
         addRecipe(EffectEnvenom.INSTANCE, Items.POISONOUS_POTATO, Items.FERMENTED_SPIDER_EYE, Items.SUSPICIOUS_STEW);

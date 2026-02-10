@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:glyphs_1",
+  "icon": "ars_elemental:glyph_slime_feet",
+  "name": "ars_elemental.glyph_name.glyph_slime_feet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_elemental.glyph_desc.glyph_slime_feet"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_elemental:glyph_slime_feet"
+    }
+  ],
+  "sortnum": 2
+}

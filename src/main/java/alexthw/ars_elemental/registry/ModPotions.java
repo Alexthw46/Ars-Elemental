@@ -4,6 +4,8 @@ import alexthw.ars_elemental.common.mob_effects.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -14,6 +16,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
+import static alexthw.ars_elemental.ArsElemental.prefix;
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.longPotion;
 import static com.hollingsworth.arsnouveau.common.lib.LibPotions.potion;
 
@@ -34,6 +37,8 @@ public class ModPotions {
     public static final DeferredHolder<MobEffect, LightningLureEffect> LIGHTNING_LURE;
     public static final DeferredHolder<MobEffect, RepelEffect> REPEL;
     public static final DeferredHolder<MobEffect, VenomEffect> VENOM;
+    public static final DeferredHolder<MobEffect, MobEffect> MIST;
+    public static final DeferredHolder<MobEffect, MobEffect> SLIME_SLIDE;
 
 
     public static final DeferredHolder<Potion, Potion> ENDERFERENCE_POTION;
@@ -67,6 +72,8 @@ public class ModPotions {
         LIGHTNING_LURE = EFFECTS.register("static_charged", LightningLureEffect::new);
         REPEL = EFFECTS.register("repel", RepelEffect::new);
         VENOM = EFFECTS.register("venom", VenomEffect::new);
+        SLIME_SLIDE = EFFECTS.register("slime_feet", SlimyFeetEffect::new);
+        MIST = EFFECTS.register("mist", () -> new MistEffect().addAttributeModifier(Attributes.FOLLOW_RANGE, prefix("mist"), -0.75f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 1200)));

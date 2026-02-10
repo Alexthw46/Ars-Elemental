@@ -26,14 +26,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class CarianPhalanx extends EntityProjectileSpell {
+public class EntityCarianPhalanx extends EntityProjectileSpell {
 
     // Data accessors
-    public static final EntityDataAccessor<Vec3> LAST_POS = SynchedEntityData.defineId(CarianPhalanx.class, DataSerializers.VEC.get());
-    public static final EntityDataAccessor<Integer> INDEX = SynchedEntityData.defineId(CarianPhalanx.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> ACCELERATES = SynchedEntityData.defineId(CarianPhalanx.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Float> AOE = SynchedEntityData.defineId(CarianPhalanx.class, EntityDataSerializers.FLOAT);
-    public static final EntityDataAccessor<Boolean> IS_LAUNCHED = SynchedEntityData.defineId(CarianPhalanx.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Vec3> LAST_POS = SynchedEntityData.defineId(EntityCarianPhalanx.class, DataSerializers.VEC.get());
+    public static final EntityDataAccessor<Integer> INDEX = SynchedEntityData.defineId(EntityCarianPhalanx.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> ACCELERATES = SynchedEntityData.defineId(EntityCarianPhalanx.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Float> AOE = SynchedEntityData.defineId(EntityCarianPhalanx.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Boolean> IS_LAUNCHED = SynchedEntityData.defineId(EntityCarianPhalanx.class, EntityDataSerializers.BOOLEAN);
     // Formation constants
     private static final double FORMATION_DISTANCE = 0.2; // Distance behind player
     private static final double FORMATION_HEIGHT = 0.8;   // Height above player's head
@@ -45,11 +45,11 @@ public class CarianPhalanx extends EntityProjectileSpell {
     private LivingEntity target;
     private List<Predicate<LivingEntity>> ignore;
 
-    public CarianPhalanx(EntityType<? extends CarianPhalanx> entityType, Level world) {
+    public EntityCarianPhalanx(EntityType<? extends EntityCarianPhalanx> entityType, Level world) {
         super(entityType, world);
     }
 
-    public CarianPhalanx(Level worldIn, double x, double y, double z) {
+    public EntityCarianPhalanx(Level worldIn, double x, double y, double z) {
         super(worldIn, x, y, z);
     }
 

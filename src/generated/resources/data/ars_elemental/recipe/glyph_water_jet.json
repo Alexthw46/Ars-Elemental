@@ -1,0 +1,25 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 160,
+  "inputs": [
+    {
+      "item": "ars_nouveau:water_essence"
+    },
+    {
+      "item": "ars_nouveau:manipulation_essence"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "ars_nouveau:wilden_spike"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_water_jet"
+  }
+}

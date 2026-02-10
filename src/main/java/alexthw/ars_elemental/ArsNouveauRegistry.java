@@ -113,6 +113,17 @@ public class ArsNouveauRegistry {
     }
 
 
+    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
+    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> HOMING_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodHomingProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
+    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<LingerTimeline>> GRAVITY_TIMELINE = TIMELINE_DF.register("gravity", () -> new SimpleParticleTimelineType<>(EffectGravity.INSTANCE, LingerTimeline.CODEC, LingerTimeline.STREAM_CODEC, LingerTimeline::new));
+
+    public static void registerRitual(AbstractRitual ritual) {
+        RitualRegistry.registerRitual(ritual);
+    }
+
+    @Deprecated
+    public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
+
     public static void registerGlyphs() {
 
         //effects
@@ -128,6 +139,11 @@ public class ArsNouveauRegistry {
         register(EffectSpike.INSTANCE);
         register(EffectSpark.INSTANCE);
         register(EffectConflagrate.INSTANCE);
+
+        register(EffectWaterJet.INSTANCE);
+        register(EffectGeyser.INSTANCE);
+        register(EffectMist.INSTANCE);
+        register(EffectSlimeFeet.INSTANCE);
 
         //methods
         register(MethodHomingProjectile.INSTANCE);
@@ -158,17 +174,6 @@ public class ArsNouveauRegistry {
             register(MethodCarianPhalanx.INSTANCE);
         }
     }
-
-    public static void registerRitual(AbstractRitual ritual) {
-        RitualRegistry.registerRitual(ritual);
-    }
-
-    @Deprecated
-    public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
-
-    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
-//    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> HOMING_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodHomingProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
-    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<LingerTimeline>> GRAVITY_TIMELINE = TIMELINE_DF.register("gravity", () -> new SimpleParticleTimelineType<>(EffectGravity.INSTANCE, LingerTimeline.CODEC, LingerTimeline.STREAM_CODEC, LingerTimeline::new));
 
     public static void addSchool(AbstractSpellPart part, SpellSchool school) {
         part.spellSchools.add(school);

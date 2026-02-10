@@ -12,7 +12,11 @@ import com.hollingsworth.arsnouveau.api.event.SummonEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
-import com.hollingsworth.arsnouveau.common.entity.*;
+import com.hollingsworth.arsnouveau.common.entity.EntityAllyVex;
+import com.hollingsworth.arsnouveau.common.entity.IFollowingSummon;
+import com.hollingsworth.arsnouveau.common.entity.SummonHorse;
+import com.hollingsworth.arsnouveau.common.entity.SummonSkeleton;
+import com.hollingsworth.arsnouveau.common.entity.SummonWolf;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
@@ -30,7 +34,7 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 import java.util.Set;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = ArsElemental.MODID)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class SummonEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGH)

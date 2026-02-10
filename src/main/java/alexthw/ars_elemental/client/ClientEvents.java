@@ -12,12 +12,17 @@ import alexthw.ars_elemental.client.particle.VenomParticle;
 import alexthw.ars_elemental.client.summons.DireWolfRenderer;
 import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
+import alexthw.ars_elemental.common.entity.spells.EntityGeyser;
+import alexthw.ars_elemental.common.entity.spells.EntityLavaGeyser;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
+import alexthw.ars_elemental.common.entity.spells.EntityMistCloud;
+import alexthw.ars_elemental.common.entity.spells.EntityWaterJet;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModParticles;
+import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
 import alexthw.ars_elemental.registry.ModTiles;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -29,6 +34,7 @@ import com.hollingsworth.arsnouveau.client.renderer.entity.StyledSpellRender;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerModel;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.network.Networking;
+import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -36,6 +42,7 @@ import net.minecraft.client.renderer.entity.*;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Vex;
@@ -46,12 +53,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -59,7 +61,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 
-@EventBusSubscriber(modid = ArsElemental.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsElemental.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
     static final ResourceLocation SkeletalHorseTexture = ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_skeleton.png");
@@ -71,6 +73,33 @@ public class ClientEvents {
 
     }
 
+    @SubscribeEvent
+    public static void onRenderFog(ViewportEvent.RenderFog event) {
+        if (event.getCamera().getEntity() instanceof LivingEntity living && living.hasEffect(ModPotions.MIST)) {
+
+            // 'Near' is where fog starts (0 = right at your eyes)
+            // 'Far' is where fog becomes 100% opaque (5 blocks away = you can't see past 5 blocks)
+            event.setNearPlaneDistance(0.20f);
+            event.setFarPlaneDistance(8.0f);
+
+            // Sphere shape makes it feel like proper volumetric fog,
+            // Cylinder is the old vanilla render style
+            event.setFogShape(FogShape.SPHERE);
+
+            // Essential: Cancel the event to prevent Vanilla/Other mods from overwriting your values
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onFogColor(ViewportEvent.ComputeFogColor event) {
+        var player = event.getCamera().getEntity();
+        if (player instanceof LivingEntity living && living.hasEffect(ModPotions.MIST)) {
+            event.setRed(0.85f);
+            event.setGreen(0.9f);
+            event.setBlue(0.95f);
+        }
+    }
 
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {
@@ -92,7 +121,6 @@ public class ClientEvents {
 
         event.registerEntityRenderer(ModEntities.FLASHJACK_ENTITY.get(), FlashJackRenderer::new);
         event.registerEntityRenderer(ModEntities.FLASHJACK_FAMILIAR.get(), FlashJackFamiliarRenderer::new);
-
 
         event.registerEntityRenderer(ModEntities.SKELEHORSE_SUMMON.get(), manager -> new UndeadHorseRenderer(manager, ModelLayers.SKELETON_HORSE) {
             @Override
@@ -136,6 +164,30 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.LERP_PROJECTILE.get(), (m) -> new EntityRenderer<>(m) {
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull EntityLerpedProjectile pEntity) {
+                return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
+            }
+        });
+        event.registerEntityRenderer(ModEntities.WATER_JET_MARKER.get(), (m) -> new EntityRenderer<>(m) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull EntityWaterJet pEntity) {
+                return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
+            }
+        });
+        event.registerEntityRenderer(ModEntities.GEYSER.get(), (m) -> new EntityRenderer<>(m) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull EntityGeyser pEntity) {
+                return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
+            }
+        });
+        event.registerEntityRenderer(ModEntities.FIRE_GEYSER.get(), (m) -> new EntityRenderer<>(m) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull EntityLavaGeyser pEntity) {
+                return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
+            }
+        });
+        event.registerEntityRenderer(ModEntities.MIST_CLOUD.get(), (m) -> new EntityRenderer<>(m) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull EntityMistCloud pEntity) {
                 return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/entity/spell_proj.png");
             }
         });

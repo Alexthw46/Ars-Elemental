@@ -8,7 +8,12 @@ import com.alexthw.sauce.api.IUndeadSummon;
 import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.alexthw.sauce.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.event.SpellCastEvent;
-import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
+import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
@@ -41,7 +46,7 @@ import java.util.stream.IntStream;
 import static alexthw.ars_elemental.ConfigHandler.COMMON;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = ArsElemental.MODID)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class NecroticFocus extends ElementalCurio implements ISchoolFocus {
 
     public NecroticFocus(Item.Properties properties) {
