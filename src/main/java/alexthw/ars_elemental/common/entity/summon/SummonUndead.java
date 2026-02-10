@@ -9,6 +9,7 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public class SummonUndead extends SummonSkeleton implements IUndeadSummon {
 
@@ -21,7 +22,7 @@ public class SummonUndead extends SummonSkeleton implements IUndeadSummon {
     }
 
     @Override
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.WSKELETON_SUMMON.get();
     }
 

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
-@EventBusSubscriber(modid = ArsElemental.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class Datagen {
 
     public static CompletableFuture<HolderLookup.Provider> provider;

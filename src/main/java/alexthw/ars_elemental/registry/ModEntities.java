@@ -17,6 +17,7 @@ import alexthw.ars_elemental.common.entity.spikes.EnchantedDripstoneEntity;
 import alexthw.ars_elemental.common.entity.spikes.IceSpikeEntity;
 import alexthw.ars_elemental.common.entity.summon.*;
 import alexthw.ars_elemental.common.glyphs.EffectSpark;
+import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
@@ -71,7 +72,8 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<SummonDolphin>> DOLPHIN_SUMMON;
     public static final DeferredHolder<EntityType<?>, EntityType<SummonStrider>> STRIDER_SUMMON;
     public static final DeferredHolder<EntityType<?>, EntityType<SummonCamel>> CAMEL_SUMMON;
-
+    public static final DeferredHolder<EntityType<?>, EntityType<SummonSlime>> SLIME_SUMMON;
+    public static final DeferredHolder<EntityType<?>, EntityType<SummonBee>> BEE_SUMMON;
 
     public static final DeferredHolder<EntityType<?>, EntityType<AllyVhexEntity>> VHEX_SUMMON;
     public static final DeferredHolder<EntityType<?>, EntityType<EntityMagnetSpell>> LINGER_MAGNET;
@@ -114,11 +116,13 @@ public class ModEntities {
 
         SKELEHORSE_SUMMON = addEntity("summon_skelehorse", 1.4F, 1.6F, true, true, SummonSkeleHorse::new, MobCategory.CREATURE);
         CAMEL_SUMMON = addEntity("summon_camel", 1.7F, 2.375F, true, true, SummonCamel::new, MobCategory.CREATURE);
-
-        DIREWOLF_SUMMON = registerEntity("summon_direwolf", 0.9F, 1.0F, SummonDirewolf::new, MobCategory.CREATURE);
-        WSKELETON_SUMMON = registerEntity("summon_wskeleton", 1.0F, 1.8F, SummonUndead::new, MobCategory.CREATURE);
         DOLPHIN_SUMMON = addEntity("summon_dolphin", 0.9F, 0.6F, false, true, SummonDolphin::new, MobCategory.WATER_CREATURE);
         STRIDER_SUMMON = addEntity("summon_strider", 0.9F, 1.7F, true, true, SummonStrider::new, MobCategory.CREATURE);
+
+        DIREWOLF_SUMMON = addEntity("summon_direwolf", 0.9F, 1.0F, false, CompatUtils.isSummonRework(), SummonDirewolf::new, MobCategory.CREATURE);
+        WSKELETON_SUMMON = addEntity("summon_wskeleton", 1.0F, 1.8F, false, CompatUtils.isSummonRework(), SummonUndead::new, MobCategory.CREATURE);
+        SLIME_SUMMON = addEntity("summon_slime", 0.52F, 0.52F, false, CompatUtils.isSummonRework(), SummonSlime::new, MobCategory.CREATURE);
+        BEE_SUMMON = addEntity("summon_bee", 0.7F, 0.6F, false, CompatUtils.isSummonRework(), SummonBee::new, MobCategory.CREATURE);
 
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);

@@ -84,6 +84,8 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(InsectFilter.INSTANCE, ItemsRegistry.ALLOW_ITEM_SCROLL, Items.SPIDER_EYE);
         addRecipe(InsectFilter.NOT_INSTANCE, ItemsRegistry.DENY_ITEM_SCROLL, Items.SPIDER_EYE);
 
+        addRecipe(EffectSummonSlime.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.CONJURATION_ESSENCE, Items.SLIME_BALL, Items.SLIME_BALL);
+        addRecipe(EffectSummonBee.INSTANCE, ItemsRegistry.EARTH_ESSENCE, ItemsRegistry.CONJURATION_ESSENCE, ItemsRegistry.MAGE_BLOOM, Items.HONEYCOMB);
 
         for (GlyphRecipe recipe : recipes) {
             Path path = getScribeGlyphPath(output, recipe.output.getItem());

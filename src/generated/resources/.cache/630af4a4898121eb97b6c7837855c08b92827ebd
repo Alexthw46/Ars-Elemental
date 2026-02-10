@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-10T01:25:31.2906647	Ars Elemental Glyph Recipes
+// 1.21.1	2026-02-10T15:50:10.1238923	Ars Elemental Glyph Recipes
 7f7506751675b1d87ec7db1ccedcb4210a0041e9 data/ars_elemental/recipe/glyph_aerial_filter.json
 3b8f76168d955361326f91d4af658f899a4f12f7 data/ars_elemental/recipe/glyph_aquatic_filter.json
 7af1aca836a572719061d1c76265c17f65db049b data/ars_elemental/recipe/glyph_arc_projectile.json
@@ -28,7 +28,9 @@ eb084e4b61bcc3dff594ddd75416665f4107533c data/ars_elemental/recipe/glyph_propaga
 d4f02224e410824b6eae295aca6416bdc00d9d40 data/ars_elemental/recipe/glyph_slime_feet.json
 da5f19c2954a129684895d14f3ecdf4a46270e5c data/ars_elemental/recipe/glyph_spark.json
 12af8735775455776e52ef61a09db6a56f0b2e75 data/ars_elemental/recipe/glyph_spike.json
+8f62c00623925b30d6e314921337c65797edb951 data/ars_elemental/recipe/glyph_summon_bee.json
 efdb39a8b3e7b63bf245f8cec9206273d6b6159a data/ars_elemental/recipe/glyph_summon_filter.json
+0ecadabf849ef5aac68106deada5ae6da99e1fab data/ars_elemental/recipe/glyph_summon_slime.json
 7189c2170cc32bec6a348ee10bcf8691cb907e50 data/ars_elemental/recipe/glyph_undead_filter.json
 b0d525b1c55d568dadca0231dc5b4834ed725800 data/ars_elemental/recipe/glyph_watery_grave.json
 c043515aa38aebd306682b6d382fdfa53b2a5398 data/ars_elemental/recipe/glyph_water_jet.json

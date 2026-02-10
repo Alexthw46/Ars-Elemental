@@ -17,6 +17,7 @@ import alexthw.ars_elemental.common.entity.spells.EntityLavaGeyser;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.common.entity.spells.EntityMistCloud;
 import alexthw.ars_elemental.common.entity.spells.EntityWaterJet;
+import alexthw.ars_elemental.common.entity.summon.SummonSlime;
 import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.network.OpenCurioBagPacket;
 import alexthw.ars_elemental.registry.ModEntities;
@@ -43,8 +44,10 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -137,6 +140,41 @@ public class ClientEvents {
             public @NotNull ResourceLocation getTextureLocation(@NotNull AbstractSkeleton entity) {
                 return ResourceLocation.withDefaultNamespace("textures/entity/skeleton/wither_skeleton.png");
             }
+        });
+        event.registerEntityRenderer(ModEntities.SLIME_SUMMON.get(), p_174391_ -> new SlimeRenderer(p_174391_) {
+            static final ResourceLocation defLoc = prefix("textures/entity/slime/slime.png");
+            static final ResourceLocation waterLoc = prefix("textures/entity/slime/slime_water.png");
+            static final ResourceLocation earthLoc = prefix("textures/entity/slime/slime_earth.png");
+            static final ResourceLocation airLoc = prefix("textures/entity/slime/slime_air.png");
+            static final ResourceLocation manipLoc = prefix("textures/entity/slime/slime_manipulation.png");
+            private static final ResourceLocation MAGMACUBE_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/slime/magmacube.png");
+
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull Slime entity) {
+                if (!(entity instanceof SummonSlime summon))
+                    return super.getTextureLocation(entity);
+                var variant = summon.getVariant();
+                return switch (variant) {
+                    case "summon" -> defLoc;
+                    case "earth" -> earthLoc;
+                    case "fire" -> MAGMACUBE_LOCATION;
+                    case "water" -> waterLoc;
+                    case "air" -> airLoc;
+                    case "manipulation" -> manipLoc;
+
+                    default -> super.getTextureLocation(entity);
+                };
+            }
+        });
+
+        event.registerEntityRenderer(ModEntities.BEE_SUMMON.get(), p_173931_ -> new BeeRenderer(p_173931_) {
+            private static final ResourceLocation ANGRY_BEE_TEXTURE = prefix("textures/entity/bee_angry.png");
+            private static final ResourceLocation BEE_TEXTURE = prefix("textures/entity/bee.png");
+
+            public @NotNull ResourceLocation getTextureLocation(@NotNull Bee entity) {
+                return entity.isAngry() ? ANGRY_BEE_TEXTURE : BEE_TEXTURE;
+            }
+
         });
         event.registerEntityRenderer(ModEntities.DOLPHIN_SUMMON.get(), DolphinRenderer::new);
         event.registerEntityRenderer(ModEntities.STRIDER_SUMMON.get(), StriderRenderer::new);

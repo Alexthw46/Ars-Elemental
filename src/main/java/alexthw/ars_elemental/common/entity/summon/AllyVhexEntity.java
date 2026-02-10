@@ -42,7 +42,7 @@ public class AllyVhexEntity extends EntityAllyVex implements IUndeadSummon {
         oldVex.getActiveEffects().stream().filter(e -> e.getEffect().value().isBeneficial()).forEach(this::addEffect);
     }
 
-    public EntityType<?> getType() {
+    public @NotNull EntityType<?> getType() {
         return ModEntities.VHEX_SUMMON.get();
     }
 

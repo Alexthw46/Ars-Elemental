@@ -1,0 +1,22 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 27,
+  "inputs": [
+    {
+      "item": "ars_nouveau:earth_essence"
+    },
+    {
+      "item": "ars_nouveau:conjuration_essence"
+    },
+    {
+      "item": "ars_nouveau:magebloom"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ars_elemental:glyph_summon_bee"
+  }
+}
