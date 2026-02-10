@@ -145,6 +145,10 @@ public class ArsNouveauRegistry {
         register(EffectMist.INSTANCE);
         register(EffectSlimeFeet.INSTANCE);
 
+        //summons
+        register(EffectSummonBee.INSTANCE);
+        register(EffectSummonSlime.INSTANCE);
+
         //methods
         register(MethodHomingProjectile.INSTANCE);
         register(MethodArcProjectile.INSTANCE);
@@ -172,6 +176,7 @@ public class ArsNouveauRegistry {
 
         if (!isProduction()) {
             register(MethodCarianPhalanx.INSTANCE);
+
         }
     }
 

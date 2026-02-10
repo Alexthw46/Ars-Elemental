@@ -6,6 +6,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
+import net.neoforged.neoforgespi.language.IModFileInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -21,6 +22,7 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_WATE
 public class CompatUtils {
     static boolean botania = false;
     static boolean creo = false;
+    static boolean SSR = false;
 
     public static boolean isBotaniaLoaded() {
         return botania;
@@ -30,13 +32,23 @@ public class CompatUtils {
         return creo;
     }
 
+    public static boolean isSummonRework() {
+        return SSR;
+    }
+
     public static void checkCompats() {
 
         ModList modList = ModList.get();
 
         botania = modList.isLoaded("botania");
         creo = modList.isLoaded("ars_creo");
+        IModFileInfo info = modList.getModFileById("ars_nouveau");
+        String version = info.versionString();
 
+        // examples
+        if (version.contains("SSR")) {
+            SSR = true;
+        }
     }
 
     public static SlotResult getCurio(LivingEntity player, Predicate<ItemStack> predicate) {
@@ -44,7 +56,7 @@ public class CompatUtils {
         SlotResult noResult = new SlotResult(null, ItemStack.EMPTY);
         if (lazy.isPresent()) {
             var curioInv = lazy.get();
-                return curioInv.findFirstCurio(predicate).orElse(noResult);
+            return curioInv.findFirstCurio(predicate).orElse(noResult);
         }
         return noResult;
     }

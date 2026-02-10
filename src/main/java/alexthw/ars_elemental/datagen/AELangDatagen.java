@@ -107,6 +107,8 @@ public class AELangDatagen extends LanguageProvider {
         add("entity.ars_elemental.summon_skelehorse", "Summoned Skeletal Steed");
         add("entity.ars_elemental.summon_camel", "Summoned Camel");
         add("entity.ars_elemental.summon_direwolf", "Summoned Direwolf");
+        add("entity.ars_elemental.summon_slime", "Summoned Slime");
+        add("entity.ars_elemental.summon_bee", "Summoned Bee");
         add("entity.ars_elemental.summon_vhex", "Summoned Vhex");
         add("entity.ars_elemental.summon_wskeleton", "Summoned Revenant");
         add("entity.ars_elemental.summon_dolphin", "Summoned Dolphin");
