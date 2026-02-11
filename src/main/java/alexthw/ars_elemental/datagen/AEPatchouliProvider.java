@@ -5,7 +5,11 @@ import alexthw.ars_elemental.common.entity.familiars.MermaidHolder;
 import alexthw.ars_elemental.common.items.armor.ArmorSet;
 import alexthw.ars_elemental.common.items.armor.ShockPerk;
 import alexthw.ars_elemental.common.items.armor.SporePerk;
-import alexthw.ars_elemental.common.rituals.*;
+import alexthw.ars_elemental.common.rituals.AttractionRitual;
+import alexthw.ars_elemental.common.rituals.DetectionRitual;
+import alexthw.ars_elemental.common.rituals.RepulsionRitual;
+import alexthw.ars_elemental.common.rituals.SquirrelRitual;
+import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestRitual;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
@@ -82,7 +86,6 @@ public class AEPatchouliProvider extends PatchouliProvider {
                         .withPage(ImbuementPage(ModItems.ACC_LENS.get()))
                         .withPage(ImbuementPage(ModItems.DEC_LENS.get()))
                         .withPage(ImbuementPage(ModItems.PIERCE_LENS.get()))
-                        .withPage(ImbuementPage(ModItems.RGB_LENS.get()))
                 , getPath(AUTOMATION, "advanced_prism"));
 
         addPage(new PatchouliBuilder(AUTOMATION, "elemental_turrets")

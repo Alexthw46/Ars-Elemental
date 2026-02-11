@@ -76,7 +76,7 @@ public class AELangDatagen extends LanguageProvider {
         add("item.ars_elemental.flashpine_pod", "Flashpine");
         add("item.ars_elemental.arc_prism_lens", "Arc Prism Lens");
         add("item.ars_elemental.homing_prism_lens", "Homing Prism Lens");
-        add("item.ars_elemental.rainbow_prism_lens", "Rainbow Prism Lens");
+        add("item.ars_elemental.rainbow_prism_lens", "Rainbow Prism Lens [REMOVED]");
         add("item.ars_elemental.acceleration_prism_lens", "Acceleration Prism Lens");
         add("item.ars_elemental.deceleration_prism_lens", "Deceleration Prism Lens");
         add("item.ars_elemental.piercing_prism_lens", "Piercing Prism Lens");
@@ -102,6 +102,10 @@ public class AELangDatagen extends LanguageProvider {
         add("block.ars_elemental.air_turret", "Air Infused Turret");
         add("block.ars_elemental.earth_turret", "Earth Infused Turret");
         add("block.ars_elemental.manipulation_turret", "Manipulation Infused Turret");
+        add("block.ars_elemental.fire_relay", "Fiery Collector Relay");
+        add("block.ars_elemental.water_relay", "Flow Splitter Relay");
+        add("block.ars_elemental.air_relay", "Wind Warper Relay");
+        add("block.ars_elemental.earth_relay", "Deep Depositor Relay");
         add("block.ars_elemental.flashpine_pod", "Flashpine");
         add("entity.ars_elemental.lerp", "Interpolated Source Effect");
         add("entity.ars_elemental.summon_skelehorse", "Summoned Skeletal Steed");
@@ -196,11 +200,13 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page2.siren_charm", "The Shrine will slowly generate fishing loot items over time, asking for source after each cycle. The number of items and chance of getting a treasure will increase if many different water animals and plants are near the Shrine. You should build an aquarium or pond around the Shrine, to let your sirens have fun. [Note: it will take some time to update the score].");
         add("ars_elemental.page1.flashjack_charm", "Flashjacks are usually found in archwood forests, hiding among the trees, or in high mountainous peaks. You can befriend a wild flashjack by giving them a flashpine. In the current version, they don't have a fully implemented job yet but try to link them to a turret loaded with an attack spell in front of an horde, if you are curious.");
         add("ars_elemental.page1.advanced_prism", "Upgrade of the Spell Prism that can be adjusted to aim to a specific block. This prism also allows to equip a lens that modifies the redirected projectile, but can't be pushed by pistons. Use the dominion wand to aim the prism to a block, shift-click to remove the lens. Specific lens may require source whenever a projectile is redirected to extend the spell, their limits can be configured.");
-        add("ars_elemental.page2.advanced_prism", "A Prism Lens can be applied to this advanced prisms to customize how the prism redirects projectiles. Arc and Homing lenses change the projectile to be an arc or homing projectile. Rainbow lens randomize the color of the projectile, while Acceleration and Deceleration lenses allow to adjust the speed.");
+        add("ars_elemental.page2.advanced_prism", "A Prism Lens can be applied to this advanced prisms to customize how the prism redirects projectiles. Arc and Homing lenses change the projectile to be an arc or homing projectile. Acceleration and Deceleration lenses allow to adjust the speed.");
         add("ars_elemental.page3.advanced_prism", "Piercing and Chaining lenses require source to work. Chaining lens can be inscribed on a table and will append its glyphs on the projectile redirected, if valid. Cost scales linearly with the new spell created. Piercing lens will allow to increase the projectile piercing for a fixed cost.");
         add("ars_nouveau.page.spell_mirror", "Mirror similar to a Spell Prism that can be placed on walls, floor and ceiling. If a spell projectile hits the mirror, it will be reflected by with a mirrored angle.");
         add("ars_elemental.page.elemental_turrets", "Elemental Infused Turrets");
         add("ars_elemental.page1.elemental_turrets", "Enchanted Turrets can be imbued with the power of an elemental focus to gift them a fractions of its abilities. Spells shot by these turrets will trigger the combos of the corresponding focus and will be discounted by 65 %% if the spell contains a glyph of the matching elemental school.");
+        add("ars_elemental.page.elemental_relays", "Elemental Relays");
+        add("ars_elemental.page1.elemental_relays", "Source Relays can be improved in terms of internal capacity and transfer rate by infusing them with their respective element. Warper Relays upgraded this way don't lose source over long distances.");
         add("ars_elemental.page1.base_bangle", "This magic accessory has a chance to boost the damage of your spells. Its magic is unstable but perhaps attuning it to a school can stabilize its abilities.");
         add("ars_elemental.page.air_bangle", "This bangle will boost the damage of your Air spells. Your arms sparks with the element, giving a passive boost to speed and attack knockback.");
         add("ars_elemental.page.fire_bangle", "This bangle will boost the damage of your Fire spells. Your arms are engulfed in the element, setting on fire enemies hit and granting a passive boost to speed while in hot biomes.");

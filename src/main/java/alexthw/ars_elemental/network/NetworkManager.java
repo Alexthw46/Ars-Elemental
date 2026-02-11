@@ -12,15 +12,9 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
-@EventBusSubscriber(modid = ArsElemental.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class NetworkManager {
     public static final String PROTOCOL_VERSION = "1";
-
-    private static int ID = 0;
-
-    public static int nextID() {
-        return ID++;
-    }
 
     @SubscribeEvent
     public static void register(final RegisterPayloadHandlersEvent event) {

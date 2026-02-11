@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-12T17:20:27.5297425	Ars Elemental Item Models
+// 1.21.1	2026-02-11T00:46:01.0338816	Ars Elemental Item Models
 a5b2cd6b765fcd98484c5cad23aa0a2775ae7d1a assets/ars_elemental/models/item/advanced_prism.json
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
@@ -12,6 +12,7 @@ a6d4c597f4c3f6036e3d68c26e27abe32cbc02be assets/ars_elemental/models/item/air_ho
 79fca4292ed9902253a4f570b90f57e87e2a6ad3 assets/ars_elemental/models/item/air_leggings.json
 84a4ba3c9664711defad172f1e76c0eebfa86ef4 assets/ars_elemental/models/item/air_leggings_heavy.json
 9a2157a81835396db97793ec0313168e7ca55d61 assets/ars_elemental/models/item/air_pants.json
+1834a215f2db742eeed653f5284ee50087c512d9 assets/ars_elemental/models/item/air_relay.json
 f76249799ea44b24f5a7d1d72fa8f0e7d3d7315b assets/ars_elemental/models/item/air_robes.json
 04f47a97fb3525dfca49427ae15952b9fbd1aeb1 assets/ars_elemental/models/item/air_shoes.json
 ebb6963bb99f2e0b06025c58082ab40995df1b67 assets/ars_elemental/models/item/air_tunic.json
@@ -47,6 +48,7 @@ ae2b2da91d77724e2744c0cd32ed9c86cbaffcb9 assets/ars_elemental/models/item/earth_
 82366443aac0ab0638f1f8a3b8aa1c171f3d2dea assets/ars_elemental/models/item/earth_leggings.json
 840898b54408f1f843ba696bcf844097f03c975b assets/ars_elemental/models/item/earth_leggings_heavy.json
 d9c546d9471f37542ed58cf1f2b57c2b5e9329bb assets/ars_elemental/models/item/earth_pants.json
+05d8e275951fcbefd723dbc81b7a8efeb797f3b3 assets/ars_elemental/models/item/earth_relay.json
 56bfcc594fbcf9d1cc93d7b5050c97a5b33f507b assets/ars_elemental/models/item/earth_robes.json
 ddb0271a06c78bc1ba3b748ab34ce485b06bd346 assets/ars_elemental/models/item/earth_shoes.json
 cca23666a5510ead887ef1d364229102de014b22 assets/ars_elemental/models/item/earth_tunic.json
@@ -65,6 +67,7 @@ ad10ffdfea5fbf9ca343423fe8f24db7f88d9d77 assets/ars_elemental/models/item/fire_h
 67b2311f19a26f4499f45a94c82328775dbe29d2 assets/ars_elemental/models/item/fire_leggings.json
 57d9988598080dddb249838b927e1a59f71ae2c1 assets/ars_elemental/models/item/fire_leggings_heavy.json
 7f36b7c58aefcc78c9dc07f8276b0c2de521cc90 assets/ars_elemental/models/item/fire_pants.json
+6ea304e938b877932e8617303f399c706f89aab3 assets/ars_elemental/models/item/fire_relay.json
 7e57c35d7605064907965dea755d5e8dc9fefbc9 assets/ars_elemental/models/item/fire_robes.json
 2b48a18353c08aa7c3a51855624beb8a62a7a4cb assets/ars_elemental/models/item/fire_shoes.json
 f50501c403b25f9f47c6ff9836a7efe0448f7e91 assets/ars_elemental/models/item/fire_tunic.json
@@ -93,6 +96,7 @@ afd0ced11d036f6d2194d7a22e2a7623d0b1bad1 assets/ars_elemental/models/item/summon
 0606a07d3a31b73418fb397eb428d5f5c18519b0 assets/ars_elemental/models/item/water_bangle.json
 03c3057e946e871ffd144ee9d4438d6b167faaa9 assets/ars_elemental/models/item/water_caster_tome.json
 6a31b089a16e82510e68672fe0d8f255b634d84b assets/ars_elemental/models/item/water_focus.json
+e6b57c5cab9f6bb296020ce8ee4cd03696e14d40 assets/ars_elemental/models/item/water_relay.json
 50326a50569eebd915c48dd39615e3e3fbfa4ec4 assets/ars_elemental/models/item/water_turret.json
 2abed2811f13759f60ed87c2e8035a7f753550aa assets/ars_elemental/models/item/water_upstream.json
 706b06cf1edcf4b6fb88b815a28a02ccdd2879f3 assets/ars_elemental/models/item/yellow_archwood.json

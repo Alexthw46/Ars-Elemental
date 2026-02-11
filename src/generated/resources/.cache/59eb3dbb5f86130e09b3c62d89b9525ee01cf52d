@@ -1,9 +1,12 @@
-// 1.21.1	2025-10-05T19:39:50.8206686	Loot Tables
+// 1.21.1	2026-02-11T00:46:01.046651	Loot Tables
 8d72781d2026f75daa4271a5e2af53917ea0dce1 data/ars_elemental/loot_table/blocks/advanced_prism.json
+053efc6445b75a97128c8101dec920f21b8af63f data/ars_elemental/loot_table/blocks/air_relay.json
 d0eef53978be7d8002f4a9460aeeabdf72b73994 data/ars_elemental/loot_table/blocks/air_turret.json
 05387cdc4c9304b3f34395ab58cab180c74929b6 data/ars_elemental/loot_table/blocks/air_upstream.json
+b7c0dfb3abd5f5c8d18904f958d6b2e0432fd3f2 data/ars_elemental/loot_table/blocks/earth_relay.json
 85ba9a67807e57749eed94954370348f55274878 data/ars_elemental/loot_table/blocks/earth_turret.json
 b2d34cc967cead4cd39b7e650198ae1354df0d99 data/ars_elemental/loot_table/blocks/everfull_urn.json
+040309d6600e3649af006db6c1b2144f1572a9da data/ars_elemental/loot_table/blocks/fire_relay.json
 0e5feabd597e96048f19fe1e70a1e57b6917d501 data/ars_elemental/loot_table/blocks/fire_turret.json
 190f06b606630c9c255701839097f00ac54b373a data/ars_elemental/loot_table/blocks/flashpine_pod.json
 85e84861b65c19ea07d539a13153bd78c848742f data/ars_elemental/loot_table/blocks/magma_upstream.json
@@ -18,6 +21,7 @@ a97c32cbd63e39e3a42897ed4a933fdeaa4fbe56 data/ars_elemental/loot_table/blocks/sp
 ab34e3f7b14fa7400517e05d4a49949383ca7d49 data/ars_elemental/loot_table/blocks/spore_blossom_up.json
 865fcfda5b191e651dcc9f7b873a1e651b980e3d data/ars_elemental/loot_table/blocks/stripped_yellow_archwood.json
 8270079c41883cb5a256486dc395c7ae9bb82d93 data/ars_elemental/loot_table/blocks/stripped_yellow_archwood_log.json
+d5dcf5eee871688e4660bd40230ef6e09c45d492 data/ars_elemental/loot_table/blocks/water_relay.json
 e7cc0da3c9e1509c16c671543ac4a6f75313663d data/ars_elemental/loot_table/blocks/water_turret.json
 f354f1856b961f5bd550e2986063b2415fc17aa1 data/ars_elemental/loot_table/blocks/water_upstream.json
 5168330cfe9316eba74611b3d86f7b1169586c4b data/ars_elemental/loot_table/blocks/yellow_archwood.json

@@ -3,6 +3,10 @@ package alexthw.ars_elemental.registry;
 import alexthw.ars_elemental.common.blocks.EverfullUrnTile;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
 import alexthw.ars_elemental.common.blocks.prism.AdvancedPrismTile;
+import alexthw.ars_elemental.common.blocks.relays.AirWarperRelayTile;
+import alexthw.ars_elemental.common.blocks.relays.EarthDepositorRelayTile;
+import alexthw.ars_elemental.common.blocks.relays.FireCollectorRelayTile;
+import alexthw.ars_elemental.common.blocks.relays.WaterSplitterRelayTile;
 import alexthw.ars_elemental.common.blocks.upstream.AirUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.MagmaUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.WaterUpstreamTile;
@@ -23,6 +27,11 @@ public class ModTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagmaUpstreamTile>> LAVA_UPSTREAM_TILE;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AirUpstreamTile>> AIR_UPSTREAM_TILE;
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WaterSplitterRelayTile>> ADVANCED_SPLITTER_RELAY;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AirWarperRelayTile>> ADVANCED_WARP_RELAY;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EarthDepositorRelayTile>> ADVANCED_DEPOSITOR_RELAY;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FireCollectorRelayTile>> ADVANCED_COLLECTOR_RELAY;
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AdvancedPrismTile>> ADVANCED_PRISM;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EverfullUrnTile>> URN_TILE;
     public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MODID);
@@ -34,6 +43,11 @@ public class ModTiles {
         AIR_UPSTREAM_TILE = TILES.register("air_upstream_tile", () -> BlockEntityType.Builder.of(AirUpstreamTile::new, ModItems.AIR_UPSTREAM_BLOCK.get()).build(null));
         URN_TILE = TILES.register("everfull_urn", () -> BlockEntityType.Builder.of(EverfullUrnTile::new, ModItems.WATER_URN.get()).build(null));
         ADVANCED_PRISM = TILES.register("advanced_prism", () -> BlockEntityType.Builder.of(AdvancedPrismTile::new, ModItems.ADVANCED_PRISM.get()).build(null));
+        ADVANCED_SPLITTER_RELAY = TILES.register("adv_splitter_relay", () -> BlockEntityType.Builder.of(WaterSplitterRelayTile::new, ModItems.WATER_RELAY.get()).build(null));
+        ADVANCED_WARP_RELAY = TILES.register("adv_warp_relay", () -> BlockEntityType.Builder.of(AirWarperRelayTile::new, ModItems.AIR_RELAY.get()).build(null));
+        ADVANCED_COLLECTOR_RELAY = TILES.register("adv_collect_relay", () -> BlockEntityType.Builder.of(FireCollectorRelayTile::new, ModItems.FIRE_RELAY.get()).build(null));
+        ADVANCED_DEPOSITOR_RELAY = TILES.register("adv_deposit_relay", () -> BlockEntityType.Builder.of(EarthDepositorRelayTile::new, ModItems.EARTH_RELAY.get()).build(null));
+
     }
 
     public static void addBlocksToTiles(BlockEntityTypeAddBlocksEvent event) {

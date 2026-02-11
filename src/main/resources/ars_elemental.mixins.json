@@ -22,6 +22,8 @@
   "minVersion": "0.8",
   "client": [
     "EntityRenderDispatcherMixin",
-    "SpellBookTextureMixin"
+    "RelayTileMixin",
+    "SpellBookTextureMixin",
+    "SplitterRelayTileMixin"
   ]
 }

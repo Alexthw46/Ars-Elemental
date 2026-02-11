@@ -6,6 +6,10 @@ import alexthw.ars_elemental.common.blocks.EverfullUrnBlock;
 import alexthw.ars_elemental.common.blocks.SporeBlossomGround;
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidRock;
 import alexthw.ars_elemental.common.blocks.prism.*;
+import alexthw.ars_elemental.common.blocks.relays.AirRelay;
+import alexthw.ars_elemental.common.blocks.relays.EarthRelay;
+import alexthw.ars_elemental.common.blocks.relays.FireRelay;
+import alexthw.ars_elemental.common.blocks.relays.WaterRelay;
 import alexthw.ars_elemental.common.blocks.upstream.AirUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.MagmaUpstreamTile;
 import alexthw.ars_elemental.common.blocks.upstream.UpstreamBlock;
@@ -29,6 +33,8 @@ import com.alexthw.sauce.common.block.FocusEnhancedSpellTurret;
 import com.alexthw.sauce.common.item.NecroEssence;
 import com.alexthw.sauce.common.item.SchoolCasterTome;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.client.renderer.item.GenericItemBlockRenderer;
+import com.hollingsworth.arsnouveau.client.renderer.tile.GenericModel;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.MagicLeaves;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
@@ -43,6 +49,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -77,11 +84,13 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
+import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.LOG_PROP;
 import static com.hollingsworth.arsnouveau.setup.registry.BlockRegistry.SAP_PROP;
@@ -113,6 +122,12 @@ public class ModItems {
     public static final DeferredHolder<Block, ? extends Block> WATER_UPSTREAM_BLOCK;
     public static final DeferredHolder<Block, ? extends Block> LAVA_UPSTREAM_BLOCK;
     public static final DeferredHolder<Block, ? extends Block> AIR_UPSTREAM_BLOCK;
+
+    public static final DeferredHolder<Block, ? extends Block> FIRE_RELAY;
+    public static final DeferredHolder<Block, ? extends Block> WATER_RELAY;
+    public static final DeferredHolder<Block, ? extends Block> AIR_RELAY;
+    public static final DeferredHolder<Block, ? extends Block> EARTH_RELAY;
+
     public static final DeferredHolder<Block, ? extends Block> FIRE_TURRET;
     public static final DeferredHolder<Block, ? extends Block> WATER_TURRET;
     public static final DeferredHolder<Block, ? extends Block> AIR_TURRET;
@@ -121,7 +136,6 @@ public class ModItems {
 
     public static final DeferredHolder<Block, AdvancedPrism> ADVANCED_PRISM;
     public static final DeferredHolder<Block, ? extends Block> SPELL_MIRROR;
-
 
     public static final DeferredHolder<Item, GreaterElementalFocus> FIRE_FOCUS;
     public static final DeferredHolder<Item, GreaterElementalFocus> AIR_FOCUS;
@@ -155,7 +169,6 @@ public class ModItems {
     public static final DeferredHolder<Item, SchoolCasterTome> EARTH_CTOME;
     public static final DeferredHolder<Item, SchoolCasterTome> NECRO_CTOME;
     public static final DeferredHolder<Item, SchoolCasterTome> SHAPERS_CTOME;
-
 
     public static final DeferredHolder<Item, BaseBangle> ENCHANTER_BANGLE;
     public static final DeferredHolder<Item, FireBangles> FIRE_BANGLE;
@@ -284,12 +297,17 @@ public class ModItems {
         });
 
         //turrets
-        FIRE_TURRET = addGeckoBlock("fire_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
-        WATER_TURRET = addGeckoBlock("water_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
-        AIR_TURRET = addGeckoBlock("air_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
-        EARTH_TURRET = addGeckoBlock("earth_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
-        SHAPING_TURRET = addGeckoBlock("manipulation_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
+        FIRE_TURRET = addTurret("fire_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_RED).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_FIRE), "fire");
+        WATER_TURRET = addTurret("water_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_LIGHT_BLUE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_WATER), "water");
+        AIR_TURRET = addTurret("air_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_YELLOW).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_AIR), "air");
+        EARTH_TURRET = addTurret("earth_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_GREEN).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.ELEMENTAL_EARTH), "earth");
+        SHAPING_TURRET = addTurret("manipulation_turret", () -> new FocusEnhancedSpellTurret(blockProps(Blocks.GOLD_BLOCK, MapColor.COLOR_ORANGE).sound(SoundType.STONE).strength(2.0f, 6.0f), SpellSchools.MANIPULATION), "manipulation");
 
+        //relays
+        FIRE_RELAY = addRelay("fire_relay", FireRelay::new, "source_collector");
+        WATER_RELAY = addRelay("water_relay", WaterRelay::new, "source_splitter");
+        AIR_RELAY = addRelay("air_relay", AirRelay::new, "source_warp");
+        EARTH_RELAY = addRelay("earth_relay", EarthRelay::new, "source_deposit");
 
         ADVANCED_PRISM = BLOCKS.register("advanced_prism", () -> new AdvancedPrism(blockProps(Blocks.STONE, MapColor.TERRACOTTA_WHITE)));
         ITEMS.register("advanced_prism", () -> new RendererBlockItem(ADVANCED_PRISM.get(), itemProps()) {
@@ -412,13 +430,31 @@ public class ModItems {
         return block;
     }
 
-    static DeferredHolder<Block, ? extends Block> addGeckoBlock(String name, Supplier<Block> blockSupp, String model) {
+    static DeferredHolder<Block, ? extends Block> addTurret(String name, Supplier<Block> blockSupp, String model) {
         DeferredHolder<Block, ? extends Block> block = BLOCKS.register(name, blockSupp);
         ITEMS.register(name, () -> new RendererBlockItem(block.get(), itemProps()) {
             @Override
             @OnlyIn(Dist.CLIENT)
             public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
                 return () -> FocusTurretRenderer.getISTER(model);
+            }
+        });
+        return block;
+    }
+
+    static DeferredHolder<Block, ? extends Block> addRelay(String name, Supplier<Block> blockSupp, String model) {
+        DeferredHolder<Block, ? extends Block> block = BLOCKS.register(name, blockSupp);
+        ResourceLocation texLoc = prefix("textures/block/" + name + ".png");
+        ITEMS.register(name, () -> new RendererBlockItem(block.get(), itemProps()) {
+            @Override
+            @OnlyIn(Dist.CLIENT)
+            public Supplier<BlockEntityWithoutLevelRenderer> getRenderer() {
+                return () -> new GenericItemBlockRenderer(new GenericModel<>(model) {
+                    @Override
+                    public ResourceLocation getTextureResource(GeoAnimatable GeoAnimatable) {
+                        return texLoc;
+                    }
+                });
             }
         });
         return block;

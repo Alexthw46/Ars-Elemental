@@ -14,14 +14,13 @@ import com.hollingsworth.arsnouveau.api.documentation.entry.TextEntry;
 import com.hollingsworth.arsnouveau.api.documentation.search.ConnectedSearch;
 import com.hollingsworth.arsnouveau.api.documentation.search.Search;
 import com.hollingsworth.arsnouveau.api.registry.DocumentationRegistry;
-import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCut;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFreeze;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectGravity;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectGrow;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
-import com.hollingsworth.arsnouveau.setup.registry.ItemRegistryWrapper;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -33,6 +32,10 @@ import net.minecraft.world.level.Level;
 
 import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.registry.ModRegistry.NETHERITE_UP;
+import static com.alexthw.sauce.util.DocsUtil.getBaseEntry;
+import static com.alexthw.sauce.util.DocsUtil.getBaseEntryBlock;
+import static com.alexthw.sauce.util.DocsUtil.getBaseEntryGlyph;
+import static com.alexthw.sauce.util.DocsUtil.getBaseEntryItem;
 import static com.hollingsworth.arsnouveau.api.registry.DocumentationRegistry.*;
 import static com.hollingsworth.arsnouveau.common.lib.LibBlockNames.BASIC_SPELL_TURRET;
 import static com.hollingsworth.arsnouveau.common.lib.LibBlockNames.SPELL_PRISM;
@@ -59,7 +62,7 @@ public class AEDocumentation {
         var advancedPrism = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.ADVANCED_PRISM.get()).withTextPage("ars_elemental.page1.advanced_prism")
                 .withCraftingPages(ModItems.ADVANCED_PRISM.get())
                 .withTextPage("ars_elemental.page2.advanced_prism")
-                .withCraftingPages(ModItems.RGB_LENS.get())
+                //.withCraftingPages(ModItems.RGB_LENS.get())
                 .withCraftingPages(ModItems.ARC_LENS.get())
                 .withCraftingPages(ModItems.HOMING_LENS.get())
                 .withCraftingPages(ModItems.ACC_LENS.get())
@@ -76,6 +79,13 @@ public class AEDocumentation {
                 .withCraftingPages(ModItems.EARTH_TURRET.get())
                 .withCraftingPages(ModItems.SHAPING_TURRET.get()))
                 .withRelation(getBaseEntry(BASIC_SPELL_TURRET));
+
+        var elementalRelays = addPage(new AEDocEntryBuilder(SOURCE, "elemental_relays").withIcon(ModItems.WATER_RELAY.get()).withTextPage("ars_elemental.page1.elemental_relays")
+                .withCraftingPages(ModItems.FIRE_RELAY.get())
+                .withCraftingPages(ModItems.WATER_RELAY.get())
+                .withCraftingPages(ModItems.AIR_RELAY.get())
+                .withCraftingPages(ModItems.EARTH_RELAY.get()))
+                .withRelations(getBaseEntryBlock(BlockRegistry.RELAY), getBaseEntryBlock(BlockRegistry.RELAY_WARP), getBaseEntryBlock(BlockRegistry.RELAY_COLLECTOR), getBaseEntryBlock(BlockRegistry.RELAY_DEPOSIT), getBaseEntryBlock(BlockRegistry.RELAY_SPLITTER));
 
         addBasicItem(ModItems.SPELL_HORN.get(), SPELL_CASTING);
 
@@ -185,18 +195,6 @@ public class AEDocumentation {
         getBaseEntryGlyph(EffectGrow.INSTANCE).addPage(TextEntry.create("ars_elemental.page.grow"));
         getBaseEntryGlyph(EffectCut.INSTANCE).addPage(TextEntry.create("ars_elemental.page.cut"));
 
-    }
-
-    private static DocEntry getBaseEntryGlyph(AbstractSpellPart instance) {
-        return getEntry(instance.getRegistryName());
-    }
-
-    private static DocEntry getBaseEntryItem(ItemRegistryWrapper<?> delegate) {
-        return getBaseEntry(delegate.get().getDescriptionId());
-    }
-
-    static DocEntry getBaseEntry(String entry) {
-        return getEntry(ArsNouveau.prefix(entry));
     }
 
     static class AEDocEntryBuilder extends DocEntryBuilder {

@@ -9,6 +9,7 @@ import net.minecraft.world.phys.Vec3;
 
 import static com.hollingsworth.arsnouveau.common.entity.ColoredProjectile.PARTICLE_TAG;
 
+@Deprecated(forRemoval = true)
 public class RainbowPrismLens extends AbstractPrismLens {
 
     public RainbowPrismLens(Properties pProperties) {

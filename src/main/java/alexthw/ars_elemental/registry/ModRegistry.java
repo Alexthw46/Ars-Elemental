@@ -32,10 +32,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.List;
 
 import static alexthw.ars_elemental.ArsElemental.MODID;
 import static alexthw.ars_elemental.ArsElemental.prefix;
@@ -49,6 +52,7 @@ import static alexthw.ars_elemental.registry.ModPotions.POTIONS;
 import static alexthw.ars_elemental.registry.ModTiles.TILES;
 import static alexthw.ars_elemental.world.ModWorldgen.FEATURES;
 import static com.alexthw.sauce.registry.ModRegistry.CONDITION_CODECS;
+import static com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry.SOURCE_CAPABILITY;
 
 public class ModRegistry {
 
@@ -77,6 +81,17 @@ public class ModRegistry {
     public static final ResourceKey<DamageType> MAGIC_FIRE = key(Registries.DAMAGE_TYPE, "hellfire");
     public static final ResourceKey<DamageType> SPARK = key(Registries.DAMAGE_TYPE, "spark");
 
+    public static final ResourceKey<Enchantment> MIRROR = key(Registries.ENCHANTMENT, "mirror_shield");
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ELEMENTAL_TAB;
+
+    public static final DeferredHolder<MenuType<?>, MenuType<CurioHolderContainer>> CURIO_HOLDER;
+    public static final DeferredHolder<MenuType<?>, MenuType<CasterHolderContainer>> CASTER_HOLDER;
+
+
+    public static final DeferredHolder<BlockStateProviderType<?>, BlockStateProviderType<?>> AE_BLOCKSTATE_PROVIDER;
+    public static final ResourceKey<Enchantment> SOULBOUND = key(Registries.ENCHANTMENT, "soulbound");
+
     public static void registerRegistries(IEventBus bus) {
         A_MATERIALS.register(bus);
         BLOCKS.register(bus);
@@ -96,18 +111,8 @@ public class ModRegistry {
         TABS.register(bus);
         D_COMPONENTS.register(bus);
         bus.addListener(ModTiles::addBlocksToTiles);
+        bus.addListener(ModRegistry::registerCapabilities);
     }
-
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ELEMENTAL_TAB;
-
-    public static final DeferredHolder<MenuType<?>, MenuType<CurioHolderContainer>> CURIO_HOLDER;
-    public static final DeferredHolder<MenuType<?>, MenuType<CasterHolderContainer>> CASTER_HOLDER;
-
-
-    public static final DeferredHolder<BlockStateProviderType<?>, BlockStateProviderType<?>> AE_BLOCKSTATE_PROVIDER;
-
-    public static final ResourceKey<Enchantment> MIRROR = key(Registries.ENCHANTMENT,"mirror_shield");
-    public static final ResourceKey<Enchantment> SOULBOUND = key(Registries.ENCHANTMENT,"soulbound");
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ElementProtectionFlag>> P4E = D_COMPONENTS.register("p4e", () -> DataComponentType.<ElementProtectionFlag>builder().persistent(ElementProtectionFlag.CODEC).networkSynchronized(ElementProtectionFlag.STREAM_CODEC).build());
 
@@ -151,6 +156,12 @@ public class ModRegistry {
                     }
                 }).withTabsBefore(CreativeTabRegistry.BLOCKS.getId())
                 .build());
+    }
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        var relays = List.of(ModTiles.ADVANCED_COLLECTOR_RELAY, ModTiles.ADVANCED_DEPOSITOR_RELAY, ModTiles.ADVANCED_WARP_RELAY, ModTiles.ADVANCED_SPLITTER_RELAY);
+        for (var relay : relays)
+            event.registerBlockEntity(SOURCE_CAPABILITY, relay.get(), (sourceJar, side) -> sourceJar.getSourceStorage());
     }
 
     static <T> ResourceKey<T> key(ResourceKey<Registry<T>> registryResourceKey, String name) {

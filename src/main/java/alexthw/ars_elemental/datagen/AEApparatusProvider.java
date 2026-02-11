@@ -331,6 +331,11 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .keepNbtOfReagent(true)
                 .build());
 
+        recipes.add(builder().withResult(ModItems.FIRE_RELAY.get()).withReagent(BlockRegistry.RELAY_COLLECTOR.asItem()).withPedestalItem(2, ItemsRegistry.FIRE_ESSENCE).withPedestalItem(2, Tags.Items.GEMS_DIAMOND).build());
+        recipes.add(builder().withResult(ModItems.WATER_RELAY.get()).withReagent(BlockRegistry.RELAY_SPLITTER.asItem()).withPedestalItem(2, ItemsRegistry.WATER_ESSENCE).withPedestalItem(2, Tags.Items.GEMS_DIAMOND).build());
+        recipes.add(builder().withResult(ModItems.AIR_RELAY.get()).withReagent(BlockRegistry.RELAY_WARP.asItem()).withPedestalItem(2, ItemsRegistry.AIR_ESSENCE).withPedestalItem(2, Tags.Items.GEMS_DIAMOND).build());
+        recipes.add(builder().withResult(ModItems.EARTH_RELAY.get()).withReagent(BlockRegistry.RELAY_DEPOSIT.asItem()).withPedestalItem(2, ItemsRegistry.EARTH_ESSENCE).withPedestalItem(2, Tags.Items.GEMS_DIAMOND).build());
+
         Path output = this.generator.getPackOutput().getOutputFolder();
         for (ApparatusRecipeBuilder.RecipeWrapper<? extends EnchantingApparatusRecipe> g : recipes) {
             if (g != null) {

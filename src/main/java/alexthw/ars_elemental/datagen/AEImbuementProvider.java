@@ -146,15 +146,6 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(AugmentPierce.INSTANCE.getGlyph())
         );
-        recipes.add(new ImbuementRecipe("rainbow_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.RGB_LENS.get().getDefaultInstance(), 2000)
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-                .withPedestalItem(Ingredient.of(Tags.Items.DYES))
-        );
     }
 
     protected Path getRecipePath(Path pathIn, String str) {

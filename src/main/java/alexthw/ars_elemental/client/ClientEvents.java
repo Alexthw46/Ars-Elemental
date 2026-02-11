@@ -12,6 +12,10 @@ import alexthw.ars_elemental.client.particle.VenomParticle;
 import alexthw.ars_elemental.client.summons.DireWolfRenderer;
 import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
+import alexthw.ars_elemental.common.blocks.relays.AirWarperRelayTile;
+import alexthw.ars_elemental.common.blocks.relays.EarthDepositorRelayTile;
+import alexthw.ars_elemental.common.blocks.relays.FireCollectorRelayTile;
+import alexthw.ars_elemental.common.blocks.relays.WaterSplitterRelayTile;
 import alexthw.ars_elemental.common.entity.spells.EntityGeyser;
 import alexthw.ars_elemental.common.entity.spells.EntityLavaGeyser;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
@@ -33,6 +37,7 @@ import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSummonSkeleton;
 import com.hollingsworth.arsnouveau.client.renderer.entity.StyledSpellRender;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerModel;
+import com.hollingsworth.arsnouveau.client.renderer.tile.GenericTileRenderer;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.mojang.blaze3d.shaders.FogShape;
@@ -114,6 +119,38 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModTiles.ADVANCED_COLLECTOR_RELAY.get(), (t) -> new GenericTileRenderer<>(t, "source_collector") {
+            static final ResourceLocation FIRE = prefix("textures/block/fire_relay.png");
+
+            @Override
+            public ResourceLocation getTextureLocation(FireCollectorRelayTile animatable) {
+                return FIRE;
+            }
+        });
+        event.registerBlockEntityRenderer(ModTiles.ADVANCED_SPLITTER_RELAY.get(), (t) -> new GenericTileRenderer<>(t, "source_splitter") {
+            static final ResourceLocation WATER = prefix("textures/block/water_relay.png");
+
+            @Override
+            public ResourceLocation getTextureLocation(WaterSplitterRelayTile animatable) {
+                return WATER;
+            }
+        });
+        event.registerBlockEntityRenderer(ModTiles.ADVANCED_WARP_RELAY.get(), (t) -> new GenericTileRenderer<>(t, "source_warp") {
+            static final ResourceLocation AIR = prefix("textures/block/air_relay.png");
+
+            @Override
+            public ResourceLocation getTextureLocation(AirWarperRelayTile animatable) {
+                return AIR;
+            }
+        });
+        event.registerBlockEntityRenderer(ModTiles.ADVANCED_DEPOSITOR_RELAY.get(), (t) -> new GenericTileRenderer<>(t, "source_deposit") {
+            static final ResourceLocation EARTH = prefix("textures/block/earth_relay.png");
+
+            @Override
+            public ResourceLocation getTextureLocation(EarthDepositorRelayTile animatable) {
+                return EARTH;
+            }
+        });
 
         event.registerBlockEntityRenderer(ModTiles.ADVANCED_PRISM.get(), PrismRenderer::new);
         event.registerEntityRenderer(ModEntities.SIREN_ENTITY.get(), MermaidRenderer::new);
