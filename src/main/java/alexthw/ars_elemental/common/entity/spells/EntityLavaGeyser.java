@@ -4,14 +4,12 @@ import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.List;
 
 public class EntityLavaGeyser extends EntityGeyser {
 
@@ -21,85 +19,96 @@ public class EntityLavaGeyser extends EntityGeyser {
         super(entityType, level);
     }
 
-    public EntityLavaGeyser(Level world, BlockPos pos, int duration, float height, float aoe) {
+    public EntityLavaGeyser(Level world, BlockPos pos, int duration, float height, float aoe, Direction dir) {
         super(ModEntities.FIRE_GEYSER.get(), world);
         this.level = world;
         this.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5); // Center in block
         this.maxDuration = duration;
         this.entityData.set(HEIGHT, height);
         this.entityData.set(AOE, 1 + aoe);
+        this.entityData.set(FACING, dir.get3DDataValue());
     }
 
-    protected void pushEntitiesUp() {
-        // Get all entities inside the bounding box
-        List<Entity> targets = this.level().getEntities(this, this.getBoundingBox(), Entity::isAlive);
-
-        for (Entity e : targets) {
-            // Apply Upward Velocity
-            Vec3 motion = e.getDeltaMovement();
-
-            if (e instanceof LivingEntity le)
-                le.setRemainingFireTicks(le.getRemainingFireTicks() + 20);
-            // If they are at the very top, hold them there (bobbing effect)
-            // If they are below the top, launch them up
-            if (e.getY() < this.getY() + this.entityData.get(HEIGHT)) {
-                // 0.4 is roughly bubble column speed
-                e.setDeltaMovement(motion.x, 0.4, motion.z);
-                e.hasImpulse = true;
-                e.hurtMarked = true;
-                e.fallDistance = 0; // Prevent fall damage while riding
-            }
-        }
+    @Override
+    protected void applyEffect(LivingEntity le) {
+        le.setRemainingFireTicks(le.getRemainingFireTicks() + 20);
     }
 
     protected void spawnParticles() {
-        float height = this.entityData.get(HEIGHT);
-        float radius = this.entityData.get(AOE);
 
-        // Scale particle count based on volume so it doesn't look empty when big
-        // Volume = pi * r^2 * h. We use a simplified multiplier.
-        int particleCount = (int) (height * radius * 10);
+        float length = this.entityData.get(HEIGHT);
+        float radius = this.entityData.get(AOE);
+        if (dir == null || right == null || forward == null) recalcVecs();
+
+        int particleCount = (int) (length * radius * 10);
 
         for (int i = 0; i < particleCount; i++) {
-            // 1. Pick a random height
-            double yOffset = this.random.nextDouble() * height;
 
-            // 2. Pick a random point within the circle (Uniform distribution)
-            // r = radius * sqrt(random) ensures particles aren't Clumped in the center
-            double r = radius * Math.sqrt(this.random.nextDouble()) - 0.5;
-            double theta = this.random.nextDouble() * 2 * Math.PI;
+            // distance along geyser axis
+            double dist = this.random.nextDouble() * length;
 
-            double xOffset = r * Math.cos(theta);
-            double zOffset = r * Math.sin(theta);
+            // circular distribution
+            double r = radius * Math.sqrt(this.random.nextDouble());
+            double theta = this.random.nextDouble() * Math.PI * 2;
 
-            // 3. Spawn Core Stream
-            this.level().addParticle(GlowParticleData.createData(color, 0.5f, 0.75f, 15),
-                    this.getX() + xOffset, this.getY() + yOffset, this.getZ() + zOffset,
-                    0, 0.1, 0); // Slight upward drift
+            Vec3 radial =
+                    right.scale(Math.cos(theta) * r)
+                            .add(forward.scale(Math.sin(theta) * r));
 
-            // 4. Spawn Outer Splash (The "Wall" of the geyser)
-            // If we want a defined "edge" to the geyser, spawn splashes specifically at the radius
-            if (this.random.nextFloat() < 0.2f) { // 20% chance for edge particles
-                double edgeX = radius * Math.cos(theta);
-                double edgeZ = radius * Math.sin(theta);
+            Vec3 offset = dir.scale(dist).add(radial);
 
-                this.level().addParticle(ParticleTypes.FALLING_LAVA,
-                        this.getX() + edgeX, this.getY() + yOffset, this.getZ() + edgeZ,
-                        0, 0.05, 0);
+            // === CORE WATER BODY ===
+            this.level().addParticle(
+                    GlowParticleData.createData(color, 0.5f, 0.75f, 15),
+                    this.getX() + offset.x,
+                    this.getY() + offset.y,
+                    this.getZ() + offset.z,
+                    dir.x * 0.1,
+                    dir.y * 0.1,
+                    dir.z * 0.1
+            );
+
+            // === EDGE SPLASH WALL ===
+            if (this.random.nextFloat() < 0.2f) {
+
+                Vec3 edge =
+                        dir.scale(dist)
+                                .add(right.scale(Math.cos(theta) * radius))
+                                .add(forward.scale(Math.sin(theta) * radius));
+
+                this.level().addParticle(
+                        ParticleTypes.FALLING_LAVA,
+                        this.getX() + edge.x,
+                        this.getY() + edge.y,
+                        this.getZ() + edge.z,
+                        dir.x * 0.05,
+                        dir.y * 0.05,
+                        dir.z * 0.05
+                );
             }
         }
 
-        // 5. Optional: Surface Foam (Top of the geyser)
-        // Spawns only at the very top to show where the water "breaks"
-        for (int i = 0; i < radius * 5; i++) {
-            double r = radius * Math.sqrt(this.random.nextDouble());
-            double theta = this.random.nextDouble() * 2 * Math.PI;
+        // === SURFACE FOAM ===
+        Vec3 end = dir.scale(length);
 
-            this.level().addParticle(ParticleTypes.LARGE_SMOKE,
-                    this.getX() + (r * Math.cos(theta)),
-                    this.getY() + height,
-                    this.getZ() + (r * Math.sin(theta)),
-                    0, 0, 0);
+        for (int i = 0; i < radius * 5; i++) {
+
+            double r = radius * Math.sqrt(this.random.nextDouble());
+            double theta = this.random.nextDouble() * Math.PI * 2;
+
+            Vec3 radial =
+                    right.scale(Math.cos(theta) * r)
+                            .add(forward.scale(Math.sin(theta) * r));
+
+            Vec3 pos = end.add(radial);
+
+            this.level().addParticle(
+                    ParticleTypes.LARGE_SMOKE,
+                    this.getX() + pos.x,
+                    this.getY() + pos.y,
+                    this.getZ() + pos.z,
+                    0, 0, 0
+            );
         }
     }
 

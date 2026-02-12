@@ -6,6 +6,7 @@ import alexthw.ars_elemental.common.items.caster_tools.SpellHorn;
 import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.SpellPrismLens;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
+import com.hollingsworth.arsnouveau.common.block.Relay;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
 import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,7 +16,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -42,6 +47,7 @@ public class AEItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         Set<DeferredHolder<Item,? extends Item>> items = new HashSet<>(ModItems.ITEMS.getEntries());
 
+        takeAll(items, i -> i.get() instanceof AnimBlockItem abi && abi.getBlock() instanceof Relay);
         takeAll(items, i -> i.get() instanceof AnimBlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof SpellHorn);
         takeAll(items, i -> i.get() instanceof SpellPrismLens);

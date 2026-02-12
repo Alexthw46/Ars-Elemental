@@ -8,13 +8,16 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -37,7 +40,7 @@ public class EffectGeyser extends ElementalAbstractEffect {
 
     @Override
     public String getBookDescription() {
-        return "Creates a Geyser on the spot that soaks and propels entities upwards for a small time. Height controlled by Amplify, size controlled by AoE";
+        return "Creates a Geyser on the spot that soaks and propels entities upwards for a small time. Height controlled by Amplify, size controlled by AoE, can be horizontal if Sensitive.";
     }
 
     @Override
@@ -49,33 +52,56 @@ public class EffectGeyser extends ElementalAbstractEffect {
         BlockPos blockPos = BlockPos.containing(hitPos);
         float height = (float) Math.max(0d, 4.0f + (spellStats.getAmpMultiplier() * 2.0f)); // Base 4 blocks high + 2 * Amplify
 
-        // If we hit a block side, adjust to spawn "on top" or "in front" of it
+        Direction geyserDir = Direction.UP;
         if (rayTraceResult instanceof BlockHitResult bhr) {
-            Direction face = bhr.getDirection();
-            if (face != Direction.UP)
-                blockPos = blockPos.relative(face);
-            while (world.getBlockState(blockPos).isAir() && blockPos.distManhattan(bhr.getBlockPos()) < height * 2) {
-                blockPos = blockPos.below();
+
+            geyserDir = bhr.getDirection();
+
+            // Move spawn position outward if not hitting top
+            if (geyserDir != Direction.UP)
+                blockPos = blockPos.relative(geyserDir);
+
+            if (!spellStats.isSensitive()) // Only directional geysers with sensitive
+                geyserDir = Direction.UP;
+
+            int attempts = 0;
+            // Move opposite the geyser direction until a solid surface is found
+            while (world.getBlockState(blockPos).isAir()
+                    && attempts++ < height * 2) {
+                blockPos = blockPos.relative(geyserDir.getOpposite());
             }
+
+        } else if (rayTraceResult instanceof EntityHitResult ehr) {
+            blockPos = ehr.getEntity().getOnPos();
         } else {
-            blockPos.above();
+            // fallback: spawn one block up
+            blockPos = blockPos.above();
         }
+
         if (world.getBlockState(blockPos).isAir()) return;
 
         // Calculate Stats
-        int duration = 5 * 20; // Base 5 seconds
-        duration += (int) (spellStats.getDurationMultiplier() * 20); // Each Extend Time adds 1 second
+        int duration = POTION_TIME.get() * 20; // Base 5 seconds
+        duration += (int) (EXTEND_TIME.get() * spellStats.getDurationMultiplier() * 20); // Each Extend Time adds 1 second
 
         float aoe = (float) spellStats.getAoeMultiplier();
 
         // Spawn the Geyser Entity
-        EntityGeyser geyser = fireCheck(resolverContext) ? new EntityLavaGeyser(world, blockPos, duration, height, aoe) : new EntityGeyser(world, blockPos, duration, height, aoe);
+        EntityGeyser geyser = fireCheck(resolverContext) ? new EntityLavaGeyser(world, blockPos, duration, height, aoe, geyserDir) : new EntityGeyser(world, blockPos, duration, height, aoe, geyserDir);
         world.addFreshEntity(geyser);
+    }
+
+    @Override
+    public void buildConfig(ModConfigSpec.Builder builder) {
+        super.buildConfig(builder);
+        addExtendTimeConfig(builder, 1);
+        addPotionConfig(builder, 5);
     }
 
     @Override
     public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
         super.addAugmentDescriptions(map);
+        map.put(AugmentSensitive.INSTANCE, "Allows horizontal streams.");
         map.put(AugmentAOE.INSTANCE, "Increases the size of the Geyser.");
         map.put(AugmentAmplify.INSTANCE, "Increases the height of the Geyser");
         map.put(AugmentDampen.INSTANCE, "Decreases the height of the Geyser");
@@ -95,7 +121,7 @@ public class EffectGeyser extends ElementalAbstractEffect {
 
     @Override
     protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
-        return Set.of(AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE);
+        return Set.of(AugmentSensitive.INSTANCE, AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE);
     }
 
 }
