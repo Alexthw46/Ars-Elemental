@@ -7,6 +7,7 @@ import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
+import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeBuilder;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
@@ -68,7 +69,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withReagent(ItemsRegistry.SUMMONING_FOCUS)
                 .withPedestalItem(2, Items.WITHER_ROSE)
                 .withPedestalItem(1, Items.WITHER_SKELETON_SKULL)
-                .withPedestalItem(1, ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(Ingredient.of(SauceTags.ANIMA_ESSENCE))
                 .build()
         );
 
@@ -200,8 +201,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
         recipes.add(builder()
                 .withResult(ModItems.ANIMA_BANGLE.get())
                 .withReagent(ModItems.ENCHANTER_BANGLE.get())
-                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
-                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(2, Ingredient.of(SauceTags.ANIMA_ESSENCE))
                 .withPedestalItem(Items.GHAST_TEAR)
                 .withPedestalItem(Items.WITHER_ROSE)
                 .build()
@@ -283,7 +283,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .buildEnchantmentRecipe(ModRegistry.MIRROR, 3, 8000));
 
         recipes.add(builder()
-                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(Ingredient.of(SauceTags.ANIMA_ESSENCE))
                 .withPedestalItem(Items.TOTEM_OF_UNDYING)
                 .withPedestalItem(Blocks.LAPIS_BLOCK)
                 .withPedestalItem(RecipeDatagen.SOURCE_GEM_BLOCK)
@@ -312,7 +312,7 @@ public class AEApparatusProvider extends ApparatusRecipeProvider {
                 .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
                 .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
                 .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
+                .withPedestalItem(Ingredient.of(SauceTags.ANIMA_ESSENCE))
                 .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)

@@ -3,10 +3,10 @@
   "keepNbtOfReagent": false,
   "pedestalItems": [
     {
-      "item": "ars_elemental:anima_essence"
+      "tag": "sauce:anima_essence"
     },
     {
-      "item": "ars_elemental:anima_essence"
+      "tag": "sauce:anima_essence"
     },
     {
       "item": "minecraft:ghast_tear"

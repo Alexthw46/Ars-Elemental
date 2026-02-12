@@ -1,7 +1,6 @@
-// 1.21.1	2025-02-27T22:21:43.7658605	Recipes
+// 1.21.1	2026-02-12T11:22:08.4024376	Recipes
 32525ad53faf41a82f22d6159ad8475fc610064a data/ars_elemental/advancement/recipes/building_blocks/stripped_yellow_archwood.json
 24acf37e7c18f079c22d994befd3f523ceec3de7 data/ars_elemental/advancement/recipes/misc/alt_blossom.json
-255b12dbb3c15abc31b5cc86dbc03d65c20ed55d data/ars_elemental/advancement/recipes/misc/caster_bag.json
 3e9af32118c69a47c9fdd8a4a89c805233ec7988 data/ars_elemental/advancement/recipes/misc/curio_bag.json
 f6f9566b6a0a1b52e1e716ac9daf8ef8bd362e17 data/ars_elemental/advancement/recipes/misc/flashing_sapling.json
 2d33ae99290193d2e0558a357b71ea2ba20b8fc6 data/ars_elemental/advancement/recipes/misc/flight_alt.json
@@ -18,7 +17,6 @@ fb4cc1d1de856806af7b13956b3c91396547f65b data/ars_elemental/advancement/recipes/
 6b1c07bcca6c0c766520f9b6b7fccb7821edacf1 data/ars_elemental/advancement/recipes/redstone/advanced_prism.json
 85002051f3bead96a36468b4ff936c434b8cd8be data/ars_elemental/recipe/advanced_prism.json
 2175e7f4c99fbf6e8c021f43d04857ba6ed99193 data/ars_elemental/recipe/alt_blossom.json
-08b669898329f3d18eb5abb6f45eb5173a8c2ffd data/ars_elemental/recipe/caster_bag.json
 5b0ef28e767db7829c74057d90db9f2ad07eefab data/ars_elemental/recipe/curio_bag.json
 e65068f5f096982d6f6bd6e50f910292395b939d data/ars_elemental/recipe/flashing_sapling.json
 a3bce590f1520ec192aca59389ba98829c3ed556 data/ars_elemental/recipe/flight_alt.json

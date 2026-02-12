@@ -12,7 +12,7 @@
       "item": "minecraft:wither_skeleton_skull"
     },
     {
-      "item": "ars_elemental:anima_essence"
+      "tag": "sauce:anima_essence"
     }
   ],
   "reagent": {

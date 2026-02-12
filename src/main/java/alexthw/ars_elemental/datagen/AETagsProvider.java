@@ -81,7 +81,6 @@ public class AETagsProvider {
 
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
-            tag(SPELLBOOK).add(ItemsRegistry.NOVICE_SPELLBOOK.get(), ItemsRegistry.APPRENTICE_SPELLBOOK.get(), ItemsRegistry.ARCHMAGE_SPELLBOOK.get(), ItemsRegistry.CREATIVE_SPELLBOOK.get()).addOptional(ResourceLocation.fromNamespaceAndPath("ars_omega", "arcane_book"));
             tag(ModRegistry.SOULBOUND_ABLE).add(Items.WRITABLE_BOOK, Items.WRITTEN_BOOK, ModItems.CURIO_BAG.get(), ModItems.CASTER_BAG.get());
             tag(CURIO_SPELL_FOCUS).add(ModItems.AIR_FOCUS.get(), ModItems.FIRE_FOCUS.get(), ModItems.EARTH_FOCUS.get(), ModItems.NECRO_FOCUS.get(), ModItems.WATER_FOCUS.get(), ModItems.LESSER_AIR_FOCUS.get(), ModItems.LESSER_FIRE_FOCUS.get(), ModItems.LESSER_EARTH_FOCUS.get(), ModItems.LESSER_WATER_FOCUS.get());
             tag(CURIO_BANGLE).add(ModItems.AIR_BANGLE.get(), ModItems.FIRE_BANGLE.get(), ModItems.EARTH_BANGLE.get(), ModItems.WATER_BANGLE.get(), ModItems.ENCHANTER_BANGLE.get(), ModItems.ANIMA_BANGLE.get(), ModItems.SUMMON_BANGLE.get());
@@ -106,7 +105,7 @@ public class AETagsProvider {
             );
 
             //noinspection unchecked
-            tag(ModRegistry.SOULBOUND_ABLE).addTags(ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, SPELLBOOK, Tags.Items.TOOLS);
+            tag(ModRegistry.SOULBOUND_ABLE).addTags(ItemTags.ARMOR_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, Tags.Items.TOOLS).addOptionalTag(SPELLBOOK);
             tag(ModRegistry.SOULBOUND_ABLE)
                     .add(ItemsRegistry.WAND.asItem())
                     .add(ItemsRegistry.ENCHANTERS_MIRROR.asItem())

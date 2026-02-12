@@ -62,8 +62,11 @@
     "#minecraft:enchantable/bow",
     "#minecraft:enchantable/crossbow",
     "#minecraft:enchantable/durability",
-    "#ars_nouveau:spellbook",
     "#c:tools",
+    {
+      "id": "#ars_nouveau:spellbook",
+      "required": false
+    },
     "ars_nouveau:wand",
     "ars_nouveau:enchanters_mirror",
     "ars_nouveau:enchanters_fishing_rod",

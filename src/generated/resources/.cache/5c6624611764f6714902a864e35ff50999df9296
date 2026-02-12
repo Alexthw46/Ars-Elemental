@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-11T15:42:09.9955816	Ars Elemental Apparatus
+// 1.21.1	2026-02-12T11:22:08.3980789	Ars Elemental Apparatus
 59dd089a3501f291dd053dd81461a723b577d33e data/ars_elemental/recipe/air_bangle.json
 805a484f9698715df73c2ea2d924e3ebf8807ee8 data/ars_elemental/recipe/air_boots.json
 055ee2eaf11ac7c915f4088cdfeb4577c89c5fb5 data/ars_elemental/recipe/air_boots_heavy.json
@@ -15,7 +15,7 @@ ef4de11ac43e9fe2bbbf0719759b7b83edcaa793 data/ars_elemental/recipe/air_pants.jso
 dea865860e02d01f902a0967be87d76dd924f6ad data/ars_elemental/recipe/air_shoes.json
 337f408b9d3245b9af65f2c991082b783f76bb50 data/ars_elemental/recipe/air_tunic.json
 2ebcfc1c2be8842ad44707ab8ce1bd4bb72ba700 data/ars_elemental/recipe/air_upstream.json
-98e119fa66667fd4be71cdc53ddf7e2cabd94e8f data/ars_elemental/recipe/anima_bangle.json
+4bdde5af98a0ec0515b09c9536ba1cab852148ae data/ars_elemental/recipe/anima_bangle.json
 7b9e2c299237cdc9688fb28dc9a9a4e97b748fd6 data/ars_elemental/recipe/aqua_boots.json
 55012fac46193a37715a42bb6b2ecb2825881b2a data/ars_elemental/recipe/aqua_boots_heavy.json
 30ad80a3c21aefd33721f661febce7807cbee23e data/ars_elemental/recipe/aqua_chestplate.json
@@ -65,13 +65,13 @@ e69e0d91cb3c3a34c51782ac91fcb33af5ad2569 data/ars_elemental/recipe/fire_robes.js
 b62732d55f72240638c87f344ea07296065b8209 data/ars_elemental/recipe/fire_tunic.json
 2da144f50ffe33c0f017937e4cd4487dc8f330fc data/ars_elemental/recipe/flashjack_charm.json
 b2c0832acfa1644a5a2da5aac295a9ad4f5f7f13 data/ars_elemental/recipe/magma_upstream.json
-aa843a05130846e7258ea1fbdf7aca561784f12c data/ars_elemental/recipe/mark_of_mastery.json
+117067340468257918b562f509d3500d4f0aa2b3 data/ars_elemental/recipe/mark_of_mastery.json
 8ca27bc373bc3616d0a3c9403e420eafb4ab907c data/ars_elemental/recipe/mirror_shield_1.json
 2bed2484890dd34656c9ba6deac74b5ce73e2fa5 data/ars_elemental/recipe/mirror_shield_2.json
 2f291e3f46a25fab51866ef675646c138bc0e13b data/ars_elemental/recipe/mirror_shield_3.json
-770afdfdc12d26b07516ed13cfd29ac7c50c0739 data/ars_elemental/recipe/necrotic_focus.json
+87021f52f2f2448f88c2bbe0b90779328453ebf8 data/ars_elemental/recipe/necrotic_focus.json
 0ec0c37c7dcfb0d3e8b9f91df9347839c5d9404f data/ars_elemental/recipe/siren_charm.json
-ce7bcc6db9f6aa702309ea6da2cd803825d16d0a data/ars_elemental/recipe/soulbound_1.json
+01a4116eee8cee48d1202e2ada63b745b59d4c10 data/ars_elemental/recipe/soulbound_1.json
 4f6e659bbeea5b71632a6577fb3e7d3021718d82 data/ars_elemental/recipe/spell_horn.json
 960f578dc6ee7ecc715438e9fe52719021166dee data/ars_elemental/recipe/spell_mirror.json
 f7a6444fc8c1ca31c2f4a22ab40a6103014f9ab0 data/ars_elemental/recipe/summon_bangle.json

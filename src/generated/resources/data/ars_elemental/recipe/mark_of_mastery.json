@@ -15,7 +15,7 @@
       "item": "ars_nouveau:air_essence"
     },
     {
-      "item": "ars_elemental:anima_essence"
+      "tag": "sauce:anima_essence"
     },
     {
       "item": "ars_nouveau:water_essence"

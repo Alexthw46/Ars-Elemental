@@ -1,6 +1,10 @@
 package alexthw.ars_elemental.datagen;
 
-import alexthw.ars_elemental.common.rituals.*;
+import alexthw.ars_elemental.common.rituals.AttractionRitual;
+import alexthw.ars_elemental.common.rituals.DetectionRitual;
+import alexthw.ars_elemental.common.rituals.RepulsionRitual;
+import alexthw.ars_elemental.common.rituals.SquirrelRitual;
+import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestRitual;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestationRitual;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -13,7 +17,11 @@ import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -126,14 +134,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("MMM").pattern("MCM").pattern("MMM")
                 .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
                 .save(consumer, prefix("curio_bag"));
-
-        shapedBuilder(CASTER_BAG.get())
-                .define('M', ItemsRegistry.MAGE_FIBER)
-                .define('C', Items.CHEST)
-                .define('D', Tags.Items.GEMS_DIAMOND)
-                .pattern("MDM").pattern("MCM").pattern("MMM")
-                .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
-                .save(consumer, prefix("caster_bag"));
 
     }
 

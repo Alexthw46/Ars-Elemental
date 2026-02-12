@@ -1,13 +1,12 @@
-// 1.21.1	2025-11-19T09:49:41.4818543	Ars Elemental Item Tags
+// 1.21.1	2026-02-12T11:22:08.3881838	Ars Elemental Item Tags
 fc755eac29017eb89ac4ef700922465e823cd57e data/allthearcanistgear/tags/item/elemental_boots.json
 aac8a888c5540a98f9beb7cfcaf35a98ff6f8ba3 data/allthearcanistgear/tags/item/elemental_chest.json
 aefb1f27ab8598f9b63cb5655b69d45d1a57c0f0 data/allthearcanistgear/tags/item/elemental_hat.json
 57e8510f5ca943ff1628b3650e0c0f6c942794c1 data/allthearcanistgear/tags/item/elemental_legs.json
 25c25fe991f3c519320705f8f43330f7257ab6f2 data/ars_elemental/tags/item/blacklist_bag_item.json
-ec8f4130b0fdab4f776c26202bb8ba546fcee9ec data/ars_elemental/tags/item/soulbound_extra.json
+6fa15fb13c7af67157ffedc3fb4b4d6d5f55f389 data/ars_elemental/tags/item/soulbound_extra.json
 beb29041bbcee414c7fb982c8ca5182ed70b3b39 data/ars_nouveau/tags/item/magic_shards.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/item/shady_wizard_fruits.json
-fb5515462bb431dac505a9b745b9f43680967b76 data/ars_nouveau/tags/item/spellbook.json
 bb8638ea7e8c91cece989a9c826c5a320fb1ba54 data/ars_nouveau/tags/item/spell_prism_lens.json
 f72d67a94070b85f94a35223a3d06249a8f3816d data/curios/tags/item/an_focus.json
 093b982bcf3efffd59a052d7473d47981f1ec738 data/curios/tags/item/bracelet.json

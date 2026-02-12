@@ -8,6 +8,7 @@ import alexthw.ars_elemental.common.glyphs.filters.InsectFilter;
 import alexthw.ars_elemental.common.glyphs.filters.SummonFilter;
 import alexthw.ars_elemental.common.glyphs.filters.UndeadFilter;
 import alexthw.ars_elemental.registry.ModItems;
+import com.alexthw.sauce.registry.SauceTags;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
@@ -47,9 +48,9 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(EffectSpores.INSTANCE, Items.SPORE_BLOSSOM, Items.RED_MUSHROOM, ItemsRegistry.EARTH_ESSENCE);
         addRecipe(EffectDischarge.INSTANCE, Items.LIGHTNING_ROD, ModItems.FLASHING_POD.get().asItem(), ItemsRegistry.AIR_ESSENCE);
         recipes.add(get(EffectSpark.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE).withIngredient(Ingredient.of(ItemTags.WOOL)).withItem(Items.IRON_BARS));
-        addRecipe(EffectCharm.INSTANCE, ModItems.ANIMA_ESSENCE.get(), Items.GOLDEN_CARROT, ItemsRegistry.SOURCE_BERRY_PIE, Blocks.CAKE);
-        addRecipe(EffectLifeLink.INSTANCE, Items.LEAD, ModItems.ANIMA_ESSENCE.get(), Items.SCULK_SENSOR);
-        addRecipe(EffectPhantom.INSTANCE, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, ModItems.ANIMA_ESSENCE.get());
+        recipes.add(get(EffectCharm.INSTANCE).withIngredient(Ingredient.of(SauceTags.ANIMA_ESSENCE)).withItem(Items.GOLDEN_CARROT).withItem(ItemsRegistry.SOURCE_BERRY_PIE).withItem(Blocks.CAKE));
+        recipes.add(get(EffectLifeLink.INSTANCE).withItem(Items.LEAD).withIngredient(Ingredient.of(SauceTags.ANIMA_ESSENCE)).withItem(Items.SCULK_SENSOR));
+        recipes.add(get(EffectPhantom.INSTANCE).withIngredient(Ingredient.of(SauceTags.ANIMA_ESSENCE)).withItem(Items.PHANTOM_MEMBRANE).withItem(Items.PHANTOM_MEMBRANE));
         addRecipe(EffectConflagrate.INSTANCE, Items.GUNPOWDER, ItemsRegistry.FIRE_ESSENCE, BlockRegistry.BOMBEGRANTE_POD.asItem(), Items.NETHERITE_SCRAP);
 
         addRecipe(EffectSlimeFeet.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.ABJURATION_ESSENCE, Items.SLIME_BALL, Items.ICE);

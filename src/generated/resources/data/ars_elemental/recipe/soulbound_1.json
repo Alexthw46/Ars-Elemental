@@ -4,7 +4,7 @@
   "level": 1,
   "pedestalItems": [
     {
-      "item": "ars_elemental:anima_essence"
+      "tag": "sauce:anima_essence"
     },
     {
       "item": "minecraft:totem_of_undying"
