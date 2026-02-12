@@ -323,7 +323,7 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
     protected boolean canHitEntity(Entity entity) {
         boolean b = super.canHitEntity(entity);
         if (entity instanceof LivingEntity) {
-            b &= shouldTarget((LivingEntity) entity);
+            b = b && shouldTarget((LivingEntity) entity);
         }
         return b;
     }
