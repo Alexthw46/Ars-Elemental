@@ -5,6 +5,7 @@ import alexthw.ars_elemental.common.entity.ai.HoverAroundTargetGoal;
 import alexthw.ars_elemental.common.entity.spells.FlashLightning;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
+import alexthw.ars_elemental.registry.ModParticles;
 import com.alexthw.sauce.api.item.ISchoolProvider;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
@@ -85,8 +86,9 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public static final RawAnimation idle = RawAnimation.begin().thenLoop("idle.air");
     public static final RawAnimation inactive = RawAnimation.begin().thenPlayAndHold("idle.ground");
+    public static final RawAnimation sitting = RawAnimation.begin().thenPlayAndHold("idle.sitting");
     public static final RawAnimation flapping = RawAnimation.begin().thenLoop("idle.flapping");
-    public static final RawAnimation attack = RawAnimation.begin().thenPlayXTimes("attack", 2).thenWait(40).thenLoop("idle.flapping");
+    public static final RawAnimation attack = RawAnimation.begin().thenPlay("attack");
     public static final EntityDataAccessor<Boolean> BEING_TAMED = SynchedEntityData.defineId(FlashjackEntity.class, EntityDataSerializers.BOOLEAN);
 
     List<BlockPos> turrets = new ArrayList<>();
@@ -154,8 +156,11 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     }
 
     private static PlayState attackPredicate(AnimationState<FlashjackEntity> event) {
-        if (event.isCurrentAnimation(attack))
+
+        if (event.isCurrentAnimation(attack) && event.getAnimatable().attackAnim < 120) {
+            event.getAnimatable().attackAnim++;
             return PlayState.CONTINUE;
+        }
 
         if (event.getAnimatable().entityData.get(BEING_TAMED) && !event.getAnimatable().isTamed())
             return event.setAndContinue(attack);
@@ -164,7 +169,6 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         if (event.getAnimatable().onGround())
             return PlayState.STOP;
 
-        // If the entity is in the attack animation, continue it until the end
         // Defaults to flapping animation if in the air and not attacking
         return event.setAndContinue(flapping);
     }
@@ -216,8 +220,8 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
         if (!player.level().isClientSide) {
-            ItemStack stack = player.getItemInHand(hand);
             if (this.isOwnedBy(player)) {
 
                 if (stack.is(Tags.Items.DYES_YELLOW) && !this.getColor().equals("flashjack")) {
@@ -249,11 +253,11 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
                 entityData.set(BEING_TAMED, true);
                 stack.shrink(1);
             }
-
-            if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && stack.isEmpty()) {
+        }
+        if (!this.isFlying() && this.isTame() && this.isOwnedBy(player) && stack.isEmpty()) {
+            if (!level().isClientSide())
                 this.setOrderedToSit(!this.isOrderedToSit());
-                return InteractionResult.sidedSuccess(this.level().isClientSide);
-            }
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return InteractionResult.PASS;
     }
@@ -276,7 +280,7 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
-        data.add(new AnimationController<>(this, "idle_controller", 5, event -> onGround() ? event.setAndContinue(inactive) : event.setAndContinue(idle)));
+        data.add(new AnimationController<>(this, "idle_controller", 5, this::idlePredicate));
         actionController = new AnimationController<>(this, "action_controller", 5, FlashjackEntity::attackPredicate);
         data.add(actionController);
     }
@@ -284,7 +288,15 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
     @Override
     public void startAnimation(int arg) {
         if (arg == 0 && actionController != null) {
+            actionController.forceAnimationReset();
             actionController.setAnimation(attack);
+            attackAnim = 0;
+            for (int i = 0; i < 5; i++) {
+                double offsetX = (this.getRandom().nextDouble() - 0.5) * this.getBbWidth();
+                double offsetY = this.getRandom().nextDouble() * this.getBbHeight();
+                double offsetZ = (this.getRandom().nextDouble() - 0.5) * this.getBbWidth();
+                this.level().addParticle(ModParticles.SPARK.get(), this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ, 0, 0, 0);
+            }
         }
     }
 
@@ -437,4 +449,9 @@ public class FlashjackEntity extends Parrot implements GeoEntity, ICharmSerializ
         return IWandable.super.onLastConnection(storedPos, face, storedEntity, playerEntity);
     }
 
+    private PlayState idlePredicate(AnimationState<FlashjackEntity> event) {
+        if (onGround())
+            return isInSittingPose() ? event.setAndContinue(sitting) : event.setAndContinue(inactive);
+        return event.setAndContinue(idle);
+    }
 }

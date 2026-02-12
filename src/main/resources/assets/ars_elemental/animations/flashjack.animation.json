@@ -196,18 +196,102 @@
     },
     "idle.ground": {
       "loop": "hold_on_last_frame",
+      "animation_length": 2,
       "bones": {
         "body": {
+          "rotation": [
+            -10,
+            0,
+            0
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ]
+        },
+        "legs": {
+          "rotation": [
+            7.5,
+            0,
+            0
+          ]
+        },
+        "feets": {
+          "rotation": [
+            12.5,
+            0,
+            0
+          ]
+        },
+        "head": {
+          "position": [
+            0,
+            "math.sin(query.anim_time * 200) * 0.15",
+            0
+          ]
+        },
+        "upperBody": {
+          "position": [
+            0,
+            "math.sin(query.anim_time * 200) * 0.25",
+            0
+          ]
+        }
+      }
+    },
+    "idle.sitting": {
+      "animation_length": 1.25,
+      "bones": {
+        "head": {
           "rotation": {
-            "vector": [
-              -10,
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              7.5,
               0,
               0
             ]
           },
           "position": {
-            "vector": [
+            "0.0": [
               0,
+              0,
+              0
+            ],
+            "1.0": [
+              0,
+              -1,
+              0
+            ]
+          }
+        },
+        "body": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              12.5,
+              0,
+              0
+            ]
+          }
+        },
+        "tail": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              20,
               0,
               0
             ]
@@ -215,17 +299,39 @@
         },
         "legs": {
           "rotation": {
-            "vector": [
-              7.5,
+            "0.0": [
               0,
+              0,
+              0
+            ],
+            "1.0": [
+              -27.5,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              0,
+              -0.5,
               0
             ]
           }
         },
         "feets": {
           "rotation": {
-            "vector": [
-              12.5,
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "1.0": [
+              35,
               0,
               0
             ]
