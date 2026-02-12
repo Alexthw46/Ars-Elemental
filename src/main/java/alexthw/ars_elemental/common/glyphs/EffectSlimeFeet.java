@@ -53,4 +53,9 @@ public class EffectSlimeFeet extends ElementalAbstractEffect implements IPotionE
     public int getExtendTimeDuration() {
         return EXTEND_TIME == null ? 10 : EXTEND_TIME.get();
     }
+
+    @Override
+    public SpellTier defaultTier() {
+        return SpellTier.TWO;
+    }
 }

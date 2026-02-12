@@ -37,6 +37,7 @@ public class ModPotions {
     public static final DeferredHolder<MobEffect, LightningLureEffect> LIGHTNING_LURE;
     public static final DeferredHolder<MobEffect, RepelEffect> REPEL;
     public static final DeferredHolder<MobEffect, VenomEffect> VENOM;
+    public static final DeferredHolder<MobEffect, MobEffect> RUST;
     public static final DeferredHolder<MobEffect, MobEffect> MIST;
     public static final DeferredHolder<MobEffect, MobEffect> SLIME_SLIDE;
 
@@ -74,6 +75,7 @@ public class ModPotions {
         VENOM = EFFECTS.register("venom", VenomEffect::new);
         SLIME_SLIDE = EFFECTS.register("slime_feet", SlimyFeetEffect::new);
         MIST = EFFECTS.register("mist", () -> new MistEffect().addAttributeModifier(Attributes.FOLLOW_RANGE, prefix("mist"), -0.75f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        RUST = EFFECTS.register("rust", () -> new RustEffect().addAttributeModifier(Attributes.ARMOR_TOUGHNESS, prefix("rust"), -0.15f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 1200)));

@@ -176,7 +176,8 @@ public class ArsNouveauRegistry {
 
         if (!isProduction()) {
             register(MethodCarianPhalanx.INSTANCE);
-
+            register(EffectCavitate.INSTANCE);
+            register(EffectOxidize.INSTANCE);
         }
     }
 

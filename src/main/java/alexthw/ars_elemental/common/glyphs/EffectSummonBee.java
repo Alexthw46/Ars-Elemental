@@ -2,12 +2,7 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.summon.SummonBee;
 import alexthw.ars_elemental.util.CompatUtils;
-import com.hollingsworth.arsnouveau.api.spell.AbstractAugment;
-import com.hollingsworth.arsnouveau.api.spell.SpellContext;
-import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
@@ -76,5 +71,10 @@ public class EffectSummonBee extends ElementalAbstractEffect {
     @Override
     public Set<SpellSchool> getSchools() {
         return setOf(SpellSchools.CONJURATION, SpellSchools.ELEMENTAL_EARTH);
+    }
+
+    @Override
+    public SpellTier defaultTier() {
+        return SpellTier.TWO;
     }
 }
