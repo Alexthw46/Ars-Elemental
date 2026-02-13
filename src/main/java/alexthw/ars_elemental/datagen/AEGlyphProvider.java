@@ -99,7 +99,7 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         // wrap conditionalRecipe in a ConfigCondition
         var condition = new JsonObject();
         condition.addProperty("config", "frame_skip_recipe");
-        condition.addProperty("type", "ars_elemental:config");
+        condition.addProperty("type", "ars_elemental:ae_config");
         var array = new JsonArray();
         array.add(condition);
         conditionalRecipe.getAsJsonObject().add("neoforge:conditions", array);
