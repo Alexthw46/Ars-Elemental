@@ -31,7 +31,7 @@ public class HijackTurretGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return mob != null && mob.isTamed() && mob.getTarget() != null && mob.getTarget().isAlive();
+        return mob != null && mob.isTamed() && !mob.getTurrets().isEmpty() && mob.getTarget() != null && mob.getTarget().isAlive();
     }
 
     @Override

@@ -127,7 +127,7 @@ public class AEDocumentation {
 
         var firenandoCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FIRENANDO_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FIRENANDO_ENTITY.get())).withCraftingPages());
 
-        var flashjackCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FLASHJACK_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FLASHJACK_ENTITY.get())).withCraftingPages());
+        var flashjackCharm = addPage(new AEDocEntryBuilder(DocumentationRegistry.CRAFTING, ModItems.FLASHJACK_CHARM.get()).withIntroPage().withPage(EntityEntry.create(ModEntities.FLASHJACK_ENTITY.get())).withTextPage("ars_elemental.page2.flashjack_charm").withCraftingPages());
 
         addPage(new AEDocEntryBuilder(ARMOR, ModItems.MARK_OF_MASTERY.get()).withIntroPage().withCraftingPages().withSortNum(5));
         addArmorSet(ModItems.FIRE_ARMOR, ModItems.FIRE_ARMOR_L, ModItems.FIRE_ARMOR_H);
