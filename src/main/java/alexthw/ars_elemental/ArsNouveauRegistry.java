@@ -144,7 +144,7 @@ public class ArsNouveauRegistry {
         register(EffectWaterJet.INSTANCE);
         register(EffectGeyser.INSTANCE);
         register(EffectMist.INSTANCE);
-        register(EffectSlimeFeet.INSTANCE);
+        register(EffectSlipper.INSTANCE);
         register(EffectCavitate.INSTANCE);
         register(EffectOxidize.INSTANCE);
 

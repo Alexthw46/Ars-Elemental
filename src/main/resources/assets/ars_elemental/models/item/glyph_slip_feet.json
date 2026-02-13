@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ars_nouveau:item/slime_feet"
+    "layer0": "ars_nouveau:item/slip_feet"
   }
 }

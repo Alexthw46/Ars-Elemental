@@ -4,9 +4,9 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
 
-public class SlimyFeetEffect extends MobEffect {
-    public SlimyFeetEffect() {
-        super(MobEffectCategory.NEUTRAL, MobEffects.POISON.value().getColor());
+public class SlipFeetEffect extends MobEffect {
+    public SlipFeetEffect() {
+        super(MobEffectCategory.NEUTRAL, MobEffects.SLOW_FALLING.value().getColor());
     }
 
 }

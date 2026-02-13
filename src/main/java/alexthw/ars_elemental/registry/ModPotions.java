@@ -39,7 +39,7 @@ public class ModPotions {
     public static final DeferredHolder<MobEffect, VenomEffect> VENOM;
     public static final DeferredHolder<MobEffect, MobEffect> RUST;
     public static final DeferredHolder<MobEffect, MobEffect> MIST;
-    public static final DeferredHolder<MobEffect, MobEffect> SLIME_SLIDE;
+    public static final DeferredHolder<MobEffect, MobEffect> ICE_SLIDE;
 
 
     public static final DeferredHolder<Potion, Potion> ENDERFERENCE_POTION;
@@ -73,7 +73,7 @@ public class ModPotions {
         LIGHTNING_LURE = EFFECTS.register("static_charged", LightningLureEffect::new);
         REPEL = EFFECTS.register("repel", RepelEffect::new);
         VENOM = EFFECTS.register("venom", VenomEffect::new);
-        SLIME_SLIDE = EFFECTS.register("slime_feet", SlimyFeetEffect::new);
+        ICE_SLIDE = EFFECTS.register("slip_feet", SlipFeetEffect::new);
         MIST = EFFECTS.register("mist", () -> new MistEffect().addAttributeModifier(Attributes.FOLLOW_RANGE, prefix("mist"), -0.75f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         RUST = EFFECTS.register("rust", () -> new RustEffect().addAttributeModifier(Attributes.ARMOR_TOUGHNESS, prefix("rust"), -0.15f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 

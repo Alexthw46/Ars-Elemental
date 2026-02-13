@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin {
     )
     private float wrapFriction(BlockState state, LevelReader level, BlockPos pos, Entity entity, Operation<Float> original) {
         float baseFriction = original.call(state, level, pos, entity);
-        if (hasEffect(ModPotions.SLIME_SLIDE)) {
+        if (hasEffect(ModPotions.ICE_SLIDE)) {
             return Math.clamp(baseFriction + 0.38f, baseFriction, 1.075f);
         }
         return baseFriction;

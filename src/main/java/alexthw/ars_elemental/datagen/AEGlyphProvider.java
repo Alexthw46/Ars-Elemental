@@ -53,7 +53,7 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         recipes.add(get(EffectPhantom.INSTANCE).withIngredient(Ingredient.of(SauceTags.ANIMA_ESSENCE)).withItem(Items.PHANTOM_MEMBRANE).withItem(Items.PHANTOM_MEMBRANE));
         addRecipe(EffectConflagrate.INSTANCE, Items.GUNPOWDER, ItemsRegistry.FIRE_ESSENCE, BlockRegistry.BOMBEGRANTE_POD.asItem(), Items.NETHERITE_SCRAP);
 
-        addRecipe(EffectSlimeFeet.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.ABJURATION_ESSENCE, Items.SLIME_BALL, Items.ICE);
+        addRecipe(EffectSlipper.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.ABJURATION_ESSENCE, Items.SLIME_BALL, Items.ICE);
         addRecipe(EffectGeyser.INSTANCE, ItemsRegistry.FIRE_ESSENCE, ItemsRegistry.WATER_ESSENCE, Items.MAGMA_BLOCK, Items.WIND_CHARGE);
         addRecipe(EffectMist.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.AIR_ESSENCE, Items.PHANTOM_MEMBRANE, Items.BLUE_ICE);
         addRecipe(EffectWaterJet.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.MANIPULATION_ESSENCE, Items.PRISMARINE_SHARD, ItemsRegistry.WILDEN_SPIKE, Items.BREEZE_ROD);

@@ -2,6 +2,8 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.registry.ModPotions;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -9,11 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class EffectSlimeFeet extends ElementalAbstractEffect implements IPotionEffect {
+public class EffectSlipper extends ElementalAbstractEffect implements IPotionEffect {
 
-    public static final EffectSlimeFeet INSTANCE = new EffectSlimeFeet("slime_feet", "Slime Walk");
+    public static final EffectSlipper INSTANCE = new EffectSlipper("slip_feet", "Sliding");
 
-    public EffectSlimeFeet(String tag, String description) {
+    public EffectSlipper(String tag, String description) {
         super(tag, description);
     }
 
@@ -25,7 +27,7 @@ public class EffectSlimeFeet extends ElementalAbstractEffect implements IPotionE
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity target) {
-            applyConfigPotion(target, ModPotions.SLIME_SLIDE, spellStats);
+            applyConfigPotion(target, ModPotions.ICE_SLIDE, spellStats);
         }
     }
 
@@ -41,7 +43,7 @@ public class EffectSlimeFeet extends ElementalAbstractEffect implements IPotionE
 
     @Override
     protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
-        return getPotionAugments();
+        return augmentSetOf(AugmentExtendTime.INSTANCE, AugmentDurationDown.INSTANCE);
     }
 
     @Override

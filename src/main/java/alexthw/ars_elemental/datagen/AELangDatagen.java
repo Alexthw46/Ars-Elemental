@@ -167,8 +167,11 @@ public class AELangDatagen extends LanguageProvider {
         add("effect.ars_elemental.repel.description", "The target is repelled from one or more places by a magic force.");
         add("effect.ars_elemental.mist", "Mist");
         add("effect.ars_elemental.mist.description", "Similar to blindness, mist reduces the field of vision of mobs and players");
-        add("effect.ars_elemental.slime_feet", "Slippery Feet");
-        add("effect.ars_elemental.slime_feet.description", "Makes the entity slide as if on ice while on normal blocks, increased slipperiness on ice blocks.");
+        add("effect.ars_elemental.slip_feet", "Slippery Feet");
+        add("effect.ars_elemental.slip_feet.description", "Makes the entity slide as if on ice while on normal blocks, increased slipperiness on ice blocks.");
+        add("effect.ars_elemental.rust", "Rust");
+        add("effect.ars_elemental.rust.description", "Makes the entity armor rust temporarily, dropping its armor toughness points.");
+
         add("enchantment.ars_elemental.mirror_shield", "Spell Reflection");
         add("enchantment.ars_elemental.mirror_shield.desc", "Shield have a chance to reflect projectile spells");
         add("enchantment.ars_elemental.soulbound", "Soulbound");

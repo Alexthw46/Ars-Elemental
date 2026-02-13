@@ -1,7 +1,11 @@
 package alexthw.ars_elemental.common.items;
 
 import alexthw.ars_elemental.ArsElemental;
-import alexthw.ars_elemental.common.entity.mages.*;
+import alexthw.ars_elemental.common.entity.mages.AirMage;
+import alexthw.ars_elemental.common.entity.mages.EarthMage;
+import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
+import alexthw.ars_elemental.common.entity.mages.FireMage;
+import alexthw.ars_elemental.common.entity.mages.WaterMage;
 import alexthw.ars_elemental.common.items.foci.ElementalFocus;
 import alexthw.ars_elemental.registry.ModPotions;
 import com.alexthw.sauce.api.item.ISchoolFocus;
@@ -35,7 +39,7 @@ public class Debugger extends ElementalFocus {
     }
 
     @Override
-    public boolean onLeftClickEntity(@NotNull ItemStack stack, Player player, @NotNull Entity entity) {
+    public boolean onLeftClickEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull Entity entity) {
         if (player.getUUID().equals(ArsElemental.Dev) && entity instanceof Player target)
             target.addEffect(new MobEffectInstance(ModPotions.HYMN_OF_ORDER, 6400));
         return super.onLeftClickEntity(stack, player, entity);
