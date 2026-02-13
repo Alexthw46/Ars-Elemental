@@ -1,7 +1,10 @@
 package alexthw.ars_elemental.common.glyphs;
 
+import alexthw.ars_elemental.registry.ModParticles;
+import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.entity.BubbleEntity;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
@@ -10,11 +13,11 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentRandomize;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -41,7 +44,7 @@ public class EffectCavitate extends ElementalAbstractEffect implements IDamageEf
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity target = rayTraceResult.getEntity();
-        if (!(world instanceof ServerLevel))
+        if (!(world instanceof ServerLevel serverLevel))
             return;
         float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
         double range = 2 + spellStats.getAoeMultiplier();
@@ -52,10 +55,14 @@ public class EffectCavitate extends ElementalAbstractEffect implements IDamageEf
                 this.applyConfigPotion(entity, ModPotions.SOAKED_EFFECT, spellStats);
             }
             Vec3 vec = target.position();
-            // Circle of particles
-            ((ServerLevel) world).sendParticles(ParticleTypes.SCULK_CHARGE_POP, vec.x, vec.y + 0.5, vec.z, 20,
-                    ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.3);
-
+            double cx = vec.x;
+            double cy = vec.y + 0.5; // Center mass of the mob
+            double cz = vec.z;
+            // Emit the shockwave from the bubble
+            // Spawn 3 flat rings at distinct heights, middle one is larger
+            serverLevel.sendParticles(ModParticles.SHOCKWAVE_SMALL.get(), cx, cy - 0.5, cz, 1, 0, 0, 0, 0);
+            serverLevel.sendParticles(ModParticles.SHOCKWAVE.get(), cx, cy, cz, 1, 0, 0, 0, 0);
+            serverLevel.sendParticles(ModParticles.SHOCKWAVE_SMALL.get(), cx, cy + 0.5, cz, 1, 0, 0, 0, 0);
         }
     }
 
@@ -82,7 +89,13 @@ public class EffectCavitate extends ElementalAbstractEffect implements IDamageEf
 
     @Override
     protected int getDefaultManaCost() {
-        return 60;
+        return 80;
+    }
+
+    @Override
+    public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
+        shooter = !(shooter instanceof Player) ? ANFakePlayer.getPlayer((ServerLevel) world) : shooter;
+        return DamageUtil.source(world, ModRegistry.CAVITATION, shooter);
     }
 
     @Override

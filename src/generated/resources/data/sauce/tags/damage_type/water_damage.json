@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "ars_elemental:water_jet",
+      "required": false
+    },
+    {
+      "id": "ars_elemental:cavitation",
+      "required": false
+    }
+  ]
+}

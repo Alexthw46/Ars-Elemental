@@ -18,6 +18,11 @@ public class ModParticles {
 
     public static final Supplier<SimpleParticleType> VENOM = PARTICLES.register("venom", () -> new SimpleParticleType(true));
 
+    public static final Supplier<SimpleParticleType> SHOCKWAVE = PARTICLES.register("shockwave", () -> new SimpleParticleType(true));
+    public static final Supplier<SimpleParticleType> SHOCKWAVE_SMALL = PARTICLES.register("shockwave_small", () -> new SimpleParticleType(true));
+
+
+
     public static final DeferredHolder<ParticleType<?>, PropertyParticleType> SPARK_2 = PARTICLES.register("spark_spell", PropertyParticleType::new);
 
     public static final DeferredHolder<ParticleType<?>, PropertyParticleType> VENOM_2 = PARTICLES.register("venom_spell", PropertyParticleType::new);

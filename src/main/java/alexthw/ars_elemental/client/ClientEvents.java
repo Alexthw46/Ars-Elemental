@@ -7,6 +7,7 @@ import alexthw.ars_elemental.client.flashjack.FlashJackFamiliarRenderer;
 import alexthw.ars_elemental.client.flashjack.FlashJackRenderer;
 import alexthw.ars_elemental.client.mages.MageRenderer;
 import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
+import alexthw.ars_elemental.client.particle.ShockwaveParticle;
 import alexthw.ars_elemental.client.particle.SparkParticle;
 import alexthw.ars_elemental.client.particle.VenomParticle;
 import alexthw.ars_elemental.client.summons.DireWolfRenderer;
@@ -115,6 +116,9 @@ public class ClientEvents {
         event.registerSpriteSet(ModParticles.VENOM.get(), VenomParticle::factory);
         event.registerSpriteSet(ModParticles.SPARK_2.get(), (sprites -> new WrappedProvider(ModParticles.SPARK.get(), SparkParticle::factory)));
         event.registerSpriteSet(ModParticles.VENOM_2.get(), (sprites -> new WrappedProvider(ModParticles.VENOM.get(), VenomParticle::factory)));
+        event.registerSpriteSet(ModParticles.SHOCKWAVE.get(), ShockwaveParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.SHOCKWAVE_SMALL.get(), ShockwaveParticle.ProviderSmall::new);
+
     }
 
     @SubscribeEvent

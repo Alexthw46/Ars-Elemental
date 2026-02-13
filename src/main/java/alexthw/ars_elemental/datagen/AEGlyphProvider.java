@@ -57,6 +57,8 @@ public class AEGlyphProvider extends GlyphRecipeProvider {
         addRecipe(EffectGeyser.INSTANCE, ItemsRegistry.FIRE_ESSENCE, ItemsRegistry.WATER_ESSENCE, Items.MAGMA_BLOCK, Items.WIND_CHARGE);
         addRecipe(EffectMist.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.AIR_ESSENCE, Items.PHANTOM_MEMBRANE, Items.BLUE_ICE);
         addRecipe(EffectWaterJet.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.MANIPULATION_ESSENCE, Items.PRISMARINE_SHARD, ItemsRegistry.WILDEN_SPIKE, Items.BREEZE_ROD);
+        addRecipe(EffectOxidize.INSTANCE, ItemsRegistry.WATER_ESSENCE, ItemsRegistry.AIR_ESSENCE, Items.OXIDIZED_COPPER, ItemsRegistry.ABJURATION_ESSENCE);
+        addRecipe(EffectCavitate.INSTANCE, ItemsRegistry.WATER_ESSENCE, Items.HEART_OF_THE_SEA, Items.PUFFERFISH, Items.SPONGE);
 
         addRecipe(EffectSpike.INSTANCE, Items.POINTED_DRIPSTONE, Items.NETHERITE_INGOT, ItemsRegistry.EARTH_ESSENCE);
         addRecipe(EffectEnvenom.INSTANCE, Items.POISONOUS_POTATO, Items.FERMENTED_SPIDER_EYE, Items.SUSPICIOUS_STEW);

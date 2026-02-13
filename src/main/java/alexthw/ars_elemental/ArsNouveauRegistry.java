@@ -140,10 +140,13 @@ public class ArsNouveauRegistry {
         register(EffectSpark.INSTANCE);
         register(EffectConflagrate.INSTANCE);
 
+        // Water Update
         register(EffectWaterJet.INSTANCE);
         register(EffectGeyser.INSTANCE);
         register(EffectMist.INSTANCE);
         register(EffectSlimeFeet.INSTANCE);
+        register(EffectCavitate.INSTANCE);
+        register(EffectOxidize.INSTANCE);
 
         //summons
         register(EffectSummonBee.INSTANCE);
@@ -176,8 +179,6 @@ public class ArsNouveauRegistry {
 
         if (!isProduction()) {
             register(MethodCarianPhalanx.INSTANCE);
-            register(EffectCavitate.INSTANCE);
-            register(EffectOxidize.INSTANCE);
         }
     }
 

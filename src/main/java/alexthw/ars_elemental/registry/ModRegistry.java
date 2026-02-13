@@ -80,6 +80,8 @@ public class ModRegistry {
     public static final ResourceKey<DamageType> POISON = key(Registries.DAMAGE_TYPE, "poison");
     public static final ResourceKey<DamageType> MAGIC_FIRE = key(Registries.DAMAGE_TYPE, "hellfire");
     public static final ResourceKey<DamageType> SPARK = key(Registries.DAMAGE_TYPE, "spark");
+    public static final ResourceKey<DamageType> WATER_JET = key(Registries.DAMAGE_TYPE, "water_jet");
+    public static final ResourceKey<DamageType> CAVITATION = key(Registries.DAMAGE_TYPE, "cavitation");
 
     public static final ResourceKey<Enchantment> MIRROR = key(Registries.ENCHANTMENT, "mirror_shield");
 

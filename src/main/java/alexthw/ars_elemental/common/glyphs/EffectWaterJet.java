@@ -1,14 +1,20 @@
 package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.common.entity.spells.EntityWaterJet;
+import alexthw.ars_elemental.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentRandomize;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -33,7 +39,7 @@ public class EffectWaterJet extends ElementalAbstractEffect implements IDamageEf
 
     @Override
     public String getBookDescription() {
-        return "Creates a high pressure water jet that pierce trough the closest target's armor after few seconds. Split can be used to spawn multiple at the same time, using randomize on top will make each jet target a different entity if possible.";
+        return "Creates a high pressure water jet that pierce trough the closest target, ignoring armor, after few seconds. Split can be used to spawn multiple at the same time, using randomize on top will make each jet target a different entity if possible.";
     }
 
     @Override
@@ -89,6 +95,12 @@ public class EffectWaterJet extends ElementalAbstractEffect implements IDamageEf
     }
 
     @Override
+    public DamageSource buildDamageSource(Level world, LivingEntity shooter) {
+        shooter = !(shooter instanceof Player) ? ANFakePlayer.getPlayer((ServerLevel) world) : shooter;
+        return DamageUtil.source(world, ModRegistry.WATER_JET, shooter);
+    }
+
+    @Override
     protected int getDefaultManaCost() {
         return 80;
     }
@@ -101,6 +113,11 @@ public class EffectWaterJet extends ElementalAbstractEffect implements IDamageEf
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
         return Set.of(SpellSchools.ELEMENTAL_WATER);
+    }
+
+    @Override
+    protected void addAugmentCostOverrides(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentSplit.INSTANCE.getRegistryName(), 40);
     }
 
     @Override

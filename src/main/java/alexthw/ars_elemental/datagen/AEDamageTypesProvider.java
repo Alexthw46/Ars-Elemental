@@ -24,6 +24,9 @@ public class AEDamageTypesProvider extends DatapackBuiltinEntriesProvider {
         ctx.register(ModRegistry.MAGIC_FIRE, new DamageType("hellfire", 0.1F));
         ctx.register(ModRegistry.SPARK, new DamageType("spark", 0.1F));
         ctx.register(ModRegistry.CUT, new DamageType("cut", 0.1F));
+        ctx.register(ModRegistry.CAVITATION, new DamageType("cavitation", 0.1F));
+        ctx.register(ModRegistry.WATER_JET, new DamageType("water_jet", 0.1F));
+
     }
 
     public AEDamageTypesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

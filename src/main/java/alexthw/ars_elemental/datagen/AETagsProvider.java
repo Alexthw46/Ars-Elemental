@@ -364,8 +364,10 @@ public class AETagsProvider {
         @Override
         protected void addTags(HolderLookup.@NotNull Provider provider) {
 
-            tag(Tags.DamageTypes.IS_MAGIC).addOptional(ModRegistry.MAGIC_FIRE.location()).addOptional(ModRegistry.SPARK.location()).addOptional(ModRegistry.CUT.location()).addOptional(ModRegistry.POISON.location());
+            tag(Tags.DamageTypes.IS_MAGIC).addOptional(ModRegistry.MAGIC_FIRE.location()).addOptional(ModRegistry.SPARK.location()).addOptional(ModRegistry.CUT.location()).addOptional(ModRegistry.POISON.location()).addOptional(ModRegistry.WATER_JET.location()).addOptional(ModRegistry.CAVITATION.location());
             tag(DamageTypeTags.ALWAYS_HURTS_ENDER_DRAGONS).addOptional(ModRegistry.MAGIC_FIRE.location()).addOptional(ModRegistry.SPARK.location()).addOptional(ModRegistry.CUT.location()).addOptional(ModRegistry.POISON.location());
+
+            tag(DamageTypeTags.BYPASSES_ARMOR).addOptional(ModRegistry.WATER_JET.location());
 
             tag(Tags.DamageTypes.IS_POISON)
                     .addOptional(ModRegistry.POISON.location());
@@ -378,6 +380,9 @@ public class AETagsProvider {
 
             tag(SauceTags.AIR_DAMAGE)
                     .addOptional(ModRegistry.CUT.location());
+
+            tag(SauceTags.WATER_DAMAGE)
+                    .addOptional(ModRegistry.WATER_JET.location()).addOptional(ModRegistry.CAVITATION.location());
 
         }
     }

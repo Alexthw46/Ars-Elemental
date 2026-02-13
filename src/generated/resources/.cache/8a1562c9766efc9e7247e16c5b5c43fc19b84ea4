@@ -1,7 +1,9 @@
-// 1.21.1	2025-09-13T16:00:17.822123	Tags for minecraft:damage_type mod id ars_elemental
+// 1.21.1	2026-02-13T01:31:23.4825635	Tags for minecraft:damage_type mod id ars_elemental
 b7a840e1c6875dd31f4ca204b40d3307b4f01b12 data/minecraft/tags/damage_type/always_hurts_ender_dragons.json
+d593d2541870744333d8a8cd0bbc1cdce8212447 data/minecraft/tags/damage_type/bypasses_armor.json
 e941ab12d557deb5f49a5f7022e85ecb2ad21333 data/minecraft/tags/damage_type/is_lightning.json
-b7a840e1c6875dd31f4ca204b40d3307b4f01b12 data/neoforge/tags/damage_type/is_magic.json
+4e1adf80b492ef6662c0c728374da2b29243c059 data/neoforge/tags/damage_type/is_magic.json
 8e8ae0c3f8e6e00cb57a3074537acc20e7a2075f data/neoforge/tags/damage_type/is_poison.json
 d3530f55250aeaac896b601a1bd0812ee5d3ccf2 data/sauce/tags/damage_type/air_damage.json
 b588536d638c8176ec77e9cd2c841cc804b65aa6 data/sauce/tags/damage_type/fire_damage.json
+92c3b92e0d3703c39aac38aa62803a1d8ff6cebb data/sauce/tags/damage_type/water_damage.json

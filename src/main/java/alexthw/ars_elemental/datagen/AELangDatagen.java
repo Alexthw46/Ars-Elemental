@@ -224,6 +224,10 @@ public class AELangDatagen extends LanguageProvider {
         add("death.attack.poison.item", "%1$s was poisoned by %2$s using %3$s");
         add("death.attack.spark", "%1$s experienced a short circuit");
         add("death.attack.spark.item", "%1$s was shocked to death    by %2$s using %3$s");
+        add("death.attack.cavitation", "%1$s was ruptured by a hydrostatic implosion");
+        add("death.attack.cavitation.item", "%1$s popped in a violent cavitation shockwave caused by %2$s using %3$s");
+        add("death.attack.water_jet", "%1$s was pierced by a high-pressure water stream");
+        add("death.attack.water_jet.item", "%1$s was cut down by pressurized water from %2$s using %3$s");
         add("death.attack.beheading", "%1$s was cut into pieces");
         add("death.attack.beheading.item", "%1$s was cut to shreds by %2$s using %3$s");
         add("death.attack.magic.item", "%1$s was killed by %2$s using %3$s");
