@@ -175,6 +175,7 @@ public class AETagsProvider {
         protected void addTags(HolderLookup.@NotNull Provider provider) {
             addPickMineable(1, ModItems.WATER_UPSTREAM_BLOCK.get(), ModItems.AIR_UPSTREAM_BLOCK.get(), ModItems.LAVA_UPSTREAM_BLOCK.get(), ModItems.MERMAID_ROCK.get());
             addPickMineable(0, ModItems.SPELL_MIRROR.get(), ModItems.AIR_TURRET.get(), ModItems.FIRE_TURRET.get(), ModItems.EARTH_TURRET.get(), ModItems.WATER_TURRET.get(), ModItems.SHAPING_TURRET.get(), ModItems.ADVANCED_PRISM.get());
+            addPickMineable(0, ModItems.AIR_RELAY.get(), ModItems.FIRE_RELAY.get(), ModItems.EARTH_RELAY.get(), ModItems.WATER_RELAY.get());
             logsTag(ModItems.FLASHING_ARCHWOOD_LOG.get(),
                     ModItems.FLASHING_ARCHWOOD.get(),
                     ModItems.FLASHING_ARCHWOOD_STRIPPED.get(),
@@ -315,12 +316,16 @@ public class AETagsProvider {
         protected void addTags(HolderLookup.@NotNull Provider provider) {
             this.tag(EntityTags.MAGIC_FIND).add(SIREN_ENTITY.get(), FLASHJACK_ENTITY.get());
             this.tag(EntityTags.MAGIC_FIND).add(AIR_MAGE.get(), FIRE_MAGE.get(), EARTH_MAGE.get(), WATER_MAGE.get());
-            this.tag(EntityTags.FAMILIAR).add(FIRENANDO_FAMILIAR.get(), SIREN_FAMILIAR.get());
+            this.tag(EntityTags.FAMILIAR).add(FIRENANDO_FAMILIAR.get(), SIREN_FAMILIAR.get(), FLASHJACK_FAMILIAR.get());
             this.tag(ModRegistry.AERIAL).add(EntityType.PHANTOM, EntityType.WITHER, EntityType.BAT, EntityType.ALLAY, EntityType.ENDER_DRAGON, EntityType.PARROT, EntityType.GHAST, EntityType.VEX, EntityType.BEE, ModEntities.WILDEN_STALKER.get(), ModEntities.WILDEN_BOSS.get(), FLASHJACK_ENTITY.get());
             this.tag(ModRegistry.FIERY).add(EntityType.ENDER_DRAGON);
             this.tag(EntityTypeTags.UNDEAD).add(EntityType.GHAST);
-            this.tag(EntityTypeTags.AQUATIC).add(EntityType.AXOLOTL, EntityType.FROG, EntityType.DROWNED);
-            this.tag(ModRegistry.INSECT).add(EntityType.SILVERFISH);
+            this.tag(EntityTypeTags.AQUATIC).add(EntityType.FROG, EntityType.DROWNED);
+            this.tag(EntityTypeTags.ARTHROPOD).add(BEE_SUMMON.get());
+            this.tag(EntityTypeTags.FROG_FOOD).add(SLIME_SUMMON.get());
+            this.tag(EntityTypeTags.IMMUNE_TO_OOZING).add(SLIME_SUMMON.get());
+            this.tag(ModRegistry.INSECT).addTag(EntityTypeTags.ARTHROPOD);
+            this.tag(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("c", "bees"))).add(BEE_SUMMON.get());
             this.tag(ModRegistry.ATTRACT_BLACKLIST).add(EntityType.PLAYER).addTag(Tags.EntityTypes.BOSSES).add(ModEntities.ENTITY_FOLLOW_PROJ.get()).addTag(EntityTags.FAMILIAR);
             this.tag(EntityTypeTags.UNDEAD).add(SKELEHORSE_SUMMON.get(), WSKELETON_SUMMON.get());
             this.tag(EntityTypeTags.AQUATIC).add(SIREN_ENTITY.get(), SIREN_FAMILIAR.get());
@@ -331,6 +336,7 @@ public class AETagsProvider {
             this.tag(ModRegistry.CHARM_BLACKLIST);
             this.tag(VITALIC_GROWTH_BLACKLIST).add(FLASHING_WEALD_WALKER.get());
             this.tag(VITALIC_DEATH_BLACKLIST).add(FLASHING_WEALD_WALKER.get());
+            this.tag(EntityTags.LINGERING_BLACKLIST).add(GEYSER.get(), FIRE_GEYSER.get(), MIST_CLOUD.get(), WATER_JET_MARKER.get());
         }
 
         @Override

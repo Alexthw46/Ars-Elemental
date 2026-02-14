@@ -10,6 +10,10 @@
     "ars_elemental:earth_turret",
     "ars_elemental:water_turret",
     "ars_elemental:manipulation_turret",
-    "ars_elemental:advanced_prism"
+    "ars_elemental:advanced_prism",
+    "ars_elemental:air_relay",
+    "ars_elemental:fire_relay",
+    "ars_elemental:earth_relay",
+    "ars_elemental:water_relay"
   ]
 }
