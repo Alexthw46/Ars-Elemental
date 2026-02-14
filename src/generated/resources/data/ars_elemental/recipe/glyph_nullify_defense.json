@@ -1,7 +1,7 @@
 {
   "neoforge:conditions": [
     {
-      "type": "ars_elemental:ae_config",
+      "type": "sauce:ae_config",
       "config": "frame_skip_recipe"
     }
   ],
