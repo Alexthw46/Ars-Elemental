@@ -8,7 +8,12 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.CasterTomeData;
 import com.hollingsworth.arsnouveau.common.datagen.CasterTomeProvider;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
-import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import com.hollingsworth.arsnouveau.common.spell.effect.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
@@ -19,6 +24,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 
@@ -129,6 +135,14 @@ public class AECasterTomeProvider extends CasterTomeProvider {
                 , "Summon a Skeletal Horse for a short time.",
                 ParticleUtil.soulColor));
 
+        tomes.add(buildTome(WATER_CTOME, "shrimp_pistol", "Shrimp Pistol", new Spell()
+                        .add(MethodProjectile.INSTANCE)
+                        .add(EffectBubble.INSTANCE)
+                        .add(EffectDelay.INSTANCE)
+                        .add(AugmentDurationDown.INSTANCE)
+                        .add(EffectCavitate.INSTANCE)
+                , "Trap the enemy in a bubble that detonates shortly after from cavitation.", ParticleUtil.waterColor));
+
         Path output = this.generator.getPackOutput().getOutputFolder();
         for (CasterRecipeWrapper g : tomes) {
             Path path = getRecipePath(output, g.id().getPath());
@@ -150,7 +164,7 @@ public class AECasterTomeProvider extends CasterTomeProvider {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Ars Elemental Caster Tomes Datagen";
     }
 

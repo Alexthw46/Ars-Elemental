@@ -21,18 +21,24 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
+
+import static alexthw.ars_elemental.common.entity.summon.SummonSlime.Variant.FIRE;
+import static net.neoforged.neoforge.common.NeoForgeMod.LAVA_TYPE;
 
 public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
 
@@ -71,12 +77,37 @@ public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
         super.registerGoals();
         targetSelector.removeAllGoals((g) -> true);
 
-        this.goalSelector.addGoal(2, new FollowSummonerGoal(this, owner, 1.0, 6.0f, 3.0f));
+        this.goalSelector.addGoal(2, new FollowSummonerGoal(this, owner, 1.0, 6.0f, 12.0f));
+        this.targetSelector.addGoal(1, new CopyOwnerTargetGoal<>(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 10, false, true,
                 entity -> (entity instanceof Mob mob && mob.getTarget() != null &&
                         mob.getTarget().equals(this.owner)) || entity != null && entity.getKillCredit() != null && entity.getKillCredit().equals(this.owner)
                         && entity != this.owner
         ));
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return FIRE.toString().equals(getVariant()) || super.fireImmune();
+    }
+
+    @Override
+    public void jumpInFluid(@NotNull FluidType type) {
+        if (FIRE.toString().equals(getVariant())) {
+            this.jumpInLiquidInternal(() -> type == LAVA_TYPE.value(), () -> super.jumpInFluid(type));
+        } else {
+            super.jumpInFluid(type);
+        }
+    }
+
+    private void jumpInLiquidInternal(java.util.function.BooleanSupplier isLava, Runnable onSuper) {
+        if (isLava.getAsBoolean()) {
+            Vec3 vec3 = this.getDeltaMovement();
+            this.setDeltaMovement(vec3.x, 0.22F + (float) this.getSize() * 0.05F, vec3.z);
+            this.hasImpulse = true;
+        } else {
+            onSuper.run();
+        }
     }
 
     @Override
@@ -88,7 +119,6 @@ public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
         if (this.getSummoner() != null) return getSummoner().getTeam();
         return super.getTeam();
     }
-
 
     @Override
     public boolean isAlliedTo(@NotNull Entity pEntity) {
@@ -232,6 +262,7 @@ public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
             this.setOwnerID(uuid);
             owner = level.getPlayerByUUID(uuid);
         }
+        tryResetGoals();
     }
 
     @Override
@@ -314,4 +345,35 @@ public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
         }
     }
 
+    static class CopyOwnerTargetGoal<I extends Mob & IFollowingSummon> extends TargetGoal {
+
+        public CopyOwnerTargetGoal(I creature) {
+            super(creature, false);
+        }
+
+        /**
+         * Returns whether the EntityAIBase should begin execution.
+         */
+        public boolean canUse() {
+            if (!(this.mob instanceof IFollowingSummon summon)) return false;
+            LivingEntity summoner = summon.getSummoner();
+            if (summoner == null) return false;
+            var target = summon.getSummoner().getLastHurtMob();
+            if (target == null) target = summon.getSummoner().getLastHurtByMob();
+            mob.setTarget(target);
+            return target != null && summoner != target && !(target instanceof ISummon summon2 && summon2.getOwnerAlt() == summoner);
+        }
+
+        /**
+         * Execute a one shot task or start executing a continuous task
+         */
+        public void start() {
+            if (mob instanceof IFollowingSummon summon && summon.getSummoner() != null) {
+                var target = summon.getSummoner().getLastHurtMob();
+                if (target == null) target = summon.getSummoner().getLastHurtByMob();
+                mob.setTarget(target);
+            }
+            super.start();
+        }
+    }
 }

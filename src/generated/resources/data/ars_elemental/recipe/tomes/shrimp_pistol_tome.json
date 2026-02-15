@@ -1,0 +1,38 @@
+{
+  "type": "ars_nouveau:caster_tome",
+  "color": {
+    "b": 250,
+    "g": 50,
+    "id": "ars_nouveau:constant",
+    "r": 50
+  },
+  "flavour_text": "Trap the enemy in a bubble that detonates shortly after from cavitation.",
+  "name": "Shrimp Pistol",
+  "sound": {},
+  "spell": [
+    "ars_nouveau:glyph_projectile",
+    "ars_nouveau:glyph_bubble",
+    "ars_nouveau:glyph_delay",
+    "ars_nouveau:glyph_duration_down",
+    "ars_elemental:glyph_cavitate"
+  ],
+  "spellData": {
+    "color": {
+      "b": 250,
+      "g": 50,
+      "id": "ars_nouveau:constant",
+      "r": 50
+    },
+    "name": "Shrimp Pistol",
+    "particleTimeline": {},
+    "recipe": [
+      "ars_nouveau:glyph_projectile",
+      "ars_nouveau:glyph_bubble",
+      "ars_nouveau:glyph_delay",
+      "ars_nouveau:glyph_duration_down",
+      "ars_elemental:glyph_cavitate"
+    ],
+    "sound": {}
+  },
+  "tome_type": "ars_elemental:water_caster_tome"
+}

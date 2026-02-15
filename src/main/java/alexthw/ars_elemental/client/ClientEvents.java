@@ -46,6 +46,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -185,10 +186,10 @@ public class ClientEvents {
         event.registerEntityRenderer(ModEntities.SLIME_SUMMON.get(), p_174391_ -> new SlimeRenderer(p_174391_) {
             static final ResourceLocation defLoc = prefix("textures/entity/slime/slime.png");
             static final ResourceLocation waterLoc = prefix("textures/entity/slime/slime_water.png");
+            static final ResourceLocation fireLoc = prefix("textures/entity/slime/slime_fire.png");
             static final ResourceLocation earthLoc = prefix("textures/entity/slime/slime_earth.png");
             static final ResourceLocation airLoc = prefix("textures/entity/slime/slime_air.png");
             static final ResourceLocation manipLoc = prefix("textures/entity/slime/slime_manipulation.png");
-            private static final ResourceLocation MAGMACUBE_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/slime/magmacube.png");
 
             @Override
             public @NotNull ResourceLocation getTextureLocation(@NotNull Slime entity) {
@@ -198,7 +199,7 @@ public class ClientEvents {
                 return switch (variant) {
                     case "summon" -> defLoc;
                     case "earth" -> earthLoc;
-                    case "fire" -> MAGMACUBE_LOCATION;
+                    case "fire" -> fireLoc;
                     case "water" -> waterLoc;
                     case "air" -> airLoc;
                     case "manipulation" -> manipLoc;
@@ -206,6 +207,12 @@ public class ClientEvents {
                     default -> super.getTextureLocation(entity);
                 };
             }
+
+            @Override
+            protected int getBlockLightLevel(@NotNull Slime entity, @NotNull BlockPos pos) {
+                return 15;
+            }
+
         });
 
         event.registerEntityRenderer(ModEntities.BEE_SUMMON.get(), p_173931_ -> new BeeRenderer(p_173931_) {
