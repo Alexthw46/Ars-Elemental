@@ -75,7 +75,7 @@ public class ModPotions {
         VENOM = EFFECTS.register("venom", VenomEffect::new);
         ICE_SLIDE = EFFECTS.register("slip_feet", SlipFeetEffect::new);
         MIST = EFFECTS.register("mist", () -> new MistEffect().addAttributeModifier(Attributes.FOLLOW_RANGE, prefix("mist"), -0.75f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        RUST = EFFECTS.register("rust", () -> new RustEffect().addAttributeModifier(Attributes.ARMOR_TOUGHNESS, prefix("rust"), -0.15f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        RUST = EFFECTS.register("rust", () -> new RustEffect().addAttributeModifier(Attributes.ARMOR, prefix("rust"), -0.15f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
         ENDERFERENCE_POTION = POTIONS.register(potion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 400)));
         LONG_ENDERFERENCE_POTION = POTIONS.register(longPotion("enderference"), () -> new Potion(new MobEffectInstance(ENDERFERENCE, 1200)));

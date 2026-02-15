@@ -445,7 +445,7 @@
   "effect.ars_elemental.repel": "Repelled",
   "effect.ars_elemental.repel.description": "The target is repelled from one or more places by a magic force.",
   "effect.ars_elemental.rust": "Rust",
-  "effect.ars_elemental.rust.description": "Makes the entity armor rust temporarily, dropping its armor toughness points.",
+  "effect.ars_elemental.rust.description": "Makes the entity armor rust temporarily, dropping its armor points.",
   "effect.ars_elemental.slip_feet": "Slippery Feet",
   "effect.ars_elemental.slip_feet.description": "Makes the entity slide as if on ice while on normal blocks, increased slipperiness on ice blocks.",
   "effect.ars_elemental.static_charged": "Static Charged",
