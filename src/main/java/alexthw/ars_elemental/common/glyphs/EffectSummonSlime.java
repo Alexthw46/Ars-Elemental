@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class EffectSummonSlime extends ElementalAbstractEffect {
 
@@ -49,8 +50,10 @@ public class EffectSummonSlime extends ElementalAbstractEffect {
             applySummoningSickness(shooter, (int) (ticks * 0.80));
     }
 
+    private static final UUID mk = UUID.fromString("7f4b964d-7661-41bf-b71e-33ff01f3994d");
+
     private Variant getVariant(SpellResolver resolver) {
-        // if caster == MK return Variant.MK;
+        if (mk.equals(resolver.spellContext.getUnwrappedCaster().getUUID())) return Variant.MK;
         if (CompatUtils.fireCheck(resolver)) return Variant.FIRE;
         if (CompatUtils.waterCheck(resolver)) return Variant.WATER;
         if (CompatUtils.earthCheck(resolver)) return Variant.EARTH;

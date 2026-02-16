@@ -50,6 +50,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -105,6 +106,15 @@ public class DamageEvents {
                                         || living.isInvulnerable() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.isCreativePlayer());
                             }
                         }
+                        /*
+                        case "water" -> {
+                            // check if target was invulnerable only to drowning damage, not a true invulnerability
+                            if (source.is(DamageTypeTags.IS_DROWNING) && living.getType().is(EntityTypeTags.CAN_BREATHE_UNDER_WATER)){
+                                flag = flag && (living.isRemoved()
+                                        || living.isInvulnerable() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.isCreativePlayer());
+                            }
+                        }
+                         */
                     }
                 }
                 // the target was invulnerable to the damage source and the player has a focus that bypasses it
@@ -175,7 +185,7 @@ public class DamageEvents {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public static void damageTweaking(LivingIncomingDamageEvent event) {
+    public static void preReductionDamageTweaking(LivingIncomingDamageEvent event) {
 
         var dealer = event.getSource().getEntity();
         var target = event.getEntity();
@@ -212,40 +222,45 @@ public class DamageEvents {
             }
         }
 
-        boolean not_bypassEnchants = !event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS);
         if (event.getSource().getEntity() instanceof LivingEntity living && target instanceof Player player && EnthrallUtil.isEnthralledBy(living, player))
             event.setAmount(event.getAmount() * .5F);
+
+    }
+
+    @SubscribeEvent
+    public static void postReductionDamageTweaking(LivingDamageEvent.Pre event) {
+        LivingEntity target = event.getEntity();
 
         // if damage is magic and target has magic fire, add back the half the damage that was reduced from the armor points
         if (event.getSource().is(Tags.DamageTypes.IS_MAGIC) && target.hasEffect(MAGIC_FIRE)) {
             var armorReduction = event.getContainer().getReduction(DamageContainer.Reduction.ARMOR);
-            event.setAmount(event.getAmount() + armorReduction * 0.5F);
+            event.setNewDamage(event.getNewDamage() + armorReduction * 0.5F);
         }
+        boolean not_bypassEnchants = !event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS);
 
-        LivingEntity living = event.getEntity();
         //check if the entity has the mana bubble effect and if so, reduce the damage
-        MobEffectInstance bubbleEffect = living.getEffect(MANA_BUBBLE);
+        MobEffectInstance bubbleEffect = target.getEffect(MANA_BUBBLE);
         if (not_bypassEnchants && bubbleEffect != null) {
-            float ManaBubbleCost = Math.max(0, EffectBubbleShield.INSTANCE.GENERIC_INT.get() - ManaUtil.getPlayerDiscounts(living, new Spell(EffectBubbleShield.INSTANCE), ItemStack.EMPTY) * 0.75F);
-            var mana = CapabilityRegistry.getMana(living);
+            float ManaBubbleCost = Math.max(0, EffectBubbleShield.INSTANCE.GENERIC_INT.get() - ManaUtil.getPlayerDiscounts(target, new Spell(EffectBubbleShield.INSTANCE), ItemStack.EMPTY) * 0.75F);
+            var mana = CapabilityRegistry.getMana(target);
             // guard against infinite damage that would cause NaN mana
-            if (mana != null && event.getAmount() < 100000) {
+            if (mana != null && event.getNewDamage() < 100000) {
                 double maxReduction = mana.getCurrentMana() / ManaBubbleCost;
                 double amp = Math.min(1 + bubbleEffect.getAmplifier(), maxReduction);
-                float newDamage = (float) Math.max(0, event.getAmount() - amp);
-                float actualReduction = event.getAmount() - newDamage;
+                float newDamage = (float) Math.max(0, event.getNewDamage() - amp);
+                float actualReduction = event.getNewDamage() - newDamage;
                 // don't deplete mana if the entity is invulnerable due to a previous attack
                 if (actualReduction > 0 && mana.getCurrentMana() >= ManaBubbleCost) {
-                    event.setAmount(newDamage);
+                    event.setNewDamage(newDamage);
                     if (event.getContainer().getPostAttackInvulnerabilityTicks() != event.getEntity().invulnerableTime) {
                         mana.removeMana(actualReduction * ManaBubbleCost);
                     }
                 }
                 if (mana.getCurrentMana() < ManaBubbleCost) {
-                    living.removeEffect(MANA_BUBBLE);
+                    target.removeEffect(MANA_BUBBLE);
                 }
-            } else if (living instanceof WaterMage) {
-                event.setAmount(event.getAmount() * 0.5F);
+            } else if (target instanceof WaterMage) {
+                event.setNewDamage(event.getNewDamage() * 0.75F);
             }
         }
     }

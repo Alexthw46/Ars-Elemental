@@ -40,7 +40,7 @@ public class EffectGeyser extends ElementalAbstractEffect {
 
     @Override
     public String getBookDescription() {
-        return "Creates a Geyser on the spot that soaks and propels entities upwards for a small time. Height controlled by Amplify, size controlled by AoE, can be horizontal if Sensitive.";
+        return "Creates a Geyser on the spot that soaks and propels entities upwards for a small time. Height controlled by Amplify, size controlled by AoE, can be horizontal if Sensitive. If combined with a fire focus, it will set on fire the entities too";
     }
 
     @Override
