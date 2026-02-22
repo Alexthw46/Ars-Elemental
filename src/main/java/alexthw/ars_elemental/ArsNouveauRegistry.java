@@ -18,6 +18,7 @@ import alexthw.ars_elemental.common.items.armor.SporePerk;
 import alexthw.ars_elemental.common.items.armor.SummonPerk;
 import alexthw.ars_elemental.common.rituals.AttractionRitual;
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
+import alexthw.ars_elemental.common.rituals.PollinationRitual;
 import alexthw.ars_elemental.common.rituals.RepulsionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
@@ -381,6 +382,7 @@ public class ArsNouveauRegistry {
         registerRitual(new DetectionRitual());
         registerRitual(new RepulsionRitual());
         registerRitual(new AttractionRitual());
+        registerRitual(new PollinationRitual());
         registerRitual(new ArchwoodForestRitual());
         registerRitual(new ArchwoodForestationRitual());
 

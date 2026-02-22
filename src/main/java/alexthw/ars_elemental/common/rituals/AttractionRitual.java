@@ -2,9 +2,11 @@ package alexthw.ars_elemental.common.rituals;
 
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -16,7 +18,7 @@ public class AttractionRitual extends AbstractRitual {
 
     @Override
     public String getLangDescription() {
-        return "Make the brazier act as a magnet for entities in a 8 blocks radius. Won't work on players and bosses.";
+        return "Make the brazier act as a magnet for entities in a 8 blocks radius. Won't work on players and bosses. Can be augmented with Earth Essence to increase its radius.";
     }
 
     @Override
@@ -24,11 +26,15 @@ public class AttractionRitual extends AbstractRitual {
         return "Attraction";
     }
 
+    public int getRadius() {
+        return 8 + itemConsumedCount(this::canConsumeItem);
+    }
+
     @Override
     protected void tick() {
         if (getWorld() instanceof ServerLevel level && level.getGameTime() % 10 == 0 && this.tile != null) {
             // Get all entities in 8 block radius, excluding players and bosses
-            List<Entity> entities = level.getEntitiesOfClass(Entity.class, new AABB(tile.getBlockPos()).inflate(8), entity -> !(entity.getType().is(ModRegistry.ATTRACT_BLACKLIST)));
+            List<Entity> entities = level.getEntitiesOfClass(Entity.class, new AABB(tile.getBlockPos()).inflate(getRadius()), entity -> !(entity.getType().is(ModRegistry.ATTRACT_BLACKLIST)));
             for (Entity entity : entities) {
                 if (entity != null && getPos() != null) {
                     Vec3 vec3d = new Vec3(this.getPos().getX() - entity.getX(), this.getPos().getY() - entity.getY(), this.getPos().getZ() - entity.getZ());
@@ -39,6 +45,11 @@ public class AttractionRitual extends AbstractRitual {
                 setNeedsSource(true);
             }
         }
+    }
+
+    @Override
+    public boolean canConsumeItem(ItemStack stack) {
+        return stack.is(ItemsRegistry.EARTH_ESSENCE.asItem());
     }
 
     @Override
