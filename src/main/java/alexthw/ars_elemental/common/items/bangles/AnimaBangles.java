@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.items.bangles;
 
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import com.alexthw.sauce.api.item.ISchoolBangle;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -23,7 +24,8 @@ public class AnimaBangles extends ElementalCurio implements ISchoolBangle {
     @Override
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation uuid, ItemStack stack) {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
-        map.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid,  4.d, AttributeModifier.Operation.ADD_VALUE));
+        map.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, 4.d, AttributeModifier.Operation.ADD_VALUE));
+        map.put(ModRegistry.NECROMANCY_POWER, new AttributeModifier(uuid, 2f, AttributeModifier.Operation.ADD_VALUE));
         return map;
     }
 

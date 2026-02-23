@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-12T15:15:39.8850154	Ars Elemental Item Models
+// 1.21.1	2026-02-23T12:48:57.624067	Ars Elemental Item Models
 a5b2cd6b765fcd98484c5cad23aa0a2775ae7d1a assets/ars_elemental/models/item/advanced_prism.json
 43734dccea8eb5c4ed28aba4b1239c6ab9241405 assets/ars_elemental/models/item/air_bangle.json
 4effb972e3d0fda927a6663b513396158592b9ae assets/ars_elemental/models/item/air_boots.json
@@ -19,7 +19,6 @@ ebb6963bb99f2e0b06025c58082ab40995df1b67 assets/ars_elemental/models/item/air_tu
 5bf4803f9d27ac7f3b38a81ba33e8206ac33acbc assets/ars_elemental/models/item/air_upstream.json
 532e8d7811b9bfc0bee90899bd01a27564dfb3f4 assets/ars_elemental/models/item/anima_bangle.json
 c4ba07c5c7130e9734c1ea3691ac71eaed4c97f9 assets/ars_elemental/models/item/anima_caster_tome.json
-c23ded919ec2e7048013124b58167bcaff925569 assets/ars_elemental/models/item/anima_essence.json
 4a6fa79090a4ec5637e757aa4d1f0a8b219016f2 assets/ars_elemental/models/item/aqua_boots.json
 60490d1e193d0105fa803d09ca34f0630b52d27d assets/ars_elemental/models/item/aqua_boots_heavy.json
 08d6384827af8e26bc8423b8c0f87113fafd3031 assets/ars_elemental/models/item/aqua_chestplate.json
