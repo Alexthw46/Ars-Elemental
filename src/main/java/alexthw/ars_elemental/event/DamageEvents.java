@@ -316,11 +316,11 @@ public class DamageEvents {
     public static void vorpalCut(SpellDamageEvent.Post event) {
         if (!(event.target instanceof LivingEntity living) || living.getHealth() > 0 || event.context == null) return;
         int idx = event.context.getCurrentIndex();
-        var recipe = event.context.getSpell().recipe;
+        var spellRecipe = event.context.getSpell().recipe;
         // Avoid out of bounds
-        if (idx <= 0 || idx > recipe.size()) return;
+        if (idx <= 0 || idx > spellRecipe.size()) return;
         SpellSchool school = event.context.getCaster() instanceof TileCaster tc && tc.getTile() instanceof ElementalSpellTurretTile turret ? turret.getSchool() : ISchoolFocus.hasFocus(event.caster);
-        Spell subspell = new Spell(recipe.subList(idx - 1, recipe.size()));
+        Spell subspell = new Spell(spellRecipe.subList(idx - 1, spellRecipe.size()));
         if (subspell.recipe.isEmpty()) return;
         if (subspell.recipe.get(0) == EffectCut.INSTANCE && school == ELEMENTAL_AIR) {
             ItemStack skull = null;
