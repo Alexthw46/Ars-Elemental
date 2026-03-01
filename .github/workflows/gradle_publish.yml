@@ -23,9 +23,9 @@ jobs:
 
     steps:
       - name: checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: validate gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v5
       - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v3
         with:
