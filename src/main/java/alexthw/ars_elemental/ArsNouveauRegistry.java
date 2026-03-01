@@ -285,6 +285,7 @@ public class ArsNouveauRegistry {
         addSchool(EffectSummonUndead.INSTANCE, SpellSchools.NECROMANCY);
 
         addSchool(EffectCut.INSTANCE, SpellSchools.ELEMENTAL_AIR);
+        addSchool(EffectEvaporate.INSTANCE, SpellSchools.ELEMENTAL_FIRE);
 
         //Tweaks
         EffectFirework.INSTANCE.compatibleAugments.add(AugmentDampen.INSTANCE);
@@ -371,9 +372,6 @@ public class ArsNouveauRegistry {
         });
 
     }
-
-
-    // Banner patterns
 
     public static void registerRituals() {
 
