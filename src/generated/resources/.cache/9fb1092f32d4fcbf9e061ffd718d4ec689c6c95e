@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-12T11:22:08.4024376	Recipes
+// 1.21.1	2026-02-22T19:15:50.1020011	Recipes
 32525ad53faf41a82f22d6159ad8475fc610064a data/ars_elemental/advancement/recipes/building_blocks/stripped_yellow_archwood.json
 24acf37e7c18f079c22d994befd3f523ceec3de7 data/ars_elemental/advancement/recipes/misc/alt_blossom.json
 3e9af32118c69a47c9fdd8a4a89c805233ec7988 data/ars_elemental/advancement/recipes/misc/curio_bag.json
@@ -8,6 +8,7 @@ db5f5c5bd4d04d46d0d63c0c24bb6693694e2d18 data/ars_elemental/advancement/recipes/
 d766ccd8c4c86452e41980d43b96e0958f056a5e data/ars_elemental/advancement/recipes/misc/ritual_archwood_forestation.json
 a8072546e42b76080f91020d252dfa999fd707c4 data/ars_elemental/advancement/recipes/misc/ritual_attraction.json
 5928d123c62bc8c563943dca9ff995bc184578d5 data/ars_elemental/advancement/recipes/misc/ritual_detection.json
+6b71cc4a25641e6012e2deabeaa6cfd4a96a9f19 data/ars_elemental/advancement/recipes/misc/ritual_pollination.json
 4f027eaca7a66e86eabb05b792af6d53c5b931f7 data/ars_elemental/advancement/recipes/misc/ritual_repulsion.json
 f582d41cab062c7beefb13bf7487e724178d2308 data/ars_elemental/advancement/recipes/misc/ritual_squirrels.json
 a51455469a2b6d14770b3c113c979bc9b652c7c7 data/ars_elemental/advancement/recipes/misc/ritual_tesla_coil.json
@@ -24,6 +25,7 @@ a3bce590f1520ec192aca59389ba98829c3ed556 data/ars_elemental/recipe/flight_alt.js
 888c343a7f3c592bd15c6d2720fb7fc3c9b1b713 data/ars_elemental/recipe/ritual_archwood_forestation.json
 a009f7cc7ffef586af1cef40dbbbba0c5b81f1df data/ars_elemental/recipe/ritual_attraction.json
 7dec075d269e0f965c61d43794f01c014a976dff data/ars_elemental/recipe/ritual_detection.json
+1a2ce6ccccd45dd08c1be6f77e17826cc2f52cfd data/ars_elemental/recipe/ritual_pollination.json
 0a6e2c0406a81afb1824ae745f488e9d983f0d74 data/ars_elemental/recipe/ritual_repulsion.json
 6cc5cf495d2918e8d77268dd285b2a3f06a04de7 data/ars_elemental/recipe/ritual_squirrels.json
 3bbeea068e4733418b6f7fb2d7963271eba15bdd data/ars_elemental/recipe/ritual_tesla_coil.json

@@ -221,7 +221,6 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page.book_protection", "This book upgrade will protect your spellbook from all kinds of damage, may it be a cactus or a pool of lava. Can't guarantee on the void. The gold inlays will become netherite-black but you can toggle it off in the client configs.");
         add("ars_elemental.enchantment_desc.mirror_shield", "Can only be applied on the Enchanter's Shield. Gives a chance of reflecting spell projectile while blocking with the shield. 25% per level.");
         add("ars_elemental.enchantment_desc.soulbound", "Prevent the item enchanted from being lost on death.");
-        add("ars_nouveau.school.necromancy", "Anima");
         add("death.attack.hellflare", "%1$s was burned by magic flames");
         add("death.attack.hellflare.item", "%1$s was burned by %2$s with the magic flames of %3$s");
         add("death.attack.poison", "%2$s's poison spores blossomed inside %1$s");
@@ -422,6 +421,13 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.page3.necrotic_focus", "Summoned Wolves, Undead and Vexes seems unchanged at first, but if they die while the summoner wear this focus they will rise from death once, filled with blood lust. These undead summons will cast Homing spells when you do and heal you every time they kill an enemy.");
         add("ars_elemental.page.water_upstream", "This block generates an upstream current that will make surrounding entities in water float upwards as if inside a bubble column, even if they are not in source blocks. Sneaking will allow to descend.");
         add("ars_elemental.page.curio_bag", "All those magical trinkets can easily clutter your inventory, but fear not! Using some magebloom fiber you can make a magic pouch to store items. You can also open it with $(k:ars_elemental.open_pouch) while in the hotbar or in a curio slot. You can further upgrade it into the Spellcaster bag, which is larger and can be dyed.");
+
+        add("ars_elemental.page1.air_bangle", "This bangle will boost the damage of your Air spells. Your arms sparks with the element, giving a passive boost to speed and attack knockback.");
+        add("ars_elemental.page1.fire_bangle", "This bangle will boost the damage of your Fire spells. Your arms are engulfed in the element, setting on fire enemies hit and granting a passive boost to speed while in hot biomes.");
+        add("ars_elemental.page1.earth_bangle", "This bangle will boost the damage of your Earth spells. Plants blossom on your arms, inflicting snare to enemies hit and granting the wearer immunity to cactus and berry bushes and knockback resistance.");
+        add("ars_elemental.page1.water_bangle", "This bangle will boost the damage of your Water spells. Your arms chills the air around, freezing enemies on every hit. It will also grant the wearer a passive boost to speed in water and rain.");
+        add("ars_elemental.page1.summon_bangle", "This bangle will boost the damage of your Summoning spells. Your summons follows your arms movement, targeting whatever your hit with increased damage.");
+        add("ars_elemental.page1.anima_bangle", "This bangle will boost the damage of your Anima spells. You can feel a cycle of life and death in your arms, randomly healing or withering the enemies hit and giving you a small health boost.");
 
         add("ars_elemental.particle.spark_spell", "Elemental Spark");
         add("ars_elemental.particle.venom_spell", "Envenom Skulls");

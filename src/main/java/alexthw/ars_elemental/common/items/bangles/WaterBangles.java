@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.items.bangles;
 
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import com.alexthw.sauce.api.item.ISchoolBangle;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -30,6 +31,7 @@ public class WaterBangles extends ElementalCurio implements ISchoolBangle {
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
         map.put(NeoForgeMod.SWIM_SPEED, new AttributeModifier(id, 0.5f, AttributeModifier.Operation.ADD_VALUE));
+        map.put(ModRegistry.WATER_POWER, new AttributeModifier(id, 2f, AttributeModifier.Operation.ADD_VALUE));
         if (slotContext.entity() != null && slotContext.entity().isInWaterOrRain())
             map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(id,  0.035f, AttributeModifier.Operation.ADD_VALUE));
         return map;

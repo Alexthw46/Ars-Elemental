@@ -87,7 +87,7 @@ public class TerrablenderAE {
                         .humidity(ParameterUtils.Humidity.FULL_RANGE)
                         .continentalness(ParameterUtils.Continentalness.MUSHROOM_FIELDS, ParameterUtils.Continentalness.MID_INLAND, ParameterUtils.Continentalness.FAR_INLAND)
                         .erosion(ParameterUtils.Erosion.span(ParameterUtils.Erosion.EROSION_0, ParameterUtils.Erosion.EROSION_3))
-                        .depth(Climate.Parameter.span(0.05F, .80F))
+                        .depth(Climate.Parameter.span(0.1F, .80F))
                         .weirdness(ParameterUtils.Weirdness.FULL_RANGE)
                         .build().forEach(point -> builder.add(point, ModWorldgen.Biomes.VEXING_CAVES_KEY));
 

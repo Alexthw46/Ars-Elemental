@@ -2,6 +2,7 @@ package alexthw.ars_elemental.common.items.bangles;
 
 import alexthw.ars_elemental.common.items.ElementalCurio;
 import com.alexthw.sauce.api.item.ISchoolBangle;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
@@ -30,6 +31,7 @@ public class AirBangles extends ElementalCurio implements ISchoolBangle {
         Multimap<Holder<Attribute>, AttributeModifier> map = HashMultimap.create();
         map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, 0.06f, AttributeModifier.Operation.ADD_VALUE));
         map.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(uuid, 1.2f, AttributeModifier.Operation.ADD_VALUE));
+        map.put(ModRegistry.AIR_POWER, new AttributeModifier(uuid, 2f, AttributeModifier.Operation.ADD_VALUE));
         return map;
     }
 

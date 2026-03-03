@@ -157,19 +157,20 @@ repositories {
 
 dependencies {
 
-    implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}")
+    implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}") { transitive = false }
     jarJar(implementation("com.alexthw.sauce:sauce-${minecraft_version}") {
         version {
-            strictly '[0.0.18,)'
+            strictly '[0.0.21.64,)'
             prefer sauce_version
         }
     }) { transitive = false }
 
     // only need the compileOnly, the runtime dependency is handled by Ars Nouveau
-    compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    compileOnly 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+    implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     compileOnly "com.hollingsworth.nuggets:nuggets-neoforge-1.21.1:${nuggets_version}"
     compileOnly "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
     // localRuntime "curse.maven:create-328085:7408951"

@@ -2,6 +2,7 @@ package alexthw.ars_elemental.datagen;
 
 import alexthw.ars_elemental.common.rituals.AttractionRitual;
 import alexthw.ars_elemental.common.rituals.DetectionRitual;
+import alexthw.ars_elemental.common.rituals.PollinationRitual;
 import alexthw.ars_elemental.common.rituals.RepulsionRitual;
 import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
@@ -23,6 +24,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -127,6 +129,13 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ItemsRegistry.WATER_ESSENCE)
                 .requires(ItemsRegistry.FIRE_ESSENCE)
                 .save(consumer, prefix(ArchwoodForestationRitual.ID));
+
+        shapelessBuilder(getRitualItem(prefix(PollinationRitual.ID)))
+                .requires(BlockRegistry.FLOURISHING_LOG)
+                .requires(Ingredient.of(Items.HONEYCOMB), 2)
+                .requires(Ingredient.of(ItemTags.FLOWERS), 2)
+                .requires(ItemsRegistry.EARTH_ESSENCE)
+                .save(consumer, prefix(PollinationRitual.ID));
 
         shapedBuilder(CURIO_BAG.get())
                 .define('M', ItemsRegistry.MAGE_FIBER)

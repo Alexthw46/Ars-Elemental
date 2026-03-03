@@ -69,8 +69,8 @@ public class EffectCavitate extends ElementalAbstractEffect implements IDamageEf
     @Override
     public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addDamageConfig(builder, 6);
-        addAmpConfig(builder, 1);
+        addDamageConfig(builder, 8);
+        addAmpConfig(builder, 3);
         addDefaultPotionConfig(builder);
     }
 

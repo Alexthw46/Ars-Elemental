@@ -8,6 +8,7 @@ import com.alexthw.sauce.api.item.SpellPrismLens;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.common.block.Relay;
 import com.hollingsworth.arsnouveau.common.block.StrippableLog;
+import com.hollingsworth.arsnouveau.common.items.AbstractEssence;
 import com.hollingsworth.arsnouveau.common.items.AnimBlockItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
@@ -58,6 +59,7 @@ public class AEItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
+        takeAll(items, i -> i.get() instanceof AbstractEssence);
         items.forEach(this::generatedItem);
 
     }
