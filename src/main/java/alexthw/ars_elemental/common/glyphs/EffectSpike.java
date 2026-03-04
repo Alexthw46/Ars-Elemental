@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class EffectSpike extends ElementalAbstractEffect implements IDamageEffect {
 
-    public static EffectSpike INSTANCE = new EffectSpike();
+    public static final EffectSpike INSTANCE = new EffectSpike();
 
     public EffectSpike() {
         super("spike", "Spike");

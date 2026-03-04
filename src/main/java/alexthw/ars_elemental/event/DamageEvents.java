@@ -9,7 +9,6 @@ import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.alexthw.sauce.api.item.ISchoolBangle;
 import com.alexthw.sauce.api.item.ISchoolFocus;
-import com.alexthw.sauce.common.entity.EnthrallUtil;
 import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
@@ -200,14 +199,13 @@ public class DamageEvents {
             event.setAmount(event.getAmount() * 0.85F);
         }
 
-
         if (dealer instanceof LivingEntity caster && (target instanceof Player || target instanceof EntityMageBase)) {
             Set<SpellSchool> foci = ISchoolFocus.getFociSchools(caster);
             for (SpellSchool focus : foci) {
                 //if the player has a focus, apply the special effects
                 switch (focus.getId()) {
                     case "water" -> {
-                        //change the freezing buff from useless to the whole damage
+                        // boost freezing damage if the target is already partially frozen
                         if (target.getPercentFrozen() > 0.75F && event.getSource().is(DamageTypeTags.IS_FREEZING)) {
                             event.setAmount(event.getAmount() * 1.25F);
                         }
@@ -221,9 +219,6 @@ public class DamageEvents {
                 }
             }
         }
-
-        if (event.getSource().getEntity() instanceof LivingEntity living && target instanceof Player player && EnthrallUtil.isEnthralledBy(living, player))
-            event.setAmount(event.getAmount() * .5F);
 
     }
 

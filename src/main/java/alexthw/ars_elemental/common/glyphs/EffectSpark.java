@@ -5,7 +5,11 @@ import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
-import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentRandomize;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +28,7 @@ import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 
 public class EffectSpark extends ElementalAbstractEffect implements IPotionEffect, IDamageEffect {
 
-    public static EffectSpark INSTANCE = new EffectSpark();
+    public static final EffectSpark INSTANCE = new EffectSpark();
 
     public EffectSpark() {
         super("spark", "Spark");

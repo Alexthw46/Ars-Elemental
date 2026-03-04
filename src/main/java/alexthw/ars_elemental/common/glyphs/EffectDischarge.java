@@ -33,7 +33,7 @@ import static alexthw.ars_elemental.registry.ModPotions.LIGHTNING_LURE;
 
 public class EffectDischarge extends ElementalAbstractEffect implements IDamageEffect, IPotionEffect {
 
-    public static EffectDischarge INSTANCE = new EffectDischarge();
+    public static final EffectDischarge INSTANCE = new EffectDischarge();
 
     public EffectDischarge() {
         super("discharge", "Discharge");

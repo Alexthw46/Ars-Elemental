@@ -3,7 +3,11 @@ package alexthw.ars_elemental.common.glyphs;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
-import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentRandomize;
 import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,7 +29,7 @@ import java.util.Set;
 
 public class EffectConflagrate extends ElementalAbstractEffect implements IDamageEffect {
 
-    public static EffectConflagrate INSTANCE = new EffectConflagrate();
+    public static final EffectConflagrate INSTANCE = new EffectConflagrate();
 
     public EffectConflagrate() {
         super("conflagrate", "Conflagrate");

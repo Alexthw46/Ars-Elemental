@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-13T16:33:58.025152	Ars Elemental Patchouli Datagen
+// 1.21.1	2026-03-04T16:00:17.3793858	Ars Elemental Patchouli Datagen
 8cd54adfd381523a8826b7e3f6ff00c23c8ee20a assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/armor/armor_air.json
 13673d59819930f81a824dc16e8ec88fef16a195 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/armor/armor_aqua.json
 a5f64c5693aa5688bbb9cf74b9ac17afaffba4c9 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/armor/armor_earth.json
@@ -58,6 +58,7 @@ a1466cb20cae7b3e6871b03c2b5c9fb8608341de assets/ars_nouveau/patchouli_books/worn
 51f5982f8a3cb4fb6be8b42eb4c1af5999b98495 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_2/glyph_summon_slime.json
 2ca958f4874d316ca26c315384a124e321b0d503 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_2/glyph_watery_grave.json
 85956b68d0d7edf37678713d25fbf80e12fa144d assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_carian_phalanx.json
+ece9db0efc7ba5ea4596879e0a72ed14788cb0d7 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_cauterize.json
 456712e46f3ef729c45ef10898eb17d4a7025623 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_cavitate.json
 1e3f69c829255411c64eb9a32101063ac48e2dd4 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_conflagrate.json
 325aab3b3df2e1e27865046cf3618b2916eb2068 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_homing_projectile.json

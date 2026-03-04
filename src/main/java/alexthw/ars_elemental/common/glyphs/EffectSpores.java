@@ -41,7 +41,7 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EART
 
 public class EffectSpores extends ElementalAbstractEffect implements IDamageEffect, IPotionEffect {
 
-    public static EffectSpores INSTANCE = new EffectSpores();
+    public static final EffectSpores INSTANCE = new EffectSpores();
 
     public EffectSpores() {
         super("poison_spores", "Poison Spores");

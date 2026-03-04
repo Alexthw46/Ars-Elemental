@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class EffectEnvenom extends ElementalAbstractEffect implements IPotionEffect, IDamageEffect {
 
-    public static EffectEnvenom INSTANCE = new EffectEnvenom();
+    public static final EffectEnvenom INSTANCE = new EffectEnvenom();
 
     public EffectEnvenom() {
         super("envenom", "Envenom");

@@ -134,11 +134,14 @@ public class ArsNouveauRegistry {
         register(EffectCharm.INSTANCE);
         register(EffectPhantom.INSTANCE);
         register(EffectLifeLink.INSTANCE);
+
         register(EffectSpores.INSTANCE);
-        register(EffectDischarge.INSTANCE);
         register(EffectEnvenom.INSTANCE);
         register(EffectSpike.INSTANCE);
+
+        register(EffectDischarge.INSTANCE);
         register(EffectSpark.INSTANCE);
+
         register(EffectConflagrate.INSTANCE);
 
         // Water Update
@@ -180,6 +183,7 @@ public class ArsNouveauRegistry {
 
         if (!isProduction()) {
             register(MethodCarianPhalanx.INSTANCE);
+            register(EffectCauterize.INSTANCE);
         }
     }
 

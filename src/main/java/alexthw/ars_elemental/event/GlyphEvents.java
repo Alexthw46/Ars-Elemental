@@ -38,6 +38,8 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.List;
 
+import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SOAKED_EFFECT;
+
 @EventBusSubscriber(modid = ArsElemental.MODID)
 public class GlyphEvents {
 
@@ -64,6 +66,7 @@ public class GlyphEvents {
         boolean hasAir = CompatUtils.airCheck(resolver);
         //boolean hasAnima = resolver.hasFocus(ModItems.NECRO_FOCUS.get().getDefaultInstance());
 
+        // Switch based on the resolving effect
         if (event.resolveEffect == EffectCut.INSTANCE) {
             if (living.hasEffect(ModPotions.LIFE_LINK)) {
                 if (living.getEffect(ModPotions.LIFE_LINK) instanceof EntityCarryMEI effect) {
@@ -71,20 +74,17 @@ public class GlyphEvents {
                     if (effect.getTarget() != null) effect.getTarget().removeEffect(ModPotions.LIFE_LINK);
                 }
             }
-        }
-
-
-        if (event.resolveEffect == EffectIgnite.INSTANCE && hasFire)
+        } else if (event.resolveEffect == EffectIgnite.INSTANCE && hasFire)
             living.addEffect(new MobEffectInstance(ModPotions.MAGIC_FIRE, 200), living);
-
-        if (event.resolveEffect == EffectLaunch.INSTANCE) {
+        else if (event.resolveEffect == EffectEvaporate.INSTANCE && living.hasEffect(SOAKED_EFFECT))
+            living.removeEffect(SOAKED_EFFECT);
+        else if (event.resolveEffect == EffectLaunch.INSTANCE) {
             if (event.spellStats.getDurationMultiplier() != 0 && hasAir) {
                 living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 50 * (1 + (int) event.spellStats.getDurationMultiplier()), (int) event.spellStats.getAmpMultiplier() / 2));
                 if (event.shooter instanceof ServerPlayer serverPlayer && !(serverPlayer instanceof FakePlayer))
                     ModAdvTriggers.LEVITATE.get().trigger(serverPlayer);
             }
-        }
-        if (event.resolveEffect == EffectFreeze.INSTANCE) {
+        } else if (event.resolveEffect == EffectFreeze.INSTANCE) {
             if (event.shooter != living && hasWater) {
                 if (living instanceof Skeleton skeleton && skeleton.getType() == EntityType.SKELETON) {
                     skeleton.setFreezeConverting(true);
@@ -96,8 +96,7 @@ public class GlyphEvents {
                     living.forceAddEffect(new MobEffectInstance(ModPotions.FROZEN, 60, 0, false, false, false), living);
                 }
             }
-        }
-        if (event.resolveEffect == EffectGrow.INSTANCE) {
+        } else if (event.resolveEffect == EffectGrow.INSTANCE) {
             if (living.getType().is(EntityTypeTags.UNDEAD) && hasEarth && event.shooter instanceof Player) {
                 ((IDamageEffect) event.resolveEffect).attemptDamage(event.world, event.shooter, event.spellStats, event.context, event.resolver, living, event.world.damageSources().magic(), (float) (3 + 2 * event.spellStats.getAmpMultiplier()));
                 if (living.isDeadOrDying() && event.world.getRandom().nextInt(100) < 20) {
@@ -110,8 +109,7 @@ public class GlyphEvents {
                     }
                 }
             }
-        }
-        if (event.resolveEffect == EffectGravity.INSTANCE) {
+        } else if (event.resolveEffect == EffectGravity.INSTANCE) {
             if (event.spellStats.hasBuff(AugmentSensitive.INSTANCE) && hasEarth) {
                 var magnet = EntityMagnetSpell.createMagnet(event.world, event.shooter, event.spellStats, event.resolver, event.rayTraceResult.getLocation());
                 magnet.setTracked(entityHitResult.getEntity());
