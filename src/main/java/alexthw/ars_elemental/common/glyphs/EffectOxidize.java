@@ -70,7 +70,6 @@ public class EffectOxidize extends ElementalAbstractEffect implements IPotionEff
         // Apply status
         if (rayTraceResult.getEntity() instanceof LivingEntity livingEntity) {
             this.applyConfigPotion(livingEntity, ModPotions.RUST, spellStats);
-
         }
     }
 

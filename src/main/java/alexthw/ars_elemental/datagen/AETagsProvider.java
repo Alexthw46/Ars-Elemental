@@ -57,6 +57,10 @@ import static alexthw.ars_elemental.ArsElemental.prefix;
 import static alexthw.ars_elemental.ArsNouveauRegistry.heavy_armors;
 import static alexthw.ars_elemental.ArsNouveauRegistry.light_armors;
 import static alexthw.ars_elemental.ArsNouveauRegistry.medium_armors;
+import static alexthw.ars_elemental.common.glyphs.EffectConjureTerrain.CONJUREABLE_COBBLE;
+import static alexthw.ars_elemental.common.glyphs.EffectConjureTerrain.CONJUREABLE_DIRT;
+import static alexthw.ars_elemental.common.glyphs.EffectConjureTerrain.CONJUREABLE_SAND;
+import static alexthw.ars_elemental.common.glyphs.EffectConjureTerrain.CONJUREABLE_STONE;
 import static alexthw.ars_elemental.registry.ModEntities.*;
 import static com.alexthw.sauce.registry.SauceTags.*;
 import static com.hollingsworth.arsnouveau.setup.registry.ModPotions.SUMMONING_SICKNESS_EFFECT;
@@ -167,6 +171,7 @@ public class AETagsProvider {
         final static public TagKey<Block> AQUARIUM_BONUS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(MODID, "aquarium_bonus"));
         public static TagKey<Block> SUMMER_CROPS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("sereneseasons", "summer_crops"));
 
+
         public AEBlockTagsProvider(DataGenerator gen, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
             super(gen.getPackOutput(), provider, ArsElemental.MODID, existingFileHelper);
         }
@@ -197,6 +202,12 @@ public class AETagsProvider {
             tag(AQUARIUM_BONUS).addTag(BlockTags.CORALS).add(Blocks.SEAGRASS, Blocks.TALL_SEAGRASS, Blocks.KELP, Blocks.KELP_PLANT, Blocks.TURTLE_EGG);
             tag(SUMMER_CROPS).add(ModItems.FLASHING_POD.get(), ModItems.FLASHING_SAPLING.get());
             tag(BlockTags.create(ArsNouveau.prefix("whirlisprig/greatly_likes"))).add(ModItems.GROUND_BLOSSOM.get());
+
+            tag(CONJUREABLE_STONE)
+                    .add(Blocks.DIORITE, Blocks.ANDESITE, Blocks.GRANITE, Blocks.TUFF, Blocks.CALCITE, Blocks.BLACKSTONE);
+            tag(CONJUREABLE_COBBLE).add(Blocks.COBBLESTONE);
+            tag(CONJUREABLE_SAND).add(Blocks.SAND, Blocks.RED_SAND);
+            tag(CONJUREABLE_DIRT).add(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.GRAVEL);
         }
 
         void logsTag(Block... blocks) {

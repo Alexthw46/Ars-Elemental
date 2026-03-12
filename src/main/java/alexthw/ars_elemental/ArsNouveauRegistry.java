@@ -184,6 +184,7 @@ public class ArsNouveauRegistry {
         if (!isProduction()) {
             register(MethodCarianPhalanx.INSTANCE);
             register(EffectCauterize.INSTANCE);
+            register(EffectRage.INSTANCE);
         }
     }
 

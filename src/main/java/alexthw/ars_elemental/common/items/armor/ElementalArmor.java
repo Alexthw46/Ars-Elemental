@@ -11,7 +11,6 @@ import com.hollingsworth.arsnouveau.api.mana.IManaDiscountEquipment;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
-import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import com.hollingsworth.arsnouveau.setup.registry.MaterialRegistry;
@@ -99,7 +98,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
         TooltipUtils.addOnShift(tooltip, () -> addInformationAfterShift(stack, context, tooltip, flags), "armor_set");
     }
 
-    EquipmentSlot[] OrderedSlots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    public static final EquipmentSlot[] OrderedSlots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public ElementalArmor(ArmorItem.Type slot, SpellSchool element, Holder<ArmorMaterial> material, Properties builder) {
@@ -113,22 +112,19 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
                 case "fire" -> ModItems.FIRE_ARMOR_L;
                 case "water" -> ModItems.WATER_ARMOR_L;
                 case "earth" -> ModItems.EARTH_ARMOR_L;
-                case "air" -> ModItems.AIR_ARMOR_L;
-                default -> new ArmorSet.Light("necro", SpellSchools.NECROMANCY);
+                default -> ModItems.AIR_ARMOR_L;
             };
             case "heavy" -> switch (school.getId()) {
                 case "fire" -> ModItems.FIRE_ARMOR_H;
                 case "water" -> ModItems.WATER_ARMOR_H;
                 case "earth" -> ModItems.EARTH_ARMOR_H;
-                case "air" -> ModItems.AIR_ARMOR_H;
-                default -> new ArmorSet.Heavy("necro", SpellSchools.NECROMANCY);
+                default -> ModItems.AIR_ARMOR_H;
             };
             default -> switch (school.getId()) {
                 case "fire" -> ModItems.FIRE_ARMOR;
                 case "water" -> ModItems.WATER_ARMOR;
                 case "earth" -> ModItems.EARTH_ARMOR;
-                case "air" -> ModItems.AIR_ARMOR;
-                default -> new ArmorSet.Medium("necro", SpellSchools.NECROMANCY);
+                default -> ModItems.AIR_ARMOR;
             };
         };
     }

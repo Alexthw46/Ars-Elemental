@@ -9,11 +9,16 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentRandomize;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectConjureWater;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectCrush;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSmelt;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +26,14 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
 
+import static alexthw.ars_elemental.ArsElemental.prefix;
+
 public class EffectConjureTerrain extends ElementalAbstractEffect {
+
+    final static public TagKey<Block> CONJUREABLE_DIRT = BlockTags.create(prefix("conjureable/dirt"));
+    final static public TagKey<Block> CONJUREABLE_COBBLE = BlockTags.create(prefix("conjureable/cobble"));
+    final static public TagKey<Block> CONJUREABLE_STONE = BlockTags.create(prefix("conjureable/stone"));
+    final static public TagKey<Block> CONJUREABLE_SAND = BlockTags.create(prefix("conjureable/sand"));
 
     public static EffectConjureTerrain INSTANCE = new EffectConjureTerrain();
 
@@ -29,51 +41,50 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
         super("conjure_terrain", "Conjure Terrain");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         // Get the number of Amplify Augments in the spell and use that to determine the block to place
+        // Do not use amplification spellstats to avoid unintended effects
         int amps = spellStats.getBuffCount(AugmentAmplify.INSTANCE);
-        BlockState toPlace = switch (amps) {
-            case 1 -> Blocks.COBBLESTONE.defaultBlockState();
-            case 2 -> Blocks.COBBLED_DEEPSLATE.defaultBlockState();
-            default -> Blocks.DIRT.defaultBlockState();
+        Registry<Block> registry = shooter.registryAccess().registryOrThrow(Registries.BLOCK);
+        HolderSet.Named<Block> terrain = registry.getTag(CONJUREABLE_DIRT).orElseThrow();
+        HolderSet.Named<Block> cobbles = registry.getTag(CONJUREABLE_COBBLE).orElseThrow();
+        HolderSet.Named<Block> stones = registry.getTag(CONJUREABLE_STONE).orElseThrow();
+        HolderSet.Named<Block> sands = registry.getTag(CONJUREABLE_SAND).orElseThrow();
+
+        Block toPlace = switch (amps) {
+            case 1 ->
+                    spellStats.isRandomized() ? cobbles.getRandomElement(shooter.getRandom()).orElse(Blocks.COBBLESTONE.builtInRegistryHolder()).value() : Blocks.COBBLESTONE;
+            case 2 -> Blocks.COBBLED_DEEPSLATE;
+            default ->
+                    spellStats.isRandomized() ? terrain.getRandomElement(shooter.getRandom()).orElse(Blocks.DIRT.builtInRegistryHolder()).value() : Blocks.DIRT;
         };
 
-        if (spellStats.isRandomized() && toPlace.getBlock() == Blocks.DIRT) {
-            toPlace = switch (world.random.nextInt(5)) {
-                case 0 -> Blocks.COARSE_DIRT.defaultBlockState();
-                case 1 -> Blocks.PODZOL.defaultBlockState();
-                case 2 -> Blocks.GRASS_BLOCK.defaultBlockState();
-                case 4 -> Blocks.GRAVEL.defaultBlockState();
-                default -> Blocks.DIRT.defaultBlockState();
-            };
-        }
-
-        // If the spell contains a Conjure Water effect, place mud instead, and if it contains a Crush effect, place sand instead
         if (spellContext.hasNextPart()) {
             while (spellContext.hasNextPart()) {
                 AbstractSpellPart next = spellContext.nextPart();
+                // Skip augments, look for next effect
                 if (next instanceof AbstractEffect) {
-                    if (next == EffectConjureWater.INSTANCE) {
-                        toPlace = Blocks.MUD.defaultBlockState();
+                    // If the spell contains a Conjure Water effect, place mud instead, and if it contains a Crush effect, place sand instead
+                    if (next == EffectConjureWater.INSTANCE && amps == 0) {
+                        toPlace = Blocks.MUD;
                     } else if (next == EffectCrush.INSTANCE) {
                         // If the spell contains a Crush effect with an Amplify augment, place sandstone instead
-                        toPlace = amps > 0 ? Blocks.SANDSTONE.defaultBlockState() : Blocks.SAND.defaultBlockState();
-                        if (spellStats.isRandomized() && world.random.nextBoolean()) {
-                            toPlace = amps > 0 ? Blocks.RED_SANDSTONE.defaultBlockState() : Blocks.RED_SAND.defaultBlockState();
-                        }
-                    } else if (next == EffectSmelt.INSTANCE && amps > 0) {
-                        // If the spell contains a Smelt effect with an Amplify augment, place deepslate instead
-                        toPlace = amps > 1 ? Blocks.DEEPSLATE.defaultBlockState() : Blocks.STONE.defaultBlockState();
-                        if (spellStats.isRandomized() && toPlace.getBlock() == Blocks.STONE) {
-                            toPlace = switch (world.random.nextInt(6)) {
-                                case 0 -> Blocks.DIORITE.defaultBlockState();
-                                case 1 -> Blocks.ANDESITE.defaultBlockState();
-                                case 2 -> Blocks.GRANITE.defaultBlockState();
-                                case 3 -> Blocks.TUFF.defaultBlockState();
-                                case 4 -> Blocks.CALCITE.defaultBlockState();
-                                default -> Blocks.BLACKSTONE.defaultBlockState();
-                            };
+                        toPlace = amps > 0 ? (spellStats.isRandomized() && world.random.nextBoolean() ? Blocks.RED_SANDSTONE : Blocks.SANDSTONE) : spellStats.isRandomized() ? sands.getRandomElement(shooter.getRandom()).orElse(Blocks.SAND.builtInRegistryHolder()).value() : Blocks.SAND;
+                    } else if (next == EffectSmelt.INSTANCE) {
+                        // Directly cook the cobblestone
+                        switch (amps) {
+                            case 0 -> {
+                                // No effect
+                            }
+                            case 1 -> {
+                                if (spellStats.isRandomized()) {
+                                    toPlace = stones.getRandomElement(shooter.getRandom()).orElse(Blocks.STONE.builtInRegistryHolder()).value();
+                                }
+                            }
+                            // Amps > 1
+                            default -> toPlace = Blocks.DEEPSLATE;
                         }
                     } else {
                         spellContext.setCurrentIndex(spellContext.getCurrentIndex() - 1);
@@ -82,7 +93,7 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
                 }
             }
         }
-        GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, spellContext, resolver, toPlace);
+        GlyphEffectUtil.placeBlocks(rayTraceResult, world, shooter, spellStats, spellContext, resolver, toPlace.defaultBlockState());
     }
 
     @Override
@@ -120,4 +131,5 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
         map.put(AugmentAmplify.INSTANCE, "Changes Dirt to Cobblestone to Cobbled Deepslate, or Sand to Sandstone.");
         map.put(AugmentRandomize.INSTANCE, "Uses a variant of the terrain block, ex. Red Sand instead of sand or Andesite in place of stone.");
     }
+
 }
