@@ -138,7 +138,15 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     }
 
     public void addArmorSetDescription(ArmorSet set, List<Component> list) {
+        list.add(Component.translatable("ars_elemental.armor_set.school_set.desc").withStyle(ChatFormatting.AQUA));
         list.add(Component.translatable("ars_elemental.armor_set." + set.getName() + ".desc").withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("ars_elemental.armor_set.set_bonus.desc").withStyle(ChatFormatting.GOLD));
+        list.add(Component.translatable("ars_elemental.armor_set." + switch (set) {
+            case ArmorSet.Heavy ignored -> "heavy";
+            case ArmorSet.Light ignored -> "light";
+            default -> "medium";
+        } + ".desc").withStyle(ChatFormatting.GRAY));
+
     }
 
     @Override
@@ -154,7 +162,7 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void addInformationAfterShift(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag flags) {
+    public void addInformationAfterShift(ItemStack ignoredStack, TooltipContext ignoredContext, List<Component> list, TooltipFlag ignoredFlags) {
         Player player = ArsNouveau.proxy.getPlayer();
         if (player != null) {
             ArmorSet set = getArmorSetFromElement(this.element, getTier());
