@@ -57,6 +57,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     public String type = "medium";
 
     public int castCooldown = 0;
+    public int selfCastCooldown = 0;
     public int animationTimer = 0;
     public int currentAnim = -1;
 
@@ -81,6 +82,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     public void tick() {
         super.tick();
         if (castCooldown > 0) castCooldown--;
+        if (selfCastCooldown > 0) selfCastCooldown--;
         if (animationTimer > 0) animationTimer--;
         if (currentAnim > 0 && animationTimer == 0) {
             currentAnim = -1;
@@ -96,7 +98,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Monster.class, true, (e) -> !(e instanceof EntityMageBase)));
         this.goalSelector.addGoal(3, new MageProjCastingGoal<>(this, 1.0d, 30, 64f, () -> castCooldown <= 0, 2, 10));
-        this.goalSelector.addGoal(2, new SelfCastGoal<>(this, 10, 0, () -> (castCooldown <= 10 && (getHealth() <= getMaxHealth() / 3)), 1, 10));
+        this.goalSelector.addGoal(2, new SelfCastGoal<>(this, 10, 0, () -> (selfCastCooldown <= 10 && (getHealth() <= getMaxHealth() / 3)), 1, 10));
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -186,11 +188,13 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("cast", castCooldown);
+        tag.putInt("selfCast", selfCastCooldown);
     }
 
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.castCooldown = tag.getInt("cast");
+        this.selfCastCooldown = tag.getInt("selfCast");
     }
 
     //Monster overrides

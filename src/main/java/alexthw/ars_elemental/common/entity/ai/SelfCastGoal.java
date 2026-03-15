@@ -32,11 +32,11 @@ public class SelfCastGoal<T extends EntityMageBase> extends CastGoal<T> {
     public void tick() {
         super.tick();
         if (spell == null) spell = mob.sSpells.get(index);
-        if (mob.castCooldown <= 0) {
+        if (mob.selfCastCooldown <= 0) {
             ParticleColor color = schoolToColor(mob.school.getId());
             EntitySpellResolver resolver = new EntityMageBase.MageResolver(new SpellContext(mob.level, this.spell, this.mob, new LivingCaster(this.mob)).withColors(color), mob.getSchool());
             resolver.onCast(ItemStack.EMPTY, mob.level);
-            mob.castCooldown = 60;
+            mob.selfCastCooldown = 60;
             stop();
         }
     }
