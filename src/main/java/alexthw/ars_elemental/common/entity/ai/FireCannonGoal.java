@@ -13,7 +13,7 @@ public class FireCannonGoal extends ProjCastingGoal<FirenandoEntity> {
 
 
     public FireCannonGoal(FirenandoEntity entity, double speed, int attackInterval, float attackRange, Supplier<Boolean> canUse, int animId, int delayTicks) {
-        super(entity, speed, attackInterval, attackRange, canUse, animId, delayTicks);
+        super(entity, speed, attackRange, canUse, animId, delayTicks);
     }
 
     public void stop() {

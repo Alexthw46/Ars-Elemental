@@ -160,7 +160,7 @@ dependencies {
     implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}") { transitive = false }
     jarJar(implementation("com.alexthw.sauce:sauce-${minecraft_version}") {
         version {
-            strictly '[0.0.25,)'
+            strictly '[0.0.27.69,)'
             prefer sauce_version
         }
     }) { transitive = false }
@@ -175,7 +175,7 @@ dependencies {
     compileOnly "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
     // localRuntime "curse.maven:create-328085:7408951"
     compileOnly "curse.maven:ars-creo-575698:7528185"
-    //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    // implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     // cyanide to debug worldgen
     localRuntime "curse.maven:cyanide-541676:5782674"
@@ -185,7 +185,7 @@ dependencies {
     // Iris Shader tests
     // localRuntime "curse.maven:irisshaders-455508:6661598"
     localRuntime "curse.maven:sodium-394468:6382651"
-    localRuntime "curse.maven:neocontinuity-1377279:7178602"
+    // localRuntime "curse.maven:neocontinuity-1377279:7178602"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

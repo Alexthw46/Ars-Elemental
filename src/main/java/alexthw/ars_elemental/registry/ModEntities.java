@@ -101,10 +101,10 @@ public class ModEntities {
         FLASHJACK_FAMILIAR = registerEntity("flashjack_familiar", 0.6F, 0.9F, FlashjackFamiliar::new, MobCategory.CREATURE);
 
 
-        FIRE_MAGE = registerEntity("fire_mage", 0.5F, 1.8F, FireMage::new, MobCategory.MONSTER);
-        WATER_MAGE = registerEntity("water_mage", 0.5F, 1.8F, WaterMage::new, MobCategory.MONSTER);
-        AIR_MAGE = registerEntity("air_mage", 0.5F, 1.8F, AirMage::new, MobCategory.MONSTER);
-        EARTH_MAGE = registerEntity("earth_mage", 0.5F, 1.8F, EarthMage::new, MobCategory.MONSTER);
+        FIRE_MAGE = registerEntity("fire_mage", 0.7F, 1.9F, FireMage::new, MobCategory.MONSTER);
+        WATER_MAGE = registerEntity("water_mage", 0.7F, 1.9F, WaterMage::new, MobCategory.MONSTER);
+        AIR_MAGE = registerEntity("air_mage", 0.7F, 1.9F, AirMage::new, MobCategory.MONSTER);
+        EARTH_MAGE = registerEntity("earth_mage", 0.7F, 1.9F, EarthMage::new, MobCategory.MONSTER);
 
         FLASHING_WEALD_WALKER = registerEntity("flashing_weald_walker", 1.4F, 3F,
                 (EntityType<WealdWalker> type, Level world) -> {

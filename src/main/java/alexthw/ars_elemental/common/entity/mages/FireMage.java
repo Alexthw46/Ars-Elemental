@@ -1,5 +1,7 @@
 package alexthw.ars_elemental.common.entity.mages;
 
+import alexthw.ars_elemental.common.entity.ai.SelfCastGoal;
+import alexthw.ars_elemental.common.glyphs.EffectCauterize;
 import alexthw.ars_elemental.common.glyphs.EffectConflagrate;
 import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
@@ -10,16 +12,18 @@ import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectExplosion;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFirework;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectHeal;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIgnite;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.EffectCures;
 import org.jetbrains.annotations.NotNull;
 
 public class FireMage extends EntityMageBase {
@@ -42,11 +46,18 @@ public class FireMage extends EntityMageBase {
         this(ModEntities.FIRE_MAGE.get(), level);
     }
 
+    public static final Spell PURIFY_SPELL = new Spell(MethodSelf.INSTANCE, EffectCauterize.INSTANCE, EffectHeal.INSTANCE);
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(2, new SelfCastGoal<>(this, () -> PURIFY_SPELL, () -> this.getHealth() < this.getMaxHealth() * 0.8 && this.getActiveEffects().stream().anyMatch(e -> e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL && e.getCures().contains(EffectCures.MILK)), 1, 10));
+    }
+
     @Override
     protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
-        ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
-        book.set(DataComponents.BASE_COLOR, DyeColor.RED);
+        for (var book : this.getHandSlots()) book.set(DataComponents.BASE_COLOR, DyeColor.RED);
     }
 
 }

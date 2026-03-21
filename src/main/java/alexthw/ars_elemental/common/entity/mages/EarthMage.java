@@ -19,10 +19,8 @@ import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,8 +48,7 @@ public class EarthMage extends EntityMageBase {
     @Override
     protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
-        ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
-        book.set(DataComponents.BASE_COLOR, DyeColor.GREEN);
+        for (var book : this.getHandSlots()) book.set(DataComponents.BASE_COLOR, DyeColor.GREEN);
     }
 
     public EarthMage(Level level) {

@@ -3,10 +3,17 @@ package alexthw.ars_elemental.common.glyphs;
 import com.alexthw.sauce.api.IPropagator;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtract;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
+import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -50,7 +57,12 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
     public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         Vec3 pos = hitResult.getLocation();
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
-        EntityProjectileSpell projectileSpell = new EntityProjectileSpell(world, resolver).setGravity(true);
+        EntityProjectileSpell projectileSpell = new EntityProjectileSpell(world, resolver) {
+            @Override
+            public @NotNull EntityType<?> getType() {
+                return ModEntities.SPELL_PROJ_ARC.get();
+            }
+        }.setGravity(true);
         projectileSpell.setPos(pos.add(0, 1, 0));
         projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
@@ -62,7 +74,12 @@ public class PropagatorArc extends ElementalAbstractEffect implements IPropagato
             if (i % 2 == 0) offset = offset.getOpposite();
             // Alternate sides
             BlockPos projPos = BlockPos.containing(pos).relative(offset, i).offset(0, (int) (1.5 * sizeRatio), 0);
-            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver).setGravity(true);
+            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver) {
+                @Override
+                public @NotNull EntityType<?> getType() {
+                    return ModEntities.SPELL_PROJ_ARC.get();
+                }
+            }.setGravity(true);
             spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
