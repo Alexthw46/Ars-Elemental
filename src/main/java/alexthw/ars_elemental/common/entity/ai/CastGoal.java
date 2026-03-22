@@ -22,7 +22,7 @@ public class CastGoal<T extends Mob> extends Goal {
 
     Supplier<Boolean> canUse;
 
-    public CastGoal(T entity, double speed, int attackInterval, float attackRange, Supplier<Boolean> canUse, int animId, int delayTicks) {
+    public CastGoal(T entity, double speed, float attackRange, Supplier<Boolean> canUse, int animId, int delayTicks) {
         this.mob = entity;
         this.speedModifier = speed;
         this.attackRadiusSqr = attackRange * attackRange;
@@ -40,16 +40,10 @@ public class CastGoal<T extends Mob> extends Goal {
         return (this.canUse() || !this.mob.getNavigation().isDone()) && !this.done;
     }
 
-    public void start() {
-        super.start();
-        this.mob.setAggressive(true);
-    }
 
     public void stop() {
         super.stop();
-        this.mob.setAggressive(false);
         this.seeTime = 0;
-        int attackTime = -1;
         animatedTicks = 0;
         done = false;
         hasAnimated = false;

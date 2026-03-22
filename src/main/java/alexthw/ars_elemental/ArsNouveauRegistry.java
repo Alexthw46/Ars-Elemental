@@ -184,6 +184,7 @@ public class ArsNouveauRegistry {
         if (!isProduction()) {
             register(MethodCarianPhalanx.INSTANCE);
             register(EffectCauterize.INSTANCE);
+            register(EffectRage.INSTANCE);
         }
     }
 
@@ -215,6 +216,13 @@ public class ArsNouveauRegistry {
 
     private static void addPerkSlots() {
 
+        for (ArmorSet set : heavy_armors) {
+            PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
+            PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
+        }
+
         for (ArmorSet set : medium_armors) {
             PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
             PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
@@ -222,32 +230,11 @@ public class ArsNouveauRegistry {
             PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
         }
 
-        if (ConfigHandler.Startup.ENABLE_ARMOR_REWORK.get()) {
-            for (ArmorSet set : heavy_armors) {
-                PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
-                PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.TWO)));
-            }
-            for (ArmorSet set : light_armors) {
-                PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-            }
-        } else {
-            for (ArmorSet set : light_armors) {
-                PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-            }
-            for (ArmorSet set : heavy_armors) {
-                PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-                PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
-            }
+        for (ArmorSet set : light_armors) {
+            PerkRegistry.registerPerkProvider(set.getHat(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getChest(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getLegs(), makePerkList(Arrays.asList(PerkSlot.TWO, PerkSlot.TWO, PerkSlot.THREE)));
+            PerkRegistry.registerPerkProvider(set.getBoots(), makePerkList(Arrays.asList(PerkSlot.ONE, PerkSlot.TWO, PerkSlot.THREE)));
         }
 
     }

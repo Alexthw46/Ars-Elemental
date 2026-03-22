@@ -14,8 +14,8 @@ public class ProjCastingGoal<T extends Mob & RangedAttackMob> extends CastGoal<T
     protected boolean strafingBackwards;
     protected boolean strafingClockwise;
 
-    public ProjCastingGoal(T entity, double speed, int attackInterval, float attackRange, Supplier<Boolean> canUse, int animId, int delayTicks) {
-        super(entity, speed, attackInterval, attackRange, canUse, animId, delayTicks);
+    public ProjCastingGoal(T entity, double speed, float attackRange, Supplier<Boolean> canUse, int animId, int delayTicks) {
+        super(entity, speed, attackRange, canUse, animId, delayTicks);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ProjCastingGoal<T extends Mob & RangedAttackMob> extends CastGoal<T
 
     void animationChecks(LivingEntity target) {
 
-        if (this.seeTime >= 40 && !this.hasAnimated) {
+        if (this.seeTime >= 20 && !this.hasAnimated) {
             this.hasAnimated = true;
             Networking.sendToNearbyClient(mob.level, mob, new PacketAnimEntity(mob.getId(), animId));
         }

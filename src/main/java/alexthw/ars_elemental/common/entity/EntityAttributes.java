@@ -19,6 +19,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 
+import java.util.List;
+
+import static com.alexthw.sauce.ArsNouveauRegistry.CASTER_ENTITIES;
+
 @EventBusSubscriber(modid = ArsElemental.MODID)
 public class EntityAttributes {
 
@@ -49,6 +53,8 @@ public class EntityAttributes {
         event.put(ModEntities.WATER_MAGE.get(), EntityMageBase.createAttributes().build());
         event.put(ModEntities.AIR_MAGE.get(), EntityMageBase.createAttributes().build());
         event.put(ModEntities.EARTH_MAGE.get(), EntityMageBase.createAttributes().build());
+
+        CASTER_ENTITIES.addAll(List.of(ModEntities.AIR_MAGE.get(), ModEntities.FIRE_MAGE.get(), ModEntities.WATER_MAGE.get(), ModEntities.EARTH_MAGE.get()));
 
     }
 }

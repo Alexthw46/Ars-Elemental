@@ -248,23 +248,30 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.armor_set.fire_light", "Pyromaniac's Set");
         add("ars_elemental.armor_set.fire", "Pyromancer's Set");
         add("ars_elemental.armor_set.fire_heavy", "Netherguard's Set");
-        add("ars_elemental.armor_set.fire.desc", "Absorb some fire-related damage and convert into mana, instantly clears fire.");
+        add("ars_elemental.armor_set.fire.desc", "Absorb some fire-related damage, instantly clears fire.");
         add("ars_elemental.armor_set.aqua_light", "Nereid's Set");
         add("ars_elemental.armor_set.aqua", "Aquamancer's Set");
         add("ars_elemental.armor_set.aqua_heavy", "Winterguard's Set");
-        add("ars_elemental.armor_set.aqua.desc", "Absorb some water-related damage and convert into mana, refill air if about to drown.");
+        add("ars_elemental.armor_set.aqua.desc", "Absorb some water-related damage, refill air if about to drown.");
         add("ars_elemental.armor_set.earth_light", "Dryad's Set");
         add("ars_elemental.armor_set.earth", "Geomancer's Set");
         add("ars_elemental.armor_set.earth_heavy", "Wealdguard's Set");
-        add("ars_elemental.armor_set.earth.desc", "Absorb some earth-related damage and convert into mana, gives food deep underground if about to starve.");
+        add("ars_elemental.armor_set.earth.desc", "Absorb some earth-related damage, gives food deep underground if about to starve.");
         add("ars_elemental.armor_set.air_light", "Olympian's Set");
         add("ars_elemental.armor_set.air", "Aethermancer's Set");
         add("ars_elemental.armor_set.air_heavy", "Thunderguard's Set");
-        add("ars_elemental.armor_set.air.desc", "Absorb some air-related damage and convert into mana, highly reduce fall damage.");
-        add("ars_elemental.page.armor_set.fire", "Attuned to the School of Fire, each piece of this armor will amplify fire glyphs, make them cheaper, and reduce damage related to fire, like lava, dragon breath and magma.$(br)When all the pieces are equipped, the damage reduced is converted into mana and fire is immediately put out.");
-        add("ars_elemental.page.armor_set.aqua", "Attuned to the School of Water, each piece of this armor will amplify water glyphs, make them cheaper and reduce damage related to water, like drowning, freezing and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and refill air if about to drown.");
-        add("ars_elemental.page.armor_set.air", "Attuned to the School of Air, each piece of this armor will amplify air glyphs, make them cheaper and reduce damage related to air, like falling, hitting walls while flying and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana, falling won't be a problem anymore!.");
-        add("ars_elemental.page.armor_set.earth", "Attuned to the School of Earth, each piece of this armor will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve.");
+        add("ars_elemental.armor_set.air.desc", "Absorb some air-related damage, highly reduce fall damage.");
+        add("ars_elemental.armor_set.school_set.desc", "School Set Bonus (4 same element pieces).");
+        add("ars_elemental.armor_set.set_bonus.desc", "Armor Set Bonus (2 or 4 pieces needed).");
+        add("ars_elemental.armor_set.light.desc", "After absorbing damage from its element, gets higher critical chance for spells for a short time.");
+        add("ars_elemental.armor_set.medium.desc", "After absorbing damage from its element, gets mana discount for a short time. Convert some into mana with full set.");
+        add("ars_elemental.armor_set.heavy.desc", "After absorbing damage from its element, convert some into mana. Overflowing mana converted into health with full set.");
+        add("ars_elemental.page.armor_set.fire", "Attuned to the School of Fire, each piece of this armor set will amplify fire glyphs, make them cheaper, and reduce damage related to fire, like lava, dragon breath and magma.$(br)When all the pieces are equipped, the damage reduced is converted into mana and fire is immediately put out.");
+        add("ars_elemental.page.armor_set.aqua", "Attuned to the School of Water, each piece of this armor set will amplify water glyphs, make them cheaper and reduce damage related to water, like drowning, freezing and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana and refill air if about to drown.");
+        add("ars_elemental.page.armor_set.air", "Attuned to the School of Air, each piece of this armor set will amplify air glyphs, make them cheaper and reduce damage related to air, like falling, hitting walls while flying and lightning.$(br)When all the pieces are equipped, the damage reduced is converted into mana, falling won't be a problem anymore!.");
+        add("ars_elemental.page.armor_set.earth", "Attuned to the School of Earth, each piece of this armor set will amplify earth glyphs, make them cheaper and reduce damage related to earth, like starving, berry bushes, cactus and crushing.$(br)When all the pieces are equipped, the damage reduced is converted into mana and gives food deep underground if about to starve.");
+
+
         add("ars_elemental.thread_of", "Thread of %s");
         add("ars_elemental.tablet_of", "Tablet of %s");
         add("tooltip.flashjack_shards", "Obtained by giving a flashpine to a flashjack.");

@@ -8,18 +8,17 @@ import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
-import com.hollingsworth.arsnouveau.common.spell.effect.*;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectDelay;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectLightning;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectWindshear;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,8 +37,8 @@ public class AirMage extends EntityMageBase {
      */
     public AirMage(EntityType<? extends EntityMageBase> p_21368_, Level level) {
         super(p_21368_, level, SpellSchools.ELEMENTAL_AIR);
-        sSpells.add(new Spell(MethodSelf.INSTANCE, EffectLeap.INSTANCE, AugmentAmplify.INSTANCE, EffectBounce.INSTANCE));
-        sSpells.add(new Spell(MethodSelf.INSTANCE, EffectOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
+        //sSpells.add(new Spell(MethodSelf.INSTANCE, EffectLeap.INSTANCE, AugmentAmplify.INSTANCE, EffectBounce.INSTANCE));
+        //sSpells.add(new Spell(MethodSelf.INSTANCE, EffectOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectLaunch.INSTANCE, AugmentDurationDown.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE));
         pSpells.add(new Spell(MethodArcProjectile.INSTANCE, AugmentPierce.INSTANCE, AugmentPierce.INSTANCE, EffectLightning.INSTANCE));
         pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectSpark.INSTANCE, AugmentAmplify.INSTANCE, EffectDischarge.INSTANCE));
@@ -52,7 +51,7 @@ public class AirMage extends EntityMageBase {
     @Override
     protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
-        ItemStack book = this.getItemInHand(InteractionHand.MAIN_HAND);
-        book.set(DataComponents.BASE_COLOR, DyeColor.WHITE);
+        for (var book : this.getHandSlots()) book.set(DataComponents.BASE_COLOR, DyeColor.YELLOW);
     }
+
 }

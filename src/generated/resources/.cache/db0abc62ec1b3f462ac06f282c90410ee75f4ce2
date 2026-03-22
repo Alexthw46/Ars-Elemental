@@ -1,5 +1,9 @@
-// 1.21.1	2026-02-14T18:30:49.1313836	Ars Elemental Block Tags
+// 1.21.1	2026-03-11T16:40:12.3086681	Ars Elemental Block Tags
 5e3244c6bdbcf39d4626b444c800986b05852064 data/ars_elemental/tags/block/aquarium_bonus.json
+4299a3aeb550dac5d1182404571c32a720c12c01 data/ars_elemental/tags/block/conjureable/cobble.json
+b09ec2e752188278aa2b27884b143ad022819e24 data/ars_elemental/tags/block/conjureable/dirt.json
+e85d473045cf55c6f706798af73a74b69875c186 data/ars_elemental/tags/block/conjureable/sand.json
+11b172cef513d50c6997e6f22a1e2d08ba5f9eb1 data/ars_elemental/tags/block/conjureable/stone.json
 caaa7216f05586fbce67c6d354118a6f75faebe4 data/ars_elemental/tags/block/logs/flashing_archwood.json
 1debdb7b55c4191b833ea9a9d8aef27e7cd26ff8 data/ars_nouveau/tags/block/magic_plants.json
 9764206a29734fcec0ce6859c04d754c36205280 data/ars_nouveau/tags/block/magic_saplings.json

@@ -30,8 +30,8 @@ import alexthw.ars_elemental.datagen.AETagsProvider;
 import alexthw.ars_elemental.world.ModWorldgen;
 import com.alexthw.sauce.client.FocusTurretRenderer;
 import com.alexthw.sauce.common.block.FocusEnhancedSpellTurret;
-import com.alexthw.sauce.common.item.NecroEssence;
 import com.alexthw.sauce.common.item.SchoolCasterTome;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.client.renderer.item.GenericItemBlockRenderer;
 import com.hollingsworth.arsnouveau.client.renderer.tile.GenericModel;
@@ -189,10 +189,11 @@ public class ModItems {
     public static final DeferredHolder<Item, AccelerationPrismLens> ACC_LENS;
     public static final DeferredHolder<Item, DecelerationPrismLens> DEC_LENS;
     public static final DeferredHolder<Item, PiercingPrismLens> PIERCE_LENS;
-    public static final DeferredHolder<Item, RainbowPrismLens> RGB_LENS;
+    @SuppressWarnings("removal")
+    public static final DeferredHolder<Item, RainbowPrismLens> RGB_LENS = ITEMS.register("rainbow_prism_lens", () -> new RainbowPrismLens(itemProps()));
     public static final DeferredHolder<Item, ChainingPrismLens> CHAIN_LENS;
 
-    public static final DeferredHolder<Item, NecroEssence> ANIMA_ESSENCE;
+    public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ModRegistry.ANIMA_ESSENCE;
 
     public static final DeferredHolder<Item, ModItem> SIREN_SHARDS;
     public static final DeferredHolder<Item, SirenCharm> SIREN_CHARM;
@@ -229,13 +230,11 @@ public class ModItems {
 
         DEBUG_ICON = ITEMS.register("debug", () -> new Debugger(new Item.Properties()));
         MARK_OF_MASTERY = (DeferredItem<Item>) ITEMS.register("mark_of_mastery", () -> new Item(itemProps()));
-        ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence(itemProps()));
 
         SPELL_HORN = ITEMS.register("spell_horn", () -> new SpellHorn(itemProps()));
 
         HOMING_LENS = ITEMS.register("homing_prism_lens", () -> new HomingPrismLens(itemProps()));
         ARC_LENS = ITEMS.register("arc_prism_lens", () -> new ArcPrismLens(itemProps()));
-        RGB_LENS = ITEMS.register("rainbow_prism_lens", () -> new RainbowPrismLens(itemProps()));
         ACC_LENS = ITEMS.register("acceleration_prism_lens", () -> new AccelerationPrismLens(itemProps()));
         DEC_LENS = ITEMS.register("deceleration_prism_lens", () -> new DecelerationPrismLens(itemProps()));
         PIERCE_LENS = ITEMS.register("piercing_prism_lens", () -> new PiercingPrismLens(itemProps()));

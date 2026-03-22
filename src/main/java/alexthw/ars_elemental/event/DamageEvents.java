@@ -57,7 +57,6 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import java.util.Optional;
 import java.util.Set;
 
-import static alexthw.ars_elemental.ConfigHandler.COMMON;
 import static alexthw.ars_elemental.registry.ModPotions.FROZEN;
 import static alexthw.ars_elemental.registry.ModPotions.MAGIC_FIRE;
 import static alexthw.ars_elemental.registry.ModPotions.MANA_BUBBLE;
@@ -174,7 +173,7 @@ public class DamageEvents {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void handleHealing(LivingHealEvent event) {
         //boost healing if you have earth focus
-        if (COMMON.EnableGlyphEmpowering.get() || event.getEntity() instanceof Player player && ISchoolFocus.getFociSchools(player).contains(ELEMENTAL_EARTH)) {
+        if (event.getEntity() instanceof Player player && ISchoolFocus.getFociSchools(player).contains(ELEMENTAL_EARTH)) {
             event.setAmount(event.getAmount() * 1.5F);
         }
         //cancel healing if under frozen effect

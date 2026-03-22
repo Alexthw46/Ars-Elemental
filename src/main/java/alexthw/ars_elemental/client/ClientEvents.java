@@ -124,6 +124,8 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+        //ModelProperty.resources.add(new ModelProperty.Model(ArsElemental.prefix("carian"), DocAssets.STYLE_ICON_SPHERE, true));
+
         event.registerBlockEntityRenderer(ModTiles.ADVANCED_COLLECTOR_RELAY.get(), (t) -> new GenericTileRenderer<>(t, "source_collector") {
             static final ResourceLocation FIRE = prefix("textures/block/fire_relay.png");
 

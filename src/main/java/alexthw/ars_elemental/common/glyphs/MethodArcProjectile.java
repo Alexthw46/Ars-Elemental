@@ -1,10 +1,21 @@
 package alexthw.ars_elemental.common.glyphs;
 
-import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.AbstractAugment;
+import com.hollingsworth.arsnouveau.api.spell.CastResolveType;
+import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.api.spell.SpellTier;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
-import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDecelerate;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
+import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +53,12 @@ public class MethodArcProjectile extends ElementalAbstractForm {
         float sizeRatio = shooter.getEyeHeight() / Player.DEFAULT_EYE_HEIGHT;
 
         for (int i = 1; i < 1 + numSplits + 1; i++) {
-            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver).setGravity(true);
+            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver) {
+                @Override
+                public @NotNull EntityType<?> getType() {
+                    return ModEntities.SPELL_PROJ_ARC.get();
+                }
+            }.setGravity(true);
             projectiles.add(spell);
         }
 
