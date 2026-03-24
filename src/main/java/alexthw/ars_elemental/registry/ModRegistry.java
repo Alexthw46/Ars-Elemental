@@ -18,7 +18,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -99,7 +98,6 @@ public class ModRegistry {
         A_MATERIALS.register(bus);
         BLOCKS.register(bus);
         ITEMS.register(bus);
-        ITEMS.addAlias(prefix("anima_essence"), ResourceLocation.fromNamespaceAndPath("sauce", "anima_essence"));
         ENTITIES.register(bus);
         TILES.register(bus);
         CONTAINERS.register(bus);
