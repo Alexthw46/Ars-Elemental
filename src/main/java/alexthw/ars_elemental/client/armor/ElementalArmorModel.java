@@ -1,13 +1,12 @@
 package alexthw.ars_elemental.client.armor;
 
 import alexthw.ars_elemental.ArsElemental;
-import com.alexthw.sauce.api.item.IElementalArmor;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.model.GeoModel;
 
-public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends GeoModel<T> {
+public class ElementalArmorModel<T extends AnimatedMagicArmor> extends GeoModel<T> {
 
     public ResourceLocation modelLocation;
     public ResourceLocation textLoc;
@@ -16,6 +15,7 @@ public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends Ge
     public ElementalArmorModel(String name) {
         this.modelLocation = ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "geo/" + name + ".geo.json");
         this.textLoc = ResourceLocation.fromNamespaceAndPath(ArsElemental.MODID, "textures/armor/" + name + ".png");
+        this.animationLoc = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "animations/empty.json");
     }
 
     @Override
@@ -28,6 +28,7 @@ public class ElementalArmorModel<T extends IElementalArmor & GeoItem> extends Ge
         return textLoc;
     }
 
+    @Deprecated(forRemoval = true)
     public GeoModel<T> withEmptyAnim() {
         this.animationLoc = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "animations/empty.json");
         return this;

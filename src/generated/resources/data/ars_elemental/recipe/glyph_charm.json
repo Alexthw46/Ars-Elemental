@@ -3,7 +3,7 @@
   "exp": 55,
   "inputs": [
     {
-      "tag": "sauce:anima_essence"
+      "item": "sauce:anima_essence"
     },
     {
       "item": "minecraft:golden_carrot"

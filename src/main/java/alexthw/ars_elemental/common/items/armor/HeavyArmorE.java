@@ -12,6 +12,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import static alexthw.ars_elemental.common.items.armor.ArmorSet.resistanceMap;
 public class HeavyArmorE extends ElementalArmor {
 
     public HeavyArmorE(ArmorItem.Type slot, SpellSchool element, Properties builder) {
-        super(slot, element, schoolToMaterial(element.getId() + "_heavy"), builder.durability(slot.getDurability(50)));
+        super(slot, element, schoolToMaterial(element.getId() + "_heavy"), FMLEnvironment.production ? "medium_armor_e" : "heavy_armor_" + element.getId(), builder.durability(slot.getDurability(50)));
     }
 
     @Override

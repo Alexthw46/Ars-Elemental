@@ -100,9 +100,13 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     public static final EquipmentSlot[] OrderedSlots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public ElementalArmor(ArmorItem.Type slot, SpellSchool element, Holder<ArmorMaterial> material, Properties builder) {
-        super(material, slot, builder, new ElementalArmorModel("medium_armor_e").withEmptyAnim());
+        super(material, slot, builder, new ElementalArmorModel<>("medium_armor_e"));
+        this.element = element;
+    }
+
+    public ElementalArmor(ArmorItem.Type slot, SpellSchool element, Holder<ArmorMaterial> material, String model_name, Properties builder) {
+        super(material, slot, builder, new ElementalArmorModel<>(model_name));
         this.element = element;
     }
 
@@ -138,14 +142,15 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     }
 
     public void addArmorSetDescription(ArmorSet set, List<Component> list) {
-        list.add(Component.translatable("ars_elemental.armor_set.school_set.desc").withStyle(ChatFormatting.AQUA));
+        list.add(Component.literal(Component.translatable("ars_elemental.armor_set." + getSchool().getId() + ".name").getString() + " " + Component.translatable("ars_elemental.armor_set.school_set.desc").getString()).withStyle(ChatFormatting.AQUA));
         list.add(Component.translatable("ars_elemental.armor_set." + set.getName() + ".desc").withStyle(ChatFormatting.GRAY));
-        list.add(Component.translatable("ars_elemental.armor_set.set_bonus.desc").withStyle(ChatFormatting.GOLD));
-        list.add(Component.translatable("ars_elemental.armor_set." + switch (set) {
+        String armor_type = switch (set) {
             case ArmorSet.Heavy ignored -> "heavy";
             case ArmorSet.Light ignored -> "light";
             default -> "medium";
-        } + ".desc").withStyle(ChatFormatting.GRAY));
+        };
+        list.add(Component.literal(Component.translatable("ars_elemental.armor_set." + armor_type + ".name").getString() + " " + Component.translatable("ars_elemental.armor_set.set_bonus.desc").getString()).withStyle(ChatFormatting.GOLD));
+        list.add(Component.translatable("ars_elemental.armor_set." + armor_type + ".desc").withStyle(ChatFormatting.GRAY));
 
     }
 

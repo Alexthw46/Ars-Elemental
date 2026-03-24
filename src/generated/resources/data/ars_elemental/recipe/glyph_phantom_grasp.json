@@ -3,13 +3,13 @@
   "exp": 55,
   "inputs": [
     {
-      "tag": "sauce:anima_essence"
-    },
-    {
       "item": "minecraft:phantom_membrane"
     },
     {
       "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "sauce:anima_essence"
     }
   ],
   "output": {

@@ -246,7 +246,7 @@ public class EntityMageBase extends Monster implements RangedAttackMob, ISchoolP
     @Override
     protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(randomSource, pDifficulty);
-        String random = types[randomSource.nextInt(types.length)];
+        String random = "medium";// types[randomSource.nextInt(types.length)];
         if (school != null) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 setItemSlot(slot, getArmorForSlot(slot, this.school, random));

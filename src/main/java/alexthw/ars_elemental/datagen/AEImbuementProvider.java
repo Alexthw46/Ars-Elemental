@@ -115,17 +115,6 @@ public class AEImbuementProvider extends ImbuementRecipeProvider {
                 .withPedestalItem(ItemsRegistry.SHAPERS_FOCUS.get())
         );
 
-        recipes.add(new ImbuementRecipe("mark_of_mastery", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModItems.MARK_OF_MASTERY.get(), 5), 10000)
-                .withPedestalItem(ItemsRegistry.EARTH_ESSENCE)
-                .withPedestalItem(ItemsRegistry.FIRE_ESSENCE)
-                .withPedestalItem(ItemsRegistry.WATER_ESSENCE)
-                .withPedestalItem(ItemsRegistry.AIR_ESSENCE)
-                .withPedestalItem(ItemsRegistry.ABJURATION_ESSENCE)
-                .withPedestalItem(ItemsRegistry.CONJURATION_ESSENCE)
-                .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
-                .withPedestalItem(ModItems.ANIMA_ESSENCE.get())
-        );
-
         recipes.add(new ImbuementRecipe("arc_prism_lens", Ingredient.of(Tags.Items.GEMS_QUARTZ), ModItems.ARC_LENS.get().getDefaultInstance(), 2000)
                 .withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE)
                 .withPedestalItem(MethodArcProjectile.INSTANCE.getGlyph())
