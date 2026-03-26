@@ -38,20 +38,22 @@ public class EffectCauterize extends ElementalAbstractEffect implements IDamageE
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity entity) {
-            Collection<MobEffectInstance> effects = entity.getActiveEffects();
-            MobEffectInstance[] array = effects.toArray(new MobEffectInstance[0]);
-            Optional<HolderSet.Named<MobEffect>> blacklist = world.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(PotionEffectTags.DISPEL_DENY);
-            Optional<HolderSet.Named<MobEffect>> whitelist = world.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(PotionEffectTags.DISPEL_ALLOW);
-            for (MobEffectInstance e : array) {
-                if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL && e.getCures().contains(EffectCures.MILK)) {
-                    if (blacklist.isPresent() && blacklist.get().stream().anyMatch(effect -> effect.value() == e.getEffect()))
-                        continue;
-                    entity.removeEffect(e.getEffect());
-                } else if (whitelist.isPresent() && whitelist.get().stream().anyMatch(effect -> effect.value() == e.getEffect())) {
-                    entity.removeEffect(e.getEffect());
+            // Only works if the damage can land
+            if (attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), (float) (DAMAGE.get() + spellStats.getDamageModifier()))) {
+                Collection<MobEffectInstance> effects = entity.getActiveEffects();
+                MobEffectInstance[] array = effects.toArray(new MobEffectInstance[0]);
+                Optional<HolderSet.Named<MobEffect>> blacklist = world.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(PotionEffectTags.DISPEL_DENY);
+                Optional<HolderSet.Named<MobEffect>> whitelist = world.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(PotionEffectTags.DISPEL_ALLOW);
+                for (MobEffectInstance e : array) {
+                    if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL && e.getCures().contains(EffectCures.MILK)) {
+                        if (blacklist.isPresent() && blacklist.get().stream().anyMatch(effect -> effect.value() == e.getEffect()))
+                            continue;
+                        entity.removeEffect(e.getEffect());
+                    } else if (whitelist.isPresent() && whitelist.get().stream().anyMatch(effect -> effect.value() == e.getEffect())) {
+                        entity.removeEffect(e.getEffect());
+                    }
                 }
             }
-            attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), (float) (DAMAGE.get() + spellStats.getDamageModifier()));
         }
     }
 
