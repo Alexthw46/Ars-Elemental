@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.event;
 
 import alexthw.ars_elemental.ArsElemental;
+import alexthw.ars_elemental.common.entity.FlashjackEntity;
 import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import alexthw.ars_elemental.common.entity.mages.WaterMage;
 import alexthw.ars_elemental.common.glyphs.EffectBubbleShield;
@@ -12,6 +13,7 @@ import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
+import com.hollingsworth.arsnouveau.api.event.SpellProjectileHitEvent;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
@@ -43,6 +45,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -64,6 +67,13 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EART
 
 @EventBusSubscriber(modid = ArsElemental.MODID)
 public class DamageEvents {
+
+    @SubscribeEvent
+    public static void saveSoldierFlashjackFromSpellProjectiles(SpellProjectileHitEvent event) {
+        if (event.getHitResult() instanceof EntityHitResult entityHit && entityHit.getEntity() instanceof FlashjackEntity)
+            event.setCanceled(true);
+    }
+
 
     @SubscribeEvent
     public static void changeDamageType(SpellDamageEvent.Pre preSpellDamageEvent) {
