@@ -78,11 +78,8 @@ public class EffectConjureTerrain extends ElementalAbstractEffect {
                             case 0 -> {
                                 // No effect
                             }
-                            case 1 -> {
-                                if (spellStats.isRandomized()) {
-                                    toPlace = stones.getRandomElement(shooter.getRandom()).orElse(Blocks.STONE.builtInRegistryHolder()).value();
-                                }
-                            }
+                            case 1 ->
+                                    toPlace = spellStats.isRandomized() ? stones.getRandomElement(shooter.getRandom()).orElse(Blocks.STONE.builtInRegistryHolder()).value() : Blocks.STONE;
                             // Amps > 1
                             default -> toPlace = Blocks.DEEPSLATE;
                         }
