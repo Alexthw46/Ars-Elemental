@@ -3,6 +3,8 @@ package alexthw.ars_elemental.common.entity.spells;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import com.hollingsworth.arsnouveau.common.entity.EntityLingeringSpell;
+import com.hollingsworth.arsnouveau.common.entity.EntityWallSpell;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -118,6 +120,9 @@ public class EntityGeyser extends Entity {
             // If they are at the very top, hold them there (bobbing effect)
             // If they are below the top, launch them up
             if (e.getY() < this.getY() + this.entityData.get(HEIGHT)) {
+                if (e instanceof EntityLingeringSpell || e instanceof EntityWallSpell)
+                    // force move it on the top of the geyser, since delta movement doesn't work
+                    e.setPos(e.getX(), this.getY() + this.entityData.get(HEIGHT) + 0.1, e.getZ());
                 // 0.4 is roughly bubble column speed
                 e.setDeltaMovement(motion.x, push, motion.z);
                 e.hasImpulse = true;

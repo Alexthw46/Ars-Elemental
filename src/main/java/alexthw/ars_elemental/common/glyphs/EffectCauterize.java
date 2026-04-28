@@ -39,7 +39,7 @@ public class EffectCauterize extends ElementalAbstractEffect implements IDamageE
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity entity) {
             // Only works if the damage can land
-            if (attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), (float) (DAMAGE.get() + spellStats.getDamageModifier()))) {
+            if (attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world, shooter), DAMAGE.get().floatValue())) {
                 Collection<MobEffectInstance> effects = entity.getActiveEffects();
                 MobEffectInstance[] array = effects.toArray(new MobEffectInstance[0]);
                 Optional<HolderSet.Named<MobEffect>> blacklist = world.registryAccess().registryOrThrow(Registries.MOB_EFFECT).getTag(PotionEffectTags.DISPEL_DENY);
