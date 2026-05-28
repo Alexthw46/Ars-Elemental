@@ -140,7 +140,7 @@ public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
     @Override
     public void push(@NotNull Entity pEntity) {
         super.push(pEntity);
-        if (pEntity instanceof LivingEntity entity && !pEntity.isAlliedTo(owner) && !pEntity.getUUID().equals(getOwnerUUID()) && !(pEntity instanceof ISummon sum && sum.getOwnerUUID() != null && sum.getOwnerUUID().equals(this.getOwnerUUID())))
+        if (pEntity instanceof LivingEntity entity && (owner == null || !entity.isAlliedTo(owner) && !entity.getUUID().equals(getOwnerUUID())) && !(entity instanceof ISummon sum && sum.getOwnerUUID() != null && sum.getOwnerUUID().equals(this.getOwnerUUID())))
             this.dealDamage(entity);
     }
 
@@ -187,7 +187,7 @@ public class SummonSlime extends Slime implements IFollowingSummon, ISummon {
     @Override
     public void remove(@NotNull RemovalReason pReason) {
         int i = this.getSize();
-        if (this.level instanceof ServerLevel server && i > 1 && this.isDeadOrDying()) {
+        if (this.level instanceof ServerLevel && i > 1 && this.isDeadOrDying()) {
             Component component = this.getCustomName();
             boolean flag = this.isNoAi();
             float f = (float) i / 4.0F;
