@@ -56,7 +56,7 @@ public class PropagatorHoming extends ElementalAbstractEffect implements IPropag
         // Set the position and shoot the projectiles in the correct direction
         for (EntityHomingProjectileSpell proj : projectiles) {
             proj.setPos(pos.add(0, 1, 0));
-            proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell));
+            proj.setIgnored(MethodHomingProjectile.basicIgnores(shooter, stats, resolver.spellContext, resolver));
             if (stats.hasBuff(AugmentDampen.INSTANCE)) proj.setGravity(true);
             if (stats.hasBuff(AugmentExtract.INSTANCE) || (shooter instanceof FakePlayer)) {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);

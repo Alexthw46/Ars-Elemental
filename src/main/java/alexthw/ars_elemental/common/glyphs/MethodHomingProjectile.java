@@ -74,7 +74,7 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
     @Override
     public CastResolveType onCast(ItemStack stack, LivingEntity shooter, Level world, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
 
-        List<Predicate<LivingEntity>> ignore = basicIgnores(shooter, spellStats.hasBuff(AugmentSensitive.INSTANCE), resolver.spell);
+        List<Predicate<LivingEntity>> ignore = basicIgnores(shooter, spellStats, resolver.spellContext, resolver);
 
         if (shooter instanceof Player) {
             ignore.add(entity -> entity instanceof ISummon summon && shooter.getUUID().equals(summon.getOwnerUUID()));
@@ -136,20 +136,19 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
         return augmentSetOf(AugmentPierce.INSTANCE, AugmentSplit.INSTANCE, AugmentAccelerate.INSTANCE, AugmentDecelerate.INSTANCE, AugmentSensitive.INSTANCE, AugmentDampen.INSTANCE);
     }
 
-    public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, Boolean targetPlayers, Spell spell) {
+    public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         List<Predicate<LivingEntity>> ignore = new ArrayList<>();
-
         ignore.add((entity -> !entity.isAlive()));
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity || entity instanceof FlashjackEntity);
         ignore.add(entity -> entity.hasEffect(MobEffects.INVISIBILITY));
         ignore.add(shooter::isAlliedTo);
-        if (!targetPlayers) {
+        if (!spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
             ignore.add(entity -> entity instanceof Player);
         }
-        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.unsafeList(), 0);
+        Set<IFilter> filters = GlyphEffectUtil.getFilters(spellContext.getSpell().unsafeList(), 0);
         if (!filters.isEmpty()) {
-            ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
+            ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters, spellStats, spellContext, resolver));
         }
         return ignore;
     }

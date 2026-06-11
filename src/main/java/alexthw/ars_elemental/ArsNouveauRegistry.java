@@ -145,7 +145,7 @@ public class ArsNouveauRegistry {
         register(EffectConflagrate.INSTANCE);
         register(EffectCauterize.INSTANCE);
         register(EffectRage.INSTANCE);
-        
+
         // Water Update
         register(EffectWaterJet.INSTANCE);
         register(EffectGeyser.INSTANCE);
@@ -307,7 +307,7 @@ public class ArsNouveauRegistry {
                 SpellStats stats = resolver.getCastStats();
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
-                spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+                spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, stats, resolver.spellContext, resolver));
                 float velocity = MethodHomingProjectile.getProjectileSpeed(stats);
                 if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
                     Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
@@ -342,7 +342,7 @@ public class ArsNouveauRegistry {
                 float velocity = MethodHomingProjectile.getProjectileSpeed(stats);
                 spell.setOwner(fakePlayer);
                 spell.setPos(position.x(), position.y(), position.z());
-                spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, resolver.spell.getAugments(0, null).contains(AugmentSensitive.INSTANCE), resolver.spell));
+                spell.setIgnored(MethodHomingProjectile.basicIgnores(fakePlayer, stats, resolver.spellContext, resolver));
                 spell.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), velocity, 0);
                 world.addFreshEntity(spell);
             }

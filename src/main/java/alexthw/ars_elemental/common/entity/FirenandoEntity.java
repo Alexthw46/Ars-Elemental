@@ -14,6 +14,7 @@ import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
@@ -187,8 +188,10 @@ public class FirenandoEntity extends PathfinderMob implements ISchoolProvider, R
                 return stack == ModItems.FIRE_FOCUS.get();
             }
         };
+        SpellStats stats = resolver.getCastStats();
+        stats.setAugments(List.of(AugmentSensitive.INSTANCE));
         EntityHomingProjectileSpell projectileSpell = new EntityHomingProjectileSpell(level(), resolver);
-        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, false, resolver.spell);
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(this, stats, resolver.spellContext, resolver);
         ignore.add(entity -> !(entity instanceof Enemy));
         ignore.add(entity -> entity instanceof FirenandoEntity firenando && getOwner().equals(firenando.getOwner()));
         projectileSpell.shoot(this, this.getXRot(), this.getYRot(), 0.0F, 0.8f, 0.8f);

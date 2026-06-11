@@ -40,6 +40,7 @@ public class EntityMagnetSpell extends EntityProjectileSpell {
     public static final EntityDataAccessor<Float> AOE = SynchedEntityData.defineId(EntityMagnetSpell.class, EntityDataSerializers.FLOAT);
 
     LivingEntity tracked;
+
     public EntityMagnetSpell(EntityType<? extends EntityProjectileSpell> type, Level worldIn) {
         super(type, worldIn);
     }
@@ -51,7 +52,7 @@ public class EntityMagnetSpell extends EntityProjectileSpell {
     static public EntityMagnetSpell createMagnet(Level world, LivingEntity shooter, SpellStats spellStats, SpellResolver spellResolver, Vec3 location) {
         EntityMagnetSpell magnet = new EntityMagnetSpell(world);
         SpellContext spellContext = spellResolver.spellContext;
-        magnet.ignored = makeIgnores(shooter, spellContext.getSpell(), spellContext.getCurrentIndex() + 1);
+        magnet.ignored = makeIgnores(shooter, spellStats, spellContext, spellResolver, spellContext.getCurrentIndex() + 1);
         magnet.setPos(location);
         magnet.setAoe((float) spellStats.getAoeMultiplier());
         magnet.setOwner(shooter);
@@ -126,16 +127,16 @@ public class EntityMagnetSpell extends EntityProjectileSpell {
         return ignored.stream().anyMatch(filter -> entity == this.tracked || filter.test(entity));
     }
 
-    public static List<Predicate<Entity>> makeIgnores(LivingEntity shooter, Spell spell, int index) {
+    public static List<Predicate<Entity>> makeIgnores(LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver, int index) {
         List<Predicate<Entity>> ignore = new ArrayList<>();
         // prevent magnet from pulling itself and other lingering spells and familiars and entities that are ignored by filters
         ignore.add((entity -> entity instanceof EntityLingeringSpell));
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity);
         ignore.add(shooter::isAlliedTo);
-        Set<IFilter> filters = GlyphEffectUtil.getFilters(spell.unsafeList(), index);
+        Set<IFilter> filters = GlyphEffectUtil.getFilters(spellContext.getSpell().unsafeList(), index);
         if (!filters.isEmpty()) {
-            ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
+            ignore.add(entity -> GlyphEffectUtil.checkIgnoreFilters(entity, filters, spellStats, spellContext, resolver));
         }
         return ignore;
     }

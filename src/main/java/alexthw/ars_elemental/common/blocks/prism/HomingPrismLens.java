@@ -1,6 +1,7 @@
 package alexthw.ars_elemental.common.blocks.prism;
 
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import net.minecraft.core.BlockPos;
@@ -20,10 +21,10 @@ public class HomingPrismLens extends AbstractPrismLens {
 
     public void shoot(ServerLevel world, BlockPos pos, EntityProjectileSpell spell, Vec3 angle) {
         // create a new EntityHomingProjectile and copy the properties of the spell
-        EntityHomingProjectileSpell newProjectile = new EntityHomingProjectileSpell(world, spell.resolver());
-        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(spell.resolver().spellContext.getUnwrappedCaster(), true, spell.resolver().spell);
+        SpellResolver resolver = spell.resolver();
+        EntityHomingProjectileSpell newProjectile = new EntityHomingProjectileSpell(world, resolver);
+        List<Predicate<LivingEntity>> ignore = MethodHomingProjectile.basicIgnores(resolver.spellContext.getUnwrappedCaster(), resolver.getCastStats(), resolver.spellContext, resolver);
         newProjectile.setIgnored(ignore);
-        newProjectile.setColor(spell.getParticleColor());
         newProjectile.pierceLeft = spell.pierceLeft;
         newProjectile.prismRedirect = spell.prismRedirect;
         newProjectile.age = spell.age;
