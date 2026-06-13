@@ -39,10 +39,10 @@ import static com.alexthw.sauce.util.DocsUtil.getBaseEntryItem;
 import static com.hollingsworth.arsnouveau.api.registry.DocumentationRegistry.*;
 import static com.hollingsworth.arsnouveau.common.lib.LibBlockNames.BASIC_SPELL_TURRET;
 import static com.hollingsworth.arsnouveau.common.lib.LibBlockNames.SPELL_PRISM;
-import static com.hollingsworth.arsnouveau.setup.registry.Documentation.addBasicItem;
 import static com.hollingsworth.arsnouveau.setup.registry.Documentation.addPage;
 import static com.hollingsworth.arsnouveau.setup.registry.Documentation.getLangPath;
 import static com.hollingsworth.arsnouveau.setup.registry.Documentation.getRecipePages;
+import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 
 public class AEDocumentation {
 
@@ -197,6 +197,14 @@ public class AEDocumentation {
 
     }
 
+    public static DocEntry addBasicItem(ItemLike item, DocCategory category) {
+        ItemStack stack = new ItemStack(item);
+        return addPage(new AEDocEntryBuilder(category, stack.getDescriptionId())
+                .withIcon(item)
+                .withSortNum(100)
+                .withPage(TextEntry.create(Component.translatable("ars_elemental.page." + getRegistryName(item.asItem()).getPath()), stack.getItem().getDescription(), stack)).withCraftingPages(item));
+    }
+
     static class AEDocEntryBuilder extends DocEntryBuilder {
 
         public AEDocEntryBuilder(DocCategory category, String name) {
@@ -217,4 +225,5 @@ public class AEDocumentation {
             return this;
         }
     }
+
 }
