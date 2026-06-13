@@ -6,6 +6,8 @@ import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,13 +31,26 @@ public abstract class ElementalAbstractFilter extends AbstractFilter {
         return this;
     }
 
-    @Override
-    public void onResolve(HitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (!shouldAffect(rayTraceResult, world)) spellContext.setCanceled(true);
+    /**
+     * Whether the filter should allow the block hit
+     *
+     * @param target BlockHitResult
+     */
+    public boolean shouldResolveOnBlock(BlockHitResult target, Level level) {
+        return false;
+    }
+
+    public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
+        return shouldResolveOnEntity(target, level, null, null, null);
     }
 
     @Override
-    public boolean shouldAffect(HitResult rayTraceResult, Level level) {
-        return inverted != super.shouldAffect(rayTraceResult, level);
+    public void onResolve(HitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        if (!shouldAffect(rayTraceResult, world, spellStats, spellContext, resolver)) spellContext.setCanceled(true);
+    }
+
+    @Override
+    public boolean shouldAffect(HitResult rayTraceResult, Level level, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        return inverted != super.shouldAffect(rayTraceResult, level, spellStats, spellContext, resolver);
     }
 }
