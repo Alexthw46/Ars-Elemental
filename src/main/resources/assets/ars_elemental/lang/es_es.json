@@ -486,7 +486,7 @@
   "enchantment.ars_elemental.mirror_shield": "Spell Reflection",
   "enchantment.ars_elemental.mirror_shield.desc": "Shield have a chance to reflect projectile spells",
   "enchantment.ars_elemental.soulbound": "Soulbound",
-  "enchantment.ars_elemental.soulbound.description": "Preserve items on death.",
+  "enchantment.ars_elemental.soulbound.desc": "Preserve items on death.",
   "entity.ars_elemental.air_mage": "Rogue Air Mage",
   "entity.ars_elemental.conjured_dripstone": "Falling Spike",
   "entity.ars_elemental.conjured_ice_spike": "Falling Ice Spike",
