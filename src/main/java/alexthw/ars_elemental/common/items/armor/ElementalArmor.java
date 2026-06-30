@@ -6,10 +6,10 @@ import alexthw.ars_elemental.client.armor.ElementalArmorModel;
 import alexthw.ars_elemental.client.armor.ElementalArmorRenderer;
 import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.IElementalArmor;
+import com.alexthw.sauce.event.AttributeEventHandler;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.mana.IManaDiscountEquipment;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
-import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import com.hollingsworth.arsnouveau.common.armor.AnimatedMagicArmor;
@@ -20,7 +20,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -80,11 +79,6 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
 
     public String getTier() {
         return "medium";
-    }
-
-    @Override
-    public int getManaDiscount(ItemStack i, Spell spell) {
-        return Mth.ceil(getDiscount(spell.unsafeList()));
     }
 
     @Override
@@ -195,7 +189,8 @@ public class ElementalArmor extends AnimatedMagicArmor implements IElementalArmo
     public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(@NotNull ItemStack stack) {
         return super.getDefaultAttributeModifiers(stack)
                 .withModifierAdded(PerkAttributes.MAX_MANA, new AttributeModifier(ArsNouveau.prefix("max_mana_armor_" + this.type.getName()), ARMOR_MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
-                .withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor_" + this.type.getName()), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()));
+                .withModifierAdded(PerkAttributes.MANA_REGEN_BONUS, new AttributeModifier(ArsNouveau.prefix("mana_regen_armor_" + this.type.getName()), ARMOR_MANA_REGEN.get(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()))
+                .withModifierAdded(AttributeEventHandler.schoolToDiscountAttribute.get(getSchool()), new AttributeModifier(ArsNouveau.prefix("discount_armor_" + this.type.getName()), 0.15, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.bySlot(this.type.getSlot()));
     }
 
     /*
