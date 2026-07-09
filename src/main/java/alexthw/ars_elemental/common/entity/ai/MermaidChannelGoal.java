@@ -49,7 +49,7 @@ public class MermaidChannelGoal extends Goal {
 
     public void tick() {
         if (!this.complete && this.target != null) {
-            this.approached = BlockUtil.distanceFrom(this.mermaid.position(), this.target.position()) <= 2.0;
+            this.approached = BlockUtil.distanceFrom(this.mermaid.level, this.mermaid.position(), this.target.position()) <= 2.0;
             if (!this.approached && this.mermaid.level().getGameTime() % 20 == 0) {
                 Path path = this.mermaid.getNavigation().createPath(this.target.getX(), this.target.getY(), this.target.getZ(), 1);
                 if (path == null || !path.canReach()) {
@@ -72,15 +72,16 @@ public class MermaidChannelGoal extends Goal {
                     this.complete = true;
                     MermaidTile shrine = this.mermaid.getShrine();
                     BlockPos targetPos = this.target.blockPosition();
-                    if (shrine != null)
+                    if (shrine != null) {
                         if (shrine.getY() + 2 >= targetPos.getY()) {
                             targetPos = targetPos.above(shrine.getBlockPos().getY() - targetPos.getY());
                         } else {
                             targetPos = targetPos.below();
                         }
-                    EntityLerpedProjectile item = new EntityLerpedProjectile(this.mermaid.level, targetPos, shrine.getBlockPos(), 20, 100, 200);
-                    this.mermaid.level.addFreshEntity(item);
-                    shrine.giveProgress();
+                        EntityLerpedProjectile item = new EntityLerpedProjectile(this.mermaid.level, targetPos, shrine.getBlockPos(), 20, 100, 200);
+                        this.mermaid.level.addFreshEntity(item);
+                        shrine.giveProgress();
+                    }
                     this.mermaid.channelCooldown = 100;
                 }
             }
