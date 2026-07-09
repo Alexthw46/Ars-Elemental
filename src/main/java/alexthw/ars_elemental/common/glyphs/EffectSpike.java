@@ -78,6 +78,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         super.buildConfig(builder);
         addDamageConfig(builder, 8.0);
         addAmpConfig(builder, 2.5);
+        addExtendTimeTicksConfig(builder, 10);
     }
 
     @Override

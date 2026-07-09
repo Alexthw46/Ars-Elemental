@@ -69,7 +69,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         this.resolver = resolver;
         this.pierce = 1 + spellStats.getBuffCount(AugmentPierce.INSTANCE) * 0.25;
         this.aoe = 1 + (spellStats.getAoeMultiplier() - 1) * 0.25;
-        this.lifeTicks += (int) (5 * spellStats.getDurationMultiplier());
+        this.lifeTicks += (int) (EffectSpike.INSTANCE.EXTEND_TIME.get() * spellStats.getDurationMultiplier());
     }
 
     @Override
@@ -94,7 +94,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
 
     @Override
     public void tick() {
-        if (!this.level.isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * 5) && lifeTicks % 5 == 0) {
+        if (!this.level.isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * EffectSpike.INSTANCE.EXTEND_TIME.get()) && lifeTicks % 5 == 0) {
             for (Entity entity : this.level.getEntities(this, this.getBoundingBox(), (e) -> e instanceof LivingEntity)) {
                 if (entity instanceof LivingEntity target) {
                     damage(target);
@@ -134,7 +134,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         }
         pierce = compound.getDouble("pierce");
         aoe = compound.getDouble("aoe");
-
+        lifeTicks = compound.getInt("lifeTicks");
     }
 
     protected void addAdditionalSaveData(@NotNull CompoundTag compound) {
@@ -144,6 +144,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
         }
         compound.putDouble("pierce", pierce);
         compound.putDouble("aoe", aoe);
+        compound.putInt("lifeTicks", lifeTicks);
     }
 
     @Override
@@ -182,6 +183,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
     public void writeSpawnData(FriendlyByteBuf buffer) {
         buffer.writeDouble(pierce);
         buffer.writeDouble(aoe);
+        buffer.writeInt(lifeTicks);
     }
 
     /**
@@ -194,6 +196,7 @@ public class DripstoneSpikeEntity extends Entity implements IEntityAdditionalSpa
     public void readSpawnData(FriendlyByteBuf additionalData) {
         pierce = additionalData.readDouble();
         aoe = additionalData.readDouble();
+        lifeTicks = additionalData.readInt();
     }
 
 }

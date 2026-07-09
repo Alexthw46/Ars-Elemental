@@ -2,8 +2,6 @@ package alexthw.ars_elemental.common.blocks;
 
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.registry.ModTiles;
-import alexthw.ars_elemental.util.BotaniaCompat;
-import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
@@ -30,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -96,9 +95,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
                 return true;
             }
         }
-
-        // If the position is a botania apothecary, try to fill it with water and return true if successful
-        return CompatUtils.isBotaniaLoaded() && BotaniaCompat.tryFillApothecary(toPos, world);
+        return false;
     }
 
 
@@ -134,9 +131,10 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
 
         if (level.getBlockState(storedPos).getBlock() instanceof AbstractCauldronBlock) {
             return true;
-        } else if (level.getBlockEntity(storedPos) != null && level.getBlockEntity(storedPos).getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent()) {
-            return true;
-        } else return CompatUtils.isBotaniaLoaded() && BotaniaCompat.isApothecary(storedPos, level);
+        } else {
+            BlockEntity blockEntity = level.getBlockEntity(storedPos);
+            return blockEntity != null && blockEntity.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).isPresent();
+        }
     }
 
     public void createParticles(BlockPos from, BlockPos to) {
@@ -174,7 +172,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     }
 
     @Override
-    public void load(CompoundTag tag) {
+    public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         toList = new HashSet<>();
         int counter = 0;

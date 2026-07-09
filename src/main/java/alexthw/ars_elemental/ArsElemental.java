@@ -6,7 +6,6 @@ import alexthw.ars_elemental.registry.ModAdvTriggers;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModPotions;
 import alexthw.ars_elemental.registry.ModRegistry;
-import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.world.TerrablenderAE;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import net.minecraft.resources.ResourceLocation;
@@ -70,7 +69,6 @@ public class ArsElemental {
         event.enqueueWork(() -> {
             ModPotions.addPotionRecipes();
             ArsNouveauRegistry.postInit();
-            CompatUtils.checkCompats();
         });
         if (terrablenderLoaded && ConfigHandler.Common.EXTRA_BIOMES.get() > 0) {
             event.enqueueWork(TerrablenderAE::registerBiomes);

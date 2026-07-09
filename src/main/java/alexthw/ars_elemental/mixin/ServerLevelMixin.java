@@ -5,10 +5,12 @@ import alexthw.ars_elemental.common.entity.spells.FlashLightning;
 import alexthw.ars_elemental.datagen.AETagsProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin {
 
+    @Unique
+    public RandomSource arsElemental$randomSource = RandomSource.createNewThreadLocalInstance();
     @Shadow
     protected abstract BlockPos findLightningTargetAround(BlockPos pos);
 
@@ -26,7 +30,7 @@ public abstract class ServerLevelMixin {
         var chunkpos = pChunk.getPos();
         int x = chunkpos.getMinBlockX();
         int z = chunkpos.getMinBlockZ();
-        if (level.random.nextInt(1000) == 0 && level.isRainingAt(new BlockPos(x,120,z))) {
+        if (arsElemental$randomSource.nextInt(1000) == 0 && level.isRainingAt(new BlockPos(x,120,z))) {
             var biome = pChunk.getLevel().getBiomeManager().getBiome(new BlockPos(x,120,z));
             if (biome.containsTag(AETagsProvider.AEBiomeTagsProvider.FLASHING_BIOME)) {
 

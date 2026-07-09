@@ -19,7 +19,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
@@ -90,8 +89,6 @@ public class EntityLerpedProjectile extends ColoredProjectile {
         if (age > 400)
             this.remove(RemovalReason.DISCARDED);
 
-
-        Vec3 vec3d2 = this.getDeltaMovement();
         BlockPos start = entityData.get(from);
         BlockPos end = entityData.get(to);
         if (BlockUtil.distanceFrom(this.blockPosition(), end) < 1 || this.age > 1000 || BlockUtil.distanceFrom(this.blockPosition(), end) > 16) {
@@ -108,9 +105,31 @@ public class EntityLerpedProjectile extends ColoredProjectile {
         EasingType type = EasingType.EaseOutExpo;
 
         double startY = start.getY();
-        double endY = end.getY() + getDistanceAdjustment(start, end);
+
+        double endY = end.getY();
+        double progress = Mth.clamp(age / 80.0, 0.0, 1.0);
+
+        // base linear interpolation
+        double baseY = Mth.lerp(progress, startY, endY);
+
+        // arc height scales with horizontal distance, not vertical delta
+        double horizontalDist = Math.sqrt(
+                Math.pow(end.getX() - start.getX(), 2) +
+                        Math.pow(end.getZ() - start.getZ(), 2)
+        );
+
+        // tune this value as needed
+        double arcHeight = Math.min(4.0, horizontalDist * 0.25);
+
+        // parabola arc
+        double arc = 4 * arcHeight * progress * (1 - progress);
+
+        double lerpY = baseY + arc;
+        //double startY = start.getY();
+        //double endY = end.getY() + getDistanceAdjustment(start, end);
+
         double lerpX = lerp(time, (double) start.getX() + 0.5, (double) end.getX() + 0.5, type);
-        double lerpY = lerp(time, lerp(time, startY, endY, type), lerp(time, endY, startY, type), type);
+        //double lerpY = lerp(time, lerp(time, startY, endY, type), lerp(time, endY, startY, type), type);
         double lerpZ = lerp(time, (double) start.getZ() + 0.5, (double) end.getZ() + 0.5, type);
 
         BlockPos adjustedPos = new BlockPos(Mth.floor(posX), end.getY(), Mth.floor(posZ));
