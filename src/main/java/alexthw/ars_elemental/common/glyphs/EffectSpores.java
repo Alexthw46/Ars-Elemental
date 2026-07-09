@@ -82,6 +82,7 @@ public class EffectSpores extends ElementalAbstractEffect implements IDamageEffe
                 damage(vec, world, shooter, spellStats, damage, effectSec, e, spellContext, resolver);
             } else {
                 e.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * effectSec, (int) spellStats.getAmpMultiplier()));
+                e.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * effectSec, (int) spellStats.getAmpMultiplier()));
             }
         }
     }

@@ -99,6 +99,7 @@ public class EffectSpike extends ElementalAbstractEffect implements IDamageEffec
         super.buildConfig(builder);
         addDamageConfig(builder, 8.0);
         addAmpConfig(builder, 2.5);
+        addExtendTimeConfig(builder, 10);
         addGenericInt(builder, 40, "The maximum damage a thrown spike can deal to a single entity. The damage from thrown spikes scales with the height difference.", "maxFallDamage");
     }
 

@@ -13,7 +13,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import org.jetbrains.annotations.NotNull;
@@ -52,23 +56,11 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
 
     double pierce, aoe = 1;
 
-
     public DripstoneSpikeEntity(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public DripstoneSpikeEntity(EntityType<?> pEntityType, Level worldIn, BlockPos pos, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
-        this(pEntityType, worldIn);
-        this.setOwner(casterIn);
-        this.setPos(pos.getCenter().add(0, 0.5, 0));
-        this.damage = damage;
-        this.stats = spellStats;
-        this.context = context;
-        this.resolver = resolver;
-        this.pierce = 1 + spellStats.getBuffCount(AugmentPierce.INSTANCE) * 0.25;
-        this.aoe = 1 + (spellStats.getAoeMultiplier() - 1) * 0.25;
-        this.lifeTicks += (int) (5 * spellStats.getDurationMultiplier());
-    }
+    private static final RawAnimation SPROUT_ANIM = RawAnimation.begin().thenPlayAndHold("sprout");
 
     @Override
     public @NotNull EntityType<?> getType() {
@@ -88,9 +80,22 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
         this.casterUUID = pOwner == null ? null : pOwner.getUUID();
     }
 
+    public DripstoneSpikeEntity(EntityType<?> pEntityType, Level worldIn, BlockPos pos, float damage, LivingEntity casterIn, SpellStats spellStats, SpellContext context, SpellResolver resolver) {
+        this(pEntityType, worldIn);
+        this.setOwner(casterIn);
+        this.setPos(pos.getCenter().add(0, 0.5, 0));
+        this.damage = damage;
+        this.stats = spellStats;
+        this.context = context;
+        this.resolver = resolver;
+        this.pierce = 1 + spellStats.getBuffCount(AugmentPierce.INSTANCE) * 0.25;
+        this.aoe = 1 + (spellStats.getAoeMultiplier() - 1) * 0.25;
+        this.lifeTicks += (int) (EffectSpike.INSTANCE.EXTEND_TIME.get() * spellStats.getDurationMultiplier());
+    }
+
     @Override
     public void tick() {
-        if (!this.level().isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * 5) && lifeTicks % 5 == 0) {
+        if (!this.level().isClientSide() && lifeTicks < (16 + stats.getDurationMultiplier() * EffectSpike.INSTANCE.EXTEND_TIME.get()) && lifeTicks % 5 == 0) {
             for (Entity entity : this.level().getEntities(this, this.getBoundingBox(), (e) -> e instanceof LivingEntity)) {
                 if (entity instanceof LivingEntity target) {
                     damage(target);
@@ -102,23 +107,16 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
         }
     }
 
-
     @Nullable
     public LivingEntity getOwner() {
-        if (this.caster == null && this.casterUUID != null && this.level() instanceof ServerLevel serverLevel) {
-            Entity entity = serverLevel.getEntity(this.casterUUID);
-            if (entity instanceof LivingEntity) {
-                this.caster = (LivingEntity) entity;
-            }
-        }
+        if (this.caster == null && this.casterUUID != null && this.level() instanceof ServerLevel serverLevel && serverLevel.getEntity(this.casterUUID) instanceof LivingEntity livingEntity)
+            this.caster = livingEntity;
         return this.caster;
     }
 
     @Override
     public boolean isAlliedTo(@NotNull Entity pEntity) {
-        if (this.getOwner() != null) {
-            return pEntity == this.getOwner() || this.getOwner().isAlliedTo(pEntity);
-        }
+        if (this.getOwner() != null) return pEntity == this.getOwner() || this.getOwner().isAlliedTo(pEntity);
         return super.isAlliedTo(pEntity);
     }
 
@@ -130,6 +128,7 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
         }
         pierce = compound.getDouble("pierce");
         aoe = compound.getDouble("aoe");
+        lifeTicks = compound.getInt("lifeTicks");
     }
 
     protected void addAdditionalSaveData(@NotNull CompoundTag compound) {
@@ -139,9 +138,8 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
         }
         compound.putDouble("pierce", pierce);
         compound.putDouble("aoe", aoe);
+        compound.putInt("lifeTicks", lifeTicks);
     }
-
-    private static final RawAnimation SPROUT_ANIM = RawAnimation.begin().thenPlay("sprout");
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar animationData) {
@@ -172,6 +170,7 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
     public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         buffer.writeDouble(pierce);
         buffer.writeDouble(aoe);
+        buffer.writeInt(lifeTicks);
     }
 
     /**
@@ -184,6 +183,7 @@ public class DripstoneSpikeEntity extends Entity implements GeoEntity, IEntityWi
     public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
         pierce = additionalData.readDouble();
         aoe = additionalData.readDouble();
+        lifeTicks = additionalData.readInt();
     }
 
 }
