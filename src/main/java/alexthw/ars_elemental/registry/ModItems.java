@@ -60,12 +60,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -80,6 +75,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -209,6 +205,9 @@ public class ModItems {
             .effect(() -> new MobEffectInstance(LIGHTNING_LURE, 30 * 20, 0), .2f)
             .alwaysEdible().build();
 
+    public static final DeferredHolder<Item, SpawnEggItem> SIREN_SPAWN_EGG;
+    public static final DeferredHolder<Item, SpawnEggItem> FLASHJACK_SPAWN_EGG;
+
     static {
 
         WATER_ARMOR_H = new ArmorSet.Heavy("aqua", SpellSchools.ELEMENTAL_WATER);
@@ -223,6 +222,9 @@ public class ModItems {
 
         SIREN_SHARDS = ITEMS.register("siren_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.siren_shards")));
         FLASHJACK_SHARDS = ITEMS.register("flashjack_shards", () -> new ModItem(itemProps()).withTooltip(Component.translatable("tooltip.flashjack_shards")));
+
+        SIREN_SPAWN_EGG = ITEMS.register("spawn_egg_siren", () -> new DeferredSpawnEggItem(ModEntities.SIREN_ENTITY, 56063, 3289855, itemProps()));
+        FLASHJACK_SPAWN_EGG = ITEMS.register("spawn_egg_flashjack", () -> new DeferredSpawnEggItem(ModEntities.FLASHJACK_ENTITY, 0xFFB233, 4411786, itemProps()));
 
         SIREN_CHARM = ITEMS.register("siren_charm", () -> new SirenCharm(itemProps()));
         FIRENANDO_CHARM = ITEMS.register("firenando_charm", () -> new FirenandoCharm(itemProps()));

@@ -506,6 +506,10 @@ public class AELangDatagen extends LanguageProvider {
         add("item.ars_elemental.air_pants", "Olympian's Pants");
         add("item.ars_elemental.air_shoes", "Olympian's Shoes");
 
+        // Spawn Eggs
+        add("item.ars_elemental.spawn_egg_siren", "Siren Spawn Egg");
+        add("item.ars_elemental.spawn_egg_flashjack", "Flashjack Spawn Egg");
+
     }
 
 }
