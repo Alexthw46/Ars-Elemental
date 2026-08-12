@@ -55,7 +55,7 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
                         // Check and fill below if the block is floating
                         BlockPos fillPos = basePos.offset(dx, 0, dz);
                         // Continue filling down while below is empty and within world limits and not too far
-                        while (level.isEmptyBlock(fillPos.below()) && fillPos.getY() > level.getMinBuildHeight() && !isTooFar(origin, fillPos)) {
+                        while (!isTooFar(origin, fillPos) && fillPos.getY() > level.getMinBuildHeight() && level.isEmptyBlock(fillPos.below())) {
                             level.setBlock(fillPos.below(), random.nextFloat() <= 0.1 ? GILDED_BLACKSTONE : BLACKSTONE, 3);
                             fillPos = fillPos.below();
                             hasFloatingBlocks = true; // Indicates we need to taper further
