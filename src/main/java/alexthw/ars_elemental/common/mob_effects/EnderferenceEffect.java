@@ -1,7 +1,7 @@
 package alexthw.ars_elemental.common.mob_effects;
 
 import alexthw.ars_elemental.registry.ModPotions;
-import com.hollingsworth.arsnouveau.ArsNouveau;
+import alexthw.ars_elemental.ArsElemental;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,7 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 
-@EventBusSubscriber(modid = ArsNouveau.MODID)
+@EventBusSubscriber(modid = ArsElemental.MODID)
 public class EnderferenceEffect extends MobEffect {
 
     public EnderferenceEffect() {
