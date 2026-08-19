@@ -1,7 +1,11 @@
 package alexthw.ars_elemental.common.entity;
 
 import alexthw.ars_elemental.common.blocks.mermaid_block.MermaidTile;
-import alexthw.ars_elemental.common.entity.ai.*;
+import alexthw.ars_elemental.common.entity.ai.DolphinJumpGoal;
+import alexthw.ars_elemental.common.entity.ai.FollowBoatGoalM;
+import alexthw.ars_elemental.common.entity.ai.HybridStrollGoal;
+import alexthw.ars_elemental.common.entity.ai.MermaidAi;
+import alexthw.ars_elemental.common.entity.ai.MermaidChannelGoal;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.api.entity.IDispellable;
@@ -32,7 +36,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -57,8 +65,11 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
@@ -406,7 +417,6 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
             if (!isTamed() && taming) {
                 taming = false;
                 ItemStack stack = new ItemStack(ModItems.SIREN_SHARDS.get(), 1 + level().random.nextInt(2));
-                stack.set(PERSISTENT_FAMILIAR_DATA, new PersistentFamiliarData().setColor(getColor()).setName(getCustomName()));
                 level().addFreshEntity(new ItemEntity(level(), getX(), getY() + 0.5, getZ(), stack));
                 ANCriteriaTriggers.rewardNearbyPlayers(ANCriteriaTriggers.POOF_MOB.get(), (ServerLevel) this.level(), this.getOnPos(), 10);
                 this.remove(RemovalReason.DISCARDED);
