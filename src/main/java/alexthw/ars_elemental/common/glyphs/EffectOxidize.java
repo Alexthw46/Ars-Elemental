@@ -40,12 +40,11 @@ public class EffectOxidize extends ElementalAbstractEffect implements IPotionEff
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        // Aoe Block logic with oxidation
-        BlockPos pos = rayTraceResult.getBlockPos();
+        BlockPos startingBlockPos = rayTraceResult.getBlockPos();
         BlockState state;
         double aoeBuff = spellStats.getAoeMultiplier();
         int pierceBuff = spellStats.getBuffCount(AugmentPierce.INSTANCE);
-        List<BlockPos> posList = SpellUtil.calcAOEBlocks(shooter, pos, rayTraceResult, aoeBuff, pierceBuff);
+        List<BlockPos> posList = SpellUtil.calcAOEBlocks(shooter, startingBlockPos, rayTraceResult, aoeBuff, pierceBuff);
         for (BlockPos pos1 : posList) {
             if (world.isOutsideBuildHeight(pos1) || world.random.nextFloat() < spellStats.getBuffCount(AugmentRandomize.INSTANCE) * 0.25F) {
                 continue;
@@ -59,7 +58,7 @@ public class EffectOxidize extends ElementalAbstractEffect implements IPotionEff
             //Try oxidize
             if (state.getBlock() instanceof ChangeOverTimeBlock<?> toOxidize && toOxidize.getNext(state).isPresent()) {
                 if (world.getRandom().nextFloat() < 0.1)
-                    world.setBlockAndUpdate(pos, toOxidize.getNext(state).get());
+                    world.setBlockAndUpdate(pos1, toOxidize.getNext(state).get());
             }
 
         }

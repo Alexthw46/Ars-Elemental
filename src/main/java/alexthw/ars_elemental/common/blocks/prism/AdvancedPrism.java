@@ -53,9 +53,11 @@ public class AdvancedPrism extends SpellPrismBlock implements EntityBlock {
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
+
     @Override
-    public void onHit(ServerLevel world, BlockPos pos, EntityProjectileSpell spell) {
-        if (!(world.getBlockEntity(pos) instanceof AdvancedPrismTile tile)) return;
+    public void onHit(Level level, BlockState state, BlockPos pos, EntityProjectileSpell spell) {
+        if (!(level instanceof ServerLevel world) || !(world.getBlockEntity(pos) instanceof AdvancedPrismTile tile))
+            return;
         Position iposition = getDispensePosition(pos, tile.getShootAngle());
         spell.setPos(iposition.x(), iposition.y(), iposition.z());
         spell.prismRedirect++;
