@@ -87,7 +87,7 @@ public class EntityLerpedProjectile extends ColoredProjectile {
 
         BlockPos start = entityData.get(from);
         BlockPos end = entityData.get(to);
-        if (BlockUtil.distanceFrom(this.blockPosition(), end) < 1 || this.age > 1000 || BlockUtil.distanceFrom(this.blockPosition(), end) > 16) {
+        if (BlockUtil.distanceFrom(level, this.blockPosition(), end) < 1 || this.age > 1000 || BlockUtil.distanceFrom(level, this.blockPosition(), end) > 16) {
             this.remove(RemovalReason.DISCARDED);
             return;
         }
@@ -100,26 +100,7 @@ public class EntityLerpedProjectile extends ColoredProjectile {
 
         EasingType type = EasingType.EaseOutExpo;
 
-        double startY = start.getY();
-        double endY = end.getY();
-        double progress = Mth.clamp(age / 80.0, 0.0, 1.0);
-
-// base linear interpolation
-        double baseY = Mth.lerp(progress, startY, endY);
-
-// arc height scales with horizontal distance, not vertical delta
-        double horizontalDist = Math.sqrt(
-                Math.pow(end.getX() - start.getX(), 2) +
-                        Math.pow(end.getZ() - start.getZ(), 2)
-        );
-
-// tune this value as needed
-        double arcHeight = Math.min(4.0, horizontalDist * 0.25);
-
-// parabola arc
-        double arc = 4 * arcHeight * progress * (1 - progress);
-
-        double lerpY = baseY + arc;
+        double lerpY = getLerpY(start, end);
         //double startY = start.getY();
         //double endY = end.getY() + getDistanceAdjustment(start, end);
         double lerpX = lerp(time, (double) start.getX() + 0.5, (double) end.getX() + 0.5, type);
@@ -127,7 +108,7 @@ public class EntityLerpedProjectile extends ColoredProjectile {
         double lerpZ = lerp(time, (double) start.getZ() + 0.5, (double) end.getZ() + 0.5, type);
 
         BlockPos adjustedPos = new BlockPos(Mth.floor(posX), end.getY(), Mth.floor(posZ));
-        if (BlockUtil.distanceFrom(adjustedPos, end) <= 0.5) {
+        if (BlockUtil.distanceFrom(level, adjustedPos, end) <= 0.5) {
             posY = getY() - 0.05;
             this.setPos(lerpX, posY, lerpZ);
         } else {
@@ -154,19 +135,27 @@ public class EntityLerpedProjectile extends ColoredProjectile {
         }
     }
 
-    public void setDistanceAdjust(float offset) {
-        this.entityData.set(OFFSET, offset);
-        this.entityData.set(DIDOFFSET, true);
-    }
+    private double getLerpY(BlockPos start, BlockPos end) {
+        double startY = start.getY();
+        double endY = end.getY();
+        double progress = Mth.clamp(age / 80.0, 0.0, 1.0);
 
-    private double getDistanceAdjustment(BlockPos start, BlockPos end) {
-        if (this.entityData.get(DIDOFFSET))
-            return this.entityData.get(OFFSET);
-        double distance = BlockUtil.distanceFrom(start, end);
-        if (distance <= 1.5)
-            return 2.5;
+// base linear interpolation
+        double baseY = Mth.lerp(progress, startY, endY);
 
-        return 3;
+// arc height scales with horizontal distance, not vertical delta
+        double horizontalDist = Math.sqrt(
+                Math.pow(end.getX() - start.getX(), 2) +
+                        Math.pow(end.getZ() - start.getZ(), 2)
+        );
+
+// tune this value as needed
+        double arcHeight = Math.min(4.0, horizontalDist * 0.25);
+
+// parabola arc
+        double arc = 4 * arcHeight * progress * (1 - progress);
+
+        return baseY + arc;
     }
 
     @Override

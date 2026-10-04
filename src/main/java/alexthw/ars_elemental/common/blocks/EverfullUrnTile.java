@@ -4,7 +4,6 @@ import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.registry.ModTiles;
 import alexthw.ars_elemental.util.BotaniaCompat;
 import alexthw.ars_elemental.util.CompatUtils;
-import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.NBTUtil;
@@ -14,6 +13,7 @@ import com.hollingsworth.arsnouveau.common.block.ITickable;
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import com.hollingsworth.arsnouveau.common.items.DominionWand;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
+import com.hollingsworth.nuggets.client.overlay.IWorldTooltipProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -38,7 +38,7 @@ import java.util.Map;
 import static alexthw.ars_elemental.ConfigHandler.Common.WATER_URN_COST;
 import static net.minecraft.world.level.material.Fluids.WATER;
 
-public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable, ITooltipProvider {
+public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable, IWorldTooltipProvider {
 
     HashMap<BlockPos, Direction> toList = new HashMap<>();
 
@@ -147,7 +147,7 @@ public class EverfullUrnTile extends ModdedTile implements ITickable, IWandable,
     }
 
     public boolean closeEnough(BlockPos pos) {
-        return BlockUtil.distanceFrom(pos, this.worldPosition) <= getMaxDistance() && !pos.equals(getBlockPos());
+        return BlockUtil.distanceFrom(level, pos, this.worldPosition) <= getMaxDistance() && !pos.equals(getBlockPos());
     }
 
     private double getMaxDistance() {

@@ -16,7 +16,6 @@ import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.advancement.ANCriteriaTriggers;
 import com.hollingsworth.arsnouveau.common.block.tile.IAnimationListener;
-import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
 import com.hollingsworth.arsnouveau.common.entity.goal.GoBackHomeGoal;
 import com.hollingsworth.arsnouveau.common.items.data.ICharmSerializable;
 import com.hollingsworth.arsnouveau.common.items.data.PersistentFamiliarData;
@@ -217,15 +216,13 @@ public class MermaidEntity extends PathfinderMob implements GeoEntity, IAnimatio
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         data.add(new AnimationController<>(this, "idle", 0, this::idle));
-        actions = new AnimationController<>(this, "actions", 10, e -> e.setAndContinue(getDeltaMovement().length() > 0 || level().isClientSide && PatchouliHandler.isPatchouliWorld() ? swim : idle));
+        actions = new AnimationController<>(this, "actions", 10, e -> e.setAndContinue(getDeltaMovement().length() > 0 ? swim : idle));
         data.add(actions);
     }
 
     private PlayState idle(AnimationState<MermaidEntity> event) {
         PlayState result = PlayState.CONTINUE;
-        if (level().isClientSide && PatchouliHandler.isPatchouliWorld()) {
-            event.setAndContinue(RawAnimation.begin().thenLoop("ground"));
-        } else if (isJumping()) {
+        if (isJumping()) {
             event.setAndContinue(RawAnimation.begin().thenLoop("jump"));
         } else if (getDeltaMovement().y > 0.3) {
             setJump(true);

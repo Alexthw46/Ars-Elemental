@@ -5,7 +5,6 @@ import alexthw.ars_elemental.common.entity.MermaidEntity.Variants;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import com.hollingsworth.arsnouveau.common.compat.PatchouliHandler;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FlyingFamiliarEntity;
 import com.hollingsworth.arsnouveau.common.entity.familiar.ISpellCastListener;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +22,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 
 import java.util.Locale;
 
@@ -84,7 +87,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         super.registerControllers(data);
-        data.add(new AnimationController<>(this, "actionController", 10, event -> event.setAndContinue(getDeltaMovement().length() > 0 || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? swim : idle)));
+        data.add(new AnimationController<>(this, "actionController", 10, event -> event.setAndContinue(getDeltaMovement().length() > 0 ? swim : idle)));
     }
 
     RawAnimation swim = RawAnimation.begin().thenLoop("swim");
@@ -94,7 +97,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
 
     @Override
     public PlayState walkPredicate(AnimationState event) {
-        return event.setAndContinue(onGround() && !isInWater() || (level().isClientSide && PatchouliHandler.isPatchouliWorld()) ? ground : floating);
+        return event.setAndContinue(onGround() && !isInWater() ? ground : floating);
     }
 
     public @NotNull EntityType<?> getType() {
@@ -102,7 +105,7 @@ public class MermaidFamiliar extends FlyingFamiliarEntity implements ISpellCastL
     }
 
     @Override
-    protected PathNavigation createNavigation(Level world) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level world) {
         PathNavigation newNav = super.createNavigation(world);
         newNav.setCanFloat(false);
         return newNav;
