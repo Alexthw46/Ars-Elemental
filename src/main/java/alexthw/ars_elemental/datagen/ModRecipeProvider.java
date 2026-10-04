@@ -143,7 +143,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("MMM").pattern("MCM").pattern("MMM")
                 .unlockedBy("has_journal", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsRegistry.WORN_NOTEBOOK))
                 .save(consumer, prefix("curio_bag"));
-
     }
 
     public Item getRitualItem(ResourceLocation id) {
