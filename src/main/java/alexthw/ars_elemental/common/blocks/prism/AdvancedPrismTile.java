@@ -2,11 +2,11 @@ package alexthw.ars_elemental.common.blocks.prism;
 
 import alexthw.ars_elemental.registry.ModTiles;
 import com.alexthw.sauce.api.item.SpellPrismLens;
-import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.item.IWandable;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import com.hollingsworth.arsnouveau.common.util.PortUtil;
+import com.hollingsworth.nuggets.client.overlay.IWorldTooltipProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
@@ -30,7 +30,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity, ITooltipProvider {
+public class AdvancedPrismTile extends ModdedTile implements IWandable, GeoBlockEntity, IWorldTooltipProvider {
     private static final String TAG_LENTS = "prismLent";
     private static final String TAG_ROTATION_X = "rotationX";
     private static final String TAG_ROTATION_Y = "rotationY";

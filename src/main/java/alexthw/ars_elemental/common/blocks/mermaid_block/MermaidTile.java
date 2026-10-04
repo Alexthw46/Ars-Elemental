@@ -5,7 +5,6 @@ import alexthw.ars_elemental.common.entity.MermaidEntity;
 import alexthw.ars_elemental.common.entity.spells.EntityLerpedProjectile;
 import alexthw.ars_elemental.registry.ModTiles;
 import com.google.common.collect.ImmutableList;
-import com.hollingsworth.arsnouveau.api.client.ITooltipProvider;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
@@ -14,6 +13,7 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.block.tile.MobJarTile;
 import com.hollingsworth.arsnouveau.common.block.tile.SummoningTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
+import com.hollingsworth.nuggets.client.overlay.IWorldTooltipProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -45,7 +45,7 @@ import java.util.Set;
 import static alexthw.ars_elemental.datagen.AETagsProvider.AEBlockTagsProvider.AQUARIUM_BONUS;
 
 
-public class MermaidTile extends SummoningTile implements ITooltipProvider {
+public class MermaidTile extends SummoningTile implements IWorldTooltipProvider {
 
     public int progress;
     public int bonus;
