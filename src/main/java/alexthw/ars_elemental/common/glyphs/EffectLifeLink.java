@@ -2,7 +2,12 @@ package alexthw.ars_elemental.common.glyphs;
 
 import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.util.EntityCarryMEI;
-import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.AbstractAugment;
+import com.hollingsworth.arsnouveau.api.spell.IPotionEffect;
+import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.api.spell.SpellTier;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -53,10 +58,15 @@ public class EffectLifeLink extends ElementalAbstractEffect implements IPotionEf
         return 30;
     }
 
+    public ModConfigSpec.DoubleValue SHARED_HEAL;
+    public ModConfigSpec.DoubleValue SHARED_DAMAGE;
+
     @Override
     public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDefaultPotionConfig(builder);
+        SHARED_DAMAGE = builder.comment("How much damage is shared with the linked entity.").defineInRange("dmg_link", 0.5, 0, 1);
+        SHARED_HEAL = builder.comment("How much healing is shared with the linked entity.").defineInRange("heal_link", 0.5, 0, 1);
     }
 
     @NotNull

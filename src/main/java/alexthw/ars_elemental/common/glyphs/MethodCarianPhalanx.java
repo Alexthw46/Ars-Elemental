@@ -240,6 +240,13 @@ public class MethodCarianPhalanx extends ElementalAbstractForm {
     public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
         super.addAugmentDescriptions(map);
         map.put(AugmentSplit.INSTANCE, "Summons one additional phalanx projectile.");
+        map.put(AugmentAccelerate.INSTANCE, "Projectiles will move faster.");
+        map.put(AugmentDecelerate.INSTANCE, "Projectiles will move slower.");
+        map.put(AugmentExtendTime.INSTANCE, "Projectiles will wait longer before detaching if no target is found.");
+        map.put(AugmentDurationDown.INSTANCE, "Projectiles will detach sooner from the player orbit.");
+        map.put(AugmentPierce.INSTANCE, "Projectiles will pierce through enemies and blocks an additional time.");
+        map.put(AugmentSensitive.INSTANCE, "Projectiles will hit plants and other materials that do not block motion.");
+        map.put(AugmentAOE.INSTANCE, "Increases orbiting radius");
     }
 
     @Override
@@ -252,8 +259,7 @@ public class MethodCarianPhalanx extends ElementalAbstractForm {
                 AugmentExtendTime.INSTANCE,     // Longer duration
                 AugmentDurationDown.INSTANCE,   // Shorter duration
                 AugmentPierce.INSTANCE,         // Pierce through enemies
-                AugmentSensitive.INSTANCE,      // Hit blocks
-                AugmentAmplify.INSTANCE         // More damage when resolved
+                AugmentSensitive.INSTANCE
         );
     }
 }

@@ -4,6 +4,7 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
+import com.hollingsworth.arsnouveau.common.items.curios.ShapersFocus;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectEvaporate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,6 +35,9 @@ public abstract class EvaporateMixin extends AbstractEffect {
             if (BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, p)) {
 
                 world.setBlockAndUpdate(p, Blocks.CLAY.defaultBlockState());
+                ShapersFocus.tryPropagateBlockSpell(new BlockHitResult(
+                        new Vec3(p.getX(), p.getY(), p.getZ()), rayTraceResult.getDirection(), p, false
+                ), world, shooter, context, resolver);
                 ci.cancel();
             }
         }
