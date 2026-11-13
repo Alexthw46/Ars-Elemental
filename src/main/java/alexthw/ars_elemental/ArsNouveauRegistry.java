@@ -32,6 +32,7 @@ import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.documentation.DocAssets;
+import com.hollingsworth.arsnouveau.api.particle.configurations.properties.ModelProperty;
 import com.hollingsworth.arsnouveau.api.particle.configurations.properties.ParticleTypeProperty;
 import com.hollingsworth.arsnouveau.api.particle.timelines.IParticleTimelineType;
 import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
@@ -124,6 +125,19 @@ public class ArsNouveauRegistry {
 
     @Deprecated
     public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
+
+    public static final DocAssets.BlitInfo STYLE_ICON_ARROW = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/arrow_icon.png"), 14, 14);
+    public static final ModelProperty.Model ARROW_BODY = new ModelProperty.Model(ArsElemental.prefix("arrow"), STYLE_ICON_ARROW, true);
+
+    public static final DocAssets.BlitInfo STYLE_ICON_SWORD = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/sword_icon.png"), 14, 14);
+    public static final ModelProperty.Model SWORD_BODY = new ModelProperty.Model(ArsElemental.prefix("sword"), STYLE_ICON_SWORD, true);
+
+    public static final DocAssets.BlitInfo STYLE_ICON_SKULL = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/skull_icon.png"), 14, 14);
+    public static final ModelProperty.Model SKULL_BODY = new ModelProperty.Model(ArsElemental.prefix("skull"), STYLE_ICON_SKULL, true);
+
+    public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/cube_icon.png"), 14, 14);
+    public static final ModelProperty.Model DRAKE_BODY = new ModelProperty.Model(ArsElemental.prefix("ars_drake"), STYLE_ICON_DRAKE, true);
+
 
     public static void registerGlyphs() {
 
@@ -295,6 +309,12 @@ public class ArsNouveauRegistry {
 
         ParticleTypeProperty.addType(new ParticleTypeProperty.ParticleData(ModParticles.SPARK_2.get(), true));
         ParticleTypeProperty.addType(new ParticleTypeProperty.ParticleData(ModParticles.VENOM_2.get(), true));
+
+        ModelProperty.resources.add(ARROW_BODY);
+        ModelProperty.resources.add(SWORD_BODY);
+        ModelProperty.resources.add(SKULL_BODY);
+        //ModelProperty.resources.add(DRAKE_BODY);
+
     }
 
 
