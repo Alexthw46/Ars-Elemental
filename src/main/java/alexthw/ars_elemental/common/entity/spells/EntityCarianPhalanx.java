@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,9 +40,8 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
     private static final double FORMATION_HEIGHT = 0.8;   // Height above player's head
     private static final double FORMATION_SPREAD = 1.2;   // Horizontal spread
     private static final double FORMATION_ARC_DROP = 0.8; // How much sides drop (increased)
-    private final int detectionRange = 12; // Range to detect enemies
+    private static final int detectionRange = 12; // Range to detect enemies
     public int extendTimes;
-    private State state = State.ORBITING;
     private LivingEntity target;
     private List<Predicate<LivingEntity>> ignore;
 
@@ -56,6 +56,10 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
     @Override
     public @NotNull EntityType<?> getType() {
         return ModEntities.PHALANX_PROJ.get();
+    }
+
+    public State getState() {
+        return getEntityData().get(IS_LAUNCHED) ? State.LAUNCHED : State.ORBITING;
     }
 
     @Override
@@ -102,9 +106,6 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
 
     private void setLaunched(boolean launched) {
         entityData.set(IS_LAUNCHED, launched);
-        if (launched) {
-            state = State.LAUNCHED;
-        }
     }
 
     @Override
@@ -118,20 +119,41 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
         }
 
         // Only check for targets while orbiting
-        if (state == State.ORBITING && tickCount % 20 == getIndex() * 2) {
+        if (getState() == State.ORBITING) {
             // update rotation
-            this.setYRot(-getOwner().getYRot());
-            this.setXRot(-20.0f); // Slight downward
+
+            float targetRot = -getOwner().getYRot();
+            this.setYRot(Mth.rotLerp(0.25F, this.getYRot(), targetRot));
+            this.setXRot(Mth.rotLerp(0.25F, this.getXRot(), -10));
             this.yRotO = this.getYRot();
             this.xRotO = this.getXRot();
             if (level.isClientSide()) return;
-            checkForTargets();
-            // If the age is more than half the max and is still orbiting, launch it anyway
-            if (this.age > this.getExpirationTime() / 2 && target == null) {
-                setLaunched(true);
-                var shooter = getOwner();
-                shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, 0.5f, 0.8f);
-                MethodCarianPhalanx.onPhalanxLaunched(this);
+            if (tickCount % 20 == getIndex() * 2) {
+                checkForTargets();
+                // If the age is more than half the max and is still orbiting, launch it anyway
+                if (this.age > this.getExpirationTime() / 2 && target == null) {
+                    setLaunched(true);
+                    var shooter = getOwner();
+                    shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, 0.5f, 0.8f);
+                    MethodCarianPhalanx.onPhalanxLaunched(this);
+                }
+            }
+        } else if (target != null) {
+            // update rotation to aim at the target
+            Vec3 velocity = this.getDeltaMovement();
+
+            if (velocity.lengthSqr() > 0.0001) {
+                float targetYaw = (float) (Mth.atan2(velocity.z, velocity.x) * (180F / Math.PI)) - 90.0F;
+                float targetPitch = (float) -(Mth.atan2(
+                        velocity.y,
+                        Math.sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
+                ) * (180F / Math.PI));
+
+                this.setYRot(Mth.rotLerp(0.25F, this.getYRot(), -targetYaw));
+                this.setXRot(Mth.rotLerp(0.25F, this.getXRot(), targetPitch - 10));
+
+                this.yRotO = this.getYRot();
+                this.xRotO = this.getXRot();
             }
         }
 
@@ -163,14 +185,13 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
         // Set initial velocity towards target
         Vec3 direction = target.position().subtract(this.position()).normalize();
         this.setDeltaMovement(direction.scale(0.5));
-
         // Unregister from the tracking map since we're no longer orbiting
         MethodCarianPhalanx.onPhalanxLaunched(this);
     }
 
     @Override
     public Vec3 getNextHitPosition() {
-        if (state == State.LAUNCHED) {
+        if (getState() == State.LAUNCHED) {
             // Use parent's default ray tracing for launched state
             return super.getNextHitPosition();
         } else {
@@ -187,19 +208,20 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
 
     @Override
     public void tickNextPosition() {
-        if (level.isClientSide()) return;
         if (!this.isRemoved()) {
-            if (state == State.ORBITING) {
-                // Move to formation position with smooth interpolation
-                Vec3 targetPos = getFormationPosition();
-                Vec3 currentPos = this.position();
+            if (getState() == State.ORBITING) {
+                if (level.isClientSide() || this.age % 10 == 0) {
+                    // Move to formation position with smooth interpolation
+                    Vec3 targetPos = getFormationPosition();
+                    Vec3 currentPos = this.position();
 
-                // Smooth movement towards target position
-                double lerpSpeed = 0.5; // How quickly it follows (0.0 to 1.0)
-                Vec3 newPos = currentPos.lerp(targetPos, lerpSpeed);
+                    // Smooth movement towards target position
+                    double lerpSpeed = 0.5; // How quickly it follows (0.0 to 1.0)
+                    Vec3 newPos = level.isClientSide() ? currentPos.lerp(targetPos, lerpSpeed) : targetPos;
 
-                this.setPos(newPos.x, newPos.y, newPos.z);
-            } else if (state == State.LAUNCHED) {
+                    this.setPos(newPos.x, newPos.y, newPos.z);
+                }
+            } else if (getState() == State.LAUNCHED) {
                 // Home in on target
                 if (target != null && target.isAlive() && target.distanceToSqr(this) < 50 * 50) {
                     homeTo(target.blockPosition());
@@ -355,7 +377,7 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
 
     @Override
     public int getExpirationTime() {
-        return 60 * 20 + 30 * 20 * extendTimes;
+        return 60 * 20 + 10 * 20 * extendTimes;
     }
 
     @Override
@@ -424,7 +446,7 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
     }
 
     // State tracking
-    private enum State {
+    public enum State {
         ORBITING,
         LAUNCHED
     }

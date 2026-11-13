@@ -127,7 +127,15 @@ public class ModEntities {
         VHEX_SUMMON = registerEntity("summon_vhex", 0.4F, 0.8F, AllyVhexEntity::new, MobCategory.MONSTER);
         LINGER_MAGNET = addEntity("linger_magnet", 0.5F, 0.5F, true, true, EntityMagnetSpell::new, MobCategory.MISC);
         LERP_PROJECTILE = addEntity("lerp", 0.5F, 0.5F, true, true, EntityLerpedProjectile::new, MobCategory.MISC);
-        PHALANX_PROJ = addEntity("phalanx_projectile", 0.5f, 0.5f, true, true, EntityCarianPhalanx::new, MobCategory.MISC);
+        PHALANX_PROJ = ENTITIES.register("phalanx_projectile", () -> EntityType.Builder.<EntityCarianPhalanx>of(EntityCarianPhalanx::new, MobCategory.MISC)
+                .setTrackingRange(16)
+                .noSave()
+                .setTrackingRange(20)
+                .fireImmune()
+                .setShouldReceiveVelocityUpdates(true)
+                .sized(0.5F, 0.5F)
+                .build(MODID + ":" + "phalanx_projectile"));
+
         WATER_JET_MARKER = addEntity("water_jet", 0.5f, 0.5f, true, true, EntityWaterJet::new, MobCategory.MISC);
         FLASH_LIGHTNING = addEntity("flash_lightning", 0.5F, 0.5F, true, true, FlashLightning::new, MobCategory.MISC);
         GEYSER = addEntity("geyser", 1, 1, true, true, EntityGeyser::new, MobCategory.MISC);

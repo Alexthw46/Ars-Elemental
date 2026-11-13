@@ -138,11 +138,13 @@ public class MethodHomingProjectile extends ElementalAbstractForm {
 
     public static List<Predicate<LivingEntity>> basicIgnores(LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         List<Predicate<LivingEntity>> ignore = new ArrayList<>();
+        ignore.add(entity -> entity instanceof Player p && (p.isSpectator() || p.isCreative()));
         ignore.add((entity -> !entity.isAlive()));
         ignore.add((entity -> entity == shooter));
         ignore.add(entity -> entity instanceof FamiliarEntity || entity instanceof FlashjackEntity);
         ignore.add(entity -> entity.hasEffect(MobEffects.INVISIBILITY));
-        ignore.add(shooter::isAlliedTo);
+        if (shooter.getTeam() != null)
+            ignore.add(shooter::isAlliedTo);
         if (!spellStats.hasBuff(AugmentSensitive.INSTANCE)) {
             ignore.add(entity -> entity instanceof Player);
         }

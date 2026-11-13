@@ -6,7 +6,6 @@ import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -151,17 +150,7 @@ public class MethodCarianPhalanx extends ElementalAbstractForm {
                 .withSpell(remainingSpell);
 
         // Setup ignore predicates for targeting
-        List<Predicate<LivingEntity>> ignorePredicates = new ArrayList<>();
-
-        // Ignore the caster
-        ignorePredicates.add(e -> e.equals(caster));
-
-        // Ignore caster's allies if they're on a team
-        if (caster.getTeam() != null) {
-            ignorePredicates.add(e -> e.isAlliedTo(caster));
-        }
-
-        ignorePredicates.add(e -> e instanceof Animal);
+        List<Predicate<LivingEntity>> ignorePredicates = MethodHomingProjectile.basicIgnores(caster, stats, context, resolver);
 
         // Spawn each phalanx projectile
         List<EntityCarianPhalanx> newPhalanxList = new ArrayList<>();
