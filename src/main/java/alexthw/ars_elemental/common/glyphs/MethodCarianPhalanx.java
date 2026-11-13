@@ -220,9 +220,8 @@ public class MethodCarianPhalanx extends ElementalAbstractForm {
 
     @Override
     public String getBookDescription() {
-        return "Summons floating magical projectiles that orbit around you. When an enemy gets close, they automatically launch and home in on the target. " +
-                "You can have up to " + MAX_PHALANX_PER_PLAYER + " projectiles orbiting at once - casting more will dismiss the oldest ones. " +
-                "Additional projectiles, their speed, radius, duration, and homing capability can be augmented. ";
+        return "Summons floating magical projectiles that orbit around you. When an enemy gets close or their timer run out, they automatically launch and home in on the target. " +
+                "You can have up to " + MAX_PHALANX_PER_PLAYER + " projectiles orbiting at once - casting more will dismiss the oldest ones. ";
     }
 
     @Override
