@@ -24,6 +24,12 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
     private static final BlockState GILDED_BLACKSTONE = Blocks.GILDED_BLACKSTONE.defaultBlockState();
     private static final BlockState LAVA = Blocks.LAVA.defaultBlockState();
 
+    private static boolean isTooFar(BlockPos origin, BlockPos pos) {
+        int dx = Math.abs(pos.getX() - origin.getX());
+        int dz = Math.abs(pos.getZ() - origin.getZ());
+        return dx > 15 || dz > 15;
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         LevelAccessor level = context.level();
@@ -36,7 +42,7 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
         }
 
         // Generate a base mound
-        int baseRadius = random.nextInt(3) + 3; // Radius (3-5 blocks)
+        int baseRadius = random.nextInt(5) + 3; // Radius (3-7 blocks)
         int height = baseRadius / 2 + random.nextInt(3) + 2;     // Height (4-6 blocks)
 
         // Ensure no floating edges by checking and filling below the entire base layer with organic tapering
@@ -136,12 +142,6 @@ public class BlackstoneFormation extends Feature<NoneFeatureConfiguration> {
             }
         }
         return true;
-    }
-
-    private static boolean isTooFar(BlockPos origin, BlockPos pos) {
-        int dx = Math.abs(pos.getX() - origin.getX());
-        int dz = Math.abs(pos.getZ() - origin.getZ());
-        return dx > 32 || dz > 32;
     }
 
 }

@@ -209,13 +209,13 @@ public class ModWorldgen {
 
         context.register(CAVE_CARVER, WorldCarver.CAVE.configured(
                 new CaveCarverConfiguration(
-                        0.20F,
-                        UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(180)),
+                        0.12F,
+                        UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(80)),
                         UniformFloat.of(2.F, 5.0F),
                         VerticalAnchor.aboveBottom(8),
                         CarverDebugSettings.of(false, BlockRegistry.ARCHWOOD_BUTTON.defaultBlockState()),
                         holdergetter.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
-                        UniformFloat.of(2.0F, 6F),
+                        UniformFloat.of(2.0F, 5F),
                         UniformFloat.of(2F, 6F),
                         UniformFloat.of(-1.0F, -0.4F)
                 ))
