@@ -8,8 +8,10 @@ import alexthw.ars_elemental.common.items.CurioHolder;
 import alexthw.ars_elemental.recipe.ConfigCondition;
 import alexthw.ars_elemental.recipe.HeadCutRecipe;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
+import alexthw.ars_elemental.recipe.SetHornRecipe;
 import alexthw.ars_elemental.util.CompatUtils;
 import alexthw.ars_elemental.util.SupplierBlockStateProviderAE;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.ExtendableShapelessSerializer;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
@@ -122,6 +124,8 @@ public class ModRegistry {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<NetheriteUpgradeRecipe>> NETHERITE_UP_SERIALIZER;
     public static final DeferredHolder<RecipeType<?>, RecipeType<HeadCutRecipe>> HEAD_CUT;
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeadCutRecipe>> HEAD_CUT_SERIALIZER;
+    public static final DeferredHolder<RecipeType<?>, RecipeType<SetHornRecipe>> SET_HORN;
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<SetHornRecipe>> SET_HORN_SERIALIZER;
     public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> AE_CONFIG_CONDITION = CONDITION_CODECS.register("ae_config", () -> ConfigCondition.CODEC);
 
     static {
@@ -146,6 +150,8 @@ public class ModRegistry {
 
         HEAD_CUT = RECIPES.register("head_cut", () -> RecipeType.simple(prefix("head_cut")));
         HEAD_CUT_SERIALIZER = SERIALIZERS.register("head_cut", HeadCutRecipe.Serializer::new);
+        SET_HORN = RECIPES.register("set_horn", () -> RecipeType.simple(prefix("set_horn")));
+        SET_HORN_SERIALIZER = SERIALIZERS.register("set_horn", () -> ExtendableShapelessSerializer.create(SetHornRecipe::new));
         NETHERITE_UP = RECIPES.register("netherite_upgrade", () -> RecipeType.simple(prefix("netherite_upgrade")));
         NETHERITE_UP_SERIALIZER = SERIALIZERS.register("netherite_upgrade", NetheriteUpgradeRecipe.Serializer::new);
 

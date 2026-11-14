@@ -12,9 +12,16 @@ import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import com.hollingsworth.arsnouveau.setup.config.Config;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -26,6 +33,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.Instrument;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -45,10 +53,13 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import static net.minecraft.tags.InstrumentTags.GOAT_HORNS;
 
 public class SpellHorn extends Item implements GeoItem, ISpellModifierItem, ICasterTool {
 
@@ -76,6 +87,12 @@ public class SpellHorn extends Item implements GeoItem, ISpellModifierItem, ICas
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
+    private static void play(Level level, Player player, Instrument instrument, float volume) {
+        SoundEvent soundevent = instrument.soundEvent().value();
+        level.playSound(player, player, soundevent, SoundSource.RECORDS, volume, 1.0F);
+        level.gameEvent(GameEvent.INSTRUMENT_PLAY, player.position(), GameEvent.Context.of(player));
+    }
+
     @Override
     public void releaseUsing(@NotNull ItemStack stack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int remainingTicks) {
 
@@ -99,7 +116,13 @@ public class SpellHorn extends Item implements GeoItem, ISpellModifierItem, ICas
                 player.addEffect(new MobEffectInstance(ModPotions.SPELL_DAMAGE_EFFECT, getMaxUseDuration() * 4));
             }
             //play the sound effect and cooldown the item
-            play(pLevel, player, aoeMult * 16);
+            Optional<? extends Holder<Instrument>> optional = this.getInstrument(stack);
+            if (optional.isPresent()) {
+                Instrument instrument = optional.get().value();
+                play(pLevel, player, instrument, aoeMult * 16);
+            } else {
+                play(pLevel, player, aoeMult * 16);
+            }
             player.getCooldowns().addCooldown(this, 200);
         }
 
@@ -114,6 +137,16 @@ public class SpellHorn extends Item implements GeoItem, ISpellModifierItem, ICas
         SoundEvent soundevent = SoundEvents.RAID_HORN.value();
         level.playSound(player, player, soundevent, SoundSource.RECORDS, volume, 1.0F);
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, player.position(), GameEvent.Context.of(player));
+    }
+
+    private Optional<Holder<Instrument>> getInstrument(ItemStack stack) {
+        Holder<Instrument> holder = stack.get(DataComponents.INSTRUMENT);
+        if (holder != null) {
+            return Optional.of(holder);
+        } else {
+            Iterator<Holder<Instrument>> iterator = BuiltInRegistries.INSTRUMENT.getTagOrEmpty(GOAT_HORNS).iterator();
+            return iterator.hasNext() ? Optional.of(iterator.next()) : Optional.empty();
+        }
     }
 
     @Override
@@ -176,6 +209,11 @@ public class SpellHorn extends Item implements GeoItem, ISpellModifierItem, ICas
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         if (Screen.hasShiftDown() || !Config.GLYPH_TOOLTIPS.get())
             getInformation(stack, context, tooltip, flagIn);
+        Optional<ResourceKey<Instrument>> optional = this.getInstrument(stack).flatMap(Holder::unwrapKey);
+        if (optional.isPresent()) {
+            MutableComponent mutablecomponent = Component.translatable(Util.makeDescriptionId("instrument", optional.get().location()));
+            tooltip.add(mutablecomponent.withStyle(ChatFormatting.GRAY));
+        }
         super.appendHoverText(stack, context, tooltip, flagIn);
     }
 

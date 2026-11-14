@@ -2,6 +2,7 @@ package alexthw.ars_elemental.recipe.jei;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.recipe.NetheriteUpgradeRecipe;
+import alexthw.ars_elemental.recipe.SetHornRecipe;
 import alexthw.ars_elemental.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import mezz.jei.api.IModPlugin;
@@ -10,6 +11,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +38,11 @@ public class JeiElementalPlugin implements IModPlugin {
         registry.addRecipeCategories(
                 new SpellBookUpgradeRecipeCategory(registry.getJeiHelpers().getGuiHelper())
         );
+    }
+
+    @Override
+    public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
+        registration.getCraftingCategory().addExtension(SetHornRecipe.class, new SetHornRecipeCategory());
     }
 
     @Override
