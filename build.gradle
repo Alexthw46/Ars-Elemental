@@ -156,14 +156,14 @@ dependencies {
     implementation("com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}") { transitive = false }
     jarJar(implementation("com.alexthw.sauce:sauce-${minecraft_version}") {
         version {
-            strictly '[0.0.61,)'
+            strictly '[0.0.62,)'
             prefer sauce_version
         }
     }) { transitive = false }
 
     // only need the compileOnly, the runtime dependency is handled by Ars Nouveau
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
+    compileOnly 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
@@ -181,6 +181,10 @@ dependencies {
     // localRuntime "curse.maven:irisshaders-455508:6661598"
     localRuntime "curse.maven:sodium-394468:6382651"
     // localRuntime "curse.maven:neocontinuity-1377279:7178602"
+
+
+    // Lithostiched tests
+    localRuntime "curse.maven:lithostitched-936015:8944659"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

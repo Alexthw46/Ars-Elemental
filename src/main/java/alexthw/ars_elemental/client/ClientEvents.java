@@ -10,6 +10,7 @@ import alexthw.ars_elemental.client.mermaid.MermaidRenderer;
 import alexthw.ars_elemental.client.particle.ShockwaveParticle;
 import alexthw.ars_elemental.client.particle.SparkParticle;
 import alexthw.ars_elemental.client.particle.VenomParticle;
+import alexthw.ars_elemental.client.phalanx.StyledPhalanxRender;
 import alexthw.ars_elemental.client.summons.DireWolfRenderer;
 import alexthw.ars_elemental.common.CasterHolderContainer;
 import alexthw.ars_elemental.common.CurioHolderContainer;
@@ -36,7 +37,6 @@ import com.hollingsworth.arsnouveau.api.item.inv.SlotReference;
 import com.hollingsworth.arsnouveau.client.particle.WrappedProvider;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSpell;
 import com.hollingsworth.arsnouveau.client.renderer.entity.RenderSummonSkeleton;
-import com.hollingsworth.arsnouveau.client.renderer.entity.StyledSpellRender;
 import com.hollingsworth.arsnouveau.client.renderer.entity.WealdWalkerModel;
 import com.hollingsworth.arsnouveau.client.renderer.tile.GenericTileRenderer;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
@@ -280,7 +280,7 @@ public class ClientEvents {
             }
         });
 
-        event.registerEntityRenderer(ModEntities.PHALANX_PROJ.get(), StyledSpellRender::new);
+        event.registerEntityRenderer(ModEntities.PHALANX_PROJ.get(), StyledPhalanxRender::new);
 
     }
 

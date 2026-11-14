@@ -1,8 +1,17 @@
 package alexthw.ars_elemental.common.entity.spells;
 
+import alexthw.ars_elemental.ArsNouveauRegistry;
+import alexthw.ars_elemental.client.phalanx.CPStyledProjectileModel;
 import alexthw.ars_elemental.common.glyphs.MethodCarianPhalanx;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.event.SpellProjectileHitEvent;
+import com.hollingsworth.arsnouveau.api.particle.ParticleEmitter;
+import com.hollingsworth.arsnouveau.api.particle.configurations.properties.ModelProperty;
+import com.hollingsworth.arsnouveau.api.particle.timelines.ProjectileTimeline;
+import com.hollingsworth.arsnouveau.api.particle.timelines.TimelineEntryData;
+import com.hollingsworth.arsnouveau.api.particle.timelines.TimelineMap;
+import com.hollingsworth.arsnouveau.api.registry.ParticlePropertyRegistry;
+import com.hollingsworth.arsnouveau.client.ClientInfo;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.setup.registry.DataSerializers;
 import net.minecraft.core.BlockPos;
@@ -22,6 +31,9 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
 
 import java.util.Comparator;
 import java.util.List;
@@ -120,15 +132,15 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
 
         // Only check for targets while orbiting
         if (getState() == State.ORBITING) {
-            // update rotation
 
+            // update rotation
             float targetRot = -getOwner().getYRot();
             this.setYRot(Mth.rotLerp(0.25F, this.getYRot(), targetRot));
             this.setXRot(Mth.rotLerp(0.25F, this.getXRot(), -10));
             this.yRotO = this.getYRot();
             this.xRotO = this.getXRot();
             if (level.isClientSide()) return;
-            if (tickCount % 20 == getIndex() * 2) {
+            if (age >= 20 && age % 20 == getIndex() * 2) {
                 checkForTargets();
                 // If the age is more than half the max and is still orbiting, launch it anyway
                 if (this.age > this.getExpirationTime() / 2 && target == null) {
@@ -449,5 +461,37 @@ public class EntityCarianPhalanx extends EntityProjectileSpell {
     public enum State {
         ORBITING,
         LAUNCHED
+    }
+
+    public void buildEmitters() {
+        TimelineMap timelineMap = this.resolver().spell.particleTimeline();
+        ProjectileTimeline projectileTimeline = timelineMap.get(ArsNouveauRegistry.PHALANX_TIMELINE.get());
+        TimelineEntryData trailConfig = projectileTimeline.trailEffect;
+        TimelineEntryData resolveConfig = projectileTimeline.onResolvingEffect;
+        TimelineEntryData spawnConfig = projectileTimeline.onSpawnEffect;
+        TimelineEntryData flairConfig = projectileTimeline.flairEffect;
+
+        this.tickEmitter = new ParticleEmitter(() -> this.getPosition(ClientInfo.partialTicks), this::getRotationVector, trailConfig);
+        this.resolveEmitter = new ParticleEmitter(() -> this.getPosition(ClientInfo.partialTicks), this::getRotationVector, resolveConfig);
+        this.onSpawnEmitter = new ParticleEmitter(() -> this.getPosition(ClientInfo.partialTicks), this::getRotationVector, spawnConfig);
+        this.flairEmitter = new ParticleEmitter(() -> this.getPosition(ClientInfo.partialTicks), this::getRotationVector, flairConfig);
+
+        Vec3 center = this.getDimensions(getPose()).makeBoundingBox(0, 0, 0).getCenter();
+        this.tickEmitter.setPositionOffset(center);
+        this.resolveEmitter.setPositionOffset(center);
+        this.onSpawnEmitter.setPositionOffset(center);
+        this.flairEmitter.setPositionOffset(center);
+
+        this.castSound = projectileTimeline.castSound.sound;
+        this.resolveSound = projectileTimeline.resolveSound.sound;
+    }
+
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        ProjectileTimeline timeline = this.resolver().spell.particleTimeline().get(ArsNouveauRegistry.PHALANX_TIMELINE.get());
+        ModelProperty modelProperty = timeline.trailEffect.motion().propertyMap.get(ParticlePropertyRegistry.MODEL_PROPERTY.get());
+        if (CPStyledProjectileModel.ModelToAnim.getOrDefault(modelProperty.selectedResource, null) != null)
+            controllers.add(new AnimationController<>(this, "loopController", 0, (event) -> event.setAndContinue(RawAnimation.begin().thenPlay("run"))));
     }
 }

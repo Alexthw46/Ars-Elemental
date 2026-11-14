@@ -1,0 +1,20 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "run": {
+      "loop": true,
+      "animation_length": 1,
+      "bones": {
+        "sword": {
+          "rotation": {
+            "vector": [
+              "-query.anim_time * 360",
+              0,
+              0
+            ]
+          }
+        }
+      }
+    }
+  }
+}

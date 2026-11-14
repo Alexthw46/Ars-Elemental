@@ -1,5 +1,6 @@
 package alexthw.ars_elemental;
 
+import alexthw.ars_elemental.client.phalanx.CPStyledProjectileModel;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoFamiliar;
 import alexthw.ars_elemental.common.entity.familiars.FirenandoHolder;
 import alexthw.ars_elemental.common.entity.familiars.FlashjackFamiliar;
@@ -36,6 +37,7 @@ import com.hollingsworth.arsnouveau.api.particle.configurations.properties.Model
 import com.hollingsworth.arsnouveau.api.particle.configurations.properties.ParticleTypeProperty;
 import com.hollingsworth.arsnouveau.api.particle.timelines.IParticleTimelineType;
 import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
+import com.hollingsworth.arsnouveau.api.particle.timelines.ProjectileTimeline;
 import com.hollingsworth.arsnouveau.api.particle.timelines.SimpleParticleTimelineType;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.registry.FamiliarRegistry;
@@ -116,7 +118,7 @@ public class ArsNouveauRegistry {
 
 
     //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
-    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> HOMING_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodHomingProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
+    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> PHALANX_TIMELINE = TIMELINE_DF.register("phalanx", () -> new SimpleParticleTimelineType<>(MethodCarianPhalanx.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
     public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<LingerTimeline>> GRAVITY_TIMELINE = TIMELINE_DF.register("gravity", () -> new SimpleParticleTimelineType<>(EffectGravity.INSTANCE, LingerTimeline.CODEC, LingerTimeline.STREAM_CODEC, LingerTimeline::new));
 
     public static void registerRitual(AbstractRitual ritual) {
@@ -135,7 +137,7 @@ public class ArsNouveauRegistry {
     public static final DocAssets.BlitInfo STYLE_ICON_SKULL = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/skull_icon.png"), 14, 14);
     public static final ModelProperty.Model SKULL_BODY = new ModelProperty.Model(ArsElemental.prefix("skull"), STYLE_ICON_SKULL, true);
 
-    public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/cube_icon.png"), 14, 14);
+    public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/cube_icon.png"), 14, 14);
     public static final ModelProperty.Model DRAKE_BODY = new ModelProperty.Model(ArsElemental.prefix("ars_drake"), STYLE_ICON_DRAKE, true);
 
 
@@ -175,6 +177,7 @@ public class ArsNouveauRegistry {
         //methods
         register(MethodHomingProjectile.INSTANCE);
         register(MethodArcProjectile.INSTANCE);
+        register(MethodCarianPhalanx.INSTANCE);
 
         //propagators
         register(PropagatorHoming.INSTANCE);
@@ -198,7 +201,7 @@ public class ArsNouveauRegistry {
         register(EffectNullify.INSTANCE);
 
         if (!isProduction()) {
-            register(MethodCarianPhalanx.INSTANCE);
+
         }
     }
 
@@ -314,6 +317,10 @@ public class ArsNouveauRegistry {
         ModelProperty.resources.add(SWORD_BODY);
         ModelProperty.resources.add(SKULL_BODY);
         //ModelProperty.resources.add(DRAKE_BODY);
+
+        CPStyledProjectileModel.ModelToAnim.put(SWORD_BODY, ArsElemental.prefix("animations/sword.animations.json"));
+        CPStyledProjectileModel.ModelToAnim.put(SKULL_BODY, ArsElemental.prefix("animations/skull.animations.json"));
+        CPStyledProjectileModel.ModelToAnim.put(DRAKE_BODY, ArsElemental.prefix("animations/ars_drake.animations.json"));
 
     }
 
