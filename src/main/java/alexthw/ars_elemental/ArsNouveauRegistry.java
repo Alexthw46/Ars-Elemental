@@ -140,6 +140,8 @@ public class ArsNouveauRegistry {
     public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/cube_icon.png"), 14, 14);
     public static final ModelProperty.Model DRAKE_BODY = new ModelProperty.Model(ArsElemental.prefix("ars_drake"), STYLE_ICON_DRAKE, true);
 
+    public static final DocAssets.BlitInfo STYLE_ICON_GEAR = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/gear_icon.png"), 14, 14);
+    public static final ModelProperty.Model GEAR_BODY = new ModelProperty.Model(ArsElemental.prefix("gear"), STYLE_ICON_GEAR, true);
 
     public static void registerGlyphs() {
 
@@ -317,10 +319,12 @@ public class ArsNouveauRegistry {
         ModelProperty.resources.add(SWORD_BODY);
         ModelProperty.resources.add(SKULL_BODY);
         //ModelProperty.resources.add(DRAKE_BODY);
+        ModelProperty.resources.add(GEAR_BODY);
 
         CPStyledProjectileModel.ModelToAnim.put(SWORD_BODY, ArsElemental.prefix("animations/sword.animations.json"));
         CPStyledProjectileModel.ModelToAnim.put(SKULL_BODY, ArsElemental.prefix("animations/skull.animations.json"));
         CPStyledProjectileModel.ModelToAnim.put(DRAKE_BODY, ArsElemental.prefix("animations/ars_drake.animations.json"));
+        CPStyledProjectileModel.ModelToAnim.put(GEAR_BODY, ArsElemental.prefix("animations/gear.animations.json"));
 
     }
 
