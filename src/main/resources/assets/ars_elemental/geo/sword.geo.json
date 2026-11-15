@@ -6,7 +6,7 @@
         "identifier": "geometry.sword",
         "texture_width": 32,
         "texture_height": 32,
-        "visible_bounds_width": 3,
+        "visible_bounds_width": 2,
         "visible_bounds_height": 2.5,
         "visible_bounds_offset": [
           0,
@@ -21,11 +21,6 @@
             0.78298,
             4.62591,
             -0.00819
-          ],
-          "rotation": [
-            0,
-            90,
-            0
           ]
         },
         {

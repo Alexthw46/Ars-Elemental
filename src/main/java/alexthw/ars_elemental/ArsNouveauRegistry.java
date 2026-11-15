@@ -128,20 +128,32 @@ public class ArsNouveauRegistry {
     @Deprecated
     public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
 
-    public static final DocAssets.BlitInfo STYLE_ICON_ARROW = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/arrow_icon.png"), 14, 14);
-    public static final ModelProperty.Model ARROW_BODY = new ModelProperty.Model(ArsElemental.prefix("arrow"), STYLE_ICON_ARROW, true);
+    public static final ModelProperty.Model ARROW_BODY = createModel("arrow");
+    public static final ModelProperty.Model SWORD_BODY = createModel("sword");
+    public static final ModelProperty.Model SKULL_BODY = createModel("skull");
+    public static final ModelProperty.Model GEAR_BODY = createModel("gear");
+    public static final ModelProperty.Model HEART_BODY = createModel("heart");
+    public static final ModelProperty.Model GUST_BODY = createModel("gust");
+    public static final ModelProperty.Model ROCK_BODY = createModel("rock");
+    public static final ModelProperty.Model BOTTLE_BODY = createModel("potion_jar", false);
 
-    public static final DocAssets.BlitInfo STYLE_ICON_SWORD = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/sword_icon.png"), 14, 14);
-    public static final ModelProperty.Model SWORD_BODY = new ModelProperty.Model(ArsElemental.prefix("sword"), STYLE_ICON_SWORD, true);
-
-    public static final DocAssets.BlitInfo STYLE_ICON_SKULL = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/skull_icon.png"), 14, 14);
-    public static final ModelProperty.Model SKULL_BODY = new ModelProperty.Model(ArsElemental.prefix("skull"), STYLE_ICON_SKULL, true);
-
-    public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/cube_icon.png"), 14, 14);
+    public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/doc_spellstyle_icon_cube.png"), 14, 14);
     public static final ModelProperty.Model DRAKE_BODY = new ModelProperty.Model(ArsElemental.prefix("ars_drake"), STYLE_ICON_DRAKE, true);
 
-    public static final DocAssets.BlitInfo STYLE_ICON_GEAR = new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/gear_icon.png"), 14, 14);
-    public static final ModelProperty.Model GEAR_BODY = new ModelProperty.Model(ArsElemental.prefix("gear"), STYLE_ICON_GEAR, true);
+    private static ModelProperty.Model createModel(String name) {
+        return createModel(name, true);
+    }
+
+    private static ModelProperty.Model createModel(String name, boolean hasAnimation) {
+        var model = new ModelProperty.Model(
+                ArsElemental.prefix(name),
+                new DocAssets.BlitInfo(ArsElemental.prefix("textures/gui/" + name + "_icon.png"), 14, 14),
+                true
+        );
+        if (hasAnimation)
+            CPStyledProjectileModel.ModelToAnim.put(model, ArsElemental.prefix("animations/" + name + ".animations.json"));
+        return model;
+    }
 
     public static void registerGlyphs() {
 
@@ -318,13 +330,13 @@ public class ArsNouveauRegistry {
         ModelProperty.resources.add(ARROW_BODY);
         ModelProperty.resources.add(SWORD_BODY);
         ModelProperty.resources.add(SKULL_BODY);
-        //ModelProperty.resources.add(DRAKE_BODY);
+        ModelProperty.resources.add(DRAKE_BODY);
+        ModelProperty.resources.add(HEART_BODY);
         ModelProperty.resources.add(GEAR_BODY);
+        ModelProperty.resources.add(GUST_BODY);
+        ModelProperty.resources.add(BOTTLE_BODY);
 
-        CPStyledProjectileModel.ModelToAnim.put(SWORD_BODY, ArsElemental.prefix("animations/sword.animations.json"));
-        CPStyledProjectileModel.ModelToAnim.put(SKULL_BODY, ArsElemental.prefix("animations/skull.animations.json"));
         CPStyledProjectileModel.ModelToAnim.put(DRAKE_BODY, ArsElemental.prefix("animations/ars_drake.animations.json"));
-        CPStyledProjectileModel.ModelToAnim.put(GEAR_BODY, ArsElemental.prefix("animations/gear.animations.json"));
 
     }
 

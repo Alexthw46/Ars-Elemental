@@ -439,6 +439,12 @@ public class AELangDatagen extends LanguageProvider {
         add("ars_elemental.model.arrow", "Arrow");
         add("ars_elemental.model.skull", "Skull");
         add("ars_elemental.model.orb", "Orb");
+        add("ars_elemental.model.gear", "Gear");
+        add("ars_elemental.model.rock", "Rock");
+        add("ars_elemental.model.heart", "Heart");
+        add("ars_elemental.model.gust", "Gust");
+        add("ars_elemental.model.potion_jar", "Bottle");
+        add("ars_elemental.model.ars_drake", "Drake");
 
         // Flashjack dominion wand
         add("ars_elemental.flashjack.connect", "Flashjack connected to turret");
