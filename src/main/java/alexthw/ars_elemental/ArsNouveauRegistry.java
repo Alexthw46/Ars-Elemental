@@ -134,11 +134,9 @@ public class ArsNouveauRegistry {
     public static final ModelProperty.Model GEAR_BODY = createModel("gear");
     public static final ModelProperty.Model HEART_BODY = createModel("heart");
     public static final ModelProperty.Model GUST_BODY = createModel("gust");
-    public static final ModelProperty.Model ROCK_BODY = createModel("rock");
+    public static final ModelProperty.Model ORB_BODY = createModel("orb");
     public static final ModelProperty.Model BOTTLE_BODY = createModel("potion_jar", false);
-
-    public static final DocAssets.BlitInfo STYLE_ICON_DRAKE = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/doc_spellstyle_icon_cube.png"), 14, 14);
-    public static final ModelProperty.Model DRAKE_BODY = new ModelProperty.Model(ArsElemental.prefix("ars_drake"), STYLE_ICON_DRAKE, true);
+    public static final ModelProperty.Model DRAKE_BODY = createModel("ars_drake");
 
     private static ModelProperty.Model createModel(String name) {
         return createModel(name, true);
@@ -335,8 +333,7 @@ public class ArsNouveauRegistry {
         ModelProperty.resources.add(GEAR_BODY);
         ModelProperty.resources.add(GUST_BODY);
         ModelProperty.resources.add(BOTTLE_BODY);
-
-        CPStyledProjectileModel.ModelToAnim.put(DRAKE_BODY, ArsElemental.prefix("animations/ars_drake.animations.json"));
+        ModelProperty.resources.add(ORB_BODY);
 
     }
 
