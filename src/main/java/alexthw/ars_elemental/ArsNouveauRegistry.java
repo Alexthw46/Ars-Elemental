@@ -25,6 +25,7 @@ import alexthw.ars_elemental.common.rituals.SquirrelRitual;
 import alexthw.ars_elemental.common.rituals.TeslaRitual;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestRitual;
 import alexthw.ars_elemental.common.rituals.forest.ArchwoodForestationRitual;
+import alexthw.ars_elemental.common.rituals.forest.ArchwoodVariantsRegistry;
 import alexthw.ars_elemental.registry.ModEntities;
 import alexthw.ars_elemental.registry.ModItems;
 import alexthw.ars_elemental.registry.ModParticles;
@@ -117,7 +118,7 @@ public class ArsNouveauRegistry {
     }
 
 
-    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.register("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
+    //    public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> ARC_PROJECTILE_TIMELINE = TIMELINE_DF.init("projectile", () -> new SimpleParticleTimelineType<>(MethodArcProjectile.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
     public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<ProjectileTimeline>> PHALANX_TIMELINE = TIMELINE_DF.register("phalanx", () -> new SimpleParticleTimelineType<>(MethodCarianPhalanx.INSTANCE, ProjectileTimeline.CODEC, ProjectileTimeline.STREAM_CODEC, ProjectileTimeline::new));
     public static final DeferredHolder<IParticleTimelineType<?>, IParticleTimelineType<LingerTimeline>> GRAVITY_TIMELINE = TIMELINE_DF.register("gravity", () -> new SimpleParticleTimelineType<>(EffectGravity.INSTANCE, LingerTimeline.CODEC, LingerTimeline.STREAM_CODEC, LingerTimeline::new));
 
@@ -212,6 +213,8 @@ public class ArsNouveauRegistry {
         // the bullshit one
         register(EffectNullify.INSTANCE);
 
+        // For testing-only glyphs
+        //noinspection StatementWithEmptyBody
         if (!isProduction()) {
 
         }
@@ -294,7 +297,7 @@ public class ArsNouveauRegistry {
 
     public static void postInit() {
         registerCasters();
-
+        ArchwoodVariantsRegistry.init();
         //Schools
         addSchool(EffectHeal.INSTANCE, SpellSchools.NECROMANCY);
         addSchool(EffectSummonVex.INSTANCE, SpellSchools.NECROMANCY);

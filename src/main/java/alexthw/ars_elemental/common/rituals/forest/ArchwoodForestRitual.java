@@ -1,11 +1,8 @@
 package alexthw.ars_elemental.common.rituals.forest;
 
-import alexthw.ars_elemental.registry.ModItems;
-import alexthw.ars_elemental.world.ModWorldgen;
 import com.hollingsworth.arsnouveau.api.ritual.ConjureBiomeRitual;
 import com.hollingsworth.arsnouveau.common.block.ArchfruitPod;
 import com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry;
-import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -37,19 +34,10 @@ public class ArchwoodForestRitual extends ConjureBiomeRitual {
         super.onStart(player);
         // get the pod, if consumed
         Optional<Block> pod = getConsumedItems().stream().map(ItemStack::getItem).filter(item -> item instanceof BlockItem bi && bi.getBlock() instanceof ArchfruitPod).map(item -> ((BlockItem) item).getBlock()).findFirst();
-        if (pod.isPresent()) {
-            if (pod.get() == BlockRegistry.BOMBEGRANTE_POD.get()) {
-                biome = ModWorldgen.Biomes.BLAZING_FOREST_KEY;
-            } else if (pod.get() == BlockRegistry.FROSTAYA_POD.get()) {
-                biome = ModWorldgen.Biomes.CASCADING_FOREST_KEY;
-            } else if (pod.get() == BlockRegistry.MENDOSTEEN_POD.get()) {
-                biome = ModWorldgen.Biomes.FLOURISHING_FOREST_KEY;
-            } else if (pod.get() == BlockRegistry.BASTION_POD.get()) {
-                biome = ModWorldgen.Biomes.VEXING_CAVES_KEY;
-            } else if (pod.get() == ModItems.FLASHING_POD.get()) {
-                biome = ModWorldgen.Biomes.FLASHING_FOREST_KEY;
-            }
-        }
+        pod.ifPresent(block -> {
+            var variant = ArchwoodVariantsRegistry.getByPod(block.asItem());
+            biome = (variant != null && variant.biome().get() != null) ? variant.biome().get() : BiomeRegistry.ARCHWOOD_FOREST;
+        });
     }
 
     @Override
