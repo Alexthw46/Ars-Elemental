@@ -16,15 +16,9 @@ import alexthw.ars_elemental.common.entity.spikes.DripstoneSpikeEntity;
 import alexthw.ars_elemental.common.entity.spikes.EnchantedDripstoneEntity;
 import alexthw.ars_elemental.common.entity.spikes.IceSpikeEntity;
 import alexthw.ars_elemental.common.entity.summon.*;
-import alexthw.ars_elemental.common.glyphs.EffectSpark;
 import alexthw.ars_elemental.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
-import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.WealdWalker;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectDelay;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectWindshear;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
@@ -109,8 +103,8 @@ public class ModEntities {
         FLASHING_WEALD_WALKER = registerEntity("flashing_weald_walker", 1.4F, 3F,
                 (EntityType<WealdWalker> type, Level world) -> {
                     WealdWalker walker = new WealdWalker(type, world);
-                    walker.spell = new Spell(MethodProjectile.INSTANCE, EffectSpark.INSTANCE, EffectLaunch.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE);
-                    walker.color = new ParticleColor(200, 150, 15);
+                    walker.spell = Spell.fromBinaryBase64("H4sIAAAAAAAA/+1XUW/aMBD+L37OpgSVaeN1Q9pLtar0bZoi41yCV8eObKc0Q/nvOychIQlMK4gWifKCfbbP9933cT42xKhcRmS2KT2igfEMyOwnodqEUuVPQPNZIopsFWZa/QZmuQDiVcsgIAVpqWg2mIzqx2atf1TQXLLVS5ciELTYu7LmMgrNCqgmvzyC11rOBDzwFASXGP6md6b2g0YlHzh7nMcxwnDzVFmupBshtuyWZnUSbOFS0HMheLKypOzu+pG5o2Z7FtAKZnixyQBcYklxy+WinvgffQ/n9LmbBx55/jPYgYbdLWU/C9sowjrUTZeCcegS1mEi1BoTafLl3cFgmRJK7/r6ujXwaOCSIXJLpUWXuGEynXokab6XZBa4FHJpv3FDl8IBiKkwUJYDEBFIw21FTDucIHRNI54bBxsTg5paywbV4u77/H5Oyv0UtTjLSsdGiScuk2PIXubanI3saZ/sD62pt+la+J726PbrT3DzxQ+CT8HkdPoXTWlra1w3GKG0kGZgrC7CmKZcFKQ8cFVdT4YUddURnceCcn2M9qTC+vVS6V2oPGp1fPZH+rA6d/L4DyIZNXbEYccwnMYvpplbfHxQezdVNJpy8W/Weh5ThVJwRhdNrtkQCl5oiy7RDe8HcFeXn6vqvL8w2yEWmfPUHCXvr+/R6VrAqvnDFhCEuIDS8hovz37stRQW7vR7/T+5/u9Z33loR4KVVqX4J6Du9a/w53iBJL9xDzjuEA7JqhWP2yCpUxFBsOz4jJR/AXdD+xRbDwAA");
+                    // new Spell(MethodProjectile.INSTANCE, EffectSpark.INSTANCE, EffectLaunch.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE);
                     return walker;
                 }, MobCategory.CREATURE);
 
