@@ -1,19 +1,8 @@
 package alexthw.ars_elemental.common.entity.mages;
 
-import alexthw.ars_elemental.common.glyphs.EffectDischarge;
-import alexthw.ars_elemental.common.glyphs.EffectSpark;
-import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.registry.ModEntities;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDurationDown;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectDelay;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectLightning;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectWindshear;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -39,9 +28,10 @@ public class AirMage extends EntityMageBase {
         super(p_21368_, level, SpellSchools.ELEMENTAL_AIR);
         //sSpells.add(new Spell(MethodSelf.INSTANCE, EffectLeap.INSTANCE, AugmentAmplify.INSTANCE, EffectBounce.INSTANCE));
         //sSpells.add(new Spell(MethodSelf.INSTANCE, EffectOrbit.INSTANCE, EffectLaunch.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE, EffectGravity.INSTANCE, AugmentExtendTime.INSTANCE));
-        pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectLaunch.INSTANCE, AugmentDurationDown.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE));
-        pSpells.add(new Spell(MethodArcProjectile.INSTANCE, AugmentPierce.INSTANCE, AugmentPierce.INSTANCE, EffectLightning.INSTANCE));
-        pSpells.add(new Spell(MethodProjectile.INSTANCE, EffectSpark.INSTANCE, AugmentAmplify.INSTANCE, EffectDischarge.INSTANCE));
+        pSpells.add(Spell.fromBinaryBase64("H4sIAAAAAAAA/+1XTW/bMAz9Lzp7hR00w+brFmCXYEXT2zAYik07WmVJkOSmXpD/PspO4vgj7Zo2XVbUF0skRZGPT5S9IkYWIiHhau0RDTFTQMIfhGoTCVncAS3CjJdqESktf0FsGQfiDag5LUS8eKoqAU7LQc2SiSQyC6Ca/PSIotqymMMNy4EzgSGuWmv2gkNNyinTkzRFiZvm0jIp3AjN1JSqOllbulRbboRE1+tmu+/KrTTbpYBSML29N8ZR7XDVBDuwASyjjMslpmyK+dVBn7HkUu/7+rIVsKTjMsYALRUWXaLBaDz2SObeHpmTMPjku0yZsF+ZoXMOuNrqAtb4DCOwDdDpY2rsbMOOhiYVT4zkd9DTNYNemBZyBcbqMkppznhZwcws8iL0Ly6raDRl/OGqtTzmEtnjhC6aQsfbVIBDDsJSHmaFsQ3SAy5eAOYaZ3w/Decq2ZNSTUmZvgLNHs2/fbgTEIbZ0m2xGwY++qQJK4zjQuDXT3D52Q+Cj8EIc1B0KTYpzq6+Ta4npOPWKICKd+WUiVk98S/Qbzml9/vz+98dAxTsWxwoVwWm00lxXXGfieyYBjMvNFLyFGVvWI9o6dsIEeH8DNrM4+Ufv1b1x+3yf9iJWkYdBgzjWlNh5iJ7v2eefc8MHbjmQu9RyH0yYIRS3LD49hj4OcsWpzmF/wD/TQF68KeUm787gKN2/33BExcc3XBb/NDn2XL/y2Kfd7d9uPzP+948sFXdTzo5KsRe5vizUTeaM73zz7Dbv2EC9n93Dt1dO/I4A0EdiwgCGR+P9voPz0ZzVacPAAA="));
+        // new Spell(MethodProjectile.INSTANCE, EffectLaunch.INSTANCE, AugmentExtendTime.INSTANCE, EffectDelay.INSTANCE, EffectWindshear.INSTANCE);
+        pSpells.add(Spell.fromBinaryBase64("H4sIAAAAAAAA/+1X3W/aMBD/X/zMqgSVaeN1Q+oLWlX6Nk2RMRe44diW7ZRmiP9954SvQKgK7VqKlpfE9vl3X787O3PmdK5GrDtftJgFgQZY9yfj1iUgIQPlueyOZWEmCbciMVb/BuFRAmuVQkrnD8DzpYhBsOLoJYnjiVeoxuxXixluPQoJ95iBREXWzGtbtiyglVRytL00pZkwzLRHrcIXiZk+N5Vfvghe1WCUJujFRt0PE3a61VagWXB7upfCSQU43xjboABmyVjqGXns8uHtQUyhpbbbWN9WEzjagRRkoOfKEyQJtDudFhuHd4sNWTf+EgVPUfnv6PhQAu32NocFPc0RWBkY1gV3frAkwpoRm489UzxkBpy3RZLyDGVRhhK9mJAhV9eLkktOywd4JdCoAvWWo3w63UcnbENzR6vTxBmQ8gyyVq+UTI9ABvwQ1zxUUl2LMziFjdUNsXg3opVJ+ye19l6pqwJB7+flbgTKoS+CivVnHEUEykeYu8BuGpZPfP01iuPPcZucMHymls4Obm96dz22g0vuQllJRR/VoBpEV4Rb9Pnj9vjxz44ATWxL7CSuOaxBSKu7sqypV5/SdIe5df6imHBcETcRofNWNOjUefBpPVUTOoIKg2DZ/7P3xWdvw/rWJWePQpKXBNLqHsX0lPCX161Lif8yAXvhT7l0zyvAdr0Rv2LFxUd33kZ+2PNsuR8y2efdbZ9O/8uu0gdUVf1kx0dDsdcZ/YBVjeZMz/wz7PYXTMD9P7lDZ9eaPEFA8cAiRoEUp0d78Rev4K0fphAAAA=="));//(new Spell(MethodArcProjectile.INSTANCE, AugmentPierce.INSTANCE, AugmentPierce.INSTANCE, EffectLightning.INSTANCE));
+        pSpells.add(Spell.fromBinaryBase64("H4sIAAAAAAAA/+1Vy27bMBD8F57VQExjo/W1MdBL0CDurSgMmlop21AkQVJxVMP/3qUk15It14HbU1BdLM3Ozj40FjfMm0pnbLbZJsyBRAts9o0J55faVM8gqlmhavu4tM78ABlQAUuaMCgoQQehOoK3wj11sWGqKK3CvD6Rl6GXj8IVwL4njDQCSgVfsQSFmnrZDAR7XVAkVwLdPM8JiY+lCWh0vCOavRO2nSrUcaaBjDYkvd2X+2Jjpt+lAqHgj2p35GUruNk3O1IA1stCmTXN7KvV/UlNaZRxfa1POwCzA0lJDQahA0kS4XoySVgRfxO2YjP+IY2Tog636MVKAWUHV8GWrvEN7BqMcSl8WHQ22PuhMYQ36hlGY8EJVH9e/qBiaTJQEYyilZOHHXmLT7Df14jCP1hWt62jXeVC+dPLakZ9K345t4LhPzgD7THUscLvW56mpCkyrKi/9Op9OrxuaAYr1robc3H/ef4wZwe63gI0lqrvUC/ah3fpVTpNCBEvHdICLz8HHN5CPRKfvsblRj80dkZdXPLNWFXOh7dignMfjfMmmPQtwLtXz28+ppxP+fWlFqAXfmiAyZEBOmhAep0BFrGp/wfGXx8YI/HeyRwZWpSRQbXl5Q1ufwHLwOwFnggAAA=="));//(new Spell(MethodProjectile.INSTANCE, EffectSpark.INSTANCE, AugmentAmplify.INSTANCE, EffectDischarge.INSTANCE));
     }
 
     public AirMage(Level level) {
